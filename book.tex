@@ -1,0 +1,112 @@
+\documentclass[11pt]{book}
+%\pagenumbering{roman} %...will enumerate the front matter correctly, but without a viewer that can start at page -3, it makes the index page numbers less helpful...
+\usepackage{fourier,amssymb}
+
+% consider these for the caligraphic fonts:
+% http://www.tug.dk/FontCatalogue/lukassvatba/
+% http://ftp.isu.edu.tw/pub/Unix/CTAN/fonts/aurical/aurical.pdf
+\usepackage{aurical}
+\usepackage[T1]{fontenc}
+% couldn't get these to work.  \cal might be the best bet...
+
+% \usepackage{euler}
+\usepackage[leqno]{amsmath}
+\usepackage{epsfig}	% deprecated, use \includegraphics
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{enumerate}
+\usepackage{mathcomp,textcomp}
+\usepackage{fullpage}
+\usepackage{quoting}
+\usepackage[light,outline]{draftcopy}
+
+\newcommand{\Index}[1]{#1\index{#1}}
+
+\DeclareMathOperator{\THETA}{\Theta}
+\DeclareMathOperator{\ETA}{\eta}
+%\DeclareMathOperator{\DRightarrow}{^*\!\!\!\!\Rightarrow}
+% center the '*' better with:
+\DeclareMathOperator{\DRightarrow}{^*\!\!\!\!\!\!\!\Rightarrow}
+\DeclareMathOperator{\R}{R}
+\DeclareMathOperator{\Dvdash}{\vdash^{\!\!\!\!\!\!{*}}\ }
+
+\newtheorem{dfn}{Definition}[chapter]
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}{Corollary}[chapter]
+\newtheorem{lmm}{Lemma}[chapter]
+\newtheorem{alg}{Algorithm}[chapter]
+
+\title{Theory of Finite Automata \\
+with an Introduction to Formal Languages}
+\author{John Carroll and Darrell Long}
+\makeindex
+\begin{document}\maketitle
+
+\begin{quoting}
+\centering
+\includegraphics[width=0.75\linewidth]{Figures/mturk.eps}
+\end{quoting}
+
+\index{Mechanical Turk}
+\tableofcontents
+
+\setcounter{chapter}{-1}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+% Define macros here:
+\def\NN{\mathbb{N}}
+\def\RN{\mathbb{R}}
+\def\ZN{\mathbb{Z}}
+\def\IN{\mathbb{I}}
+\def\QN{\mathbb{Q}}
+\def\EN{\mathbb{E}}
+\def\NNN{\mathbb{P}}
+\def\<{\text{\textless}}
+\def\>{\text{\textgreater}}
+\def\cent{\text{\textcent}}
+\def\DBAR{\ensuremath{\overline{\delta}}}
+\def\PBAR{\ensuremath{\overline{\psi}}}
+\def\OBAR{\ensuremath{\overline{\omega}}}
+% The following makes a wide bar to overshadow the superscript, too.
+\newcommand{\deltabar}[1]{\overline{\delta^{#1}}}
+\def\DSIG{\ensuremath{\mathfrak{D}_\Sigma}}
+\def\WSIG{\ensuremath{\mathfrak{W}_\Sigma}}
+\def\NSIG{\ensuremath{\mathfrak{N}_\Sigma}}
+\def\RSIG{\ensuremath{\mathfrak{R}_\Sigma}}
+\def\GSIG{\ensuremath{\mathfrak{G}_\Sigma}}
+% CSIG is the designator of _C_ontext free languages:
+\def\CSIG{\ensuremath{\mathfrak{C}_\Sigma}}
+%no such thing as ISIG; after cleanup, the following ISIG line can be removed:
+\def\ISIG{\ensuremath{\mathfrak{I}_\Sigma}}
+\def\USIG{\ensuremath{\mathfrak{U}_\Sigma}}
+\def\XSIG{\ensuremath{\mathfrak{X}_\Sigma}}
+\def\PSIG{\ensuremath{\mathfrak{P}_\Sigma}}
+\def\FSIG{\ensuremath{\mathfrak{F}_\Sigma}}
+% the 'A' is totally unreadable and unintuitive; consider \cal???
+\def\ASIG{\ensuremath{\cal{A}_\Sigma}}
+%\def\ASIG{\ensuremath{\mathfrak{A}_\Sigma}}
+\def\TSIG{\ensuremath{\mathfrak{T}_\Sigma}}
+\def\LSIG{\ensuremath{\mathfrak{L}_\Sigma}}
+% several of the LSIGs should be ZSIGs
+\def\ZSIG{\ensuremath{\mathfrak{Z}_\Sigma}}
+\def\OSIG{\ensuremath{\mathfrak{O}_\Sigma}}
+\def\HSIG{\ensuremath{\mathfrak{H}_\Sigma}}
+
+%\pagenumbering{arabic} <-- this did not work correctly here; placed just after start of ch-00.tex instead
+\include{ch-00}
+\include{ch-01}
+\include{ch-02}
+\include{ch-03}
+\include{ch-04}
+\include{ch-05}
+\include{ch-06}
+\include{ch-07}
+\include{ch-08}
+\include{ch-09}
+\include{ch-10}
+\include{ch-11}
+\include{ch-12}
+
+\printindex
+\newpage\centerline{\epsfig{figure=Figures/mfake.eps,height=4in}}
+\end{document}

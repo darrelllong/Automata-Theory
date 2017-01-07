@@ -4,3 +4,9 @@
 *.out
 *.blg
 *.bbl
+*.idx 
+*.ind 
+*.ilg 
+*.aux 
+*.toc
+

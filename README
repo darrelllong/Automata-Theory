@@ -1,0 +1,10 @@
+To build the book, type:
+
+latex book
+latex book
+dvips book -o
+ps2pdf book.ps
+
+There is now a Makefile, so to build just type "make"
+
+(to clean up, just type "make clean")
