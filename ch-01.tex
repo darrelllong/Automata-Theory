@@ -53,11 +53,11 @@ our formal treatment with some fundamental definitions.
 
 The devices we will consider are meant to react to and manipulate symbols.
 Different applications may employ different character sets, and we will therefore
-take care to explicitly mention the alphabet under consideration.
+take care to explicitly mention the \emph{alphabet} under consideration.
 
 % Definition 1.1
 \begin{dfn}\label{dfn-1.1}
-$\Sigma$ is an \Index{alphabet} \emph{iff} $\Sigma$ is a finite nonempty set of symbols.
+$\Sigma$ is an \emph{\Index{alphabet}} \ \ {\bf \emph{iff}} \ \ $\Sigma$ is a finite nonempty set of symbols.
 \end{dfn}
 
 An element of an alphabet is often called a letter, although there is no reason
@@ -89,7 +89,7 @@ alphabet.
 \begin{dfn}\label{dfn-1.2}
 For a given alphabet $\Sigma$ and a natural number $n$, a sequence of symbols
 $\pmb{a}_1\pmb{a}_2\ldots\pmb{a}_n$ is a \emph{word} (or \emph{string}) {\em over
-the alphabet $\Sigma$ of length $n$} iff for each $i=1,2,\ldots,n,\pmb{a}_1\in
+the alphabet $\Sigma$ of length $n$} iff for each $i=1,2,\ldots,n,\ \pmb{a}_i\in
 \Sigma$.
 \end{dfn}
 
@@ -100,7 +100,7 @@ $\Sigma \times \Sigma \times \Sigma$. Indeed, one may view the three-letter word
 $\pmb{bca}$ as a convenient shorthand for the ordered triple $\langle \pmb{b, c, a}\rangle$.
 A word over an alphabet is thus an ordered string of symbols, where each symbol
 in the string is an element of the given alphabet. An obvious example of words
-are what you are reading right now, which are words (or strings) over the
+is what you are reading right now, which are words (or strings) over the
 standard English alphabet. In some contexts, these strings of symbols are
 occasionally called \emph{sentences}.
 
@@ -117,7 +117,7 @@ Even though only three different members of $\Sigma$ occur in the second
 example, the length of $\pmb{242342}$ is 6, as each symbol is counted each time
 it occurs. To easily and succinctly express these concepts, the absolute value
 notation will be employed to denote the length of a string. Thus, $|\pmb{42}|=2$,
-$|\pmb{242342}|=6$, and $|\pmb{a}_l\pmb{a}_2\pmb{a}_3\pmb{a}_4|=4$.
+$|\pmb{242342}|=6$, and $|\pmb{a}_1\pmb{a}_2\pmb{a}_3\pmb{a}_4|=4$.
 
 % Definition 1.3
 \begin{dfn}\label{dfn-1.3}
@@ -136,7 +136,7 @@ second string.
 \begin{dfn}\label{dfn-1.4}\index{concatenation!of strings}
 Given an alphabet $\Sigma$, let $x = \pmb{a}_1,\ldots\pmb{a}_n$ and $y=\pmb{b}_1,
 \ldots\pmb{b}_m$, be strings where each $\pmb{a}_i\in\Sigma$ and each $\pmb{b}_j
-\in\Sigma$. The \em{concatenation} of the strings $x$ and $y$, denoted by $x\cdot y$,
+\in\Sigma$. The \emph{concatenation} of the strings $x$ and $y$, denoted by $x\cdot y$,
 is the juxtaposition of $x$ and $y$; that is, $x\cdot y=\pmb{a}_1\ldots\pmb{a}_n
 \pmb{b}_1\ldots\pmb{b}_m$.
 \end{dfn}
@@ -184,7 +184,7 @@ especially useful shorthand in many contexts.
 
 % Definition 1.6
 \begin{dfn}\label{dfn-1.6}
-Given an alphabet $\Sigma$, and some $b \in \Sigma$, the {\em length of a word
+Given an alphabet $\Sigma$, and some $\pmb{b} \in \Sigma$, the {\em length of a word
 $w$ with respect to $\pmb{b}$}, denoted $|w|_{\pmb{b}}$, is the number of
 occurrences of the letter $\pmb{b}$ within that word.
 \end{dfn}
@@ -207,7 +207,7 @@ empty string serves as the identity element for concatenation. That is, for all
 strings $x$,
 \[ x \cdot \lambda = \lambda \cdot x = x \]
 Even though the empty word is represented by a single character,
-$\lambda$ is a string but is not a member of any alphabet:
+$\lambda$ is a string but is \emph{not} a member of any alphabet:
 $\lambda \notin \Sigma$.
 (Symbols in an alphabet all have length one; $\lambda$ has length zero.)
 
@@ -251,7 +251,7 @@ the definition, is indeed a word consisting of zero letters.
 % Definition 1.9
 \begin{dfn}\label{dfn-1.9}
 Given an alphabet $\Sigma$, define
-\[\Sigma^* = \bigcup\limits^\infty_{k=1} \Sigma^k = \Sigma^0 \cup \Sigma^1 \cup
+\[\Sigma^* = \bigcup\limits^\infty_{k=0} \Sigma^k = \Sigma^0 \cup \Sigma^1 \cup
 	\Sigma^2 \cup \Sigma^3 \cup \ldots \]
 and
 \[ \Sigma^+ = \bigcup\limits^\infty_{k=1} \Sigma^k = \Sigma^1 \cup \Sigma^2 \cup
@@ -289,7 +289,7 @@ automata. A \emph{deterministic finite automaton} is a mathematical model of a
 machine that accepts a particular set of words over some alphabet $\Sigma$.
 
 A useful visualization of this concept might be referred to as the
-\Index{black@\emph{black box} model}. This conceptualization is built around a black box that
+\index{black box model}\emph{black box} model. This conceptualization is built around a black box that
 houses the \emph{finite-state control}. This control reacts to the information
 provided by the \emph{read head}, which extracts data from the \emph{input tape}.\index{tape!input}
 The control also governs the operation of the output indicator, often depicted
@@ -447,14 +447,14 @@ $\Sigma$.
 \begin{figure}
 \begin{verbatim}
 type
-   Sigma='a'..'c';
-   State=(s0,s1,s2);
+   Sigma = 'a'..'c';
+   State = (s0,s1,s2);
 var
    TransitionTable=array[State,Sigma] of State;
 
 function Delta(S:State;A:Sigma):State;
 begin
-   Delta:=TransitionTable [S, A]
+   Delta := TransitionTable [S, A]
 end; {Delta}
 \end{verbatim}
 \caption{A Pascal implementation of a state transition function}\label{fig-1.4}
@@ -488,7 +488,7 @@ $s_2$ & $s_1$ & $s_0$
 This table represents the following transitions:
 \begin{align*}
 &\delta(s_0,\pmb{a}) = s_1 &\delta(s_0,\pmb{b}) = s_2 \\
-&\delta(s_1,\pmb{a}) = s_1 &\delta(s_2,\pmb{b}) = s_2 \\
+&\delta(s_1,\pmb{a}) = s_1 &\delta(s_1,\pmb{b}) = s_2 \\
 &\delta(s_2,\pmb{a}) = s_1 &\delta(s_2,\pmb{b}) = s_0
 \end{align*}
 
@@ -565,11 +565,13 @@ shown with the following theorem.
 \begin{thm}\label{thm-1.1}
 Let $A =\langle\Sigma,S,s_0,\delta,F\rangle$ be a DFA. Then
 
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
 $(\forall x \in \Sigma^*)(\forall y \in \Sigma^*)(\forall s \in S)
 (\DBAR(s,yx) = \DBAR(\DBAR(s,y),x))$
 
 \emph{Proof.} Define $P(n)$ by
 
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
 $(\forall x \in \Sigma^*)(\forall y \in \Sigma^n)(\forall s \in S)
 (\DBAR(s,yx) = \DBAR(\DBAR(s,y),x))$
 
@@ -629,21 +631,21 @@ const
 MaxWordLength = 255; {an arbitrary constraint} 
 type 
    Word = record 
-      Length : 0 .. MaxWordLength; 
-      Letters: packed array [0..MaxWordLength] of Sigma 
+      Length :0..MaxWordLength; 
+      Letters:packed array [0..MaxWordLength] of Sigma 
    end; {Word} 
 function DeltaBar(S:State; W:Word) : State; 
 {uses the function Delta defined previously} 
 var 
-   T: State; 
+   T:State; 
    I:0..MaxWordLength; 
 begin 
-   T: = S; 
+   T := S; 
    if W.Length>0 
       then 
-         for I:=1 to W.Length do 
-            T:=Delta(T, W. Letters[I]); 
-   DeltaBar : = T
+         for I := 1 to W.Length do 
+            T := Delta(T, W.Letters[I]); 
+   DeltaBar := T
 end; {DeltaBar}
 \end{verbatim}
 \caption{A Pascal implementation of the extended state transition function}\label{fig-1.5}
@@ -698,7 +700,7 @@ To see how some of the above definitions apply, let $x = \pmb{0100}$:
 &= \DBAR(q_1, \pmb{00}) \\
 &= \DBAR(\delta(q_1, \pmb{0}), \pmb{0}) \\
 &= \DBAR(q_1, \pmb{0}) \\
-&= \DBAR(q_1, \pmb{0}) \\
+&= \delta(q_1, \pmb{0}) \\
 &= q_1
 \end{align*}
 Thus, $\DBAR(q_0,x) = q_1 \in F$, which means that $x$ is 
@@ -713,7 +715,7 @@ Now let $y = \pmb{1100}$:
 &= \DBAR(q_0, \pmb{00}) \\
 &= \DBAR(\delta(q_0, \pmb{0}), \pmb{0}) \\
 &= \DBAR(q_0, \pmb{0}) \\
-&= \DBAR(q_0, \pmb{0}) \\
+&= \delta(q_0, \pmb{0}) \\
 &= q_0
 \end{align*}
 Therefore, $\DBAR(q_0,y) = q_0 \notin F$, which means that $y$ is
@@ -743,11 +745,11 @@ procedure \texttt{Initialize} reflect the structure of the DFA shown in Figure
 \ref{fig-1.9}. Invoking this program will produce a response to a single input
 word. For example, a typical exchange would be
 \begin{align*}
-\pmb{cba} && \\
-\text{Rejected} && \\
+\pmb{cba} & \\
+\text{Rejected} & \\
 \intertext{Running this program again might produce}
-\pmb{cccc} && \\
-\text{Accepted} && \\
+\pmb{cccc} & \\
+\text{Accepted} & \\
 \end{align*}
 This behavior is essentially the same as that of the C program shown
 in Figure \ref{fig-1.10}. The succinct coding clearly shows the relationship
@@ -774,9 +776,9 @@ language (like English) or a programming language (like Pascal).
 \begin{figure}
 \begin{verbatim}
 function Accept(W:Word):Boolean;
-{returns TRUE iff Wis accepted by the DFA}
+{returns TRUE iff W is accepted by the DFA}
 begin
-   Accept: = DeltaBar (s0, W) in FinalState
+   Accept := DeltaBar(s0, W) in FinalState
 end; {Accept}
 \end{verbatim}
 \caption{A Pascal implementation of a test for acceptance}\label{fig-1.7}
@@ -791,42 +793,42 @@ program DFA(input, output);
 {the keyboard, delimited by a carriage return. No error checking  }
 {is done; letters outside ['a' .. 'c'] cause a range error.       }
 type
-   Sigma='a'..'c';
-State= (s0, s1, s2);
+    Sigma = 'a'..'c';
+    State = (s0, s1, s2);
 var
     TransitionTable : array [State, Sigma] of State;
-    FinalState	    : set of State;
+    FinalState	     : set of State;
 function Delta(s : State; c : Sigma) : State;
 begin
-    Delta :=TransitionTable[s,c]
+    Delta := TransitionTable[s,c]
 end; { Delta }
 function DeltaBar(s : State) : State;
 var
     t : State;
 begin
-    t :=s;
+    t := s;
     { Step through the keyboard input one letter at a time. }
     while not eoln(input) do
         begin
-	    t :=Delta(t, input^);
+	    t := Delta(t, input^);
 	    get(input)
 	end;
-    DeltaBar :=t
+    DeltaBar := t
 end; { DeltaBar }
 function Accept : boolean;
 begin
-    Accept :=DeltaBar(s0) in FinalState
+    Accept := DeltaBar(s0) in FinalState
 end; { Accept }
 procedure Initialize;
 begin
     FinalState := [s2];
-    { Set up the state transition table.
-    TransitionTable [s0,'a'] :=s1; TransitionTable [s0,'b'] :=s0;
-    TransitionTable [s0,'c'] :=s2; TransitionTable [s1,'a'] :=s2;
-    TransitionTable [s1,'b'] :=s0; TransitionTable [s1,'c'] :=s0;
-    TransitionTable [s2,'a'] :=s0; TransitionTable [s2,'b'] :=s0;
-    TransitionTable [s2,'c'] :=s1;
-end; { Initialize
+    { Set up the state transition table. }
+    TransitionTable [s0,'a'] := s1; TransitionTable [s0,'b'] := s0;
+    TransitionTable [s0,'c'] := s2; TransitionTable [s1,'a'] := s2;
+    TransitionTable [s1,'b'] := s0; TransitionTable [s1,'c'] := s0;
+    TransitionTable [s2,'a'] := s0; TransitionTable [s2,'b'] := s0;
+    TransitionTable [s2,'c'] := s1;
+end; { Initialize }
 begin { DFA }
     Initialize;
     if Accept then
@@ -861,29 +863,25 @@ Some other examples of valid languages are
 \begin{figure}
 \begin{verbatim}
 # include       <stdio.h>
-
 # define        to_int(c)       ((int) c-(int) 'a')
 # define        FINAL_STATE     s_2
 
 enum state { s_0, s_1, s_2 };
 /*
 ** This table implements the state transition function and is indexed by
-** the current state and the current input letter
+** the current state and the current input letter.
 */
-
 enum state transition_table[3][3]={ { s_1, s_0, s_2 },
                                     { s_2, s_0, s_0 },
-                                    { s_0, s_0, s_1 }
-};
-
-enum state delta(s, c)
-enum state s;
-{
+                                    { s_0, s_0, s_1 }};
+enum state delta(enum state s, char c) {
+        return transition_table[(int) s][to_int(c)];
+}
+enum state delta_bar(enum state s) {
         enum state t;
         char       c;
 	
         t=s;
-	
 /*
 ** Step through the input one letter at a time.
 */
@@ -891,7 +889,6 @@ enum state s;
               t=delta(t, c);
         return t;
 }
-
 main() {
         if (delta_bar(s_0) == FINAL_STATE)
                 printf("Accepted\n");
@@ -984,7 +981,7 @@ $s_2$ & $s_3$ & $s_3$ & $s_3\ldots s_3$ & $s_3$ & $s_3$ & $s_3\ldots s_3$
 	& $s_3$ & $s_2$ & $s_7$ \\
 $s_3$ & $s_4$ & $s_4$ & $s_4\ldots s_4$ & $s_4$ & $s_4$ & $s_4\ldots s_4$
 	& $s_4$ & $s_3$ & $s_7$ \\
-$S_4$ & $s_5$ & $s_5$ & $s_5\ldots s_5$ & $s_5$ & $s_5$ & $s_5\ldots s_5$
+$s_4$ & $s_5$ & $s_5$ & $s_5\ldots s_5$ & $s_5$ & $s_5$ & $s_5\ldots s_5$
 	& $s_5$ & $s_4$ & $s_7$ \\
 $s_5$ & $s_6$ & $s_6$ & $s_6\ldots s_6$ & $s_6$ & $s_6$ & $s_6\ldots s_6$
 	& $s_6$ & $s_5$ & $s_7$ \\
@@ -1000,7 +997,7 @@ The entries under the column labeled $\Gamma$ show the transitions taken for
 each member of the set $\Gamma$. The state transition diagram of the machine
 corresponding to this quintuple is displayed in Figure \ref{fig-1.11}. Note
 that, while each of the 26 letters transition from $s_0$ to $s_1$, a single
-arrow labeled a-z is sufficient to denote all these transitions. Similarly, the
+arrow labeled \pmb{a}-\pmb{z} is sufficient to denote all these transitions. Similarly, the
 transition labeled $\Sigma$ from $s_7$ indicates that every element of the
 alphabet follows the same path.
 
@@ -1052,22 +1049,6 @@ See the exercises for some other problems involving congruence modulo 2.
 Consider a typical set of all real number constants in modified scientific
 notation format described by the BNF in Table \ref{tbl-1.1}.\index{BNF}
 
-% Table 1.1
-\begin{table}\caption{}\label{tbl-1.1}
-\begin{center}\begin{tabular}{rcl}
-\hline
-\<sign\> & ::= & $ + | -$ \\
-\<digit\> & ::= & $ 0|1|2|3|4|5|6|7|8|9$ \\
-\<natural\> & ::= & \<\text{digit}\>$|$\<digit\>\<natural\> \\
-\<integer\> & ::= & \<natural\>$|$\<sign\>\<natural\> \\
-\<real constant\> & ::= & \<integer\> \\\
- & &\ \ \<integer\> \\
- & &\ \ \<integer\>,\<natural\> \\
- & &\ \ \<integer\>,\<natural\>E\<integer\> \\
-\hline
-\end{tabular}\end{center}
-\end{table}
-
 This set of productions defines real number constants like $\pmb{+192.}$, since
 \begin{align*}
 \<\text{real constant}\> &\Rightarrow \<\text{integer}\>\pmb{.} \\
@@ -1099,6 +1080,25 @@ $\pmb{1.+1}$ \\
 $\pmb{8.E-10}$
 \end{tabular}
 \end{center}
+
+% table was edited to fix several errors on 12/29/17, and then moved
+% here to prevent it being placed ABOVE Example 1.10...
+% Placement is still not great, but it's better than it was.
+% Table 1.1
+\begin{table}\caption{For Example 1.11}\label{tbl-1.1}
+\begin{center}\begin{tabular}{rcl}
+\hline
+\<sign\> & ::= & $ \pmb + | \pmb -$ \\
+\<digit\> & ::= & $ \pmb 0|\pmb 1|\pmb 2|\pmb 3|\pmb 4|\pmb 5|\pmb 6|\pmb 7|\pmb 8|\pmb 9$ \\
+\<natural\> & ::= & \<\text{digit}\>$|$\<digit\>\<natural\> \\
+\<integer\> & ::= & \<natural\>$|$\<sign\>\<natural\> \\
+\<real constant\> & ::= & \<integer\> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
+ & &\ \ \<integer\>\pmb{.}  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
+ & &\ \ \<integer\>\pmb{.}\<natural\> \ \,$|$ \\
+ & &\ \ \<integer\>\pmb{.}\<natural\>\pmb{E}\<integer\> \\
+\hline
+\end{tabular}\end{center}
+\end{table}
 
 The set of all real number constants that can be derived from the productions
 given in Table \ref{tbl-1.1} is a FAD language. Let $R$ be the deterministic
@@ -1213,7 +1213,7 @@ $\pmb{0}$ & $\pmb{1}$
 $p$ & $q$ & $p\wedge q$ \\
 \hline
 $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ \\
-$\pmb{1}$ & $\pmb{0}$ & $\pmb{1}$ \\
+$\pmb{1}$ & $\pmb{0}$ & $\pmb{0}$ \\
 $\pmb{0}$ & $\pmb{1}$ & $\pmb{0}$ \\
 $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$
 \end{tabular}
@@ -1233,7 +1233,7 @@ $p$ & $q$ & $p \uparrow q$ \\
 $\pmb{1}$ & $\pmb{1}$ & $\pmb{0}$ \\
 $\pmb{1}$ & $\pmb{0}$ & $\pmb{1}$ \\
 $\pmb{0}$ & $\pmb{1}$ & $\pmb{1}$ \\
-$\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$
+$\pmb{0}$ & $\pmb{0}$ & $\pmb{1}$
 \end{tabular}
 } & {
 \begin{tabular}{cc|c}
@@ -1265,7 +1265,7 @@ between clock pulses. The symbol for a D flip-flop (sometimes called a
 gates that comprise the circuit.
 
 The output, $p$ and $\neg p$, will reflect the value of the input signal $p'$
-only after the high clock pulse is received and will retain that value after the
+\emph{only} after the high clock pulse is received and will retain that value after the
 clock drops to low (even if $p'$ subsequently changes) until the next clock
 pulse comes along, at which time the output will reflect the new current value
 of $p'$. This is best illustrated by referring to the NAND truth table and
@@ -1372,7 +1372,7 @@ $t_1$ & $\pmb{a}_1\ \ \pmb{a}_2$ & $t_1'$ \\
 $s_{\pmb{0}}$ & $\underline{\pmb{0}\ \ \ \ \pmb{1}} = \pmb{b}$ & $s_{\pmb{0}}$ \\
 $s_{\pmb{0}}$ & $\underline{\pmb{1}\ \ \ \ \pmb{0}} = \pmb{c}$ & $s_{\pmb{1}}$ \\
 $s_{\pmb{1}}$ & $\underline{\pmb{0}\ \ \ \ \pmb{1}} = \pmb{b}$ & $s_{\pmb{0}}$ \\
-$s_{\pmb{1}}$ & $\underline{\pmb{1}\ \ \ \ \pmb{0}} = \pmb{c}$ & $s_{\pmb{1}}$
+$s_{\pmb{1}}$ & $\underline{\pmb{1}\ \ \ \ \pmb{0}} = \pmb{c}$ & $s_{\pmb{0}}$
 \end{tabular}
 }
 \end{tabular}\end{center}
@@ -1541,7 +1541,7 @@ automata, and Turing machines, are introduced later in the text. We close this
 chapter with three examples to motivate the material in the succeeding chapters.
 
 When presenting automata in this chapter, we made no effort to construct the
-minimal machine. A \emph{\Index{minimal machine}} for a given language is one
+\Index{minimal machine}.  A \emph{minimal} machine for a given language is one
 that has the least number of states required to accept that language.
 
 \subsection*{Example 1.14}
@@ -1649,7 +1649,7 @@ In this case, we required one letter between the initial part of the search
 string ($\pmb{ab}$) and the terminal part ($\pmb{bb}$). It is possible to modify
 the machine to accept strings that contain $\pmb{ab}$, followed by any number of
 letters, followed by $\pmb{bb}$. This type of machine would be useful for
-identifying comments in many programming languages. For example, a Pascal
+identifying \emph{comments} in many programming languages. For example, a Pascal
 comment is essentially of the form $\pmb{(^*}$, followed by most combinations
 of letters, followed by the first occurrence of $\pmb{^*)}$.
 
@@ -1678,7 +1678,7 @@ instruction type are called \emph{\Index{opcodes}}.
 Various performance advantages can be attained when one part of the CPU
 \emph{prefetches} the next instruction while another part executes the current
 instruction. However, computers must have the capability of altering the order
-in which instructions are executed; \emph{\Index{branch instructions}} allow the
+in which instructions are executed; \emph{branch} instructions \index{branch instructions} allow the
 CPU to avoid the anticipated next instruction and instead begin executing the
 instructions stored in some other area of memory. When a branch occurs, the
 prefetched instruction will generally need to be replaced by the proper
@@ -1726,10 +1726,10 @@ files between micros and mainframes [DACR]. During a file transfer, the send
 portion of Kermit on the source host is responsible for delivering data to the
 receive portion of the Kermit process on the destination host. The receive
 portion of Kermit reacts to incoming data in much the same way as the machines
-presented in this chapter. The receive program starts in a state of waiting for
+presented in this chapter. The receive program \emph{starts} in a state of waiting for
 a transfer request (in the form of an initialization packet) to signal the
 commencement of a file transfer (state R in Figure \ref{fig-1.25}). When such
-a packet is received, Kermit transitions to the RF state, where it awaits a
+a packet is received, Kermit \emph{transitions} to the RF state, where it awaits a
 file-header packet (which specifies the name of the file about to be transferred).
 Upon receipt of the file-header packet, it enters the RD state, where it processes
 a succession of data packets (which comprise the body of the file being
@@ -1744,8 +1744,9 @@ portion of the Kermit protocol; for simplicity, timeouts and error conditions
 are not reflected in the diagram. The input alphabet is \{B,D,Z,H,S\}, where B
 represents a break, D is a data packet, Z is EOF, H is a file-header packet, and
 S is a send-intention packet. The state set is \{A,R,RF,RD\}, where A denotes
-the abort state, R signifies receive, RF is receive fileheader, and RD is
-receive data. Note that unexpected packets (such as a data packet received in
+the \underline{\emph{a}}bort state, R signifies \underline{\emph{r}}eceive,
+RF is \underline{\emph{r}}eceive \underline{\emph{f}}ileheader, and RD is
+\underline{\emph{r}}eceive \underline{\emph{d}}ata. Note that unexpected packets (such as a data packet received in
 the start state R or a break packet received when data packets are expected in
 state RD) cause a transition to the abort state A.
 
@@ -1830,7 +1831,7 @@ such that:
 \item $L(A_1)=\{x\ |\ (|x|_a\text{ is odd})\wedge(|x|_b\text{ is even})\}$
 \item $L(A_2)=\{y\ |\ (|y|_a\text{ is even})\vee(|y|_b\text{ is odd})\}$
 \item $L(A_3)=\{z\ |\ (|z|_a\text{ is even})\overline{\vee}(|z|_b\text{ is even})\}
-	(\overline{\vee}\text{ represents exclusive-or})$
+	\ \ (\overline{\vee}\text{ represents exclusive-or})$
 \item $L(A_4)=\{z\ | \ \ \ |z|_a\text{ is even}\}$
 \end{enumerate}
 \item How does the structure of each of these machines relate to the one defined
@@ -1909,10 +1910,10 @@ combinations of $u$, $v$, and $w$ will satisfy this constraint?
 \end{enumerate}
 
 \item Let $\Sigma = \{\pmb{a},\pmb{b}\}$ and $\Xi =\{x \in \Sigma^*|x$ contains
-(at least) two consecutive $\pmb{b}$s $\wedge\ x$ does not contain two
+(at least) two consecutive $\pmb{b}$s $\wedge\ x$ does \emph{not} contain two
 consecutive $\pmb{a}$s\}. Draw a machine that will accept $\Xi$.
 
-\item. The FORTRAN identifier in Example 1.9 recognized all alphabetic
+\item The FORTRAN identifier in Example 1.9 recognized \emph{all} alphabetic
 words, including those like DO, DATA, END, and STOP, which have different uses
 in FORTRAN. Modify Figure \ref{fig-1.11} to produce a DFA that will also reject
 the words DO and DATA while still accepting all other valid FORTRAN identifiers.
@@ -1926,25 +1927,26 @@ with a mantissa less than 1.
 \item Modify Figure \ref{fig-1.13} so that it will accept the set of real-number
 constants described by the following BNF.
 \begin{center}
-\begin{tabular}{r@{ ::}l}
-\<sign\> & $=\pmb{+}|\pmb{-}$ \\
-\<digit\> &  $=\pmb{0}|\pmb{1}|\pmb{2}|\pmb{3}|\pmb{4}|\pmb{5}|\pmb{6}|\pmb{7}|
-	\pmb{8}|\pmb{9}$ \\
-\<natural\> & $=$\<digit\>$|$\<digit\>\<natural\> \\
-\<integer\> & $=$\<natural\>$|$\<sign\>\<natural\> \\
-\<real constant\> & $=$\<integer\> \\
-&\ \ \<integer\>{\bf .} \\
-&\ \ {\bf .}\<natural\> \\
-&\ \ \<sign\>{\bf .}\<natural\> \\
-&\ \ {\bf .}\<natural\>{\bf E}\<integer\> \\
-&\ \ \<sign\>{\bf .}\<natural\>{\bf E}\<integer\> \\
-&\ \ \<integer\>{\bf .}\<natural\> \\
-&\ \ \<integer\>{\bf .}\<natural\>{\bf E}\<integer\>
+%\begin{tabular}{r@{ ::}l}
+\begin{tabular}{rllll}
+\<sign\> & $::=$ & $ \pmb{+}|\pmb{-}$ & \\
+\<digit\> &  $::=$ & $ \pmb{0}|\pmb{1}|\pmb{2}|\pmb{3}|\pmb{4}|\pmb{5}|\pmb{6}|\pmb{7}|
+	\pmb{8}|\pmb{9}$ & \\
+\<natural\> & $::=$ & \<digit\>$|$\<digit\>\<natural\> & \\
+\<integer\> & $::=$ & \<natural\>$|$\<sign\>\<natural\> & \\
+\<real constant\> & $::=$& \<integer\> & $|$ \\
+&& \<integer\>{\bf .} & $|$ \\
+&& {\bf .}\<natural\> & $|$ \\
+&& \<sign\>{\bf .}\<natural\> & $|$ \\
+&& {\bf .}\<natural\>{\bf E}\<integer\> & $|$ \\
+&& \<sign\>{\bf .}\<natural\>{\bf E}\<integer\> & $|$ \\
+&& \<integer\>{\bf .}\<natural\> & $|$ \\
+&& \<integer\>{\bf .}\<natural\>{\bf E}\<integer> & \\
 \end{tabular}
+\end{center}
 \item Write a program in your favorite programming language to implement the
 automaton derived in part (a). The program should read a line of text and state
 whether or not the word on that line was accepted.
-\end{center}
 \end{enumerate}
 
 \item Show that part (i) of Definition \ref{dfn-1.11} is implied by parts (ii)
@@ -2009,7 +2011,7 @@ $S=\{t_0,t_1\}$ & $\delta(t_0,\pmb{b})=t_1$ \\
 $s_0=t_0$ & $\delta(t_1,\pmb{a})=t_1$ \\
 $F=\{t_1\}$ & $\delta(t_1,\pmb{b})=t_0$
 \end{tabular}\end{center}
-\item Rigorously prove the statement you made in part (a). \emph{Hint:} First
+\item Rigorously \emph{prove} the statement you made in part (a). \emph{Hint:} First
 prove the inductive statement
 \[ P(n):(\forall x \in \Sigma^n)((\DBAR(t_0,x)=t_0\Leftrightarrow|x|_{\pmb{b}}
 \text{ is even}) \wedge (\DBAR(t_0,x)=t_1\Leftrightarrow|x|_{\pmb{b}}
@@ -2097,7 +2099,7 @@ words that have neither consecutive $\pmb{a}$s nor consecutive $\pmb{b}$s.
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$. Let
-$L=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \ | \ \ |x|_{\pmb{a}} \equiv 0 \bmod 3\}$.
+$L=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \,| \ \ |x|_{\pmb{a}} \equiv 0 \bmod 3\}$.
 \begin{enumerate}
 \item Draw a DFA that accepts $L$.
 \item Formally specify the five parts of a DFA that accepts $L$.
@@ -2123,16 +2125,16 @@ $\pmb{a()a(**)b(*ab*)}$ is valid.
 \item
 \begin{enumerate}
 \item Is the set of all postfix expressions over $\{\pmb{A},\pmb{B},\pmb{+},
-\pmb{-},\pmb{*},\pmb{/}\}$ with two or fewer operators a FAD language? If it
+\pmb{-},\pmb{\times},\pmb{/}\}$ with two or fewer operators a FAD language? If it
 is, draw a machine.
 \item Is the set of all postfix expressions over $\{\pmb{A},\pmb{B},\pmb{+},
-\pmb{-},\pmb{*},\pmb{/}\}$ with four or fewer operators a FAD language? If it
+\pmb{-},\pmb{\times},\pmb{/}\}$ with four or fewer operators a FAD language? If it
 is, draw a machine.
 \item Is the set of all postfix expressions over $\{\pmb{A},\pmb{B},\pmb{+},
-\pmb{-},\pmb{*},\pmb{/}\}$ with eight or fewer operators a FAD language? If it
+\pmb{-},\pmb{\times},\pmb{/}\}$ with eight or fewer operators a FAD language? If it
 is, draw a machine.
-\item Do you think the set of all postfix expressions over $\{\pmb{A},\pmb{B},
-\pmb{+},\pmb{-},\pmb{*},\pmb{/}\}$ is a FAD language? Why or why not?
+\item Do you think the set of \emph{all} postfix expressions over $\{\pmb{A},\pmb{B},
+\pmb{+},\pmb{-},\pmb{\times},\pmb{/}\}$ is a FAD language? Why or why not?
 \end{enumerate}
 
 \item Let $\Sigma =\{\pmb{a},\pmb{b},\pmb{c}\}$. Consider the language

@@ -25,7 +25,7 @@ In the latter part of this chapter, we will see that unlike the questions in
 Sections \ref{sec-12.1} and \ref{sec-12.2}, there are some questions that are in
 a fundamental sense unanswerable in the general case. That is, there cannot
 exist an algorithm that correctly answers such a question in all cases. These
-questions will be called undecidable. An undecidable question about Pascal
+questions will be called \emph{undecidable}. An undecidable question about Pascal
 programs is considered in detail in Section \ref{sec-12.3} and is independent of
 advanced machine theory. The concept of undecidability is addressed formally in
 Section \ref{sec-12.4}, and other undecidable problems are also presented.
@@ -86,7 +86,7 @@ of instances.
 
 It should be clear that producing an algorithm that solves a finite set of
 instances is no great accomplishment, since these algorithms are guaranteed to
-exist. Such an algorithm could be programmed as one big case statement, which
+exist. Such an algorithm could be programmed as one big {\tt case} statement, which
 identifies the particular input instance and produces the corresponding output
 for that instance. Algorithms that apply to an infinite set of instances are of
 much more theoretical and practical interest.
@@ -122,7 +122,7 @@ answer if the language is indeed nonempty. However, the procedure will never
 halt and answer NO (in a finite amount of time) because there are an infinite
 number of strings in $\Sigma^*$ that must be checked. A modification of this
 basic idea is necessary to produce a procedure that will halt under all
-circumstances (that is, to produce an algorithm ).
+circumstances (that is, to produce an \emph{algorithm}).
 
 % Theorem 12.1
 \begin{thm}\label{thm-12.1}
@@ -203,13 +203,13 @@ length greater than $n$ and have a procedure that halts, so Lemma \ref{lmm-12.1}
 invoked to argue that if a long string is accepted by $A$, then a string whose
 length is in the range $n\leq |x| < 2n$ must be accepted, and it is therefore
 sufficient to check the strings in this limited range. Thus, our algorithm will
-consist of computing the intersection of $\{\delta(s_0,y)\ |\ y\in\Sigma^*\wedge n
+consist of computing the intersection of $\{\DBAR(s_0,y)\ |\ y\in\Sigma^*\wedge n
 \leq |y| < 2n\}$ and $F$. $L(A)$ is infinite iff this intersection is
 nonempty.
 \end{thm}
 
 If we were to write a program that consulted the matrix containing the state
-transition table for $A$ to actually determine $\{\delta(s_0,y)\ |\ y\in\Sigma^*
+transition table for $A$ to actually determine $\{\DBAR(s_0,y)\ |\ y\in\Sigma^*
 \wedge n\leq |y| < 2n\}$, it would be very inefficient to implement this
 computation as implied by the definition. Repeatedly looking up entries in the
 state transition table to determine \DBAR\ for each word in this large class of
@@ -219,7 +219,7 @@ represents the set of all states that can be reached by strings of length
 exactly $i$. This can be easily computed by defining $R_0=\{s_0\}$ and using the
 recursive formula
 \[ R_{i+1}= R_i \cup \{\delta(s,\pmb{a})\ |\ \pmb{a}\in\Sigma,s\in R_i\} \]
-Successive sets can thereby be calculated from $R_0$. When $R_i$ is reached, it
+Successive sets can thereby be calculated from $R_0$. When $R_n$ is reached, it
 is checked against $F$, and the algorithm halts and returns Yes if they have a
 common state. Otherwise, $R_{n+1}$ through $R_{2n-1}$ are checked, and No is
 returned if no final state appears in these groups. This method is easily
@@ -240,8 +240,8 @@ Specifically, if $A$ is an $n$-state deterministic finite automaton, consider
 the DFA $A_n=\langle\Sigma,\{r_0,r_1,r_2,\ldots,\\r_n\},r_0,\delta_{\!n},\{r_n\}
 \rangle$, where $\delta_{\!\!n}$ is defined by
 \[ (\forall i=0,1,\ldots,n)(\forall\pmb{a}\in\Sigma)(\delta_{\!\!n}(r_i,\pmb{a})=
-	r_{\text{max}\{i+1,n\}}) \]
-It is easy to show that $L(A_n)=\{x\in\Sigma^*|\ \ |x|\geq n\}$, and building
+	r_{\text{min}\{i+1,n\}}) \]
+It is easy to show that $L(A_n)=\{x\in\Sigma^*\,|\ \ |x|\geq n\}$, and building
 $A^{\cap}$ as specified in Lemma \ref{lmm-5.1} produces a DFA for which $L(A^{\cap})=\{x
 \in L(A)\ |\ \ |x|\geq n\}$. The question of whether $L(A)$ is infinite now becomes
 the question of whether $L(A^{\cap})$ is nonempty, which was shown to be
@@ -306,7 +306,7 @@ and it should be clear from the definition of $A$ that $s_{0_1}E_As_{0_2}
 
 Consider the two machines $A_1$ and $A_2$ displayed in Figure \ref{fig-12.2}. The machine
 $A$ constructed according to Theorem \ref{thm-12.3} would look like the diagram inside the
-dotted box shown in Figure \ref{fig-12.3}. This new machine is very definitely
+dashed box shown in Figure \ref{fig-12.3}. This new machine is very definitely
 disconnected, and in this example $s_{0_1}$ is not related to $s_{0_2}$ by $E_A$ since
 these two states treat $\pmb{ab}$ differently ($\pmb{ab}$ is accepted by $A_1$
 and rejected by $A_2$). The reader is encouraged to generate another example
@@ -350,7 +350,7 @@ minimal machine will allow the question to be answered correctly.
 The careful reader may have noticed that the minimal machine described in
 Chapters \ref{ch-2} and \ref{ch-3} was only advertised to have the minimum
 \emph{total} number of states and has not yet been guaranteed to have the smallest
-number of \emph{final} states (perhaps there is an equivalent machine with many
+number of \emph{final} states (perhaps there is an equivalent DFA with many
 more nonfinal states but fewer final states). An investigation of the
 relationship between the final states of the minimal machine and the equivalence
 classes comprising the right congruence generated by this language will show
@@ -396,13 +396,13 @@ It is decidable whether a given right-linear grammar $G=\langle\Omega,\Sigma,S,
 P\rangle$ contains any useless nonterminals.
 
 \emph{Proof.} Recall that a nonterminal is \emph{useless} if it can never appear
-in the derivation of any valid terminal string. Essentially, only two things can
+in the derivation of \emph{any} valid terminal string. Essentially, only two things can
 prevent a nonterminal $X$ from being effectively used somewhere in a valid
 derivation: either $X$ can never appear as part of a partial derivation that
 begins with only the start symbol (no matter how many productions we apply), or,
 once $X$ is generated, it can never lead to a valid \emph{terminal} string.
 
-Finding the members of $\Omega$ that can be produced from $S$ is a simple
+Finding the members of $\Omega$ that \emph{can} be produced from $S$ is a simple
 recursive procedure: Begin with $Z_0=\{S\}$ and form $Z_1$ by adding to $Z_0$
 all the nonterminals that appear on the right side of productions that are used
 to replace $S$. Then form $Z_2$ by adding to $Z_1$ all the nonterminals that
@@ -450,7 +450,9 @@ iteration methods similar to those developed in Chapter \ref{ch-3}. In fact, it
 is possible to apply the connectivity algorithms for nondeterministic finite
 automata to this problem by transforming the right-linear grammar $G$ into the
 NDFA $A_G$, as defined in the proof of Lemma \ref{lmm-8.2}. The automaton
-corresponding to the grammar in Example \ref{ex-12.3} is shown in Figure
+%The field \ref{ex-12.3} resolves to '12.1" for some reason...
+%corresponding to the grammar in Example \ref{ex-12.3} is shown in Figure
+corresponding to the grammar in Example 12.3 is shown in Figure
 \ref{fig-12.4}. Note that the state labeled $\<W\>$ is inaccessible, which
 means that it cannot be reached from $\<S\>$. This indicates that there is no
 sequence of productions starting with the start symbol $S$ that will produce
@@ -707,7 +709,7 @@ function, we have only two other cases to consider.
 abc\=abc\=end \kill
 program CHECK; \\
 \{ envisioned usage of HALT \} \\
-\> function HALT:boolean; \\
+\> function HALT: boolean; \\
 \> begin \\
 \>\> \{ marvelous code goes here \} \\
 \> end \{ HALT \} \\
@@ -743,7 +745,7 @@ clear contradiction, and so case 1 never occurs.
 {\bf Case 2}: HALT returns a value of FALSE to the calling program TEST. This
 likewise has two consequences. Considering the advertised behavior of HALT, this
 must mean that the program in data.p, TEST, must not halt. However, the code for
-TEST shows that if HALT returns FALSE we execute the else statement, write one
+TEST shows that if HALT returns FALSE we execute the {\tt else} statement, write one
 line, and then stop. TEST therefore halts. TEST must again both halt and not
 halt.
 
@@ -755,7 +757,7 @@ It should be clear that the problem cannot be fixed by having the programmer who
 proposed the function HALT fiddle with the code; the above contradiction will be
 reached regardless of what code appears between the {\tt begin} and {\tt end}
 statements in the function HALT. We have shown that any such proposed function
-is guaranteed to behave inappropriately when fed a program such as TEST. In
+is \emph{guaranteed} to behave inappropriately when fed a program such as TEST. In
 actuality, there are an infinite number of programs that cause HALT to misbehave,
 but it was sufficient to demonstrate just one failure to justify that no such
 function can solve the general problem.
@@ -783,7 +785,7 @@ else \\
 \> writeln('This program halts') \\
 end \{ TEST \}.
 \end{tabbing}
-}.
+}
 \caption{Another program incorporating HALT}\label{fig-12.6}
 \end{figure}
 
@@ -915,7 +917,7 @@ would accept $\lambda$ and halts with $\pmb{N}$ whenever $T$ rejects $\lambda$.
 $X$ can then be used to determine whether an arbitrary Turing machine $M$ would
 accept an arbitrary word $x$. Given a machine $M$ and a string $x$, it is easy
 to modify $M$ to produce a new Turing machine $T_{M_x}$, which accepts $\lambda$
-exactly when $M$ accepts $x$. $T_{M_x}$, is formed by adding a new start state
+exactly when $M$ accepts $x$. $T_{M_x}$ is formed by adding a new start state
 that checks whether the read head is initially scanning a blank (that is, if
 $\lambda$ is on the input tape). If not, control remains in this state, and
 $T_{M_x}$ never halts. However, if the initially scanned symbol is a blank, new
@@ -1085,7 +1087,7 @@ Let $\Sigma$ be an alphabet for which $\|\Sigma\|\geq 2$. There is a language
 that is Turing decidable but not context sensitive. That is, $\OSIG\subset\HSIG$.
 
 \emph{Proof.} By Corollary \ref{cor-12.3}, $\OSIG\subseteq\HSIG$, and it remains
-to be shown that there is a member of \HSIG\ that is not a member of \OSIG. By
+to be shown that there is a member of \,\HSIG\ that is not a member of \ \OSIG. By
 the technique described in Theorem \ref{thm-12.9}, every context-sensitive
 grammar can be represented by a halting Turing machine, and each such Turing
 machine has an encoding of its finite-state control. Define $L$ to be the set of
@@ -1113,9 +1115,9 @@ $G_L$ that generates $L$, then this grammar would have a corresponding Turing
 machine $T_L$, which would have an encoding $x_L$. If $x_L$ did not belong to
 $L$, then by definition of $L$ it would be an encoding of a machine ($T_L$) that
 did not reject its own encoding ($x_L$). Thus, $T_L$ recognizes $x_L$, and
-therefore the corresponding grammar $G_L$ must generate $X_L$. But then $X_L\in
-L(G_L)=L$, contradicting the assumption that $X_L$ did not belong to $L$. If on
-the other hand $X_L$ belongs to $L$, then, by definition of $L$, $T_L$ must
+therefore the corresponding grammar $G_L$ must generate $x_L$. But then $x_L\in
+L(G_L)=L$, contradicting the assumption that $x_L$ did not belong to $L$. If on
+the other hand $x_L$ belongs to $L$, then, by definition of $L$, $T_L$ must
 reject its own encoding ($x_L$), and thus $x_L\notin L(T_L)=L(G_L)=L$, which is
 another contradiction. Thus, no such context-sensitive grammar $G_L$ can exist,
 and $L$ is not a context-sensitive language.
@@ -1141,7 +1143,7 @@ that \ASIG\ properly lies between the type 3 and type 2 languages. Corollary
 the type 1 and type 0 languages and also show that the type 1 languages are a
 proper subset of the type 0 languages. The existence of languages that are not
 Turing acceptable shows that \TSIG\ is properly contained in $\wp(\Sigma^*)$. A
-counting argument shows that proper containment of \TSIG\ in $\wp(\Sigma^*)$
+counting argument shows that proper containment of \ \TSIG\ in $\wp(\Sigma^*)$
 also holds even if\ \ $\Sigma$ is a singleton set.
 \end{thm}
 
@@ -1338,8 +1340,8 @@ determining paths in the graphs discussed.
 
 \item Let $L=L_2(T)$ for some Turing machine $T$ that halts on all inputs. That
 is, let $L$ consist of all strings that cause $T$ to halt with $\pmb{Y}$
-somewhere on the tape. Prove that there exists a halting Turing machine $T$ for
-which $L=L_2(T)=L(T)$. $T$ must:
+somewhere on the tape. Prove that there exists a halting Turing machine $T'$ for
+which $L=L_2(T)=L(T')$. \  $T'$ must:
 \begin{enumerate}[1.]
 \item Halt on all input.
 \item Place a $\pmb{Y}$ after the input word on an otherwise blank tape for
@@ -1400,4 +1402,21 @@ on input $\lambda$. Prove or disprove:
 \item $N\in\HSIG$
 \item $N\in\OSIG$
 \end{enumerate}
+
+\item 
+\begin{enumerate}
+\item
+Show that it is decidable, given an arbitrary DFA $A$,
+whether at least one of the equivalence classes of $R_{L(A)}$ is finite in size.
+\item
+Show that it is decidable, given an arbitrary DFA $A$,
+whether all of the equivalence classes of $R_{L(A)}$ are finite in size.
+\end{enumerate}
+
+\item
+Given two right-linear grammars $G_1$ and $G_2$,
+show that it is decidable whether
+$L(G_1) \subset L(G_2)$.
+(Note that this is $\subset$, not $\subseteq$.)
+
 \end{enumerate}

@@ -374,7 +374,7 @@ NDFA grows exponentially as the length of the word increases. For example, if
 each transition allowed a choice of three destination states, a word of length
 $m$ would have $3^m$ possible paths from one single start state. An improvement
 can be made by calculating, as each letter is processed, the set of possible
-\emph{destinations} (rather than recording all the paths). Still, in an
+\emph{destinations} (rather than recording all the \emph{paths}). Still, in an
 $n$-state NDFA, there are potentially $2^n$ such combinations of states. This
 represents an improvement over the path set, since now the number of state
 combinations is independent of the length of the particular word being
@@ -456,7 +456,7 @@ that all the states happen to be accessible in this particular example.
 
 Since the construction of the corresponding deterministic machine involves
 $\wp(S)$, it should be obvious to the reader that the size of this
-deterministic finite automaton can grow exponentially larger as the number of
+deterministic finite automaton \emph{can} grow exponentially larger as the number of
 states in the associated nondeterministic finite automaton increases. In
 general, however, there are often many inaccessible states. Thus, only the
 states that are found to be reachable during the construction process need to be
@@ -554,22 +554,23 @@ given problem.
 Recall the machine from Chapter \ref{ch-1} that accepted a subset of real constants in
 scientific notation according to the following BNF:\index{BNF}\index{natural numbers}
 \begin{center}
-\begin{tabular}{rcl}
+\begin{center}\begin{tabular}{rcl}
 \hline
-\<sign\> & :: & $= + | -$ \\
-\<digit\> & :: & $= 0|1|2|3|4|5|6|7|8|9$ \\
-\<natural\> & :: & =\<\text{digit}\>$|$\<digit\>\<natural\> \\
-\<integer\> & :: & =\<natural\>$|$\<sign\>\<natural\> \\
-\<real constant\> & :: & =\<integer\> \\\
- & &\ \ \<integer\>.. $|$\\
- & &\ \ \<integer\>.\<natural\> $|$\\
- & &\ \ \<integer\>.\<natural\>E\<integer\> $|$\\
+\<sign\> & ::= & $ \pmb + | \pmb -$ \\
+\<digit\> & ::= & $ \pmb 0|\pmb 1|\pmb 2|\pmb 3|\pmb 4|\pmb 5|\pmb 6|\pmb 7|\pmb 8|\pmb 9$ \\
+\<natural\> & ::= & \<\text{digit}\>$|$\<digit\>\<natural\> \\
+\<integer\> & ::= & \<natural\>$|$\<sign\>\<natural\> \\
+\<real constant\> & ::= & \<integer\> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
+ & &\ \ \<integer\>\pmb{.}  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
+ & &\ \ \<integer\>\pmb{.}\<natural\> \ \,$|$ \\
+ & &\ \ \<integer\>\pmb{.}\<natural\>\pmb{E}\<integer\> \\
 \hline
-\end{tabular}
+\end{tabular}\end{center}
 \end{center}
 By using nondeterministic finite automata, it is easy to construct a machine
 that will recognize this language (compare with the deterministic version given
 in Example 1.11). One such NDFA is shown in Figure \ref{fig-4.9}.
+
 
 % Figure 4.9
 \begin{figure}
@@ -582,8 +583,8 @@ in Example 1.11). One such NDFA is shown in Figure \ref{fig-4.9}.
 Let $L=\{x \in \{\pmb{a},\pmb{b}\}^*|\ x$ begins with $\pmb{a}\vee x$ contains
 $\pmb{ba}$ as a substring$\}$. We can easily build a machine that will accept
 this language, as illustrated in Figure \ref{fig-4.10}. Now suppose we wanted to construct
-a machine that would accept the reverse of this language, that is, to accept
-$L'=\{x \in \{\pmb{a},\pmb{b}\}^*|\ x$ ends with $\pmb{a}\vee x$ contains
+a machine that would accept the \emph{reverse} of this language, that is, to accept
+$L^r=\{x \in \{\pmb{a},\pmb{b}\}^*|\ x$ ends with $\pmb{a}\vee x$ contains
 $\pmb{ab}\}$. The machine that will accept this language can be built using
 nondeterministic finite automata by simply exchanging the initial states and the
 final states and by reversing the arrows of the $\delta$ function. The automaton
@@ -596,7 +597,7 @@ final states and by reversing the arrows of the $\delta$ function. The automaton
 \caption{An NDFA accepting the language given in Example 4.10}\label{fig-4.10}
 \end{figure}
 
-It can be shown that the technique employed in Example 4.10, when applied to any
+It can be shown that the technique employed in Example 4.10, when applied to \emph{any}
 automaton, will yield a new NDFA that is guaranteed to accept the \emph{reverse}
 of the original language. The material in Chapter \ref{ch-5} will reveal many instances
 where the ability to define multiple start states and multiple transitions will
@@ -665,14 +666,14 @@ equivalent and can be coalesced to form the minimal machine given in Figure \ref
 
 % Figure 4.14
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig4-13.eps,width=6.5in}}
+\centerline{\epsfig{figure=ToFAfigures/fig4-14.eps,width=6.5in}}
 \caption{The connected portion of the DFA equivalent to the NDFA given in
 Example 4.12}\label{fig-4.14}
 \end{figure}
 
 % Figure 4.15
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig4-14.eps,width=6.5in}}
+\centerline{\epsfig{figure=ToFAfigures/fig4-15.eps,width=6.5in}}
 \caption{A reduced equivalent of the DFA given in Figure \ref{fig-4.14}}\label{fig-4.15}
 \end{figure}
 
@@ -735,7 +736,7 @@ state activity and the current letter being scanned, as shown in Table \ref{tbl-
 \begin{table}[h]
 \caption{}\label{tbl-4.1}
 \begin{center}\begin{tabular}{cccc|ccc}
-$t_l$ & $t_2$ & $a_1$ & $a_2$ & $t'_1$ & $t'_2$ & {\bf accept} \\
+$t_1$ & $t_2$ & $a_1$ & $a_2$ & $t'_1$ & $t'_2$ & {\bf accept} \\
 \hline
 $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ &
 	$\pmb{0}$ \\
@@ -774,7 +775,7 @@ $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ &
 
 The first four rows of Table \ref{tbl-4.1} reflect the situation in which a string is
 hopelessly stuck, and no states are active. Processing subsequent symbols from
-$\Sigma$, will not change this; both $t_1$ and $t_2$ remain $\pmb{0}$. The one
+$\Sigma$, will not change this; both $t'_1$ and $t'_2$ remain $\pmb{0}$. The one
 exception is when the \<SOS\> symbol is scanned; in this case, each of the start
 states is activated ($t'_1 = \pmb{1}$ and $t'_2 = \pmb{1}$). This corrects the
 situation in which both flip-flops happen to initialize to $\pmb{0}$ when power
@@ -796,7 +797,7 @@ $t'_1$ & $=$ & $(t_1\wedge\neg\pmb{a}_1) \vee (t_2\wedge\pmb{a}_2) \vee
 	(t_2\wedge\pmb{a}_1) \vee (\pmb{a}_1\wedge\pmb{a}_2)$ \\
 $t'_2$ & $=$ & $(t_2\wedge\neg\pmb{a}_1\wedge\neg\pmb{a}_2) \vee
 	(t_1\wedge\pmb{a}_2) \vee (\pmb{a}_1\wedge\pmb{a}_2)$ \\
-{\bf accept} & $=$ & $(t_2\wedge\neg\pmb{a}_1\wedge\neg\pmb{a}_2)$
+accept & $=$ & $(t_2\wedge\neg\pmb{a}_1\wedge\neg\pmb{a}_2)$
 \end{tabular}\end{center}
 Since similar terms appear in these expressions, these three subcircuits can
 ``share'' the common components, as shown in Figure \ref{fig-4.18}.
@@ -919,7 +920,7 @@ for $A_{\lambda}$} is a function $\DBAR_{\!\lambda}$$: S \times \Sigma^*
 \begin{enumerate}[i.]
 \item $(\forall s \in S)\DBAR_{\!\lambda}(s,\lambda) = \Lambda(s)$
 \item $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\DBAR_{\!\lambda}(s,\pmb{a}) =
-	\Lambda( \bigcup\limits_{q\,\in\,\Lambda(s)}\DBAR_{\!\lambda}(q,\pmb{a}))$
+	\Lambda( \bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\!\lambda}(q,\pmb{a}))$
 \item $(\forall s \in S)(\forall x \in \Sigma^*)(\forall\pmb{a}\in\Sigma)
 	\DBAR_{\!\lambda}(s,x\pmb{a}) = \Lambda(\bigcup\limits_{q\,\in\,\DBAR_{
 	\!\lambda}(s,x)} \delta_{\!\lambda}(q,\pmb{a}))$
@@ -939,8 +940,8 @@ $\lambda$-transition maps to a new state (which may have $\lambda$-transitions
 of its own) that must be included in this path and processed by the
 $\delta_{\!\lambda}$ function.
 
-The nondeterministic finite automaton without $\lambda$-transitions that
-corresponds to a nondeterministic finite automaton with $\lambda$-transitions is
+The nondeterministic finite automaton \emph{without} $\lambda$-transitions that
+corresponds to a nondeterministic finite automaton \emph{with} $\lambda$-transitions is
 given in Definition \ref{dfn-4.9}.
 
 % Figure 4.20
@@ -952,7 +953,7 @@ Figure \ref{fig-4.19}}\label{fig-4.20}
 
 % Definition 4.9
 \begin{dfn}\label{dfn-4.9}
-Given a nondeterministic finite automaton with $\lambda$-transitions,
+Given a nondeterministic finite automaton \emph{with} $\lambda$-transitions,
 $A_{\lambda}=\langle\Sigma,S,S_0,\delta_{\lambda},F\rangle$, the
 \emph{corresponding nondeterministic finite automaton without
 $\lambda$-transitions}, $A^{\sigma}_{\lambda}=\langle\Sigma,S\cup\{q_0\},S_0\cup
@@ -993,7 +994,7 @@ machine. If $\lambda\in L(A_{\lambda})$, we also make $q_0$ a final state.
 
 \subsection*{Example 4.15}
 
-Let $A_{\lambda}$ represent the NDFA given in Example 4.14. $A_{\lambda}$ would
+Let $A_{\lambda}$ represent the NDFA given in Example 4.14. $A^{\sigma}_{\lambda}$ would
 then be given by the NDFA shown in Figure \ref{fig-4.20}. This new NDFA does indeed accept
 the same language as $A_{\lambda}$. To show in general that $L(A_{\lambda}) =
 L(A^{\sigma}_{\lambda})$, we must first show that the respective extended state
@@ -1242,7 +1243,7 @@ example).
 
 \item Using nondeterministic machines \emph{with} $\lambda$-transitions, give an
 algorithm for constructing a $\lambda$-NDFA having \emph{one} start state and
-\emph{one} final state that will accept the union of two FAD languages.
+\emph{one} final state that will accept the \emph{union} of two FAD languages.
 
 \item Give an example of an NDFA $A$ for which:
 \begin{enumerate}
@@ -1289,7 +1290,7 @@ $\lambda$-transitions.
 portion of the machine).
 \end{enumerate}
 
-\item Consider the NDFA which accepts the modified language $L'$ in Example
+\item Consider the NDFA which accepts the modified language $L^r$ in Example
 4.10.
 \begin{enumerate}
 \item Using the standard encodings, draw a circuit diagram for this NDFA
@@ -1397,17 +1398,17 @@ portion of the machine).
 \item Consider the automaton B given in Example 4.8.
 \begin{enumerate}
 \item Using the standard encodings, draw a circuit diagram for $B$ (include
-neither \<S0S\> nor \<EOS\>).
+neither \<SOS\> nor \<EOS\>).
 \item Using the standard encodings, draw a circuit diagram for $B^d$ (include
-neither \<S0S\> nor \<EOS\>). Encode the states in such a way that your circuit is similar
+neither \<SOS\> nor \<EOS\>). Encode the states in such a way that your circuit is similar
 to the one found in part (a).
 \end{enumerate}
 
 \item Draw a circuit diagram for each NDFA given in Figure \ref{fig-4.25} (include
-neither \<S0S\> nor \<EOS\>). Use the standard encodings.
+neither \<SOS\> nor \<EOS\>). Use the standard encodings.
 
 \item Draw a circuit diagram for each NDFA given in Figure \ref{fig-4.25} (include both
-\<S0S\> and \<EOS\>). Use the standard encodings.
+\<SOS\> and \<EOS\>). Use the standard encodings.
 (See Example 4.13 for the solution corresponding to Figure \ref{fig-4.25}e.)
 
 

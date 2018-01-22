@@ -45,7 +45,7 @@ to recognize many non-FAD languages. A device to recognize $\{\pmb{a}^n\pmb{b}^n
 |\ n \geq 1\}$ would need three states. The start state will transfer control to a
 second state when an $\pmb{a}$ is read, leaving the sack contents unchanged. The
 start state will have no valid moves for $\pmb{b}$, causing words that begin with
-b to be rejected since the input tape will not be completely consumed. The
+$\pmb{b}$ to be rejected since the input tape will not be completely consumed. The
 automaton will remain in the second state in response to each $\pmb{a}$, adding a
 stone to the sack each time an $\pmb{a}$ is processed. The second state will
 transfer control to the third state upon receipt of the symbol $\pmb{b}$ and
@@ -100,7 +100,7 @@ $F$ is the set of \emph{final states} ($F\subseteq S$).
 By the definition of alphabet (Definition \ref{dfn-1.1}), both $\Sigma$ and $\Gamma$ must
 be nonempty. Figure \ref{fig-10.1} presents a conceptualization of a pushdown automaton.
 As with an NDFA, there is a finite-state control and a read head for the input
-tape, which only moves forward. The auxiliary tape also has a \index{read/write head},
+tape, which only moves forward. The auxiliary tape also has a \Index{read/write head},
 which not only moves forward, but can move backward when an item is popped. The
 state transition function is meant to signify that, given a current state, an
 input symbol being currently scanned, and the current top stack symbol, the
@@ -154,7 +154,7 @@ one of the possible reactions satisfies the criteria for acceptance. For a given
 PDA, the set of words accepted by the empty stack criterion will likely differ
 from the set of words accepted by the final state condition.
 
-\subsection*{Example  10.1}
+\subsection*{Example 10.1}
 
 Consider the PDA defined by $P_1=\langle\{\pmb{a},\pmb{b}\},\{A,B\},\{q,r\},q,
 \delta,B,\emptyset\rangle$, where $\delta$ is defined by
@@ -262,7 +262,7 @@ $\langle q,\pmb{aabb},B\rangle$ \\
 $\langle q,\pmb{abb},A\rangle$ \\
 $\langle q,\pmb{bb},AA\rangle$ \\
 $\langle r,\pmb{b},A\rangle$ \\
-$\langle r,\lambda,A\rangle$
+$\langle r,\lambda,\lambda\rangle$
 \end{tabular}\end{center}
 Successive configurations followed from their predecessors by applying a single
 rule from the state transition function. These transitions will be described by
@@ -297,7 +297,7 @@ and thus we also have $\langle s_1,x_1,\alpha_1\rangle\Dvdash\langle s_1,x_1,\al
 $\langle s_1,x_1,\alpha_1\rangle\vdash\langle s_2,x_2,\alpha_2\rangle$ implies $\langle s_1,x_1,\alpha_1\rangle\Dvdash
 \langle s_2,x_2,\alpha_2\rangle$.
 
-\subsection*{Example  10.2}
+\subsection*{Example 10.2}
 
 For the pushdown automaton $P_1$ in Example 10.1, $\langle q,\pmb{aabb},B\rangle
 \Dvdash\langle r,\lambda,\lambda\rangle$ because $\langle q,\pmb{aabb},B\rangle
@@ -315,7 +315,7 @@ For a pushdown automaton $P=\langle\Sigma,\Gamma,S,s_0,\delta,B,F\rangle$, the
 	\lambda,\lambda\rangle\} \]
 \end{dfn}
 
-\subsection*{Example  10.3}
+\subsection*{Example 10.3}
 
 Consider the pushdown automaton $P_1$ in Example 10.1. Since only strings of the
 form $\pmb{a}^i\pmb{b}^i$ (for $i \geq 1$) allow $\langle q,\pmb{a}^i\pmb{b}^i,
@@ -328,7 +328,7 @@ sense that there will never be more than one choice that can be made from any
 configuration. The following example illustrates a pushdown automaton that is
 nondeterministic.
 
-\subsection*{Example  10.4}
+\subsection*{Example 10.4}
 
 Consider the pushdown automaton defined by $P_2=\langle\{\pmb{a},\pmb{b}\},\{S,
 C\},\{t\},t,\delta,S,\emptyset\rangle$, where $\delta$ is defined by
@@ -376,7 +376,7 @@ descriptors define the same language, those descriptors will be called
 equivalent. Thus, if a PDA $M$ happens to accept the language described by a
 regular expression $R$, we will say that $R$ is equivalent to $M$.
 
-\subsection*{Example  10.5}
+\subsection*{Example 10.5}
 
 The following pushdown automaton illustrates the use of $\lambda$-moves and
 acceptance by final state for the language $\{\pmb{a}^n\pmb{b}^m|\ n\geq 1\wedge
@@ -402,7 +402,7 @@ $\delta(s_4,\lambda,A)$ & $\{\ \ \}$
 \end{tabular}\end{center}
 The finite-state control for this automaton is diagrammed in Figure \ref{fig-10.4}. Note
 that the $\lambda$-move from state $s_3$ is \emph{not} responsible for any
-nondeterminism in this machine. From $S_3$, only one move is permissible: the
+nondeterminism in this machine. From $s_3$, only one move is permissible: the
 $\lambda$-move to $s_4$. On the other hand, the $\lambda$-move from state $s_1$
 does allow a choice of moving to $s_2$ (without moving the read head) or staying
 at $s_1$ while consuming another input symbol. The choice of moves from state
@@ -421,7 +421,7 @@ there are no more symbols on the input tape.
 \caption{The PDA discussed in Example 10.5}\label{fig-10.4}
 \end{figure}
 
-Since $A$ was the only stack symbol in $P_3$ , the language could have as easily
+Since $A$ was the only stack symbol in $P_3$, the language could have as easily
 been described by the sack-and-stone counting device described at the beginning
 of the section. It should be clear that counting automata are essentially
 pushdown automata with a singleton stack alphabet. Pushdown automata with only
@@ -450,7 +450,7 @@ which $L(A)=\Lambda(A'')$.
 results of the next section, since pushdown automata can define all the
 context-free languages, and the regular language defined by the NDFA $A$ must be
 context free. The following constructions will use only the one stack symbol
-\cent, and hence $A'$ and $A''$ are actually counting automata for which $L(A)=
+\cent, and hence $A'$ and $A''$ are actually \emph{counting} automata for which $L(A)=
 L(A')$ and $L(A)=\Lambda(A'')$.
 
 While the construction of a PDA from an NDFA is straightforward, the inductive
@@ -517,7 +517,7 @@ have a sequence of moves that results in acceptance by empty stack.
 % Definition 10.6
 \begin{dfn}\label{dfn-10.6}
 Given a context-free grammar $G=\langle\Omega,\Sigma,S,P\rangle$ in pure
-Greibach normal form, the single-state pushdown automaton corresponding to $G$
+Greibach normal form, the single-state \emph{pushdown automaton corresponding to} $G$
 is the septuple
 \[ P_G=\langle\Sigma,\Omega\cup\Sigma,\{s\},s,\delta_G,S,\emptyset\rangle, \]
 where $\delta_G$ is defined by
@@ -532,7 +532,7 @@ $\delta_G(s,\pmb{a},\Psi)$ & $\left\{\begin{tabular}{l@{$\qquad$}l@{$\qquad$}l}
 \end{tabular}\end{center}
 \end{dfn}
 
-\subsection*{Example  10.6}
+\subsection*{Example 10.6}\label{ex-10.6}
 
 Consider the pure Greibach normal form grammar
 \[ G=\langle\{S\},\{\pmb{a},\pmb{b}\},S,\{S\rightarrow\pmb{a}S\pmb{b},S
@@ -561,7 +561,7 @@ corresponds to the successful move sequence
 The exact correspondence between derivation steps and move sequences is
 illustrated in the next example.
 
-\subsection*{Example  10.7}
+\subsection*{Example 10.7}
 
 For a slightly more complex example, consider the pure Greibach normal form
 grammar
@@ -695,10 +695,10 @@ then include the move $\delta_G(s,\lambda,Z)=\{\langle s,S\rangle,\langle s,
 \lambda\rangle\}$ to reflect the two $Z$-rules. The bottom of the stack symbol
 would then be $Z$, the new start symbol.
 
-In either case, induction on the number of moves in a sequence will show that
+In either case, induction on the number of moves in a sequence will show that\\
 $(\forall x\in\Sigma^*)(\forall\beta\in(\Sigma\cup\Omega)^*)(\langle s,x,S
-\rangle\Dvdash\langle s,\lambda,\beta\rangle$ iff $S\ \DRightarrow x\beta$ as a
-leftmost derivation). Note that $x\beta$ is likely to be a sentential form that
+\rangle\Dvdash\langle s,\lambda,\beta\rangle  \ \ \  \Leftrightarrow\ \ \ S\ \DRightarrow x\beta$ as a
+leftmost derivation).\\Note that $x\beta$ is likely to be a sentential form that
 still contains nonterminals. The words $x$ that result in an empty stack ($\beta
 =\lambda$) will then be exactly those words that produce an entire string of
 terminal symbols from the start symbol $S$ (or $Z$ in the case where the grammar
@@ -753,7 +753,7 @@ Note that when $m=1$, the transition $\langle r,A_1\rangle\in\delta(s,\pmb{a},A)
 gives rise to a rule of the form $A^{sq}\rightarrow\pmb{a}A^{rq}_1$ for each
 state $q\in S$.
 
-\subsection*{Example  10.8}
+\subsection*{Example 10.8}
 
 Consider again the pushdown automaton from Example 10.4, defined by $P_2=\langle
 \{\pmb{a},\pmb{b}\},\{S,C\},\{t\},t,\delta,S,\emptyset\rangle$, where $\delta$
@@ -781,7 +781,7 @@ therefore
 and $G_{P_2}$ does indeed generate $\{\pmb{a}^n\pmb{b}^n|\ n \geq 1\}$ and is
 therefore equivalent to $P_2$.
 
-\subsection*{Example  10.9}
+\subsection*{Example 10.9}
 
 Now consider the pushdown automaton from Example 10.1, defined by
 \[ P_1 = \langle\{\pmb{a},\pmb{b}\},\{A,B\},\{q,r\},q,\delta,B,\emptyset\rangle, \]
@@ -875,7 +875,7 @@ empty stack after processing the terminal string $x$ exactly when there is a
 leftmost derivation of the form
 \[ Z \Rightarrow A^{s_0t}\  \DRightarrow x \]
 That is,
-\[ (\forall x\in\Sigma^*)(Z\Rightarrow B^{s_0t}\ \DRightarrow x \text{ \ \ \ iff\ \ \ } 
+\[ (\forall x\in\Sigma^*)(Z\Rightarrow B^{s_0t}\ \DRightarrow x  \ \ \  \Leftrightarrow\ \ \  
 	\langle s_0,x, B\rangle \Dvdash \langle t,\lambda,\lambda\rangle) \]
 The desired conclusion, that $L(G_P) = \Lambda(P)$, will follow immediately from
 this equivalence. The equivalence does not easily lend itself to proof by
@@ -884,7 +884,7 @@ $m+1^{st}$ step, a more general statement involving more of the nonterminals of
 $G_P$ is needed. The following statement can be proved by induction on the
 number of moves and leads to the desired conclusion when $s=s_0$ and $A=B$:
 \[ (\forall x\in\Sigma^*)(\forall A\in\Gamma)(\forall s\in S)(\forall t\in S)
-	(A^{st}\ \DRightarrow x\text{ \ \ \ iff\ \ \ }  \langle s,x,A\rangle \Dvdash
+	(A^{st}\ \DRightarrow x \ \ \  \Leftrightarrow\ \ \  \langle s,x,A\rangle \Dvdash
 	\langle t,\lambda,\lambda\rangle) \]
 The resulting grammar will then generate $\Lambda(P)$, but $G_P$ may not be a
 strict context-free grammar; $\lambda$-moves may result in some productions of
@@ -912,9 +912,10 @@ $P$.
 Unlike the pushdown automata discussed in this section, PDAs that accept via
 final state cannot always make do with a single state. As the exercises will
 make clear, at least one final and one nonfinal state are typically necessary. Unlike
-DFAs, PDAs with only one state can accept some nontrivial languages, since
+DFAs, PDAs with only one state \emph{can} accept some nontrivial languages, since
 selected words can be rejected because there is no appropriate move sequence.
-However, a single final state and a single nonfinal state are sufficient for full generality, as
+However, a single final state and a single nonfinal state
+\emph{are} sufficient for full generality, as
 shown in the following section.
 
 \section{Equivalence Of Acceptance By Final State and Empty Stack}\label{sec-10.3}
@@ -1023,7 +1024,7 @@ Define $P_{\lambda}$ by choosing new stack symbols $Y$ and $Z$ such that $Y,Z
 \item $(\forall A\in\Gamma)(\forall f\in F)(\delta_{\lambda}(f,\lambda,A)
 	=\delta(f,\lambda,A)\cup\{\langle e,\lambda\rangle\})$
 \item $(\forall A\in\Gamma)(\delta_{\lambda}(e,\lambda,A) = \{\langle e,\lambda
-	\rangle\}$
+	\rangle\})$
 \item $\delta_{\lambda}(e,\lambda,Y) = \{\langle e,\lambda\rangle\}$
 \end{enumerate}
 
@@ -1077,7 +1078,7 @@ It is hard to imagine how to find a method that would combine two context-free
 grammars to produce a new context-free grammar that might accept the
 intersection of the original languages. The constructs for regular expressions
 and regular grammars likewise did not lend themselves to such methods, and yet
-it was possible to find appropriate constructs that did represent intersections.
+it \emph{was} possible to find appropriate constructs that \emph{did} represent intersections.
 As presented in Chapter \ref{ch-5}, this was possible by turning to the cognitive
 representation for this class of languages, the deterministic finite automata.
 It is instructive to recall the technique that allowed two DFAs $A_1$ and $A_2$
@@ -1121,7 +1122,7 @@ context free and $R_2 $is regular, $L_1\cap R_2$ is always context free.
 
 \emph{Proof.} Let $L_1$ be a context-free language and let $R_2$ be a regular
 set. Since $\CSIG=\FSIG$ there must be a PDA $P_1=\langle\Sigma,\Gamma_1,S_1,
-s_{0_l},\delta_1,B_1,F_1\rangle$ for which $L_1=L(P_1)$. Let $A_2=\langle\Sigma,
+s_{0_1},\delta_1,B_1,F_1\rangle$ for which $L_1=L(P_1)$. Let $A_2=\langle\Sigma,
 S_2,s_{0_2},\delta_2,F_2\rangle$ be a DFA for which $R_2=L(A_2)$. Define
 \[ P^{\cap} = \langle\Sigma,\Gamma_1,S_1\times S_2,\langle s_{0_1},s_{0_2}
 	\rangle,\delta^{\cap},B_1,F_1\times F_2\rangle, \]
@@ -1131,10 +1132,10 @@ where $\delta^{\cap}$ is defined by:
 	A\in\Gamma_1)$ \\
 	$(\delta^{\cap}(\langle s_1,s_2\rangle,\pmb{a},A)=\{\langle\langle t_1,
 	t_2\rangle,\beta\rangle\ |\ \langle t_1,\beta\rangle\in\delta_1(s_1,\pmb{a},
-	A)\wedge t_2=\delta_2(s_2,\pmb{a})\})$
+	A)\wedge t_2=\delta_2(s_2,\pmb{a})\}).$
 \item $(\forall s_1\in S_1)(\forall s_2\in S_2)(\forall A\in\Gamma_1)$ \\
 	$(\delta^{\cap}(\langle s_1,s_2\rangle,\lambda,A)=\{\langle\langle t_1,
-	t_2\rangle,\beta\rangle\ |\ (t_1,\beta)\in\delta_1(s_1,\lambda,A)\wedge t_2
+	t_2\rangle,\beta\rangle\ |\ \langle t_1,\beta\rangle\in\delta_1(s_1,\lambda,A)\wedge t_2
 	=s_2\}).$
 \end{enumerate}
 
@@ -1149,7 +1150,7 @@ $((\langle s_1,xy,	\alpha)\Dvdash\langle t_1,y,\beta\rangle\text{ in }
 	P^{\cap})\wedge(t_2=\DBAR_2(s_2,x))))$
 \end{tabular}\end{center}
 From this, with $\alpha=B_1$, $s_1 = s_{0_1}$, $s_2 = s_{0_2}$ and the observation that $\langle t_1,t_2\rangle\in
-F_1\times F_2$ iff $t_1\in F_1\wedge t_2\in F_2$, it follows that $(\forall x\in
+F_1\times F_2$ $\Leftrightarrow$ $t_1\in F_1\wedge t_2\in F_2$, it follows that $(\forall x\in
 \Sigma^*)(x\in L(P^{\cap})\Leftrightarrow (x\in L(P_1)\wedge x\in L(A_2)))$.
 Therefore,
 \[ L(P^{\cap})=L(P_1)\cap L(A_2)=L_1\cap R_2. \]
@@ -1195,7 +1196,7 @@ cannot have two different choices of destination states or two different choices
 of strings to place on the stack. Rule 2 ensures that there is no choice of
 $\lambda$-moves either. Furthermore, rule 3 guarantees that there will never be
 a choice between a $\lambda$-move and a transition that consumes a letter;
-states that have a $\lambda$-move can have only that one move; no other
+states that have a $\lambda$-move can have \emph{only} that one move; no other
 transitions of any type are allowed out of that state. Thus, for any string,
 there is never any more than one path through the machine. Unlike deterministic
 finite automata, deterministic pushdown automata may not always completely
@@ -1234,7 +1235,7 @@ choice; each word has a unique parse tree and a unique leftmost derivation. The
 grammar in Example 10.7 is not ambiguous, even though the corresponding PDA was
 nondeterministic.
 
-\subsection*{Example  10.11}
+\subsection*{Example 10.11}
 
 The following Greibach normal form grammar is similar to the one used to
 construct the PDA in Example 10.7, but with the different operators paired with
@@ -1300,12 +1301,12 @@ PDA (Example 10.4), but it also had a grammar that corresponded to a DPDA
 compatible with determinism, and they seek grammars for the language that
 reflect that determinism.
 
-\subsection*{Example  10.12}
+\subsection*{Example 10.12}
 
 Consider again the language discussed in Example 10.7, which can also be
 expressed by the following grammar
 \[ H = \langle\{S,T\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{(},\pmb{)},\pmb{\epsilon},
-	\pmb{\emptyset\rangle},\pmb{\cup},\pmb{\cdot},\pmb{^*}\},S,\{S\rightarrow\pmb{(}ST|
+	\pmb{\emptyset},\pmb{\cup},\pmb{\cdot},\pmb{^*}\},S,\{S\rightarrow\pmb{(}ST|
 	\pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset},T\rightarrow
 	\pmb{\cdot}S\pmb{)}|\pmb{\cup} S\pmb{)}|\pmb{)^*}\}\rangle \]
 The automaton $P_H$ is then
@@ -1408,8 +1409,8 @@ contained in \PSIG.
 shows that every finite automaton has an equivalent deterministic pushdown
 automaton, and thus it is always true that $\DSIG\subseteq\ASIG$. Definition
 \ref{dfn-10.7} implies that $\ASIG\subseteq\PSIG$. If $|\Sigma|=1$, then Theorem \ref{thm-9.15}
-showed that $\DSIG = \CSIG ( = \PSIG)$, from which it follows that $\DSIG =
-\ASIG = \PSIG$. If $|\Sigma|>1$, an example such as $\{\pmb{a}^n\pmb{b}^n|n\geq
+showed that $\DSIG = \CSIG\  ( = \PSIG)$, from which it follows that $\DSIG =
+\ASIG = \PSIG$. If\, $|\Sigma|>1$, an example such as $\{\pmb{a}^n\pmb{b}^n|\,n\geq
 1\}$ shows that \DSIG\ is properly contained in \ASIG\ (see the exercises).
 Since $\mathfrak{P}_{\{\pmb{a},\pmb{b}\}}$ and $\cal{A}_{\{\pmb{a},
 \pmb{b}\}}$ have different closure properties, they cannot represent the same
@@ -1421,7 +1422,7 @@ In the proof of Theorem \ref{thm-10.6}, it is easy to see that if $P_1$ is deter
 then $P^{\cap}$ will be a DPDA, also. Hence \ASIG, like \PSIG, is closed under
 intersection with a regular set. Also, the exercises show that both \ASIG\ and
 \PSIG\ are closed under difference with a regular set. However, the closure
-properties of \ASIG\ and \PSIG disagree in just about every other case. The
+properties of \ASIG\ and \PSIG\  disagree in just about every other case. The
 languages
 \[ L_1 = \{\pmb{a}^n\pmb{b}^m|\ (n \geq 1)\wedge(n = m)\}\qquad\text{and}\qquad
 	L_2 = \{\pmb{a}^n\pmb{b}^m|\ (n \geq 1)\wedge(n = 2m)\} \]
@@ -1486,7 +1487,7 @@ $L^r_1$
 exercises.
 \end{lmm}
 
-\subsection*{Example  10.13}
+\subsection*{Example 10.13}
 
 These closure properties can often be used to justify that certain languages are
 not DCFLs. For example, the language
@@ -1588,7 +1589,7 @@ $L$.
 \item Refer to Theorem \ref{thm-10.2} and use induction on the number of moves in a
 sequence to show that
 \[ (\forall x\in\Sigma^*)(\forall\beta\in(\Sigma\cup\Omega)^*)(\langle s,x,S\rangle
-	\Dvdash\langle s,\lambda,\beta\rangle\quad\text{\emph{iff}}\quad S\ 
+	\Dvdash\langle s,\lambda,\beta\rangle \ \ \  \Leftrightarrow\ \ \  S\ 
 	\DRightarrow x\beta\text{ as a leftmost derivation}) \]
 
 \item Consider the grammar
@@ -1620,7 +1621,7 @@ $G_{P_3}$.
 
 \item Refer to Theorem \ref{thm-10.3} and use induction to show
 \[ (\forall x\in\Sigma^*)(\forall A\in\Gamma)(\forall s\in S)(\forall t\in S)
-	(A^{st}\DRightarrow x\text{ \ \ \ iff\ \ \ }\langle s,x,A\rangle\Dvdash\langle
+	(A^{st}\,\DRightarrow x\ \ \  \Leftrightarrow\ \ \  \langle s,x,A\rangle\Dvdash\langle
 	t,\lambda,\lambda\rangle) \]
 
 \item Let $L=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m|\ n,m\in\NN\}\cup\{\pmb{a}^i
@@ -1640,13 +1641,13 @@ $G_{P_G}$.
 
 \item Refer to Theorem \ref{thm-10.4} and use induction to show
 \[ (\forall\alpha,\beta\in\Gamma^*)(\forall x,y\in\Sigma^*)(\langle s,xy,\alpha\rangle
-	\Dvdash\langle s,y,\beta\rangle\text{ in }P\text{ \ \ \ iff\ \ \ }\langle s,xy,
+	\Dvdash\langle s,y,\beta\rangle\text{ in }P \ \ \  \Leftrightarrow\ \ \ \langle s,xy,
 	\alpha Y\rangle\Dvdash\langle s,y,\beta Y\rangle\text{ in }P_{\!\!f}) \]
 
 \item Refer to Theorem \ref{thm-10.5} and use induction to show
 \[ (\forall \alpha,\beta\in\Gamma^*)(\forall x,y\in\Sigma^*)(\forall s,t\in S)
 	(\langle s,xy,\alpha\rangle\Dvdash\langle t,y,\beta\rangle\text{ in }P
-	\text{ \ \ \ iff\ \ \ }\langle s,xy,\alpha Y\rangle\Dvdash\langle t,y,\beta Y\rangle
+	 \ \ \  \Leftrightarrow\ \ \ \langle s,xy,\alpha Y\rangle\Dvdash\langle t,y,\beta Y\rangle
 	\text{ in }P_{\lambda}) \]
 
 \item Prove that $\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{a}}=|x|_{
@@ -1684,7 +1685,7 @@ a DCFL.
 $(\forall\alpha,\beta\in\Gamma^*)(\forall x\in\Sigma^*)(\forall s_1,t_1\in S_1)
 	(\forall s_2,t_2\in S_2)$ \\
 $(\langle\langle s_1,s_2\rangle,xy,\alpha\rangle\Dvdash\langle\langle t_1,t_2
-	\rangle,y,\beta\rangle$ in $P_1\Leftrightarrow((\langle s_1,xy,\alpha
+	\rangle,y,\beta\rangle$ in $P_1\ \ \ \Leftrightarrow\ \ \ ((\langle s_1,xy,\alpha
 	\rangle\Dvdash\langle t_1,y,\beta\rangle$ in $P^{\cap})\wedge(t_2=
 	\DBAR_2(s_2,x))))$
 \end{tabular}\end{center}

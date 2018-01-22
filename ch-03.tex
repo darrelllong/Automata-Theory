@@ -2,7 +2,7 @@
 
 We have seen that there are many different automata that can be
 used to represent a given language. We would like to be able to
-find an automaton for a language $L$ that is minimal, that is, a
+find an automaton for a language $L$ that is \emph{minimal}, that is, a
 machine which can represent that language which has the fewest
 number of states possible.
 
@@ -13,7 +13,7 @@ unequivocal directions specifying how to proceed. A \emph{\Index{procedure}}
 is a finite set of instructions that unambiguously defines deterministic,
 discrete steps for performing some task. As anyone who has programmed
 a computer knows, it is possible to generate procedures that will
-never halt for some inputs (or perhaps for all inputs if the program
+never halt for some inputs (or perhaps for \emph{all} inputs if the program
 is seriously flawed). An \emph{\Index{algorithm}} is a procedure that is
 guaranteed to halt on all (legal) inputs. In this chapter we will specify a
 procedure for finding a minimal machine and then justify that this
@@ -25,14 +25,14 @@ automaton in a straightforward manner that can be easily programmed.
 \section{Homomorphisms and Isomorphisms}\label{sec-3.1}
 
 One of our goals for this chapter can be stated as follows: Given
-a language $L$, we wish to survey all the machines that recognize
+a language $L$, we wish to survey \emph{all} the machines that recognize
 $L$ and choose the machine (or machines) that is ``smallest.'' It
-will be seen that there is indeed a unique smallest machine: $A_{R_L}$.
+will be seen that there is indeed a \emph{unique} smallest machine: $A_{R_L}$.
 The automaton $A_{R_L}$ will be unique in the sense that any other
 optimal DFA looks exactly like $A_{R_L}$ except for a trivial relabeling
 of the state names.  The concept of two automata ``looking alike''
 will have to be formalized to provide a basis for our rigorous
-statements. Machines that ``look alike'' will be called isomorphic,
+statements. Machines that ``look alike'' will be called \emph{isomorphic},
 and the relabeling specification will be called an \emph{isomorphism}.\index{isomorphism!between DFAs}
 
 We have already learned some facts about $A_{R_L}$, which stem from
@@ -83,7 +83,7 @@ $$ (\forall s \in S)(\exists x_s \in \Sigma^*)(\DBAR(s_0,x_s)=s) $$
 That is, a connected machine requires all states to be accessible; every state
 $s$ of $S$ must be ``reachable'' from $s_0$ by some string $(x_s)$ in $\Sigma^*$
 (different states will require different strings, and hence it is convenient to
-associate an appropriate string $x$, with the state $s$). States that are not
+associate an appropriate string $x_s$, with the state $s$). States that are not
 accessible are sometimes called \emph{disconnected},\index{inaccessible state}\index{unreachable state}\index{disconnected DFA}
 \emph{\Index{inaccessible}}, or \emph{unreachable}.
 
@@ -110,13 +110,13 @@ between strings in ways that are unnecessary.
 
 \subsection*{Example 3.2}
 
-Consider the four-state DFA over $\{a,b\}^*$ in which $s_0$ is the start and
+Consider the four-state DFA over $\{\pmb{a},\pmb{b}\}$ in which $s_0$ is the start and
 only final state, defined in Figure \ref{fig-3.2}. This automaton is clearly connected,
 but it is still not optimal. This machine accepts all strings whose length is a
 multiple of 3, and $s_1$ and $s_2$ are really ``remembering'' the same
 information, that is, that we currently have read a string that is one more than
-a multiple of 3. The fact that some strings that end in $a$ are sent to $s_1$,
-while those that end in $b$ may be sent to $s_2$, is of no real importance; we
+a multiple of 3. The fact that some strings that end in $\pmb a$ are sent to $s_1$,
+while those that end in $\pmb b$ may be sent to $s_2$, is of no real importance; we
 do not have to ``remember'' what the last letter in the string actually was in
 order to correctly accept the given language. The states $s_1$ and $s_2$ are in
 some sense \emph{equivalent}\index{equivalent!DFA states}, since they are performing the same
@@ -132,8 +132,8 @@ function, but $s_3$ and $s_4$ are ``equivalent,'' and $s_0$ and $s_5$ are both
 Note that it is not enough to check that $s_1$ and $s_2$ take you to exactly the
 same places (as was the case in the first example); in this example, the arrows
 coming out of $s_1$ and $s_2$ do \emph{not} point to the same places. The
-important thing is that, when leaving $s_1$ or $s_2$, when $a$ is seen, we go to
-\emph{equivalent states}, and when processing $b$ from $s_1$ or $s_2$,
+important thing is that, when leaving $s_1$ or $s_2$, when $\pmb a$ is seen, we go to
+\emph{equivalent} states, and when processing $\pmb b$ from $s_1$ or $s_2$,
 we also go to \emph{equivalent} states. However, deciding whether two states are
 equivalent or not is perhaps a little less straightforward than it may at first
 seem. This sets the stage for the appropriate definition of equivalence.
@@ -160,9 +160,9 @@ relation on $A$, defined by \\
 \end{dfn}
 In other words, we will relate $s$ and $t$ \emph{iff} it is not possible to
 distinguish whether we are starting from state $s$ or state $t$; each string
-$x \in \Sigma^*$ will either take $x$ to a final state when starting from $s$
-and also take $x$ to a final state from $t$, or neither $s$ nor $t$ will take
-$x$ to a final state.
+$x \in \Sigma^*$ will \emph{either} take $x$ to a final state when starting from
+$s$ and also take $x$ to a final state from $t$, \emph{or} neither $s$ nor $t$ will
+take $x$ to a final state.
 
 Another way of looking at this concept is to define new machines that ``look
 like'' $A$, but have different start states. Given a finite automaton
@@ -212,7 +212,7 @@ $[s_1]_{E_N} = [s_2]_{E_N} = [s_3]_{E_N} = \{s_1, s_2, s_3\}$,
 \end{center}
 and we will abuse our notation slightly and blur the distinction
 between the relation $E_N$ with the partition it generates by writing
-$E_N = \{\{s_0\},\{s_1,s_2,s_3\}\}$
+$E_N = \{\{s_0\},\{s_1,s_2,s_3\}\}$.
 
 % Figure 3.4
 \begin{figure}
@@ -249,7 +249,7 @@ criteria that must exist between similar machines.
 
 We now consider the automaton $B$ shown in Figure \ref{fig-3.5}b, which looks suspiciously
 like the DFA $A$ given in Figure \ref{fig-3.5}a. In fact, it is basically the ``same''
-machine. While it has been oriented differently (which has no effect on the $S$
+machine. While it has been oriented differently (which has no effect on the $\delta$
 function), and the start state has been labeled $q_0$ rather than $s_0$, and the
 final state is called $q_1$ rather than $s_1$, $A$ and $B$ are otherwise
 ``identical.'' For such a \emph{\Index{relabeling}} to truly reflect the
@@ -305,8 +305,8 @@ homomorphism} from $A$ to $B$ iff the following three conditions hold:
 \begin{enumerate}[i.]
 \item $\mu(s_{0_A}) = s_{0_B}.$
 \item $(\forall s \in S_A)(s \in F_A \Leftrightarrow \mu(s) \in F_B).$
-\item $(\forall s \in S_A)(\forall a \in \Sigma)(\mu(\delta_A(s,a)) =
-	\delta_B(\mu(s),a)).$
+\item $(\forall s \in S_A)(\forall \pmb{a} \in \Sigma)(\mu(\delta_A(s,\pmb{a}))
+	= \delta_B(\mu(s),\pmb{a})).$
 \end{enumerate}
 \end{dfn}
 
@@ -339,7 +339,7 @@ $\psi(s_1)=q_1$, and $\psi(s_2)=q_0$. Note that the start state maps to the
 start state, final states map to final states (and nonfinal states map to
 nonfinal states), and, furthermore, the transitions agree. Here is the statement
 that the $\pmb{0}$ transition out of state $s_0$ is consistent:
-$$ \psi(\delta_M(s_0,0))=\psi(s_1)=q_1=\delta_N(q_0,0)=\delta_N(\psi(s_0),0) $$
+$$ \psi(\delta_M(s_0,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{0})=\delta_N(\psi(s_0),\pmb{0}) $$
 Note that this really \emph{does} say that the transition labeled $\pmb{0}$
 leaving the start state conforms; $s_0$ has a $\pmb{0}$-transition pointing to
 $s_1$, and so the $\pmb{0}$-transition from $\psi(s_0)$ should point to $\psi(s_1)$
@@ -358,18 +358,18 @@ that is, $(\forall s \in S_M)(\forall a \in \Sigma)(\psi(\delta_M(s,a)) =
 states $s$, we have
 \begin{center}
 \begin{tabular}{l}
-$\psi(\delta_M(s_0,0))=\psi(s_1)=q_1=\delta_N(q_0,0)=\delta_N(\psi(s_0),0)$ \\
-$\psi(\delta_M(s_0,1))=\psi(s_1)=q_1=\delta_N(q_0,1)=\delta_N(\psi(s_0),1)$ \\
-$\psi(\delta_M(s_1,0))=\psi(s_1)=q_1=\delta_N(q_1,0)=\delta_N(\psi(s_1),0)$ \\
-$\psi(\delta_M(s_1,1))=\psi(s_0)=q_0=\delta_N(q_1,1)=\delta_N(\psi(s_1),1)$ \\
-$\psi(\delta_M(s_2,0))=\psi(s_1)=q_1=\delta_N(q_0,0)=\delta_N(\psi(s_2),0)$ \\
-$\psi(\delta_M(s_2,1))=\psi(s_1)=q_1=\delta_N(q_0,1)=\delta_N(\psi(s_2),1)$
+$\psi(\delta_M(s_0,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{0})=\delta_N(\psi(s_0),\pmb{0})$ \\
+$\psi(\delta_M(s_0,\pmb{1}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{1})=\delta_N(\psi(s_0),\pmb{1})$ \\
+$\psi(\delta_M(s_1,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_1,\pmb{0})=\delta_N(\psi(s_1),\pmb{0})$ \\
+$\psi(\delta_M(s_1,\pmb{1}))=\psi(s_0)=q_0=\delta_N(q_1,\pmb{1})=\delta_N(\psi(s_1),\pmb{1})$ \\
+$\psi(\delta_M(s_2,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{0})=\delta_N(\psi(s_2),\pmb{0})$ \\
+$\psi(\delta_M(s_2,\pmb{1}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{1})=\delta_N(\psi(s_2),\pmb{1})$
 \end{tabular}
 \end{center}
 Hence $\psi$ is a homomorphism between $M$ and $N$ even though $M$ has three
 states and $N$ has two states. While the existence of a homomorphism is not
 enough to ensure that the machines are ``the same,'' the exercises for this
-chapter indicate that the existence of a homomorphism is enough to ensure that
+chapter indicate that the existence of a homomorphism \emph{is} enough to ensure that
 the machines are equivalent. The extra condition we need to guarantee that the
 machines are identical\index{identical DFAs} (except for a trivial renaming of the states) is that
 $\psi$ be a \emph{\Index{bijection}}.
@@ -383,8 +383,8 @@ isomorphism} from $A$ to $B$ iff the following five conditions hold:
 \begin{enumerate}[i.]
 \item $\mu(s_{0_A}) = s_{0_B}$.
 \item $(\forall s \in S_A)(s \in F_A \Leftrightarrow \mu(s) \in F_B)$.
-\item $(\forall s \in S_A)(\forall a \in \Sigma)(\mu(\delta_A(s,a)) =
-	\delta_B(\mu(s),a))$.
+\item $(\forall s \in S_A)(\forall \pmb{a} \in \Sigma)(\mu(\delta_A(s,\pmb{a}))
+	= \delta_B(\mu(s),\pmb{a}))$.
 \item $\mu$ is a one-to-one function from $S_A$ to $S_B$.
 \item $\mu$ is onto $S_B$.
 \end{enumerate}
@@ -411,12 +411,12 @@ between $A$ and $B$, and we will write $A \cong B$.
 
 Machines $A$ and $B$ from Examples 3.4 and 3.5 are isomorphic. Machines $M$ and
 $N$ from Example 3.10 are not isomorphic (and not just because the particular
-function $\psi$ fails to satisfy the conditions; we must actually prove that no
+function $\psi$ fails to satisfy the conditions; we must actually prove that \emph{no}
 function exists that qualifies as an isomorphism between $M$ and $N$).
 
 Now that we have rigorously defined the concept of two machines being
 ``essentially identical,'' we can prove that, given a language $L$, any reduced
-and connected machine $A$ accepting $L$ must be minimal, that is, have as few
+and connected machine $A$ accepting $L$ must be \emph{minimal}, that is, have as few
 states as possible for that particular language. We will prove this assertion by
 showing that any such $A$ is isomorphic to $A_{R_L}$, which was shown in
 Corollary \ref{cor-3.2} to be the ``smallest'' possible machine for $L$.
@@ -441,11 +441,11 @@ An immediate question comes to mind: There may be several strings that we could
 use for $x_s$; does it matter which one we choose to find the equivalence class?
 It would not do if, say, $R_L$ consisted of two equivalence classes, the
 even-length strings = $[\pmb{11}]_RL$ and the odd-length strings =
-$[0]_{R_L}$, and both $\DBAR(s_0,0)$ and $\DBAR(s_0,11)$ equaled $s$. Then, on
-the one hand, $\mu(s)$ should be $[0]_{R_L}$ and, on the other hand, it should
-be $[11]_{R_L}$. $\mu$ must be a function; it cannot send $s$ to two different
-equivalence classes. Note that there would be no problem if $\DBAR(s_0,11)=s$ 
-and $\DBAR(s_0,1111) = s$, since $[11]_{R_L}=[1111]_{R_L}$, both of which
+$[\pmb{0}]_{R_L}$, and both $\DBAR(s_0,\pmb{0})$ and $\DBAR(s_0,\pmb{11})$ equaled $s$. Then, on
+the one hand, $\mu(s)$ should be $[\pmb{0}]_{R_L}$ and, on the other hand, it should
+be $[\pmb{11}]_{R_L}$. $\mu$ must be a function; it cannot send $s$ to two different
+equivalence classes. Note that there would be no problem if $\DBAR(s_0,\pmb{11})=s$ 
+and $\DBAR(s_0,\pmb{1111}) = s$, since $[\pmb{11}]_{R_L}=[\pmb{1111}]_{R_L}$, both of which
 represent the set of all even-length strings. Here $x_s$ could be $\pmb{11}$, or
 it could be $\pmb{1111}$, and there is no inconsistency in the way in which
 $\mu(s)$ is defined; in either case, $s$ is mapped by $\mu$ to the class of
@@ -456,7 +456,7 @@ definitions are consistent; that is, if there are two choices for $x_s$, say,
 $y$ and $z$, then $[y]_{R_L}=[z]_{R_L}$). Since $A$ is connected, each state $s$
 can be reached by some string $x_s$; that is,
 $(\forall s \in S)(\exists x_s \in \Sigma^*)(\DBAR(s_0,x_s) = s)$, and so there
-is indeed (at least) one equivalence class ($[x_s]_{R_L}$) to which $s$ maps
+is indeed (at least) one equivalence class (namely $[x_s]_{R_L}$) to which $s$ maps
 under $\mu$. We therefore have $\mu(s)=[x_s]_{R_L}$. Thus $\mu$ is defined
 everywhere. We must still make sure that $\mu$ is not multiply defined: Let
 $x,y \in \Sigma^*$ and assume $\DBAR(s_0,x)=\DBAR(s_0,y)$. Then
@@ -491,7 +491,7 @@ $s \in S$ and pick a corresponding $x_s \in \Sigma^*$ such that
 $\DBAR(s_0,x_s) = s$. Then
 \begin{center}
 \begin{tabular}{rcl}
-$s \in F$ & $\Leftrightarrow$ & (by definition of $x_s,L$) \\
+$s \in F$ & $\Leftrightarrow$ & (by definition of $x_s$, and Definition \ref{dfn-1.14}) \\
 $x_s \in L(A)$ & $\Leftrightarrow$ & (by definition of L) \\
 $x_s \in L$ & $\Leftrightarrow$ & (by definition of $F_{R_L}$) \\
 $[x_s]_{R_L} \in F_{R_L}$ & $\Leftrightarrow$ & (by definition of $\mu$) \\
@@ -600,7 +600,7 @@ $F^c = F \cap S^c =\{f \in F$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = f\}
 \end{tabular}
 \end{center}
 and $\delta^c$ is derived from the restriction of $\delta$ to $S^c\times\Sigma$:
-$$(\forall a \in \Sigma)(\forall s \in S^c)(\delta^c(s, a) = \delta(s,a)) $$
+$$(\forall \pmb{a} \in \Sigma)(\forall s \in S^c)(\delta^c(s, \pmb{a}) = \delta(s,\pmb{a})) $$
 \end{dfn}
 
 $A^c$ is thus simply the machine $A$ with the unreachable states ``thrown
@@ -618,10 +618,10 @@ properties is relegated to the exercises.
 
 \subsection*{Example 3.13}
 
-Let $M =\langle\{a,b\},\{q_0,q_1,q_2,q_3\},q_0,\delta,\{q_1,q_3\}\rangle$, as
+Let $M =\langle\{\pmb{a},\pmb{b}\},\{q_0,q_1,q_2,q_3\},q_0,\delta,\{q_1,q_3\}\rangle$, as
 illustrated in Figure \ref{fig-3.7}a. By inspection, the only states that can be reached
 from the start state are $q_0$ and $q_3$. Hence
-$M^c =\langle\{a,b\},\{q_0,q_3\},q_0,\delta^c,\{q_3\}\rangle$. The resulting
+$M^c =\langle\{\pmb{a},\pmb{b}\},\{q_0,q_3\},q_0,\delta^c,\{q_3\}\rangle$. The resulting
 automaton is shown in Figure \ref{fig-3.7}b. An algorithm for effectively computing $S^c$
 will be presented later.
 
@@ -671,7 +671,7 @@ Thus, given any machine $A$, we can find an \emph{equivalent} machine
 Furthermore, there is an algorithm that can be applied to find $A^c$ (that is,
 we don't just know that such a machine exists, we actually have a method for
 calculating what it is). The definition of $S^c$ implies that there is a
-procedure for finding $S^c$: one can begin enumerating the strings $x$ in
+\emph{procedure} for finding $S^c$: one can begin enumerating the strings $x$ in
 $\Sigma^*$, and by applying the transition function to each $x$, the new states
 that are reached can be included in $S^c$. This is not a very satisfactory
 process because there are an infinite number of strings in $\Sigma^*$ to check.
@@ -684,7 +684,7 @@ where $Q$ consists of the ``short'' strings:
 $Q =\{x \in \Sigma^*|\ |x| < \|S\|\}$. Thus, $Q$ is the set of all strings of
 length less than the number of states in the DFA. $Q$ is a finite set, and
 therefore we can check all strings $x$ in $Q$ in a finite amount of time; we
-therefore have an algorithm (that is, a procedure that is guaranteed to halt)
+therefore have an \emph{algorithm} (that is, a procedure that is guaranteed to halt)
 for finding $S^c$, and consequently an algorithm for constructing $A^c$. Thus,
 given any machine, we can find an equivalent machine that is connected. The
 above method is not very efficient because many calculations are constantly
@@ -709,18 +709,18 @@ $F_{E_A}$ & $=$ & $\{[s]_{E_A}$ $|$ $s \in F\}$
 \end{tabular}
 \end{center}
 and $\delta_{E_A}$ is defined by
-$$ (\forall a \in \Sigma)(\forall[s]_{E_A} \in S_{E_A})(\delta_{E_A}([s]_{E_A},a) =
-	[\delta(s,a)]_{E_A}) $$
+$$ (\forall \pmb{a} \in \Sigma)(\forall[s]_{E_A} \in S_{E_A})(\delta_{E_A}([s]_{E_A},\pmb{a}) =
+	[\delta(s,\pmb{a})]_{E_A}) $$
 \end{dfn}
 
 Thus, there is one state in $A/\!\!_{E_A}$ for each equivalence class in $E_A$, the
 new start state is the equivalence class containing $s_0$, and the final states
 are those equivalence classes that are made up of states from $F$. The
 transition function is also defined in a natural manner: Given an equivalence
-class $[t]_{E_A}$ and a letter $a$, choose one state, say $t$, from the class
-and see what state the old transition specified $(\delta(t,a))$. The new
+class $[t]_{E_A}$ and a letter $\pmb{a}$, choose one state, say $t$, from the class
+and see what state the old transition specified $(\delta(t,\pmb{a}))$. The new
 transition function will choose the equivalence class containing this new state
-$([\delta(t,a)]_{E_A})$. Once again, there may be several states in an
+$([\delta(t,\pmb{a})]_{E_A})$. Once again, there may be several states in an
 equivalence class and thus several states from which to choose. We must make
 sure that the definition of $\delta_{E_A}$ does not depend on which state of
 $[t]_{E_A}$ we choose (that is, we must ascertain that $\delta_{E_A}$ is well
@@ -738,7 +738,7 @@ Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, $A/_{E_A}$ is
 reduced.
 
 \emph{Proof.} Note that the state equivalence relation for $A/_{E_A}$ is
-$E_{(A/\!\!_{E_A}})$, not $E_A$. We need to show that if two states of $A/_{E_A}$
+$E_{(A/\!\!_{E_A}})$, \emph{not} $E_A$. We need to show that if two states of $A/_{E_A}$
 are related by the state equivalence relation for $A/\!\!_{E_A}$ then those two
 states are identical; that is,
 $$ (\forall s,t \in S_{E_A})(s E_{(A/\!_{E_A})} t \Leftrightarrow s = t) $$
@@ -823,12 +823,12 @@ $x \in L(A)$ &&
 % Theorem 3.7
 \begin{thm}\label{thm-3.7}\index{finite automaton!minimal deterministic}
 Given a finite automaton definable language $L$ and any finite automaton $A$
-that accepts $L$, then there exists an algorithm for constructing the unique
+that accepts $L$, then there exists an algorithm for constructing the \emph{unique}
 (up to isomorphism) minimum-state finite automaton accepting $L$.
 
 \emph{Proof.} For the finite automaton $A$ that accepts $L$, there is an
 algorithm for finding the set of connected states in $A$, and therefore there
-exists an algorithm for constructing $A^c$, which is a connected automaton with
+exists an algorithm for constructing $A^c$, which is a \emph{connected} automaton with
 the property that $L(A^c) = L(A) = L$.
 
 Furthermore, there exists an algorithm for computing $E_{A^c}$ the state equivalence
@@ -876,12 +876,12 @@ but cannot differentiate between $q_1,\ q_2,\ q_3$, and $q_4$. Thus $E_{0B}$ has
 two equivalence classes, $\{q_0\}$ and $\{q_1, q_2, q_3, q_4\}$.
 
 In $E_{1B}$, $\lambda$ still differentiates $q_0$ from the other states, but the
-string 1 can distinguish $q_3$ from $q_1,\ q_2$, and $q_4$ since
-$\DBAR(q_3,1) \notin F$, but $\DBAR(q_i,1) \in F$ for $i$ = 1, 2, and 4. We
+string \pmb{1} can distinguish $q_3$ from $q_1,\ q_2$, and $q_4$ since
+$\DBAR(q_3,\pmb{1}) \notin F$, but $\DBAR(q_i,\pmb{1}) \in F$ for $i$ = 1, 2, and 4. We
 still cannot distinguish between $q_1,\ q_2$, and $q_4$ with strings of length
 0 or 1, so these remain together and
 $E_{1B}=\{\{q_0\},\{q_3\},\{q_1,q_2,q_4\}\}$. Similarly, since
-$\DBAR(q_1,11) \in F$ but $\DBAR(q_2,11)\notin F$ and $\DBAR(q_4,11)\notin F$,
+$\DBAR(q_1,\pmb{11})\in F$ but $\DBAR(q_2,\pmb{11})\notin F$ and $\DBAR(q_4,\pmb{11})\notin F$,
 $E_{2B}=\{\{q_0\},\{q_3\},\{q_1\},\{q_2,q_4\}\}$. Further investigation shows
 $E_{2B} = E_{3B} = E_{4B} = E_{5B} = \cdots$, and indeed $E_B = E_{2B}$.
 
@@ -914,7 +914,7 @@ generalizes, as formalized below.
 \begin{lmm}\label{lmm-3.1}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and an integer
 $m$, $E_{m+1A}$ is a refinement of $E_{mA}$, which means
-$$ (\forall s,t \in S)(s E_{m+1a}t \Rightarrow s E_{mA}t) $$
+$$ (\forall s,t \in S)(s E_{m+1A}t \Rightarrow s E_{mA}t) $$
 or
 $$ E_{m+1A} \subseteq E_{mA} $$
 \emph{Proof.} See the exercises.
@@ -970,7 +970,7 @@ can be efficiently calculated.
 \begin{thm}\label{thm-3.8}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
 $$(\forall s\in S)(\forall t\in S)(\forall i \in\NN)(s E_{i+1A} t\Leftrightarrow
-s E_{iA} t \wedge (\forall a \in \Sigma)(\delta(s,a)E_{iA}\delta(t,a))) $$
+s E_{iA} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,\pmb{a})E_{iA}\delta(t,\pmb{a}))) $$
 
 \emph{Proof.} Let $s \in S,\ t \in S$. Then
 \begin{center}
@@ -987,16 +987,16 @@ $s E_{i+1A} t$ & $\Leftrightarrow$ & $(\forall x \in \Sigma^* \ni |x| \leq i+1)
 \Leftrightarrow \DBAR(t,y)\in F]$ \\
 & $\Leftrightarrow$ & $(\forall x \in \Sigma^* \ni |x| \leq i)[\DBAR(s,x) \in F
 \Leftrightarrow \DBAR(t,x) \in F] \wedge$ \\
-&& $(\forall a \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)[\DBAR(s,ax)
-\in F \Leftrightarrow \DBAR(t,ax) \in F]$ \\
+&& $(\forall \pmb{a} \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)[\DBAR(s,\pmb{a}x)
+\in F \Leftrightarrow \DBAR(t,\pmb{a}x) \in F]$ \\
 & $\Leftrightarrow$ & $s E_{iA} t \wedge$ \\
-&& $(\forall a \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)(\DBAR(s,ax)
-\in F \Leftrightarrow \DBAR(t,ax) \in F)$ \\
+&& $(\forall \pmb{a} \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)(\DBAR(s,\pmb{a}x)
+\in F \Leftrightarrow \DBAR(t,\pmb{a}x) \in F)$ \\
 & $\Leftrightarrow$ & $s E_{iA} t \wedge$ \\
-&& $(\forall a \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)
-(\DBAR(\delta(s,a),x) \in F \Leftrightarrow \DBAR(\delta(t,a)x) \in F)$ \\
-& $\Leftrightarrow$ & $s E_{iA} t \wedge (\forall a \in \Sigma)(\delta(s,a)
-E_{iA} \delta(t,a))$
+&& $(\forall \pmb{a} \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)
+(\DBAR(\delta(s,\pmb{a}),x) \in F \Leftrightarrow \DBAR(\delta(t,\pmb{a})x) \in F)$ \\
+& $\Leftrightarrow$ & $s E_{iA} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,\pmb{a})
+E_{iA} \delta(t,\pmb{a}))$
 \end{tabular}
 \end{center}
 \end{thm}
@@ -1048,7 +1048,7 @@ $(\forall q,r \in S)(q E_{mA} r \Leftrightarrow q E_A r)$, and so $E_{mA}=E_A$.
 \end{enumerate}
 \end{thm}
 
-The next theorem guarantees that these relations will eventually look alike
+The next theorem guarantees that these relations \emph{will} eventually look alike
 (and so by Theorem \ref{thm-3.10}, we are assured that successive computations of $E_{iA}$
 will yield an expression representing the relation $E_A$).
 
@@ -1070,7 +1070,7 @@ $m$ for which $E_{mA} = E_{m+1A}$.
 
 % Corollary 3.5
 \begin{cor}\label{cor-3.5}
-Given a DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, there is an algorithm for
+Given a DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, there is an \emph{algorithm} for
 computing $E_A$.
 
 \emph{Proof.} $E_A$ can be found by using Lemma \ref{lmm-3.2} to find $E_{0A}$, and
@@ -1114,12 +1114,12 @@ Definition \ref{dfn-3.10}.
 Given a finite automaton $A=\langle\Sigma,S,s_0,\delta,F\rangle$, the 
 \emph{i\textsuperscript{th} partial state set $C_i$} is defined by the following rules:
 Let $C_0=\{s_0\}$ and recursively define
-$$C_{i+1} = C_i \ \ \cup \bigcup\limits_{q\in C_i, a\in\Sigma} \delta(q,a).$$
+$$C_{i+1} = C_i \ \ \cup \bigcup\limits_{q\in C_i, \pmb{a}\in\Sigma} \delta(q,\pmb{a}).$$
 \end{dfn}
 
 $C_{\|S\|}$ must equal $S^c$ (why?), and we will often arrive at the final answer
 long before $\|S\|$ iterations have been calculated (see the exercises and refer
-to the treatment of $E_{iA}$). It can also be proved (by induction) that $C$
+to the treatment of $E_{iA}$). It can also be proved (by induction) that $C_i$
 represents the set of all states that can be reached from $s_0$ by strings of
 length $i$ or less (see the exercises).
 
@@ -1133,7 +1133,7 @@ $C_i$, since only paths from the newly added states need be explored anew.
 
 Consider the DFA $D$ given in Figure \ref{fig-3.9}.
 $$ C_0= \{s_0\} $$
-and since $\delta(s_0,a) = s_1$, and $\delta(s_0,b) = s_3$,
+and since $\delta(s_0,\pmb{a}) = s_1$, and $\delta(s_0,\pmb{b}) = s_3$,
 $$ C_1 =\{s_0,s_1,s_3\} $$
 Note that there is no need to check $s_0$ again, but $s_1$ and $s_3$ generate
 $$ C_2 = \{s_0,s_1,s_3,s_2,s_4\} $$
@@ -1187,7 +1187,7 @@ matrix. The minimization procedures would then return the minimized matrix and
 new final state set.
 
 As a practical matter then, when generating an automaton to perform a given
-task, our concern can be limited to defining a machine that works. No further
+task, our concern can be limited to defining a machine that \emph{works}. No further
 creative insight is then necessary to find the minimal machine. Once a machine
 that recognizes the desired language is found (however inefficient it may be),
 the minimization algorithms can then be applied to produce a machine that is
@@ -1232,7 +1232,7 @@ $$ (\forall x \in \Sigma^*)(\forall[s]_{E_A} \in S_{E_A})
 
 \item Prove that
 $$ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
-	\cdots = \bigcup\limits^\infty_{j=0} E_{jA} $$
+	\cdots = \bigcap\limits^\infty_{j=0} E_{jA} $$
 
 \item Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, show
 that the function $\delta_{E_A}$ given in Definition \ref{dfn-3.8} is well defined.
@@ -1252,8 +1252,8 @@ contained in $S^c$.
 \item Given a homomorphism $\mu$ from the finite automaton 
 $A=\langle\Sigma,S_A,s_{0A},\delta_A,F_A\rangle$ to the DFA 
 $B=\langle\Sigma,S_B,s_{0B},\delta_B,F_B\rangle$, prove by induction that
-$$ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\delta_A(s,x)) =
-	\delta_B(\mu(s),x)) $$
+$$ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) =
+	\DBAR_B(\mu(s),x)) $$
 	
 \item Given a homomorphism $\mu$ from the finite automaton
 $A=\langle\Sigma,S_A,s_{0A},\delta_A,F_A\rangle$ to the DFA 
@@ -1301,7 +1301,7 @@ $\cong$ is a right congruence.
 
 \item For a homomorphism $\mu$ from $S_A$ to $S_B$ for the two finite automata
 $A=\langle\Sigma,S_A,s_{0A},\delta_A,F_A\rangle$ and
-$B=\langle\Sigma,S_B,s_{0B}.\delta_B,F_B\rangle$,prove
+$B=\langle\Sigma,S_B,s_{0B},\delta_B,F_B\rangle$,prove
 $(\forall s,t \in S_A)(\mu(s) E_B \mu(t) \Leftrightarrow s E_A t)$.
 
 \item Let $M$ be a DFA, and let $L=L(M)$.
@@ -1401,23 +1401,23 @@ to $A$.
 equivalence relation over the set of all deterministic finite automata.
 \end{enumerate}
 
-\item Show that homomorphism is not an equivalence relation over the set of
+\item Show that homomorphism is \emph{not} an equivalence relation over the set of
 all deterministic finite automata.
 
 \item For the relations $R$ and $R_L$ given in Theorem \ref{thm-2.2}, show that there
 exists a homomorphism from $A_R$ to $A_{R_L}$.
 
-\item Prove that if there is a homomorphism from $A$ to $B$ then $R_A$ refines
-$R_B$.
+\item Prove that if there is a homomorphism from $A$ to $B$ then $R^A$ refines
+$R^B$.
 
-\item Prove that if $A$ is isomorphic to $B$ then $R_A=R_B$
+\item Prove that if $A$ is isomorphic to $B$ then $R^A=R^B$
 \begin{enumerate}
 \item By appealing to Exercise 3.35.
 \item Without appealing to Exercise 3.35.
 \end{enumerate}
 
 \item Consider two deterministic finite automata for which $A$ is not
-homomorphic to $B$, but $R_A=R_B$.
+homomorphic to $B$, but $R^A=R^B$.
 \begin{enumerate}
 \item Give an example of such automata for which $L(A) = L(B)$.
 \item Give an example of such automata for which $L(A) \not= L(B)$.
@@ -1427,7 +1427,7 @@ $L(A)=L(B)$?
 $L(A)=L(B)$?
 \end{enumerate}
 
-\item Disprove that if $A$ is homomorphic to $B$ then $R_A=R_B$.
+\item Disprove that if $A$ is homomorphic to $B$ then $R^A=R^B$.
 
 \item Prove or give a counterexample [assume $L = L(M)$].
 \begin{enumerate}
@@ -1439,7 +1439,7 @@ $M$.
 $A_{(R^M)}$.
 \end{enumerate}
 
-\item Prove that if $A$ is a minimal DFA then $R_A = R_{L(A)}$.
+\item Prove that if $A$ is a minimal DFA then $R^A = R_{L(A)}$.
 
 \item Give an example to show that Exercise 3.40 can be false if $A$ is not
 minimal.

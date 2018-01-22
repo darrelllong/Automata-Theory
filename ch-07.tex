@@ -61,7 +61,7 @@ $\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, where:
 \item $\Sigma$ denotes the input alphabet.
 \item $\Gamma$ denotes the output alphabet.
 \item $S$ denotes the set of states, a finite nonempty set.
-\item $s_0$ denotes the \emph{\Index{start state}}; $s_0 \in S$.
+\item $s_0$ denotes the \Index{start state}; $s_0 \in S$.
 \item $\delta$ denotes the state transition function; $\delta$$: S \times \Sigma
 	\rightarrow S$.
 \item $\omega$ denotes the output function; $\omega$$: S \times \Sigma \rightarrow
@@ -84,7 +84,7 @@ Let $V=\langle\{\pmb{n},\pmb{d},\pmb{q},\pmb{b}\},\{\pmb{\varphi},\pmb{n'},
 action of a candy machine that dispenses 30\cent\  Chocolate Explosions. $\pmb{n},
 \ \pmb{d},\ \pmb{q}$ denote inputs of nickels, dimes, and quarters
 (respectively), and $\pmb{b}$ denotes the act of pushing the button to select a
-candy bar. $\pmb{\varphi},\pmb{n'},\pmb{d'},\pmb{q'},\pmb{c}_0,\pmb{c}_2,
+candy bar. $\pmb{\varphi},\pmb{n'},\pmb{d'},\pmb{q'},\pmb{c}_0,\pmb{c}_1,
 \pmb{c}_2,\pmb{c}_3,\pmb{c}_4$ represent the vending machine's response to these
 inputs: it may do nothing, return the nickel that was just inserted, return the
 dime, return the quarter, or dispense a candy bar with 0, 1, 2, 3, or 4 nickels
@@ -92,7 +92,7 @@ as change, respectively. Note that the transitions agree with the vending
 machine model presented in Chapter \ref{ch-1}; the new model now specifies the action
 corresponding to the given input. It is relatively simple to modify the above
 machine to include a new input $r$ that signifies that the coin return has been
-activated and a new output a representing the release of all coins that have
+activated and a new output $a$ representing the release of all coins that have
 been inserted (see the exercises).\index{vending machine!FST}
 
 % Figure 7.2
@@ -139,7 +139,7 @@ $s_1$ & $s_0$ & $s_1$ \\
 It can be more succinctly specified by ($\forall s \in S)[\delta(s,\pmb{a}) =
 s_0$ and $\delta(s,\pmb{b}) = s_1]$. Finally, Table 7.1b displays the
 output function, which can be summarized by
-$ (\forall c \in \Sigma)[\omega(s_0,c)=0\quad\text{and}\quad\omega(s_1,c) =
+$ (\forall \pmb{c} \in \Sigma)[\omega(s_0,\pmb{c})=\pmb{0}\quad\text{and}\quad\omega(s_1,\pmb{c}) =
 	\pmb{1}] $
 % Table 7.1b
 \begin{table}[h]\label{tbl-7.1b}
@@ -178,7 +178,7 @@ describing translations. While $\omega$ describes the way in which single
 \emph{letters} are translated, the study of finite-state transducers will
 involve descriptions of how entire \emph{strings} are translated. This situation
 is reminiscent of the modification of the state transition function $\delta$,
-which likewise operated on single letters, to the extended state transition
+which likewise operated on single \emph{letters}, to the extended state transition
 function $\DBAR$ (which was defined for \emph{strings}). Indeed, what is called
 for is an extension of $\omega$ to \OBAR, which will encompass the translation
 of entire strings. The translation cited in the last example could then be
@@ -188,25 +188,25 @@ transducer (beginning from state $t$) in response to the input string $y$.
 
 The formal recursive definition of \OBAR\ will depend not only on $\omega$ but
 also on the state transition function $\delta$ (and its extension \DBAR).
-$\delta$ retains the same conceptual meaning it had for finite-state acceptors:
+$\DBAR$ retains the same conceptual meaning it had for finite-state acceptors:
 $\DBAR(s,x)$ denotes the state reached when starting from $s$ and processing, in
 sequence, the individual letters of the string $x$. Furthermore, the conclusion
 stated in Theorem \ref{thm-1.1} still holds:
 \[ (\forall x \in \Sigma^*)(\forall y \in \Sigma^*)(\forall s \in S)(\DBAR(s,yx)
 	=\DBAR(\DBAR(s,y),x)) \]
-A similar statement can be made about $\omega$ once it has been rigorously
+A similar statement can be made about $\OBAR$ once it has been rigorously
 defined.
 
 % Definition 7.2
 \begin{dfn}\label{dfn-7.2}\index{extended state transition function \DBAR\! for FST}\index{extended output function \OBAR\! for FST}
-Given a FST $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the extended
-output function for $A$, denoted by \OBAR, is a function $\OBAR$$: S \times
+Given a FST $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the \emph{extended
+output function} for $A$, denoted by \OBAR, is a function $\OBAR$$: S \times
 \Sigma^* \rightarrow \Gamma^*$ defined recursively as follows:
 \begin{enumerate}[i. ]
 % handspaced vs. hardcoding i., ii.
 \item $(\forall t \in S)\qquad\qquad\qquad\qquad\ \ \ \thinspace\thinspace\OBAR
 	(t,\lambda)=\lambda$
-\item $(\forall t \in S)(\forall x \in \Sigma^*)(\forall a \in \Sigma)
+\item $(\forall t \in S)(\forall x \in \Sigma^*)(\forall \pmb{a} \in \Sigma)
 	(\OBAR(t,\pmb{a}x)=\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),x))$
 \end{enumerate}
 \end{dfn}
@@ -231,8 +231,8 @@ The \OBAR\ function extends the $\omega$ function from single letters to words.
 Whereas the $\omega$ function maps a state and a \emph{letter} to a single
 symbol from $\Gamma$, the \OBAR\ function maps a state and a \emph{word} to an
 entire \emph{string} from $\Gamma^*$. It can be deduced from (i) and (ii) (see
-the exercises) that (iii) ($\forall t \in S)(\forall a \in \Sigma)(\OBAR(t, a)
-= \omega(t,a))$, which is the observation that $\omega$ and \OBAR\ treat single
+the exercises) that (iii) ($\forall t \in S)(\forall \pmb{a} \in \Sigma)(\OBAR(t, \pmb{a})
+= \omega(t,\pmb{a}))$, which is the observation that $\omega$ and \OBAR\ treat single
 letters the same. The extended output function \OBAR\ has properties similar to
 those of \DBAR, in that the single letter $\pmb{a}$ found in the recursive
 definition of \OBAR\ can be replaced by an entire word $y$. The analog of
@@ -364,7 +364,7 @@ the exercises).
 \section{Minimization of Finite-State Transducers}\label{sec-7.2}
 
 Two transducers that perform exactly the same translation over the entire range
-of input strings from $\Sigma$ will be called \emph{equivalent} transducers.
+of input strings from $\Sigma^*$ will be called \emph{equivalent} transducers.
 This is in spirit similar to the way equivalence was defined for deterministic
 finite automata.
 
@@ -470,7 +470,7 @@ Consider the two FSTs
 $C=\langle\{\pmb{a},\pmb{b}\},\{\pmb{0},\pmb{1}\},\{t_0,t_1,t_2,t_3\},t_0,
 \delta_C,\omega_C\rangle$, given in Figure \ref{fig-7.4}, and
 $D=$\linebreak$\langle\{\pmb{a},\pmb{b}\},\{\pmb{0},\pmb{1}\},\{q_0,q_1,q_2\},q_0,\delta_D,
-\omega_D\rangle$, displayed in Figure \ref{fig-7.5}. The function $u$$:\{t_0,t_1,t_2,t_3\} 
+\omega_D\rangle$, displayed in Figure \ref{fig-7.5}. The function $\mu$$:\{t_0,t_1,t_2,t_3\} 
 \rightarrow\{q_0,q_1,q_2\}$, defined by $\mu(t_0)=q_0,\ \mu(t_1)=q_1,\ 
 \mu(t_2)=q_2$, and $\mu(t_3)=q_0$ is a homomorphism between C and D. Conditions
 (i) and (ii) are exactly the same criteria used for finite automata
@@ -540,8 +540,8 @@ transducer $M^c=\langle\Sigma,\Gamma,S^c,s^c_0,\delta^c,\omega^c\rangle$, called
 $S^c=\{s \in S$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
 $s^c_0 = s_0$
 \end{tabular}\end{center}
-$\delta^c$ is essentially the restriction of $B$ to $S^c\!\times \Sigma$$:
-(\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a})=\delta(s,a))$,
+$\delta^c$ is essentially the restriction of $\delta$ to $S^c\!\times \Sigma$$:
+(\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a})=\delta(s,\pmb{a}))$,
 and $\omega^c$ is the restriction of $\omega to\ S^c\!\times \Sigma$$:
 (\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\omega^c(s,\pmb{a}) =
 \omega(s,\pmb{a}))$.
@@ -562,7 +562,7 @@ the restriction of \  $\overline\omega$ to\ \ $S^c \times \Sigma^*$ is $\overlin
 \emph{Proof.} We must show that $(\forall y \in \Sigma^*)(\forall t \in S^c)
 (\overline{\omega^c}(t,y)=\OBAR(t,y))$. This can be done with a straightforward induction on
 $|y|$. Let $P(n)$ be defined by
-\[ (\forall y \in \Sigma)(\forall t \in S^c)(\overline{\omega^c}(t,y) = \OBAR(t,y)). \]
+\[ (\forall y \in \Sigma^n)(\forall t \in S^c)(\overline{\omega^c}(t,y) = \OBAR(t,y)). \]
 The basis step is trivial, since\ \ $\overline{\omega^c}(t,\lambda)=\lambda=\OBAR(t,\lambda)$.
 For the inductive step, assume
 $(\forall y \in \Sigma^m)(\forall t \in S^c)(\overline{\omega^c}(t,y)=\OBAR(t,y))$, and let
@@ -584,7 +584,7 @@ $\OBAR(t,z)$ &&
 \end{tabular}\end{center}
 Since $z$ was an arbitrary element of $\Sigma^{m+1}$\!, and $t$ was an arbitrary
 state in $S^c$,
-\[ (\forall y \in \Sigma^{m+1})(\forall t \in S^c)(\overline{\omega^c}(t,z)=\OBAR(t,z)), \]
+\[ (\forall z \in \Sigma^{m+1})(\forall t \in S^c)(\overline{\omega^c}(t,z)=\OBAR(t,z)), \]
 which proves $P(m+1)$. Hence, $P(m) \Rightarrow P(m+1)$, and, since $m$ was
 arbitrary, $(\forall m \in \NN)(P(m) \Rightarrow P(m+1))$. By the principle of
 mathematical induction, $P(n)$ is therefore true for all $n$, and the lemma is
@@ -665,10 +665,10 @@ $S_{E_M}$ & $=$ & $\{[s]_{E_M}$ $|$ $s \in S\}$ \\
 $s_{0_{E_M}}$ & $=$ & $[s_0]_{E_M}$
 \end{tabular}\end{center}
 $\delta_{E_M}$ is defined by
-\[ (\forall a \in \Sigma)(\forall [s]_{E_M} \in S_{E_M})(\delta_{E_M}([s]_{E_M},
+\[ (\forall \pmb{a} \in \Sigma)(\forall [s]_{E_M} \in S_{E_M})(\delta_{E_M}([s]_{E_M},
 	\pmb{a}) = [\delta(s,\pmb{a})]_{E_M}), \]
 and $\omega_{E_M}$ is defined by
-\[ (\forall a \in \Sigma)(\forall [s]_{E_M} \in S_{E_M})(\omega_{E_M}([s]_{E_M},
+\[ (\forall \pmb{a} \in \Sigma)(\forall [s]_{E_M} \in S_{E_M})(\omega_{E_M}([s]_{E_M},
 	\pmb{a}) = \omega(s,\pmb{a})). \]
 \end{dfn}
 
@@ -728,10 +728,10 @@ $M_2$. The converse half of the proof is very reminiscent of that given for
 Theorem \ref{thm-3.1}. We must assume $M_1$ and $M_2$ are equivalent and then prove that
 an isomorphism can be exhibited between $M_1$ and $M_2$. A natural way to define
 such an isomorphism is as follows: Given a state $s$ in $M_1$, choose a string
-$x$, such that $\DBAR_1(s_{0_1},x_s) = s$. Let $\mu(s)=\DBAR_2(s_{0_2},x_s)$. At
+$x_s$, such that $\DBAR_1(s_{0_1},x_s) = s$. Let $\mu(s)=\DBAR_2(s_{0_2},x_s)$. At
 least one such string $x_s$, must exist for each state of $M_1$, since $M_1$ was
 assumed to be connected. There may be several choices for $x_s$ for a given
-state $s$, but all will yield the same value for $\delta_2(s_{0_2},x_s)$, and
+state $s$, but all will yield the same value for $\DBAR_2(s_{0_2},x_s)$, and
 so $\mu$ is well defined (see the exercises). The function $\mu$ satisfies the
 three properties of a homomorphism and turns out to be a bijection (see the
 exercises). Thus $M_1 \cong M_2$. As will be clear from the exercises, the
@@ -783,10 +783,10 @@ Thus $E_{iM}$ relates states that cannot be distinguished by strings of length
 $i$ or less, whereas $E_M$ relates states that cannot be distinguished by any
 string of any length. All the properties attributable to the analogous relations
 for finite automata ($E_{iA}$) carryover, with essentially the same proofs, to
-the relations for finite-state transducers ($E_{iM}$)
+the relations for finite-state transducers ($E_{iM}$).
 
 % Lemma 7.3
-\begin{lmm}\label{lmm-7.3}.
+\begin{lmm}\label{lmm-7.3}
 Given a transducer $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 \begin{enumerate}[a.]
 \item $E_{m+1M}$ is a refinement of $E_{mM}$; that is, $(\forall s,t \in S)
@@ -812,7 +812,7 @@ Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 \Sigma)(\omega(s,\pmb{a})=\omega(t,\pmb{a}))$.
 \item For $i \geq 1,\ E_{i+1M}$ can be computed from $E_{iM}$ as follows:
 \[ (\forall s \in S)(\forall t \in S)(\forall i \geq 1)(s E_{i+1M} t
-	\Leftrightarrow S E_{iM} t \wedge (\forall a \in \Sigma)(\delta(s,
+	\Leftrightarrow S E_{iM} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,
 	\pmb{a})E_{iM}\delta(t,\pmb{a}))). \]
 \end{enumerate}
 \emph{Proof.} The proof is similar to the proofs given in Chapter \ref{ch-3} for $E_{iA}$
@@ -825,7 +825,7 @@ Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, there is an
 \emph{algorithm} for computing $E_M$.
 
 \emph{Proof.} Use Lemma \ref{lmm-7.4} to compute successive $E_{iM}$ relations from
-$E_{lM}$ until $E_{iM}=E_{i+1M}$; by Lemma \ref{lmm-7.3}, this $E_{iM}$ will equal $E_M$,
+$E_{1M}$ until $E_{iM}=E_{i+1M}$; by Lemma \ref{lmm-7.3}, this $E_{iM}$ will equal $E_M$,
 and this will all happen before $i$ reaches $\|S\|$, the number of states in
 $S$. Thus the procedure is guaranteed to halt.
 \end{cor}
@@ -836,7 +836,7 @@ Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, there is an
 \emph{algorithm} for computing the minimal machine equivalent to $M$.
 
 \emph{Proof.} Using the algorithm for computing the set of connected states,
-$M^c$ can be found. The output function is used to find $E_{1M^c}$', and the
+$M^c$ can be found. The output function is used to find $E_{1M^c}$, and the
 state transition function is then used to calculate successive relations until
 $E_{M^c}$ is found. $M^c/_{E_{M^c}}$, can then be defined and will be the
 minimal machine equivalent to $M$.
@@ -930,18 +930,18 @@ starting at $s$ and processing $x$.
 \begin{dfn}\label{dfn-7.17}\index{extended output function \OBAR\! for MSM}
 Given a MSM $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the
 \emph{\Index{extended output function}} for $A$, denoted again by \OBAR, is a
-function $\omega$$: S \times \Sigma \rightarrow \Gamma^*$ defined recursively by:
+function $\OBAR$$: S \times \Sigma^* \rightarrow \Gamma^*$ defined recursively by:
 \begin{enumerate}[i. ]
 % handspaced vs. hardcoding i., ii.
 \item $(\forall t \in S)\qquad\qquad\qquad\qquad\ \ \ \thinspace\thinspace\OBAR
 	(t,\lambda)=\lambda$
 \item $(\forall t \in S)(\forall x \in \Sigma^*)(\forall a \in \Sigma)
 	(\OBAR(t,\pmb{a}x)=\omega(\delta(t,\pmb{a}))\cdot\OBAR
-	(\delta(t,\pmb{a}),x)$
+	(\delta(t,\pmb{a}),x))$
 \end{enumerate}
 \end{dfn}
 
-Note that the domain of the function w has been extended further than usual:
+Note that the domain of the function $\omega$ has been extended further than usual:
 in all previous cases, the domain was enlarged from $S \times \Sigma$ to
 $S \times \Sigma^*$; in this instance, we are beginning with a domain of only
 $S$ and still extending it to $S \times \Sigma^*$. The above definition allows
@@ -982,7 +982,7 @@ sixth component (the output function) must be redefined, as outlined below.
 Given a Moore machine $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the
 corresponding Mealy machine $M$ is given by $M=\langle\Sigma,\Gamma,S,s_0,
 \delta,\omega'\rangle$, where $\omega'$ is defined by
-\[ (\forall a \in \Sigma)(\forall s \in S)(\omega'(s,\pmb{a})=
+\[ (\forall \pmb{a} \in \Sigma)(\forall s \in S)(\omega'(s,\pmb{a})=
 	\omega(\delta(s,\pmb{a}))) \]
 \end{dfn}
 
@@ -994,7 +994,7 @@ machines perform the same translation.
 % Theorem 7.7
 \begin{thm}\label{thm-7.7}\index{equivalent!transducers}
 Given a Moore machine $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the
-corresponding Mealy machine\linebreak$M=\langle\Sigma,\gamma,S,s_0,\delta,\omega'\rangle$
+corresponding Mealy machine\linebreak$M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega'\rangle$
 is equivalent to $A$; that is, $(\forall x \in \Sigma^*)(f_M(x)=f_A(x))$.
 
 \emph{Proof.} The proof is by induction on $|x|$ (see the exercises).
@@ -1086,7 +1086,7 @@ basis of what was meant by a translation $f$ being finite transducer definable.
 
 % Corollary 7.8
 \begin{cor}\label{cor-7.8}
-A translation $J$ is FTD iff $f$ can be defined by a FST $M$ iff $f$ can be
+A translation $f$ is FTD iff $f$ can be defined by a FST $M$ iff $f$ can be
 defined by a MSM $A$.
 
 \emph{Proof.} The proof is immediate from the definition of FTD and Theorems
@@ -1160,9 +1160,9 @@ functions. The formal definition is given below.
 \begin{dfn}\label{dfn-7.21}
 Given two MSMs
 \[ A=\langle\Sigma,\Gamma,S_A,s_{0_A},\delta_A,\omega_A\rangle\quad\text{ and }
-	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_A\rangle, \]
+	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_B\rangle, \]
 and a function $\mu$$: S_A \rightarrow S_B,\ \mu$ is called a \emph{\Index{Moore
-machine isomorphism}} from $A$ to $B$ iff the following five conditions hold:\emph{isomorphism}\index{isomorphism!between MSMs}
+machine isomorphism}} from $A$ to $B$ iff the following five conditions hold:\index{isomorphism!between MSMs}
 \begin{enumerate}[i.]
 \item $\mu(s_{0_A}) = s_{0_B}$.
 \item $(\forall s \in S_A)(\forall\pmb{a}\in\Sigma)(\mu(\delta_A(s,\pmb{a})) =
@@ -1189,7 +1189,7 @@ transducer without necessarily being a bijection.
 \begin{dfn}\label{dfn-7.22}
 Given two MSMs
 \[ A=\langle\Sigma,\Gamma,S_A,s_{0_A},\delta_A,\omega_A\rangle\quad\text{ and }
-	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_A\rangle, \]
+	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_B\rangle, \]
 and a function $\mu$$: S_A \rightarrow S_B,\ \mu$ is called a \emph{\Index{Moore
 machine homomorphism}} from $A$ to $B$ iff the following three conditions hold:
 \index{homomorphism!between MSMs}
@@ -1212,7 +1212,7 @@ extends to similar statements about strings, as outlined in Lemma \ref{lmm-7.5}.
 \begin{lmm}\label{lmm-7.5}
 If $\mu$$: S_A \rightarrow S_B$ is a homomorphism between two MSMs
 \[ A=\langle\Sigma,\Gamma,S_A,s_{0_A},\delta_A,\omega_A\rangle\quad\text{ and }
-	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_A\rangle, \]
+	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_B\rangle, \]
 then
 \[ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x))=\DBAR_B
 	(\mu(s),x)) \]
@@ -1234,7 +1234,7 @@ of $f_M$.
 \end{cor}
 
 It is interesting to note that the MSMs $A$ in Figure \ref{fig-7.8} and $A'$ in Figure
-\ref{fig-7.9} are not isomorphic. In fact, there does not even exist a homomorphism (in
+\ref{fig-7.9} are \emph{not} isomorphic. In fact, there does not even exist a homomorphism (in
 either direction) between $A$ and $A'$ since the start states print different
 symbols, and rules (i) and (iii) therefore conflict. The absence of an
 isomorphism in this instance illustrates that an analog to Theorem \ref{thm-7.5} cannot be
@@ -1310,7 +1310,7 @@ Given a MSM $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define the
 transducer $M^c =\langle\Sigma,\Gamma,S^c,s^c_0,\delta^c,\omega^c\rangle$,
 called \emph{M connected}, by
 \begin{center}\begin{tabular}{l}
-$S^c=\{s \in S^c$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
+$S^c=\{s \in S$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
 $s^c_0 = s_0$
 \end{tabular}\end{center}
 $\delta^c$ is essentially the restriction of $\delta$ to $S^c \times \Sigma:\ 
@@ -1628,7 +1628,7 @@ In actuality, the duration of patterns incorporating the yellow caution light
 is shorter than others. With the addition of extra states, a clock cycle length
 on the order of 5 seconds (commensurate with the typical length of a yellow
 light) could be used to govern the length of the different output configurations.
-For example, incorporating $s_g$ as shown in Figure \ref{fig-7.16} guarantees that the
+For example, incorporating $s_8$ as shown in Figure \ref{fig-7.16} guarantees that the
 output $\langle R,R,R,G\rangle$ will persist for at least two cycles (10
 seconds). From an engineering standpoint, complicating the finite-state control
 in this manner can be avoided by varying the clock cycle length.
@@ -1659,7 +1659,7 @@ cases, an \<EOS\> symbol is not necessary; the circuit operates until power is
 shut off. Similarly, an \<SOS\> symbol is not essential for a traffic signal
 complex; upon resuming operation after a power failure, it is usually immaterial
 whether east-west traffic first gets a green light or whether it gets a red
-light in deference to the north-south traffic. In contrast, it is important for
+light in deference to the north-south traffic. In contrast, it \emph{is} important for
 vending machines to initialize to the proper state or some interesting discounts
 could be obtained by playing with the power cord.
 
@@ -1723,7 +1723,7 @@ network is shown in Figure \ref{fig-7.18}. Note that we would want the output de
 print on the rising edge of the clock cycle, before the new value of $t_1$
 propagates through the circuitry.
 
-A larger output alphabet would require an encoding of several bits; each $w_1$
+A larger output alphabet would require an encoding of several bits; each $w_i$
 would have its own network of gates, and the complete circuit would then
 simultaneously generate several bits of output information. As in Chapter \ref{ch-1},
 additional states or input symbols will add bits to the other encoding schemes
@@ -1784,7 +1784,7 @@ following statements from Lemma \ref{lmm-7.4}:
 	(\omega(s,\pmb{a}) = \omega(t,\pmb{a}))$.
 \item $(\forall s \in S)(\forall t \in S)(\forall i \geq 1)(s E_{i+1M} t
 	\Leftrightarrow s E_{iM} t \wedge (\forall\pmb{a}\in\Sigma)
-	(\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a}))$.
+	(\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})))$.
 \end{enumerate}
 
 \item Prove Theorem \ref{thm-7.6} by showing that if $A=\langle\Sigma,\Gamma,S,s_0,\delta,
@@ -1934,9 +1934,9 @@ false if $M_2$ is not connected.
 \end{enumerate}
 
 \item \begin{enumerate}
-\item Give an example of a FST $A$ for which $A$ is \emph{not} reduced and $A'$
+\item Give an example of a FST $A$ for which $A$ is \emph{not} reduced and $A^c$
 is not reduced.
-\item Give an example of a FST $A$ for which $A$ is \emph{not} reduced and $A'$
+\item Give an example of a FST $A$ for which $A$ is \emph{not} reduced and $A^c$
 \emph{is} reduced.
 \end{enumerate}
 
@@ -1952,17 +1952,17 @@ is not reduced.
 \item Let $\Sigma=\{\pmb{0},\pmb{1}\}$ and $\Gamma=\{\pmb{y},\pmb{n}\}$.
 \begin{enumerate}
 \item Define $f_1(\pmb{a}_1\pmb{a}_2\ldots \pmb{a}_m)=y^m$ if $\pmb{a}_1=
-\pmb{1}$, and let $f_1(\pmb{a}_1\pmb{a}_2\ldots a^m) = n^m$ otherwise. Thus,
+\pmb{1}$, and let $f_1(\pmb{a}_1\pmb{a}_2\ldots a_m) = n^m$ otherwise. Thus,
 $f_1(\pmb{10})=\pmb{yy}$ and $f_1(\pmb{0101})=\pmb{nnnn}$. Demonstrate that
 $f_1$ is FTD.
 \item Define $f_2(\pmb{a}_1\pmb{a}_2\ldots \pmb{a}_m)=y^m$ if $\pmb{a}_m=
-\pmb{1}$, and let $f_2(\pmb{a}_2\pmb{a}_2\ldots \pmb{a}_m)=n^m$ otherwise. Thus,
+\pmb{1}$, and let $f_2(\pmb{a}_1\pmb{a}_2\ldots \pmb{a}_m)=n^m$ otherwise. Thus,
 $f_2(\pmb{10})=\pmb{nn}$ and $f_2(\pmb{0101})=\pmb{yyyy}$. Prove that $f_2$ is
 \emph{not} FTD.
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b}\}$ and $\Gamma=\{\pmb{0},\pmb{1}\}$. Define
-$f_3(\pmb{a}_1\pmb{a}_2\ldots a_m)$ to be the first $m$ letters of the infinite
+$f_3(\pmb{a}_1\pmb{a}_2\ldots \pmb{a}_m)$ to be the first $m$ letters of the infinite
 sequence $\pmb{010010001000010^510^610^710^81}\ldots$. Thus,
 $f_3(\pmb{ababababab})=\pmb{0100100010}$ and $f_3(\pmb{abbaa})=\pmb{01001}$.
 Argue that $f_3$ is \emph{not} FTD.

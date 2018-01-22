@@ -110,7 +110,8 @@ is a quintuple $M=\langle\Sigma,\Gamma,S,s_0,\delta\rangle$, where
 
 \begin{quote}
 $\Sigma$ is the \emph{input alphabet}. \\
-$\Gamma$ is the \emph{auxiliary alphabet}, and $\Sigma$, $\Gamma$, and $\{L,R\}$
+$\Gamma$ is the \emph{auxiliary alphabet}, and $\Sigma$, $\Gamma$,
+and $\{\pmb{L},\pmb{R}\}$
 	are pairwise disjoint sets of symbols. \\
 $S$ is a finite nonempty set of \emph{states} (and $S\cap(\Sigma\cup\Gamma) = 
 	\emptyset)$. \\
@@ -121,7 +122,7 @@ $\delta$ is the \emph{state transition function} $\delta$: $S\times(\Sigma\cup
 The auxiliary alphabet always includes the \emph{\Index{blank symbol}} (denoted by $\#$),
 and neither $\Sigma$ nor $\Gamma$ include the special symbols $\pmb{L}$ and
 $\pmb{R}$, which denote moving the tape head left and right, respectively. The
-state $h$ is a special \Index{halt state}\index{Turing machine!halt state}, from which no further transitions are
+state $h$ is a special \emph{\Index{halt state}}\index{Turing machine!halt state}, from which no further transitions are
 possible; $h\notin S$.
 \end{dfn}
 
@@ -192,7 +193,7 @@ be passed to a second submachine, which then further modifies the tape contents.
 When this submachine would halt, control may be passed on to a third submachine,
 or back to the first submachine, and so on. The straight arrows leaving the
 state transition diagram can be thought of as exit arrows for a submachine, and
-they function much like a return statement in many programming languages.
+they function much like a \emph{return} statement in many programming languages.
 Example 11.4 illustrates a Turing machine that employs submachines.
 
 % Figure 11.3
@@ -238,7 +239,7 @@ aa\=\kill
 halt and print $\pmb{Y}$ if no more $\pmb{b}$s nor $\pmb{c}$s remain
 \end{tabbing}\end{quote}
 
-States $s_0$ and $s_1$ in Figure \ref{fig-11.4} check the while condition, and states $s_2$
+States $s_0$ and $s_1$ in Figure \ref{fig-11.4} check the \emph{while} condition, and states $s_2$
 through $s_6$ perform the body of the do loop. On each iteration, beginning at
 the leftmost symbol, state $s_0$ moves the tape head right, checking for symbols
 that have not been replaced by $\pmb{X}$. If it reaches the end of the word
@@ -275,7 +276,7 @@ computation will be represented according to the following conventions.
 % Definition 11.2
 \begin{dfn}\label{dfn-11.2}\index{Turing machine!configuration}
 Let $M=\langle\Sigma,\Gamma,S,s_0,\delta\rangle$ be a Turing machine that is
-operating on a tape containing\linebreak$\ldots\#\#\#\alpha\pmb{b}\beta\#\#\#\ldots$,
+operating on a tape containing\linebreak$\ldots\pmb{\#\#\#}\alpha\pmb{b}\beta\pmb{\#\#\#}\ldots$,
 currently in state $t$ with the tape head scanning the $\pmb{b}$, where $\alpha,
 \beta\in(\Sigma\cup\Gamma)^*$, $\alpha$ contains no leading blanks and $\beta$
 has no trailing blanks. This configuration will be represented by $\alpha t
@@ -296,11 +297,11 @@ configuration representation denotes the state. As with PDAs, $\gamma\Dvdash\psi
 means that $\gamma$ produces $\psi$ in zero or more transitions. Note that the
 leading and trailing blanks are not represented, but $\alpha$ and $\beta$ may
 contain embedded blanks. Indeed, $\pmb{b}$ may be a blank. The representation $\pmb{ac\#
-\#\#t\#}$ indicates that the tape head has moved past the word $\pmb{ac}$ and is
+\#\#}t\pmb{\#}$ indicates that the tape head has moved past the word $\pmb{ac}$ and is
 scanning the fourth blank to the right of the word ($\alpha=\pmb{ac\#\#\#},
-\pmb{b}=\pmb{\#},\beta=\lambda$). At the other extreme, $t\#\#\pmb{ac}$ shows
+\pmb{b}=\pmb{\#},\beta=\lambda$). At the other extreme, $t\pmb{\#\#ac}$ shows
 the tape head two cells to the left of the word ($\alpha=\lambda,\pmb{b}=
-\pmb{\#},\beta=\pmb{\#ac}$). A totally blank tape\index{tape!blank} is represented by $t\#$.
+\pmb{\#},\beta=\pmb{\#ac}$). A totally blank tape\index{tape!blank} is represented by $t\pmb{\#}$.
 
 % Definition 11.3
 \begin{dfn}\label{dfn-11.3}\index{language!Turing-acceptable}
@@ -338,7 +339,7 @@ and
 These distinguish all words that halt with $\pmb{Y}$ somewhere on the tape and
 all words that halt with $\pmb{Y}$ at the end of the tape, respectively.
 
-It should be clear that a Turing machine $A$, accepting $L=L_1(A_1)$ has an
+It should be clear that a Turing machine $A_1$, accepting $L=L_1(A_1)$ has an
 equivalent\index{equivalent!Turing machines} Turing machine $A_2$ for which $L=L_2(A_2)$. $A_2$ can be obtained
 from $A_1$ by simply adding a new state and changing the transitions to the halt
 state so that they now all go to the new state. The new state prints $\pmb{Y}$
@@ -361,7 +362,7 @@ language. The following steps show that $s_0\pmb{babcca}\Dvdash\pmb{XXXXXX}h
 $s_0\pmb{babcca}$ & $\vdash\pmb{b}s_1\pmb{abcca}$ & $\vdash\pmb{b}s_2\pmb{Xbcca}$
 	& $\vdash s_2\pmb{bXbcca}$ & $\vdash$ \\
 $s_2\pmb{\#bXbcca}$ & $\vdash s_3\pmb{bXbcca}$ & $\vdash s_4\pmb{XXbcca}$ &
-	$\vdash s_4\#\pmb{XXbcca}$ & $\vdash$ \\
+	$\vdash s_4\pmb{\#XXbcca}$ & $\vdash$ \\
 $s_5\pmb{XXbcca}$ & $\vdash\pmb{X}s_5\pmb{Xbcca}$ & $\vdash\pmb{XX}s_5\pmb{bcca}$
 	& $\vdash\pmb{XXb}s_5\pmb{cca}$ & $\vdash$ \\
 $\pmb{XXb}s_6\pmb{Xca}$ & $\vdash\pmb{XX}s_6\pmb{bXca}$ & $\vdash\pmb{X}s_6
@@ -371,7 +372,7 @@ $s_6\pmb{\#XXbXca}$ & $\vdash s_0\pmb{XXbXca}$ & $\vdash\pmb{X}s_0\pmb{XbXca}$
 $\pmb{XXb}s_1\pmb{Xca}$ && $\Dvdash s_2\pmb{\#XXbXcX}$ && $\Dvdash$ \\
 $\pmb{XX}s_3\pmb{bXcX}$ && $\Dvdash s_4\pmb{\#XXXXcX}$ && $\Dvdash$ \\
 $\pmb{XXXX}s_5\pmb{cX}$ && $\Dvdash s_6\pmb{\#XXXXXX}$ && $\Dvdash$ \\
-$\pmb{XXXXXX}s_0$ && $\vdash\pmb{XXXXXXhY}$
+$\pmb{XXXXXX}s_0$ && $\vdash\pmb{XXXXXX}h\pmb{Y}$
 \end{tabular}\end{center}
 The string $\pmb{babcca}$ is therefore accepted. $\pmb{ac}$ is rejected since
 $s_0\pmb{ac}\Dvdash\pmb{Xc}h\pmb{N}$. Further analysis shows that $L_3(M)$ is
@@ -526,7 +527,7 @@ A simple inductive argument on $|x|$ shows that
 \[ (\forall x\in\Sigma^*)(\forall\alpha,\beta\in(\Sigma\cup\Gamma)^*)(\alpha tx 
 	\beta\Dvdash \alpha xq\beta\text{ iff }\DBAR_A(t,x) = q) \]
 From this it follows that
-\[ (\forall x\in\Sigma^*)(s_0x\Dvdash xq\#\text{ iff }\DBAR_A(s_0,x)=q) \]
+\[ (\forall x\in\Sigma^*)(s_0x\Dvdash xq\pmb{\#}\text{ iff }\DBAR_A(s_0,x)=q) \]
 Therefore,
 \[ (\forall x\in\Sigma^*)(s_0x\Dvdash xh\pmb{Y}\text{ iff }\DBAR_A(s_0,x)\in
 	F) \]
@@ -610,7 +611,7 @@ erased, leaving the original string to the left of the $\pmb{Y}$ (see Example
  
 The foregoing discussion justifies that a Turing machine with a tape head
 capable of reading two tracks can be simulated by a Definition \ref{dfn-11.1} style Turing
-machine; indeed, it is a Turing machine with a slightly more complex alphabet.
+machine; indeed, it \emph{is} a Turing machine with a slightly more complex alphabet.
 When convenient, then, we may assume that we have a Turing machine with two
 tracks. A similar argument shows that, for any finite number $k$, a $k$-track
 machine has an equivalent\index{equivalent!Turing machines} one-track Turing machine with an expanded alphabet.
@@ -826,7 +827,7 @@ but the translation process is quite direct.
 
 % Lemma 11.1
 \begin{lmm}\label{lmm-11.1}
-Let $\Sigma$ be an alphabet. Then $\PSIG\subseteq\TSIG$. That is, every
+Let $\Sigma$ be an alphabet. Then $\PSIG\subset\TSIG$. That is, every
 context-free language is Turing acceptable, and the containment is proper.
 
 \emph{Proof.} Containment follows from the formalization of the above discussion
@@ -882,17 +883,29 @@ Consider the context-sensitive grammar $G=\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{
 S,A,B,C\},S,P\rangle$, where $P$ contains the productions
 \begin{enumerate}
 \item $Z\rightarrow\lambda$
+\vspace{-0.1in}
 \item $Z\rightarrow S$
+\vspace{-0.1in}
 \item $S\rightarrow SABC$
+\vspace{-0.1in}
 \item $S\rightarrow ABC$
+\vspace{-0.1in}
 \item $AB\rightarrow BA$
+\vspace{-0.1in}
 \item $BA\rightarrow AB$
+\vspace{-0.1in}
 \item $CB\rightarrow BC$
+\vspace{-0.1in}
 \item $BC\rightarrow CB$
+\vspace{-0.1in}
 \item $CA\rightarrow AC$
+\vspace{-0.1in}
 \item $AC\rightarrow CA$
+\vspace{-0.1in}
 \item $A\rightarrow\pmb{a}$
+\vspace{-0.1in}
 \item $B\rightarrow\pmb{b}$
+\vspace{-0.1in}
 \item $C\rightarrow\pmb{c}$
 \end{enumerate}
 It is quite easy to show that $L(G)=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \
@@ -1115,7 +1128,8 @@ s_7\pmb{\#babcca}$
 $s_8\pmb{babcca}$ & $\vdash\pmb{b}s_8\pmb{abcca}$ & $\Dvdash\pmb{babcca}s_8$
 &&
 	$\vdash$ \\
-$\pmb{babccahY}$ \end{tabular}\end{center}
+$\pmb{babccahY}$
+\end{tabular}\end{center}
 
 If occurrences of the machine transition symbol $\vdash$ are replaced by the
 derivation symbol $\Rightarrow$, the above sequence would look remarkably like a
@@ -1124,16 +1138,16 @@ which sentential forms like $\pmb{b}s_1\pmb{abcca}$ could be derived from
 $s_0\pmb{babcca}$ in one step. Since the machine changed configurations because
 of the transition rule $\delta(s_0,\pmb{b})=\langle s_1,\pmb{R}\rangle$, this
 transition should have a corresponding production of the form $s_0\pmb{b}
-\rightarrow\pmb{b}s_1$, Each transition in the Turing machine will be
+\rightarrow\pmb{b}s_1$. Each transition in the Turing machine will be
 responsible for similar productions.
 
 Unfortunately, the correspondence between transition rules and productions is
 complicated by the fact that the tape head may occasionally scan blank cells,
-which must then be added to the sentential form. The special characters $[$ and
-$]$ will bracket the sentential form throughout this stage of the derivation and
+which must then be added to the sentential form. The special characters `$[$' and
+`$]$' will bracket the sentential form throughout this stage of the derivation and
 will indicate the current left and right limits of the tape head travel,
-respectively. Attempting to move left past the conceptual position of \pmb{[} (or
-right past the position of \pmb{]}) will result in the addition of a blank symbol to
+respectively. Attempting to move left past the conceptual position of `$[$' (or
+right past the position of `$]$'\,) will result in the addition of a blank symbol to
 the sentential form.
 
 To generate the words accepted by a Turing machine, our grammar will randomly
@@ -1154,7 +1168,7 @@ W,U,V,[,]\},Z,P_M\rangle$, where $P_M$ contains the following classes of
 productions:
 \begin{enumerate}
 \item $Z\rightarrow[W\pmb{\#}]\in P_M$ \\
-$(\forall a\in\Sigma)([W\rightarrow[W\pmb{a}\in P_M)$ \\
+$(\forall \pmb{a}\in\Sigma)([W\rightarrow[W\pmb{a}\in P_M)$ \\
 $W\rightarrow s_0\in P_M$
 
 \item Each printing transition gives rise to a production rule as follows
@@ -1189,14 +1203,14 @@ The rules in class 1 are intended to generate all words of the form $[s_0x
 \pmb{\#}]$, where $x$ is an arbitrary member of $\Sigma^*$. The remaining rules
 are defined in such a way that only those strings $x$ that are recognized by $M$
 can successfully produce a terminal string. Note that once $W$ is replaced by
-$s_0$ neither $Z$ nor $W$ can appear in a later sentential form. After $s_0$ is
+$s_0$, neither $Z$ nor $W$ can appear in a later sentential form. After $s_0$ is
 generated, the rules in class 2 may apply. It can be inductively argued that the
 derivations arising from the application of these rules directly reflect the
 changes in the configuration of the Turing machine (see Theorem \ref{thm-11.4}).
 
 None of the class 3 productions can be used until the point at which the halt
 state would be reached in the corresponding computation. Since $h\notin S$, none
-of the class 2 productions can then be used. Only if $Y$ was written to tape as
+of the class 2 productions can then be used. Only if $\pmb{Y}$ was written to tape as
 the Turing machine halted will the production $h\pmb{Y}\rightarrow U$ be
 applicable. $U$ will then delete the trailing blanks and $]$ from the sentential
 form, and then $V$ will percolate to the left, removing the leading blanks and
@@ -1250,7 +1264,7 @@ In Turing machines where the tape head travels further afield, there may be
 many more blanks enclosed within the brackets. At this point, the class 3
 productions take over to tidy up the string:
 \begin{center}\begin{tabular}{l}
-$[\pmb{\#babccahY}]\Rightarrow[\pmb{\#babcca}U]\Rightarrow[\pmb{\#babcca}V
+$[\pmb{\#babcca}h\pmb{Y}]\Rightarrow[\pmb{\#babcca}U]\Rightarrow[\pmb{\#babcca}V
 	\Rightarrow[\pmb{\#babcc}V\pmb{a}$ \\
 $\Rightarrow[\pmb{\#babc}V\pmb{ca}\Rightarrow[\pmb{\#bab}V\pmb{cca}\Rightarrow
 	[\pmb{\#ba}V\pmb{bcca}\Rightarrow[\pmb{\#b}V\pmb{abcca}$ \\
@@ -1306,8 +1320,8 @@ with perhaps some change in the number of blanks at either end. The above
 statement was stated in full generality to facilitate the induction proof (see
 the exercises). We need apply it in a very limited sense, as stated below.
 \[ (\forall\alpha,\beta,\gamma,\omega\in(\Sigma\cup\Gamma)^*)(s_0x\Dvdash x
-	\pmb{hY}\text{ iff }(\exists m,n\in\NN)([s_0x\pmb{\#}]\ \DRightarrow
-	[\pmb{\#}^mx\pmb{hY\#}^n])) \]
+	h\pmb{Y}\text{ iff }(\exists m,n\in\NN)([s_0x\pmb{\#}]\ \DRightarrow
+	[\pmb{\#}^mxh\pmb{Y\#}^n])) \]
 Observe that the productions in class 3 cannot be used unless $h\pmb{Y}$ appears
 on the tape after a finite number of steps. As discussed earlier, the presence
 of $h\pmb{Y}$ triggers the class 3 productions, which remove all the remaining
@@ -1515,7 +1529,7 @@ Each move left gives rise to a production rule as follows:
 Each halt with acceptance gives rise to a production rule as follows:
 \[ (\forall s_i\in S)(\forall\pmb{b}\in\Sigma\cup\Gamma)(\forall\pmb{a}\in\Sigma)
 	(\text{if }\delta(s_i,\pmb{b})=\langle h,\pmb{a}_{\pmb{Y}}\rangle,
-	\text{ then }\pmb{b}_i\rightarrow\pmb{a}_{\pmb{y}}\in P_B) \]
+	\text{ then }\pmb{b}_i\rightarrow\pmb{a}_{\pmb{Y}}\in P_B) \]
 \item $(\forall\pmb{a},\pmb{b}\in\Sigma)(\pmb{ba}_{\pmb{Y}}\rightarrow\pmb{b}_{
 	\pmb{Y}}\pmb{a}\in P_B)$ \\
 $(\forall\pmb{a},\pmb{b}\in\Sigma)(\overline{\pmb{b}}\pmb{a}_{\pmb{Y}}\rightarrow
@@ -1580,10 +1594,10 @@ strings that would have been accepted by the original machine will lead to a
 terminal string. If the productions of this example were applied to the
 sentential form $\overline{\pmb{b}}_0\pmb{a}\underline{\pmb{a}}$, at each step there
 will be exactly one choice of applicable production, until eventually the form
-$\overline{\pmb{B}}\pmb{A}\underline{\pmb{a}}$ is obtained. At this step, no production will
+$\overline{\pmb{B}}\pmb{A}\underline{\pmb{a}}_5$ is obtained. At this step, no production will
 apply, and therefore a terminal string cannot be generated from $\overline{\pmb{
 b}}_0\pmb{a}\underline{\pmb{a}}$. This correspondence between words accepted by the
-machine $\delta$ and words generated by the context-sensitive grammar $G_B$
+machine $B$ and words generated by the context-sensitive grammar $G_B$
 given in Definition \ref{dfn-11.9} is the foundation of the following theorem.
 
 % Theorem 11.5

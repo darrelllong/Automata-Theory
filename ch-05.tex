@@ -37,7 +37,7 @@ $(\forall x \in K)(\ETA(x) \in K)$.
 \subsection*{Example 5.1}
 
 $\NN$ is closed under $+$ since, if $x$ and $y$ are nonnegative integers, then
-$x + y$ is another nonnegative integer; that is. if $x,y \in \NN$, then
+$x + y$ is another nonnegative integer; that is, if $x,y \in \NN$, then
 $x + y \in \NN$.
 
 \subsection*{Example 5.2}
@@ -47,7 +47,8 @@ is also an integer.
 
 \subsection*{Example 5.3}
 
-Let $\rho =\{X$ $|$ X is a finite subset of $\NN\}$; then $\rho$ is closed under
+%jc perhaps we don't want emph below...
+Let $\rho =\{X$ $|$ X is a \emph{finite} subset of $\NN\}$; then $\rho$ is closed under
 $\cup$, since the union of two finite sets is still finite. (If $Y$ and $Z$ are
 subsets for which $\|Y\| = n < \infty$ and $\|Z\| = m < \infty$, then
 $\|Y \cup Z\| \leq n + m < \infty$. Under what conditions would
@@ -69,7 +70,8 @@ is sufficient to show that a given set is not closed under a unary operator.
 
 \subsection*{Example 5.5}
 
-$\NN$ is not closed under $\sqrt{\ \ \ }$ (square root) since $7 \in \NN$ but
+%jc Shenanigans to get an overbar without the symbol sinking far below the line.
+$\NN$ is not closed under $\sqrt{\huge \ ^{\ ^{\ }}}$ (square root) since $7 \in \NN$ but
 $\sqrt{7} \notin \NN$.
 
 We will not be concerned so much with sets of numbers as with sets of languages.
@@ -152,7 +154,7 @@ accepted by $M_1$ and $M_2$.
 \subsection*{Example 5.6}
 
 Consider the two machines $M_1$ and $M_2$ displayed in Figure \ref{fig-5.1}. These two
-machines can easily be employed to construct a nondeterministic finite automaton
+machines can easily be employed to construct a \emph{non}deterministic finite automaton
 that clearly accepts the appropriate union. We simply need to combine them into
 a single machine, which in this case will have two start states, as shown in
 Figure \ref{fig-5.2}.
@@ -162,10 +164,10 @@ start states. Any string that would be accepted by $M_1$ will reach a final
 state if it starts in the ``upper half'' of the new machine, while strings that
 are recognized by $M_2$ will be accepted by the ``lower half'' of the machine.
 Recall that the definition of acceptance by a nondeterministic finite automaton
-implies that the NDFA in Figure \ref{fig-5.2} will accept a string if any path leads to a
+implies that the NDFA in Figure \ref{fig-5.2} will accept a string if \emph{any} path leads to a
 final state. This new NDFA will therefore accept all the strings that $M_1$
 accepted and all the strings that $M_2$ accepted. Furthermore, these are the
-only strings that will be accepted. This trick is the basis of the following
+\emph{only} strings that will be accepted. This trick is the basis of the following
 proof, which demonstrates the convenience of using the NDFA concept; a proof
 involving only DFAs would be both longer and less obvious (see the exercises).
 
@@ -190,7 +192,7 @@ are \underline{non}deterministic finite automata
 $A_1 =\langle\Sigma,S_1,S_{0_1},\delta_1,F_1\rangle$ and
 $A_2 =\langle\Sigma,S_2,S_{0_2},\delta_2,F_2\rangle$ such that $L(A_1)=L_1$ and
 $L(A_2)=L_2$ (why?). Define
-$A^\cup =\langle\Sigma,S^\cup,s_0^\cup,\delta^\cup,F^\cup\rangle$, where
+$A^\cup =\langle\Sigma,S^\cup,S_0^\cup,\delta^\cup,F^\cup\rangle$, where
 \begin{center}
 \begin{tabular}{ll}
 $S^\cup = S_1 \cup S_2$ & (without loss of generality, we can assume
@@ -201,12 +203,12 @@ $F^\cup = F_1 \cup F_2$ &
 \end{center}
 and $\delta^\cup$$:\ (S_1 \cup S_2) \times \Sigma \rightarrow \wp(S_1 \cup S_2)$ is
 defined by
-\[ \delta^\cup(s,a) = \left\{\begin{array}{lr}
-				\delta_1(s,a) & \text{if }s \in S_1 \\
+\[ \delta^\cup(s,\pmb{a}) = \left\{\begin{array}{lr}
+				\delta_1(s,\pmb{a}) & \text{if }s \in S_1 \\
 				& , \\
-				\delta_2(s,a) & \text{if }s \in S_2
+				\delta_2(s,\pmb{a}) & \text{if }s \in S_2
 			     \end{array}\right.
-\quad \forall s \in S_1 \cup S_2,\quad \forall a \in \Sigma \]
+\quad \forall s \in S_1 \cup S_2,\quad \forall \pmb{a} \in \Sigma \]
 We claim that $L(A^\cup)=L(A_1) \cup L(A_2)=L_1 \cup L_2$. This must be proved
 using the definition of $L$ from Chapter \ref{ch-4}, since $A_1,\ A_2$, and $A^\cup$ are
 all NDFAs.
@@ -287,22 +289,22 @@ intersection operator.
 
 % Lemma 5.1
 \begin{lmm}\label{lmm-5.1}\index{closure!under intersection}\index{cross product}
-Given deterministic finite automata
+Given \emph{deterministic} finite automata
 $A_1 =\langle\Sigma,S_1,s_{0_1},\delta_1,F_1\rangle$ and
 $A_2 =\langle\Sigma,S_2,s_{0_2},\delta_2,F_2\rangle$ such that $L(A_1)=L_1$, and
 $L(A_2) = L_2$, define a new DFA
 $A^\cap =\langle\Sigma,S^\cap,s_0^\cap,\delta^\cap,F^\cap\rangle$, where
 \begin{center}
 \begin{tabular}{l}
-$s^\cap = S_1 \times S_2$ \\
+$S^\cap = S_1 \times S_2$ \\
 $s_0^\cap = \langle s_{0_1},s_{0_2}\rangle$ \\
 $F^\cap = F_1 \times F_2$
 \end{tabular}
 \end{center}
 and $\delta^\cap$$:\ (S_1 \times S_2) \times \Sigma \rightarrow S_1 \times S_2$ is
 defined by
-\[ \delta^\cap(\langle s,t\rangle,a) = \langle\delta_1(s,a),\delta_2(t,a)\rangle\quad
-	\forall s \in S_1, \forall t \in S_2, \forall a \in \Sigma \]
+\[ \delta^\cap(\langle s,t\rangle,\pmb{a}) = \langle\delta_1(s,\pmb{a}),\delta_2(t,\pmb{a})\rangle\quad
+	\forall s \in S_1, \forall t \in S_2, \forall \pmb{a} \in \Sigma \]
 Then $L(A^\cap) = L_1 \cap L_2.$
 
 \emph{Proof.} As usual, the key is to show that
@@ -327,7 +329,7 @@ $A_1$ and $A_2$. The goal was to design the transition function $\delta^\cap$ so
 that being in state $\langle s,t\rangle$ in $A^\cap$ indicates that $A_1$ would
 currently be in state $s$ and $A_2$ would be in state $t$. This goal also
 motivates the definition of the new start state; we want to begin in the start
-states of $A_1$ and $A_2$, and hence $s_0^\cap =\langle s_{0_1},s_{0_3}\rangle$.
+states of $A_1$ and $A_2$, and hence $s_0^\cap =\langle s_{0_1},s_{0_2}\rangle$.
 We only wish to accept strings that are common to both languages, which means
 that the terminating state in $A_1$ belongs to $F_1$ and the last state reached
 in $A_2$ is likewise a final state. This requirement naturally leads to the
@@ -466,10 +468,10 @@ and $\delta^\bullet$$: (S_1 \cup S_2) \times \Sigma \rightarrow \wp(S_1 \cup S_2
 is defined by
 \begin{center}
 \begin{tabular}{l}
-$\delta^\bullet(s,a)=\left\{\begin{array}{ll}
-		\{\delta_1(s,a)\} & \text{if }s \in S_1 - F_1 \\
-		\{\delta_1(s,a),\delta_2(s_{0_2},a)\} & \text{if }s\in F_1 \\
-		\{\delta_2(s,a)\} & \text{if }s \in S_2
+$\delta^\bullet(s,\pmb{a})=\left\{\begin{array}{ll}
+		\{\delta_1(s,\pmb{a})\} & \text{if }s \in S_1 - F_1 \\
+		\{\delta_1(s,\pmb{a}),\delta_2(s_{0_2},\pmb{a})\} & \text{if }s\in F_1 \\
+		\{\delta_2(s,\pmb{a})\} & \text{if }s \in S_2
 		\end{array}\right.$
 \end{tabular}
 \end{center}
@@ -517,7 +519,7 @@ just slightly from $B_2$ ($t_0$ is no longer a final state). Note that
 $L(B_3)=\{\pmb{aa},\pmb{baa}\}$, and $\lambda \notin L(B_3)$. Applying Theorem
 \ref{thm-5.4} in this case yields the automaton shown in Figure \ref{fig-5.12}. In this
 construction, $s_0$ and $s_1$ are no longer final states since the definition of
-$F$ must follow a different rule when $\lambda \not= L(B_3)$. By examining the
+$F$ must follow a different rule when $\lambda \notin L(B_3)$. By examining the
 resulting machine, the reader can verify that having $t_3$ as the only final
 state is indeed the correct strategy for this case.
 
@@ -540,6 +542,8 @@ The operators $^*$ and $^+$, which have at this point only been defined for
 alphabets, likewise have natural extensions to languages. Loosely, we would
 expect $L^*$ to consist of all words that can be formed by the concatenation of
 several words from L.
+\vspace{1in} % with current spacing, one line of Def5.5 is on page 152,
+% followed by two figures at the top of 153, then the rest of Def5.5.  Ugh...
 
 % Figure 5.12
 \begin{figure}
@@ -564,7 +568,7 @@ and in general
 $L^n = L\cdot L^{n-1},\qquad \text{for }n = 1,2,3, \ldots$ \\
 $L^*= \bigcup\limits^\infty_{i=0} L^i = L^0 \cup L^1 \cup L^2 \cup \cdots =
 	\{\lambda\}\cup L\cup L\cdot L\cup L\cdot L\cdot L\cup \ldots$ \\
-$L^+= \bigcup\limits^\infty_{i=1} L^i=L \cup L^2 \cup L^3 \cup \cdots =
+$L^+= \bigcup\limits^\infty_{i=1} L^i=L^1 \cup L^2 \cup L^3 \cup \cdots =
 	L \cup L \cdot L \cup L \cdot L \cdot L \cup \ldots$ \\
 \end{tabular}
 \end{center}
@@ -579,7 +583,7 @@ If $L =\{\pmb{aa},\pmb{c}\}$, then $L^*=\{\lambda,\pmb{aa},\pmb{c},\pmb{aac},
 \subsection*{Example 5.15}
 
 If $K =\{\pmb{db},\pmb{b},\pmb{c}\}$, then $K^*$ consists of all words (over
-$\{b,c,d\}$) for which each occurrence of $\pmb{d}$ is immediately followed by (at
+$\{\pmb{b},\pmb{c},\pmb{d}\}$ for which each occurrence of $\pmb{d}$ is immediately followed by (at
 least) one $\pmb{b}$.
 
 $\DSIG$ is closed under both $^*$ and $^+$. The technique for
@@ -591,24 +595,24 @@ Kleene closure is outlined in Theorem \ref{thm-5.5}. The construction for $L^+$ 
 For any alphabet $\Sigma$, $\DSIG$ is closed under $^*$ (Kleene
 closure).
 
-\emph{Proof.} Let L belong to $\DSIG$. Then there is a nondeterministic
-finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ such that $L(A)=L$.
-Define a nondeterministic machine
+\emph{Proof.} Let L belong to $\DSIG$. Then there is a \underline{non}deterministic
+finite automaton $A =\langle\Sigma,S,S_0,\delta,F\rangle$ such that $L(A)=L$.
+Define a \underline{non}deterministic machine
 $A_*=\langle\Sigma,S_{*},S_{0*},\delta_{*},F_{*}\rangle$,
 where
 \begin{center}
 \begin{tabular}{rll}
 $S_{*}=$ & \!\!\!\!$S \cup \{q_0\}\quad \text{(where $q_0$ is some new
 	state; $q_0 \notin S$)}$ \\
-$S_{0*}=$ &\!\!\!\!$s_0 \cup \{q_0\}$ \\
+$S_{0*}=$ &\!\!\!\!$S_0 \cup \{q_0\}$ \\
 $F_{*}=$ &\!\!\!\!$F \cup \{q_0\}$
 \end{tabular}
 \end{center}
 and $\delta_{*}$$: (S \cup \{q_0\}) \times \Sigma \rightarrow
 	\wp(S \cup \{q_0\})$ is defined by
-\[ \delta_{*}(s,a) = \left\{\begin{array}{ll}
-		\delta(s,a) & \text{if }s \notin F \cup \{q_0\} \\
-		\delta(s,a)\cup\left(\bigcup\limits_{t\in S_0}\delta(t,a)\right)
+\[ \delta_{*}(s,\pmb{a}) = \left\{\begin{array}{ll}
+		\delta(s,\pmb{a}) & \text{if }s \notin F \cup \{q_0\} \\
+		\delta(s,\pmb{a})\cup\left(\bigcup\limits_{t\in S_0}\delta(t,\pmb{a})\right)
 			& \text{if }s \in F \\
 		\emptyset & \text{if }s = q_0
 		\end{array}\right. \]
@@ -643,19 +647,19 @@ Theorem \ref{thm-5.4} began with deterministic machines, while Theorem \ref{thm-
 an NDFA was provided. Note that, in the construction of $\delta^\bullet$ in
 Theorem \ref{thm-5.4}, $\delta_1$ was a deterministic transition function and as such
 produced a single state, whereas $\delta^\bullet$, on the other hand, must
-adhere to the nondeterministic definition and produce a set of states. As a
+adhere to the nondeterministic definition and produce a \emph{set} of states. As a
 consequence, the definition of $\delta^\bullet$ involved expressions like
-$\{\delta_1(s,a)\}$, which indicated that the single state given by
-$\delta_1(s,a)$ should be viewed as a singleton set.
+$\{\delta_1(s,\pmb{a})\}$, which indicated that the single state given by
+$\delta_1(s,\pmb{a})$ should be viewed as a singleton set.
 
 By contrast, Theorem \ref{thm-5.5} specified the nondeterministic transition function
 $\delta_{*}$ in terms of $\delta$, which was also assumed to be
 nondeterministic. This gave rise to definitions of the form
-$\delta_*(s,a) = \delta(s,a)$. In this case, no set brackets $\{\ \}$
-were necessary since $\delta(s,a)$ by assumption already represented a set
+$\delta_*(s,\pmb{a}) = \delta(s,\pmb{a})$. In this case, no set brackets $\{\ \}$
+were necessary since $\delta(s,\pmb{a})$ by assumption already represented a set
 (rather than just a single element as in the deterministic case).
 
-The definition of the new set of start states So is also affected by the type
+The definition of the new set of start states $S_0$ is also affected by the type
 of machine from which the new NDFA is formed. In reviewing Theorems \ref{thm-5.4} and \ref{thm-5.5},
 the reader should be able to see the parallel between the differences in the
 specifications of the $\delta$ function and the differences in the definitions
@@ -682,8 +686,8 @@ where Z is defined by
 \subsection*{Example 5.17}
 
 Consider the deterministic finite automaton $C$ displayed in Figure \ref{fig-5.15}, which
-accepts the language $\{a^nb^m\ |\ n \geq 1,m \geq 1\}.\ Z(L(C))$ would then be
-\[ \{a^nb^m\ |\ n \geq 0, m \geq 0\} \]
+accepts the language $\{\pmb{a}^n\pmb{b}^m\ |\ n \geq 1,m \geq 1\}.\ Z(L(C))$ would then be
+\[ \{\pmb{a}^n\pmb{b}^m\ |\ n \geq 0, m \geq 0\} \]
 and can be accepted by modifying $C$ so that every transition in the diagram has
 a corresponding $\lambda$-move (allowing that particular letter to be skipped),
 as shown in Figure \ref{fig-5.16}.
@@ -776,7 +780,7 @@ is, those that are \emph{not} in $\DSIG$.
 \begin{dfn}\label{dfn-5.7}\index{N@\NSIG \ (N-sigma )}
 Let $\Sigma$ be an alphabet. Then $\NSIG$ is defined to be the set of all
 \emph{non}-FAD languages over $\Sigma$; that is,
-\[ \NSIG =\{L \subseteq \Sigma^*| \text{ there does \emph{not} exist any finite
+\[ \NSIG =\{L \subseteq \Sigma^*| \text{ there does \emph{not} exist \emph{any} finite
 automaton } M \ni L(M) = L\} \]
 \end{dfn}
 
@@ -807,11 +811,11 @@ which contradicts the assumption. Thus the lemma must be true.
 
 % Lemma 5.3
 \begin{lmm}\label{lmm-5.3}\index{closure!under intersection}
-$\mathfrak{N}_{\{a,b\}}$ is \emph{not} closed under $\cap$.
+$\mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ is \emph{not} closed under $\cap$.
 
-\emph{Proof.} Let $L_1=\{a^p\ |\ p$ is prime$\}$ and let $L_2=\{b^p\ |\ p$ is prime$\}$.
-Then $L_1 \in \mathfrak{N}_{\{a,b\}}$, $L_2 \in \mathfrak{N}_{\{a,b\}}$ but
-$L_1 \cap L_2 = \emptyset \notin \mathfrak{N}_{\{a,b\}}$ (why?).
+\emph{Proof.} Let $L_1=\{\pmb{a}^p\ |\ p$ is prime$\}$ and let $L_2=\{\pmb{b}^p\ |\ p$ is prime$\}$.
+Then $L_1 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$, $L_2 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ but
+$L_1 \cap L_2 = \emptyset \notin \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ (why?).
 \end{lmm}
 
 As another useful example of closure, we consider the transformation of one
@@ -830,13 +834,13 @@ common transformation that can be defined by a language homomorphism.
 Let $\Sigma=\{\pmb{a_1},\pmb{a_2}, \ldots , \pmb{a_m}\}$ be an alphabet and let
 $\Gamma$ be a second alphabet. Given words $w_1,$ $w_2,\ldots ,w_m$ over $\Gamma^*$\!\!,
 define a \emph{language homomorphism} $\psi$$: \Sigma \rightarrow \Gamma^*$ by
-$\psi(a_i) = w_i$ for each $i$, which can be extended to
+$\psi(\pmb{a}_i) = w_i$ for each $i$, which can be extended to
 $\PBAR$$: \Sigma^* \rightarrow \Gamma^*$ by:
 \begin{center}
 \begin{tabular}{rcl}
 $\PBAR(\lambda)$ & $=$ & $\lambda$ \\
-$(\forall a \in \Sigma)(\forall x \in \Sigma^*)(\PBAR(a\cdot x)$ & $=$ &
-	$\psi(a) \cdot (\PBAR(x)))$
+$(\forall \pmb{a} \in \Sigma)(\forall x \in \Sigma^*)(\PBAR(\pmb{a}\cdot x)$ & $=$ &
+	$\psi(\pmb{a}) \cdot (\PBAR(x)))$
 \end{tabular}
 \end{center}
 \PBAR can be further extended to operate on a language $L$ by defining
@@ -857,7 +861,7 @@ $\{\pmb{c},\pmb{d}\}$ in which every $\pmb{c}$ is immediately followed by $\pmb{
 As a second example, let $\Sigma=\{),(\}$ and let $\Gamma$ be the ASCII
 alphabet. If $\mu$ is defined by $\mu(() =$ {\bf begin} and $\mu())=$ {\bf end},
 then the set $M$ of all strings of matched parentheses maps to $K$, the set of
-all matched begin-end pairs.
+all matched {\bf begin}-{\bf end} pairs.
 
 A general homomorphism $\psi$ maps a language over $\Sigma$ to a language over
 $\Gamma$. However, to consider the closure of \DSIG, we will restrict our
@@ -916,7 +920,7 @@ for Example 5.22}\label{fig-5.20}
 \subsection*{Example 5.23}
 
 Consider the \emph{identity} homomorphism $\mu$$: \Sigma\rightarrow\Sigma^*$
-defined by $(\forall a \in \Sigma)(\mu(\pmb{a})=\pmb{a})$. Since
+defined by $(\forall \pmb{a} \in \Sigma)(\mu(\pmb{a})=\pmb{a})$. Since
 $\overline{\mu}(L)=L$, \emph{any} collection of languages, including \NSIG, is
 clearly closed under this homomorphism. Unlike \DSIG, though, there are many
 homomorphisms under which \NSIG\ is not closed.
@@ -924,7 +928,7 @@ homomorphisms under which \NSIG\ is not closed.
 % Lemma 5.4
 \begin{lmm}\label{lmm-5.4}\index{closure!under language homomorphism}
 Let $\Sigma=\{\pmb{a},\pmb{b}\}$, and let $\xi$$: \Sigma\rightarrow\Sigma^*$ be
-defined by $\xi(a)=\pmb{a}$ and $\xi(b)=\pmb{a}$. Then \NSIG\ is \emph{not}
+defined by $\xi(\pmb{a})=\pmb{a}$ and $\xi(\pmb{b})=\pmb{a}$. Then \NSIG\ is \emph{not}
 closed under $\overline{\xi}$.
 
 \emph{Proof.} Consider the set $L$ of all strings that have the same number of
@@ -989,7 +993,7 @@ $F^\psi = F$
 \end{center}
 and $\delta^\psi$ is defined by
 \[ \delta^\psi(s,\pmb{a})=\DBAR\!(s,\psi(\pmb{a}))\ 
-		\forall s \in S, \forall a \in \Sigma \]
+		\forall s \in S, \forall \pmb{a} \in \Sigma \]
 Induction can be used to show $\overline{\delta^\psi}\!\!(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
 \forall x \in \Sigma^*$\!\!, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
 $\forall x \in \Sigma^*$\!\!. Hence $L(A^\psi)=\overline{\psi^{-1}}(L(A))$.
@@ -1109,17 +1113,19 @@ Once again, \NSIG\ does not enjoy the same closure properties that \DSIG\ does.
 
 % Lemma 5.6
 \begin{lmm}\label{lmm-5.6}
-Let $\Sigma$ be an alphabet. Then \NSIG\ is not closed under the operator $b$.
+Let $\Sigma = \{\pmb{a},\pmb{b}\}$.
+Then \NSIG\ is not closed under the operator $b$.
 
-\emph{Proof.} Let $L=\{a^nb^n$ $|$ $n \geq 0\}\in \NSIG$. Then $L^b=\{a^n$ $|$ $n\geq 0\}
+\emph{Proof.} Let $L=\{\pmb{a}^n\pmb{b}^n$ $|$ $n \geq 0\}\in \NSIG$. Then $L^b=\{\pmb{a}^n$ $|$ $n\geq 0\}
 \notin \NSIG$.
 \end{lmm}
 
 Other examples that show \NSIG\ is not closed under the operator $b$ abound. If
-$K=\{x\in\{\pmb{a},\pmb{b}\}^*$ $|$ $\ |x|_a = |x|_b\}$, then
+$K=\{x\in\{\pmb{a},\pmb{b}\}^*$ $|$ $\ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$, then
 $K^b=\{\pmb{a},\pmb{b}\}^*$. The last operator we will cover in this chapter is
-useful for illustrating closures that may not be effective, that is, for which
+useful for illustrating closures that may not be \emph{effective}, that is, for which
 there may not exist an algorithm for constructing the desired entity.
+}
 
 % Definition 5.10
 \begin{dfn}\label{dfn-5.10}
@@ -1136,7 +1142,7 @@ $L_1$ that terminate in a word from $L_2$.
 Let $\Sigma=\{\pmb{a},\pmb{b}\}$. Then $\{\pmb{b}^2,\pmb{b}^4,\pmb{b}^6,\pmb{b}^8,
 \pmb{b}^{10},\pmb{b}^{12},\ldots\}/\{\pmb{b}\}=\{\pmb{b}^1,\pmb{b}^3,\pmb{b}^5,
 \pmb{b}^7,\pmb{b}^9,\pmb{b}^{11},\ldots\}$.\\Note that %\linebreak[4]
-$\{\pmb{b}^2, \pmb{b}^4, \pmb{b}^6, \pmb{b}^8, \pmb{b}{10}, \pmb{b}^{12},
+$\{\pmb{b}^2, \pmb{b}^4, \pmb{b}^6, \pmb{b}^8, \pmb{b}^{10}, \pmb{b}^{12},
 \ldots\}/\{\pmb{a}\} = \{\ \}$.
 
 % Theorem 5.12
@@ -1147,7 +1153,7 @@ For any alphabet $\Sigma$, \DSIG\ is closed under quotient.
 deterministic finite automaton
 $A_1=\langle\Sigma,S_1,s_{0_1},\delta_1,F\rangle$ such that $L(A_1)=L_1$. An
 automaton that accepts $L_1/L_2$ can be defined by
-$A^/=\langle\Sigma,S_1,s_{0_2},\delta_1,F^/\rangle$, where $F^/$ is defined to
+$A^/=\langle\Sigma,S_1,s_{0_1},\delta_1,F^/\rangle$, where $F^/$ is defined to
 be the set of all states $t$ for which there is a word in $L_2$ that reaches a
 final state from $t$. That is, $F^/=\{t$ $|$ $\exists y \in \Sigma^*\ni (y \in L_2
 \wedge \delta_1(t,y) \in F)\}$. It can be shown that $A^/$ does indeed accept
@@ -1161,7 +1167,7 @@ It was not actually necessary to deal with an automaton for $L_2$ in order to
 argue that there must exist a DFA that recognizes $L_1/L_2$. The proof of
 Theorem \ref{thm-5.12} is thus an \emph{existence} proof, but does not indicate whether
 \DSIG\ is \emph{effectively} closed under quotient. Indeed, Theorem \ref{thm-5.12}
-actually proves that the quotient of a FAD language with any other language
+actually proves that the quotient of a FAD language with \emph{any} other language
 (including those in \NSIG) will always be FAD. However, if it is hard to
 determine just which strings in the other language may have the properties we
 need to define $F^/$; we may not really know which subset of states $F^/$ should
@@ -1213,7 +1219,7 @@ finite languages over $\Sigma$. Prove or give counterexamples to the following:
 \end{enumerate}
 
 \item Let $\Sigma$ be an alphabet. Define $C_\Sigma$ to be the collection of all
- \index{cofinite!collection $C_\Sigma$} languages over $\Sigma$ (a language is cofinite if it is the complement
+ \emph{cofinite}\index{cofinite!collection $C_\Sigma$} languages over $\Sigma$ (a language is cofinite if it is the complement
 of a finite language). Prove or give counterexamples to the following:
 \begin{enumerate}
 \item $\pmb{C_\Sigma}$ is closed under complementation.
@@ -1260,7 +1266,7 @@ counterexamples to the following:
 \item $\pmb{J_\Sigma}$ is closed under relative complement.
 \end{enumerate}
 
-\item Define $E$ to be the collection of all
+\item Define $\pmb{E}$ to be the collection of all
 languages over $\{\pmb{a},\pmb{b}\}$ that contain the word $\pmb{abba}$. Prove or
 give counterexamples to the following:
 \begin{enumerate}
@@ -1302,7 +1308,7 @@ construction used in Theorem \ref{thm-5.2}:
 \item Build a \emph{deterministic} automaton $A^u$ that will accept
 $L(A_1) \cup L(A_2)$.
 \item Prove that your construction behaves as advertised.
-\item If no minimization is performed in Exercise 5.14, how do the number of
+\item If \emph{no} minimization is performed in Exercise 5.14, how do the number of
 states in $A^\cup$, $A^U$, and $A^u$ compare? (Assume $A_1$ has $n$ states
 and $A_2$ has $m$ states, and give expressions based on these variables.)
 \end{enumerate}
@@ -1310,7 +1316,7 @@ and $A_2$ has $m$ states, and give expressions based on these variables.)
 \item Let $\Sigma$ be an alphabet. Define the (unary) operator $P$ by
 \[ P(L)=\{x\ |\  \exists y \in \Sigma^* \ni xy \in L\}\text{ (for any collection of
 words $L$)} \]
-$P(L)$ then represents all the prefixes of words in $L$. For example, if
+$P(L)$ then represents all the \emph{prefixes} of words in $L$. For example, if
 $K =\{\pmb{a},\pmb{bbc},\pmb{dd}\}$, then
 $P(K)=\{\pmb{\lambda},\pmb{a},\pmb{b},\pmb{bb},\pmb{bbc},\pmb{d},\pmb{dd}\}$. Prove
 that \DSIG\ is closed under the operator $P$.
@@ -1318,7 +1324,7 @@ that \DSIG\ is closed under the operator $P$.
 \item Let $\Sigma$ be an alphabet. Define the (unary) operator $S$ by
 \[ S(L)=\{x\ | \ \exists y \in \Sigma^* \ni yx \in L\}\text{ (for any collection of
 words $L$)} \]
-$S(L)$ then represents all the suffixes of words in $L$. For example, if
+$S(L)$ then represents all the \emph{suffixes} of words in $L$. For example, if
 $K=\{\pmb{a},\pmb{bbc},\pmb{dd}\}$, then
 $S(K)=\{\pmb{\lambda},\pmb{a},\pmb{c},\pmb{bc},\pmb{bbc},\pmb{d},\pmb{dd}\}$.
 \begin{enumerate}
@@ -1331,7 +1337,7 @@ automaton accepting $S(L)$.
 \item Let $\Sigma$ be an alphabet. Define the (unary) operator $C$ by
 \[ C(L)=\{x\ | \ \exists y,z \in \Sigma^* \ni yxz \in L\}
 	\text{ (for any collection of words $L$)} \]
-$C(L)$ then represents all the centers of words in $L$. For example, if
+$C(L)$ then represents all the \emph{centers} of words in $L$. For example, if
 $K=\{\pmb{a},\pmb{bbc},\pmb{dd}\}$, then $C(K)=\{\pmb{\lambda},\pmb{a},\pmb{c},
 \pmb{bc},\pmb{bbc},\pmb{b},\pmb{bb},\pmb{d},\pmb{dd}\}$.
 \begin{enumerate}
@@ -1344,7 +1350,7 @@ automaton accepting $C(L)$.
 \item Let $\Sigma$ be an alphabet. Define the (unary) operator $F$ by
 \[ F(L)=\{x\ \ | \ x \in L \wedge (\text{if }\exists y \in \Sigma^* \ni xy \in L,
 	\text{then }y = \lambda)\} \]
-$F(L)$ then represents all the words in $L$ that are not the beginnings of
+$F(L)$ then represents all the words in $L$ that are \emph{not} the beginnings of
 other words in $L$. For example, if $K=\{\pmb{ad},\pmb{ab},\pmb{abbad}\}$, then
 $F(K)=\{\pmb{ad},\pmb{abbad}\}$. Prove that \DSIG\ is closed under the operator
 $F$.
@@ -1360,13 +1366,13 @@ $K^r=\{\pmb{\lambda},\pmb{da},\pmb{cbb},\pmb{dabb}\}$.
 \item Given an automaton accepting L, describe how to modify it to produce an
 automaton accepting $L^r$.\index{closure!under reversal}
 \item Prove that your construction behaves as advertised.
-\item Argue that \DSIG\ is closed under the operator $r$
+\item Argue that \DSIG\ is closed under the operator $r$.
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c},\pmb{d}\}$. Define the (unary)
 operator $G$ by
-\[ G(L)=\{a_na_{n-1}\ldots a_3a_2a_1a_1a_2a_3\ldots a_{n-1}a_n\ |\ a_1a_2a_3\ldots
-	a_{n-1}a_n \in L\} \]
+\[ G(L)=\{\pmb{a}_n\pmb{a}_{n-1}\ldots \pmb{a}_3\pmb{a}_2\pmb{a}_1\pmb{a}_1\pmb{a}_2\pmb{a}_3\ldots \pmb{a}_{n-1}\pmb{a}_n\ |\ \pmb{a}_1\pmb{a}_2\pmb{a}_3\ldots
+	\pmb{a}_{n-1}\pmb{a}_n \in L\} \]
 \[ =\{w^r \cdot w\ |\ w \in L\} \]
 (see the definition of $w^r$ in Exercise 5.20). As an example, if
 $K=\{\pmb{\lambda},\pmb{ad},\pmb{bbc},\pmb{bbad}\}$, then
@@ -1404,10 +1410,10 @@ concatenation, and Kleene closure, but is not closed under intersection.
 closed under intersection? Prove or give a counterexample.
 
 \item Refer to the construction in Theorem \ref{thm-5.4} and prove that
-$L(A^\bullet) = L_1 \cdot L_2$. Warning! This involves a lot of tedious details.
+$L(A^\bullet) = L_1 \cdot L_2$. Warning! This involves a \emph{lot} of tedious details.
 
 \item Refer to the construction in Theorem \ref{thm-5.5} and prove that
-$L(A_*) = L^*$. Warning! This involves a lot of tedious details.
+$L(A_*) = L^*$. Warning! This involves a \emph{lot} of tedious details.
 
 \item Amplify the explanations for each of the equivalences in the proof of
 Theorem \ref{thm-5.2}.
@@ -1415,7 +1421,7 @@ Theorem \ref{thm-5.2}.
 \item Given a DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, define an NDFA that
 will accept $L(A)^+$.
 
-\item Given an NDFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, define an NDFA that
+\item Given an NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$, define an NDFA that
 will accept $L(A)^+$.
 
 \item If $L$ is FAD, is it necessarily true that all subsets of $L$ are FAD?
@@ -1486,7 +1492,7 @@ $\mathfrak{L}_\Sigma$ have? How does $\mathfrak{L}_\Sigma$ compare to \DSIG?
 	\end{tabular}\right. \]
 \begin{enumerate}
 \item Prove (by induction) that $\overline{\delta^\cup}$ conforms to a similar formula:
-\[ \overline{\delta^\cup}(s,x_) = \left\{\begin{tabular}{lrl}
+\[ \overline{\delta^\cup}(s,x) = \left\{\begin{tabular}{lrl}
 	$\DBAR_1(s,x)$ & if $s \in S_1$ & \\
 	& , & $\forall s \in S_1 \cup S_2,\quad \forall x \in \Sigma^*$ \\
 	$\DBAR_2(s,x)$ & if $s \in S_2$ &
@@ -1538,7 +1544,7 @@ automaton accepting $M(L)$.
 \item Refer to the definitions given in Lemma \ref{lmm-5.1} and use induction to show
 that
 \[ (\forall s \in S_1)(\forall t \in S_2)(\forall x \in \Sigma^*)(\overline{\delta^\cap}
-	(\langle s,t\rangle,x) = \langle\delta_1(s,x),\delta_2(t,x)\rangle ) \]
+	(\langle s,t\rangle,x) = \langle\DBAR_1(s,x),\DBAR_2(t,x)\rangle ) \]
 
 \item Refer to Lemma \ref{lmm-5.1} and prove that $L(A^\cap)=L_1 \cap L_2$. As long as the
 reference is explicitly stated, the result in Exercise 5.56 can be used without
@@ -1597,7 +1603,8 @@ automaton accepting $T(L)$.
 \item Argue that \DSIG\ is closed under the operator $T$.
 \end{enumerate}
 
-\item Let $P=\{x$ $|$ $|x|$ is prime$\}$ and let $I(L)$ be defined by
+\item For any alphabet $\Sigma$,
+let $P=\{x\in\Sigma^*$ $|$ $|x|$ is prime$\}$ and let $I(L)$ be defined by
 $I(L) = L \cap P$.
 \begin{enumerate}
 \item Show that \DSIG\ is not closed under $I$.
@@ -1665,13 +1672,13 @@ $\overline{\xi^{-1}}(\xi(L))$
 
 \item Let $\Sigma$ be an alphabet. Define the (unary) operator $e$ by
 \[ L^e=\{x\ | \ \exists y \in \Sigma^* \ni (yx \in L \wedge |x|=|y|)\} \]
-$L'$ then represents the last halves of all the words in $L$. For example, if
-$K=\{\pmb{ad},\pmb{abaa},\pmb{ccccc}\}$, then $K=\{\pmb{d},\pmb{aa}\}$. Prove
+$L^e$ then represents the last halves of all the words in $L$. For example, if
+$K=\{\pmb{ad},\pmb{abaa},\pmb{ccccc}\}$, then $K^e=\{\pmb{d},\pmb{aa}\}$. Prove
 that \DSIG\ is closed under the operator $e$.
 
 \item Refer to the proof of Theorem \ref{thm-5.11} and show that there exists an automaton
 $A$ for which it would be incorrect to try to accept $L^b$ by redefining the set
-of final states to be the set of ``midway'' states.
+of final states to be merely the set of ``midway'' states.
 
 \item Consider the sets $M$ and $K$ in Example 5.20. Assume that we have used
 the pumping lemma to show that $M$ is not FAD. What would be wrong with arguing
@@ -1713,7 +1720,7 @@ infinite number of languages, every language in $S$ must be FAD.
 
 \item Let $S$ be a collection of languages that is closed under union,
 concatenation, and Kleene closure. Prove or disprove: If $S$ is a finite
-collection. every language in $S$ must be FAD.
+collection, every language in $S$ must be FAD.
 
 \item Let $u$ be a unary language operator that, when composed with itself,
 yields the identity function. Prove that if \DSIG\ is closed under $u$,

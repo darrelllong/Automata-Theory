@@ -67,23 +67,22 @@ formed by repeated application of the following rules:
 \item $\pmb{a}$, $\pmb{b}$, $\pmb{c}$ are each regular expressions.
 \item $\emptyset$ is a regular expression.
 \item $\epsilon$ is a regular expression.
-\item If $R_1$ and $R_2$ are regular expressions, then so is $(R_1 \cdot R_2)$.
-\item If $R_1$ and $R_2$ are regular expressions, then so is $(R_1 \cup R_2)$.
-\item If $R_1$ is a regular expression, then so is $R^*_1$.
+\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \pmb\cdot R_2\pmb{)}$.
+\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \pmb\cup R_2\pmb{)}$.
+\item If $R_1$ is a regular expression, then so is $R^{\pmb *}_1$.
 \end{enumerate}
 The conditions set forth above could have instead been succinctly specified by
 the BNF shown below.
-\[ R:: =\pmb{a}|\pmb{b}]\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|(R\cdot R)|(R\cup
-	R)|R^* \]
+\[ R:: =\pmb{a}|\pmb{b}]\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|\pmb{(}R\pmb\cdot R\pmb{}|\pmb{(}R\cup R\pmb{)}|R^{\pmb *} \]
 The following is a typical derivation, culminating in the regular expression
-$\pmb{(a\cdot(c\cup\epsilon))^*}$
+$\pmb{(a\pmb\cdot(c\pmb\cup\epsilon))^{\pmb *}}$
 \begin{center}\begin{tabular}{r@{ $\Rightarrow$ }l}
-$R$ & $R^*$ \\
-& $(R \cdot R)^*$ \\
-& $(\pmb{a} \cdot R)^*$ \\
-& $(\pmb{a}\cdot(R \cup R))^*$ \\
-& $(\pmb{a}\cdot(\pmb{c}\cup R))^*$ \\
-& $(\pmb{a}\cdot(\pmb{c}\cup\pmb{\epsilon}))^*$
+$R$ & $R^{\pmb *}$ \\
+& $\pmb{(}R \pmb\cdot R\pmb{)}^{\pmb *}$ \\
+& $\pmb{(}\pmb{a} \pmb\cdot R\pmb{)}^{\pmb *}$ \\
+& $\pmb{(}\pmb{a}\pmb\cdot\pmb{(}R \pmb\cup R\pmb{)}\pmb{)}^{\pmb *}$ \\
+& $\pmb{(}\pmb{a}\pmb\cdot\pmb{(}\pmb{c}\pmb\cup R\pmb{)}\pmb{)}^{\pmb *}$ \\
+& $\pmb{(}\pmb{a}\pmb\cdot\pmb{(}\pmb{c}\pmb\cup\pmb{\epsilon}\pmb{)}\pmb{)}^{\pmb *}$
 \end{tabular}\end{center}
 Note that in the intermediate steps of the derivation, we do not wish to consider
 strings such as $(\pmb{a}\cdot R)^*$ to be valid regular expressions. $(\pmb{a}
@@ -145,10 +144,11 @@ and it must also enumerate the set of rules for replacing phrases within a
 derivation with other phrases. In the above examples, the productions have all
 involved the replacement of single nonterminals with other strings. In an
 unrestricted grammar, a general replacement rule may allow an entire string
-$\alpha$ to be replaced by another string $\beta$. Thus, $\pmb{aBcD} \rightarrow
-\pmb{bcA}$ would be a legal production, and thus whenever the sequence
-$\pmb{aBcD}$ is found within a derivation it can be replaced by the shorter
-string $\pmb{bcA}$.
+$\alpha$ to be replaced by another string $\beta$.
+Thus, $\pmb{a}B\pmb{c}D \rightarrow \pmb{be}A$
+would be a legal production, and thus whenever the sequence $\pmb{a}B\pmb{c}D$
+is found within a derivation it can be replaced by the shorter
+string $\pmb{be}A$.
 
 % Definition 8.1
 \begin{dfn}\label{dfn-8.1}
@@ -235,11 +235,11 @@ Note that in Example 8.3 the only production that specified that a string be
 replaced by a shorter string was $T \rightarrow \lambda$. Consequently, the
 length of the derived string either increased or remained constant except where
 this last production was applied. Rules such as $\pmb{a}B\pmb{c}D \rightarrow
-\pmb{bc}A$, in which four symbols are replaced by only three, will at least
+\pmb{be}A$, in which four symbols are replaced by only three, will at least
 momentarily decrease the length of the string. Such productions are called
 \emph{contracting} productions. Grammars that satisfy the added requirement that
 no production may decrease the length of the derivation are called
-\index{context-sensitive grammar}\emph{context sensitive}}. Such grammars cannot generate as many
+\index{context-sensitive grammar}\emph{context sensitive}. Such grammars cannot generate as many
 languages as the unrestricted grammars, but they have the added advantage of
 allowing derivations to proceed in a more predictable manner. Programming
 languages are explicitly designed to ensure that they can be represented by
@@ -351,7 +351,7 @@ $\pmb{aabbcc}$
 This grammar does produce $\lambda$, but all other derivations are strictly
 length-increasing. Note that this was not the case in the grammar $G''$ in
 Example 8.3. The last step of the derivation shown there transformed a string of
-length 7 into a string of length 6. Gil does not satisfy the definition of a
+length 7 into a string of length 6. $G''$ does not satisfy the definition of a
 context-sensitive grammar; even though only $T$ could produce $\lambda$, $T$
 could occur later in the derivation. The presence of $T$ at later steps destroys
 the desirable property of having all other derivations strictly length-increasing
@@ -370,7 +370,7 @@ of words, as in the grammars $G''$and $G'$ from Examples 8.3 and 8.5. The term
 context sensitive comes from the fact that context-sensitive languages (that
 is, type 1 languages) can be represented by grammars in which the productions
 are all of the form $\alpha B\gamma\rightarrow\alpha\beta\gamma$, where a single
-nonterminal $B$ is replaced by the string $\beta$ in the context of the strings
+nonterminal $B$ is replaced by the string $\beta$ in the \emph{context} of the strings
 $\alpha$ on the left and $\gamma$ on the right. Specialized grammars such as
 these, in which there are restrictions on the form of the productions, are
 examples of \emph{normal forms} and are discussed later in the text.
@@ -392,7 +392,7 @@ $\Omega$ is a (nonempty) set of \emph{nonterminals}. \\
 $\Sigma$ is a (nonempty) set of \emph{terminal symbols} (and $\Omega\cap\Sigma =
 	\emptyset$). \\
 $S$ is the designated \emph{start symbol} (and $S\in\Omega$). \\
-$P$ is a set of productions of the form $A\rightarrow\beta$, where $A\in\Omega,
+$P$ is a set of \emph{productions} of the form $A\rightarrow\beta$, where $A\in\Omega,
 	\beta\in(\Omega\cup\Sigma)^+$.
 \end{quote}
 \end{dfn}
@@ -415,7 +415,7 @@ $Z \notin \Omega\cup\Sigma$.
 Productions of the form $C\rightarrow\beta$ are called \emph{\Index{C-rules}}.
 As was done with context-sensitive grammars, this definition uses a new start
 state $Z$ to avoid all such length-decreasing productions except for a single
-one of the form $Z\rightarrow\lambda$., which is used only for generating the
+one of the form $Z\rightarrow\lambda$, which is used only for generating the
 empty string. Type 2 languages will therefore always be type 1 languages. Note
 that the definition ensures that the only production that can decrease the
 length of a derivation must be the Z-rule $Z\rightarrow\lambda$.
@@ -469,7 +469,7 @@ $\Omega$ is a (nonempty) set of \emph{nonterminals}. \\
 $\Sigma$ is a (nonempty) set of \emph{terminal symbols} (and $\Omega\cap\Sigma =
 	\emptyset$). \\
 $S$ is the designated \emph{start symbol} (and $S\in\Omega$). \\
-$P$ is a set of productions of the form $A\rightarrow xB$, where $A\in\Omega, B
+$P$ is a set of \emph{productions} of the form $A\rightarrow xB$, where $A\in\Omega, B
 	\in(\Omega\cup\lambda)$, and $x\in\Sigma^*$
 \end{quote}
 \end{dfn}
@@ -560,7 +560,7 @@ the same language. The following definition formalizes this notion.
 % Definition 8.9
 \begin{dfn}\label{dfn-8.9}
 Two grammars $G_1=\langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2=\langle\Omega_2,
-\Sigma,S_2,P_2\rangle$ are called equivalent iff $L(G_1)=L(G_2)$, and we will
+\Sigma,S_2,P_2\rangle$ are called \emph{equivalent} iff $L(G_1)=L(G_2)$, and we will
 write $G_2 \simeq G_1$.
 \end{dfn}
 
@@ -581,7 +581,7 @@ regular set represented by the regular expression $R$, has generally been
 eschewed in favor of the more common convention of denoting both the set and the
 expression by the same symbol $R$]. In the larger sense, then, a representation
 $X$ of a language, regardless of whether $X$ is a grammar, DFA, NDFA, or regular
-expression, is equivalent to another representation $Y$ \emph{iff} $L(X)=L(Y)$.
+expression, is \emph{equivalent} to another representation $Y$ \emph{iff} $L(X)=L(Y)$.
 
 Our first goal in this section is to demonstrate that a cognitive representation
 of a language (via a DFA) can be replaced by a generative representation (via
@@ -642,7 +642,7 @@ sequence of integers $i_1,i_2,\ldots,i_n$,
 then the string $\pmb{a}_1\pmb{a}_2\cdots\pmb{a}_n$ will cause the DFA (when
 starting in state $q_{i_0}$) to visit the states $q_{i_1},\ q_{i_2},\ldots,\ 
 q_{i_n}$. Furthermore, if $q_{i_n} \in F$, then, by applying the production
-$q_{i_n}\rightarrow\lambda,\ q_0\Rightarrow\pmb{a}_1\pmb{a}_2\cdots\pmb{a}_n
+$q_{i_n}\rightarrow\lambda,\ q_0\,\DRightarrow\pmb{a}_1\pmb{a}_2\cdots\pmb{a}_n
 q_{i_n}\Rightarrow\pmb{a}_1\pmb{a}_2\cdots\pmb{a}_n$. This will show that valid
 derivations correspond to strings reaching final states in $A$, and so $L(G_A)
 \subseteq L(A)$ (see the exercises). Thus $L(G_A)=L(A)$.
@@ -781,7 +781,7 @@ $\Omega$ is a (nonempty) set of \emph{nonterminals}. \\
 $\Sigma$ is a (nonempty) set of \emph{terminal symbols} (and $\Omega\cap\Sigma =
 	\emptyset$). \\
 $S$ is the designated \emph{start symbol} (and $S\in\Omega$). \\
-$P$ is a set of productions of the form $A\rightarrow Bx$, where $A\in\Omega,B
+$P$ is a set of \emph{productions} of the form $A\rightarrow Bx$, where $A\in\Omega,B
 	\in(\Omega\cup\lambda)$, and $x\in\Sigma^*$.
 \end{quote}
 \end{dfn}
@@ -825,7 +825,7 @@ right-linear grammar, and again $L(G^r) = L(G)^r$.
 
 \emph{Proof.} A straightforward induction on the number of productions used to
 produce a given terminal string (see the exercises). It can be shown that $S 
-\DRightarrow Bx$ by applying $n$ productions from $G$ iff $S\DRightarrow x^rB$
+\,\DRightarrow Bx$ by applying $n$ productions from $G$ iff $S\,\DRightarrow x^rB$
 by applying $n$ corresponding productions from $G^r$.
 \end{lmm}
 
@@ -854,7 +854,7 @@ generated by the set of all right-linear grammars over $\Sigma$.
 \emph{Proof.} Let $G$ be a left-linear grammar. $G^r$ is then a right-linear
 grammar, and $L(G^r)$ is therefore FAD by Theorem \ref{thm-8.1}. Since \DSIG\ is closed
 under the reverse operator $r$ (see Exercise 5.20), $L(G^r)^r$ is also FAD. But,
-by Lemma \ref{lmm-8.3}, $L(G^r)r = L(G)$, and so $L(G)$ is FAD. Hence every left-linear
+by Lemma \ref{lmm-8.3}, $L(G^r)^r = L(G)$, and so $L(G)$ is FAD. Hence every left-linear
 grammar generates a member of \DSIG\ and therefore (by Lemma \ref{lmm-8.3}) has a corresponding
 right-linear grammar.
 
@@ -1061,7 +1061,7 @@ not involving $X_n$.
 For a given solution for $X_1$ through $X_{n-1}$ Lemma \ref{lmm-8.4} can therefore be
 applied to the above equation in the one unknown $X_n$, with coefficients
 \[ E = (E_n\cup A_{n1}X_1\cup A_{n2}X_2\cup\cdots\cup A_{n(n-1)}X_{n-1}) \]
-and $A=A_{nn}$ to find a minimal solution for X, for the corresponding values of
+and $A=A_{nn}$ to find a minimal solution for $X_n$ for the corresponding values of
 $X_1$ through $X_{n-1}$. This is exactly as given by part (b) above:
 \[ X_n=A^*_{nn}\cdot(E_n\cup A_{n1}X_1\cup A_{n2}X_2\cup\cdots\cup A_{n(n-1)}
 	X_{n-1}) \]
@@ -1089,7 +1089,7 @@ $X_k =$ & $E_k\cup A_{k1}X_1\cup A_{k2}X_2\cup\cdots$ \\
 \end{tabular}\end{center}
 Due to the nature of union and concatenation, no other solution for $X_n$ can
 possibly allow a smaller solution for $X_1,X_2,\ldots,X_{n-1}$ to be found.
-Specifically, if $Y_n$ is a solution satisfying the $n$th equation, then Lemma
+Specifically, if $Y_n$ is a solution satisfying the $n^{th}$ equation, then Lemma
 \ref{lmm-8.4} guarantees that $W_n \subseteq Y_n$, and consequently
 \[ X_k = E_k\cup A_{k1}X_1\cup A_{k2}X_2\cup\cdots\cup A_{kn}W_n \subseteq E_k
 	\cup A_{k1}X_1\cup A_{k2}X_2\cup\cdots\cup A_{kn}Y_n \]
@@ -1124,7 +1124,7 @@ through $X_{n-1}$, and the induction assumption guarantees that the elimination
 and back-substitution method yields a minimal solution for $W_1$ through
 $W_{n-1}$. Lemma \ref{lmm-8.4} then guarantees that the solution for
 \[ W_n = A^*_{nn}\cdot E_n\cup A^*_{nn}\cdot A_{n1}W_1\cup A^*_{nn}\cdot A_{n2}
-	W_2\cup\cdots\cup A^*_{nn}\cdot A_{n(n-1)}W_{n-1}) \]
+	W_2\cup\cdots\cup A^*_{nn}\cdot A_{n(n-1)}W_{n-1} \]
 is minimal, which completes the minimal solution for the original system of $n$
 equations.
 \end{lmm}
@@ -1158,7 +1158,7 @@ From the start symbol $Z$ there are only two productions that can be applied; if
 $Z\rightarrow S_1$ is chosen, then the derivation will have to continue with
 productions from $P_1$ and produce a word from $L(G_1)$ (why can't productions
 from $P_2$ be applied?). Similarly, if $Z\rightarrow S_2$ is chosen instead, the
-only result can be a word from $L(G2)$.
+only result can be a word from $L(G_2)$.
 \end{thm}
 
 In an analogous fashion, effective closure of \GSIG\ can be demonstrated for the
@@ -1272,7 +1272,7 @@ example, the construction given in Lemma \ref{lmm-8.2} would have been more conc
 easier to investigate if complex productions such as $S\rightarrow\pmb{bcaa}T$
 could be avoided. Indeed, if all productions in the grammar $G$ had been of the
 form $A\rightarrow\pmb{a}B$ or $A\rightarrow\lambda$, both the state set and the
-state transition function of $AG$ could have been defined more easily. Other
+state transition function of $A_G$ could have been defined more easily. Other
 constructions and proofs may also be able to make use of the simpler types of
 productions in grammars that conform to such normal forms. The following theorem
 guarantees that a given right-linear grammar has a corresponding equivalent
@@ -1296,7 +1296,7 @@ Note that the proof given is a constructive proof: rather than simply arguing
 the existence of such a grammar, a method for obtaining $G^1$ is outlined. The
 above theorem could have been proved without relying on automata constructs.
 Basically, ``long'' productions like $T\rightarrow\pmb{abc}R$ would be replaced
-by a series of productions involving newly introduced nonterrninals, for example,
+by a series of productions involving newly introduced nonterminals, for example,
 $T\rightarrow\pmb{a}X,X\rightarrow\pmb{b}Y,Y\rightarrow\pmb{c}R$. Similarly, a
 production like $T\rightarrow\pmb{aa}$ might be replaced by the sequence $T
 \rightarrow\pmb{a}B,B\rightarrow\pmb{a}C,C\rightarrow\lambda$. If the existence
@@ -1516,7 +1516,7 @@ using the following construction? Let $G_1 = \langle\Omega_I,\Sigma,S_1,P_1
 grammars, and, without loss of generality, assume that $\Omega_1\cap\Omega_2 =
 \emptyset$. Choose a new nonterminal $Z$ such that $Z\notin\Omega_1\cup\Omega_2$,
 and define a new grammar $G^\bullet = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,
-P_1\cup P_2\cup\{Z\rightarrow S_1\cdot S_2\}\rangle$. \emph{Note:} It is
+P_1\cup P_2\cup\{Z\rightarrow S_1\cdot S_2\}\rangle$. \emph{Note:} It \emph{is}
 straightforward to show that $L(G^\bullet)=L(G_1)\cdot L(G_2)$ (see Chapter \ref{ch-9}).
 
 \item Prove that \GSIG\ is closed under concatenation by:
@@ -1573,7 +1573,7 @@ like this one? Explain.
 \item \begin{enumerate}
 \item Why was it important to assume that $\Omega_1\cap\Omega_2=\emptyset$ in
 the proof of Theorem \ref{thm-8.4}? Give an example.
-\item Why was it possible to assume that $\Omega_1\cap\Omega_2=\emptyset$ in the
+\item Why was it \emph{possible} to assume that $\Omega_1\cap\Omega_2=\emptyset$ in the
 proof of Theorem \ref{thm-8.4}? Give a justification.
 \end{enumerate}
 
@@ -1648,7 +1648,7 @@ matches none of the other letters.
 \[ G=\langle\{A,B,S\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\rightarrow\pmb{a}SB
 	\pmb{c},S\rightarrow\lambda,SB\rightarrow\pmb{b}S,\pmb{c}B\rightarrow B
 	\pmb{c}\}\rangle \]
-Show that this context-sensitive grammar is not equivalent to $G''$ given in
+Show that this context-sensitive grammar is \emph{not} equivalent to $G''$ given in
 Example 8.3, where
 \[ G'' = \langle\{A,B,S,T\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\rightarrow\pmb{a}SB
 	\pmb{c},S\rightarrow T,T\rightarrow\lambda,TB\rightarrow\pmb{b}T,\pmb{c}

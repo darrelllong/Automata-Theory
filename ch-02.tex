@@ -5,8 +5,8 @@ conforming to the definition of a language given in Chapter \ref{ch-1}.
 We can consider a text file as being one long ``word,'' that is, a
 string of characters (including spaces, carriage returns, and so
 on). In this sense, each Pascal program can be thought of as a
-single word over the ASCII alphabet. We might define the language
-Pascal as the set of all valid Pascal programs (that is, the valid
+single word over the ASCII alphabet. We might define the \emph{language}
+Pascal as the \emph{set} of all valid Pascal programs (that is, the valid
 ``words'' are those text files that would compile with no compiler
 errors). This and many other languages are too complicated to be
 represented by the machines described in Chapter \ref{ch-1}. Indeed,
@@ -24,7 +24,7 @@ of the relations that describe that structure.
 To characterize the structure of FAD languages, we will be dealing
 with relations over $\Sigma^*$, that is, we will relate strings to
 other strings.  Recall that an \emph{equivalence relation} must be
-\emph{reflexive, symmetric}, and \emph{transitive}. The identity
+\emph{reflexive, symmetric}, and \emph{transitive}. The \emph{identity}
 relation over $\Sigma^*$, in which each string is related to itself
 but to no other string, is an example of an equivalence relation.
 
@@ -150,7 +150,7 @@ right congruence.
 \emph{Proof.} See the exercises.
 \end{thm}
 
-Note that the above theorem is very broad in scope: any language, no matter
+Note that the above theorem is very broad in scope: \emph{any} language, no matter
 how complex, \emph{always} induces a relation that satisfies all four properties
 of a right congruence. Thus, $R_L$ always partitions $\Sigma^*$ into equivalence
 classes. One useful measure of the complexity of a language $L$ is the degree to
@@ -314,7 +314,7 @@ $\Rightarrow$ (3), and (3) $\Rightarrow$ (1), rather than all six of them.
 there is a machine that accepts $L$; that is, there exists a finite automaton
 $M=\langle\Sigma,S,s_0,\delta,F\rangle$ such that $L(M) = L$. Consider the
 relation $R^M$ on $\Sigma^*$ based on this machine $M$ as given in Definition
-\ref{dfn-2.4}: $(\forall x,y \in \Sigma^*)(x\ R^M\ Y \Leftrightarrow \DBAR(s_0,x) =
+\ref{dfn-2.4}: $(\forall x,y \in \Sigma^*)(x\ R^M\ y \Leftrightarrow \DBAR(s_0,x) =
 \DBAR(s_0,y))$.
 
 This $R^M$ will be the relation $R$ we need to prove (2). For each $s \in S$,
@@ -571,7 +571,7 @@ $v$ = next few letters of $x$ that will again take us back to $q$ \\
 $w$ = rest of the string $x$
 \end{tabular}\end{center}
 Then, with $x = uvw$, we have $\DBAR(s,u) = q,\ \DBAR(s,uv) = q$, and in fact
-$\DBAR(q,v) = q$. Also, $\delta(s,x) = \DBAR(s,uvw) =$ f and $\DBAR(q,w)= f$, as
+$\DBAR(q,v) = q$. Also, $\DBAR(s,x) = \DBAR(s,uvw) =$ $f$ and $\DBAR(q,w)= f$, as
 is clear from the diagram. Now consider the string $uw$, that is, the string $x$
 with the $v$ part ``removed'':
 \begin{center}\begin{tabular}{rcl}
@@ -601,7 +601,7 @@ loop twice}\label{fig-2.7}
 \end{figure}
 
 In general, it can be proved by induction that $(\forall i \in \NN)(\DBAR(s,
-uv^i\!w)=\text{f}=\DBAR(s,uvw))$. Notice that we do reach $q$ two distinct times,
+uv^i\!w)=\text{f}=\DBAR(s,uvw))$. Notice that we do reach $q$ two \emph{distinct} times,
 which implies that the string $v$ contains at least one letter; that is,
 $|v| \geq 1$. Also, after the first $n$ letters of $x$, we must have already
 repeated a state, and thus some state $q$ can be found such that $|uv| \leq n$.
@@ -646,7 +646,7 @@ and
 
 \subsection*{Example 2.10}
 
-Let $E$ be the set of all even-length words over $\{\pmb{a},\pmb{b}\}$. There is
+Let $E$ be the set of all even-length words over $\{\pmb{a},\pmb{b}\}^*$. There is
 a two-state machine that accepts $E$, so $E$ is FAD, and the pumping lemma
 applies if $n$ is, say, 5. Then $\forall x \ni |x| > 5$, if $x = 
 \pmb{a}_1\pmb{a}_2\pmb{a}_3\ldots\pmb{a}_j \in E$ (that is, $j$ is even), we can
@@ -655,9 +655,9 @@ choose $u=\lambda,\ v=\pmb{a}_1\pmb{a}_2$, and $w=\pmb{a}_3\pmb{a}_4\ldots
 which is even, and so $(\forall i \in \NN)(uv^iw \in E)$.
 
 If Example 2.10 does not appear truly exciting, there is good reason: The
-pumping lemma is generally not applied to FAD languages! (\emph{Note:} We will
+pumping lemma is generally not applied to FAD languages! (\emph{Note:} We \emph{will}
 see an application later.) The pumping lemma is often applied to show languages
-are not FAD (by proving that the language does not satisfy the pumping lemma).
+are \emph{not} FAD (by proving that the language does not satisfy the pumping lemma).
 Note that the contrapositive of Theorem \ref{thm-2.3} is:
 
 % Theorem 2.4
@@ -682,7 +682,7 @@ $i$ may be chosen to be a convenient fixed constant, a proof that covers all pos
 combinations of $u$, $v$, and $w$ must be given).
 
 Note that this choice of $x$ is ``long enough'' in that $|x| = 2n \geq n$, as
-required by Theorem \ref{thm-2.4}. For any combination of $u,\ v,\ w \in \Sigma^*$ such
+required by Theorem \ref{thm-2.4}. For \emph{any} combination of $u,\ v,\ w \in \Sigma^*$ such
 that $x = uvw,\ |uv| \leq n,\ |v| \geq 1$, we hope to find a value for $i$ such
 that $uv^iw \notin L_4$. Since $|uv| \leq n$ and the first $n$ letters of $x$ are
 all zeros, this narrows down the choices for $u,\ v$, and $w$. They must be of
@@ -690,7 +690,7 @@ the form $u = \pmb{0}^j$ and $v = \pmb{0}^k$ (since $|uv| \leq n$ and $x$ starts
 with $n$ zeros), and $w$ must be the ``rest of the string'' and look something
 like $w=\pmb{0}^m \pmb{1}^n$. The constraints on $u,\ v$, and $w$ imply that
 $j + k \leq n,\ k \geq 1$, and $j + k + m = n$. If $i = 2$, we have that
-$uv^2w = 0^{n+k} 1^n \notin L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
+$uv^2w = \pmb{0}^{n+k} \pmb{1}^n \notin L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
 [or, alternately, because the conclusion of the pumping lemma (Theorem \ref{thm-2.3}) does
 \emph{not} hold, $L_4$ cannot be FAD].
 
@@ -767,7 +767,7 @@ and
 The new condition $|vw| \leq n$ reflects the constraint that some state must be
 repeated within the last $n$ letters. The contrapositive of Theorem \ref{thm-2.5} can be
 useful in demonstrating that certain languages are not FAD. By repeating our
-original reasoning while assuming the string $x$ takes us to a nonfinal state,
+original reasoning while assuming the string $x$ takes us to a \emph{non}final state,
 we obtain yet another variation.
 
 % Theorem 2.6
@@ -786,7 +786,8 @@ and
 \emph{Proof.} See the exercises.
 \end{thm}
 
-Notice that Theorem \ref{thm-2.6} guarantees that if one ``long'' string is not in the
+Notice that Theorem \ref{thm-2.6} guarantees that if one ``long'' string is
+{\em not} in the
 language then there is an entire sequence of strings that cannot be in the
 language. There are some examples of languages in the exercises where Theorem
 \ref{thm-2.4} is hard to apply, but where Theorem \ref{thm-2.5} (or Theorem \ref{thm-2.6}) is appropriate.
@@ -856,7 +857,7 @@ is \emph{not} a right congruence. (Is it an equivalence relation?)
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$. Consider the relation $Q
 \subseteq \Sigma^* \times \Sigma^*$ defined by
-\[ x\ Q\ y \Leftrightarrow |x|_a - |y|_b \equiv 0 \bmod{3} \]
+\[ x\ Q\ y \Leftrightarrow |x|_{\pmb{a}} - |y|_{\pmb{a}} \equiv 0 \bmod{3} \]
 \begin{enumerate}
 \item Show that $Q$ is an equivalence relation.
 \item Assume that part (a) is true, and show that $Q$ is a right congruence.
@@ -884,7 +885,7 @@ R_L = Q$.
 % NOTE: Having trouble getting the spacing on the \not portion of the !Q
 % operator
 \item Let $\Sigma=\{\pmb{a},\pmb{b}\}$. Define the relation $Q$ by $\lambda Q
-\lambda$. and $(\forall x \not= \lambda)(\lambda \not\!\! Q x)$, and
+\lambda$, and $(\forall x \not= \lambda)(\lambda \not\!\! Q x)$, and
 \[ (\forall x \not= \lambda)(\forall y \not= \lambda )[x\ Q\ y \Leftrightarrow
 	(|x|\text{ is even }\wedge |y|\text{ is even})\vee(|x|\text{ is odd }
 	\wedge |y|\text{ is odd})], \]
@@ -934,11 +935,11 @@ $\delta_{R_L}$ is a \emph{function}.
 \item Consider the automaton $P$ derived in Example 2.6, find $R^P$ and notice
 that $R^P = R_L$.
 
-\item Find $R_A$ for each machine $A$ you built in the exercises of Chapter \ref{ch-1};
-compare $R_A$ to $R_{L(A)}$.
+\item Find $R^A$ for each machine $A$ you built in the exercises of Chapter \ref{ch-1};
+compare $R^A$ to $R_{L(A)}$.
 
 \item Prove by induction that, for the strings defined in the discussion of
-the pumping lemma, $(\forall i\in\NN)(\DBAR(s,uv^iw) 	= f =\DBAR(s,uvw))$.
+the pumping lemma,\\$(\forall i\in\NN)(\DBAR(s,uv^iw) 	= f =\DBAR(s,uvw))$.
 
 \item Prove Theorem \ref{thm-2.1}.
 
@@ -965,11 +966,11 @@ Show $L$ is not FAD.
 Show $G$ is not FAD.
 
 \item Let $P=\{y \in \{\pmb{d}\}^*\ |\ \exists\text{ prime }p \ni y = \pmb{d}^p\} =
-\{\pmb{dd},\pmb{ddd},\pmb{ddddd},\pmb{d}^7,\pmb{d}^{11},\pmb{d}^{l3}\ldots\}$.
+\{\pmb{dd},\pmb{ddd},\pmb{ddddd},\pmb{d}^7,\pmb{d}^{11},\pmb{d}^{13}\ldots\}$.
 Prove that $P$ is not FAD.
 
 \item Let $\Gamma=\{x \in \{\pmb{0},\pmb{1},\pmb{2}\}^*\ |\ \exists w\in\{\pmb{0},
-\pmb{1}\}^* \ni = w \cdot 2 \cdot w\} = \{\pmb{2},\pmb{121},\pmb{020},
+\pmb{1}\}^* \ni x = w \cdot \pmb{2} \cdot w\} = \{\pmb{2},\pmb{121},\pmb{020},
 \pmb{11211},\pmb{10210},\ldots\}$. Prove that $\Gamma$ is not FAD.
 
 \item Let $\Psi=\{x \in \{\pmb{0},\pmb{1}\}^*\ |\ \exists w \in \{\pmb{0},
@@ -977,14 +978,14 @@ Prove that $P$ is not FAD.
 \pmb{1010},\pmb{1111}, \ldots \}$. Prove that $\Psi$ is not FAD.
 
 \item Define the reverse of a string $w$ as follows: If $w=\pmb{a}_1\pmb{a}_2
-\pmb{a}_3\pmb{a}_4 \ldots \pmb{a}_{n-1}\pmb{a}_n$, then $w'=\pmb{a}_n
-\pmb{a}_{n-1} \ldots \pmb{a}_4\pmb{a}_3\pmb{a}_2\pmb{a_1}$. Let
-$K=\{w \in \{\pmb{0},\pmb{1}\}^*\ |\ w = w'\} = \{\lambda,\pmb{0},\pmb{1},\pmb{00},
+\pmb{a}_3\pmb{a}_4 \ldots \pmb{a}_{n-1}\pmb{a}_n$, then $w^r=\pmb{a}_n
+\pmb{a}_{n-1} \ldots \pmb{a}_4\pmb{a}_3\pmb{a}_2\pmb{a}_1$. Let
+$K=\{w \in \{\pmb{0},\pmb{1}\}^*\ |\ w = w^r\} = \{\lambda,\pmb{0},\pmb{1},\pmb{00},
 \pmb{11},\pmb{000},\pmb{010},\pmb{101},\pmb{111},\pmb{0000},\pmb{0110},\ldots\}$.
 Prove $K$ is not FAD.
 
 \item Let $\Phi=\{x \in \{\pmb{a},\pmb{b},\pmb{c}\}^*\ |\ \exists j,k,m \in \NN \ni
-= \pmb{a}^j\pmb{b}^k\pmb{c}^m$, where $j \geq 3$ and $k = m\}$. Prove $\Phi$ is
+x = \pmb{a}^j\pmb{b}^k\pmb{c}^m$, where $j \geq 3$ and $k = m\}$. Prove $\Phi$ is
 not FAD. \emph{Hint:} The first version of the pumping lemma is hard to apply
 here (why?).
 
@@ -999,7 +1000,7 @@ words$\}$, $\{$all even-length words except $\lambda\}$.
 \begin{enumerate}
 \item Why couldn't $L=\{x\ |\ \ |x|\text{ is odd}\}$? (\emph{Hint:} Recompute
 $R_{\{x|\ |x|\text{ is odd}\}})$.
-\item List the languages $L$ that could give rise to this $R_L$.
+\item List the languages $L$ that \emph{could} give rise to this $R_L$.
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b}\}$ and let $\Psi=\{x \in \Sigma^*\ |\ x$ has an
@@ -1017,12 +1018,12 @@ Prove that $\Phi$ is not FAD.
 \item Let $\Sigma=\{\pmb{a},\pmb{b}\}$. Assume $R_L$ has the following five
 equivalence classes: $\{\lambda\},\ \{\pmb{a}\}, \{\pmb{aa}\},\ \{\pmb{a}^3,
 \pmb{a}^4,\pmb{a}^5,\pmb{a}^6, \ldots \},\linebreak\{x\ |\ x$ contains (at least) one
-$\pmb{b}\}$. Also assume that $L$ consists of exactly one of these equivalence
+$\pmb{b}\}$. Also assume that $L$ consists of exactly \emph{one} of these equivalence
 classes.
 \begin{enumerate}
 \item Which equivalence class is $L$?
-\item List the other languages $L$ that could give rise to this $R_L$ (and note
-that they might consist of several equivalence classes).
+\item List the other languages $L$ that \emph{could} give rise to this $R_L$
+(and note that they might consist of several equivalence classes).
 \end{enumerate}
 
 \item Let $\Omega=\{y \in \{\pmb{0},\pmb{1}\}^*\ |\ (y$ contains exactly one 
@@ -1066,7 +1067,7 @@ $R_{\Gamma}$ to $\pmb{bb}$.
 \item Draw the minimal state DFA which accepts $\Gamma$.
 \end{enumerate}
 
-\item Prove that the relation $R_M$ given in Definition \ref{dfn-2.4} is a right
+\item Prove that the relation $R^M$ given in Definition \ref{dfn-2.4} is a right
 congruence.
 
 \item We can view a text file as being one long ``word,'' that is, a string of
@@ -1081,10 +1082,10 @@ that are composed of less than 1 million characters. Is Short Pascal FAD? Any
 volunteers for building the appropriate DFA?
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$, and define $L=\{\pmb{a}^n
-\pmb{b}^k\pmb{c}^i\ |\  n < 3$ \emph{ or } $(n \geq 3$ and $k = j)\}$.
+\pmb{b}^k\pmb{c}^j\ |\  n < 3$ \emph{ or } $(n \geq 3$ and $k = j)\}$.
 \begin{enumerate}
 \item Show that for this language the conclusion of Theorem \ref{thm-2.3} holds, but the
-hypothesis of Theorem \ref{thm-2.3} does not hold.
+hypothesis of Theorem \ref{thm-2.3} does \emph{not} hold.
 \item Is the contrapositive of Theorem \ref{thm-2.3} true? Explain.
 \end{enumerate}
 
@@ -1094,7 +1095,7 @@ hypothesis of Theorem \ref{thm-2.3} does not hold.
 
 \item For $\delta_Q$ in Definition \ref{dfn-2.5}, use induction to show that
 \[ (\forall x \in \Sigma^*)(\forall y \in \Sigma^*)(\DBAR_Q([x]_Q,y) =
-	[xy]_q). \]
+	[xy]_Q). \]
 
 \item For the $L$ and $Q$ in Definition \ref{dfn-2.5}, prove that $L(A_Q) = L$.
 
@@ -1141,29 +1142,30 @@ possible choices for the language $L$.
 possible choices for the language $L$.
 
 \item \begin{enumerate}
-\item Give an example of a DFA $M$ for which $R_M = R_{L(M)}$.
-\item Give an example of a DFA $M$ for which $R_M \not= R_{L(M)}$.
-\item For every DFA $M$, show that $R_M$ refines $R_{L(M)}$.
+\item Give an example of a DFA $M$ for which $R^M = R_{L(M)}$.
+\item Give an example of a DFA $M$ for which $R^M \not= R_{L(M)}$.
+\item For every DFA $M$, show that $R^M$ refines $R_{L(M)}$.
 \end{enumerate}
 
-\item Find $R_M$ and $R_{L(M)}$ for the machine $M$ described in Example 1.5.
+\item Find $R^M$ and $R_{L(M)}$ for the machine $M$ described in Example 1.5.
 
 \item Is $A_{R_{L(A)}}$ always equivalent to $A$? Explain.
 
 \item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^*\,|\ \ |y|_{\pmb{0}} =
-|y|_{\pmb{1}}$ as given in Example 2.11. Let $n$ be given and consider $x =
-(\pmb{01})^n = \pmb{010101} \ldots \pmb{0101}$. Then $|x| = 2n > n$; but if
+|y|_{\pmb{1}}\}$ as given in Example 2.11. Let $n$ be given and consider
+$x$$=$$(\pmb{01})^n = \pmb{010101} \ldots \pmb{0101}$. Then $|x| = 2n > n$; but if
 $u = \pmb{0101}$, $v = \pmb{01}$, and $w = (\pmb{01})^{n-3},\ (\forall i \in
 \NN)uv^iw \in L_4$. Does this mean $L_4$ is FAD? Explain.
 
+%%jc we should probably have unique subscripts for the different languages...
 \item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^*\,|\ \ |y|_{\pmb{0}} =
-|y|_{\pmb{1}}$ as given in Example 2.11. Find $R_{L_4}$.
+|y|_{\pmb{1}}\}$ as given in Example 2.11. Find $R_{L_4}$.
 
 \item Show that the set of all postfix expressions over the alphabet
 $\{\pmb{A},\pmb{B},\pmb{+},\pmb{-}\}$ is not FAD.
 
 \item Show that the set of all parenthesized infix expressions over the alphabet
-$\{\pmb{A},\pmb{B},\pmb{+},\pmb{-}\}$ is not FAD.
+$\{\pmb{A},\pmb{B},\pmb{+},\pmb{-},$\,\pmb{(},\,\pmb{)}$\}$ is not FAD.
 
 \item For a given language $L$, how does $R_L$ compare to $R_{-L}$; that is, how
 does the right congruence generated by a language compare to the right
@@ -1192,7 +1194,7 @@ relation with the following equivalence classes:
 $[\lambda]_Q$ & $=$ & $\{\lambda\} = \{\pmb{a}\}^0$ \\
 $[\pmb{a}]_Q$ & $=$ & $\{\pmb{a}\} = \{\pmb{a}\}^1$ \\
 $[\pmb{aa}]_Q$ & $=$ & $\{\pmb{a}\}^2 \cup \{\pmb{a}\}^3 \cup \{\pmb{a}\}^4 \cup
-\{\pmb{a}\} \cup \ldots$ \\
+\{\pmb{a}\}^5 \cup \ldots$ \\
 \end{tabular}\end{center}
 Show that $Q$ is a right congruence.
 
@@ -1249,12 +1251,12 @@ $L=\{\pmb{0},\pmb{01},\pmb{010},\pmb{0100},\pmb{01001},\pmb{010010},
 
 \item Consider the following BNF\index{BNF} over the three-symbol alphabet $\{\pmb{a},
 \pmb{)},\pmb{(}\}$, and show that the resulting language is not FAD.
-\[ \text{\<simple\>} := \pmb{a}|\pmb{(}\text{\<simple\>}\pmb{)} \]
+\[ \text{\<simple\>}\ ::=\ \pmb{a}\ |\ \pmb{(}\text{\<simple\>}\pmb{)} \]
 
 \item \begin{enumerate}
 \item Let $\Sigma=\{\pmb{0},\pmb{1}\}$. Let $L_2=\{x \in \Sigma^*|$ the base $2$
 number represented by $x$ is a power of $2\}$. Show that $L_2$ is FAD.
-\item Let $\Sigma^*=\{\pmb{0},\pmb{1},\pmb{2},\pmb{3},\pmb{4},\pmb{5},\pmb{6},
+\item Let $\Sigma=\{\pmb{0},\pmb{1},\pmb{2},\pmb{3},\pmb{4},\pmb{5},\pmb{6},
 \pmb{7},\pmb{8},\pmb{9}\}$. \\
 Let $L_{10}=\{x \in \Sigma^*|$ the base 10 number represented by $x$ is a power
 of $2\}$. Prove that $L_{10}$ is not FAD.
