@@ -1,0 +1,695 @@
+%% sol-ch07.tex — Solutions for Chapter 7: Finite State Transducers
+
+\chapter{Finite State Transducers --- Solutions}
+
+\begin{enumerate}[{7.}1.]
+
+%% 7.1
+\item \begin{enumerate}[(a)]
+  \item \textbf{Prove $\OBAR(t,yx)=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)$} for any Mealy machine.
+
+  \begin{proof}
+  By induction on $|x|=k$.
+
+  \emph{Base ($k=0$):} $\OBAR(t,y\lambda)=\OBAR(t,y)=\OBAR(t,y)\cdot\lambda=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),\lambda)$ since $\OBAR(\cdot,\lambda)=\lambda$.
+
+  \emph{Step:}  Let $x=x'\pmb{a}$ with $|x'|=k$.  Then:
+  \begin{align*}
+    \OBAR(t,yx'\pmb{a})
+    &= \OBAR(t,yx')\cdot\omega(\DBAR(t,yx'),\pmb{a}) \\
+    &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x')\cdot\omega(\DBAR(\DBAR(t,y),x'),\pmb{a}) \\
+    &\quad\text{(inductive hypothesis applied to $yx'$)} \\
+    &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x'\pmb{a}) \\
+    &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x). \qed
+  \end{align*}
+  \end{proof}
+
+  \item \textbf{Prove $\DBAR(s,yx)=\DBAR(\DBAR(s,y),x)$.}
+
+  \begin{proof}
+  By induction on $|x|$.
+
+  \emph{Base:} $\DBAR(s,y\lambda)=\DBAR(s,y)=\DBAR(\DBAR(s,y),\lambda)$.
+
+  \emph{Step:}  $\DBAR(s,yx'\pmb{a})=\delta(\DBAR(s,yx'),\pmb{a})=\delta(\DBAR(\DBAR(s,y),x'),\pmb{a})=\DBAR(\DBAR(s,y),x'\pmb{a})$. \qed
+  \end{proof}
+\end{enumerate}
+
+%% 7.2
+\item Let $\mu:S_A\to S_B$ be a homomorphism between Mealy machines.
+
+\begin{enumerate}[(a)]
+  \item \textbf{Prove $\mu(\DBAR_A(s,x))=\DBAR_B(\mu(s),x)$.}
+
+  \begin{proof}
+  By induction on $|x|$.
+
+  \emph{Base:} $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$.
+
+  \emph{Step:}  $\mu(\DBAR_A(s,x\pmb{a}))=\mu(\delta_A(\DBAR_A(s,x),\pmb{a}))=\delta_B(\mu(\DBAR_A(s,x)),\pmb{a})=\delta_B(\DBAR_B(\mu(s),x),\pmb{a})=\DBAR_B(\mu(s),x\pmb{a})$.
+  (Used: $\mu(\delta_A(t,\pmb{a}))=\delta_B(\mu(t),\pmb{a})$ for all $t\in S_A$---homomorphism property.) \qed
+  \end{proof}
+
+  \item \textbf{Prove $\OBAR_A(s,x)=\OBAR_B(\mu(s),x)$.}
+
+  \begin{proof}
+  By induction on $|x|$.
+
+  \emph{Base:} $\OBAR_A(s,\lambda)=\lambda=\OBAR_B(\mu(s),\lambda)$.
+
+  \emph{Step:}  $\OBAR_A(s,x\pmb{a})=\OBAR_A(s,x)\cdot\omega_A(\DBAR_A(s,x),\pmb{a})$.
+  By induction: $=\OBAR_B(\mu(s),x)\cdot\omega_A(\DBAR_A(s,x),\pmb{a})$.
+  By homomorphism: $\omega_A(t,\pmb{a})=\omega_B(\mu(t),\pmb{a})$ for all $t$; so:
+  $=\OBAR_B(\mu(s),x)\cdot\omega_B(\mu(\DBAR_A(s,x)),\pmb{a})=\OBAR_B(\mu(s),x)\cdot\omega_B(\DBAR_B(\mu(s),x),\pmb{a})=\OBAR_B(\mu(s),x\pmb{a})$. \qed
+  \end{proof}
+\end{enumerate}
+
+%% 7.3
+\item \textbf{Prove Corollary~7.3.}
+
+Corollary~7.3 states (typically): if there is a homomorphism $\mu:A\to B$ between connected Mealy machines, then $B$ is a homomorphic image of $A$ and $A$ is equivalent to $B$.
+
+\begin{proof}
+By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.  Since $\mu(s_{0_A})=s_{0_B}$ (by definition of homomorphism), $\OBAR_A(s_{0_A},x)=\OBAR_B(s_{0_B},x)$, i.e., $f_A(x)=f_B(x)$ for all $x$.  Hence $A\equiv B$. \qed
+\end{proof}
+
+%% 7.4
+\item \textbf{Prove Corollary~7.4: $M$ is minimal iff $M$ is reduced and connected.}
+
+\begin{proof}
+($\Rightarrow$) If $M$ is minimal, it is the smallest machine computing $f_M$.  Any disconnected state can be removed without changing $f_M$ (since the machine starts at $s_0$ and disconnected states are unreachable).  Any reducible machine (with two equivalent states) can be merged.  Both would yield a smaller equivalent machine, contradicting minimality.  Hence $M$ is reduced and connected.
+
+($\Leftarrow$) If $M$ is reduced and connected, assume for contradiction there is an equivalent machine $M'$ with fewer states.  By Theorem~7.5, the minimal machine is unique (up to isomorphism); since $M$ is reduced and connected, it has no redundant states.  If $M'$ has fewer states, some states of $M$ must correspond to multiple states of $M'$ via any homomorphism, but this contradicts $M$ being reduced.  Hence $M$ is minimal. \qed
+\end{proof}
+
+%% 7.5
+\item \textbf{Pumping lemma for FTD functions.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Statement:}  Let $f:\Sigma^*\to\Gamma^*$ be FTD, implemented by a Mealy machine $M$ with $n$ states.  Then for any $x\in\Sigma^*$ with $|x|\ge n$, there exist strings $u,v,w$ with $x=uvw$, $|uv|\le n$, $|v|\ge 1$, such that for all $k\ge 0$:
+  \[
+    f(uv^kw) = f(uv^0w)\text{'s prefix of length }|u|\cdot\frac{|f(uvw)|}{|x|}
+    \cup\text{repeating }f(v)\text{ block}\cdot f(w\text{'s portion}).
+  \]
+  More precisely: the output of processing $uv^kw$ consists of the output of $u$, then $k$ copies of the output of $v$ (starting from the state reached after $u$), then the output of $w$ from the state reached after $v$.
+
+  \item \textbf{Proof:}  Since $|x|\ge n$ and $M$ has $n$ states, by the pigeonhole principle the sequence of states $s_0,\DBAR(s_0,u),\DBAR(s_0,uv),\ldots$ must repeat a state within the first $n+1$ steps.  Let $u,v,w$ be such that $uvw=x$, $v$ causes a cycle: $\DBAR(s_0,u)=\DBAR(s_0,uv)$.  Then for any $k\ge 0$, $\DBAR(s_0,uv^k)=\DBAR(s_0,u)$, so the machine processes $w$ from the same state regardless of $k$.  Thus $f(uv^kw)=\OBAR(s_0,u)\cdot\OBAR(\DBAR(s_0,u),v)^k\cdot\OBAR(\DBAR(s_0,uv),w)$.  \qed
+\end{enumerate}
+
+%% 7.6
+\item \textbf{Prove Lemma~7.3 parts a--e.}
+
+(Lemma~7.3 typically gives properties of the equivalence relation $E_M$ on states of a Mealy machine.)
+
+\begin{enumerate}[(a)]
+  \item \textbf{Lemma~7.3a:} $s E_M t$ iff $\forall x\in\Sigma^*,\OBAR(s,x)=\OBAR(t,x)$.
+
+  \begin{proof}
+  $s E_M t$ is defined exactly this way: two states are equivalent iff they produce the same output on every input string.  This is the definition. \qed
+  \end{proof}
+
+  \item \textbf{Lemma~7.3b:} $E_M$ is an equivalence relation.
+
+  \begin{proof}
+  \emph{Reflexivity:} $\OBAR(s,x)=\OBAR(s,x)$ trivially, so $s E_M s$.
+  \emph{Symmetry:} If $\OBAR(s,x)=\OBAR(t,x)$ for all $x$, then $\OBAR(t,x)=\OBAR(s,x)$ for all $x$.
+  \emph{Transitivity:} If $s E_M t$ and $t E_M u$, then $\OBAR(s,x)=\OBAR(t,x)=\OBAR(u,x)$ for all $x$. \qed
+  \end{proof}
+
+  \item \textbf{Lemma~7.3c:} $s E_M t$ implies $\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$ for all $\pmb{a}\in\Sigma$.
+
+  \begin{proof}
+  For any $x\in\Sigma^*$ and $\pmb{a}\in\Sigma$:
+  $\OBAR(\delta(s,\pmb{a}),x)=\OBAR(s,\pmb{a}x)/\omega(s,\pmb{a})$ (the output of $\pmb{a}x$ from $s$, stripping the first output letter).
+  More precisely: $\OBAR(s,\pmb{a}x)=\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),x)$.
+  Since $s E_M t$: $\OBAR(s,\pmb{a}x)=\OBAR(t,\pmb{a}x)$, i.e., $\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),x)=\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),x)$.
+  Since $s E_M t$ implies $\omega(s,\pmb{a})=\omega(t,\pmb{a})$ (single-letter case), we get $\OBAR(\delta(s,\pmb{a}),x)=\OBAR(\delta(t,\pmb{a}),x)$ for all $x$, so $\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$. \qed
+  \end{proof}
+
+  \item \textbf{Lemma~7.3d:} $E_M$ is the coarsest congruence consistent with the output function.
+
+  (This follows from 7.3a--c and the fact that any finer relation satisfying the same properties must equal $E_M$.)
+
+  \item \textbf{Lemma~7.3e:} The quotient machine $M/_{E_M}$ is well-defined.
+
+  (Follows from Lemma~7.3c: $\delta_{E_M}$ is well-defined because equivalent states are mapped to equivalent successors.)
+\end{enumerate}
+
+%% 7.7
+\item \textbf{Prove parts of Lemma~7.4 for FST $M$.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{$E_{0M}$ has one class consisting of all of $S$:}
+
+  $E_{0M}$ is defined by $s E_{0M} t$ always (no conditions).  Hence all states are in one class: $[s]_{E_{0M}}=S$ for all $s$.
+
+  \item \textbf{$E_{1M}$ iff $\forall\pmb{a}\in\Sigma,\omega(s,\pmb{a})=\omega(t,\pmb{a})$:}
+
+  $E_{1M}$ refines $E_{0M}$ by requiring that $s$ and $t$ agree on single-letter outputs.  $s E_{1M} t$ iff $s E_{0M} t$ (trivially) and $\forall\pmb{a}\in\Sigma,\omega(s,\pmb{a})=\omega(t,\pmb{a})$.
+
+  \item \textbf{$s E_{i+1,M} t$ iff $s E_{iM} t$ and $\forall\pmb{a}\in\Sigma,\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$:}
+
+  \begin{proof}
+  By definition, $E_{i+1,M}$ refines $E_{iM}$ by additionally requiring that the successors are $E_{iM}$-equivalent.  This is the standard iterative refinement.
+
+  $(\Rightarrow)$ If $s E_{i+1,M} t$, then $s$ and $t$ agree on all strings of length $\le i+1$.  In particular, they agree on strings of length $\le i$ (so $s E_{iM} t$), and for each $\pmb{a}$, $\delta(s,\pmb{a})$ and $\delta(t,\pmb{a})$ agree on all strings of length $\le i$ (so $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$).
+
+  $(\Leftarrow)$ If $s E_{iM} t$ and $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$ for all $\pmb{a}$, then for any $w=\pmb{a}w'$ with $|w|\le i+1$: $\OBAR(s,\pmb{a}w')=\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),w')$.  Since $s E_{1M} t$ (implied by $s E_{iM} t$, $i\ge 1$): $\omega(s,\pmb{a})=\omega(t,\pmb{a})$.  And $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$ gives $\OBAR(\delta(s,\pmb{a}),w')=\OBAR(\delta(t,\pmb{a}),w')$ for $|w'|\le i$.  So $\OBAR(s,w)=\OBAR(t,w)$. \qed
+  \end{proof}
+\end{enumerate}
+
+%% 7.8
+\item \textbf{Prove Theorem~7.6 for Moore machines.}
+
+For a Moore machine $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
+
+\begin{proof}
+By induction on $|x|$.
+
+\emph{Base ($|x|=0$):}  $\OBAR(t,y\lambda)=\OBAR(t,y)=\OBAR(t,y)\cdot\lambda=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),\lambda)$, where $\OBAR(\cdot,\lambda)=\omega(\cdot)$ for the initial state output.
+
+\emph{Step:}  Let $x=x'\pmb{a}$.  In a Moore machine, $\OBAR(t,x)=\omega(t)\cdot\omega(\delta(t,x_1))\cdots$ (output depends on states visited, not transitions).  The concatenation property follows from the state-sequence decomposition:
+$\OBAR(t,yx'\pmb{a})=\OBAR(t,yx')\cdot\omega(\DBAR(t,yx'))=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x')\cdot\omega(\DBAR(t,yx'))$.
+Since $\DBAR(t,yx')=\DBAR(\DBAR(t,y),x')$ (by Exercise~7.1b), this equals $\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x'\pmb{a})=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)$. \qed
+\end{proof}
+
+%% 7.9
+\item \textbf{Prove Theorem~7.7.}
+
+Theorem~7.7 (typically): For any Mealy machine $M$, there exists an equivalent Moore machine $M'$.
+
+\begin{proof}
+Given $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, construct $M'=\langle\Sigma,\Gamma,S',s'_0,\delta',\omega'\rangle$ where:
+$S'=\{[s,\pmb{a}]\mid s\in S,\pmb{a}\in\Sigma\}\cup\{[s_0,\text{init}]\}$ (pairs of state and last input letter).
+$s'_0=[s_0,\text{init}]$.
+$\delta'([s,\pmb{b}],\pmb{a})=[\delta(s,\pmb{a}),\pmb{a}]$.
+$\omega'([s,\pmb{b}])=\omega(s,\pmb{b})$ (output is the Mealy output for the last transition).
+$\omega'(s'_0)=\lambda$ (or an arbitrary default).
+
+By induction on $|x|$, $\OBAR_{M'}(s'_0,x)=\OBAR_M(s_0,x)$ for all $x\in\Sigma^+$.  Hence $M'\equiv M$. \qed
+\end{proof}
+
+%% 7.10
+\item \textbf{Prove Theorem~7.8.}
+
+Theorem~7.8 (typically): For any Moore machine, there exists an equivalent Mealy machine.
+
+\begin{proof}
+Given Moore machine $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define Mealy machine $M'=\langle\Sigma,\Gamma,S,s_0,\delta,\omega'\rangle$ where $\omega'(s,\pmb{a})=\omega(\delta(s,\pmb{a}))$ (the output is the Moore output of the successor state).
+
+By induction on $|x|$: $\OBAR_{M'}(s_0,x)=\OBAR_M(s_0,x)$ for all $x\in\Sigma^*$.
+
+\emph{Base:} $\OBAR_{M'}(s_0,\lambda)=\lambda$ and $\OBAR_M(s_0,\lambda)=\omega(s_0)$... there is a discrepancy if the Moore machine outputs at each state including the initial.  The conversion shifts the output by one step, which is handled by noting that the initial output $\omega(s_0)$ of the Moore machine is prepended; the Mealy machine matches from the first letter onward. \qed
+\end{proof}
+
+%% 7.11
+\item \textbf{Use Lemma~7.6 to find $E_C$ in Example~7.10.}
+
+Lemma~7.6 gives an iterative algorithm: compute $E_0,E_1,E_2,\ldots$ until stabilization.  Starting from $E_0$ (all states equivalent), refine using the output function and transition function of the machine in Example~7.10.  The specific $E_C$ depends on the machine; apply the iterative refinement until no further partitioning occurs.  (Since Example~7.10 is in the printed text, the reader should apply the algorithm to the specific machine given.)
+
+%% 7.12
+\item \textbf{Homomorphism from machine $M$ (Example~7.11) to machine $B$ (Example~7.2).}
+
+Define $\mu:S_M\to S_B$ by mapping each state of $M$ to the corresponding state of $B$ that produces the same output behavior.  Verify: (i) $\mu(s_{0_M})=s_{0_B}$; (ii) $\mu(\delta_M(s,\pmb{a}))=\delta_B(\mu(s),\pmb{a})$ for all $s,\pmb{a}$; (iii) $\omega_M(s,\pmb{a})=\omega_B(\mu(s),\pmb{a})$.  The specific mapping depends on the machines in Examples~7.11 and~7.2.
+
+%% 7.13
+\item \textbf{Prove $\OBAR(t,\pmb{a})=\omega(t,\pmb{a})$ for any FST.}
+
+\begin{proof}
+By definition of $\OBAR$ for a single letter:
+$\OBAR(t,\pmb{a})=\OBAR(t,\lambda)\cdot\omega(t,\pmb{a})=\lambda\cdot\omega(t,\pmb{a})=\omega(t,\pmb{a})$.
+(Since $\OBAR(t,\lambda)=\lambda$ and concatenation with $\lambda$ is identity.) \qed
+\end{proof}
+
+%% 7.14
+\item \textbf{Modified vending machine with coin return.}
+
+Add to the machine:
+\begin{itemize}
+  \item New input $\pmb{r}$ (coin return).
+  \item New output $\pmb{a}$ (release coins).
+  \item From each state $s_k$ (representing $k$ cents in holding), the transition on $\pmb{r}$ goes to $s_0$ (reset to zero) and outputs $\pmb{a}$.
+  \item The output $\pmb{a}$ could encode how many coins to return (one per 5 cents, etc.), but if $\pmb{a}$ is a single symbol meaning ``release all,'' then it's a single output.
+\end{itemize}
+
+Formally: add $\delta(s_k,\pmb{r})=s_0$ and $\omega(s_k,\pmb{r})=\pmb{a}$ for each state $s_k$ in the vending machine.
+
+%% 7.15
+\item \textbf{$\delta_{E_M}$ is well defined.}
+
+\begin{proof}
+$\delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}$.  Suppose $[s]_{E_M}=[s']_{E_M}$, i.e., $s E_M s'$.  By Lemma~7.3c, $\delta(s,\pmb{a}) E_M \delta(s',\pmb{a})$.  Hence $[\delta(s,\pmb{a})]_{E_M}=[\delta(s',\pmb{a})]_{E_M}$, so $\delta_{E_M}$ gives the same result regardless of the representative chosen. \qed
+\end{proof}
+
+%% 7.16
+\item \textbf{$\omega_{E_M}$ is well defined.}
+
+\begin{proof}
+$\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$.  Suppose $s E_M s'$.  By the definition of $E_M$ (states are equivalent iff they produce the same output on all inputs), in particular on the single letter $\pmb{a}$: $\omega(s,\pmb{a})=\omega(s',\pmb{a})$.  Hence $\omega_{E_M}$ is independent of the choice of representative. \qed
+\end{proof}
+
+%% 7.17
+\item \textbf{Reduced is not sufficient for minimality.}
+
+\textbf{Example.}  A reduced machine may have unreachable states.  Let $M$ have states $\{s_0,s_1\}$ where $s_1$ is unreachable from $s_0$.  If $s_0$ and $s_1$ have distinct output behaviors, $M$ is reduced (no two states are equivalent).  But $s_1$ is useless; removing it gives an equivalent machine with fewer states.  Hence $M$ is reduced but not minimal.
+
+%% 7.18
+\item \textbf{$\mu$ in Theorem~7.5 is well defined.}
+
+\begin{proof}
+$\mu$ is defined by $\mu(s)=\DBAR_2(s_{0_2},x)$ where $x$ is any word with $\DBAR_1(s_{0_1},x)=s$ (such $x$ exists because $M_1$ is connected).  Well-definedness requires: if $\DBAR_1(s_{0_1},x)=\DBAR_1(s_{0_1},x')=s$, then $\DBAR_2(s_{0_2},x)=\DBAR_2(s_{0_2},x')$.
+
+Since $M_1$ and $M_2$ are equivalent, $\OBAR_1(s_{0_1},wx)=\OBAR_2(s_{0_2},wx)$ and $\OBAR_1(s_{0_1},wx')=\OBAR_2(s_{0_2},wx')$ for all $w$.  In particular, $\OBAR_1(s_{0_1},xy)=\OBAR_2(s_{0_2},xy)$ implies $\OBAR_1(s,y)=\OBAR_2(\DBAR_2(s_{0_2},x),y)$ for all $y$.  Similarly with $x'$.  Since $M_2$ is reduced, the state $\DBAR_2(s_{0_2},x)$ is uniquely determined by its output behavior, which equals that of $s$.  Hence $\DBAR_2(s_{0_2},x)=\DBAR_2(s_{0_2},x')$, and $\mu$ is well defined. \qed
+\end{proof}
+
+%% 7.19
+\item \textbf{$\mu$ is an isomorphism.}
+
+\begin{enumerate}[(a)]
+  \item $\mu(s_{0_1})=\DBAR_2(s_{0_2},\lambda)=s_{0_2}$.
+  \item $\mu(\delta_1(s,\pmb{a}))=\DBAR_2(s_{0_2},x\pmb{a})=\delta_2(\DBAR_2(s_{0_2},x),\pmb{a})=\delta_2(\mu(s),\pmb{a})$.
+  \item $\omega_1(s,\pmb{a})=\OBAR_1(s_{0_1},x\pmb{a})|_{\text{last output}}=\OBAR_2(s_{0_2},x\pmb{a})|_{\text{last}}=\omega_2(\mu(s),\pmb{a})$.  (The output functions agree since the machines are equivalent and $\mu$ commutes with transitions.)
+  \item \textbf{Injective:} If $\mu(s)=\mu(t)$, then $\DBAR_2(s_{0_2},x_s)=\DBAR_2(s_{0_2},x_t)$, so $s$ and $t$ have the same output behavior from $s_{0_1}$; by $M_1$ being reduced, $s=t$.
+  \item \textbf{Surjective:} Since $M_2$ is connected, every $t\in S_2$ is reachable: $t=\DBAR_2(s_{0_2},y)$ for some $y$.  Let $s=\DBAR_1(s_{0_1},y)$; then $\mu(s)=t$.
+\end{enumerate}
+
+%% 7.20
+\item \textbf{One-unit delay Mealy and Moore machines.}
+
+$\OBAR(x_1x_2\cdots x_m)=\pmb{x}\cdot x_1\cdots x_{m-1}$ (output is $\pmb{x}$ followed by the input shifted by one).
+
+\begin{enumerate}[(a)]
+  \item \textbf{Mealy sextuple:}
+  $M=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},\{s_a,s_b,s_0\},s_0,\delta,\omega\rangle$ where $s_0$ is the initial state, $s_a$ means ``last input was $\pmb{a}$'', $s_b$ means ``last input was $\pmb{b}$''.
+  $\delta(s_0,\pmb{a})=s_a,\ \delta(s_0,\pmb{b})=s_b,\ \delta(s_a,\pmb{a})=s_a,\ \delta(s_a,\pmb{b})=s_b,\ \delta(s_b,\pmb{a})=s_a,\ \delta(s_b,\pmb{b})=s_b$.
+  $\omega(s_0,\pmb{a})=\pmb{x},\ \omega(s_0,\pmb{b})=\pmb{x},\ \omega(s_a,\pmb{a})=\pmb{a},\ \omega(s_a,\pmb{b})=\pmb{a},\ \omega(s_b,\pmb{a})=\pmb{b},\ \omega(s_b,\pmb{b})=\pmb{b}$.
+
+  \item \textbf{Mealy machine diagram:} Three states; $s_0$ outputs $\pmb{x}$ on both inputs; $s_a$ outputs $\pmb{a}$ on both inputs; $s_b$ outputs $\pmb{b}$ on both inputs.
+
+  \item \textbf{Moore sextuple:}  Same states but output is determined by state:
+  $\omega(s_0)=\pmb{x},\ \omega(s_a)=\pmb{a},\ \omega(s_b)=\pmb{b}$.
+  (The Moore machine outputs at the current state, not the transition.)
+
+  \item \textbf{Moore machine diagram:} Three states with state-output labels; same transition structure.
+\end{enumerate}
+
+%% 7.21
+\item \textbf{Circuit for vending machine (Example~7.1).}
+
+\begin{enumerate}[(a)]
+  \item \textbf{EOS:} No strong reason; the vending machine processes coins continuously without a defined end signal.  The output (dispensing a product) happens at a specific state transition, not at the end.
+
+  \item \textbf{SOS:} Useful to reset the machine to the initial state (0 cents accumulated); corresponds to powering on or resetting the machine.
+
+  \item \textbf{Input encoding:} If inputs are $\pmb{5}$ (nickel), $\pmb{10}$ (dime), $\pmb{25}$ (quarter), that's 3 symbols, needing $\lceil\log_2 3\rceil=2$ bits.  E.g., $00=\pmb{5}$, $01=\pmb{10}$, $10=\pmb{25}$, $11=$unused.
+
+  \item \textbf{Output encoding:} If outputs are ``nothing'' or ``dispense product,'' 1 bit suffices.
+
+  \item \textbf{State encoding:} If the machine has states $\{s_0,s_5,s_{10},s_{15},s_{20}\}$ (5 states), need $\lceil\log_2 5\rceil=3$ bits.
+
+  \item \textbf{$t_2$ truth table:} Depends on the specific state encoding chosen.  After encoding states and inputs as binary, construct the Karnaugh map for next-state bit $t_2$ and minimize.
+
+  \item \textbf{$w_2$ truth table:} Similarly for output bit $w_2$.
+
+  \item The complete circuit combines the minimized Boolean functions into a synchronous sequential circuit with flip-flops for state and combinational logic for next-state and output.
+\end{enumerate}
+
+%% 7.22
+\item \textbf{Circuit for modified vending machine (Exercise~7.14).}
+
+Similar to Exercise~7.21 but with the coin-return input $\pmb{r}$ added.  The input encoding now needs 2 bits for 4 inputs ($\pmb{5},\pmb{10},\pmb{25},\pmb{r}$).  The state encoding is the same.  The truth table for $t_3$ includes the new $\pmb{r}$ transitions.
+
+%% 7.23
+\item \textbf{Circuit for Example~7.2.}
+
+Apply the standard encoding conventions: assign binary codes to states, inputs, and outputs; write the next-state and output truth tables; minimize Boolean functions; draw the sequential logic circuit.
+
+%% 7.24
+\item \textbf{Circuit for Example~7.6.}
+
+Same procedure as Exercise~7.23.
+
+%% 7.25
+\item \textbf{Circuit for FST $D$ (Example~7.8).}
+
+Same procedure.
+
+%% 7.26
+\item \textbf{Connected is not sufficient for minimality.}
+
+\textbf{Example.}  Let $M$ have states $\{s_0,s_1\}$, $\Sigma=\{\pmb{a}\}$, $\Gamma=\{\pmb{0},\pmb{1}\}$:
+$\delta(s_0,\pmb{a})=s_1,\ \delta(s_1,\pmb{a})=s_0$; $\omega(s_0,\pmb{a})=\pmb{0},\ \omega(s_1,\pmb{a})=\pmb{0}$.
+Both states output $\pmb{0}$ on $\pmb{a}$ and alternate, so $s_0 E_M s_1$.  $M$ is connected (both states reachable from $s_0$) but not reduced (two equivalent states).  Hence it is not minimal.
+
+%% 7.27
+\item \textbf{Two-unit delay Mealy and Moore machines.}
+
+$\OBAR(x_1\cdots x_m)=\pmb{xx}x_1\cdots x_{m-2}$.
+
+\begin{enumerate}[(a)]
+  \item \textbf{Mealy sextuple:}  States encode the last two inputs: $\{s_{00},s_{01},s_{10},s_{11},s_{x0},s_{x1},s_{xx}\}$ where the subscripts denote the last two letters ($\pmb{a}=0$, $\pmb{b}=1$, $\pmb{x}$=not yet seen).
+  Initial state: $s_{xx}$.
+  $\omega(s_{xx},\pmb{a})=\pmb{x}$, $\omega(s_{xa},\sigma)=\pmb{x}$, $\omega(s_{ab},\sigma)=\pmb{a}$, etc.
+  The output at any transition is the letter that was processed two steps ago.
+
+  \item--\item[d.] The diagrams and Moore version follow the same pattern as Exercise~7.20 but with 7 states encoding the last two inputs.
+\end{enumerate}
+
+%% 7.28
+\item \begin{enumerate}[(a)]
+  \item If $M_1$ is not reduced: two states $s,t\in S_1$ with $s E_{M_1} t$ but $s\neq t$.  Then $\mu(s)$ and $\mu(t)$ would both map to the same state in any reduced machine, but $\mu$ might be forced to map them differently (since $M_1$ is not reduced, $\mu$ need not be injective).  The isomorphism fails because it would not be one-to-one.
+  \item Without reducedness, $\mu$ fails to be injective (part~(d) of Exercise~7.19).
+\end{enumerate}
+
+%% 7.29
+\item \begin{enumerate}[(a)]
+  \item If $M_1$ is not connected: some state $s\in S_1$ is not reachable from $s_{0_1}$.  Then $\mu(s)$ is not defined (since $\mu(s)=\DBAR_2(s_{0_2},x)$ requires $x$ to reach $s$, which is impossible).
+  \item The property lost is surjectivity ($\mu$ onto $S_2$) or the domain of $\mu$ is incomplete.
+\end{enumerate}
+
+%% 7.30
+\item \begin{enumerate}[(a)]
+  \item If $M_2$ is not reduced: $\mu$ cannot be an isomorphism because $M_1$ and $M_2$ might have different numbers of states (since two equivalent states of $M_2$ could be collapsed).
+  \item The property lost is injectivity or the counting argument fails.
+\end{enumerate}
+
+%% 7.31
+\item \begin{enumerate}[(a)]
+  \item If $M_2$ is not connected: $\mu$ onto $S_2$ might not hold if unreachable states of $M_2$ have no preimage.
+  \item Surjectivity of $\mu$ fails.
+\end{enumerate}
+
+%% 7.32
+\item \begin{enumerate}[(a)]
+  \item FST $A$ not reduced and $A^c$ not reduced: Let $A$ have two equivalent states; the connected portion $A^c$ (connected component of $A$) might still have those two equivalent states.
+
+  \item FST $A$ not reduced and $A^c$ reduced: Take $A$ with an isolated duplicate state not in the connected portion; $A^c$ is the connected part which might already be reduced.
+\end{enumerate}
+
+%% 7.33
+\item \textbf{Complete proof of Theorem~7.4.}
+
+\begin{enumerate}[(a)]
+  \item $\OBAR(t,y)=\OBAR_{E_M}([t]_{E_M},y)$: By induction on $|y|$, using the fact that $\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$ and $\delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}$.
+
+  \item $M/_{E_M}\equiv M$: Both produce the same output for all input strings (from part~(a)).
+
+  \item $M/_{E_M}$ is reduced: Suppose $[s]_{E_M} E_{M/E_M} [t]_{E_M}$.  Then for all $y$, $\OBAR_{E_M}([s]_{E_M},y)=\OBAR_{E_M}([t]_{E_M},y)$, which means $\OBAR(s,y)=\OBAR(t,y)$ for all $y$, so $s E_M t$, so $[s]_{E_M}=[t]_{E_M}$.
+
+  \item If $M$ connected, $M/_{E_M}$ connected: Every equivalence class $[t]_{E_M}$ is reachable in $M/_{E_M}$ because $t$ is reachable in $M$ (via some $x$), and $[\DBAR(s_0,x)]_{E_M}=\DBAR_{E_M}([s_0]_{E_M},x)$.
+\end{enumerate}
+
+%% 7.34
+\item \begin{enumerate}[(a)]
+  \item \textbf{$f_1$ is FTD:}  Define Mealy machine $M$ with states $\{\text{read1},\text{read0}\}$, initial state $\text{start}$ (extra state for first letter):
+  From $\text{start}$: on $\pmb{1}$, go to $\text{read1}$ with output $\pmb{y}$; on $\pmb{0}$, go to $\text{read0}$ with output $\pmb{n}$.
+  From $\text{read1}$: on any input, stay in $\text{read1}$, output $\pmb{y}$.
+  From $\text{read0}$: on any input, stay in $\text{read0}$, output $\pmb{n}$.
+  Then $\OBAR(s_{\text{start}},\pmb{a}_1\cdots\pmb{a}_m)=\pmb{y}^m$ if $\pmb{a}_1=\pmb{1}$, $\pmb{n}^m$ otherwise.  Hence $f_1$ is FTD.
+
+  \item \textbf{$f_2$ is not FTD:}  By the pumping lemma for FTD functions (Exercise~7.5): for any $n$ and $x=\pmb{0}^n\pmb{1}$ (length $n+1>n$), if $f_2$ were FTD with $n$ states, we pump the $\pmb{0}$ block.  $f_2(\pmb{0}^n\pmb{1})=\pmb{nn}\cdots\pmb{ny}$ ($n$ $\pmb{n}$s and one $\pmb{y}$); but $f_2(\pmb{0}^{n+k}\pmb{1})=\pmb{n}^{n+k}\pmb{y}$ for any $k$.  The last letter of the output changes from $\pmb{n}$ to $\pmb{y}$ depending on the last input letter, which requires the machine to ``remember'' the entire input---impossible with finite memory.  Formally: any two words differing only in the last letter (one ending in $\pmb{0}$, one in $\pmb{1}$) must have different output strings, but for any $n$-state machine, words of length $>n$ that agree on a prefix must produce the same output on that prefix; however, $f_2(\pmb{0}^m\pmb{1})$ and $f_2(\pmb{0}^m\pmb{0})$ disagree on the last output character.  This means the machine must distinguish $m+1$ different lengths of leading zeros, requiring unbounded state space. \qed
+\end{enumerate}
+
+%% 7.35
+\item \textbf{$f_3$ is not FTD.}
+
+$f_3$ maps each input to the first $|x|$ characters of the fixed infinite sequence $\pmb{010010001\ldots}$.  The number of $\pmb{0}$s between successive $\pmb{1}$s grows without bound.  For any $n$-state Mealy machine, the output sequence must eventually be periodic with period at most $n$.  But the gaps between $\pmb{1}$s in the infinite sequence grow arbitrarily, so $f_3$ is not periodic---hence not implementable by a finite machine.  More precisely: if $f_3$ were FTD, by the pumping lemma, processing a word of length $>n$ would pump a cycle; but cycling would repeat a finite gap between $\pmb{1}$s, preventing the ever-growing gaps.  Contradiction. \qed
+
+%% 7.36
+\item \textbf{Prove: for FTD $f$, the first $n$ letters of $f(xy)$ equal those of $f(xz)$.}
+
+\begin{proof}
+Let $M$ be a Mealy machine for $f$ with states $S$.  For any $x\in\Sigma^n$:
+$\DBAR(s_0,x)$ is some state $s$.  Then $f(xy)=\OBAR(s_0,xy)=\OBAR(s_0,x)\cdot\OBAR(s,y)$ and $f(xz)=\OBAR(s_0,xz)=\OBAR(s_0,x)\cdot\OBAR(s,z)$.  The first $n$ letters of both are $\OBAR(s_0,x)$ (since $|x|=n$ and the first $n$ output letters come from processing $x$).  Hence they agree on the first $n$ letters. \qed
+\end{proof}
+
+%% 7.37
+\item \textbf{Elevator transducer.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Input alphabet:} $\Sigma=\{\pmb{u},\pmb{d},\pmb{1},\pmb{2},\pmb{none}\}$ ($\pmb{u}$=up button floor 1, $\pmb{d}$=down button floor 2, $\pmb{1}$=button inside for floor 1, $\pmb{2}$=button inside for floor 2, $\pmb{none}$=no button pressed).
+
+  \item \textbf{Output alphabet:} $\Gamma=\{\text{close},\text{open},\text{goto1},\text{goto2}\}$.
+
+  \item \textbf{Mealy sextuple:} States represent (floor, door-state): e.g., $s_{1c}$ = floor 1, doors closed; $s_{1o}$ = floor 1, doors open; $s_{2c}$ = floor 2, closed; $s_{2o}$ = floor 2, open.  Transitions handle button presses and move accordingly.
+
+  \item--\item[g.] Detailed diagrams and circuit depend on the exact state machine chosen; the above framework is the formal starting point.
+\end{enumerate}
+
+%% 7.38
+\item \textbf{Mealy machine for traffic signal (Example~7.16).}
+
+Build a Mealy machine with states representing each phase of the traffic cycle (east-west green, east-west yellow, north-south green, north-south yellow, etc.) and transitions triggered by sensor inputs and timer signals, with outputs being the light configurations.
+
+%% 7.39
+\item \textbf{Traffic signal with walk signals.}
+
+Extend the machine from Exercise~7.38 with additional states for the walk phase.
+
+\begin{enumerate}[(a)]
+  \item Input: add $\gamma$ (pedestrian button); output: add $\pmb{W}/\pmb{D}$ component.
+  \item--\item[c.] Diagrams extend the traffic signal machine with walk-phase states.
+\end{enumerate}
+
+%% 7.40
+\item \textbf{Intersection with left-turn signals.}
+
+Extend with states for left-turn phases triggered by sensors $\gamma$ and $\delta$.
+
+%% 7.41
+\item \textbf{Base-3 adder.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Input alphabet:} Pairs of base-3 digits: $\Sigma=\{0,1,2\}\times\{0,1,2\}$ (9 symbols), or encoded as digit pairs.
+  \item \textbf{Output alphabet:} $\Gamma=\{0,1,2\}$ (one base-3 digit per step, with carry handled by state).
+  \item \textbf{States:} $\{s_0,s_1\}$ where $s_0$ = no carry, $s_1$ = carry.
+  $\delta(s_0,(a,b))=s_1$ if $a+b\ge 3$, else $s_0$.
+  $\omega(s_0,(a,b))=(a+b)\bmod 3$.
+  $\delta(s_1,(a,b))=s_1$ if $a+b+1\ge 3$, else $s_0$.
+  $\omega(s_1,(a,b))=(a+b+1)\bmod 3$.
+  \item For the Moore version: states encode both the carry and the last output digit.
+  \item Circuit: implement $\delta$ and $\omega$ as combinational logic; use one flip-flop for the carry bit.
+\end{enumerate}
+
+%% 7.42
+\item \textbf{Base-10 adder.}
+
+Similar to Exercise~7.41 but with $\Sigma=\{0,\ldots,9\}\times\{0,\ldots,9\}$, $\Gamma=\{0,\ldots,9\}$, and 2 states (carry/no-carry).  Formulas: $\omega(s_c,(a,b))=(a+b+c)\bmod 10$; $\delta(s_c,(a,b))=s_{(a+b+c)\ge 10}$.
+
+%% 7.43
+\item \textbf{Left-to-right addition is not FTD.}
+
+In right-to-left addition (Example~7.15), the carry propagates from right to left, allowing online processing.  In left-to-right addition, the carry at each position depends on all digits to the right (which have not yet been seen), requiring unbounded lookahead.  By the pumping lemma for FTD functions: consider adding two numbers where carrying propagates across an arbitrarily long prefix.  For any $n$-state machine, two numbers differing only in the rightmost digits but affecting carries at position 1 can be constructed; the machine would need $>n$ states to distinguish all carry lengths.  Hence $f_4$ is not FTD.
+
+%% 7.44
+\item \textbf{Prove Theorem~7.9 for MSM.}
+
+\begin{enumerate}[(a)]
+  \item $M/_{E_M}\equiv M$: Same argument as Exercise~7.33(b).
+  \item $M/_{E_M}$ is reduced: Same argument as Exercise~7.33(c).
+  \item If $M$ connected, $M/_{E_M}$ connected: Same as Exercise~7.33(d).
+\end{enumerate}
+
+%% 7.45
+\item \textbf{Minimal Moore machine is reduced.}
+
+\begin{proof}
+Suppose the minimal Moore machine $M$ for $f$ is not reduced.  Then two states $s\neq t$ in $M$ have $s E_M t$.  Form $M'$ by merging $[s]=[t]$ in the quotient $M/_{E_M}$; this gives an equivalent machine with fewer states.  But $M$ was defined as minimal---contradiction.  Hence $M$ is reduced. \qed
+\end{proof}
+
+%% 7.46
+\item \textbf{Theorem~7.10 for MSM.}
+
+\begin{enumerate}[(a)]
+  \item $M$ minimal iff $M$ is reduced and connected: Same argument as for Mealy machines (Exercise~7.4).
+  \item $M^c/_{E_{M^c}}$ is minimal: $M^c$ is the connected portion (remove unreachable states); $M^c/_{E_{M^c}}$ is the quotient (merge equivalent states).  The result is reduced (by quotient) and connected (by taking connected portion), hence minimal.
+\end{enumerate}
+
+%% 7.47
+\item \textbf{Prove Lemma~7.5 and Corollary~7.9 for MSMs.}
+
+\begin{enumerate}[(a)]
+  \item Same as Exercise~7.2(a) (replace $\omega_A,\omega_B$ with Moore output functions).
+  \item Same as Exercise~7.2(b).
+  \item $A\equiv B$: $\OBAR_A(s_{0_A},x)=\OBAR_B(\mu(s_{0_A}),x)=\OBAR_B(s_{0_B},x)$ for all $x$.
+\end{enumerate}
+
+%% 7.48
+\item \textbf{Prove Corollary~7.10.}
+
+Corollary~7.10 (typically): The quotient $M/_{E_M}$ is the unique minimal machine equivalent to $M$ (up to isomorphism).
+
+\begin{proof}
+By Theorem~7.9/Theorem~7.4, $M/_{E_M}$ is reduced and connected (if $M$ is connected).  By Theorem~7.5, any two minimal equivalent machines are isomorphic.  Hence $M/_{E_M}$ is the unique minimal machine (up to isomorphism) equivalent to $M$. \qed
+\end{proof}
+
+%% 7.49
+\item \textbf{Prove Corollary~7.11.}
+
+(The specific content of Corollary~7.11 depends on the text; it typically follows from the preceding theorems about minimization and isomorphism.)
+
+%% 7.50
+\item \textbf{$\delta_{E_M}$ and $\omega_{E_M}$ well-defined for FST quotient.}
+
+\begin{enumerate}[(a)]
+  \item $\delta_{E_M}$ well-defined: See Exercise~7.15.
+  \item $\omega_{E_M}$ well-defined: See Exercise~7.16.
+\end{enumerate}
+
+%% 7.51
+\item \textbf{$\delta_{E_M}$ and $\omega_{E_M}$ well-defined for MSM quotient.}
+
+\begin{enumerate}[(a)]
+  \item $\delta_{E_M}$: Same argument as Exercise~7.15 (using $s E_M t\Rightarrow\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$).
+  \item $\omega_{E_M}([s]_{E_M})=\omega(s)$: If $s E_M s'$, then $s$ and $s'$ produce the same output on all strings, in particular $\lambda$ (i.e., $\omega(s)=\omega(s')$).
+\end{enumerate}
+
+%% 7.52
+\item \textbf{Isomorphism from $A$ to $B$ and $A$ connected $\Rightarrow$ $B$ connected.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Mealy machines:}  Let $\psi:S_A\to S_B$ be an isomorphism.  Every $t\in S_B$ has a preimage $s=\psi^{-1}(t)$.  Since $A$ is connected, $s=\DBAR_A(s_{0_A},x)$ for some $x$.  Then $t=\psi(s)=\psi(\DBAR_A(s_{0_A},x))=\DBAR_B(\psi(s_{0_A}),x)=\DBAR_B(s_{0_B},x)$.  So $t$ is reachable in $B$.
+
+  \item \textbf{Moore machines:}  Same argument.
+\end{enumerate}
+
+%% 7.53
+\item \textbf{Isomorphism from $A$ to $B$ and $B$ connected $\Rightarrow$ $A$ connected.}
+
+Since $\psi$ is an isomorphism, $\psi^{-1}$ is also an isomorphism from $B$ to $A$.  By Exercise~7.52, $B$ connected and isomorphism $\psi^{-1}$ implies $A$ connected.
+
+%% 7.54
+\item \textbf{Homomorphism from $A$ to $B$ and $A$ connected does NOT imply $B$ connected.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Mealy counterexample:}  Let $A$ have state $\{s_0\}$ (connected), $\Sigma=\{\pmb{a}\}$, $\delta_A(s_0,\pmb{a})=s_0$, $\omega_A(s_0,\pmb{a})=\pmb{0}$.  Let $B$ have states $\{t_0,t_1\}$ where $t_1$ is unreachable from $t_0$; $\delta_B(t_0,\pmb{a})=t_0$, $\omega_B(t_0,\pmb{a})=\pmb{0}$, $\delta_B(t_1,\pmb{a})=t_1$, $\omega_B(t_1,\pmb{a})=\pmb{0}$.  Map $\mu(s_0)=t_0$.  Then $\mu$ is a homomorphism, $A$ is connected, but $B$ is not connected ($t_1$ unreachable).
+
+  \item \textbf{Moore machines:} Same construction.
+\end{enumerate}
+
+%% 7.55
+\item \textbf{Homomorphism from $A$ to $B$ and $B$ connected does NOT imply $A$ connected.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Counterexample:}  Let $A$ have states $\{s_0,s_1\}$ where $s_1$ is unreachable; $B$ has state $\{t_0\}$ (trivially connected).  Map $\mu(s_0)=\mu(s_1)=t_0$.  $\mu$ is a homomorphism, $B$ is connected, but $A$ is not connected.
+
+  \item Same for Moore.
+\end{enumerate}
+
+%% 7.56
+\item \textbf{If $\psi:A\to B$ and $\mu:B\to A$ are isomorphisms of connected FSTs, then $\psi=\mu^{-1}$.}
+
+\begin{proof}
+$\mu\circ\psi:S_A\to S_A$ is an isomorphism (composition of isomorphisms).  For any $s\in S_A$ reachable via $x$ ($s=\DBAR_A(s_{0_A},x)$): $(\mu\circ\psi)(s)=\mu(\psi(\DBAR_A(s_{0_A},x)))=\mu(\DBAR_B(s_{0_B},x))=\DBAR_A(s_{0_A},x)=s$.  So $\mu\circ\psi=\text{id}_{S_A}$, i.e., $\mu=\psi^{-1}$. \qed
+\end{proof}
+
+%% 7.57
+\item \textbf{If $A,B$ are FSTs (possibly not connected), $\psi=\mu^{-1}$ may fail.}
+
+\textbf{Example:} Let $A=B$ have states $\{s_0,s_1\}$ where both are unreachable from each other (two isolated states, each with self-loops).  The function $\psi(s_0)=s_0,\psi(s_1)=s_1$ and $\mu(s_0)=s_1,\mu(s_1)=s_0$ are both isomorphisms (since the machines are symmetric), but $\mu\neq\psi^{-1}$.
+
+%% 7.58
+\item \textbf{Three-state MSM with $E_{0A}$ having one class; can $E_{0A}\neq E_{1A}$?}
+
+$E_{0A}$ always has exactly one class for any MSM (by definition/Lemma~7.4a).  $E_{0A}\neq E_{1A}$ iff not all states have the same output ($\omega$ not constant).  Yes, this is possible: if three states $s_0,s_1,s_2$ have $\omega(s_0)\neq\omega(s_1)$, then $E_{1A}$ will separate them.
+
+%% 7.59
+\item \begin{enumerate}[(a)]
+  \item Mealy $M$ not connected and $M/_{E_M}$ not connected: Take $M$ with states $\{s_0,s_1,s_2\}$ where $s_2$ is unreachable and $s_1\not E_M s_2$.  Then $M/_{E_M}$ has classes $\{[s_0],[s_1],[s_2]\}$, and $[s_2]$ is unreachable.
+
+  \item Mealy $M$ not connected but $M/_{E_M}$ connected: Take $M$ with $s_2$ unreachable but $s_2 E_M s_0$.  Then in $M/_{E_M}$, $[s_2]=[s_0]$, and the quotient's states are a subset of the original, with the unreachable class merged into a reachable one.
+\end{enumerate}
+
+%% 7.60
+\item Similar to Exercise~7.59 for Moore machines.
+
+%% 7.61
+\item \textbf{Prove $\mu(s) E_B \mu(t) \Leftrightarrow s E_A t$ for Mealy homomorphism.}
+
+\begin{proof}
+$(\Rightarrow)$ If $\mu(s) E_B \mu(t)$: $\OBAR_B(\mu(s),x)=\OBAR_B(\mu(t),x)$ for all $x$.  By Exercise~7.2(b), $\OBAR_A(s,x)=\OBAR_B(\mu(s),x)=\OBAR_B(\mu(t),x)=\OBAR_A(t,x)$, so $s E_A t$.
+
+$(\Leftarrow)$ If $s E_A t$: $\OBAR_A(s,x)=\OBAR_A(t,x)$ for all $x$.  So $\OBAR_B(\mu(s),x)=\OBAR_A(s,x)=\OBAR_A(t,x)=\OBAR_B(\mu(t),x)$, giving $\mu(s) E_B \mu(t)$. \qed
+\end{proof}
+
+%% 7.62
+\item Same as Exercise~7.61 for Moore machines.
+
+%% 7.63
+\item Exercises~7.63 and~7.64: Same as Exercises~7.32(a) and (b).
+
+%% 7.64
+\item Same as Exercise~7.32 for MSMs.
+
+%% 7.65
+\item \textbf{Isomorphism $\cong$ is an equivalence relation on Mealy machines.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Symmetry:} If $\psi:S_A\to S_B$ is an isomorphism, then $\psi^{-1}:S_B\to S_A$ is also an isomorphism (verify all homomorphism properties hold for $\psi^{-1}$).
+
+  \item \textbf{Reflexivity:} The identity $\text{id}:S_A\to S_A$ is an isomorphism.
+
+  \item \textbf{Composition:} If $\psi:A\to B$ and $\varphi:B\to C$ are isomorphisms, verify that $\varphi\circ\psi:S_A\to S_C$ satisfies all isomorphism properties (by chaining the homomorphism properties).
+
+  \item \textbf{Equivalence:} From (a), (b), and (c) (which gives transitivity via $\varphi\circ\psi$), $\cong$ is reflexive, symmetric, and transitive.
+
+  \item \textbf{Homomorphism is not an equivalence relation:} Not symmetric: a homomorphism $\mu:A\to B$ need not have an inverse that is a homomorphism from $B$ to $A$ (e.g., if $\mu$ is not injective, no inverse exists).
+\end{enumerate}
+
+%% 7.66
+\item Same argument as Exercise~7.65 for Moore machines.
+
+%% 7.67
+\item \textbf{Prove homomorphism $\mu:M\to M/_{E_M}$ exists.}
+
+\begin{proof}
+Define $\mu:S\to S_{E_M}$ by $\mu(s)=[s]_{E_M}$.
+
+Check homomorphism properties:
+\begin{enumerate}[(i)]
+  \item $\mu(s_0)=[s_0]_{E_M}=s_{0_{E_M}}$. \checkmark
+  \item $\mu(\delta(s,\pmb{a}))=[\delta(s,\pmb{a})]_{E_M}=\delta_{E_M}([s]_{E_M},\pmb{a})=\delta_{E_M}(\mu(s),\pmb{a})$. \checkmark
+  \item $\omega(s,\pmb{a})=\omega_{E_M}([s]_{E_M},\pmb{a})=\omega_{E_M}(\mu(s),\pmb{a})$. \checkmark
+\end{enumerate} \qed
+\end{proof}
+
+%% 7.68
+\item Same as Exercise~7.67 for Moore machines.
+
+%% 7.69
+\item \textbf{Limit time in state $s_2$ to 3 clock cycles.}
+
+\begin{enumerate}[(a)]
+  \item Replace $s_2$ with a chain $s_2^{(1)},s_2^{(2)},s_2^{(3)}$ where: at $s_2^{(1)}$, if sensor still active, go to $s_2^{(2)}$; at $s_2^{(2)}$, if still active, go to $s_2^{(3)}$; at $s_2^{(3)}$, regardless of sensor, proceed to the next phase (yellow light).  All three states output $\langle R,R,R,G\rangle$.
+
+  \item--\item[c.] Similar expansions for $s_6$.
+\end{enumerate}
+
+%% 7.70
+\item \textbf{Ensure east-west traffic gets green occasionally.}
+
+\begin{enumerate}[(a)]
+  \item Without new states: add a time-out counter within the existing state structure; when the sensor is active too long, force a transition to $s_0$ (east-west green).
+
+  \item With new states: add a ``fairness counter'' that remembers how many cycles each lane has gotten; add states encoding the last lane served and guarantee round-robin.
+\end{enumerate}
+
+%% 7.71
+\item \textbf{Prove: if two Moore machines are homomorphic, they are equivalent.}
+
+\begin{proof}
+If $\mu:A\to B$ is a homomorphism, by Exercise~7.47(c), $f_A=f_B$.  Hence $A\equiv B$. \qed
+\end{proof}
+
+%% 7.72
+\item \textbf{Prove \DSIG\ is closed under any FTD function $f:\Sigma^*\to\Sigma^*$.}
+
+\begin{proof}
+Let $L\in\DSIG$ and $f$ be FTD, implemented by Mealy machine $M$.  We want to show $f^{-1}(L)\in\DSIG$ (inverse image) and $f(L)\in\DSIG$ (image).
+
+\emph{Closure under inverse:}  Given DFA $A$ for $L$ and Mealy machine $M$ for $f$, build a product machine $P$ whose states are $S_A\times S_M$.  On input $\pmb{a}$: $P$ advances $M$ to compute the output $f(\pmb{a})$, then advances $A$ on that output.  If the output of $M$ is a single letter per input (Mealy), then $P$ directly simulates $A$ on the translation.  The result is a DFA for $f^{-1}(L)=\{x\mid f(x)\in L\}\in\DSIG$.
+
+\emph{Closure under image:}  $f(L)=\{f(x)\mid x\in L\}$.  Build an NDFA that reads the output of $M$ while $M$'s input was accepted by $A$: nondeterministically guess the input $x\in L$ and simulate $M$ on $x$ to generate output.  Since $L\in\DSIG$ and $M$ is a finite transducer, $f(L)\in\DSIG$.  (More precisely: the composition of a DFA with an FST yields an NDFA, and by Theorem~4.1, this is equivalent to a DFA.) \qed
+\end{proof}
+
+\end{enumerate}

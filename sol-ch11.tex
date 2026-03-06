@@ -1,0 +1,328 @@
+%% Solutions for Chapter 11: Turing Machines
+
+\chapter{Turing Machines --- Solutions}
+
+\begin{enumerate}[{11.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{How is a Turing machine like an elevator?}
+
+\textbf{Analogy}:
+\begin{itemize}
+\item \textbf{States} correspond to \emph{floors} (the elevator's current position/state).
+\item \textbf{Input} corresponds to \emph{button presses} (the sequence of requested floors).
+\item The elevator transitions from floor to floor based on button requests, just as the Turing machine transitions from state to state based on input symbols.
+\end{itemize}
+
+\textbf{Essential missing component}: An elevator has only \emph{finite, bounded memory} --- it can remember which buttons have been pressed (a finite set), but it cannot write new symbols to an unbounded tape. The critical component preventing an elevator from modeling a general computing device is the \emph{unbounded read/write tape}. Without it, the elevator can only implement a finite state machine (regular language computation), not a Turing machine. The ability to store and retrieve arbitrarily large amounts of information is essential for general computation.
+
+%%------------------------------------------------------------
+\item \textbf{Turing machine for palindromes $L = \{w \mid w = w^r\}$ over $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$.}
+
+\begin{enumerate}
+\item \textbf{One-tape, one-head TM}:
+
+Strategy: Repeatedly match the leftmost and rightmost unprocessed symbols.
+\begin{enumerate}[1.]
+\item Mark the leftmost symbol $a$ (replace with $\overline{a}$); move right to the rightmost unmarked symbol.
+\item If the rightmost symbol matches $a$, mark it and move left; continue.
+\item If the rightmost symbol does not match, reject.
+\item When all symbols are marked (or only the center symbol for odd-length), accept.
+\end{enumerate}
+States: $\{q_\text{start}, q_a, q_b, q_c, q_\text{right}, q_{\text{check},a}, q_{\text{check},b}, q_{\text{check},c}, q_\text{return}, q_\text{accept}, q_\text{reject}\}$.
+
+Transitions: $\delta(q_\text{start}, \pmb{a}) = (q_a, \overline{\pmb{a}}, R)$ [mark $\pmb{a}$, go right]; etc.
+
+\item \textbf{Linear Bounded Automaton (LBA)}: Since the tape head never needs to go beyond the input boundaries (matching leftmost/rightmost within the input), the TM above is already an LBA. The computation uses only the $n$ tape cells containing the input.
+
+\item \textbf{Nondeterminism/multiple tapes}: A two-tape TM copies the input to tape 2, reverses tape 2, and compares tape 1 with tape 2 symbol by symbol --- $O(n)$ time. A nondeterministic TM can guess the center and verify matching from both ends simultaneously.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{TM recognizing $\{\pmb{a}^n \mid n \text{ is a perfect square}\}$ over $\Sigma=\{\pmb{a}\}$.}
+
+\textbf{Strategy}: The $k$-th perfect square is $k^2$. Note $(k+1)^2 = k^2 + (2k+1)$: successive perfect squares differ by successive odd numbers $1, 3, 5, 7, \ldots$
+
+Algorithm:
+\begin{enumerate}[1.]
+\item If input is $\lambda$: accept (since $0 = 0^2$).
+\item Mark the first $\pmb{a}$ and subtract $1$; this corresponds to $1^2=1$.
+\item Then subtract $3$; if exhausted, accept (that was $2^2=4$). If not enough, reject.
+\item Then subtract $5$; if exhausted accept ($3^2=9$). Etc.
+\item Subtract $2k+1$ at each step for $k=0,1,2,\ldots$; accept if the tape is exactly emptied, reject if running short.
+\end{enumerate}
+
+The TM maintains the current step $k$ (in unary, using a separate tape region or using a scratch area) and repeats the subtraction of $2k+1$. It accepts when exactly $k^2$ symbols have been processed.
+
+%%------------------------------------------------------------
+\item \textbf{TM for languages over $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$.}
+
+\begin{enumerate}
+\item $\{\pmb{a}^k\pmb{b}^n\pmb{c}^m \mid k\neq n \wedge n\neq m\}$:
+
+Strategy: Count $|x|_a$, $|x|_b$, $|x|_c$ separately and verify $|x|_a \neq |x|_b$ and $|x|_b \neq |x|_c$.
+
+A practical approach:
+\begin{enumerate}[1.]
+\item Verify the input has the form $\pmb{a}^k\pmb{b}^n\pmb{c}^m$ (check symbol ordering); reject if not.
+\item Pair off $\pmb{a}$s and $\pmb{b}$s: erase one $\pmb{a}$ and one $\pmb{b}$ in each pass. If they run out simultaneously, $k=n$; reject.
+\item Pair off $\pmb{b}$s and $\pmb{c}$s similarly. If they run out simultaneously, $n=m$; reject.
+\item If both checks show inequality, accept.
+\end{enumerate}
+
+\item $\{x \mid |x|_a \neq |x|_b \wedge |x|_b \neq |x|_c\}$ (arbitrary mixing):
+
+Strategy: Count occurrences by marking symbols.
+\begin{enumerate}[1.]
+\item In pass 1: pair $\pmb{a}$s with $\pmb{b}$s by crossing out one of each per scan. If the pairing runs out on one side before the other, $|x|_a \neq |x|_b$ confirmed. If they balance, $|x|_a = |x|_b$; reject.
+\item In pass 2: pair $\pmb{b}$s with $\pmb{c}$s. Similarly check $|x|_b \neq |x|_c$.
+\item Accept iff both checks confirm inequality.
+\end{enumerate}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Machine $M$ with $L(M)=L_1(M)=L_2(M)=L_3(M)=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\mid |x|_a=|x|_b=|x|_c\}$.}
+
+\begin{enumerate}
+\item \textbf{Construction}: Design $M$ to:
+\begin{enumerate}[1.]
+\item Verify $|x|_a = |x|_b = |x|_c$ by crossing-off pairing.
+\item If yes: \textbf{halt} with the tape containing $\pmb{Y}$ in cell 1 (accept state is also the halt state for $L_1$, $L_2$, $L_3$).
+\item If no: \textbf{halt} with $\pmb{N}$ on the tape (reject for all acceptance modes).
+\end{enumerate}
+Specifically:
+- $L(M)$: accept = halting in designated final state.
+- $L_1(M)$: accept = halting.
+- $L_2(M)$: accept = halting with $\pmb{Y}$ on tape.
+- $L_3(M)$: accept = halting on a blank tape (we can arrange $M$ to clear tape for yes-instances).
+
+By designing $M$ to halt on all inputs and write $\pmb{Y}$/$\pmb{N}$ appropriately, all four acceptance modes agree.
+
+\item \textbf{Is this always possible?}: Yes, for any Turing-acceptable language $L$. Proof: Given any TM $A$ accepting $L$, by the $L_1$/$L_2$/$L_3$ equivalence theorems (Exercise 11.19), there is a halting TM $A'$ accepting $L$ in any of the four modes. If we require all four modes to agree, we need $A$ to halt on \emph{all} inputs (not just those in $L$). This is possible iff $L$ is \emph{recursive} (decidable). For Turing-acceptable but not recursive languages, $L(M)=L$ but $M$ may not halt on all inputs, preventing $L_1(M)=L$. So the answer is: \textbf{yes if and only if $L$ is recursive}. For every recursive language, we can build $M$ with all four modes agreeing.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L = \{ww \mid w\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\}$.}
+
+\begin{enumerate}
+\item \textbf{One-tape TM}:
+Strategy:
+\begin{enumerate}[1.]
+\item If input has odd length, reject (since $|ww|=2|w|$ is even).
+\item Mark the midpoint by counting: move right counting $n$ symbols, then left counting $n$ symbols to find the center (binary search or two-pass count).
+\item From the start, match symbol $i$ with symbol $n+i$ (for each $i$ from $1$ to $n$), crossing off matched pairs.
+\item Accept if all pairs match; reject on any mismatch.
+\end{enumerate}
+
+\item \textbf{LBA}: Since the computation uses only the $2n$ cells of the input, the machine is already an LBA.
+
+\item \textbf{Multiple tapes}: A two-tape TM copies the first half of the input to tape 2, then compares tape 2 with the second half of tape 1 symbol by symbol. A nondeterministic TM can guess the midpoint and verify.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Lexicographic ordering Turing machines.}
+
+Given $\Sigma=\{\pmb{a}_1,\ldots,\pmb{a}_n\}$ with lexicographic order based on base-$n$ numbering.
+
+\begin{enumerate}
+\item \textbf{Successor TM}: Machine $M_{succ}$ maps $x$ to its lexicographic successor.
+
+Algorithm: Process $x$ from right to left. Find the rightmost symbol $\pmb{a}_i$ with $i < n$; replace it with $\pmb{a}_{i+1}$ and replace all symbols to its right with $\pmb{a}_1$. If all symbols are $\pmb{a}_n$ (e.g., $x = \pmb{a}_n^k$), the successor is $\pmb{a}_1^{k+1}$: write $k+1$ copies of $\pmb{a}_1$ (extending the tape by one cell).
+
+\item \textbf{Generator TM}: Start with blank tape. Write $\pmb{a}_1$ (the first word). Apply $M_{succ}$ to get the next word; erase the current word, write the successor. Repeat indefinitely. This generates words of $\Sigma^*$ in lexicographic order, one at a time.
+
+\item \textbf{Enumerator TM}: Start with blank tape. Apply $M_{succ}$ repeatedly, but instead of erasing the previous word, write the next word to the right (separated by a blank). This enumerates $\Sigma^*$ by writing all words in sequence on the tape.
+
+\item \textbf{Deterministic simulation of NDTM}: Given a nondeterministic TM $N$, simulate it deterministically using the lexicographic ordering of computation paths. At step $k$, enumerate all possible $k$-step computation paths (sequences of transitions) using the lexicographic order, and simulate each one. If any path reaches an accepting state, accept. This gives a deterministic simulation (though potentially much slower). $M_{succ}$ generates the next computation path to try.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Semi-infinite tape Turing machine.}
+
+A \emph{semi-infinite tape} has a left boundary (leftmost cell = cell 1) and extends indefinitely to the right.
+
+\begin{enumerate}
+\item \textbf{Two-track simulation}: Given a TM $M$ with a bi-infinite tape, simulate it on a two-track semi-infinite tape:
+- Track 1 (top): cells $0, 1, 2, 3, \ldots$ of the original tape.
+- Track 2 (bottom): cells $-1, -2, -3, \ldots$ of the original tape (stored in reverse).
+- Cell $k$ of the two-track tape contains $(c_k, c_{-k})$ for $k \geq 0$ (where $c_i$ is the content of cell $i$ on the original tape), with a special marker at cell 0 to indicate the boundary.
+
+The head of the two-track TM simulates both directions: moving right on Track 1 corresponds to moving right; moving left (if at cell 0) switches to Track 2 and moves right.
+
+\item \textbf{Equivalence proof}: By induction on the number of TM steps:
+- Each step of $M$ corresponds to a step (or at most two steps) of the two-track machine.
+- The content of the two tracks correctly represents the bi-infinite tape of $M$.
+- Acceptance/rejection conditions are preserved. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{TM recognizing $\{\pmb{a}^n \mid n \text{ is a power of 2}\}$.}
+
+Strategy: Repeatedly check if $n$ is divisible by 2 and halve it until reaching 1.
+
+Algorithm:
+\begin{enumerate}[1.]
+\item If input is $\pmb{a}$ ($n=1=2^0$), accept.
+\item If input has odd length $> 1$, reject.
+\item Sweep left to right, marking every other $\pmb{a}$ with $\overline{\pmb{a}}$. If $n$ is odd (and $>1$) an unmarked $\pmb{a}$ remains at the end — reject. Otherwise, replace all unmarked $\pmb{a}$s with blanks; the $\overline{\pmb{a}}$s form the halved string. Repeat.
+\item Repeat until one symbol remains; accept.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Three-head TM for $\{x \mid |x|_a = |x|_b = |x|_c\}$.}
+
+\textbf{Design}: All three heads start at the leftmost character.
+
+Strategy:
+- Head 1 scans for $\pmb{a}$-symbols (moving right, skipping $\pmb{b}$ and $\pmb{c}$).
+- Head 2 scans for $\pmb{b}$-symbols.
+- Head 3 scans for $\pmb{c}$-symbols.
+
+In each synchronization step: advance all three heads to their next unmatched symbol of the respective types. If at any point one head reaches the end while others haven't (or vice versa), reject. If all three heads reach the end simultaneously, accept.
+
+\textbf{No head ever needs to move left}: Each head only moves right (it scans past symbols of other types, looking for its own). Since the heads never backtrack, none needs to move left. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Every CFL is Turing-acceptable.}
+
+\textbf{Proof} (Lemma 11.1): Let $L$ be a CFL with PDA $P = \langle\Sigma,\Gamma,S,s_0,\delta,Z_0,F\rangle$.
+
+Construct a TM $M$ that simulates $P$:
+- Tape 1: input string $x$.
+- Tape 2: stack of $P$ (top of stack at left).
+- $M$ simulates each PDA move: reads next input symbol (or $\lambda$), looks up $\delta$, pops the stack top, pushes the new stack string (nondeterministically if $|\delta|>1$).
+- If the PDA reaches a final state with empty input, $M$ accepts.
+
+Since the PDA is nondeterministic, $M$ is a nondeterministic TM. Every NTM can be simulated by a deterministic TM (by enumerating computation paths as in Exercise 11.7(d)).
+
+Thus $L = L(P) = L(M) \in \TSIG$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Every type 1 language is a LBL.}
+
+\textbf{Proof} (Theorem 11.3): Let $G=\langle\Sigma,\Omega,Z,P\rangle$ be a context-sensitive grammar (type 1: every production $\alpha\to\beta$ has $|\beta|\geq|\alpha|$, except possibly $Z\to\lambda$).
+
+Construct a nondeterministic LBA $M$ that accepts $L(G)$:
+- Tape: input $x$ of length $n$.
+- $M$ nondeterministically simulates derivations of $G$ in \emph{reverse}: it starts with the candidate string $x$ and applies productions in reverse ($\beta \to \alpha$, which decreases string length since $|\alpha|\leq|\beta|$), trying to reduce back to $Z$.
+- Since productions only decrease (or maintain) length in reverse, the tape never needs to grow beyond the original input length $n$.
+- If $M$ successfully reduces to $Z$, accept; otherwise reject.
+
+Since all computations stay within the original $n$ cells, $M$ is a linear bounded automaton. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Convert LBA $M$ to three-track strict LBA.}
+
+\begin{enumerate}
+\item \textbf{New alphabets}:
+- The three-track tape has symbols $(a, b, c) \in (\Sigma\cup\{\pmb{B}\}) \times \{L,R,\pmb{B}\} \times \{L,R,\pmb{B}\}$, where:
+  - Track 1: original tape content.
+  - Track 2: left-boundary marker ($L$ in the leftmost cell, $\pmb{B}$ elsewhere).
+  - Track 3: right-boundary marker ($R$ in the rightmost cell of input, $\pmb{B}$ elsewhere).
+
+\item \textbf{New transitions}: For any old transition $\delta(s,a) = (s',a',d)$ in $M$:
+  - The new TM reads the three-track symbol at the current head position.
+  - It writes the new three-track symbol (updating track 1, preserving tracks 2 and 3).
+  - If the head would move left from the leftmost cell (track 2 = $L$) or right from the rightmost (track 3 = $R$), the new TM instead enters a unique ``boundary error'' state and rejects.
+  - This ensures the head never leaves the input region.
+
+\item \textbf{Proof of equivalence} (for $|x|\geq 2$): By induction on the number of steps:
+  - The strict LBA $M'$ exactly simulates $M$ as long as the head stays within boundaries.
+  - Since $M$ is a linear bounded automaton, it never leaves the input region (this is the definition of LBA).
+  - Therefore the boundary checks never trigger, and $M'$ accepts exactly when $M$ does. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Handle strings of length 1; strict LBA for type 1 languages.}
+
+\begin{enumerate}
+\item \textbf{Strings of length 1}: Add a special symbol $\overline{\underline{\pmb{b}}}$ that represents ``left boundary AND right boundary'' (single-cell input). The modified machine enters a special mode when it sees $\overline{\underline{\pmb{b}}}$ and handles single-character inputs by appropriate transitions that do not require movement.
+
+\item \textbf{Strict LBA accepting $\lambda$}: The empty string requires the initial scan of a blank cell (since the tape head must look at something). Define: if the initial tape cell is blank, the strict LBA interprets this as $\lambda$ and immediately decides acceptance based on whether $\lambda\in L$. For type 1 grammars that allow $Z\to\lambda$ (the only way $\lambda\in L$), the strict LBA accepts the blank tape. All other computations proceed as before. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove (Theorem 11.4) by induction: TM computation iff LBA grammar derivation.}
+
+\textbf{Statement}: $\alpha s \beta \Dvdash \gamma t\omega$ in $M$ (Turing machine) iff $[\#^i\alpha s\beta\#^j] \DRightarrow [\#^m\gamma t\omega\#^n]$ (in the grammar constructed for Theorem 11.4), for some $i,j,m,n\in\NN$.
+
+\textbf{Base} (0 transitions): $\alpha s\beta \Dvdash \alpha s\beta$, and $[\#^i\alpha s\beta\#^j]\DRightarrow[\#^i\alpha s\beta\#^j]$ (no derivation steps). \checkmark
+
+\textbf{Step}: If $\alpha s\beta \vdash \gamma t\omega$ by one TM transition, the grammar applies the corresponding production (which is a context-sensitive rule encoding the TM transition). The $\#$ boundary markers are adjusted as needed (if the head moves to a new blank cell, a $\#$ is converted). By induction, chaining $k$ steps: $k$ TM transitions correspond to $k$ grammar derivation steps. \qed
+
+%%------------------------------------------------------------
+\item \textbf{General induction statement for Theorem 11.5.}
+
+\textbf{Theorem 11.5} establishes that every LBL is a type 1 (context-sensitive) language.
+
+\textbf{Inductive statement}: For all $k \geq 0$, for all LBA configurations $C = (s, \alpha, i)$ (state $s$, tape $\alpha$, head at position $i$) reachable from the initial configuration on input $x$ in at most $k$ steps:
+
+$C$ is reachable in $k$ LBA steps from the initial configuration iff the sentential form $\phi_C$ (encoding $C$ as a string of nonterminals in the grammar for $L(M)$) is derivable in $k$ grammar steps from the start symbol.
+
+\textbf{Proof by induction on $k$}:
+- Base ($k=0$): The initial configuration corresponds to the start of the grammar derivation. \checkmark
+- Step: Each LBA transition corresponds to a grammar production. By the IH, all $k$-step reachable configurations correspond to $k$-step derivations; adding one more LBA step extends to $k+1$ on both sides. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Type 0 language Kleene closure.}
+
+\begin{enumerate}
+\item \textbf{Flaw in $G_* = \langle\Sigma,\Omega\cup\{W\},W,P\cup\{W\to\lambda,W\to WW,W\to Z\}\rangle$}:
+
+The production $W \to WW$ in combination with $W \to Z \to \ldots$ may generate strings with nonterminals from different ``copies'' of the grammar interfering with each other. Specifically, type 0 grammars can have productions $\alpha\beta \to \gamma$ (context-sensitive or unrestricted) where $\alpha$ and $\beta$ come from different parts of the derivation. With two independent copies of $G$ (from $W\to WW$) sharing nonterminals, the productions of one copy may interact with nonterminals of the other copy in unintended ways.
+
+\item \textbf{Example}: Let $G = \langle\{A,B,C\},\{a,b\},Z,\{Z\to AB, AB\to BA, A\to a, B\to b\}\rangle$. Then $L(G) = \{ab, ba\}$. With $G_*$: $W\to WW\to ZZ\to ABAB$. The productions of $G$ might apply to the combined string $ABAB$ in unintended ways: $AB\to BA$ could apply to either the first $AB$ or the second $AB$ or the internal pair $BA$ ($B$ from copy 1 and $A$ from copy 2), producing incorrect strings.
+
+\item \textbf{Correct $G_*$}: To avoid cross-copy interference, rename nonterminals: for each copy of $G$ used in the derivation, use a fresh copy of all nonterminals (with indices). Alternatively, use the Turing machine characterization: since \TSIG\ is closed under concatenation and Kleene closure can be simulated by nondeterministically splitting the input and recognizing each piece.
+
+Formally: Let $G_* = \langle\Sigma,\Omega\cup\{W,W'\},W,P'\rangle$ where $P'$ contains a \emph{fresh} copy $P_i$ of $P$ for each ``level'' of recursion, with nonterminals marked to prevent interaction. The construction ensures each derivation of a word from $L(G)$ uses an isolated copy of $G$.
+
+\item \textbf{Proof}: $w \in L(G_*)$ iff $w$ can be written as $w = w_1 w_2\cdots w_k$ with each $w_i \in L(G)$ iff $W \DRightarrow w$ in $G_*$ (by the isolated copy construction). \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{\TSIG\ is closed under various operations.}
+
+\begin{enumerate}
+\item \textbf{Homomorphism}: Given $L\in\TSIG$ (TM $M$ accepting $L$) and homomorphism $h$, construct TM $M'$ that accepts $h(L)$: $M'$ nondeterministically guesses a string $w$ and verifies $h(w) = x$ (the input) and $w\in L(M)$. Alternatively, directly: for $h(L)$, the TM $M'$ on input $y$ nondeterministically guesses an $x$ with $h(x)=y$ and simulates $M$ on $x$.
+
+\item \textbf{Inverse homomorphism}: $M'$ on input $x$ computes $h(x)$ and simulates $M$ on $h(x)$. Since $h$ is a computable function (homomorphisms are computable), this works. So $h^{-1}(L)\in\TSIG$.
+
+\item \textbf{Concatenation}: Given TMs $M_1$ and $M_2$ for $L_1$ and $L_2$, a nondeterministic TM $M$ for $L_1\cdot L_2$ guesses a split point $x=uv$, simulates $M_1$ on $u$ and $M_2$ on $v$, accepts if both accept.
+
+\item \textbf{Substitution}: For each symbol $a\in\Sigma$, let $L_a\in\TSIG$. The substitution $L[a\mapsto L_a]$ replaces each $a$ in words of $L$ with words from $L_a$. A nondeterministic TM handles this by guessing the substitution. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence of acceptance modes $L_1$ and $L_2$.}
+
+\begin{enumerate}
+\item \textbf{$L(M)=L_1(M) \Rightarrow L(M)=L_2(M)$}: Given TM $A_1$ with $L = L_1(A_1)$ (accept = halt), construct $A_2$ with $L = L_2(A_2)$ (accept = halt with $\pmb{Y}$ on tape).
+
+Modification: When $A_1$ enters the halt state:
+- If $A_1$ was in a final/accepting configuration: $A_2$ erases the tape and writes $\pmb{Y}$.
+- If $A_1$ was in a rejecting halt: $A_2$ writes $\pmb{N}$.
+
+For non-halting $A_1$ computations: same behavior. Since $A_1$ halts on inputs in $L$ (by $L_1$), $A_2$ also halts on those inputs and writes $\pmb{Y}$. For inputs not in $L$: $A_1$ may not halt; $A_2$ has the same non-halting behavior, so $L_2(A_2) = L_1(A_1) = L$. \qed
+
+\item \textbf{$L(M)=L_2(M) \Rightarrow L(M)=L_3(M)$}: Given TM $A_2$ with $L = L_2(A_2)$ (accept = halt with $\pmb{Y}$), construct $A_3$ with $L = L_3(A_3)$ (accept = halt with blank tape).
+
+Modification: When $A_2$ halts with $\pmb{Y}$: $A_3$ erases the entire tape.
+When $A_2$ halts with $\pmb{N}$: $A_3$ writes some non-blank symbol.
+Then $L_3(A_3)$ = strings for which $A_3$ halts on blank tape = strings for which $A_2$ wrote $\pmb{Y}$ = $L_2(A_2) = L$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{\OSIG\ (halting TM languages) is closed under the same operations.}
+
+\begin{enumerate}
+\item \textbf{Homomorphism}: Given a halting TM $M$ for $L\in\OSIG$, construct a halting TM for $h(L)$: on input $y$, nondeterministically enumerate all $x$ with $h(x)=y$ in lexicographic order. For each $x$, simulate $M$ on $x$ (which halts since $M$ is a halting TM). If $M$ accepts some $x$, accept $y$; if all $x$ are rejected, reject $y$. Since $h$ is a homomorphism, the set of $x$ with $h(x)=y$ is finite and computable. The TM halts on all inputs.
+
+\item \textbf{Inverse homomorphism}: On input $x$, compute $h(x)$ (finite computation), simulate halting TM $M$ on $h(x)$; since $M$ halts on all inputs, the whole machine halts.
+
+\item \textbf{Concatenation}: Nondeterministically split input $x=uv$ (finite choices), simulate halting TMs $M_1$ on $u$ and $M_2$ on $v$ (both halt). Accept if both accept. The constructed TM halts on all inputs.
+
+\item \textbf{Substitution}: For each $a$, the substituted language $L_a\in\OSIG$ has a halting TM. The substitution machine nondeterministically applies substitutions and simulates all relevant halting TMs, which all halt. Hence the combined machine halts. \qed
+\end{enumerate}
+
+\end{enumerate}

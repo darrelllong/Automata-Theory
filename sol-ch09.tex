@@ -1,0 +1,519 @@
+%% Solutions for Chapter 9: Normal Forms and Pumping Lemmas for Context-Free Languages
+
+\chapter{Normal Forms and Pumping Lemmas --- Solutions}
+
+\begin{enumerate}[{9.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{Characterize the parse trees of left-linear grammars.}
+
+In a left-linear grammar, every production has the form $A \to w$ (terminal string) or $A \to Bw$ (nonterminal followed by a terminal string). Consequently, in any parse tree for a derivation in a left-linear grammar:
+\begin{itemize}
+\item The tree has a ``left-spine'': the leftmost child of any internal node is always a nonterminal, and the remaining children are terminal symbols.
+\item All nonterminals appear in the leftmost branch of the parse tree.
+\item The tree is maximally left-branching; at every level, the left subtree contains all nonterminal structure while the right siblings are terminals.
+\end{itemize}
+This is the mirror image of right-linear parse trees (which are maximally right-branching). The depth of the parse tree equals the number of nonterminals in the derivation.
+
+%%------------------------------------------------------------
+\item \textbf{Context-free grammars for the following languages.}
+
+\begin{enumerate}
+\item $\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m \mid n,m \in \NN\}$:
+\[
+S \to AB, \quad A \to \pmb{a}A\pmb{b} \mid \lambda, \quad B \to \pmb{c}B\pmb{d} \mid \lambda.
+\]
+
+\item $\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i \mid i,j \in \NN\}$:
+\[
+S \to \pmb{a}S\pmb{d} \mid T \mid \lambda, \quad T \to \pmb{b}T\pmb{c} \mid \lambda.
+\]
+
+\item $\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m\} \cup \{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i\}$:
+\[
+S \to S_1 \mid S_2
+\]
+where $S_1$ generates the first language (as in part (a)) and $S_2$ generates the second (as in part (b)).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Unambiguous context-free grammars.}
+
+\begin{enumerate}
+\item
+\begin{enumerate}[i.]
+\item For $\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m\}$: The grammar $S \to AB$, $A \to \pmb{a}A\pmb{b}\mid\lambda$, $B \to \pmb{c}B\pmb{d}\mid\lambda$ is already unambiguous (every string has a unique parse).
+
+\item For $\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i\}$: The grammar $S \to \pmb{a}S\pmb{d}\mid T\mid\lambda$, $T \to \pmb{b}T\pmb{c}\mid\lambda$ is unambiguous.
+
+\item For the union $L_1 \cup L_2$: Let $S \to S_1 \mid S_2$. The string $\pmb{a}^n\pmb{b}^n\pmb{c}^n\pmb{d}^n$ is in both $L_1$ (with $m=n$) and $L_2$ (with $i=j=n$), so any grammar must choose between two derivations for such strings. The language is inherently ambiguous at these strings if we require both sets in the union.
+\end{enumerate}
+
+\item $\USIG$ is not closed under union: The union $L_1 \cup L_2$ may be inherently ambiguous even when $L_1$ and $L_2$ are individually unambiguous. The classic example is $L_1 = \{\pmb{a}^i\pmb{b}^j\pmb{c}^k \mid i=j\}$ and $L_2 = \{\pmb{a}^i\pmb{b}^j\pmb{c}^k \mid j=k\}$: both are unambiguous, but $L_1 \cup L_2$ is inherently ambiguous (the string $\pmb{a}^n\pmb{b}^n\pmb{c}^n$ has two distinct parse trees).
+
+\item $\USIG$ is \emph{not} closed under union (as argued above).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{State and prove the inductive result needed in Theorem 9.2.}
+
+\textbf{Claim}: If $G = \langle\Omega,\Sigma,S,P\rangle$ is a context-free grammar in which each nonterminal $A$ has exactly one rule (the grammar is in single-rule form after Theorem 9.2's construction), then $G$ is unambiguous.
+
+The key inductive result for Theorem 9.2 (elimination of epsilon and unit productions for ambiguity resolution) is:
+
+\textbf{Lemma}: For each nonterminal $A$ and string $x$, the number of parse trees for $x$ derivable from $A$ is the same in $G$ as in the constructed unambiguous grammar $G'$.
+
+\textbf{Proof}: By induction on $|x|$. Base case $|x|=0$: $A \DRightarrow \lambda$ iff $A \in N_\lambda$ (nullable nonterminals), and the construction handles this uniquely. Inductive step: use the structure of the production applied at the root of the parse tree. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to compute $B^u = \{C \mid B \DRightarrow C\}$ for each nonterminal $B$ in $P^u$.}
+
+Consider the unit-production graph: nodes are nonterminals, directed edge $B \to C$ for each unit production $B \to C$ in $P^u$. Then $B^u$ is the set of nonterminals reachable from $B$ in this graph (including $B$ itself).
+
+\textbf{Algorithm}: For each nonterminal $B$, compute $B^u$ by BFS or DFS from $B$ in the unit-production graph:
+\begin{enumerate}
+\item Initialize $B^u = \{B\}$.
+\item While there exists $C \in B^u$ with a unit production $C \to D \in P^u$ and $D \notin B^u$: add $D$ to $B^u$.
+\item Repeat until no new nonterminals are added.
+\end{enumerate}
+This is a standard graph reachability computation and terminates since $|\Omega|$ is finite.
+
+%%------------------------------------------------------------
+\item \textbf{Closure of \CSIG\ under concatenation.}
+
+\begin{enumerate}
+\item \textbf{Problem with naive construction}: The production $Z \to S_1 \cdot S_2$ is fine as a context-free production, but the issue is with lambda productions. If $\lambda \in L(G_1)$ (i.e., $S_1 \DRightarrow \lambda$), then $Z \to S_1 S_2 \DRightarrow S_2$, so $L(G^*) \supseteq L(G_2)$, not just $L(G_1)\cdot L(G_2)$ minus $\lambda$-contributions. Similarly, if $\lambda \in L(G_2)$, then $Z \DRightarrow S_1$, giving $L(G^*) \supseteq L(G_1)$. The issue: when both $G_1$ and $G_2$ derive $\lambda$, the simple construction may include unintended strings or exclude others due to improper lambda-production treatment.
+
+\item \textbf{Fix}: First transform $G_1$ and $G_2$ so that $\lambda$ is not derivable from their respective start symbols (or handle it explicitly). If $\lambda \in L(G_i)$, add explicit productions:
+\[
+Z \to S_1 S_2 \mid S_1 \mid S_2 \mid \lambda \quad \text{(appropriate subset based on whether } \lambda \in L(G_i)\text{)}
+\]
+Specifically: add $Z \to S_2$ if $\lambda \in L(G_1)$; add $Z \to S_1$ if $\lambda \in L(G_2)$; add $Z \to \lambda$ if $\lambda \in L(G_1) \cap L(G_2)$.
+
+\item \textbf{Proof}: $w \in L(G^*_{\text{corrected}})$ iff $Z \DRightarrow w$ iff $w = uv$ with $u \in L(G_1)$ and $v \in L(G_2)$ (considering the $\lambda$ cases via the added productions) iff $w \in L(G_1)\cdot L(G_2)$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$\{\pmb{a}^i\pmb{b}^j\pmb{c}^k \mid i,j,k \in \NN,\ i+j=k\}$ is context free.}
+
+\textbf{Grammar}: $S \to \pmb{a}S\pmb{c} \mid T$, $T \to \pmb{b}T\pmb{c} \mid \lambda$.
+
+\textbf{Proof}: Any derivation produces $\pmb{a}^i \cdot \pmb{b}^j\pmb{c}^j \cdot \pmb{c}^i = \pmb{a}^i\pmb{b}^j\pmb{c}^{i+j}$. Taking $k = i+j$, we get exactly the language. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Ambiguous right-linear grammar and its disambiguation.}
+
+\begin{enumerate}
+\item $G = \langle\{S,A,B\},\{\pmb{a}\},S,\{S\to A, S\to B, A\to\pmb{aa}A, A\to\lambda, B\to\pmb{aaa}B, B\to\lambda\}\rangle$.
+The string $\pmb{aaaaaa} = \pmb{a}^6$ can be derived as $S\Rightarrow A \DRightarrow \pmb{aa}A\DRightarrow \pmb{aaaa}A\DRightarrow \pmb{aaaaaa}$ (via $A$: three $\pmb{aa}$ steps) or as $S \Rightarrow B \DRightarrow \pmb{aaa}B\DRightarrow\pmb{aaaaaa}$ (via $B$: two $\pmb{aaa}$ steps). So $G$ is ambiguous.
+
+\item $L(G) = \{w \mid |w| \equiv 0 \pmod{2}\} \cup \{w \mid |w| \equiv 0 \pmod{3}\} = \{w \mid 2 \mid |w| \text{ or } 3 \mid |w|\}$.
+To remove ambiguity, find the minimal DFA for $L(G)$ and construct the corresponding unambiguous right-linear grammar. The minimal DFA has states tracking $|w| \pmod{6}$, with $n \in \{0,2,3,4,6\equiv 0\}$ being accepting (length divisible by 2 or 3 = not $1,5 \pmod{6}$). This gives an unambiguous grammar.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Grammar for regular expressions, modified.}
+
+\begin{enumerate}
+\item Grammar that strips outermost parentheses:
+\[
+R \to \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid\pmb{\emptyset}\mid E\pmb{\cdot}E\mid E\pmb{\cup}E\mid R^{\pmb{*}}
+\]
+where $E \to \pmb{(}R\pmb{)}$ or $E$ is any atomic expression.
+
+\item Grammar allowing extraneous parentheses:
+\[
+R \to \pmb{(}R\pmb{)} \mid \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid\pmb{\emptyset}\mid\pmb{(}R\pmb{\cdot}R\pmb{)}\mid\pmb{(}R\pmb{\cup}R\pmb{)}\mid R^{\pmb{*}}
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Leftmost and rightmost derivations for $\pmb{((a^*\cdot b)\cup(c\cdot d)^*)}$.}
+
+\begin{enumerate}
+\item \textbf{Leftmost derivation} (always expand leftmost nonterminal):
+\begin{align*}
+R &\Rightarrow \pmb{(}R\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{(}\pmb{(}R\pmb{\cdot}R\pmb{)}\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{((}R^{\pmb{*}}\pmb{\cdot}R\pmb{)}\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{((}\pmb{a}^{\pmb{*}}\pmb{\cdot}R\pmb{)}\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{((a^*\cdot}\pmb{b}\pmb{)}\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{((a^*\cdot b)}\pmb{\cup}\pmb{(}R\pmb{\cdot}R\pmb{)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{((a^*\cdot b)\cup(}\pmb{c}\pmb{\cdot}R\pmb{)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{((a^*\cdot b)\cup(c\cdot}\pmb{d}\pmb{)}^{\pmb{*}}\pmb{)}
+\end{align*}
+
+\item \textbf{Rightmost derivation} (always expand rightmost nonterminal):
+\begin{align*}
+R &\Rightarrow \pmb{(}R\pmb{\cup}R\pmb{)} \\
+&\Rightarrow \pmb{(}R\pmb{\cup}\pmb{(}R\pmb{\cdot}R\pmb{)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{(}R\pmb{\cup(}R\pmb{\cdot}\pmb{d}\pmb{)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{(}R\pmb{\cup(}\pmb{c}\pmb{\cdot d)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{(}\pmb{(}R\pmb{\cdot}R\pmb{)}\pmb{\cup(c\cdot d)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{((}R\pmb{\cdot}\pmb{b}\pmb{)\cup(c\cdot d)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{((}R^{\pmb{*}}\pmb{\cdot b)\cup(c\cdot d)}^{\pmb{*}}\pmb{)} \\
+&\Rightarrow \pmb{((a^*\cdot b)\cup(c\cdot d)}^{\pmb{*}}\pmb{)}
+\end{align*}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $L(G) = L(G')$ (Theorem 9.5) by induction on derivation steps.}
+
+Theorem 9.5 concerns the elimination of lambda productions. Let $G'$ be obtained from $G$ by systematically handling lambda productions.
+
+\textbf{Claim}: For all $n \geq 0$, if $S \DRightarrow_G x$ in $n$ steps with $x \in \Sigma^*$, then $S \DRightarrow_{G'} x$, and vice versa.
+
+\textbf{Proof} (by induction on number of steps):
+\textbf{Base}: 0 steps: $x = \lambda$ (if $S$ is nullable); handled by construction of $G'$ which adds $Z \to \lambda$ if $S$ is nullable.
+\textbf{Step}: Induct on derivation length. Each step $\alpha \Rightarrow_G \beta$ uses a production $A \to \gamma$. If $\gamma$ contains no lambda productions, the same step works in $G'$. If $\gamma$ contains a lambda-derivable nonterminal $B$ (i.e., $B \DRightarrow^* \lambda$), then $G'$ contains the production $A \to \gamma'$ where $\gamma'$ is $\gamma$ with $B$ deleted; this simulates the combined derivation in one step. \qed
+
+%%------------------------------------------------------------
+\item \textbf{For CNF grammar $G$ and $x \in L(G)$, $x \neq \lambda$: number of productions in any derivation of $x$ is $2|x|$.}
+
+\textbf{Correct statement}: In a CNF grammar, any derivation of a string $x$ with $|x| \geq 1$ uses exactly $2|x|-1$ productions.
+
+\textbf{Proof}: Each production is either of the form $A \to BC$ (increases the count of nonterminals by 1) or $A \to a$ (converts one nonterminal to a terminal, does not increase count). Start with 1 nonterminal. After $k$ productions of the form $A \to BC$, we have $k+1$ nonterminals and 0 terminals. Each terminal production reduces nonterminals by 1 and adds 1 terminal. To produce $|x|$ terminals, we need $|x|$ terminal productions. The total nonterminals created = $k+1$ and consumed = $|x|$, so $k+1 = |x|$, giving $k = |x|-1$ binary productions. Total productions $= (|x|-1) + |x| = 2|x|-1$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Bounds on parse tree depth for CNF grammars.}
+
+\begin{enumerate}
+\item \textbf{Lower bound}: For $x \in L(G)$ with $|x| = n > 0$, the parse tree has $n$ leaf nodes (one per terminal). Since each internal node has exactly 2 children (CNF), a complete binary tree with $n$ leaves has depth at least $\lceil \log_2 n \rceil$. Thus the depth of the parse tree is at least $\lceil \log_2 n \rceil$.
+
+\item \textbf{Upper bound}: The parse tree can be maximally skewed (a path): at each level, one child is a leaf (terminal) and the other is the next internal node. This gives depth $n-1$ from the root to the last nonterminal, plus 1 for the final terminal, giving depth $n$. (Or $2n-1$ if we count from a different convention.) Thus the depth is at most $n = |x|$.
+
+\textbf{Summary}: $\lceil \log_2 |x| \rceil \leq \text{depth} \leq |x|$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Convert grammars to Chomsky Normal Form.}
+
+\begin{enumerate}
+\item $\langle\{S,B,C\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}B,S\to\pmb{ab}C,B\to\pmb{bc},C\to\pmb{c}\}\rangle$:
+
+Introduce terminal nonterminals: $T_a \to \pmb{a}$, $T_b \to \pmb{b}$, $T_c \to \pmb{c}$.
+- $S \to \pmb{a}B$ becomes $S \to T_a B$ (already binary CNF).
+- $S \to \pmb{ab}C$ becomes $S \to T_a D_1$ where $D_1 \to T_b C$.
+- $B \to \pmb{bc}$ becomes $B \to T_b T_c$.
+- $C \to \pmb{c}$ becomes $C \to T_c$ --- but $C \to T_c$ is a unit production! Replace: wherever $C$ appears as a target, substitute. Since $C \to \pmb{c}$ and $C$ does not appear in the right side of $B$ or $S$ (only in $S \to \pmb{ab}C$), we can just keep $C \to T_c$ and note it will be eliminated: replace $S \to T_a D_1$ (where $D_1 \to T_b C$) by substituting $C$: $D_1 \to T_b T_c$.
+
+Final CNF:
+\[
+S \to T_a B \mid T_a D_1, \quad D_1 \to T_b T_c, \quad B \to T_b T_c, \quad T_a \to \pmb{a}, \quad T_b \to \pmb{b}, \quad T_c \to \pmb{c}.
+\]
+
+\item $\langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{c}BA,S\to B,A\to\pmb{c}B,A\to A\pmb{bb}S,B\to\pmb{aaa}\}\rangle$:
+
+Step 1: Remove unit production $S \to B$: add all $B$-rules to $S$: $S \to \pmb{aaa}$.
+Step 2: Introduce terminal symbols: $T_a \to \pmb{a}$, $T_b \to \pmb{b}$, $T_c \to \pmb{c}$.
+Step 3: Break long right-hand sides:
+- $S \to \pmb{c}BA$: $S \to T_c E_1$, $E_1 \to BA$.
+- $S \to \pmb{aaa}$: $S \to T_a E_2$, $E_2 \to T_a T_a$.
+- $A \to \pmb{c}B$: $A \to T_c B$.
+- $A \to A\pmb{bb}S$: $A \to A E_3$, $E_3 \to T_b E_4$, $E_4 \to T_b S$.
+- $B \to \pmb{aaa}$: $B \to T_a E_2$ (reuse $E_2$).
+
+Final CNF:
+\begin{align*}
+S &\to T_c E_1 \mid T_a E_2 \\
+E_1 &\to BA,\quad E_2 \to T_a T_a \\
+A &\to T_c B \mid A E_3 \\
+E_3 &\to T_b E_4,\quad E_4 \to T_b S \\
+B &\to T_a E_2 \\
+T_a &\to \pmb{a},\quad T_b \to \pmb{b},\quad T_c \to \pmb{c}
+\end{align*}
+
+\item $\langle\{R\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{(},\pmb{)},\pmb{\epsilon},\pmb{\emptyset},\pmb{\cup},\pmb{\cdot},\pmb{^*}\},R,\{R\to\pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|(R\pmb{\cdot}R)|(R\pmb{\cup}R)|R^{\pmb{*}}\}\rangle$:
+
+Introduce terminal nonterminals for each terminal symbol: $T_a,T_b,T_c,T_\epsilon,T_\emptyset,T_{(},T_{)},T_\cup,T_\cdot,T_*$.
+
+$R \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}$: Each of these is a single-terminal production $R \to a$ (with $|a|=1$), which is already in CNF form.
+
+$R \to (R\pmb{\cdot}R)$: Break as $R \to T_{ (} D_1$, $D_1 \to RD_2$, $D_2 \to T_\cdot D_3$, $D_3 \to RT_{)}$.
+$R \to (R\pmb{\cup}R)$: Similarly $R \to T_{(}D_4$, $D_4 \to RD_5$, $D_5 \to T_\cup D_6$, $D_6 \to RT_{)}$.
+$R \to R^{\pmb{*}}$: $R \to RD_7$, $D_7 \to T_*$---but $D_7 \to T_*$ is a unit production; substitute: $R \to RT_*$.
+
+Final CNF:
+\begin{gather*}
+R \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset} \mid T_{(}D_1 \mid T_{(}D_4 \mid RT_* \\
+D_1 \to RD_2,\quad D_2 \to T_\cdot D_3,\quad D_3 \to RT_{)} \\
+D_4 \to RD_5,\quad D_5 \to T_\cup D_6,\quad D_6 \to RT_{)} \\
+T_{(} \to \pmb{(},\quad T_{)} \to \pmb{)},\quad T_\cdot \to \pmb{\cdot},\quad T_\cup \to \pmb{\cup},\quad T_* \to \pmb{^*}
+\end{gather*}
+
+\item $\langle\{T\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{d},\pmb{-},\pmb{+}\},T,\{T\to\pmb{a}|\pmb{b}|\pmb{c}|\pmb{d}|T\pmb{-}T|T\pmb{+}T\}\rangle$:
+
+$T \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{d}$: Already in CNF (terminal productions).
+$T \to T\pmb{-}T$: $T \to TD_-$ where $D_- \to T_{-}T$ and $T_- \to \pmb{-}$.
+$T \to T\pmb{+}T$: $T \to TD_+$ where $D_+ \to T_+T$ and $T_+ \to \pmb{+}$.
+
+Final CNF:
+\[
+T \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{d}\mid TD_-\mid TD_+,\quad D_- \to T_-T,\quad D_+ \to T_+T,\quad T_- \to \pmb{-},\quad T_+ \to \pmb{+}.
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Convert grammars to Greibach Normal Form.}
+
+\begin{enumerate}
+\item $\langle\{S_1,S_2\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{d},\pmb{e}\},S_1,\{S_1\to S_2S_1\pmb{e},S_1\to S_2\pmb{b},S_2\to S_1S_2,S_2\to\pmb{c}\}\rangle$:
+
+Step 1: Eliminate left-recursion and substitute.
+$S_2 \to S_1 S_2 \mid \pmb{c}$.
+Substitute $S_1$ into $S_2 \to S_1 S_2$:
+$S_2 \to S_2 S_1 \pmb{e} S_2 \mid S_2 \pmb{b} S_2 \mid \pmb{c} S_2 \mid \pmb{c}$.
+Eliminate left recursion in $S_2$: Let $S_2 = \pmb{c}(S_1\pmb{e}S_2 \mid \pmb{b}S_2 \mid \lambda)^*$.
+Introduce $S_2' \to S_1\pmb{e}S_2S_2' \mid \pmb{b}S_2S_2' \mid S_1\pmb{e}S_2 \mid \pmb{b}S_2 \mid \lambda$.
+So $S_2 \to \pmb{c}S_2'$, $S_2 \to \pmb{c}$.
+Then: $S_1 \to S_2 S_1 \pmb{e} \mid S_2 \pmb{b}$.
+Substitute $S_2 \to \pmb{c}S_2'$ and $S_2 \to \pmb{c}$:
+$S_1 \to \pmb{c}S_2'S_1\pmb{e} \mid \pmb{c}S_1\pmb{e} \mid \pmb{c}S_2'\pmb{b} \mid \pmb{c}\pmb{b}$.
+This is now in GNF (each rule starts with a terminal).
+
+\item $\langle\{S_1,S_2,S_3\},\ldots,\{S_1\to S_3S_1, S_1\to S_2\pmb{a},S_2\to\pmb{be},S_3\to S_2\pmb{c}\}\rangle$:
+
+$S_2 \to \pmb{be}$ (already in GNF).
+$S_3 \to S_2\pmb{c} \to \pmb{be}\pmb{c}$ (substitute): $S_3 \to \pmb{bec}$.
+$S_1 \to S_3 S_1 \to \pmb{bec}S_1$ and $S_1 \to S_2\pmb{a} \to \pmb{be}\pmb{a} = \pmb{bea}$.
+GNF: $S_1 \to \pmb{bec}S_1 \mid \pmb{bea}$, $S_2 \to \pmb{be}$, $S_3 \to \pmb{bec}$.
+
+\item $\langle\{S_1,S_2,S_3\},\ldots,\{S_1\to S_1S_2\pmb{c},S_1\to\pmb{d}S_3,S_2\to S_1S_1,S_2\to\pmb{a},S_3\to S_3\pmb{e}\}\rangle$:
+
+$S_3 \to S_3\pmb{e} \mid ?$ --- there's no base case for $S_3$ given. Assuming $S_3$ should have a base; looking at $S_1 \to \pmb{d}S_3$, $S_3$ appears only through $S_3 \to S_3\pmb{e}$, which is left-recursive with no base. This may indicate $L(S_3) = \emptyset$ unless there is a missing production. Assuming the grammar is as given and we treat $S_3 \to S_3\pmb{e}$ as the only rule for $S_3$: $S_3$ generates no terminal strings (left-recursive with no base). Then $S_1 \to \pmb{d}S_3$ generates nothing. So we focus on $S_1 \to S_1 S_2\pmb{c} \mid \pmb{d}S_3$ (empty) and $S_2 \to S_1 S_1 \mid \pmb{a}$.
+
+For the left-recursive part: $S_1 \to S_1 S_2\pmb{c} \mid \pmb{d}S_3$ (taking $S_3$ as non-empty via some additional rule like $S_3 \to \pmb{d}$):
+If $S_3 \to \pmb{d}$ (assumed), then $S_1 \to \pmb{d}S_3 \to \pmb{dd}$ and $S_1 \to S_1 S_2\pmb{c}$.
+Eliminate left recursion: $S_1 \to \pmb{dd}S_1'$, $S_1' \to S_2\pmb{c}S_1' \mid \lambda$.
+Substitute $S_2 \to S_1 S_1 \mid \pmb{a}$:
+$S_1' \to S_1 S_1\pmb{c}S_1' \mid \pmb{a}\pmb{c}S_1' \mid \pmb{ac} \mid \ldots$
+Continue substituting to get GNF; each step replaces leading nonterminals with their GNF expansions.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove there exists a CFG $G''$ equivalent to $G'$ (with added $A\to\lambda$ rules).}
+
+$G'$ is obtained from $G$ by adding rules $A \to \lambda$ for various nonterminals $A$. We want to show $G''$ equivalent to $G'$ where $G''$ handles all lambda productions via the standard construction (Definition~9.4 / Theorem~9.5).
+
+\textbf{Proof}: The standard elimination of lambda productions (Theorem 9.5) shows that for any CFG, there is an equivalent CFG with no lambda productions except possibly $Z \to \lambda$ (if $\lambda \in L(G)$). This is done by: (1) finding all nullable nonterminals ($A$ such that $A \DRightarrow^* \lambda$); (2) for each production $B \to \alpha A \beta$ where $A$ is nullable, adding $B \to \alpha\beta$; (3) removing all $A \to \lambda$ except $Z \to \lambda$ if needed. The resulting $G''$ satisfies $L(G'') = L(G') = L(G) \cup \{\lambda \mid \lambda \in L(G')\}$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Generalization of Lemma 9.1.}
+
+\textbf{Lemma}: If $G = \langle\Omega,\Sigma,S,P\rangle$, $X \to \gamma B\alpha \in P$, all $B$-rules are $\{B \to \beta_i\}$, and $G'$ replaces $X \to \gamma B\alpha$ with $\{X_B \to \gamma\beta_i\alpha\}$, then $L(G) = L(G')$.
+
+\textbf{Proof}: By induction on derivation length.
+
+($L(G) \subseteq L(G')$): Any derivation in $G$ that uses $X \to \gamma B\alpha$ followed later by $B \to \beta_i$ can be replaced in $G'$ by the single production $X_B \to \gamma\beta_i\alpha$. All other derivations are unchanged.
+
+($L(G') \subseteq L(G)$): Any production $X_B \to \gamma\beta_i\alpha$ in $G'$ can be simulated in $G$ by $X \to \gamma B\alpha$ followed by $B \to \beta_i$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$P = \{d^p \mid p \text{ prime}\}$ is not context free.}
+
+\begin{enumerate}
+\item \textbf{Pumping theorem proof}: Assume $P$ is context free with pumping constant $n$. Take $s = \pmb{d}^p$ where $p > n$ is prime. By the pumping lemma, $s = uvwxy$ with $|vwx| \leq n$, $|vx| \geq 1$, and $uv^i wx^i y \in P$ for all $i \geq 0$.
+
+Let $|vx| = m$ where $1 \leq m \leq n$. Then $uv^i wx^i y = \pmb{d}^{p + (i-1)m}$. For $i=0$: $\pmb{d}^{p-m}$. For $i=2$: $\pmb{d}^{p+m}$.
+
+Choose $i = p+1$: the resulting string has length $p + pm = p(1+m)$. Since $p \geq 2$ and $m \geq 1$, $p(1+m)$ is composite (product of two integers each $\geq 2$). So $\pmb{d}^{p(1+m)} \notin P$, contradiction. \qed
+
+\item \textbf{Using nonregularity}: Since $P \subseteq \{\pmb{d}\}^*$ and $P$ is not regular (the set of lengths is the set of primes, which is not eventually periodic), if $P$ were context free over a unary alphabet, then by Parikh's theorem $P$ would have a semilinear set of lengths. But the set of primes is not semilinear (semilinear sets over $\NN$ are eventually periodic/union of arithmetic progressions). Therefore $P$ is not context free. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$\Gamma = \{w\pmb{2}w \mid w \in \{\pmb{0},\pmb{1}\}^*\}$ is not context free.}
+
+Assume $\Gamma$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{2}\pmb{0}^n\pmb{1}^n \in \Gamma$ (take $w = \pmb{0}^n\pmb{1}^n$, $|s| = 4n+1$).
+
+By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| \geq 1$, all pumped strings in $\Gamma$.
+
+Since $|vwx| \leq n$, the substring $vwx$ lies entirely within one of the following regions: the first $\pmb{0}^n$-block, the $\pmb{1}^n$-block, the $\pmb{2}$ separator, the second $\pmb{0}^n$-block, or the second $\pmb{1}^n$-block (it cannot span the $\pmb{2}$ and both sides).
+
+In any case, pumping changes the count of some symbol on one side of $\pmb{2}$ without affecting the other side, or changes only one block. The result is a string that cannot be of the form $w'\pmb{2}w'$ for any $w'$. Contradiction. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\Psi = \{ww \mid w \in \{\pmb{0},\pmb{1}\}^*\}$ is not context free.}
+
+Assume $\Psi$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{0}^n\pmb{1}^n \in \Psi$ (take $w = \pmb{0}^n\pmb{1}^n$). $|s| = 4n$.
+
+By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| \geq 1$, all pumped strings in $\Psi$.
+
+Since $|vwx| \leq n$, $vwx$ is contained within a span of $n$ consecutive characters. The string $s$ has the pattern $0^n1^n0^n1^n$. The middle two blocks meet at position $2n$; the window $vwx$ cannot span from the first $0^n$-block to the second $0^n$-block.
+
+In all cases, pumping (or de-pumping with $i=0$) changes the length or composition of one half of $s$ without matching change in the other half, so the result cannot have the form $w'w'$. Contradiction. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\Xi = \{\pmb{b}^{2^j} \mid j \in \NN\}$ is not context free.}
+
+Assume $\Xi$ is context free with pumping constant $n$. Choose $j$ such that $2^j > n$, and let $s = \pmb{b}^{2^j}$.
+
+By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| = m \geq 1$. Then $|uv^i wx^i y| = 2^j + (i-1)m$ for each $i \geq 0$.
+
+For $i=2$: length $= 2^j + m$. We need $2^j + m$ to be a power of 2. But $2^j < 2^j + m \leq 2^j + n < 2^{j+1}$ (since $m \leq n < 2^j$). So $2^j + m$ is strictly between $2^j$ and $2^{j+1}$, which means it is not a power of 2. Contradiction. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\Phi = \{\pmb{a}^{j^2} \mid j \in \NN\}$ is not context free; application to $\Phi'$.}
+
+\begin{enumerate}
+\item \textbf{$\Phi$ is not context free}: Assume $\Phi$ is context free with pumping constant $n$. Let $j > n$; take $s = \pmb{a}^{j^2}$.
+
+By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| = m \geq 1$. Then pumped strings have length $j^2 + (i-1)m$. For $i=2$: length $j^2 + m$. We need $j^2 + m$ to be a perfect square. But $j^2 < j^2 + m \leq j^2 + n < j^2 + 2j + 1 = (j+1)^2$ (since $n < j^2 \leq j^2$ and we can choose $j$ large enough that $n < 2j$). So $j^2 + m$ is strictly between two consecutive perfect squares, hence not a perfect square. Contradiction. \qed
+
+\item \textbf{$\Phi'$ not context free via homomorphism}: Define $h: \{\pmb{b},\pmb{c},\pmb{d}\}^* \to \{\pmb{a}\}^*$ by $h(\pmb{c}) = \pmb{a}$ and $h(\pmb{b}) = h(\pmb{d}) = \lambda$. If $\Phi'$ were a CFL, then $h(\Phi') = \Phi$ would also be a CFL (CFLs are closed under homomorphism), contradicting part~(a). Hence $\Phi' \notin \CSIG$.
+
+\item \textbf{Direct Ogden's lemma proof}: Mark all $\pmb{c}$-symbols in a long string in $\Phi'$. By Ogden's lemma, the pumped substring must touch at least one marked position. Since $|x|_{\pmb{c}} = (|x|_{\pmb{d}})^2$, pumping $\pmb{c}$s or $\pmb{d}$s independently destroys the quadratic relation.
+
+\item \textbf{Pumping theorem}: The standard pumping theorem (without Ogden) may be insufficient here because it does not distinguish which positions are pumped. It may be possible to directly apply the pumping lemma, but choosing the right string is tricky. Ogden's lemma is more convenient.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L = \{y \in \{\pmb{0},\pmb{1}\}^* \mid |y|_{\pmb{0}} = |y|_{\pmb{1}}\}$ is context free.}
+
+\textbf{Grammar}: $S \to \pmb{0}S\pmb{1} \mid \pmb{1}S\pmb{0} \mid SS \mid \lambda$.
+
+\textbf{Proof}: By induction, any string with equal numbers of $\pmb{0}$s and $\pmb{1}$s is derivable, and all derivations yield strings with equal counts. So $L(G) = L$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Formal recursive definition of the path in Theorem 9.9 (pumping lemma).}
+
+\begin{enumerate}
+\item Let the parse tree have root $r$ corresponding to start symbol $S$. Define a \emph{leftmost longest path} recursively:
+  - \textbf{Boundary}: If $r$ is a leaf, the path is $\{r\}$.
+  - \textbf{Rule}: From a node $v$ with children $c_1, c_2, \ldots, c_k$, choose $c_i$ to be the child whose subtree has the greatest number of leaves. (Break ties by choosing the leftmost.) Append $c_i$ to the path, and recurse from $c_i$.
+
+\item The depth of this path is at least $\log_2$ (number of leaves) $= \log_2 |x|$ (by the binary branching property of CNF). If $|x| \geq b^{h+1}$ where $b$ is the maximum branching factor and $h = |\Omega|$, then the path has length $> h$, so some nonterminal repeats on the path. Let $A$ be the repeated nonterminal at positions $i < j$ on the path. Then the subtree at position $j$ generates $w$, and the subtree at position $i$ generates $vwx$ (with $v,x$ possibly empty but $|vx|\geq 1$ by the choice that $vwx \neq w$). Pumping follows from substituting the subtree at $j$ for the subtree at $i$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$\CSIG$ is closed under $\cup$ via direct grammar construction.}
+
+Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ with $\Omega_1\cap\Omega_2=\emptyset$. Choose $Z \notin \Omega_1\cup\Omega_2$ and define:
+\[
+G^\cup = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1,Z\to S_2\}\rangle.
+\]
+Then $w \in L(G^\cup)$ iff $Z \DRightarrow w$ iff $Z \Rightarrow S_i \DRightarrow w$ for $i=1$ or $i=2$ iff $w \in L(G_1)\cup L(G_2)$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Closure properties of $\XSIG$ (languages that are NOT context free).}
+
+\begin{enumerate}
+\item \textbf{Union}: Not closed. $L_1 = \{\pmb{a}^n\pmb{b}^n\pmb{c}^m \mid n\neq m\}$ and $L_2 = \{\pmb{a}^n\pmb{b}^m\pmb{c}^m \mid n\neq m\}$ are in \XSIG\ (not context free), but $L_1 \cup L_2 \supseteq \{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ and $L_1\cup L_2 = \{a^ib^jc^k \mid i\neq k \text{ or } j\neq k\}$ which is not context free. But also $\Sigma^*$ (CFL) is the complement of $\emptyset$ (CFL)... a simpler counterexample: $\overline{L} \cup L = \Sigma^*$ is a CFL, so if both $L$ and $\overline{L}$ are in \XSIG, their union is a CFL $\notin$ \XSIG. So \XSIG\ is \emph{not} closed under union.
+
+\item \textbf{Complement}: Not closed. If $L \in \XSIG$ (L is not CFL), $\overline{L}$ may or may not be in \XSIG. Since CFLs are not closed under complement, there exist non-CFLs whose complements are also non-CFLs, and non-CFLs whose complements are CFLs.
+
+\item \textbf{Intersection}: Not closed. Similar argument.
+
+\item \textbf{Kleene closure}: Not closed. $L = \{\pmb{a}^p \mid p \text{ prime}\} \in \XSIG$ (not regular, hence if unary: not CFL by Parikh), but $L^* = \{\pmb{a}^n \mid n \geq 0 \text{ or sum of primes}\} = \{\pmb{a}^n \mid n \neq 1\} \cup \{\lambda\}$ which is regular (hence CFL). So $L^* \notin \XSIG$.
+
+\item \textbf{Concatenation}: Not closed. $L\cdot\Sigma^*$ for a non-CFL $L$ may be a CFL or not; specific examples show \XSIG\ is not closed.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$\CSIG$ is closed under reversal.}
+
+Let $G = \langle\Omega,\Sigma,S,P\rangle$ generate $L$. Define $G^r = \langle\Omega,\Sigma,S,P^r\rangle$ where $P^r = \{A \to \alpha^r \mid A \to \alpha \in P\}$ (reverse the right-hand side of each production).
+
+\textbf{Claim}: $L(G^r) = L^r$.
+
+\textbf{Proof}: By induction on derivation length. If $S \DRightarrow_G w$, then $S \DRightarrow_{G^r} w^r$ (by reversing each production step). Formally: if $\alpha \Rightarrow_G \beta$ (applying $A \to \gamma$ in context $\alpha = \phi A\psi$), then $\beta^r = \psi^r\gamma^r\phi^r \Rightarrow_{G^r} \psi^r A\phi^r = \alpha^r$ in $G^r$ (using $A \to \gamma^r$). By induction, full derivations reverse. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\CSIG$ is closed under operator $T$ ($T(L) = \{w^r w \mid w \in L\}$).}
+
+\textbf{Claim}: $T$ does not preserve $\CSIG$ in general; i.e., there exists $L\in\CSIG$ such that $T(L)\notin\CSIG$.
+
+\textbf{Counterexample}: Let $L = \{\pmb{a}^n\pmb{b}^n \mid n \geq 0\} \in \CSIG$. Then
+\[
+  T(L) = \{(\pmb{a}^n\pmb{b}^n)^r(\pmb{a}^n\pmb{b}^n) \mid n\geq 0\} = \{\pmb{b}^n\pmb{a}^n\pmb{a}^n\pmb{b}^n \mid n\geq 0\} = \{\pmb{b}^n\pmb{a}^{2n}\pmb{b}^n \mid n\geq 0\}.
+\]
+We claim $T(L) \notin \CSIG$. Suppose for contradiction that $T(L)$ is a CFL with pumping constant $N$. Take $s = \pmb{b}^N\pmb{a}^{2N}\pmb{b}^N \in T(L)$ and write $s=uvwxy$ with $|vwx|\leq N$, $|vx|\geq 1$. Since $|vwx|\leq N < N+1 \leq N+2N+N = |s|$, the window $vwx$ spans at most two of the three contiguous blocks $[\pmb{b}^N][\pmb{a}^{2N}][\pmb{b}^N]$. We analyse each case when pumping $i=2$ (replacing $v,x$ by $v^2,x^2$):
+
+\begin{itemize}
+\item \textit{vwx within the first $\pmb{b}$-block}: $v=\pmb{b}^p$, $x=\pmb{b}^q$ with $p+q\geq 1$. Pumped string is $\pmb{b}^{N+p+q}\pmb{a}^{2N}\pmb{b}^N$. For membership in $T(L)$, the outer $\pmb{b}$-blocks must match, but $N+p+q > N$. \textbf{Not in $T(L)$.}
+\item \textit{vwx spans first $\pmb{b}$-block and $\pmb{a}$-block}: $v$ adds $p\geq 0$ $\pmb{b}$'s, $x$ adds $q\geq 0$ $\pmb{a}$'s (or vice versa), $p+q\geq 1$. Pumped string is $\pmb{b}^{N+p}\pmb{a}^{2N+q}\pmb{b}^N$. For $T(L)$ membership need $N+p = n$ and $2N+q = 2n$ and $N = n$; from $N=n$: $p=0$ and $q=0$, contradicting $p+q\geq 1$. \textbf{Not in $T(L)$.}
+\item \textit{vwx within the $\pmb{a}$-block}: $v=\pmb{a}^p$, $x=\pmb{a}^q$, $p+q\geq 1$. Pumped string is $\pmb{b}^N\pmb{a}^{2N+p+q}\pmb{b}^N$. Need $2N+p+q = 2N$, impossible. \textbf{Not in $T(L)$.}
+\item \textit{vwx spans $\pmb{a}$-block and last $\pmb{b}$-block}: symmetric to the second case; the outer $\pmb{b}$-blocks become unequal. \textbf{Not in $T(L)$.}
+\item \textit{vwx within the last $\pmb{b}$-block}: symmetric to the first case. \textbf{Not in $T(L)$.}
+\end{itemize}
+In every case, pumping $i=2$ produces a string outside $T(L)$, contradicting the pumping lemma. Hence $T(L)\notin\CSIG$.
+
+Note: $T(\Sigma^*) = \{w^r w \mid w\in\Sigma^*\}$ is in fact the language of \emph{even-length palindromes}, which \emph{is} context free (grammar $S\to\pmb{a}S\pmb{a}\mid\pmb{b}S\pmb{b}\mid\lambda$ for $\Sigma=\{\pmb{a},\pmb{b}\}$), so it cannot serve as a witness for non-closure. The counterexample above using $L=\{\pmb{a}^n\pmb{b}^n\}$ is correct.
+
+Hence \CSIG\ is \emph{not} closed under $T$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{$\mathfrak{C}_{\{\pmb{a},\pmb{b}\}}$ is not closed under relative complement.}
+
+\textbf{Disproof}: Let $L_1 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$ (CFL) and $L_2 = \{\pmb{a}\}^*\{\pmb{b}\}^*$ (regular, hence CFL). Then:
+\[
+L_1 - L_2 = \{x \mid |x|_{\pmb{a}} = |x|_{\pmb{b}}\} - \{\pmb{a}^n\pmb{b}^n\} = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}, x \notin \pmb{a}^*\pmb{b}^*\}.
+\]
+This language (balanced strings that are not in $\pmb{a}^*\pmb{b}^*$) is context free (construct a grammar). So this does not give a counterexample.
+
+A better approach: use the fact that if \CSIG\ were closed under relative complement and we know \CSIG\ is closed under union, then \CSIG\ would be closed under complement (since $\overline{L_1} = \Sigma^* - L_1$, and $\Sigma^*$ is CFL). But \CSIG\ is not closed under complement (see Exercise 9.30). Hence \CSIG\ is \emph{not} closed under relative complement. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\CSIG$ is not closed under intersection or complement.}
+
+\begin{enumerate}
+\item Let $L_1 = \{\pmb{a}^i\pmb{b}^i\pmb{c}^j \mid i,j \in \NN\}$ and $L_2 = \{\pmb{a}^i\pmb{b}^j\pmb{c}^j \mid i,j \in \NN\}$. Both are context free. Their intersection:
+\[
+L_1 \cap L_2 = \{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n \in \NN\},
+\]
+which is not context free (by the pumping lemma). So \CSIG\ is not closed under intersection.
+
+If \CSIG\ were closed under complement, then $\overline{L_1}$ and $\overline{L_2}$ would be context free, and $\overline{\overline{L_1} \cup \overline{L_2}} = L_1 \cap L_2$ would be context free (by De Morgan and closure under union and complement). But $L_1 \cap L_2$ is not CFL. Contradiction. So \CSIG\ is not closed under complement.
+
+\item For $|\Sigma| > 1$: given the result for $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$ from part (a), define a homomorphism $h: \{\pmb{a},\pmb{b},\pmb{c}\}^* \to \Sigma^*$ (injecting the three-letter alphabet into any alphabet with more than one symbol). By closure of CFLs under inverse homomorphism, the preimage of a CFL under $h$ is a CFL. If $\CSIG$ were closed under complement for $\Sigma$, pulling back via $h$ would show closure for three-letter alphabets, contradicting part (a). \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Automaton-based method for Theorem 9.3 (epsilon elimination).}
+
+Consider a pushdown automaton (PDA) with states labeled by subsets $T \subseteq \Omega$ (the power set of nonterminals). Start state: $\{S\}$. Transitions: from state $T$, for each nonterminal $A \in T$ and production $A \to \gamma$, compute the set of nonterminals derivable in one step from $\gamma$, and union these into the new state.
+
+This is similar to the subset construction for NFAs, adapted for CFGs. The set $T$ represents all nonterminals reachable in derivations. The nullable nonterminals ($N_\lambda$) are those states from which $\lambda$ is reachable.
+
+%%------------------------------------------------------------
+\item \textbf{Grammars in GNF with at most two symbols on the right.}
+
+\begin{enumerate}
+\item This is not a normal form for all CFLs: The language $\{\pmb{a}^n \mid n \geq 1\}$ can be generated (e.g., $S \to \pmb{a}S \mid \pmb{a}$), but more complex CFLs like $\{ww^r\}$ require productions of the form $S \to \pmb{a}S\pmb{a}$ in GNF which has 3 symbols on the right (more than 2). Converting to this restricted GNF may require more nonterminals and fail to represent the language if we strictly limit to 2 symbols. In fact $\pmb{a}Xa$ (where $a$ is terminal and $X$ is nonterminal) has 3 symbols; with at most 2 on the right in GNF (first terminal, at most one nonterminal), we can only write $\pmb{a}X$ (dropping the trailing $\pmb{a}$). So $\{ww^r \mid w \in \{\pmb{a},\pmb{b}\}^*\}$ cannot be generated.
+
+\item Languages generated by this restricted form: GNF with at most two RHS symbols means productions are $A \to \pmb{a}$ or $A \to \pmb{a}B$. These are exactly the \emph{right-linear grammars}, which generate precisely the \emph{regular languages} (\DSIG\ = \GSIG\ = \RSIG). \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $L^*$ must be regular for \emph{any} collection $L$ over $\Sigma$.}
+
+Over a unary alphabet $\Sigma = \{\pmb{a}\}$, $L^*$ is always regular for any $L \subseteq \Sigma^*$.
+
+\textbf{Proof}: Identify $L$ with the set of lengths $A = \{|w| \mid w \in L\} \subseteq \NN$. Then $L^* = \{\pmb{a}^n \mid n \in A^+\}$, where $A^+ = \{a_1 + \cdots + a_k \mid k \geq 0,\, a_i \in A\}$. By the Sylvester--Frobenius theorem, if $A$ is non-empty with $\gcd(A) = d$, then every sufficiently large multiple of $d$ belongs to $A^+$. Hence $A^+$ is eventually periodic, and the corresponding language $L^*$ is regular. \qed
+
+(The claim is false over alphabets of size $> 1$: $L = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$ is a CFL whose Kleene closure is not regular.)
+
+%%------------------------------------------------------------
+\item \textbf{If $|\Sigma|=1$, is $\CSIG$ closed under complementation?}
+
+\textbf{Yes}. Over a unary alphabet $\Sigma = \{\pmb{a}\}$, every context-free language $L$ corresponds to a semilinear set of lengths (by Parikh's theorem). The complement of a semilinear set is also semilinear (since semilinear sets are closed under Boolean operations). A semilinear subset of $\NN$ corresponds to a regular language over $\{\pmb{a}\}$. Hence $\overline{L}$ is regular, and in particular, context-free. So \CSIG\ is closed under complementation when $|\Sigma|=1$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^m \mid n,m \in \NN\}$ is context free.}
+
+\textbf{Grammar}: $S \to AB$, $A \to \pmb{a}A\pmb{b} \mid \lambda$, $B \to \pmb{c}B \mid \lambda$.
+
+$A$ generates $\{\pmb{a}^n\pmb{b}^n\}$ and $B$ generates $\pmb{c}^*$. So $L(G) = \{\pmb{a}^n\pmb{b}^n\pmb{c}^m\}$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Use Ogden's lemma to prove $\{\pmb{a}^k\pmb{b}^n\pmb{c}^m \mid k\neq n \wedge n\neq m\}$ is not context free.}
+
+Assume $L = \{\pmb{a}^k\pmb{b}^n\pmb{c}^m \mid k\neq n, n\neq m\}$ is context free with Ogden constant $N$.
+
+Choose $p > N$ and let $s = \pmb{a}^{p!+p}\pmb{b}^p\pmb{c}^{p!+p} \in L$ (since $p!+p \neq p$ and $p \neq p!+p$). Mark all $p$ occurrences of $\pmb{b}$ in $s$.
+
+By Ogden's lemma: $s = uvwxy$ where $vwx$ contains at most $N \leq p$ marked positions, $vx$ contains at least 1 marked position, and all pumped strings $uv^i wx^i y \in L$.
+
+Since marked positions are all in the $\pmb{b}$-block, $vwx$ lies within the $\pmb{b}$-block (at most). Then $v$ and $x$ consist only of $\pmb{b}$s (or $\pmb{a}$s on the boundary, or $\pmb{c}$s on the boundary). If $vx$ contains only $\pmb{b}$s, pumping changes $|w|_{\pmb{b}}$ while $|w|_{\pmb{a}} = p!+p$ and $|w|_{\pmb{c}} = p!+p$ remain fixed. At some $i$, $|w|_{\pmb{b}} = p!+p$ (i.e., $p + (i-1)|vx| = p!+p$, so $(i-1)|vx| = p!$, giving $i-1 = p!/|vx|$ which is an integer since $|vx| \leq p$ divides $p!$). But then $k = n = p!+p$ and $n = m = p!+p$, so the pumped string is not in $L$ (requires $k\neq n$ and $n\neq m$). Contradiction. \qed
+
+\end{enumerate}

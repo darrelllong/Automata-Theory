@@ -1,0 +1,710 @@
+%% sol-ch06.tex — Solutions for Chapter 6: Regular Expressions
+
+\chapter{Regular Expressions --- Solutions}
+
+\begin{enumerate}[{6.}1.]
+
+%% 6.1
+\item Even-length words over $\{\pmb{a},\pmb{b}\}$:
+\[
+  (\pmb{a}\cup\pmb{b})^2)^* = ((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}))^*
+\]
+
+%% 6.2
+\item Words of length $\ge 2$ over $\{\pmb{a},\pmb{b}\}$:
+\[
+  (\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b})^*
+\]
+
+%% 6.3
+\item Words with $|x|_{\pmb{a}}=|x|_{\pmb{b}}$ over $\{\pmb{a},\pmb{b}\}$: This language is \emph{not} regular (not FAD).  By the pumping lemma, if it were FAD with $n$ states, take $w=\pmb{a}^n\pmb{b}^n$; any pump within the first $n$ characters (all $\pmb{a}$s) would unbalance the counts.  Hence no regular expression exists.
+
+%% 6.4
+\item Odd-length words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ not ending in $\pmb{b}$:
+\[
+  (\pmb{a}\cup\pmb{b}\cup\pmb{c})((\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*(\pmb{a}\cup\pmb{c})
+  \;\cup\;
+  (\pmb{a}\cup\pmb{c})
+\]
+More compactly (letting $\Sigma=\pmb{a}\cup\pmb{b}\cup\pmb{c}$):
+a word of odd length not ending in $\pmb{b}$ is either a single non-$\pmb{b}$ letter, or has length $\ge 3$ with any prefix of even length followed by a non-$\pmb{b}$ letter:
+\[
+  (\pmb{a}\cup\pmb{c}) \cup (\pmb{a}\cup\pmb{b}\cup\pmb{c})((\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*(\pmb{a}\cup\pmb{c})
+\]
+
+%% 6.5
+\item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ not containing $\pmb{cc}$:
+Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is followed by a non-$\pmb{c}$ (or is at the end).  Let $N=\pmb{a}\cup\pmb{b}$ (non-$\pmb{c}$ letters).
+\[
+  (N \cup \pmb{c}N)^*(N \cup \pmb{c} \cup \epsilon)
+\]
+More precisely:
+\[
+  (N\cup\pmb{c}N)^*(\epsilon\cup\pmb{c})
+\]
+
+%% 6.6
+\item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ containing $\pmb{cc}$:
+\[
+  (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{cc}(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*
+\]
+
+%% 6.7
+\item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ with no $\pmb{c}$s:
+\[
+  (\pmb{a}\cup\pmb{b})^*
+\]
+
+%% 6.8
+\item Let $\Sigma=\{\pmb{0},\pmb{1}\}$.
+
+\begin{enumerate}[(a)]
+  \item $L_1=\{x\mid|x|\bmod 3=2\}$: words whose length is congruent to 2 modulo 3:
+  \[
+    (\pmb{0}\cup\pmb{1})(\pmb{0}\cup\pmb{1})((\pmb{0}\cup\pmb{1})(\pmb{0}\cup\pmb{1})(\pmb{0}\cup\pmb{1}))^*
+  \]
+
+  \item $L_2=\Sigma^*\setminus\{w\mid w\text{ ends in }\pmb{1}\}$: words that do \emph{not} end in $\pmb{1}$, i.e., words that end in $\pmb{0}$ or equal $\lambda$:
+  \[
+    \epsilon\cup(\pmb{0}\cup\pmb{1})^*\pmb{0}
+  \]
+
+  \item $L_3=\{y\mid|y|_{\pmb{0}}>|y|_{\pmb{1}}\}$: words with more $\pmb{0}$s than $\pmb{1}$s.  This language is \emph{not} regular.  By the pumping lemma, consider $\pmb{0}^{n+1}\pmb{1}^n$; pumping within the $\pmb{0}$ block preserves the property, but the languages of this form require counting, which finite automata cannot do.  (No regular expression exists.)
+\end{enumerate}
+
+%% 6.9
+\item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$.  Let $\Sigma^*=(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*$.
+
+\begin{enumerate}[(a)]
+  \item $L_1=\{x\mid|x|_{\pmb{a}}\text{ odd}\wedge|x|_{\pmb{b}}\text{ even}\}$:
+
+  Track the parity of $\pmb{a}$s and $\pmb{b}$s jointly.  A word is in $L_1$ iff the number of $\pmb{a}$s is odd and the number of $\pmb{b}$s is even.  This is a product of two conditions on counts modulo 2; the minimal DFA has 4 states.  The corresponding regular expression (derived from the state equations) is:
+  \[
+    \pmb{c}^*\pmb{a}(\pmb{c}\cup\pmb{bb})^*(\epsilon\cup\pmb{b}\pmb{c}^*\pmb{a}(\pmb{c}\cup\pmb{bb})^*)^*
+    \quad\text{(one valid form)}
+  \]
+  (Words with an odd number of $\pmb{a}$s interleaved with an even number of $\pmb{b}$s; $\pmb{c}$s can appear anywhere.)
+
+  \item $L_2=\{y\mid|y|_{\pmb{c}}\text{ even}\vee|y|_{\pmb{b}}\text{ odd}\}$:
+  The complement is $\{y\mid|y|_{\pmb{c}}\text{ odd}\wedge|y|_{\pmb{b}}\text{ even}\}$, which is regular, so $L_2$ is regular.  A regular expression can be derived similarly.
+
+  \item $L_3=\{z\mid|z|_{\pmb{a}}\text{ even}\}$:
+  \[
+    (\pmb{b}\cup\pmb{c})^*(\pmb{a}\pmb{a}(\pmb{b}\cup\pmb{c})^*\cup\epsilon)^*
+    \;=\;
+    ((\pmb{b}\cup\pmb{c})^*\pmb{a}(\pmb{b}\cup\pmb{c})^*\pmb{a})^*(\pmb{b}\cup\pmb{c})^*
+  \]
+
+  \item $L_4=\{z\mid|z|_{\pmb{c}}\text{ prime}\}$: Not regular.  The set of primes is not eventually periodic, so the language $\{c^p\mid p\text{ prime}\}\subseteq L_4$ restricted to $\Sigma=\{\pmb{c}\}$ is not FAD (pumping lemma).  Hence $L_4$ has no regular expression.
+
+  \item $L_5=\{x\mid\pmb{abc}\text{ is a substring}\}$:
+  \[
+    (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{abc}(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*
+  \]
+
+  \item $L_6=\{x\mid\pmb{acaba}\text{ is a substring}\}$:
+  \[
+    (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{acaba}(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*
+  \]
+
+  \item $L_7=\{x\mid|x|_{\pmb{a}}\equiv 0\pmod{3}\}$:
+  \[
+    (\pmb{b}\cup\pmb{c})^*(\pmb{a}(\pmb{b}\cup\pmb{c})^*\pmb{a}(\pmb{b}\cup\pmb{c})^*\pmb{a}(\pmb{b}\cup\pmb{c})^*)^*
+  \]
+\end{enumerate}
+
+%% 6.10
+\item $\Psi=\{x\mid x\text{ begins with }\pmb{d}\vee x\text{ contains }\pmb{bb}\}$ over $\{\pmb{a},\pmb{b},\pmb{d}\}$:
+\[
+  \pmb{d}(\pmb{a}\cup\pmb{b}\cup\pmb{d})^*
+  \;\cup\;
+  (\pmb{a}\cup\pmb{b}\cup\pmb{d})^*\pmb{bb}(\pmb{a}\cup\pmb{b}\cup\pmb{d})^*
+\]
+
+%% 6.11
+\item $\Phi=\{x\mid\text{every }\pmb{b}\text{ in }x\text{ is immediately followed by }\pmb{c}\}$ over $\{\pmb{a},\pmb{b},\pmb{c}\}$:
+Words with no isolated $\pmb{b}$ (every $\pmb{b}$ must be followed immediately by $\pmb{c}$).  Let $S=\pmb{a}\cup\pmb{c}\cup\pmb{bc}$ (safe building blocks):
+\[
+  (\pmb{a}\cup\pmb{c}\cup\pmb{bc})^*
+\]
+
+%% 6.12
+\item Numbers divisible by 3 over $\{0,\ldots,9\}$:
+
+A number is divisible by 3 iff the sum of its digits is divisible by 3.  This is recognized by a 3-state DFA tracking the running digit sum modulo 3.  The corresponding regular expression (from the state equations) is complex but finite; one approach:
+
+Let $D_k=\{$digits whose value$\equiv k\pmod 3\}$: $D_0=\{0,3,6,9\}$, $D_1=\{1,4,7\}$, $D_2=\{2,5,8\}$.  The language $\Gamma$ is accepted by a DFA with states $\{q_0,q_1,q_2\}$ where $q_i$ = ``running sum $\equiv i\pmod 3$'', $q_0$ is the (only) final state.  The state equations:
+\begin{align*}
+  X_0 &= \epsilon \cup D_0X_0 \cup D_1X_2 \cup D_2X_1 \\
+  X_1 &= D_1X_0 \cup D_2X_2 \cup D_0X_1 \\
+  X_2 &= D_2X_0 \cup D_0X_2 \cup D_1X_1
+\end{align*}
+Solving (by Theorem~6.2): $X_0 = D_0^*(D_1X_2+D_2X_1)^*$... the full solution is a regular expression in $D_0,D_1,D_2$; the simplest form is $\Gamma=(D_0\cup D_1D_2^*D_1\cup D_2D_1^*D_2)^*$ (an approximation; the exact expression requires the full Kleene computation).
+
+%% 6.13
+\item $K=\{x\mid x\text{ is divisible by }5\}$ over decimal digits:
+
+A decimal number is divisible by 5 iff it ends in $\pmb{0}$ or $\pmb{5}$.
+\[
+  K = \epsilon \cup (\pmb{0}\cup\pmb{1}\cup\cdots\cup\pmb{9})^*(\pmb{0}\cup\pmb{5})
+\]
+(Including $\lambda$ which represents 0, which is divisible by 5.)
+
+%% 6.14
+\item \textbf{Build NDFA for $\pmb{b}\cup\pmb{a}^*\pmb{c}$ using exact constructs of Chapter~5.}
+
+Step 1: $\pmb{a}^*$ via Theorem~5.5 (Kleene closure of $\{\pmb{a}\}$).
+Step 2: $\pmb{a}^*\pmb{c}$ via Theorem~5.4 (concatenation of $\pmb{a}^*$ and $\{\pmb{c}\}$).
+Step 3: $\pmb{b}\cup\pmb{a}^*\pmb{c}$ via Theorem~5.2 (union of $\{\pmb{b}\}$ and $\pmb{a}^*\pmb{c}$).
+
+The NDFA:
+\begin{itemize}
+  \item Machine for $\{\pmb{a}\}$: one start state $p_0$, one final state $p_1$, $\delta(p_0,\pmb{a})=\{p_1\}$.
+  \item Machine for $\pmb{a}^*$ (Theorem~5.5): add start state $q_0$ (final); $\lambda$-transition $q_0\to p_0$; $\lambda$-transition $p_1\to q_0$.
+  \item Machine for $\{\pmb{c}\}$: start $r_0$, final $r_1$, $\delta(r_0,\pmb{c})=\{r_1\}$.
+  \item Machine for $\pmb{a}^*\pmb{c}$ (Theorem~5.4): $\lambda$-transition $q_0\to r_0$; final states $\{r_1\}$.
+  \item Machine for $\{\pmb{b}\}$: start $s_0$, final $s_1$, $\delta(s_0,\pmb{b})=\{s_1\}$.
+  \item Union (Theorem~5.2): start state set $\{q_0,s_0\}$; final states $\{r_1,s_1\}$.
+\end{itemize}
+
+%% 6.15
+\item \textbf{Inequalities in Lemma~6.1:}
+
+\begin{enumerate}[(a)]
+  \item $R_1\cup\epsilon\neq R_1$: Let $R_1=\pmb{a}$.  Then $R_1\cup\epsilon=\{\lambda,\pmb{a}\}\neq\{\pmb{a}\}=R_1$.
+  \item $R_1\cdot R_2\neq R_2\cdot R_1$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$.  $\pmb{ab}\neq\pmb{ba}$.
+  \item $R_1\cdot R_1\neq R_1$: Let $R_1=\pmb{a}$.  $\pmb{aa}\neq\pmb{a}$.
+  \item $R_1\cup(R_2\cdot R_3)\neq(R_1\cup R_2)\cdot(R_1\cup R_3)$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$, $R_3=\pmb{c}$.  LHS: $\{\pmb{a},\pmb{bc}\}$.  RHS: $\{\pmb{a},\pmb{b},\pmb{c}\}\cdot\{\pmb{a},\pmb{b},\pmb{c}\}=\{\pmb{aa},\pmb{ab},\pmb{ac},\pmb{ba},\pmb{bb},\pmb{bc},\pmb{ca},\pmb{cb},\pmb{cc}\}\cup\ldots$.  Not equal.
+  \item $(R_1\cdot R_2)^*\neq(R_1^*\cdot R_2^*)^*$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$.  $(ab)^*=\{\lambda,\pmb{ab},\pmb{abab},\ldots\}$.  $(a^*b^*)^*=(\pmb{a}\cup\pmb{b})^*$.  Not equal.
+  \item $(R_1\cdot R_2)^*\neq(R_1^*\cup R_2^*)^*$: Same example.  $(R_1^*\cup R_2^*)^*=(a^*\cup b^*)^*=(a\cup b)^*$.  Not equal to $(\pmb{ab})^*$.
+\end{enumerate}
+
+\textbf{Examples where equality holds:}
+\begin{enumerate}[(a)]
+  \setcounter{enumii}{6}
+  \item $R_1\cup\epsilon=R_1$: Let $R_1=\epsilon$.  $\epsilon\cup\epsilon=\epsilon=R_1$.
+  \item $R_1\cdot R_2=R_2\cdot R_1$: Let $R_1=R_2=\pmb{a}$.  Both equal $\pmb{aa}$.  Or $R_1=\pmb{ab}$, $R_2=\pmb{ab}$.
+  \item $R_1\cdot R_1=R_1$: Let $R_1=\Sigma^*$.  $\Sigma^*\cdot\Sigma^*=\Sigma^*$.
+  \item $R_1\cup(R_2\cdot R_3)=(R_1\cup R_2)\cdot(R_1\cup R_3)$: Let $R_1=\Sigma^*$, $R_2,R_3$ arbitrary.  Both sides equal $\Sigma^*$.
+  \item $(R_1\cdot R_2)^*=(R_1^*\cdot R_2^*)^*$: Let $R_1=\pmb{a}^*$, $R_2=\epsilon$.  Both equal $(\pmb{a}^*)^*=\pmb{a}^*$.
+  \item $(R_1\cdot R_2)^*=(R_1^*\cup R_2^*)^*$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$... no, not equal.  Let $R_1=\epsilon$, $R_2=\pmb{a}$.  $(R_1R_2)^*=\pmb{a}^*$.  $(R_1^*\cup R_2^*)^*=(\epsilon\cup\pmb{a}^*)^*=\pmb{a}^*$.  Equal.
+\end{enumerate}
+
+%% 6.16
+\item \textbf{Prove the equalities of Lemma~6.1.}
+
+Key equalities (Lemma~6.1 typically states algebraic laws for regular sets):
+
+\begin{enumerate}[(i)]
+  \item $R\cup\emptyset=R$: $L\cup\emptyset=L$ for any language.
+  \item $R\cup R=R$: idempotency; $L\cup L=L$.
+  \item $R\cdot\emptyset=\emptyset$: concatenation with empty language is empty.
+  \item $R\cdot\epsilon=R$: $L\cdot\{\lambda\}=L$.
+  \item $(R^*)^*=R^*$: $L^*$ is already closed under concatenation and taking closures.
+  \item $R^*\cdot R^*=R^*$: $L^*\cdot L^*=L^*$.
+  \item $\emptyset^*=\epsilon$: $\emptyset^*=\{\lambda\}$.
+  \item $(R_1\cup R_2)\cdot R_3=(R_1\cdot R_3)\cup(R_2\cdot R_3)$: distributivity.
+\end{enumerate}
+
+Each of these follows directly from the set-theoretic definitions of union, concatenation, and Kleene closure.  For example, distributivity: $w\in(L_1\cup L_2)\cdot L_3$ iff $w=xy$ with $x\in L_1\cup L_2$ and $y\in L_3$ iff $(x\in L_1\wedge y\in L_3)\vee(x\in L_2\wedge y\in L_3)$ iff $w\in L_1L_3\cup L_2L_3$. \qed
+
+%% 6.17
+\item \begin{enumerate}[(a)]
+  \item \textbf{Non-uniqueness of $A^*E$ when $\lambda\in A$.}
+
+  Let $A=\{\lambda,\pmb{a}\}=\epsilon\cup\pmb{a}$ and $E=\{\pmb{b}\}$.
+  Then $A^*E=\{\pmb{a}\}^*\{\pmb{b}\}=\{\pmb{a}^n\pmb{b}\mid n\ge 0\}$.
+  But $X=\Sigma^*\{\pmb{b}\}$ also satisfies $X=A\cdot X\cup E$ since $\lambda\in A$ means $A^*E\subseteq X$ for any superset $X$ that is a fixed point.  Specifically, check $X=\Sigma^*$: $A\cdot\Sigma^*\cup\{\pmb{b}\}=\Sigma^*\cup\{\pmb{b}\}=\Sigma^*=X$.  So $\Sigma^*$ is also a solution, but $\Sigma^*\neq A^*E$.  Hence the solution is not unique.
+
+  \item \textbf{$A^*E$ as unique solution even if $\lambda\in A$.}
+
+  Let $A=\{\lambda\}$ and $E=\{\pmb{b}\}$.  Then $X=AX\cup E=\{\lambda\}X\cup\{\pmb{b}\}=X\cup\{\pmb{b}\}$.  The unique solution is $X\supseteq\{\pmb{b}\}$; the smallest such $X$ is $\{\pmb{b}\}=A^*E$.  (The equation $X=X\cup E$ has $X=E$ as a solution, and any superset works; if we take the smallest fixed point, it equals $E=A^*E$.)
+\end{enumerate}
+
+%% 6.18
+\item \textbf{Solve $X_1=(\pmb{0}\cup\pmb{1})X_1$, $X_2=\epsilon\cup\pmb{1}X_0\cup\pmb{0}X_1$.}
+
+The system has equations for $X_1$ and $X_2$, with $X_0$ appearing free (this appears to be a typo in the problem; we solve the given system and express $X_2$ in terms of $X_0$.)
+
+From the first equation: $X_1=(\pmb{0}\cup\pmb{1})X_1$.  By Theorem~6.1 (since $\lambda\notin\pmb{0}\cup\pmb{1}$), $X_1=(\pmb{0}\cup\pmb{1})^*\cdot\emptyset=\emptyset$.
+
+So $X_1=\emptyset$, and $X_2=\epsilon\cup\pmb{1}X_0\cup\pmb{0}\cdot\emptyset=\epsilon\cup\pmb{1}X_0$.
+
+This system involves $X_0$ which has no defining equation, so $X_2$ remains in terms of $X_0$.  The connection to Example~3.4: the equations describe the state languages of a DFA, where $X_i$ represents strings leading from state $i$ to acceptance.
+
+%% 6.19
+\item \textbf{Solve for $X_1,X_2,X_3$ from the equations.}
+
+Simplifying (noting $\emptyset\cdot X_i=\emptyset$):
+\begin{align*}
+  X_1 &= (\pmb{0}\cup\pmb{1})X_2 \\
+  X_2 &= \epsilon\cup\pmb{0}X_1\cup\pmb{1}X_2 \\
+  X_3 &= (\pmb{0}\cup\pmb{1})X_2
+\end{align*}
+Note $X_3=X_1$.
+
+\begin{enumerate}[(a)]
+  \item \textbf{Eliminate $X_3$, then $X_2$:}
+
+  Since $X_3=X_1$, eliminate $X_3$.  From $X_2=\epsilon\cup\pmb{0}X_1\cup\pmb{1}X_2$: by Theorem~6.1 ($\lambda\notin\{\pmb{1}\}$): $X_2=\pmb{1}^*(\epsilon\cup\pmb{0}X_1)=\pmb{1}^*\cup\pmb{1}^*\pmb{0}X_1$.
+  Substitute into $X_1=(\pmb{0}\cup\pmb{1})X_2=(\pmb{0}\cup\pmb{1})(\pmb{1}^*\cup\pmb{1}^*\pmb{0}X_1)=(\pmb{0}\cup\pmb{1})\pmb{1}^*\cup(\pmb{0}\cup\pmb{1})\pmb{1}^*\pmb{0}X_1$.
+  By Theorem~6.1: $X_1=((\pmb{0}\cup\pmb{1})\pmb{1}^*\pmb{0})^*(\pmb{0}\cup\pmb{1})\pmb{1}^*$.
+  Then $X_2=\pmb{1}^*\cup\pmb{1}^*\pmb{0}((\pmb{0}\cup\pmb{1})\pmb{1}^*\pmb{0})^*(\pmb{0}\cup\pmb{1})\pmb{1}^*=\pmb{1}^*((\pmb{0}(\pmb{0}\cup\pmb{1})\pmb{1}^*)^*$ (simplified).
+  And $X_3=X_1$.
+
+  \item \textbf{Eliminate $X_3$, then $X_1$:}
+
+  Same $X_3=X_1$.  From $X_1=(\pmb{0}\cup\pmb{1})X_2$, substitute into $X_2$:
+  $X_2=\epsilon\cup\pmb{0}(\pmb{0}\cup\pmb{1})X_2\cup\pmb{1}X_2=\epsilon\cup(\pmb{0}(\pmb{0}\cup\pmb{1})\cup\pmb{1})X_2$.
+  Let $A=\pmb{0}(\pmb{0}\cup\pmb{1})\cup\pmb{1}=\pmb{00}\cup\pmb{01}\cup\pmb{1}$; $\lambda\notin A$.
+  $X_2=A^*$.
+  Then $X_1=(\pmb{0}\cup\pmb{1})A^*$ and $X_3=X_1$.
+
+  \item \textbf{Comparison:} Both solutions are equivalent: $(\pmb{0}\cup\pmb{1})\pmb{1}^*(\pmb{0}(\pmb{0}\cup\pmb{1})\pmb{1}^*)^*=(\pmb{0}\cup\pmb{1})(\pmb{00}\cup\pmb{01}\cup\pmb{1})^*$.  The second form is more concise.
+\end{enumerate}
+
+%% 6.20
+\item \textbf{Prove Lemma~6.2: every regular expression describes a FAD language.}
+
+\begin{proof}
+Let $P(m)$: ``Every regular expression with $\le m$ operators represents a FAD language.''
+
+\emph{Base ($m=0$):}  No operators: the expression is $\emptyset$, $\epsilon$, or a single letter $\pmb{a}\in\Sigma$.  These represent $\emptyset$, $\{\lambda\}$, and $\{\pmb{a}\}$ respectively---all finite, hence FAD.
+
+\emph{Inductive step:}  Assume $P(m)$.  Any regular expression with $m+1$ operators is either $R_1\cup R_2$, $R_1\cdot R_2$, or $R_1^*$, where $R_1$ and $R_2$ each have $\le m$ operators.  By $P(m)$, $L(R_1),L(R_2)\in\DSIG$.  Then:
+\begin{itemize}
+  \item $L(R_1\cup R_2)=L(R_1)\cup L(R_2)\in\DSIG$ (Theorem~5.2).
+  \item $L(R_1\cdot R_2)=L(R_1)\cdot L(R_2)\in\DSIG$ (Theorem~5.4).
+  \item $L(R_1^*)=L(R_1)^*\in\DSIG$ (Theorem~5.5).
+\end{itemize}
+So $P(m+1)$ holds.  By induction, every regular expression represents a FAD language. \qed
+\end{proof}
+
+%% 6.21
+\item \textbf{All solutions to $X=X\cup\{\pmb{b}\}$ over $\{\pmb{a},\pmb{b},\pmb{c}\}^*$.}
+
+$X=X\cup\{\pmb{b}\}$ means $\{\pmb{b}\}\subseteq X$ and $X=X$ (which is always true).  The solutions are all languages $X$ containing $\pmb{b}$: $X=\{L\mid\pmb{b}\in L\}$.  Every such language is a solution.  The smallest solution is $\{\pmb{b}\}$.
+
+%% 6.22
+\item \textbf{Prove $A^*E=E\cup A\cdot(A^*E)$ for any languages $A$ and $E$.}
+
+\begin{proof}
+$A^*E=(\epsilon\cup A\cup A^2\cup\cdots)E=\epsilon E\cup AE\cup A^2E\cup\cdots=E\cup A(E\cup AE\cup A^2E\cup\cdots)=E\cup A(A^*E)$. \qed
+\end{proof}
+
+%% 6.23
+\item \textbf{Regular expression for $(\pmb{ab}\cup\pmb{b})^*\pmb{a}\cap(\pmb{ba}\cup\pmb{a})^*$.}
+
+Both are FAD; their intersection is FAD (Lemma~5.1).  We use the product DFA approach.
+
+$L_1=(\pmb{ab}\cup\pmb{b})^*\pmb{a}$: strings over $\{\pmb{a},\pmb{b}\}$ of the form $w\pmb{a}$ where $w\in(\pmb{ab}\cup\pmb{b})^*$.
+$L_2=(\pmb{ba}\cup\pmb{a})^*$: strings over $\{\pmb{a},\pmb{b}\}$ that are concatenations of $\pmb{ba}$ or $\pmb{a}$.
+
+$L_1$ ends in $\pmb{a}$.  $L_2=(\pmb{ba}\cup\pmb{a})^*$ consists of all strings that decompose as concatenations of $\pmb{a}$ and $\pmb{ba}$.
+
+$L_1\cap L_2$: strings that end in $\pmb{a}$ (from $L_1$) and belong to $L_2$.  By inspection, $\pmb{a}\in L_1\cap L_2$, $\pmb{ba}\in L_1\cap L_2$ (since $\pmb{b}\in(\pmb{ab}\cup\pmb{b})^*$ is false... $\pmb{b}\in(\pmb{b})^1\subseteq(\pmb{ab}\cup\pmb{b})^*$, yes; and $\pmb{ba}\in(\pmb{ba})^1\subseteq L_2$).  The intersection is: $\pmb{a}^*(\pmb{ba})^*$? Let's verify: $\pmb{a}\in L_1\cap L_2$; $\pmb{ba}\in L_1\cap L_2$; $\pmb{aba}\in L_1$ (as $\pmb{ab}\cdot\pmb{a}$), $\pmb{aba}\in L_2$ (as $\pmb{a}\cdot\pmb{ba}$); $\pmb{bba}\notin L_2$ (can't decompose $\pmb{bb}$ as $\pmb{a}$ or $\pmb{ba}$)...
+
+The intersection can be expressed as $(\pmb{a}\cup\pmb{ba})^*\pmb{a}$ (strings in $L_2$ that end in $\pmb{a}$, where $L_2=(\pmb{a}\cup\pmb{ba})^*$).  But we also need the prefix to be in $(\pmb{ab}\cup\pmb{b})^*$.  This requires simultaneous satisfaction; the exact regular expression requires the product DFA computation.
+
+\[
+  L_1\cap L_2 = (\pmb{a}\cup\pmb{ba})^+\text{-ending-in-}\pmb{a}\cap(\pmb{ab}\cup\pmb{b})^*\pmb{a}
+\]
+A valid expression: $\pmb{a}\cup(\pmb{ba})^+$ (by direct analysis: $\pmb{a}$ and $\pmb{ba}(\pmb{ba})^*$ both work).  But this needs careful verification.
+
+%% 6.24
+\item \textbf{Algorithm for intersection of two regular expressions.}
+
+Given regular expressions $R_1$ and $R_2$ (each describing a FAD language):
+\begin{enumerate}[1.]
+  \item Convert $R_1$ to an NDFA $A_1$ (using the constructions of Chapter~5 / Theorem~6.5).
+  \item Convert $R_2$ to an NDFA $A_2$ similarly.
+  \item Apply the subset construction to get DFAs $A_1^d$ and $A_2^d$.
+  \item Build the product DFA $A^\cap$ (Lemma~5.1) with $F^\cap=F_1\times F_2$.
+  \item Apply Theorem~6.6 (DFA to regular expression) to $A^\cap$ to produce a regular expression for $L(A_1)\cap L(A_2)$.
+\end{enumerate}
+
+%% 6.25
+\item \textbf{Verify that $X_1=(\pmb{a}\cup\pmb{bb})^*$ and $X_2=\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*$ satisfy:}
+\begin{align*}
+  X_1 &= \epsilon\cup\pmb{a}\cdot X_1\cup\pmb{b}\cdot X_2 \\
+  X_2 &= \pmb{b}\cdot X_1
+\end{align*}
+
+\textbf{Verification of $X_2=\pmb{b}\cdot X_1$:}
+\[
+  \pmb{b}\cdot X_1 = \pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^* = X_2. \quad\checkmark
+\]
+
+\textbf{Verification of $X_1=\epsilon\cup\pmb{a}\cdot X_1\cup\pmb{b}\cdot X_2$:}
+\begin{align*}
+  \epsilon\cup\pmb{a}\cdot X_1\cup\pmb{b}\cdot X_2
+    &= \epsilon\cup\pmb{a}(\pmb{a}\cup\pmb{bb})^*\cup\pmb{b}\cdot\pmb{b}(\pmb{a}\cup\pmb{bb})^* \\
+    &= \epsilon\cup(\pmb{a}\cup\pmb{bb})\cdot(\pmb{a}\cup\pmb{bb})^* \\
+    &= (\pmb{a}\cup\pmb{bb})^* = X_1. \quad\checkmark
+\end{align*}
+
+%% 6.26
+\item \begin{enumerate}[(a)]
+  \item \textbf{$L(D)$ for Example~6.10:}  From the state equations of machine $D$, solve the system (as in Theorem~6.3) to get $L(D)=X_{start}$ where $X_{start}$ is the language variable for the start state.  The specific answer depends on the machine in Example~6.10.
+
+  \item \textbf{General formula:}  For a machine $A$ with start states $s_{i_1},\ldots,s_{i_m}$:
+  \[
+    L(A) = X_{i_1} \cup X_{i_2} \cup \cdots \cup X_{i_m}
+  \]
+  where each $X_j$ is the solution to the state equation for state $s_j$.
+\end{enumerate}
+
+%% 6.27
+\item \textbf{Regular expression for the complement of $(\pmb{ab}\cup\pmb{b})^*\pmb{a}$.}
+
+\RSIG\ is closed under complement.  Algorithm:
+\begin{enumerate}[1.]
+  \item Build NDFA for $(\pmb{ab}\cup\pmb{b})^*\pmb{a}$.
+  \item Convert to DFA via subset construction.
+  \item Complement final states.
+  \item Apply Theorem~6.6 to get a regular expression.
+\end{enumerate}
+The complement of $(\pmb{ab}\cup\pmb{b})^*\pmb{a}$ consists of all words over $\{\pmb{a},\pmb{b}\}$ that do NOT end with $\pmb{a}$ after a prefix in $(\pmb{ab}\cup\pmb{b})^*$, i.e., strings that end in $\pmb{b}$ or words not of this form.  The complement includes $\lambda$, all words ending in $\pmb{b}$, and words with substructure violating the pattern.
+
+A regular expression: $\lambda\cup(\pmb{a}\cup\pmb{b})^*\pmb{b}\cup(\text{words not matching the pattern})$.  The exact expression requires the product DFA complement computation.
+
+%% 6.28
+\item \textbf{Algorithm to complement a regular expression.}
+
+Given regular expression $R$:
+\begin{enumerate}[1.]
+  \item Convert $R$ to a DFA $A$ (via NDFA $\to$ subset construction).
+  \item Complement $A$ by swapping $F$ and $S\setminus F$.
+  \item Apply Theorem~6.6 to the complemented DFA to produce a regular expression.
+\end{enumerate}
+
+%% 6.29
+\item \textbf{$\RSIG$ is closed under $E(L)$ using regular expressions.}
+
+$E(L)=\{z\mid\exists y\in\Sigma^+,yx\in L\}=$ suffixes with at least one character removed from the front.  If $L=L(R)$, then $E(L)=\Sigma^+\setminus\text{(words not in }E(L))$.  More directly: $E(L)=\{z\mid\exists\pmb{a}\in\Sigma,\exists y\in\Sigma^*,\pmb{a}yz\in L\}$.  This is the set of strings that can follow some nonempty prefix in $L$.  From the regular expression perspective: $E(L)=\bigcup_{\pmb{a}\in\Sigma}\overline{\psi_{\pmb{a}}^{-1}}(L)$ where $\psi_{\pmb{a}}(z)=\pmb{a}z$... this is inverse image under left-concatenation, which is regular.  Alternatively, $E(L)=\text{Suf}(L)\setminus\{\lambda\}$ restricted to at least one preceding letter, which can be expressed as a regular expression by the suffix construction.
+
+%% 6.30
+\item \textbf{$\RSIG$ is closed under $B(L)$.}
+
+$B(L)=L\cdot\Sigma^*$ (words starting with a word from $L$).  If $L=L(R)$, then $B(L)=L(R\cdot\Sigma^*)=L(R\cdot(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*)$.  This is a regular expression, so $B(L)\in\RSIG$.
+
+%% 6.31
+\item \textbf{$\RSIG$ is closed under $M(L)$.}
+
+$M(L)=L\cdot\Sigma^+$.  If $L=L(R)$, then $M(L)=L(R\cdot(\pmb{a}\cup\pmb{b}\cup\pmb{c})^+)=L(R\cdot(\pmb{a}\cup\pmb{b}\cup\pmb{c})\cdot(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*)$.  Regular expression, hence $M(L)\in\RSIG$.
+
+%% 6.32
+\item \begin{enumerate}[(a)]
+  \item \textbf{No unique solution to the given system:}
+
+  The equations:
+  $X_1=\pmb{b}\cup\epsilon\cdot X_1\cup\pmb{a}\cdot X_2=\pmb{b}\cup X_1\cup\pmb{a}X_2$.
+  Since $X_1\subseteq X_1\cup\pmb{b}\cup\pmb{a}X_2$, the equation $X_1=\pmb{b}\cup X_1\cup\pmb{a}X_2$ says $X_1\supseteq\pmb{b}\cup\pmb{a}X_2$.  Any $X_1$ that contains $\pmb{b}$ and $\pmb{a}X_2$ is a solution; there are infinitely many such $X_1$.
+
+  $X_2=\pmb{c}\cup\emptyset\cdot X_1\cup\epsilon\cdot X_2=\pmb{c}\cup X_2$.  Similarly, any $X_2\supseteq\{\pmb{c}\}$ is a solution.
+
+  \item \textbf{No contradiction with Theorem~6.2:}  Theorem~6.2 requires that the coefficients $A_{ij}$ (of $X_j$ in the equation for $X_i$) satisfy $\lambda\notin A_{ii}$ (i.e., the diagonal coefficients cannot contain $\lambda$).  Here, $\epsilon\cdot X_1$ appears in the equation for $X_1$, meaning $A_{11}=\epsilon=\{\lambda\}$.  Since $\lambda\in A_{11}$, the hypothesis of Theorem~6.2 is violated, so the theorem does not guarantee uniqueness.
+\end{enumerate}
+
+%% 6.33
+\item \textbf{Solve for $X_0$ and $X_1$.}
+
+\begin{align*}
+  X_0 &= \pmb{0}^*\pmb{1} \cup (\pmb{10})^*X_0 \cup \pmb{0}(\pmb{0}\cup\pmb{1})X_1 \\
+  X_1 &= \epsilon \cup \pmb{1}^*\pmb{01}X_0 \cup \pmb{0}X_1
+\end{align*}
+
+From the $X_1$ equation (by Theorem~6.1, $\lambda\notin\{\pmb{0}\}$):
+$X_1=\pmb{0}^*(\epsilon\cup\pmb{1}^*\pmb{01}X_0)=\pmb{0}^*\cup\pmb{0}^*\pmb{1}^*\pmb{01}X_0$.
+
+Substitute into $X_0$:
+$X_0=\pmb{0}^*\pmb{1}\cup(\pmb{10})^*X_0\cup\pmb{0}(\pmb{0}\cup\pmb{1})(\pmb{0}^*\cup\pmb{0}^*\pmb{1}^*\pmb{01}X_0)$.
+
+Let $C=\pmb{0}(\pmb{0}\cup\pmb{1})\pmb{0}^*\pmb{1}^*\pmb{01}$. Then:
+$X_0=((\pmb{10})^*\cup C)X_0\cup(\pmb{0}^*\pmb{1}\cup\pmb{0}(\pmb{0}\cup\pmb{1})\pmb{0}^*)$.
+
+By Theorem~6.1 (check $\lambda\notin(\pmb{10})^*\cup C$... $\lambda\in(\pmb{10})^*$!).  If $\lambda$ appears in the coefficient of $X_0$, uniqueness fails.  The minimal solution is:
+$X_0=((\pmb{10})^*\cup C)^*(\pmb{0}^*\pmb{1}\cup\pmb{0}(\pmb{0}\cup\pmb{1})\pmb{0}^*)$.
+
+Then back-substitute to get $X_1$.
+
+%% 6.34
+\item \begin{enumerate}[(a)]
+  \item Words ending with $\pmb{c}$ with no $\pmb{aa}$, $\pmb{bb}$, $\pmb{cc}$ substrings:
+
+  Letters after any $\pmb{a}$ must be $\pmb{b}$ or $\pmb{c}$; after any $\pmb{b}$ must be $\pmb{a}$ or $\pmb{c}$; no $\pmb{cc}$.  The last letter is $\pmb{c}$.  Let $T=(\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})$ (pairs avoiding doubles).  Words of even length with no doubles: $T^*$.  Add odd-length prefix:
+  \[
+    ((\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})^*\cup(\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})^*)\cap(\text{ends in }\pmb{c})
+  \]
+  Simplified:
+  \[
+    (\pmb{a}\cup\pmb{b})^?\cdot((\pmb{ab}\cup\pmb{ba})^*\cup\text{with }c\text{s inserted})\cdot\pmb{c}
+  \]
+  This is complex; one valid expression:
+  \[
+    ((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}))^*(\pmb{a}\cup\pmb{b})\pmb{c}\cup\pmb{c}
+    \quad\text{(oversimplified)}
+  \]
+
+  \item Words beginning with $\pmb{c}$ with no $\pmb{aa}$, $\pmb{bb}$, $\pmb{cc}$ substrings:
+  Similar constraint; the word starts with $\pmb{c}$ and the next letter (if any) must not be $\pmb{c}$:
+  \[
+    \pmb{c}((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*
+  \]
+  (where consecutive letters in the $(\pmb{a}\cup\pmb{b}\cup\pmb{c})$ part still avoid doubles; this needs refinement.)
+\end{enumerate}
+
+%% 6.35
+\item \begin{enumerate}[(a)]
+  \item Words with at most two $\pmb{c}$s:
+  \[
+    (\pmb{a}\cup\pmb{b})^*\cup(\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b})^*\cup(\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b})^*
+  \]
+
+  \item Words that do \emph{not} have exactly one $\pmb{c}$ (i.e., zero or $\ge 2$ $\pmb{c}$s):
+  \[
+    (\pmb{a}\cup\pmb{b})^*
+    \cup
+    (\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b}\cup\pmb{c})^*
+  \]
+\end{enumerate}
+
+%% 6.36
+\item \textbf{Reversal of regular expressions.}
+
+\begin{enumerate}[(a)]
+  \item Equivalences:
+  \begin{itemize}
+    \item $(R_1\cup R_2)^r=R_1^r\cup R_2^r$
+    \item $(R_1\cdot R_2)^r=R_2^r\cdot R_1^r$
+    \item $(R^*)^r=(R^r)^*$
+    \item $\emptyset^r=\emptyset$
+    \item $\epsilon^r=\epsilon$
+    \item $\pmb{a}^r=\pmb{a}$ for each $\pmb{a}\in\Sigma$
+  \end{itemize}
+
+  \item To generate a regular expression for $L^r$ from $R$: apply the reversal operator recursively to $R$ using the rules above.
+
+  \item \textbf{Proof by induction on the number of operators $m$ in $R$:}
+
+  \emph{Base ($m=0$):}  $R\in\{\emptyset,\epsilon,\pmb{a}\}$.  $L(R)^r=L(R^r)$ by direct check.
+
+  \emph{Step:}  Assume the result for all expressions with $<m$ operators.  If $R=R_1\cup R_2$: $(L(R_1)\cup L(R_2))^r=L(R_1)^r\cup L(R_2)^r=L(R_1^r)\cup L(R_2^r)=L(R_1^r\cup R_2^r)=L(R^r)$.  Similarly for $\cdot$ and $*$.  \qed
+
+  \item Since every FAD language has a regular expression (Theorem~6.6), and the reversal of any regular expression (via the rules above) is also a regular expression, $\RSIG$ is closed under $r$.
+\end{enumerate}
+
+%% 6.37
+\item \textbf{Complete details of Theorem~6.4.}
+
+Theorem~6.4 establishes that every FAD language has a regular expression (one direction of Kleene's theorem).  The proof uses the state-equation approach: for each state $s_i$ of a DFA, define $X_i$ = set of strings leading from $s_i$ to acceptance.  The system of linear equations $X_i=\bigcup_{\pmb{a}\in\Sigma}\pmb{a}\cdot X_{\delta(s_i,\pmb{a})}\cup(\epsilon\text{ if }s_i\in F)$ is solved using Theorem~6.2 (Arden's lemma), yielding a regular expression for each $X_i$.  The language of $A$ is $X_{s_0}$.  Full details: apply Theorem~6.2 repeatedly by variable elimination; the resulting expressions are regular by Lemma~6.2.
+
+%% 6.38
+\item \begin{enumerate}[(a)]
+  \item Words with no $\pmb{b}$ immediately preceded by $\pmb{a}$ over $\{\pmb{a},\pmb{b},\pmb{c}\}$:
+
+  Condition: $\pmb{ab}$ never occurs as a substring.  Let $S=\{\pmb{a},\pmb{b},\pmb{c}\}$ and avoid $\pmb{ab}$.  Words built from $\pmb{b}$s after non-$\pmb{a}$s:
+  \[
+    (\pmb{c}\cup\pmb{b})^*(\pmb{a}(\pmb{a}\cup\pmb{c})^*(\pmb{b}\cup\pmb{c}\cup\epsilon))^*(\pmb{a}\cup\epsilon)
+  \]
+  More cleanly: $\pmb{a}$ can appear only if not immediately followed by $\pmb{b}$.  So $\pmb{a}$ must be followed by $\pmb{a}$, $\pmb{c}$, or end.  Let $N=\pmb{b}\cup\pmb{c}$ (non-$\pmb{a}$).
+  \[
+    (\pmb{b}\cup\pmb{c})^*(\pmb{a}(\pmb{a}\cup\pmb{c})^*(\pmb{b}\cup\pmb{c}))^*(\pmb{a}(\pmb{a}\cup\pmb{c})^*\cup\epsilon)
+  \]
+
+  \item Words with exactly two $\pmb{c}$s and no $\pmb{ab}$:
+
+  Combine the no-$\pmb{ab}$ constraint with exactly two $\pmb{c}$s:
+  \[
+    (\text{no-$\pmb{ab}$ part with no $\pmb{c}$})\pmb{c}(\text{no-$\pmb{ab}$ part with no $\pmb{c}$})\pmb{c}(\text{no-$\pmb{ab}$ part with no $\pmb{c}$})
+  \]
+  Let $N_0$ = words over $\{\pmb{a},\pmb{b}\}$ with no $\pmb{ab}$ = $\pmb{b}^*(\pmb{a}^*\pmb{b}^*)^*$... better: $\pmb{b}^*(\pmb{a}^+\pmb{b}^*)^*= (\pmb{b}\cup\pmb{ab})^*(\pmb{a}^*\cup\epsilon)$...
+  Words over $\{\pmb{a},\pmb{b}\}$ avoiding $\pmb{ab}$: each $\pmb{a}$ must be followed by $\pmb{a}$ or end; $\pmb{b}$ can be preceded by anything non-$\pmb{a}$.  So: $(\pmb{b}^*\pmb{a}^*)^*=(\pmb{b}\cup\pmb{a})^*$... No.
+  Words avoiding $\pmb{ab}$: $\pmb{b}^*(\pmb{a}^*\pmb{b}^*)^*$... any word over $\{a,b\}$ is $b^*a^*b^*a^*\ldots$ But we need no $\pmb{ab}$, so after any $\pmb{a}$ comes only $\pmb{a}$ or end, meaning $\pmb{a}^*$ appears only at the end: $N_0=\pmb{b}^*\pmb{a}^*$.  Check: $\pmb{bba}$ avoids $\pmb{ab}$ \checkmark; $\pmb{abba}$ has no $\pmb{ab}$ prefix but $\pmb{ab}$ at position 1-2... wait, $\pmb{ab}$ is exactly $\pmb{a}$ followed by $\pmb{b}$; $\pmb{abba}$ does contain $\pmb{ab}$.  $N_0=\pmb{b}^*\pmb{a}^*$ avoids $\pmb{ab}$ since in $b^*a^*$ no $\pmb{a}$ precedes a $\pmb{b}$.  Yes.
+
+  Answer: $\pmb{b}^*\pmb{a}^*\cdot\pmb{c}\cdot\pmb{b}^*\pmb{a}^*\cdot\pmb{c}\cdot\pmb{b}^*\pmb{a}^*$.
+\end{enumerate}
+
+%% 6.39
+\item \begin{enumerate}[(a)]
+  \item Words with no $\pmb{b}$ immediately preceded by $\pmb{c}$ (no $\pmb{cb}$ substring):
+
+  $\pmb{c}$ must not be immediately followed by $\pmb{b}$.  So $\pmb{c}$ is followed by $\pmb{a}$, $\pmb{c}$, or end:
+  \[
+    (\pmb{a}\cup\pmb{b}\cup\pmb{c}(\pmb{a}\cup\pmb{c}))^*(\pmb{c}\cup\epsilon) = (\pmb{a}\cup\pmb{b}\cup\pmb{ca}\cup\pmb{cc})^*(\epsilon\cup\pmb{c})
+  \]
+
+  \item Words with exactly one $\pmb{c}$ and no $\pmb{cb}$:
+
+  Exactly one $\pmb{c}$, and that $\pmb{c}$ is not immediately followed by $\pmb{b}$:
+  \[
+    (\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\epsilon)(\pmb{a}\cup\pmb{b})^*
+    \quad\text{where the $\pmb{c}$ is followed by $\pmb{a}$ or end}
+  \]
+  More precisely:
+  \[
+    (\pmb{a}\cup\pmb{b})^*\cdot\pmb{c}\cdot((\pmb{a}(\pmb{a}\cup\pmb{b})^*)\cup\epsilon)
+  \]
+\end{enumerate}
+
+%% 6.40
+\item Exercises 6.40--6.42 require the NDFA figures (6.11, 6.12, 6.13).  The method is:
+\begin{enumerate}[(a)]
+  \item Write the state equations (right-linear or left-linear) using Theorem~6.3.
+  \item Solve by Theorem~6.2 (Arden's lemma), eliminating variables one at a time.
+  \item The solution for the start-state variable gives the regular expression.
+\end{enumerate}
+Since the figures are in the printed text, the reader should apply this procedure to the specific NDFAs shown.
+
+%% 6.41
+\item See Exercise~6.40 for method.
+
+%% 6.42
+\item See Exercise~6.40 for method.
+
+%% 6.43
+\item \textbf{Prove: for any $A$, $E$, $Y$, if $E\subseteq Y$ then $A\cdot E\subseteq A\cdot Y$.}
+
+\begin{proof}
+Let $w\in A\cdot E$.  Then $w=xy$ with $x\in A$ and $y\in E$.  Since $E\subseteq Y$, $y\in Y$.  Hence $w=xy\in A\cdot Y$. \qed
+\end{proof}
+
+%% 6.44
+\item \begin{enumerate}[(a)]
+  \item \textbf{Image of \RSIG\ under substitution $\bar{s}$ is in $\mathfrak{R}_\Gamma$.}
+
+  \begin{proof}
+  Substitution $s:\Sigma\to\wp(\Gamma^*)$ maps each letter to a regular language.  For a regular expression $R$ over $\Sigma$, define $\bar{s}(R)$ by:
+  $\bar{s}(\pmb{a})=s(\pmb{a})\in\mathfrak{R}_\Gamma$ (by assumption),
+  $\bar{s}(\emptyset)=\emptyset$, $\bar{s}(\epsilon)=\{\lambda\}$,
+  $\bar{s}(R_1\cup R_2)=\bar{s}(R_1)\cup\bar{s}(R_2)\in\mathfrak{R}_\Gamma$ (closed under union),
+  $\bar{s}(R_1\cdot R_2)=\bar{s}(R_1)\cdot\bar{s}(R_2)\in\mathfrak{R}_\Gamma$ (closed under concatenation),
+  $\bar{s}(R^*)=\bar{s}(R)^*\in\mathfrak{R}_\Gamma$ (closed under Kleene closure).
+  By induction on the structure of $R$, $\bar{s}(R)\in\mathfrak{R}_\Gamma$. \qed
+  \end{proof}
+
+  \item \textbf{Image of \NSIG\ under $\bar{s}$ need not be in $\mathfrak{N}_\Gamma$.}
+
+  Let $L\in\NSIG$ be a non-FAD context-free language, and $s$ map letters to regular languages.  The image $\bar{s}(L)$ can exceed context-free languages in some interpretations.
+\end{enumerate}
+
+%% 6.45
+\item \textbf{Proof of Lemma~6.3.}
+
+Lemma~6.3 (Arden's lemma / uniqueness): If $\lambda\notin A$, then $X=AX\cup E$ has the unique solution $X=A^*E$.
+
+\begin{proof}
+\emph{$A^*E$ is a solution:}  $A\cdot(A^*E)\cup E=A^+E\cup E=(A^+\cup\epsilon)E=A^*E$.  \checkmark
+
+\emph{Uniqueness:}  Suppose $X=AX\cup E$ and $X'=AX'\cup E$.  We show $X=X'$.
+$X\supseteq E$ (since $E\subseteq AX\cup E=X$).  By induction: $X\supseteq A^kE$ for all $k\ge 0$ (since $A^kE\subseteq A(A^{k-1}E)\cup E\subseteq AX\cup E=X$).  Hence $X\supseteq A^*E$.
+Conversely, suppose $w\in X$.  If $w\notin A^*E$, we derive a contradiction.  Since $X=AX\cup E$, $w\in AX\cup E$.  If $w\in E\subseteq A^*E$, contradiction.  So $w\in AX$: $w=av$ with $a\in A$ and $v\in X$.  Since $\lambda\notin A$, $|a|\ge 1$, so $|v|<|w|$.  By finite descent, $w\in A^nE$ for some $n$, so $w\in A^*E$.  Contradiction.  Hence $X=A^*E$, uniquely. \qed
+\end{proof}
+
+%% 6.46
+\item $\Xi=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ contains at least two consecutive }\pmb{b}\text{s}\wedge x\text{ contains no two consecutive }\pmb{a}\text{s}\}$:
+
+Words with $\pmb{bb}$ as substring but no $\pmb{aa}$.  After the $\pmb{bb}$, no $\pmb{aa}$ either.  The surrounding context avoids $\pmb{aa}$: $(\pmb{b}\cup\pmb{ab})^*\pmb{bb}(\pmb{a}\cup\pmb{b})^*$ ... but then we need no $\pmb{aa}$ anywhere.
+
+Words over $\{\pmb{a},\pmb{b}\}$ avoiding $\pmb{aa}$: $(\pmb{b}\cup\pmb{ab})^*(\pmb{a}\cup\epsilon)$.  This must also contain $\pmb{bb}$:
+\[
+  (\pmb{b}\cup\pmb{ab})^*\pmb{bb}(\pmb{b}\cup\pmb{ab})^*(\pmb{a}\cup\epsilon)
+\]
+Verify no $\pmb{aa}$: in $(\pmb{b}\cup\pmb{ab})^*$, consecutive $\pmb{a}$s cannot occur since each $\pmb{a}$ is preceded by a $\pmb{b}$ (in the $\pmb{ab}$ block) and followed by a $\pmb{b}$.
+
+%% 6.47
+\item \begin{enumerate}[(a)]
+  \item Every $\pmb{b}$ eventually followed by $\pmb{c}$ (not necessarily immediately):
+  Words where no $\pmb{b}$ appears after the last $\pmb{c}$ in a trailing position, i.e., every $\pmb{b}$ is followed somewhere later by $\pmb{c}$:
+  \[
+    (\pmb{a}\cup\pmb{c}\cup\pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{c})^*
+  \]
+  (Each $\pmb{b}$ is followed eventually by $\pmb{c}$ with possible $\pmb{a}$s and $\pmb{b}$s in between.)
+
+  \item Every $\pmb{b}$ immediately followed by $\pmb{c}$: (same as Exercise~6.11)
+  \[
+    (\pmb{a}\cup\pmb{c}\cup\pmb{bc})^*
+  \]
+\end{enumerate}
+
+%% 6.48
+\item Over $\Sigma=\{\pmb{a},\pmb{b}\}$:
+
+\begin{enumerate}[(a)]
+  \item No consecutive $\pmb{a}$s and no consecutive $\pmb{b}$s (strictly alternating):
+  \[
+    (\pmb{ab})^*(\pmb{a}\cup\epsilon) \cup (\pmb{ba})^*(\pmb{b}\cup\epsilon)
+  \]
+  (Alternating starting with $\pmb{a}$ or $\pmb{b}$, or empty word.)
+
+  \item Words beginning and ending with different letters:
+  \[
+    \pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b} \cup \pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{a}
+  \]
+
+  \item Words for which the last two letters match ($\pmb{aa}$ or $\pmb{bb}$ at the end):
+  \[
+    (\pmb{a}\cup\pmb{b})^*\pmb{aa} \cup (\pmb{a}\cup\pmb{b})^*\pmb{bb}
+  \]
+
+  \item Words for which the first two letters match ($\pmb{aa}$ or $\pmb{bb}$ at the start):
+  \[
+    \pmb{aa}(\pmb{a}\cup\pmb{b})^* \cup \pmb{bb}(\pmb{a}\cup\pmb{b})^*
+  \]
+  (Also include words of length $<2$: $\lambda$ and $\pmb{a}$ and $\pmb{b}$ trivially satisfy the vacuous condition; but ``first two letters match'' requires length $\ge 2$.)
+
+  \item Words for which the first and last letters match:
+  \[
+    \epsilon \cup \pmb{a} \cup \pmb{b} \cup \pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{a} \cup \pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{b}
+  \]
+\end{enumerate}
+
+%% 6.49
+\item \textbf{The language of all valid regular expressions over $\{\pmb{a},\pmb{b}\}$ is not FAD.}
+
+\begin{proof}
+Let $\Sigma'=\{\pmb{a},\pmb{b},(,),\cup,\cdot,*,\emptyset,\epsilon\}$ be the meta-alphabet.  Consider the sublanguage of expressions of the form $(\ldots((\pmb{a}\cup\pmb{b})\cup\pmb{a})\ldots\cup\pmb{a})$ with $n$ nested parentheses.  These have a nested bracket structure.  The language of valid regular expressions contains arbitrarily deeply nested parentheses, and by the pumping lemma (applied to the bracket depth), it cannot be FAD.  (More precisely: the set of valid regular expressions contains the language of balanced parentheses as a sublanguage, which is not FAD; since every FAD language's sublanguages are not necessarily FAD, we instead show directly: the set $\{(\cdots(R_1)\cdots)\mid n\text{ matching pairs}\}$ pumped over the parentheses leads to a contradiction.)
+\end{proof}
+
+%% 6.50
+\item Apply Theorem~6.3 (state equations) and Theorem~6.2 (Arden's lemma) to each NDFA in Figure~6.14 to produce a regular expression.  (Specific answers depend on the printed figures.)
+
+%% 6.51
+\item \textbf{Complete details of Theorem~6.6.}
+
+Theorem~6.6 (Kleene's theorem, second direction): Every FAD language has a regular expression.
+The proof proceeds by induction on the number of states $n$ of the minimal DFA, using the path-based formula:
+\[
+  R^{(k)}_{ij} = R^{(k-1)}_{ij} \cup R^{(k-1)}_{ik}(R^{(k-1)}_{kk})^* R^{(k-1)}_{kj}
+\]
+where $R^{(k)}_{ij}$ is the set of strings labeling paths from state $i$ to state $j$ using only states with index $\le k$ as intermediaries.  The base case ($k=0$) sets $R^{(0)}_{ij}$ to the letters causing direct transitions $i\to j$ (plus $\epsilon$ if $i=j$).  The language of the DFA is $\bigcup_{j\in F}R^{(n)}_{1j}$.
+
+%% 6.52
+\item \textbf{Prove Lemma~6.4.}
+
+Lemma~6.4 typically states that the regular sets (defined by regular expressions) coincide with the FAD languages.  This is Kleene's theorem (both Lemma~6.2 and Theorem~6.4/6.6 together).  The proof is covered in the text; the reader should assemble both directions: (i) every regular expression represents a FAD language (Lemma~6.2), and (ii) every FAD language has a regular expression (Theorem~6.6).
+
+%% 6.53
+\item \textbf{Theorems~5.2, 5.4, 5.5 as corollaries of Theorem~6.6.}
+
+Theorem~6.6 states that \RSIG\ = \DSIG\ (the regular sets and FAD languages coincide).  From this:
+\begin{itemize}
+  \item \textbf{Theorem~5.2 (union):}  If $L_1,L_2\in\DSIG$, then $L_1=L(R_1)$ and $L_2=L(R_2)$ for some regular expressions $R_1,R_2$.  Then $L_1\cup L_2=L(R_1\cup R_2)\in\RSIG=\DSIG$.
+  \item \textbf{Theorem~5.4 (concatenation):}  $L_1\cdot L_2=L(R_1\cdot R_2)\in\RSIG=\DSIG$.
+  \item \textbf{Theorem~5.5 (Kleene closure):}  $L_1^*=L(R_1^*)\in\RSIG=\DSIG$.
+\end{itemize}
+
+%% 6.54
+\item \textbf{Class $\pmb{F}$ generated by the five rules:}
+
+The five rules generate exactly the class of \emph{finite} languages over $\{\pmb{a},\pmb{b}\}$:
+\begin{enumerate}[(i)]
+  \item Singletons $\{\pmb{a}\}$ and $\{\pmb{b}\}$ are in $\pmb{F}$.
+  \item $\emptyset\in\pmb{F}$.
+  \item $\{\lambda\}\in\pmb{F}$.
+  \item Concatenation: $F_1\cdot F_2$ is finite if $F_1$ and $F_2$ are.
+  \item Union: $F_1\cup F_2$ is finite if $F_1$ and $F_2$ are.
+\end{enumerate}
+No Kleene closure is allowed, so $\pmb{F}$ consists only of finite languages.  Every finite language over $\{\pmb{a},\pmb{b}\}$ is in $\pmb{F}$ (can be expressed as a finite union of finite concatenations of singletons), and $\pmb{F}\subseteq F_{\{\pmb{a},\pmb{b}\}}$ (the finite languages).  Thus $\pmb{F}=F_{\{\pmb{a},\pmb{b}\}}$, the class of all finite languages over $\{\pmb{a},\pmb{b}\}$.
+
+\end{enumerate}

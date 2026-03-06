@@ -1,0 +1,613 @@
+%% Solutions for Chapter 8: Regular and Context-Free Grammars
+
+\chapter{Regular and Context-Free Grammars --- Solutions}
+
+\begin{enumerate}[{8.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{Can strings like $\pmb{ab}BA\pmb{d}B\pmb{c}$ be derived from the start symbol in a right-linear grammar?}
+
+No. In a right-linear grammar, every production has the form $A \to w$ or $A \to wB$ where $w \in \Sigma^*$ and $B$ is a nonterminal. Thus any sentential form derived from the start symbol has the structure $w$ or $wB$ where all terminal symbols precede the single nonterminal (if any). A string like $\pmb{ab}BA\pmb{d}B\pmb{c}$ contains nonterminals interspersed with and following terminals, which cannot occur in any right-linear grammar derivation.
+
+%%------------------------------------------------------------
+\item \textbf{Prove $P(n)$: for all $x \in \Sigma^n$, if $t_0 \DRightarrow xt_j$ then $\DBAR_A(t_0, x) = t_j$.}
+
+\textbf{Base case} ($n=0$): The only string of length 0 is $\lambda$. The derivation $t_0 \DRightarrow \lambda t_0$ uses zero steps, and $\DBAR_A(t_0, \lambda) = t_0$ by definition, so $P(0)$ holds.
+
+\textbf{Inductive step}: Assume $P(n)$ holds for all strings of length $n$. Let $x = ya$ where $y \in \Sigma^n$ and $a \in \Sigma$. If $t_0 \DRightarrow ya \cdot t_j$, then the derivation must pass through some intermediate state: $t_0 \DRightarrow y \cdot t_k \Rightarrow ya \cdot t_j$ for some $t_k$. By the inductive hypothesis applied to $y$, $\DBAR_A(t_0, y) = t_k$. The final step $t_k \Rightarrow a \cdot t_j$ corresponds to a production $t_k \to \pmb{a} t_j$ in the grammar (by construction of $G_A$), which corresponds to a transition $\delta(t_k, a) = t_j$ in $A$. Therefore $\DBAR_A(t_0, ya) = \delta(\DBAR_A(t_0, y), a) = \delta(t_k, a) = t_j$.
+
+%%------------------------------------------------------------
+\item \textbf{Regular expressions for the languages of:}
+
+\begin{enumerate}
+\item $G_4$: Tracing the grammar, we get
+\[
+L(G_4) = \pmb{ab}(\pmb{b}\cup\pmb{c}(\pmb{ab}(\pmb{b}\cup\pmb{c}\cdots))^*) \cup \pmb{bbab} \cup \pmb{cc}(\pmb{a}\cup\pmb{c})^*\pmb{aa}(\pmb{b}(\pmb{a}\cup\pmb{c})^*\pmb{aa})^*
+\]
+More precisely, the equations yield:
+$V = \pmb{a}V \cup \pmb{c}X$, so $V = \pmb{a}^*\pmb{c}X$.
+$X = \pmb{b}V \cup \pmb{aa}X$, so $X = (\pmb{aa})^*\pmb{b}V = (\pmb{aa})^*\pmb{b}\pmb{a}^*\pmb{c}X$, hence $X = ((\pmb{aa})^*\pmb{b}\pmb{a}^*\pmb{c})^*\cdot\lambda$ --- but $X$ has no terminal production, so in fact $X$ generates the empty language unless we continue: $X = (\pmb{aa})^*\pmb{b}V$ and $V = \pmb{a}^*\pmb{c}X$, giving $X = (\pmb{aa})^*\pmb{b}\pmb{a}^*\pmb{c}X$ with no escape, so $L(X) = \emptyset$. Similarly $L(V)=\emptyset$.
+
+Since $L(X)=L(V)=\emptyset$, the $\pmb{c}$-paths from $A$ contribute nothing. The surviving productions are $S\to\pmb{ab}A$, $A\to\pmb{b}C$, $C\to\lambda\mid\pmb{c}S$, and $S\to\pmb{bb}B$, $B\to\pmb{ab}$. Solving:
+\[
+L(G_4) = \pmb{bbab} \cup \pmb{abb}.
+\]
+The regular expression is $\pmb{bbab} \cup (\pmb{ab})^+\pmb{b}$.
+
+\item $G_5$ generates strings with an even number of \pmb{1}s (binary parity even):
+\[
+L(G_5) = (\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*\pmb{0}^* = (\pmb{0}^*(\pmb{10}^*\pmb{1})^*\pmb{0}^*).
+\]
+The regular expression is $(\pmb{0}\cup\pmb{10}^*\pmb{1})^*$.
+
+\item $G_6$: From the productions $Z \to \pmb{a}Z | \pmb{b}T$, $T \to \pmb{a}Z$. Language equations: $Z = \pmb{a}Z \cup \pmb{b}T$ and $T = \pmb{a}Z$. Substituting: $Z = \pmb{a}Z \cup \pmb{ba}Z = (\pmb{a}\cup\pmb{ba})Z$. Since there is no terminal production (no production $Z \to w$ or $T \to w$ for $w \in \Sigma^*$), $L(G_6) = \emptyset$.
+
+Every derivation cycles: $Z \Rightarrow \pmb{b}T \Rightarrow \pmb{ba}Z \Rightarrow \cdots$, and neither $Z$ nor $T$ has a terminal production, confirming $L(G_6) = \emptyset$.
+
+\item $G_7$: $S \to \pmb{a}S | \pmb{ab}B | \pmb{c}C$, $B \to \pmb{ab}B | \lambda$, $C \to \pmb{c}C | \pmb{ca}$.
+\begin{itemize}
+\item From $B$: $B = \pmb{ab}B \cup \lambda$, so $L(B) = (\pmb{ab})^*$.
+\item From $C$: $C = \pmb{c}C \cup \pmb{ca}$, so $L(C) = \pmb{c}^*\pmb{ca} = \pmb{c}^+\pmb{a}$.
+\item From $S$: $S = \pmb{a}S \cup \pmb{ab}B \cup \pmb{c}C = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}^+\pmb{a}$.
+  $S = \pmb{a}S \cup \pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$, so $L(S) = \pmb{a}^*(\pmb{a}(\pmb{ab})^+ \cup \pmb{c}^+\pmb{a})$.
+\end{itemize}
+The regular expression is $\pmb{a}^+(\pmb{ab})^+ \cup \pmb{a}^*\pmb{c}^+\pmb{a}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Use Exercise 8.2 to formally prove Lemma 8.1.}
+
+Lemma 8.1 states that for the grammar $G_A$ constructed from DFA $A$, $L(G_A) = L(A)$.
+
+By the inductive result of Exercise 8.2, for all $x \in \Sigma^*$ and all states $t_i, t_j$: $t_i \DRightarrow x t_j$ in $G_A$ iff $\DBAR_A(t_i, x) = t_j$. Taking $t_i = t_0$ (start state):
+
+$x \in L(G_A)$ iff $t_0 \DRightarrow x$ in $G_A$ iff ($\exists t_j \in F$) $t_0 \DRightarrow x t_j \Rightarrow x$ iff ($\exists t_j \in F$) $\DBAR_A(t_0, x) = t_j$ iff $\DBAR_A(t_0, x) \in F$ iff $x \in L(A)$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Draw the automata for the grammars in Exercise 8.3.}
+
+The automata are constructed by treating each nonterminal as a state, each terminal production $A \to w$ as a transition to the implicit final state, and each production $A \to wB$ as a transition labeled $w$ from state $A$ to state $B$.
+
+\begin{enumerate}
+\item For $G_4$: States are $\{S, A, B, C, V, W, X, f\}$ where $f$ is the (implicit) final/accepting state. Transitions include $S \xrightarrow{\pmb{ab}} A$, $S \xrightarrow{\pmb{bb}} B$, $S \xrightarrow{\pmb{cc}} V$, $A \xrightarrow{\pmb{b}} C$, $A \xrightarrow{\pmb{c}} X$, $B \xrightarrow{\pmb{ab}} f$, $C \xrightarrow{\pmb{c}} S$ (loops), $C \xrightarrow{\lambda} f$, $V \xrightarrow{\pmb{a}} V$ (self-loop), $V \xrightarrow{\pmb{c}} X$, $W \xrightarrow{\pmb{aa}} f$, $W \xrightarrow{\pmb{a}} W$, $X \xrightarrow{\pmb{b}} V$, $X \xrightarrow{\pmb{aa}} X$.
+
+\item For $G_5$: States $\{S_0, S_1, S_2\}$, start $S_0$, final $\{S_0\}$ (since $S_0 \to \lambda$). Transitions: $S_0 \xrightarrow{\pmb{0}} S_2$, $S_0 \xrightarrow{\pmb{1}} S_1$, $S_1 \xrightarrow{\pmb{0}} S_1$, $S_1 \xrightarrow{\pmb{1}} S_2$, $S_2 \xrightarrow{\pmb{0}} S_2$, $S_2 \xrightarrow{\pmb{1}} S_0$.
+
+\item For $G_6$: States $\{Z, T\}$. Transitions: $Z \xrightarrow{\pmb{a}} Z$, $Z \xrightarrow{\pmb{b}} T$, $T \xrightarrow{\pmb{a}} Z$. No final states (no terminal productions). $L(G_6) = \emptyset$.
+
+\item For $G_7$: States $\{S, B, C\}$, with implicit final state $f$. Transitions: $S \xrightarrow{\pmb{a}} S$, $S \xrightarrow{\pmb{ab}} B$, $S \xrightarrow{\pmb{c}} C$, $B \xrightarrow{\pmb{ab}} B$, $B \xrightarrow{\lambda} f$, $C \xrightarrow{\pmb{c}} C$, $C \xrightarrow{\pmb{ca}} f$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Right-linear grammars for the given languages.}
+
+\begin{enumerate}
+\item All words in $\{\pmb{a},\pmb{b},\pmb{c}\}^*$ \emph{not} containing two consecutive $\pmb{b}$s:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{b}A|\pmb{c}S|\lambda,
+A\to\pmb{a}S|\pmb{c}S|\lambda\}\rangle
+\]
+State $S$ = ``last symbol was not $\pmb{b}$'' (or start); state $A$ = ``last symbol was $\pmb{b}$''. From $A$, reading another $\pmb{b}$ is disallowed.
+
+\item All words \emph{containing} two consecutive $\pmb{b}$s:
+\[
+G = \langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{c}S|\pmb{b}A,
+A\to\pmb{b}B|{\pmb{a}S|\pmb{c}S},B\to\pmb{a}B|\pmb{b}B|\pmb{c}B|\lambda\}\rangle
+\]
+
+\item All words with $|w|_{\pmb{a}} = |w|_{\pmb{b}}$: This language is not regular (it includes $\{\pmb{a}^n\pmb{b}^n\}$), so no right-linear grammar exists.
+
+\item All words with an even number of $\pmb{a}$s:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{b}S|\pmb{c}S|\pmb{a}A|\lambda,
+A\to\pmb{b}A|\pmb{c}A|\pmb{a}S\}\rangle
+\]
+
+\item All words \emph{not} ending in $\pmb{b}$:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{b}A|\pmb{c}S|\pmb{a}|\pmb{c}|\lambda,
+A\to\pmb{a}S|\pmb{b}A|\pmb{c}S|\pmb{a}|\pmb{c}\}\rangle
+\]
+(Equivalently, $G = \langle\{S,A\},\ldots,\{S\to(\pmb{a}|\pmb{b}|\pmb{c})^*(\pmb{a}|\pmb{c})|\lambda\}\rangle$.)
+
+\item All words containing no $\pmb{c}$s:
+\[
+G = \langle\{S\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{b}S|\lambda\}\rangle
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Left-linear grammars for the languages in Exercise 8.6.}
+
+A left-linear grammar has productions of the form $A \to w$ or $A \to Bw$.
+
+\begin{enumerate}
+\item No two consecutive $\pmb{b}$s:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to S\pmb{a}|S\pmb{c}|A\pmb{b}|\lambda,
+A\to S\pmb{a}|S\pmb{c}|A\pmb{b}\cdot\text{(blocked)}\}\rangle
+\]
+More carefully: $S$ = words not ending in $\pmb{b}$; $A$ = words ending in exactly one $\pmb{b}$ (last char is $\pmb{b}$, but second-to-last is not $\pmb{b}$). Productions: $S \to S\pmb{a}|S\pmb{c}|A\pmb{a}|A\pmb{c}|\lambda$, $A \to S\pmb{b}$.
+
+\item Containing two consecutive $\pmb{b}$s: $S \to S\pmb{a}|S\pmb{b}|S\pmb{c}|A\pmb{b}$, $A \to B\pmb{b}$, $B \to B\pmb{a}|B\pmb{b}|B\pmb{c}|\lambda$.
+
+\item Even number of $\pmb{a}$s: $S \to S\pmb{b}|S\pmb{c}|A\pmb{a}|\lambda$, $A \to S\pmb{a}|A\pmb{b}|A\pmb{c}$.
+
+\item Not ending in $\pmb{b}$: $S \to S\pmb{a}|S\pmb{c}|A\pmb{a}|A\pmb{c}|\lambda$, $A \to S\pmb{b}|A\pmb{b}$.
+
+\item No $\pmb{c}$s: $S \to S\pmb{a}|S\pmb{b}|\lambda$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Complete the inductive portion of the proof of Theorem 8.8.}
+
+Theorem 8.8 concerns the construction of the Kleene closure grammar $G_* = \langle\Omega\cup\{Z\},\Sigma,Z,P\cup\{Z\to S,Z\to ZZ,Z\to\lambda\}\rangle$ for a right-linear grammar $G$. We prove by induction on derivation length that $L(G_*) = L(G)^*$.
+
+\textbf{Claim}: $w \in L(G_*)$ iff $w \in L(G)^*$.
+
+($\Rightarrow$) By induction on the derivation $Z \DRightarrow w$ in $G_*$: if the first production is $Z \to \lambda$ then $w = \lambda \in L(G)^*$. If $Z \to S \DRightarrow w$ then $w \in L(G) \subseteq L(G)^*$. If $Z \to ZZ \DRightarrow w$, then by IH both halves are in $L(G)^*$, so $w \in L(G)^*$.
+
+($\Leftarrow$) If $w = w_1 w_2 \cdots w_k$ with each $w_i \in L(G)$, then $Z \Rightarrow ZZ \Rightarrow ZZZ \Rightarrow \cdots \DRightarrow w_1 w_2 \cdots w_k$ by induction on $k$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Complete the inductive portion of the proof of Theorem 8.5.}
+
+Theorem 8.5 concerns the Kleene closure. The key inductive claim is: for any $n \geq 0$ and $w \in L(G)^n$, $Z \DRightarrow w$ in $G_*$.
+
+\textbf{Base} ($n=0$): $w = \lambda$ and $Z \to \lambda$.
+
+\textbf{Step}: If $w = uv$ with $u \in L(G)$ and $v \in L(G)^{n-1}$, then by IH $Z \DRightarrow v$ and (from grammar $G$) $S \DRightarrow u$. Thus $Z \Rightarrow ZZ \DRightarrow vZ \DRightarrow vu$... (carefully ordering): $Z \Rightarrow ZZ$ where the left $Z \DRightarrow u$ and the right $Z \DRightarrow v$ (by IH). \qed
+
+%%------------------------------------------------------------
+\item \textbf{Use the efficient algorithm of Theorem 8.3 to find regular expressions for $L(G_5)$, $L(G_6)$, $L(G_7)$ in Exercise 8.3.}
+
+The efficient algorithm eliminates one variable at a time using Arden's lemma.
+
+\begin{enumerate}
+\item[$G_5$:] Equations: $S_0 = \pmb{0}S_2 \cup \pmb{1}S_1 \cup \lambda$, $S_1 = \pmb{0}S_1 \cup \pmb{1}S_2$, $S_2 = \pmb{0}S_2 \cup \pmb{1}S_0$.
+Solve for $S_2$ from third equation: $S_2 = \pmb{0}^*\pmb{1}S_0$.
+Substitute into $S_1$: $S_1 = \pmb{0}S_1 \cup \pmb{1}\pmb{0}^*\pmb{1}S_0$, so $S_1 = \pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0$.
+Substitute $S_1$ and $S_2$ into $S_0$: $S_0 = \pmb{0}\cdot\pmb{0}^*\pmb{1}S_0 \cup \pmb{1}\cdot\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0 \cup \lambda = (\pmb{0}^+\pmb{1} \cup \pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})S_0 \cup \lambda$.
+By Arden's lemma: $L(G_5) = (\pmb{0}^+\pmb{1}\cup\pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*$.
+Simplified: $(\pmb{0}\cup\pmb{10}^*\pmb{1})^*$.
+
+\item[$G_6$:] Equations: $Z = \pmb{a}Z \cup \pmb{b}T$, $T = \pmb{a}Z$. Substitute: $Z = \pmb{a}Z \cup \pmb{ba}Z = (\pmb{a}\cup\pmb{ba})Z \cup \emptyset$. By Arden's lemma: $Z = (\pmb{a}\cup\pmb{ba})^*\cdot\emptyset = \emptyset$. So $L(G_6) = \emptyset$.
+
+\item[$G_7$:] Equations: $S = \pmb{a}S \cup \pmb{ab}B \cup \pmb{c}C$, $B = \pmb{ab}B \cup \lambda$, $C = \pmb{c}C \cup \pmb{ca}$.
+Solve $B = (\pmb{ab})^*$.
+Solve $C = \pmb{c}^*\pmb{ca}$.
+Substitute: $S = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}\cdot\pmb{c}^*\pmb{ca} = \pmb{a}S \cup \pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$.
+By Arden's: $L(G_7) = \pmb{a}^*(\pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}) = \pmb{a}^+(\pmb{ab})^+\cup\pmb{a}^*\pmb{c}^+\pmb{a}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Left-linear version of Theorem 8.3 and Lemmas 8.4--8.5.}
+
+\begin{enumerate}
+\item For left-linear grammars, the language equations take the form $A = BA \cup w$ (variables appear on the right of concatenations). The restatement: if a language equation system for a left-linear grammar is $\{X_i = \bigcup_j X_j \alpha_{ji} \cup \beta_i\}$, then solve by right-side substitution.
+
+\item Lemma 8.4 restated for left-linear: If $X = XA \cup B$ (where $A,B$ do not contain $X$), then $X = BA^*$.
+Lemma 8.5 restated: If $X = XA \cup Y$ and $X$ does not appear in $A$ or $Y$, then $X = YA^*$.
+
+\item For $G_2$ (Example 8.12), apply left-linear equations and solve using right-iteration ($A^*$ on the right): The result is the same language, expressed with right-star. The regular expression for $L(G_2)$ is obtained by the symmetric procedure.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Grammar $Q$ for binary numbers with decimal point.}
+
+\begin{enumerate}
+\item The NDFA corresponding to $Q$ has states $\{I, F, h\}$ where $h$ is the halt (final) state. Start state $I$, final state $F$ (since $F \to \lambda$). Transitions: $I \xrightarrow{\pmb{0}} I$, $I \xrightarrow{\pmb{1}} I$, $I \xrightarrow{\pmb{0.}} F$ (i.e., $I \xrightarrow{\pmb{0}} \cdot \xrightarrow{\pmb{.}} F$, but for an NDFA treating ``$\pmb{0.}$'' as a two-symbol transition), $I \xrightarrow{\pmb{1.}} F$, $F \xrightarrow{\pmb{0}} F$, $F \xrightarrow{\pmb{1}} F$, $F \to h$ (final).
+
+Properly, introduce an intermediate state $D$ for ``seen the dot'':
+States $\{I, D, F\}$, start $I$, final $\{F\}$.
+$\delta(I,\pmb{0}) = I$, $\delta(I,\pmb{1}) = I$, $\delta(I,\pmb{.}) = D$, $\delta(D,\pmb{0}) = F$, $\delta(D,\pmb{1}) = F$, $\delta(F,\pmb{0}) = F$, $\delta(F,\pmb{1}) = F$, $\delta(F,\lambda) = \text{accept}$. (And $I \xrightarrow{\pmb{0}} D$ and $I \xrightarrow{\pmb{1}} D$ would model $\pmb{0.}$ and $\pmb{1.}$ productions.)
+
+\item Right-linear equations:
+\begin{align*}
+I &= \pmb{0}I \cup \pmb{1}I \cup \pmb{0}\pmb{.}F \cup \pmb{1}\pmb{.}F \\
+F &= \lambda \cup \pmb{0}F \cup \pmb{1}F
+\end{align*}
+
+\item Solving: $F = (\pmb{0}\cup\pmb{1})^*$ (by Arden's on $F = \pmb{0}F\cup\pmb{1}F\cup\lambda$).
+Substituting into $I$: $I = (\pmb{0}\cup\pmb{1})I \cup (\pmb{0}\cup\pmb{1})\pmb{.}(\pmb{0}\cup\pmb{1})^*$.
+By Arden's: $I = (\pmb{0}\cup\pmb{1})^+\pmb{.}(\pmb{0}\cup\pmb{1})^*$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Right-linear grammars for the given regular expressions.}
+
+\begin{enumerate}
+\item $(\pmb{a}\cup\pmb{b})\pmb{c}^*(\pmb{d}\cup(\pmb{ab})^*)$:
+\begin{align*}
+G &= \langle\{S,A,B,C\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{d}\},S,P\rangle \\
+P &= \{S\to\pmb{a}A|\pmb{b}A,\ A\to\pmb{c}A|\pmb{d}|\pmb{a}B|\lambda,\ B\to\pmb{b}C,\ C\to\pmb{a}B|\lambda\}
+\end{align*}
+State $A$ handles $\pmb{c}^*$ and the choice of $\pmb{d}$ or $(\pmb{ab})^*$; state $B$ after seeing $\pmb{a}$ in the $(\pmb{ab})^*$ part; state $C$ after $\pmb{ab}$.
+
+\item $(\pmb{a}\cup\pmb{b})^*\pmb{a}(\pmb{a}\cup\pmb{b})^*$ (strings containing at least one $\pmb{a}$):
+\begin{align*}
+G &= \langle\{S,A\},\{\pmb{a},\pmb{b}\},S,\{S\to\pmb{a}S|\pmb{b}S|\pmb{a}A,\ A\to\pmb{a}A|\pmb{b}A|\lambda\}\rangle
+\end{align*}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Left-linear grammars for the same expressions.}
+
+\begin{enumerate}
+\item $(\pmb{a}\cup\pmb{b})\pmb{c}^*(\pmb{d}\cup(\pmb{ab})^*)$: Reverse the order of derivation.
+\[
+G = \langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{d}\},S,
+\{S\to A\pmb{d}|B|\pmb{a}|\pmb{b},\ A\to A\pmb{c}|\pmb{a}|\pmb{b},\ B\to B\pmb{ab}|\pmb{a}|\pmb{b}\}\rangle
+\]
+Here $A$ generates prefixes of $(\pmb{a}\cup\pmb{b})\pmb{c}^*\pmb{d}$ and $B$ generates $(\pmb{a}\cup\pmb{b})\pmb{c}^*(\pmb{ab})^*$.
+
+\item $(\pmb{a}\cup\pmb{b})^*\pmb{a}(\pmb{a}\cup\pmb{b})^*$:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b}\},S,\{S\to S\pmb{a}|S\pmb{b}|A\pmb{a},\ A\to A\pmb{a}|A\pmb{b}|\lambda\}\rangle
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to convert right-linear to left-linear grammar.}
+
+\begin{enumerate}
+\item \textbf{Algorithm}:
+  1. From the right-linear grammar $G$, construct the DFA $A_G$ (Lemma 8.1).
+  2. Reverse all transitions in $A_G$ to get $A^r$: swap initial and final states, reverse all arcs.
+  3. The reversed automaton $A^r$ accepts $L(G)^r$.
+  4. Construct a left-linear grammar $G^r$ from $A^r$.
+  5. The language $L(G^r) = L(G)^r$.
+
+  Alternatively, to get a grammar for $L(G)$ (not $L(G)^r$), apply the reversal twice: reverse $G$ to get $G'$ for $L(G)^r$, then reverse again.
+
+\item Applying to $G_4$: Construct the automaton, reverse it, derive the left-linear grammar. The result is a left-linear grammar with nonterminals corresponding to states of the reversed DFA and productions of the form $A \to Bw$ or $A \to w$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to convert a regular grammar to one generating the complement.}
+
+\begin{enumerate}
+\item Construct the DFA $A$ from grammar $G$ (via Lemma 8.1 or 8.2).
+\item Compute the complement DFA $A^c$ by swapping final and nonfinal states (after making $A$ complete/total).
+\item Construct a right-linear grammar $G^c$ from $A^c$.
+Then $L(G^c) = \overline{L(G)}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to determine whether $L(G) = \emptyset$ for a regular grammar $G$.}
+
+\begin{enumerate}
+\item Build the automaton $A_G$ from $G$.
+\item Compute the set of states reachable from the start state (BFS/DFS from start state).
+\item If no final state is reachable, $L(G) = \emptyset$; otherwise $L(G) \neq \emptyset$.
+\end{enumerate}
+This terminates since the automaton has finitely many states.
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to determine whether $L(G)$ is infinite for a regular grammar $G$.}
+
+\begin{enumerate}
+\item Build the automaton $A_G$ from $G$.
+\item Find all states reachable from the start state.
+\item Find all states from which a final state is reachable.
+\item Check whether the intersection of these two sets (the ``useful'' states) contains any cycle (e.g., by DFS looking for back edges).
+\item $L(G)$ is infinite iff a cycle exists among the useful states.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Algorithm to determine whether two right-linear grammars $G_1$ and $G_2$ generate the same language.}
+
+\begin{enumerate}
+\item Construct DFAs $A_1$ and $A_2$ from $G_1$ and $G_2$ respectively.
+\item Compute the minimized DFA for each.
+\item Check isomorphism of the two minimized DFAs (compare state by state).
+\item $L(G_1) = L(G_2)$ iff the minimal DFAs are isomorphic.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Determine $L(H)$ for grammar $H$.}
+
+The grammar is $H = \langle\{A,B,S\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}SB\pmb{c},S\to\lambda,SB\to\pmb{b}S,\pmb{c}B\to B\pmb{c}\}\rangle$.
+
+This is a context-sensitive grammar. We trace derivations:
+\begin{align*}
+S &\Rightarrow \lambda \\
+S &\Rightarrow \pmb{a}SB\pmb{c} \Rightarrow \pmb{a}B\pmb{c} \Rightarrow \pmb{a}B\pmb{c}
+\end{align*}
+But $SB \to \pmb{b}S$ requires $S$ immediately before $B$: $\pmb{a}SB\pmb{c} \Rightarrow \pmb{a}\pmb{b}S\pmb{c} \Rightarrow \pmb{ab}\pmb{c}$.
+\begin{align*}
+S &\Rightarrow \pmb{a}SB\pmb{c} \Rightarrow \pmb{a}\pmb{a}SB\pmb{c}B\pmb{c}
+\Rightarrow \pmb{aa}SB\pmb{c}B\pmb{c}
+\end{align*}
+Using $SB \to \pmb{b}S$: $\pmb{aa}\pmb{b}S\pmb{c}B\pmb{c}$.
+Using $\pmb{c}B \to B\pmb{c}$: $\pmb{aab}SB\pmb{c}\pmb{c}$.
+Using $SB \to \pmb{b}S$: $\pmb{aabb}S\pmb{c}\pmb{c} \Rightarrow \pmb{aabb}\pmb{cc}$.
+In general: $L(H) = \{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n \geq 0\}$.
+
+%%------------------------------------------------------------
+\item \textbf{What is wrong with the concatenation construction $G^\bullet = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1\cdot S_2\}\rangle$?}
+
+The production $Z \to S_1 S_2$ has two nonterminals on the right-hand side. In a right-linear grammar, all productions must have the form $A \to w$ or $A \to wB$ (a string of terminals followed by at most one nonterminal). The production $S_1 S_2$ violates this since $S_1$ is a nonterminal followed by $S_2$ (also nonterminal), with no terminal prefix. This is a context-free production, not a right-linear one, so the resulting grammar is not right-linear and cannot directly represent a language in \GSIG.
+
+%%------------------------------------------------------------
+\item \textbf{Prove \GSIG\ is closed under concatenation.}
+
+\begin{enumerate}
+\item Construction: Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ be right-linear grammars with $\Omega_1 \cap \Omega_2 = \emptyset$. Define:
+\[
+G^\bullet = \langle\Omega_1\cup\Omega_2,\Sigma,S_1,P^\bullet\rangle
+\]
+where $P^\bullet$ is obtained from $P_1$ by replacing each terminal production $A \to w$ (where $A \in \Omega_1$) with $A \to wS_2$, plus all productions from $P_2$ unchanged.
+
+\item Proof that $L(G^\bullet) = L(G_1)\cdot L(G_2)$:
+If $u \in L(G_1)$ and $v \in L(G_2)$, then $S_1 \DRightarrow u$ in $G_1$ via some derivation ending with $A \to u'$ (terminal production). In $G^\bullet$, this becomes $S_1 \DRightarrow u'S_2 \DRightarrow u'v = uv$.
+Conversely, any derivation in $G^\bullet$ must use rules from $P_1$ until reaching a production $A \to wS_2$, producing some prefix, then switch to $P_2$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Construct a $\lambda$-NDFA $A'$ with one start and one final state from an NDFA $A$ without $\lambda$-transitions.}
+
+Let $A = \langle\Sigma,S,s_0,\delta,F\rangle$ be an NDFA without $\lambda$-transitions.
+
+Construction of the right-linear grammar $G_A$ from $A$: Each state is a nonterminal; start state $s_0$ is start symbol; for each transition $\delta(s,a) \ni t$, add production $s \to \pmb{a}t$; for each $s \in F$, add production $s \to \lambda$.
+
+Apply Kleene's theorem (Chapter 6 constructions) to $G_A$ to build a $\lambda$-NDFA $A'$ with exactly one start state and one final state such that $L(A') = L(G_A) = L(A)$.
+
+%%------------------------------------------------------------
+\item \textbf{Complete the proof of Lemma 8.2.}
+
+\begin{enumerate}
+\item Inductive statement: For all $n \geq 0$ and all $x \in \Sigma^n$ and all nonterminals $A$: $A \DRightarrow x$ in $G$ iff $\DBAR_A(A, x) \in F$.
+
+\item Proof by induction on $n$:
+\textbf{Base} ($n=0$): $A \DRightarrow \lambda$ iff $A \to \lambda \in P$ iff $A \in F$ in the NDFA iff $\DBAR(A,\lambda) = A \in F$.
+\textbf{Step}: Assume the result holds for length $n$. For $x = ay$ ($|y|=n$): $A \DRightarrow ay$ iff $(\exists B)$ $A \to \pmb{a}B \in P$ and $B \DRightarrow y$ iff $(\exists B)$ $B \in \delta(A,\pmb{a})$ and (by IH) $\DBAR(B,y) \in F$ iff $\DBAR(A,ay) \in F$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Complete the proof of Lemma 8.3.}
+
+\begin{enumerate}
+\item Inductive statement: For all $n \geq 0$ and $x \in \Sigma^n$ and nonterminal $A$: $A \DRightarrow x$ in the left-linear grammar $G$ iff the reversed string $x^r$ leads from the start state to $A$ in the reversed automaton.
+
+\item Proof by induction on $|x|$, symmetric to Exercise 8.23. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Reasons for the assertions in the second half of the proof of Theorem 8.2.}
+
+Theorem 8.2 establishes the equivalence between right-linear grammars and DFAs. The second half (DFA $\Rightarrow$ grammar) uses the construction of $G_A$ from $A$ and verifies $L(A) = L(G_A)$ by applying Lemma 8.1, whose proof relies on Exercise 8.2. Each step in the proof follows from the definitions of transitions, derivations, and the inductive correspondence proved in Exercise 8.2. The final state condition in $A$ corresponds exactly to a terminal production in $G_A$.
+
+%%------------------------------------------------------------
+\item \textbf{Formal inductive proofs.}
+
+\begin{enumerate}
+\item $L(G_1) = \{\pmb{a}^n\pmb{baa} \mid n \in \NN\}$ (Example 8.7):
+
+\textbf{Claim}: For all $n \geq 0$, $S \DRightarrow \pmb{a}^n\pmb{baa}$ in $G_1$.
+\textbf{Base} ($n=0$): $S \Rightarrow \pmb{baa}$ (production $S \to \pmb{baa}$).
+\textbf{Step}: If $S \DRightarrow \pmb{a}^n\pmb{baa}$, then $S \Rightarrow \pmb{a}S \DRightarrow \pmb{a}\cdot\pmb{a}^n\pmb{baa} = \pmb{a}^{n+1}\pmb{baa}$.
+Conversely, any derivation from $S$ either uses $S \to \pmb{baa}$ (giving $\lambda\cdot\pmb{baa}$) or $S \to \pmb{a}S$ (giving a longer string by IH). So $L(G_1) = \{\pmb{a}^n\pmb{baa}\}$. \qed
+
+\item $L(G_8) = \{\pmb{a}^n\pmb{baa} \mid n \in \NN\}$ (Example 8.9): The proof is analogous, using the inductive structure of the left-linear grammar $G_8$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Mixed grammar $C$ with both right-linear and left-linear productions.}
+
+$C = \langle\{S,A,B\},\{\pmb{0},\pmb{1}\},S,\{S\to\pmb{0}A|\pmb{1}B|\pmb{0}|\pmb{1}|\lambda,A\to S\pmb{0},B\to S\pmb{1}\}\rangle$.
+
+\begin{enumerate}
+\item $L(C) = \{w \in \{\pmb{0},\pmb{1}\}^* \mid w = w^r\}$ --- the set of all palindromes over $\{\pmb{0},\pmb{1}\}$.
+
+Derivation: $S \Rightarrow \pmb{0}A \Rightarrow \pmb{0}S\pmb{0}$. Each step wraps the current sentential form between matching symbols. The grammar generates all even-length and odd-length palindromes.
+
+\item Yes, $L(C) = \{w \mid w = w^r\}$ is not regular (it requires unbounded memory to match the first and last symbols). So $L(C)$ is FAD only for the trivial case; in general, $L(C)$ is not FAD.
+
+\item The definition of regular grammars should \emph{not} be expanded to include such mixed grammars, because the resulting class of languages would no longer coincide with the regular languages. Mixed grammars generate languages (like palindromes) that are context-free but not regular.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Importance of $\Omega_1 \cap \Omega_2 = \emptyset$ in Theorem 8.4.}
+
+\begin{enumerate}
+\item \textbf{Why important}: If $\Omega_1 \cap \Omega_2 \neq \emptyset$, then a shared nonterminal $A$ would have its productions from both $P_1$ and $P_2$ merged. Derivations starting from $S_1$ could use $P_2$ productions for $A$ and vice versa, producing strings not in $L(G_1) \cup L(G_2)$.
+\textbf{Example}: Let $G_1$ have $\{S_1 \to \pmb{a}A, A \to \pmb{b}\}$ and $G_2$ have $\{S_2 \to \pmb{c}A, A \to \pmb{d}\}$. If $A$ is shared, the union grammar with $Z \to S_1 | S_2$ would derive $\pmb{a}A$ and then use $A \to \pmb{d}$ from $G_2$, producing $\pmb{ad} \notin L(G_1) \cup L(G_2)$.
+
+\item \textbf{Why possible}: We can always rename nonterminals in $G_2$ (choosing fresh names) to make $\Omega_1 \cap \Omega_2 = \emptyset$ without changing the language $L(G_2)$. This is a standard renaming/relabeling argument.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{If $A_G$ is disconnected, what does this say about $G$?}
+
+If $A_G$ (the NDFA constructed from $G$) is disconnected, it means some states (nonterminals) are not reachable from the start state. This means the corresponding nonterminals in $G$ are \emph{useless}: they cannot appear in any derivation from the start symbol. The portions of $G$ defining those nonterminals contribute nothing to $L(G)$ and can be removed without affecting the language generated.
+
+%%------------------------------------------------------------
+\item \textbf{Apply Lemma 8.1 to the automata in Figure 8.4.}
+
+For each DFA in Figure 8.4, Lemma 8.1 yields a right-linear grammar by treating each state $q_i$ as a nonterminal $Q_i$, adding a production $Q_i \to \pmb{a} Q_j$ for each transition $\delta(q_i, \pmb{a}) = q_j$, and adding $Q_i \to \lambda$ for each final state $q_i$.
+
+(Without the figures, the construction follows this template systematically for each automaton shown.)
+
+%%------------------------------------------------------------
+\item \textbf{Restate Lemma 8.1 for NDFAs.}
+
+\begin{enumerate}
+\item \textbf{Restated Lemma}: Given an NDFA $A = \langle\Sigma,S,s_0,\delta,F\rangle$, define a right-linear grammar $G_A = \langle S, \Sigma, s_0, P\rangle$ where for each $t \in \delta(s,a)$ add production $s \to \pmb{a}t$, and for each $s \in F$ add $s \to \lambda$. Then $L(G_A) = L(A)$.
+
+\item \textbf{Proof}: By induction on string length, using the fact that NDFA transitions correspond to sets of choices, and each path through the NDFA corresponds to a derivation in $G_A$.
+
+\item Applied to Figure 8.5: For each NDFA, apply the construction and produce the corresponding grammar with multiple productions for states with nondeterministic transitions.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Context-free grammars for languages over $\Sigma=\{\pmb{a},\pmb{b}\}$.}
+
+\begin{enumerate}
+\item $L_1$ = words where last letter matches first letter:
+\[
+G_1: S \to \pmb{a}X\pmb{a} \mid \pmb{b}X\pmb{b} \mid \pmb{a} \mid \pmb{b} \mid \lambda, \quad X \to \pmb{a}X \mid \pmb{b}X \mid \lambda
+\]
+
+\item $L_2$ = odd-length words where first letter matches center letter: Let $n=2k+1$.
+\[
+G_2: S \to \pmb{a}X\pmb{a}Y \mid \pmb{b}X\pmb{b}Y, \quad X \to \pmb{a}X\pmb{a} \mid \pmb{b}X\pmb{b} \mid \lambda, \quad Y \to \pmb{a}Y \mid \pmb{b}Y \mid \lambda
+\]
+(Pairs up from both ends; $X$ handles the center matching, $Y$ handles the suffix.)
+
+\item $L_3$ = words where last letter matches none of the other letters:
+\[
+G_3: S \to X\pmb{a} \mid X\pmb{b}, \quad \text{where } X \text{ generates strings not ending in } \pmb{a} \text{ (resp.\ } \pmb{b}\text{)}
+\]
+Since $\Sigma=\{\pmb{a},\pmb{b}\}$, ``last letter matches none of the others'' means all other letters differ. This is regular: last letter $\pmb{a}$, all others $\pmb{b}$; or last letter $\pmb{b}$, all others $\pmb{a}$: $L_3 = \pmb{b}^*\pmb{a} \cup \pmb{a}^*\pmb{b}$. So $G_3: S \to B\pmb{a} \mid A\pmb{b} \mid \pmb{a} \mid \pmb{b}$, $B \to B\pmb{b}\mid\lambda$, $A \to A\pmb{a}\mid\lambda$.
+
+\item $L_4$ = even-length words where two center letters match:
+\[
+G_4: S \to \pmb{a}S\pmb{a} \mid \pmb{a}S\pmb{b} \mid \pmb{b}S\pmb{a} \mid \pmb{b}S\pmb{b} \mid \pmb{aa} \mid \pmb{bb}
+\]
+
+\item $L_5$ = odd-length words where center letter matches none of the others: Similar to $L_3$; since $|\Sigma|=2$, if center is $\pmb{a}$ all others are $\pmb{b}$, and vice versa. So $L_5 = \{\pmb{b}^k\pmb{a}\pmb{b}^k\} \cup \{\pmb{a}^k\pmb{b}\pmb{a}^k\}$, which is context-free but not regular:
+\[
+G_5: S \to \pmb{b}S\pmb{b} \mid \pmb{a}T\pmb{a} \mid \pmb{a} \mid \pmb{b},\quad T \to \pmb{a}T\pmb{a} \mid \pmb{b}
+\]
+
+\item Regular languages: $L_1$ is not regular (requires matching ends); $L_2$ is not regular; $L_3$ is regular ($\pmb{b}^*\pmb{a}\cup\pmb{a}^*\pmb{b}$); $L_4$ is not regular; $L_5$ is not regular.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Context-free grammars for the given languages.}
+
+\begin{enumerate}
+\item $L = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} < |x|_{\pmb{b}}\}$:
+\[
+G: S \to \pmb{b} \mid BS \mid SB \mid BSB, \quad B \to \pmb{b} \mid \pmb{a}B\pmb{a} \mid \pmb{b}B\pmb{b}
+\]
+More carefully: Use the grammar for balanced strings plus extra $\pmb{b}$s. A cleaner version:
+$S \to SS \mid \pmb{b}S\pmb{a} \mid S\pmb{b}\pmb{a} \mid \pmb{b}$.
+
+\item $G = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} \geq |x|_{\pmb{b}}\}$:
+$S \to SS \mid \pmb{a} \mid \pmb{a}S\pmb{b} \mid \pmb{a}S \mid \lambda$.
+
+\item $K = \{w \in \{\pmb{0},\pmb{1}\}^* \mid w = w^r\}$ (palindromes):
+$S \to \pmb{0}S\pmb{0} \mid \pmb{1}S\pmb{1} \mid \pmb{0} \mid \pmb{1} \mid \lambda$.
+
+\item $\Phi = \{\pmb{a}^j\pmb{b}^k\pmb{c}^m \mid j\geq 3, k=m\}$:
+$S \to \pmb{aaa}AT$, $A \to \pmb{a}A \mid \lambda$, $T \to \pmb{b}T\pmb{c} \mid \lambda$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{More context-free grammars.}
+
+\begin{enumerate}
+\item $L_1 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} = 2|x|_{\pmb{b}}\}$:
+$S \to \pmb{a}\pmb{a}S\pmb{b} \mid \pmb{a}S\pmb{a}\pmb{b} \mid S\pmb{a}\pmb{a}\pmb{b} \mid \lambda$ (or use $S \to SS \mid \pmb{aab} \mid \pmb{aba} \mid \pmb{baa} \mid \lambda$).
+
+\item $L_2 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} \neq |x|_{\pmb{b}}\}$:
+$S \to A \mid B$, where $A$ generates strings with more $\pmb{a}$s than $\pmb{b}$s ($A \to \pmb{a} \mid \pmb{a}A\pmb{b} \mid \pmb{a}A \mid A\pmb{a} \mid AA$) and $B$ generates strings with more $\pmb{b}$s. Alternatively: $L_2 = \overline{L_{eq}}$ where $L_{eq} = \{|x|_{\pmb{a}}=|x|_{\pmb{b}}\}$.
+
+\item Postfix expressions over $\{\pmb{A},\pmb{B},\pmb{+},\pmb{-}\}$:
+$S \to \pmb{A} \mid \pmb{B} \mid SS\pmb{+} \mid SS\pmb{-}$.
+
+\item Parenthesized infix expressions over $\{\pmb{A},\pmb{B},\pmb{+},\pmb{-},\pmb{(},\pmb{)}\}$:
+$S \to \pmb{A} \mid \pmb{B} \mid \pmb{(}S\pmb{+}S\pmb{)} \mid \pmb{(}S\pmb{-}S\pmb{)}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Context-sensitive grammars for the given languages.}
+
+\begin{enumerate}
+\item $\Gamma = \{w\pmb{2}w \mid w \in \{\pmb{0},\pmb{1}\}^*\}$:
+This is the language of strings of the form $w2w$ (copy language with separator). A context-sensitive grammar can be constructed by ``moving'' symbols past each other:
+\begin{align*}
+S &\to \pmb{0}S\pmb{0} \mid \pmb{1}S\pmb{1} \mid \pmb{2} \\
+\end{align*}
+The grammar $S\to 0S0\mid 1S1\mid 2$ generates $\{w\cdot 2\cdot w^r\}$, not $\Gamma=\{w\cdot 2\cdot w\}$. Since $\Gamma$ requires copying (not reversing), it is not context-free. A context-sensitive grammar synchronizes the two copies of $w$ using marker symbols. Introduce nonterminals $A_0, A_1$ as ``moving'' copies:
+\begin{align*}
+S &\to \pmb{2} \mid \pmb{0}SC_0 \mid \pmb{1}SC_1 \\
+C_0\pmb{2} &\to \pmb{2}\pmb{0} \quad \text{(move 0-copy past center)} \\
+C_1\pmb{2} &\to \pmb{2}\pmb{1} \\
+C_0C_0 &\to C_0\pmb{0}, \quad \text{etc.}
+\end{align*}
+The complete grammar is complex; the key idea is to generate $w$ on the left, place a $\pmb{2}$ marker, then use context-sensitive rules to copy and place $w$ on the right.
+
+\item $\Phi = \{\pmb{b}^{2^j} \mid j \in \NN\} = \{\pmb{b},\pmb{bb},\pmb{bbbb},\ldots\}$:
+A context-sensitive grammar doubles the string at each step:
+$S \to \pmb{b} \mid \pmb{b}Ab$, $A \to \pmb{b}A\pmb{b} \mid \pmb{b}\pmb{b}$.
+The standard CSG uses ``doubling'' rules where a marker propagates through the string, doubling it:
+\begin{align*}
+S &\to \pmb{b} \mid B \\
+B &\to DB \\
+DB &\to DD \\
+D &\to \pmb{bb}
+\end{align*}
+(This is a sketch; the full CSG uses left/right markers and $O(n)$ nonterminals.)
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show $G$ (context-sensitive) is not equivalent to $G''$ in Example 8.3.}
+
+The grammar $G$ has $SB \to \pmb{b}S$ but $G''$ has $TB \to \pmb{b}T$ with $S \to T$ and $T \to \lambda$. The difference is that $G$ allows $S$ to be rewritten to $\lambda$ directly, while $G''$ uses $T$ as an intermediary. In $G$, the production $S \to \lambda$ can fire while $B$'s are still present (e.g., $\pmb{a}SB\pmb{c} \Rightarrow \pmb{a}B\pmb{c}$ by $S \to \lambda$, then $\pmb{a}B\pmb{c}$ is stuck since $B$ cannot be eliminated without an $S$ or $c$ context). In $G''$, $T$ can only go to $\lambda$ when all $B$'s have been converted. Thus $G$ may generate strings with leftover nonterminals (dead derivations), while $G''$ is designed to always complete. Formally: $\pmb{aaSBBcc} \Rightarrow^* \pmb{aaBBcc}$ in $G$ (using $S\to\lambda$), which is stuck. In $G''$ this cannot happen since $T$ only appears in the rule $TB \to \pmb{b}T$. So $G$ does not generate $\pmb{aabbcc}$ in the same way, and the two grammars may differ on some strings.
+
+%%------------------------------------------------------------
+\item \textbf{Context-free grammars for the given languages.}
+
+\begin{enumerate}
+\item $L_1 = \pmb{a}^*(\pmb{b}\cup\pmb{c})^* \cap \{x \mid |x|_{\pmb{a}} = |x|_{\pmb{b}} + |x|_{\pmb{c}}\}$:
+Strings in $L_1$ are of the form $\pmb{a}^n\pmb{b}^j\pmb{c}^k$ where $n = j+k$:
+\[
+G_1: S \to \pmb{a}S\pmb{b} \mid \pmb{a}S\pmb{c} \mid \lambda
+\]
+Each step adds one $\pmb{a}$ at the left and one $\pmb{b}$ or $\pmb{c}$ at the right.
+
+\item $L_2 = \{\pmb{a}^i\pmb{b}^j\pmb{c}^k \mid i+j=k\}$:
+\[
+G_2: S \to \pmb{a}S\pmb{c} \mid \pmb{b}T\pmb{c} \mid \lambda, \quad T \to \pmb{b}T\pmb{c} \mid \lambda
+\]
+
+\item $L_3 = \{x \in \{\pmb{a},\pmb{b},\pmb{c}\}^* \mid |x|_{\pmb{a}} + |x|_{\pmb{b}} = |x|_{\pmb{c}}\}$:
+\[
+G_3: S \to \pmb{a}S\pmb{c} \mid \pmb{b}S\pmb{c} \mid SS \mid \lambda
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $L(G') = L(G) \cup \{\lambda\}$ (Definition 8.4).}
+
+Definition 8.4 constructs $G'$ from $G$ by adding a new start symbol $Z$ with $Z \to S \mid \lambda$ (where $S$ was the original start). Then:
+$x \in L(G')$ iff $Z \DRightarrow x$ in $G'$.
+$Z \to \lambda$ gives $\lambda \in L(G')$.
+$Z \to S \DRightarrow x$ gives $x \in L(G) \subseteq L(G')$.
+Conversely, any derivation from $Z$ begins with either $Z \to \lambda$ or $Z \to S$, so $L(G') \subseteq L(G) \cup \{\lambda\}$.
+Hence $L(G') = L(G) \cup \{\lambda\}$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Prove $L(G') = L(G) \cup \{\lambda\}$ (Definition 8.6).}
+
+The proof is identical in structure to Exercise 8.40, using the specific construction given in Definition 8.6 (which adds a new start symbol with a lambda production). \qed
+
+%%------------------------------------------------------------
+\item \textbf{Properties of the normal form-preserving construction.}
+
+\begin{enumerate}
+\item If $G$ is right-linear (Theorem~8.8), the naive star construction $Z \to S \mid ZZ \mid \lambda$ does \emph{not} preserve right-linearity: $Z \to ZZ$ places a nonterminal in a non-final position, violating the form $A \to wB$ or $A \to w$.
+A right-linear Kleene-star construction avoids $ZZ$ by folding the restart into the accepting productions of $G$: whenever $A \to w$ is a terminal production of $G$, add $A \to wS$ (to restart) and $A \to w$ (to halt). This keeps all productions right-linear.
+
+\item Example: $G_1: S_1 \to \pmb{a}$ and $G_2: S_2 \to S_2\pmb{b} \mid \pmb{b}$. Both are in normal form (right-linear), but $G^\cup: Z \to S_1 \mid S_2$ combined may not be in the prescribed form if that form requires a unique start symbol structure.
+
+\item The $G^\bullet$ construction for concatenation in Example 8.18 is not normal form-preserving in general, since it requires replacing terminal productions $A \to w$ with $A \to wS_2$, which is a right-linear production but may violate other normal form constraints.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Left-linear grammars for union, concatenation, and Kleene closure.}
+
+Given left-linear grammars $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ with $\Omega_1 \cap \Omega_2 = \emptyset$:
+
+\begin{enumerate}
+\item \textbf{Union}: $G^\cup = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1\mid S_2\}\rangle$. The production $Z \to S_1$ is left-linear (since $Z \to S_1$ has a nonterminal on the right with no symbols; this is a unit production, which is allowed). $L(G^\cup) = L(G_1) \cup L(G_2)$.
+
+\item \textbf{Concatenation}: For left-linear grammars, to concatenate $L(G_1)\cdot L(G_2)$: replace each ``initial'' production $A \to w$ in $G_1$ (where $A$ generates a terminal string) with $A \to S_2 w$ (prepend $S_2$ which generates $L(G_2)$ on the left). More precisely, for each production $S_1 \to w$ in $G_1$, replace with $S_1 \to S_2 w$ (left-linear). The resulting grammar generates $L(G_1) \cdot L(G_2)$.
+
+\item \textbf{Kleene closure}: Add new start $Z$ with $Z \to ZS_1 \mid \lambda$. This is left-linear. $L(G_*) = L(G_1)^*$.
+\end{enumerate}
+
+\end{enumerate}

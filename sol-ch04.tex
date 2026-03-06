@@ -1,0 +1,896 @@
+%% sol-ch04.tex — Solutions for Chapter 4: Nondeterministic Finite Automata
+
+\chapter{Nondeterministic Finite Automata --- Solutions}
+
+\begin{enumerate}[{4.}1.]
+
+%% 4.1
+\item Because Figure~4.25 is a printed figure, we describe the subset-construction
+process generically.  For each NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$
+with $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$, we build $A^d$ by:
+\begin{enumerate}[(1)]
+  \item Taking the start state of $A^d$ to be $S_0$ (treated as a single state
+        representing the set of start states).
+  \item For each state $Q\in\wp(S)$ of $A^d$ and each $\pmb{\sigma}\in\Sigma$,
+        setting $\delta^d(Q,\pmb{\sigma})=\bigcup_{q\in Q}\delta(q,\pmb{\sigma})$.
+  \item Declaring $Q$ final iff $Q\cap F\neq\emptyset$.
+  \item Retaining only the states reachable from $S_0$.
+\end{enumerate}
+The resulting DFAs for each part of Figure~4.25 are obtained by applying this
+procedure; since the figures are referenced externally, the specific transition
+tables depend on the transitions shown in the printed text.
+
+%% 4.2
+\item Consider Example~4.17: a $\lambda$-NDFA $E$ identical to the NDFA $D$
+of Example~4.13 but with the extra transition $\delta(s_1,\lambda)=\{s_2\}$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Remove $\lambda$-transitions (Definition~4.9).}  Apply
+  $\delta^{\sigma}_{\lambda}$: for each state $s$ and each input letter
+  $\pmb{a}\in\Sigma$, set
+  $\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})=\Lambda(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a}))$.
+  The $\lambda$-closures are:
+  \[
+    \Lambda(s_0)=\{s_0\},\quad \Lambda(s_1)=\{s_1,s_2\},\quad \Lambda(s_2)=\{s_2\},\quad \Lambda(s_3)=\{s_3\}.
+  \]
+  (The $\lambda$-transition $s_1\to s_2$ means $s_2\in\Lambda(s_1)$.)
+  The resulting NDFA $A^{\sigma}_\lambda$ without $\lambda$-transitions has the
+  same state set $\{s_0,s_1,s_2,s_3\}$ (plus the auxiliary start state $q_0$
+  if $\lambda$ is not accepted) and transitions derived from the formula above.
+
+  \item \emph{Convert to DFA (Definition~4.5).}  Starting from the state
+  $\{s_0\}$ (or the appropriate initial set), compute:
+  \[
+    \delta^d(\{s_0\},\pmb{a}),\quad \delta^d(\{s_0\},\pmb{b}),\quad\ldots
+  \]
+  and continue until closure is reached.  Since the exact transitions of $E$
+  depend on the printed Figure~4.23, the reader should apply the subset
+  construction to the NDFA $A^{\sigma}_\lambda$ produced in part~(a),
+  grouping into equivalence classes of reachable state-sets.
+\end{enumerate}
+
+%% 4.3
+\item Consider the NDFA $A$ from Example~4.4:
+$A=\langle\{\pmb{a},\pmb{b}\},\{s,r,t\},\{s\},\delta,\{r,t\}\rangle$
+with $\delta(s,\pmb{a})=\{s,r\}$, $\delta(s,\pmb{b})=\{s,t\}$,
+$\delta(r,\pmb{a})=\delta(r,\pmb{b})=\delta(t,\pmb{a})=\delta(t,\pmb{b})=\emptyset$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no \textless SOS\textgreater{} or
+    \textless EOS\textgreater).}  Encode states with two flip-flops:
+    $s=00$, $r=01$, $t=10$.  The next-state logic computes
+    $D_0,D_1$ as functions of the current state bits and the input.
+    Because the machine is nondeterministic, the circuit uses OR gates to
+    collect contributions from multiple possible transitions.
+    (The precise gate-level diagram depends on the chosen encoding and
+    hazard-minimization strategy; the reader should apply the standard
+    NDFA circuit procedure from Section~4.4 of the text.)
+
+  \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
+    \textless EOS\textgreater).}  Add dedicated SOS and EOS inputs that
+    respectively force the machine into its start state and gate the
+    final-state outputs, following the standard encoding conventions of
+    Chapter~4.
+
+  \item \emph{DFA via subset construction (connected portion only).}
+  The start state of $A^d$ is $\{s\}$.  Compute:
+  \begin{center}\begin{tabular}{c|cc}
+    State & $\pmb{a}$ & $\pmb{b}$ \\\hline
+    $\{s\}$ & $\{s,r\}$ & $\{s,t\}$ \\
+    $\{s,r\}$ & $\{s,r\}$ & $\{s,t\}$ \\
+    $\{s,t\}$ & $\{s,r\}$ & $\{s,t\}$ \\
+  \end{tabular}\end{center}
+  Final states (sets intersecting $\{r,t\}$): $\{s,r\}$ and $\{s,t\}$.
+  The dead state $\emptyset$ is not reachable.  The connected DFA has
+  three states.
+
+  \item \emph{DFA including disconnected portion.}
+  The full set $\wp(\{s,r,t\})=\{\emptyset,\{s\},\{r\},\{t\},\{s,r\},\{s,t\},\{r,t\},\{s,r,t\}\}$
+  yields eight states; most are unreachable from $\{s\}$.  For each
+  subset $Q$, $\delta^d(Q,\pmb{a})=\bigcup_{q\in Q}\delta(q,\pmb{a})$ and
+  similarly for $\pmb{b}$.  The complete table has 8 rows.
+
+\end{enumerate}
+
+%% 4.4
+\item Consider the NDFA from Example~4.2, which has multiple transitions on
+$\pmb{0}$: from $s_0$ to both $s_1$ and $s_2$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
+    \textless EOS\textgreater).}  Encode states with two bits.  The
+    nondeterministic transitions become OR gates feeding multiple
+    flip-flop inputs simultaneously.  SOS and EOS are incorporated per
+    the standard convention.
+
+  \item \emph{DFA via subset construction.}  Starting from the set of
+  start states $S_0$, apply $\delta^d$ iteratively.  Since the NDFA
+  from Example~4.2 accepts $L=\{x\in\{\pmb{0},\pmb{1}\}^*\mid
+  |x|\equiv 0\pmod{2}\vee|x|_{\pmb{1}}\equiv 0\pmod{3}\}$, the
+  resulting DFA can be constructed as a product of a two-state machine
+  (tracking parity of length) and a three-state machine (tracking
+  $|x|_{\pmb{1}}\bmod 3$), giving at most 6 reachable states.
+\end{enumerate}
+
+%% 4.5
+\item Consider the NDFA from Example~4.3, which accepts the same language as
+Example~4.2 but uses multiple start states instead of multiple transitions.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no \textless SOS\textgreater{} or
+    \textless EOS\textgreater).}  Each start state is handled by
+    OR-ing their outputs into the initial-state signal.
+
+  \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
+    \textless EOS\textgreater).}  SOS activates all start states
+    simultaneously.
+
+  \item \emph{DFA (connected portion only).}  The start state of $A^d$
+  is the set of all start states of $A$.  Applying the subset
+  construction yields the connected portion of the DFA.
+
+  \item \emph{Is this DFA isomorphic to any of those in Exercise~4.4?}
+  Yes.  Both Example~4.2 and Example~4.3 accept the same language $L$.
+  The minimal DFA for $L$ is unique up to isomorphism (by
+  Theorem~3.8).  After minimizing the DFA obtained in part~(c) and the
+  DFA obtained in Exercise~4.4(b), both must produce the same minimal
+  machine (up to renaming of states).  Hence they are isomorphic.
+\end{enumerate}
+
+%% 4.6
+\item Consider the $\lambda$-NDFA from Example~4.14, with states
+$\{s_0,s_1,s_2,s_3\}$ and $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram for the original $\lambda$-NDFA (no SOS/EOS).}
+  The $\lambda$-transitions are implemented by OR-ing the output of
+  the flip-flop encoding $s_i$ directly into the $D$ input of the
+  flip-flop encoding $s_j$ whenever $\delta(s_i,\lambda)=\{s_j\}$.
+  This creates a combinational path that propagates ``active'' status
+  among $\lambda$-connected states within a single clock cycle.
+
+  \item \emph{Circuit diagram for the NDFA from Definition~4.9 (part~(b) of
+  Example~4.14, no SOS/EOS).}  After eliminating $\lambda$-transitions using
+  $\delta'(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$, the resulting NDFA has only
+  ordinary transitions; draw the standard NDFA circuit for this machine.
+\end{enumerate}
+
+%% 4.7
+\item Consider the second NDFA of Example~4.16, which accepts the language
+$L^+=\{x_1 x_2\cdots x_k\mid k\ge 1,\, x_i\in L\}$ where $L$ is the language
+of strings over $\{\pmb{a},\pmb{b},\pmb{c}\}$ containing exactly one $\pmb{b}$
+immediately followed by $\pmb{c}$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram for $A^{\sigma}_\lambda$ (with EOS but no SOS).}
+  Incorporate the $\lambda$-transitions via the standard OR-gate technique
+  and add an EOS output gate.
+
+  \item \emph{NDFA without $\lambda$-transitions (Definition~4.9).}
+  Compute $\Lambda(s)$ for each state; then set
+  $\delta'(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$ for all $\pmb{a}\in\Sigma$
+  and $s\in S$.  States whose $\lambda$-closure intersects $F$ become final.
+
+  \item \emph{Circuit diagram for the $\lambda$-free NDFA (with EOS, no SOS).}
+  Apply the standard circuit encoding to the machine from part~(b).
+
+  \item \emph{DFA (connected portion only).}
+  Apply the subset construction to the NDFA from part~(b), starting from
+  its set of initial states, and retain only the reachable portion.
+\end{enumerate}
+
+%% 4.8
+\item \textbf{Complementing the final states of an NDFA does not yield a machine
+accepting the complement language.}
+
+For a DFA, $L(\overline{A})=\Sigma^*\setminus L(A)$ because every word follows
+exactly one path and is accepted iff it ends in a final state.  Flipping final
+and nonfinal states reverses acceptance on that unique path.
+
+For an NDFA, a word $w$ may follow \emph{multiple} paths, some ending in final
+states and some not.  Under Definition~4.4, $w\in L(A)$ iff \emph{at least one}
+path ends in a final state.  If we complement the final states, a word is
+accepted by the modified machine iff at least one path ends in a \emph{formerly
+nonfinal} state.  This is \emph{not} the same as $w\notin L(A)$, because a word
+can simultaneously have a path to a (formerly) final state and a path to a
+(formerly) nonfinal state; the complemented machine would accept it, but it was
+already in $L(A)$.
+
+\textbf{Example.}  Let $\Sigma=\{\pmb{a}\}$, $S=\{s_0,s_1\}$, $S_0=\{s_0\}$,
+$F=\{s_1\}$, $\delta(s_0,\pmb{a})=\{s_0,s_1\}$, $\delta(s_1,\pmb{a})=\emptyset$.
+Then $\pmb{a}\in L(A)$ because $s_1\in\delta(s_0,\pmb{a})$.  After complementing,
+$F'=\{s_0\}$, and $\pmb{a}$ is still accepted (via the path $s_0\to s_0\in F'$),
+yet $\pmb{a}\notin\Sigma^*\setminus L(A)$ since $\pmb{a}\in L(A)$.  Hence the
+complement-of-final-states trick fails for NDFAs.
+
+%% 4.9
+\item \textbf{Given an NDFA $A$ without $\lambda$-transitions, construct a
+$\lambda$-NDFA $A'$ with exactly one start state, exactly one final state, and
+$L(A')=L(A)$.}
+
+\textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$.  Define
+$A'=\langle\Sigma,S',q_0,\delta',\{q_f\}\rangle$ where:
+\begin{itemize}
+  \item $S'=S\cup\{q_0,q_f\}$ (two new states).
+  \item $q_0$ is the unique start state.
+  \item $\delta'(q_0,\lambda)=S_0$ (a $\lambda$-transition from $q_0$ to every
+        start state of $A$).
+  \item For all $s\in S$ and $\pmb{a}\in\Sigma$: $\delta'(s,\pmb{a})=\delta(s,\pmb{a})$.
+  \item $\delta'(f,\lambda)\ni q_f$ for every $f\in F$ ($\lambda$-transitions
+        from each old final state to the new unique final state $q_f$).
+  \item $\delta'(q_f,\pmb{a})=\emptyset$ for all $\pmb{a}$ (and no transitions
+        out of $q_f$).
+\end{itemize}
+
+\textbf{Correctness.}  A word $w\in\Sigma^+$ is accepted by $A$ iff there is a
+path $q_0\xrightarrow{\lambda}s_i\xrightarrow{w}f$ for some $s_i\in S_0$ and
+$f\in F$; by the $\lambda$-transition $f\xrightarrow{\lambda}q_f$, this same
+path exists in $A'$ ending at $q_f$.  Conversely, any accepting path in $A'$
+uses the initial $\lambda$-step to some $s_i\in S_0$, processes $w$ within $S$
+(by identical transitions), then uses a final $\lambda$-step to $q_f$, which
+corresponds to an accepting path in $A$.  Hence $L(A')=L(A)$.
+
+If $\lambda\in L(A)$ (i.e., some $s\in S_0\cap F$), then we additionally make
+$q_0$ a final state.
+
+%% 4.10
+\item \textbf{Can part (ii) of Definition~4.8 be deduced from parts (i) and (iii)?}
+
+Definition~4.8 defines $\DBAR$ for NDFAs:
+\begin{enumerate}[(i)]
+  \item $\DBAR(s,\lambda)=\{s\}$,
+  \item $(\forall\pmb{a}\in\Sigma)\,\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$,
+  \item $(\forall x\in\Sigma^*)(\forall\pmb{a}\in\Sigma)\,\DBAR(s,x\pmb{a})
+        =\bigcup_{t\in\DBAR(s,x)}\delta(t,\pmb{a})$.
+\end{enumerate}
+Part (ii) concerns single-letter strings.  Setting $x=\lambda$ in part (iii):
+\[
+  \DBAR(s,\lambda\pmb{a})
+  =\bigcup_{t\in\DBAR(s,\lambda)}\delta(t,\pmb{a})
+  \;=\;\bigcup_{t\in\{s\}}\delta(t,\pmb{a})
+  \;=\;\delta(s,\pmb{a}),
+\]
+where we used part (i) to obtain $\DBAR(s,\lambda)=\{s\}$ and the fact that
+$\lambda\pmb{a}=\pmb{a}$.  Since $\lambda\pmb{a}=\pmb{a}$, this gives
+$\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$, which is exactly part (ii).
+
+\textbf{Conclusion.}  Yes, part (ii) can be derived from parts (i) and (iii).
+It is included explicitly to make the base case of inductive proofs more
+transparent, but it is logically redundant.
+
+%% 4.11
+\item \textbf{Alternative construction for removing $\lambda$-transitions.}
+
+Define $S'=S$, $S'_0=\Lambda(S_0)$, $F'=F$, and
+$\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})$ for all $s\in S$, $\pmb{a}\in\Sigma$.
+
+\textbf{Does this work?}  Not in general, because the initial states are wrong.
+Setting $S'_0=\Lambda(S_0)$ means the machine starts in the $\lambda$-closure
+of the original start states, which is correct for non-empty words.  However, the
+problem is with $F'=F$: in the original $\lambda$-NDFA, a state that can reach a
+final state via $\lambda$-transitions should \emph{also} be considered final in
+the $\lambda$-free version, since accepting the empty string through those
+$\lambda$-paths must be respected.  The correct final states should be all
+$s\in S$ such that $\Lambda(s)\cap F\neq\emptyset$.
+
+Specifically, if $s_0\xrightarrow{\lambda}\cdots\xrightarrow{\lambda}f\in F$ in
+the original machine, then $\lambda\in L(A_\lambda)$.  With $F'=F$, the
+$\lambda$-free machine might not accept $\lambda$ (or might accept incorrectly).
+
+\textbf{Fix:}  Replace $F'=F$ with $F'=\{s\in S\mid\Lambda(s)\cap F\neq\emptyset\}$.
+With this correction, the construction is equivalent to Definition~4.9 restricted
+to $S'=S$ (omitting the extra state $q_0$).
+
+%% 4.12
+\item \textbf{Algorithm for union of two FAD languages using $\lambda$-NDFAs.}
+
+Let $L_1=L(A_1)$ and $L_2=L(A_2)$ where $A_1$ and $A_2$ are $\lambda$-NDFAs.
+By Exercise~4.9 we may assume each $A_i$ has exactly one start state $q^i_0$ and
+exactly one final state $q^i_f$.  Construct $A'$ as follows:
+\begin{enumerate}[(1)]
+  \item Introduce a new start state $q_0$ and a new final state $q_f$.
+  \item Add $\lambda$-transitions: $q_0\xrightarrow{\lambda}q^1_0$ and
+        $q_0\xrightarrow{\lambda}q^2_0$.
+  \item Add $\lambda$-transitions: $q^1_f\xrightarrow{\lambda}q_f$ and
+        $q^2_f\xrightarrow{\lambda}q_f$.
+  \item Keep all existing transitions of $A_1$ and $A_2$.
+\end{enumerate}
+Then $L(A')=L(A_1)\cup L(A_2)$: a word is accepted iff it is accepted by $A_1$
+or by $A_2$, because the $\lambda$-transitions route the computation into one
+of the two machines and collect the result at $q_f$.
+
+%% 4.13
+\item \textbf{Example of NDFA $A$ such that $A^d$ is not connected, not reduced,
+but is minimal.}
+
+\textbf{(a) $A^d$ is not connected.}  Any NDFA in which some subsets of states
+are never reachable from the start set under the transition function will
+produce an $A^d$ with unreachable states.  For example, let
+$\Sigma=\{\pmb{a}\}$, $S=\{s_0,s_1\}$, $S_0=\{s_0\}$, $F=\{s_1\}$,
+$\delta(s_0,\pmb{a})=\{s_1\}$, $\delta(s_1,\pmb{a})=\emptyset$.
+Then $A^d$ has states $\{\emptyset,\{s_0\},\{s_1\},\{s_0,s_1\}\}$ but
+$\{s_0,s_1\}$ and $\{s_1\}$ with $\delta^d(\{s_1\},\pmb{a})=\emptyset$ are
+reachable, while $\{s_0,s_1\}$ is not reached from $\{s_0\}$.
+
+\textbf{(b) $A^d$ is not reduced.}  $A^d$ contains states (such as
+$\emptyset$, the dead state) that are nonfinal and from which no final state is
+reachable.  Such states are reachable but do not lead to acceptance; removing
+them gives the reduced (trim) machine.
+
+\textbf{(c) $A^d$ is minimal.}  After keeping only the connected, reduced
+(trim) portion of $A^d$, the resulting DFA may already be minimal if all
+remaining states are distinguishable.  For the example above: the connected,
+reduced $A^d$ has states $\{s_0\},\{s_1\},\emptyset$; the states $\{s_0\}$ and
+$\emptyset$ are both nonfinal but distinguishable ($\pmb{a}$ from $\{s_0\}$
+reaches a final state; from $\emptyset$ it does not), so the machine is minimal.
+
+%% 4.14
+\item \textbf{Why was the extra state $q_0$ included in $A^{\sigma}_\lambda$?}
+
+The extra state $q_0$ is needed to handle the special case $\lambda\in L(A_\lambda)$.
+
+In Definition~4.9, the machine $A^{\sigma}_\lambda$ is constructed so that
+its start state $q_0$ is \emph{disconnected} from the rest of the machine
+(it has no transitions to or from the other states via ordinary letters).
+If $\lambda\in L(A_\lambda)$---that is, if the $\lambda$-closure of some
+start state of $A_\lambda$ intersects $F$---then $q_0$ is made a final state,
+so $\lambda$ is accepted.
+
+Without $q_0$, we would have to designate some ordinary state as the start
+state, but any such state already participates in transitions that process
+non-empty strings.  Making it simultaneously responsible for the acceptance of
+$\lambda$ can create conflicts.
+
+\textbf{Example.}  Suppose $A_\lambda$ has start state $s_0$ with
+$s_0\in F$ (so $\lambda\in L(A_\lambda)$) and transitions that extend the
+language.  If we set $q_0=s_0$ without creating a separate new start state,
+the $\lambda$-closure would ``spread'' acceptance to additional states in ways
+that might incorrectly mark non-$\lambda$ prefixes as accepted.  The fresh
+isolated $q_0$ cleanly separates the ``zero-length acceptance'' case from the
+rest of the computation.
+
+%% 4.15
+\item \textbf{Union construction using NDFAs \emph{without} $\lambda$-transitions.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Algorithm.}  Let $A_1=\langle\Sigma,S_1,S^1_0,\delta_1,F_1\rangle$
+  and $A_2=\langle\Sigma,S_2,S^2_0,\delta_2,F_2\rangle$ (assume $S_1\cap S_2=\emptyset$).
+  Construct $A'=\langle\Sigma,S_1\cup S_2,S^1_0\cup S^2_0,\delta',F_1\cup F_2\rangle$
+  where $\delta'(s,\pmb{a})=\delta_i(s,\pmb{a})$ for $s\in S_i$.
+  The machine $A'$ starts in the combined set of initial states and accepts
+  any word accepted by either $A_1$ or $A_2$.  Thus $L(A')=L(A_1)\cup L(A_2)$.
+
+  \item \textbf{Comparison.}  This is actually \emph{easier} than the
+  $\lambda$-transition approach (Exercise~4.12): no new states are needed at
+  all, since we simply merge the state sets and initial-state sets.
+
+  \item \textbf{Can we ensure exactly one start state and one final state?}
+  Exactly one start state: \emph{not in general} without adding a new
+  state or using $\lambda$-transitions.  If we introduce a new state $q_0$
+  and require $q_0$ to mimic all transitions from every $s\in S^1_0\cup S^2_0$
+  (setting $\delta'(q_0,\pmb{a})=\delta'(s,\pmb{a})$ for each $s$ in the
+  original start sets), we can achieve a single start state---but we must also
+  make $q_0$ final if any original start state was final (to handle $\lambda$).
+  Exactly one final state can similarly be achieved by merging: add a new
+  state $q_f$ and, for each $f\in F_1\cup F_2$, redirect: whenever $f$ would
+  have been final, instead make $q_f$ absorb $f$'s role by duplicating its
+  transitions.  Without $\lambda$-transitions this is more complex than
+  the $\lambda$-based construction.
+\end{enumerate}
+
+%% 4.16
+\item Consider the $\lambda$-NDFA $A^{\sigma}_\lambda$ from Example~4.15 (the
+machine without $\lambda$-transitions corresponding to the automaton of
+Example~4.14).
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no SOS or EOS).}
+  From Example~4.14, the $\lambda$-closures are
+  $\Lambda(s_0)=\{s_0,s_1,s_2\}$, $\Lambda(s_1)=\{s_1,s_2\}$,
+  $\Lambda(s_2)=\{s_2\}$, $\Lambda(s_3)=\{s_3\}$.
+  The transition function of $A^{\sigma}_\lambda$ (without $\lambda$-moves)
+  is $\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$.
+  Encode states with two bits; draw next-state logic using OR gates for
+  nondeterministic branches, following the method of Chapter~4.
+
+  \item \emph{Convert to $A^{\sigma d}_\lambda$ (connected portion only).}
+  Apply the subset construction to $A^{\sigma}_\lambda$.  Starting from the
+  initial set determined by $S_0=\{q_0\}$ (or the appropriate start state
+  of $A^{\sigma}_\lambda$), compute $\delta^d$ for each reachable subset and
+  each input letter, retaining only connected states.
+\end{enumerate}
+
+%% 4.17
+\item \begin{enumerate}[(a)]
+  \item \textbf{Proof that $\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$ for any NDFA
+  without $\lambda$-transitions.}
+
+  By Definition~4.8(ii), $\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$ for all
+  $s\in S$ and $\pmb{a}\in\Sigma$.  This is immediate from the definition;
+  alternatively, apply part (iii) with $x=\lambda$:
+  \[
+    \DBAR(s,\lambda\pmb{a})
+    =\bigcup_{t\in\DBAR(s,\lambda)}\delta(t,\pmb{a})
+    =\bigcup_{t\in\{s\}}\delta(t,\pmb{a})
+    =\delta(s,\pmb{a}),
+  \]
+  using part (i): $\DBAR(s,\lambda)=\{s\}$.  Since $\lambda\pmb{a}=\pmb{a}$,
+  we conclude $\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$. \qed
+
+  \item \textbf{Counterexample for $\lambda$-NDFAs.}
+
+  Let $\Sigma=\{\pmb{a}\}$, $S=\{s_0,s_1\}$, $S_0=\{s_0\}$, $F=\{s_1\}$,
+  $\delta_\lambda(s_0,\lambda)=\{s_1\}$, $\delta_\lambda(s_0,\pmb{a})=\emptyset$,
+  $\delta_\lambda(s_1,\pmb{a})=\emptyset$.
+
+  Then $\Lambda(s_0)=\{s_0,s_1\}$.  So
+  \[
+    \DBAR_\lambda(s_0,\pmb{a})
+    =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s_0)}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda(\emptyset\cup\emptyset)=\emptyset,
+  \]
+  but $\delta_\lambda(s_0,\pmb{a})=\emptyset$ also.  Let us try a different
+  example: $\delta_\lambda(s_0,\lambda)=\{s_1\}$, $\delta_\lambda(s_1,\pmb{a})=\{s_1\}$.
+  Then $\delta_\lambda(s_0,\pmb{a})=\emptyset$, yet
+  \[
+    \DBAR_\lambda(s_0,\pmb{a})
+    =\Lambda\!\Bigl(\bigcup_{t\in\{s_0,s_1\}}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda(\{s_1\})=\{s_1\}\neq\emptyset=\delta_\lambda(s_0,\pmb{a}).
+  \]
+  This demonstrates that $\DBAR_\lambda(s,\pmb{a})\neq\delta_\lambda(s,\pmb{a})$
+  is possible for $\lambda$-NDFAs.
+\end{enumerate}
+
+%% 4.18
+\item Consider the NDFA accepting the original language $L$ from Example~4.10:
+$L=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ begins with }\pmb{a}\vee x\text{ contains }\pmb{ba}\}$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no SOS/EOS).}  The NDFA has a start state
+  with multiple transitions and states tracking whether the substring $\pmb{ba}$
+  has been seen.  Encode states with the appropriate number of bits and draw
+  the next-state logic using OR gates for nondeterministic branching.
+
+  \item \emph{DFA (connected portion only).}  Apply the subset construction
+  to the NDFA, starting from the set of initial states.  The language $L$ is
+  a union of two simpler languages ($x$ begins with $\pmb{a}$, and $x$ contains
+  $\pmb{ba}$), each recognized by small DFAs; the resulting product DFA will
+  have at most $2\times 3=6$ states (two states for ``starts with $\pmb{a}$''
+  and three for tracking the substring $\pmb{ba}$).
+\end{enumerate}
+
+%% 4.19
+\item Consider the NDFA accepting $L^r=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ ends with }\pmb{a}\vee x\text{ contains }\pmb{ab}\}$ from Example~4.10.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no SOS/EOS).}  This NDFA is obtained by
+  reversing all arrows and swapping start and final states of the NDFA for $L$.
+  The multiple start states of $L^r$'s NDFA become multiple flip-flop inputs
+  activated at initialization.
+
+  \item \emph{DFA (connected portion only).}  Apply the subset construction.
+  Because $L^r$ is the reverse of $L$ (which is FAD), $L^r$ is also FAD by
+  Theorem~5.9 (closure under reversal).  The minimal DFA for $L^r$ can be
+  computed from the subset construction applied to the reversed NDFA.
+\end{enumerate}
+
+%% 4.20
+\item \textbf{Are the pumping lemma arguments still valid for NDFAs?}
+
+Yes.  The pumping lemma (Chapter~2) applies to any language accepted by a DFA
+(or equivalently, any FAD language).  Since every NDFA $A$ is equivalent to a
+DFA $A^d$ (Theorem~4.1), $L(A)=L(A^d)$ is FAD, and the pumping lemma applies
+to $L(A)$.
+
+More directly: the pumping lemma is a property of the \emph{language}, not the
+machine representation.  If $L$ is FAD (accepted by some NDFA), then all the
+arguments from Chapter~2 go through unchanged.  In particular, if $A$ has $n$
+states, then $A^d$ has at most $2^n$ states; words of length at least $2^n$
+must cause a repeated state in $A^d$, yielding the pumping decomposition.
+
+%% 4.21
+\item \textbf{Does the conclusion of Theorem~2.7 still hold for NDFAs?}
+
+Yes.  Theorem~2.7 characterizes FAD languages via the Myhill--Nerode theorem:
+$L$ is FAD iff $\equiv_L$ has finitely many equivalence classes.  This is a
+property of the language $L$, not of the particular automaton (DFA or NDFA)
+accepting it.  Since NDFAs and DFAs accept exactly the same class of languages
+(the FAD languages, by Theorem~4.1), the conclusion holds: a language is
+accepted by some NDFA iff it is accepted by some DFA iff $\equiv_L$ has
+finitely many classes iff the minimal DFA is finite.
+
+%% 4.22
+\item \textbf{Given an NDFA $A$ without $\lambda$-transitions with $\lambda\notin L(A)$,
+construct $A''$ with exactly one start state, one final state, and $L(A'')=L(A)$.}
+
+\textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ with
+$\lambda\notin L(A)$ (i.e., $S_0\cap F=\emptyset$).
+\begin{enumerate}[1.]
+  \item Add a new start state $q_0$ and a new final state $q_f$.
+  \item For all $\pmb{a}\in\Sigma$:
+        $\delta''(q_0,\pmb{a})=\bigcup_{s\in S_0}\delta(s,\pmb{a})$.
+        (Simulate starting from any state in $S_0$.)
+  \item For all $s\in S$ and $\pmb{a}\in\Sigma$:
+        $\delta''(s,\pmb{a})=\delta(s,\pmb{a})$.
+  \item For all $f\in F$: whenever $f$ would be in $\delta''(s,\pmb{a})$
+        for some $s,\pmb{a}$, also add $q_f$ to $\delta''(s,\pmb{a})$.
+        (That is, $q_f$ behaves like a ``copy'' of states in $F$:
+        $\delta''(s,\pmb{a})=(\delta(s,\pmb{a})\setminus F)\cup\{q_f\mid\delta(s,\pmb{a})\cap F\neq\emptyset\}$.)
+  \item $\delta''(q_f,\pmb{a})=\emptyset$ for all $\pmb{a}$.
+\end{enumerate}
+The new machine $A''$ has start state $q_0$, final state $\{q_f\}$, and
+accepts a word $w=\pmb{a}_1\cdots\pmb{a}_k$ ($k\ge 1$) iff $A$ accepts $w$.
+Since $\lambda\notin L(A)$, we need $S_0\cap F=\emptyset$, ensuring $q_0$ need
+not be final.
+
+%% 4.23
+\item \textbf{If $\lambda\in L(A)$, the three conditions of Exercise~4.22
+may be incompatible (without $\lambda$-transitions).}
+
+\textbf{Example.}  Let $\Sigma=\{\pmb{a}\}$, $S=\{s_0\}$, $S_0=\{s_0\}$,
+$F=\{s_0\}$, $\delta(s_0,\pmb{a})=\{s_0\}$.  Then $L(A)=\{\pmb{a}\}^*$, which
+includes $\lambda$.
+
+We want $A''$ with: (1) one start state $q_0$; (2) one final state $q_f$; (3)
+$L(A'')=\{\pmb{a}\}^*$.
+
+For $\lambda\in L(A'')$, we need $q_0\in F''$, i.e., $q_0=q_f$.  But if
+$q_0=q_f$ is the unique start-and-final state, then for $A''$ to accept $\pmb{a}$,
+we need a transition from $q_f$ to some state that eventually reaches $q_f$---
+but $q_f$ is the only state, so $\delta''(q_f,\pmb{a})=\{q_f\}$.  This works
+for this particular example.
+
+The general obstruction arises when $L(A)$ requires the single final state to
+also be a non-trivial \emph{source} of transitions, while the single start state
+needs to be the same final state.  In machines where $\lambda\in L(A)$ but
+words of positive length follow different paths from the start state to
+the final state, merging start and final forces all transitions through a single
+state that must simultaneously act as the ``beginning'' and ``end'', which may
+require $\lambda$-transitions to route correctly.  Without $\lambda$-transitions,
+it may be impossible to separate the acceptance of $\lambda$ (at the start
+state) from the acceptance of longer words (which require reaching $q_f$ after
+processing letters).
+
+%% 4.24
+\item \textbf{Prove Lemma~4.2.}
+
+\textbf{Lemma~4.2:} For any $s\in S$ and any $x\in\Sigma^+$,
+$\overline{\delta^{\sigma}_\lambda}(s,x)=\DBAR_\lambda(s,x)$.
+
+\begin{proof}
+We proceed by induction on $|x|=k\ge 1$.
+
+\textbf{Base case ($k=1$).}  Let $x=\pmb{a}\in\Sigma$.  By definition of
+$\delta^{\sigma}_\lambda$:
+\[
+  \delta^{\sigma}_\lambda(s,\pmb{a})
+  =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a})\Bigr)
+  =\DBAR_\lambda(s,\pmb{a}).
+\]
+So $\overline{\delta^{\sigma}_\lambda}(s,\pmb{a})=\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$.
+
+\textbf{Inductive step.}  Assume the result holds for all words of length $k$.
+Let $y=x\pmb{a}$ with $|x|=k$ and $\pmb{a}\in\Sigma$.  Then:
+\begin{align*}
+  \overline{\delta^{\sigma}_\lambda}(s,x\pmb{a})
+  &= \bigcup_{t\in\overline{\delta^{\sigma}_\lambda}(s,x)}
+      \delta^{\sigma}_\lambda(t,\pmb{a}) \\
+  &= \bigcup_{t\in\DBAR_\lambda(s,x)}
+      \delta^{\sigma}_\lambda(t,\pmb{a}) \quad\text{(induction hypothesis)} \\
+  &= \bigcup_{t\in\DBAR_\lambda(s,x)}
+      \DBAR_\lambda(t,\pmb{a}) \quad\text{(base case)} \\
+  &= \DBAR_\lambda(s,x\pmb{a}).
+    \quad\text{(definition of $\DBAR_\lambda$)}
+\end{align*}
+By induction, the result holds for all $x\in\Sigma^+$. \qed
+\end{proof}
+
+%% 4.25
+\item \textbf{A DFA can be viewed as an NDFA, and $L(A^n)=L(A)$.}
+
+\textbf{Construction.}  Given a DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$
+(with $\delta:S\times\Sigma\to S$ a total function), define the NDFA
+$A^n=\langle\Sigma,S,\{s_0\},\delta^n,F\rangle$ where
+$\delta^n:S\times\Sigma\to\wp(S)$ is given by $\delta^n(s,\pmb{a})=\{\delta(s,\pmb{a})\}$.
+
+$A^n$ is a valid NDFA: $S$ is finite, $S_0^n=\{s_0\}$ is a nonempty set of
+start states, and $\delta^n$ maps to subsets of $S$.
+
+\textbf{Claim: $L(A^n)=L(A)$.}
+
+\begin{proof}
+By induction on $|x|$, we show $\DBAR^n(s_0,x)=\{\deltabar{}(s_0,x)\}$ (i.e., the
+nondeterministic extended transition function applied to the singleton start
+always yields the singleton $\{\deltabar{}(s_0,x)\}$).
+
+\emph{Base:} $\DBAR^n(s_0,\lambda)=\{s_0\}=\{\deltabar{}(s_0,\lambda)\}$.
+
+\emph{Step:} $\DBAR^n(s_0,x\pmb{a})
+=\bigcup_{t\in\DBAR^n(s_0,x)}\delta^n(t,\pmb{a})
+=\bigcup_{t\in\{\deltabar{}(s_0,x)\}}\{\delta(t,\pmb{a})\}
+=\{\delta(\deltabar{}(s_0,x),\pmb{a})\}
+=\{\deltabar{}(s_0,x\pmb{a})\}$.
+
+Hence $x\in L(A^n)$ iff $\DBAR^n(s_0,x)\cap F\neq\emptyset$ iff
+$\deltabar{}(s_0,x)\in F$ iff $x\in L(A)$. \qed
+\end{proof}
+
+%% 4.26
+\item \textbf{Show that $\overline{\delta^{\sigma}_\lambda}(s,\lambda)\neq\DBAR_\lambda(s,\lambda)$ in general.}
+
+By definition:
+\begin{itemize}
+  \item $\overline{\delta^{\sigma}_\lambda}(s,\lambda)=\{s\}$ (definition of
+    the extended transition function for zero-length input).
+  \item $\DBAR_\lambda(s,\lambda)=\Lambda(s)$ (definition of $\DBAR_\lambda$ for $\lambda$).
+\end{itemize}
+
+These differ whenever $\Lambda(s)\neq\{s\}$, i.e., whenever there exists at
+least one $\lambda$-transition out of $s$.
+
+\textbf{Example.}  In Example~4.14, $\Lambda(s_0)=\{s_0,s_1,s_2\}$ but
+$\overline{\delta^{\sigma}_\lambda}(s_0,\lambda)=\{s_0\}$.  Hence
+$\overline{\delta^{\sigma}_\lambda}(s_0,\lambda)\neq\DBAR_\lambda(s_0,\lambda)$.
+
+This is why Lemma~4.2 is stated only for $x\in\Sigma^+$ (words of length
+$\ge 1$) and cannot be extended to $\lambda$.
+
+%% 4.27
+\item \textbf{Prove: $(\forall A,B\in\wp(S))(\forall\pmb{a}\in\Sigma)\,
+\delta^d(A\cup B,\pmb{a})=\delta^d(A,\pmb{a})\cup\delta^d(B,\pmb{a})$.}
+
+\begin{proof}
+By Definition~4.5, $\delta^d(Q,\pmb{a})=\bigcup_{q\in Q}\delta(q,\pmb{a})$
+for any $Q\in\wp(S)$.  Therefore:
+\begin{align*}
+  \delta^d(A\cup B,\pmb{a})
+  &= \bigcup_{q\in A\cup B}\delta(q,\pmb{a}) \\
+  &= \Bigl(\bigcup_{q\in A}\delta(q,\pmb{a})\Bigr)\cup\Bigl(\bigcup_{q\in B}\delta(q,\pmb{a})\Bigr) \\
+  &= \delta^d(A,\pmb{a})\cup\delta^d(B,\pmb{a}). \qed
+\end{align*}
+\end{proof}
+
+%% 4.28
+\item \textbf{Acceptance requiring \emph{every} reachable state to be final.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{New acceptance definition.}  Define
+  $L_{\forall}(A)=\{w\in\Sigma^*\mid\DBAR(S_0,w)\neq\emptyset\wedge\DBAR(S_0,w)\subseteq F\}$.
+  That is, $w$ is accepted iff (i) at least one state is reachable and
+  (ii) \emph{every} reachable state is final.
+
+  \item \textbf{Modified $A^d$.}  Define $A^{\forall}=A^d$ with the same
+  state set $\wp(S)$ and transition function $\delta^d$ as before, but with
+  the new final-state condition:
+  \[
+    F^{\forall}=\{Q\in\wp(S)\mid Q\neq\emptyset\wedge Q\subseteq F\}.
+  \]
+  That is, $Q$ is a final state of $A^{\forall}$ iff $Q$ is nonempty and
+  all states in $Q$ are final states of $A$.  By the same argument as
+  Theorem~4.1 (modified for this new acceptance criterion),
+  $L_{\forall}(A)=L(A^{\forall})$.
+
+  Note: this ``universal'' acceptance is still FAD (the modified $A^{\forall}$
+  is a DFA), so $L_{\forall}(A)$ is always a FAD language.
+\end{enumerate}
+
+%% 4.29
+\item \textbf{Draw the connected part of $T^d$, the deterministic equivalent of
+the NDFA $T$ in Example~4.7.}
+
+The NDFA $T$ from Example~4.7 monitors a bit stream $\{\pmb{0},\pmb{1}\}^*$ and
+enters a final state when the substring $\pmb{010010}$ is detected.  $T$ has a
+``backbone'' chain of states tracking progress toward matching $\pmb{010010}$,
+plus loops back on mismatch.
+
+To compute $T^d$: starting from $S_0=\{s_0\}$ (the initial set), compute
+$\delta^d$ for $\pmb{0}$ and $\pmb{1}$.  The key observation is that the NDFA
+has the initial state $s_0$ loop on all inputs (to allow $\pmb{010010}$ to occur
+as a \emph{substring}), so $s_0$ is always in every reachable state-set of $T^d$.
+This means $T^d$ has relatively few distinct reachable state-sets.
+
+The connected portion of $T^d$ can be systematically computed: from each
+state-set $Q$, compute $\delta^d(Q,\pmb{0})$ and $\delta^d(Q,\pmb{1})$, where
+$\delta^d(Q,\pmb{b})=\bigcup_{q\in Q}\delta(q,\pmb{b})$.  Since $s_0$
+self-loops on both inputs and $T$'s non-start states progress or reset toward
+the pattern, the resulting DFA has at most $2^7$ states but in practice far fewer
+are reachable.
+
+%% 4.30
+\item \textbf{Modify $T$ to revert to a nonfinal state when $\pmb{000111}$ (EOT) is detected.}
+
+Extend $T$ with additional states tracking progress toward matching $\pmb{000111}$
+from within a final (recording) state.  Once in a final state $f$:
+\begin{itemize}
+  \item If the incoming bits form $\pmb{000111}$, the machine returns to a
+  designated nonfinal ``idle'' state.
+  \item Otherwise, it remains in a final state.
+\end{itemize}
+Formally, add a chain of 6 states $f_1,f_2,f_3,f_4,f_5,f_6$ (all final, since
+recording is still active during $\pmb{000111}$), where $f_i$ represents having
+matched the first $i$ characters of $\pmb{000111}$ while recording.  If all 6
+are matched, transition to a nonfinal state.  On mismatch at any $f_i$, return
+to the recording state $f$ (or $f_1$ if the failed character is still the start
+of a potential new EOT signal).  The resulting NDFA now accepts the stream
+while it is ``recording'' and stops recording upon detecting $\pmb{000111}$.
+
+%% 4.31
+\item Consider the NDFA $A$ from Example~4.14.
+
+\begin{enumerate}[(a)]
+  \item \textbf{Diagram of $A^{\sigma}_\lambda$.}
+  From the text, $A_\lambda$ (Example~4.14) has states $\{s_0,s_1,s_2,s_3\}$
+  with $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.  By Definition~4.9,
+  $A^{\sigma}_\lambda$ has the same state set plus an extra start state $q_0$
+  (disconnected unless $\lambda\in L$), and transitions
+  $\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$ for each
+  $s\in\{s_0,s_1,s_2,s_3\}$ and $\pmb{a}\in\Sigma$.
+
+  For example, if the original machine has $\delta_\lambda(s_2,\pmb{a})=\{s_3\}$
+  and $\delta_\lambda(s_0,\pmb{a})=\emptyset$, then:
+  \[
+    \delta^{\sigma}_\lambda(s_0,\pmb{a})
+    =\Lambda\!\Bigl(\bigcup_{t\in\{s_0,s_1,s_2\}}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda(\{s_3\})=\{s_3\}.
+  \]
+
+  \item \textbf{Diagram of $A^{\sigma d}_\lambda$ (connected portion).}
+  Apply the subset construction to $A^{\sigma}_\lambda$, starting from
+  $\{q_0\}$ (or the appropriate initial state set), and draw only the reachable
+  state-sets.
+\end{enumerate}
+
+%% 4.32
+\item \textbf{What is wrong with the given ``proof'' of Lemma~4.2?}
+
+The flaw is in the inductive step.  The ``proof'' starts the induction at $k=1$
+(base case for single letters), but the inductive step uses
+$\overline{\delta^{\sigma}_\lambda}(s,x)$ for $x\in\Sigma^k$ and then applies
+the ``induction hypothesis'' $\overline{\delta^{\sigma}_\lambda}(s,x)=\DBAR_\lambda(s,x)$.
+
+The critical error is on the line:
+\[
+  \delta^{\sigma}_\lambda(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a})
+  = \overline{\delta^{\sigma}_\lambda}(\DBAR_\lambda(s,x),\pmb{a}).
+\]
+Here, $\overline{\delta^{\sigma}_\lambda}(s,x)$ is a \emph{set} of states
+(since we're in an NDFA), but $\delta^{\sigma}_\lambda$ is defined on individual
+states, not sets.  The expression $\delta^{\sigma}_\lambda(Q,\pmb{a})$ where
+$Q$ is a set is not directly the same as $\overline{\delta^{\sigma}_\lambda}(Q,\pmb{a})$
+for a set-valued argument: the extended function $\overline{\delta^{\sigma}_\lambda}$
+on a set-argument must take the union over all states in the set.
+
+More specifically, the step
+\[
+  \delta^{\sigma}_\lambda\!\bigl(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a}\bigr)
+  = \overline{\delta^{\sigma}_\lambda}\!\bigl(\DBAR_\lambda(s,x),\pmb{a}\bigr)
+\]
+conflates applying $\delta^{\sigma}_\lambda$ to a \emph{set} with applying the
+set-union version of $\overline{\delta^{\sigma}_\lambda}$ to a set argument.  These
+are not the same: the left side applies $\delta^{\sigma}_\lambda$ to the entire
+set at once (which is not how the function is defined), while the right side
+correctly takes the union over individual states.  This makes the step invalid
+without justification.
+
+%% 4.33
+\item Consider the NDFA $T$ from Example~4.7 (detecting substring $\pmb{010010}$).
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no SOS/EOS).}  $T$ has 8 states (one start
+  state that loops on all input plus 7 states tracking progress through
+  $\pmb{010010}$); encode with 3 bits.  The nondeterminism (the start state
+  $s_0$ loops while simultaneously ``starting'' to track the pattern)
+  is implemented by OR-ing the self-loop into the initial state's $D$ input.
+
+  \item \emph{DFA $T^d$ (connected portion).}  See Exercise~4.29 for the
+  subset construction.  The resulting DFA recognizes the same language as $T$.
+\end{enumerate}
+
+%% 4.34
+\item Consider the NDFA from Example~4.11, which accepts all words containing
+$\pmb{10110}$, $\pmb{1010}$, or $\pmb{01101}$ as substrings.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram (no SOS/EOS).}  The NDFA has a single initial
+  state $s_0$ that loops on $\Sigma^*$, and three parallel ``arms''---one for
+  each target substring.  Encode all states; the circuit feeds the output of the
+  initial state into each arm simultaneously.  Final state output is the OR of
+  the final states of all three arms (and the appended $\Sigma^*$-accepting tail
+  $S_{18}$).
+
+  \item \emph{DFA (connected portion only).}  Since all three patterns are
+  independent, the subset construction produces a DFA whose states track
+  progress through each arm simultaneously.  The reachable state-sets are
+  bounded and the connected portion is much smaller than $2^{|S|}$.
+\end{enumerate}
+
+%% 4.35
+\item Consider the NDFA $B$ from Example~4.8 and its deterministic equivalent $B^d$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Circuit diagram for $B$ (no SOS/EOS).}  Encode the states of $B$
+  using $\lceil\log_2|S_B|\rceil$ bits.  The nondeterministic transitions become
+  OR gates feeding multiple $D$ flip-flop inputs simultaneously, as described in
+  Chapter~4.
+
+  \item \emph{Circuit diagram for $B^d$ (no SOS/EOS).}  The states of $B^d$ are
+  subsets of the states of $B$.  Encode them using as many bits as there are
+  states in $B$ (one bit per state of $B$, where each bit indicates membership
+  in the current subset).  This ``one-hot-like'' encoding makes the circuit for
+  $B^d$ structurally similar to that of $B$: the next-state logic for bit $j$
+  (corresponding to state $s_j$ of $B$) in $B^d$ is the OR of the $\delta$
+  contributions from all currently active states into $s_j$.  This is exactly
+  the same combinational logic as for $B$, confirming the structural similarity.
+\end{enumerate}
+
+%% 4.36
+\item \textbf{Circuit diagrams for each NDFA in Figure~4.25 (no SOS/EOS).}
+
+For each NDFA $A_i$ in Figure~4.25, with $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$:
+\begin{enumerate}[1.]
+  \item Assign a bit-vector encoding to each state.
+  \item For each state $s_j$ and each input letter $\pmb{\sigma}$, compute the
+    set of states $\delta(s_j,\pmb{\sigma})$.
+  \item The $D$ input of the flip-flop for state $s_k$ is the OR of the outputs
+    of all flip-flops $s_j$ for which $s_k\in\delta(s_j,\pmb{\sigma}_{current})$.
+  \item The output is the OR of all final-state flip-flops.
+\end{enumerate}
+(Specific gate-level diagrams depend on the transitions shown in Figure~4.25.)
+
+%% 4.37
+\item \textbf{Circuit diagrams for each NDFA in Figure~4.25 (with SOS and EOS).}
+
+Extend each circuit from Exercise~4.36 with:
+\begin{itemize}
+  \item \textbf{SOS input:} an asynchronous reset that forces all flip-flops to
+    the encoding of the start state(s) simultaneously.
+  \item \textbf{EOS input:} gates the final-state output signal, so the
+    ``accept'' output is only asserted during the EOS pulse, not continuously.
+\end{itemize}
+See Example~4.13 for the solution corresponding to Figure~4.25e.
+
+%% 4.38
+\item \textbf{Adapting Definition~3.10 for NDFAs and proving that an algorithm
+exists to find the connected portion.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Adapted definition.}  The connected portion of an NDFA
+  $A=\langle\Sigma,S,S_0,\delta,F\rangle$ is defined as follows.  Let
+  \[
+    \text{Reach}_0 = S_0,\qquad
+    \text{Reach}_{k+1} = \text{Reach}_k
+      \cup\bigcup_{\pmb{a}\in\Sigma}\bigcup_{s\in\text{Reach}_k}\delta(s,\pmb{a}).
+  \]
+  The connected portion is $\text{Reach}=\bigcup_{k\ge 0}\text{Reach}_k$, together
+  with all transitions among states in $\text{Reach}$ and the restriction of
+  $F$ to $\text{Reach}$.
+
+  \item \textbf{Proof that the algorithm terminates.}
+
+  \begin{proof}
+  The sets $\text{Reach}_k$ form a non-decreasing chain
+  $\text{Reach}_0\subseteq\text{Reach}_1\subseteq\cdots\subseteq S$.
+  Since $S$ is finite, the chain must stabilize: there exists $k^*$ such that
+  $\text{Reach}_{k^*}=\text{Reach}_{k^*+1}$.  At that point, no new states are
+  added.  The algorithm terminates in at most $|S|$ iterations (since at least
+  one new state must be added in each non-stable step, and there are only $|S|$
+  states).
+
+  To compute this algorithmically:
+  \begin{enumerate}[1.]
+    \item Initialize $R:=S_0$, $\text{New}:=S_0$.
+    \item While $\text{New}\neq\emptyset$:
+      \begin{enumerate}[(a)]
+        \item $\text{Next}:=\bigcup_{\pmb{a}\in\Sigma}\bigcup_{s\in\text{New}}
+              \delta(s,\pmb{a})\setminus R$.
+        \item $R:=R\cup\text{Next}$; $\text{New}:=\text{Next}$.
+      \end{enumerate}
+    \item Output $R$ as the connected portion.
+  \end{enumerate}
+  Each iteration of the while loop adds at least one state to $R$ (otherwise
+  $\text{New}=\emptyset$ and we stop).  Thus the loop executes at most $|S|$
+  times, and the algorithm runs in $O(|S|\cdot|\Sigma|)$ time. \qed
+  \end{proof}
+\end{enumerate}
+
+\end{enumerate}

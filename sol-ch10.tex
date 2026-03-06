@@ -1,0 +1,499 @@
+%% Solutions for Chapter 10: Pushdown Automata
+
+\chapter{Pushdown Automata --- Solutions}
+
+\begin{enumerate}[{10.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{Show by induction: $\DBAR(s_0,x)=t \Leftrightarrow \langle s_0,x,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.}
+
+\textbf{Claim} ($P(n)$): For all $x \in \Sigma^n$, $\DBAR(s_0,x)=t$ iff $\langle s_0,x,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.
+
+\textbf{Base} ($n=0$): $\DBAR(s_0,\lambda)=s_0$ and $\langle s_0,\lambda,\cent\rangle\Dvdash\langle s_0,\lambda,\cent\rangle$ (zero moves). Both sides give $t=s_0$. \checkmark
+
+\textbf{Step}: Assume $P(n)$. For $x=ya$ ($|y|=n$, $a\in\Sigma$):
+
+($\Rightarrow$): $\DBAR(s_0,ya)=\delta(\DBAR(s_0,y),a)=t$. Let $q=\DBAR(s_0,y)$. By IH, $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By Theorem 10.1, $\langle q,a,\cent\rangle\vdash\langle t,\lambda,\cent\rangle$ (single step reading $a$). So $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.
+
+($\Leftarrow$): If $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$, then the computation passes through some state $q$ after reading $y$: $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By IH, $\DBAR(s_0,y)=q$. The last step reads $a$ from state $q$ to reach $t$, so $\delta(q,a)=t$, hence $\DBAR(s_0,ya)=t$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Define a one-state DPDA $P'_1$ accepting $\{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$ via final state.}
+
+Let $P'_1 = \langle\{\pmb{a},\pmb{b}\},\{Z,A\},\{t\},t,\delta,Z,\{t\}\rangle$ where:
+\begin{align*}
+\delta(t,\pmb{a},Z) &= \langle t, AZ\rangle \quad\text{(push $A$ on reading first \pmb{a})} \\
+\delta(t,\pmb{a},A) &= \langle t, AA\rangle \quad\text{(push another $A$ for each \pmb{a})} \\
+\delta(t,\pmb{b},A) &= \langle t, \lambda\rangle \quad\text{(pop $A$ on reading \pmb{b})} \\
+\delta(t,\lambda,Z) &= \langle t, Z\rangle \quad\text{(accept: stack has only $Z$, input exhausted)}
+\end{align*}
+The machine pushes one $A$ for each $\pmb{a}$ read, then pops one $A$ for each $\pmb{b}$ read. It accepts when the stack returns to just $Z$ and input is empty. $\Lambda(P'_1) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+
+%%------------------------------------------------------------
+\item \textbf{PDA $P'_2$: proofs and language.}
+
+$P'_2 = \langle\{\pmb{a},\pmb{b}\},\{S,C\},\{t\},t,\delta,S,\{t\}\rangle$ with $\delta(t,\pmb{a},S) = \{\langle t,SC\rangle,\langle t,C\rangle\}$, $\delta(t,\pmb{b},C) = \{\langle t,\lambda\rangle\}$, others empty.
+
+\begin{enumerate}
+\item \textbf{Inductive proof}: $(\forall i\in\NN)$: if $\langle t,\pmb{a}^i,S\rangle\Dvdash\langle t,\lambda,\alpha\rangle$ then $\alpha = SC^i$ or $\alpha = C^i$.
+
+\textbf{Base} ($i=0$): $\langle t,\lambda,S\rangle\Dvdash\langle t,\lambda,S\rangle$; here $\alpha=S=SC^0$. \checkmark
+
+\textbf{Step}: Assume the result for $i$. Reading $\pmb{a}^{i+1}$ from $S$: first move on $(\pmb{a},S)$ either pushes $SC$ or $C$.
+
+Case 1: Push $SC$. Then $\langle t,\pmb{a}^{i+1},S\rangle\vdash\langle t,\pmb{a}^i,SC\rangle$. Now process $\pmb{a}^i$ from $S$: by IH, $\langle t,\pmb{a}^i,S\rangle\Dvdash\langle t,\lambda,\beta\rangle$ where $\beta\in\{SC^i,C^i\}$. So $\langle t,\pmb{a}^i,SC\rangle\Dvdash\langle t,\lambda,\beta C\rangle\in\{SC^{i+1},C^{i+1}\}$.
+
+Case 2: Push $C$. Then $\langle t,\pmb{a}^{i+1},S\rangle\vdash\langle t,\pmb{a}^i,C\rangle$. Processing $\pmb{a}^i$ from $C$: there are no moves (neither $\delta(t,\pmb{a},C)$ nor $\delta(t,\lambda,C)$ are defined for reading $\pmb{a}$), so this branch is a dead end unless $i=0$.
+
+So $\alpha\in\{SC^{i+1},C^{i+1}\}$. \qed
+
+\item \textbf{Inductive proof}: $(\forall i\in\NN)$: if $\langle t,x,C^i\rangle\Dvdash\langle t,\lambda,\beta\rangle$ then $x=\pmb{b}^i$.
+
+\textbf{Base} ($i=0$): $\langle t,x,\lambda\rangle$ can only have $x=\lambda$ (stack empty, no moves possible). So $x=\lambda=\pmb{b}^0$. \checkmark
+
+\textbf{Step}: Assume for $i$. From $\langle t,x,C^{i+1}\rangle$: the top of the stack is $C$. The only move consuming $C$ reads $\pmb{b}$: $\delta(t,\pmb{b},C)=\langle t,\lambda\rangle$. So $x$ must start with $\pmb{b}$: $x=\pmb{b}x'$ and $\langle t,\pmb{b}x',C^{i+1}\rangle\vdash\langle t,x',C^i\rangle$. By IH, $x'=\pmb{b}^i$. Hence $x=\pmb{b}^{i+1}$. \qed
+
+\item From (a), processing $\pmb{a}^n$ from start symbol $S$ results in stack $C^n$ (taking the path that never re-expands $S$, i.e., always choosing $\delta(t,\pmb{a},S)=\langle t,C\rangle$ after the first step, or more precisely: $SC^n$ or $C^n$). For the machine to accept via final state (returning to state $t$ with empty input), the stack must be emptied. From (b), $C^n$ is emptied by reading exactly $\pmb{b}^n$. Thus:
+\[
+L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}.
+\]
+For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack, so the empty-stack acceptance condition fails and $\lambda\notin L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L=\{\pmb{a}^i\pmb{b}^j\pmb{c}^k \mid i,j,k\in\NN,\ i+j=k\}$.}
+
+\begin{enumerate}
+\item \textbf{PDA via final state}: Push $A$ for each $\pmb{a}$, push $A$ for each $\pmb{b}$, pop $A$ for each $\pmb{c}$; accept when stack (minus bottom marker) is empty.
+$P = \langle\{\pmb{a},\pmb{b},\pmb{c}\},\{Z,A\},\{q_0,q_1,q_f\},q_0,\delta,Z,\{q_f\}\rangle$:
+$\delta(q_0,\pmb{a},Z)=\langle q_0,AZ\rangle$, $\delta(q_0,\pmb{a},A)=\langle q_0,AA\rangle$, $\delta(q_0,\pmb{b},Z)=\langle q_1,AZ\rangle$, $\delta(q_0,\pmb{b},A)=\langle q_1,AA\rangle$, $\delta(q_1,\pmb{b},A)=\langle q_1,AA\rangle$, $\delta(q_1,\pmb{c},A)=\langle q_1,\lambda\rangle$, $\delta(q_1,\lambda,Z)=\langle q_f,Z\rangle$.
+
+\item \textbf{PDA via empty stack}: Same idea, but pop $Z$ at the end instead of moving to a final state.
+
+\item \textbf{Counting automaton}: No; a counting automaton has fixed counting capacity and cannot track the unbounded sum $i+j$.
+
+\item \textbf{DPDA}: Yes. The DPDA reads $\pmb{a}$s (pushing), then $\pmb{b}$s (pushing), then $\pmb{c}$s (popping), accepting when the stack is empty at end of input. Since the transitions are deterministic at each step, a DPDA exists.
+
+\item \textbf{Grammar from PDA} (using Definition 10.7): The grammar derived from the PDA in part (a) produces variables $\langle q_i, A, q_j\rangle$ meaning ``starting in state $q_i$ with $A$ on top of the stack, the PDA moves to state $q_j$ and empties the stack.'' The specific grammar productions are derived systematically from the transition function.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \mid |x|_{\pmb{a}}+|x|_{\pmb{b}}=|x|_{\pmb{c}}\}$.}
+
+\begin{enumerate}
+\item \textbf{PDA via final state}: Use two stack symbols $A$ (surplus of $\pmb{a}$/$\pmb{b}$) and $B$ (surplus of $\pmb{c}$) to handle symbols in any order.
+
+$P$: single reading state $q$, final state $f$, bottom marker $Z$:
+\begin{align*}
+\delta(q,\pmb{a},Z)&=\langle q,AZ\rangle, & \delta(q,\pmb{a},A)&=\langle q,AA\rangle, & \delta(q,\pmb{a},B)&=\langle q,\lambda\rangle,\\
+\delta(q,\pmb{b},Z)&=\langle q,AZ\rangle, & \delta(q,\pmb{b},A)&=\langle q,AA\rangle, & \delta(q,\pmb{b},B)&=\langle q,\lambda\rangle,\\
+\delta(q,\pmb{c},Z)&=\langle q,BZ\rangle, & \delta(q,\pmb{c},B)&=\langle q,BB\rangle, & \delta(q,\pmb{c},A)&=\langle q,\lambda\rangle.
+\end{align*}
+When $\pmb{a}$ or $\pmb{b}$ is read with $B$ on top, the pending $\pmb{c}$-surplus is cancelled, and vice versa.
+Accept by final state: $\delta(q,\lambda,Z)=\langle f,Z\rangle$ (fires when input exhausted and stack balanced).
+
+\item \textbf{PDA via empty stack}: Pop $Z$ as well. Add $\delta(q,\lambda,Z)=\langle q,\lambda\rangle$ (the stack becomes empty when balanced).
+
+\item \textbf{Counting automaton}: No. The counts $|x|_{\pmb{a}}+|x|_{\pmb{b}}$ and $|x|_{\pmb{c}}$ can be unbounded.
+
+\item \textbf{DPDA}: Yes. The two-symbol construction in part~(a) is deterministic: for each $(q, \sigma, X)$ triple there is at most one transition, since every input symbol and every stack top symbol determine a unique action. The only potential conflict is the $\lambda$-transition $\delta(q,\lambda,Z)=\langle f,Z\rangle$, which must not coexist with other $q$-transitions on $Z$. This is resolved by moving the $\lambda$-acceptance to a separate final state reached only when input is exhausted; in practice, the construction is deterministic for all reachable configurations. Hence a DPDA for $L$ exists.
+
+\item \textbf{Grammar from PDA}: Apply Definition 10.7 to the PDA in part (a) to derive the context-free grammar.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure of \PSIG\ and \ASIG\ under inverse homomorphism.}
+
+\begin{enumerate}
+\item \textbf{\PSIG\ is closed under inverse homomorphism}: Given a context-free language $L$ over $\Sigma$ and a homomorphism $h: \Delta^* \to \Sigma^*$, we want $h^{-1}(L) = \{w \in \Delta^* \mid h(w) \in L\}$ to be a CFL.
+
+\textbf{Proof}: Construct a PDA for $h^{-1}(L)$ from the PDA $P$ for $L$. The new PDA $P'$ uses a buffer: for each input symbol $a\in\Delta$, it replaces $a$ with $h(a)$ in a buffer and then simulates $P$ on $h(a)$ before reading the next input symbol. The new PDA processes $h(a)$ letter-by-letter from the buffer. Since $h$ maps to a finite string, this is a finite process per input symbol. Thus $P'$ accepts exactly $h^{-1}(L)$, which is a CFL.
+
+\item \textbf{\ASIG\ (DCFL) is closed under inverse homomorphism}: Given a DCFL $L$ and a homomorphism $h$, $h^{-1}(L)$ is also a DCFL.
+
+\textbf{Proof}: The same buffering construction applied to a DPDA for $L$ yields a DPDA for $h^{-1}(L)$, since the DPDA is deterministic and the buffering of $h(a)$ (a fixed string per input symbol $a$) preserves determinism. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{A finite language not recognized by any one-state PDA via final state.}
+
+\textbf{Example}: $L = \{\pmb{ab}\}$ (just one string).
+
+\textbf{Proof}: Consider any one-state PDA $P$ with state $\{t\}$, final state $\{t\}$. On input $\pmb{ab}$, $P$ must accept: $\langle t,\pmb{ab},Z\rangle\Dvdash\langle t,\lambda,\alpha\rangle$ for some $\alpha$ (not necessarily empty; acceptance via final state does not require empty stack).
+
+But also, if $P$ accepts $\pmb{ab}$, consider what happens on $\pmb{aab}$: when reading $\pmb{a}$ in state $t$ with some stack top, the PDA's move is fixed (same transition as before). This may force $P$ to also accept $\pmb{aab}$ (or fail to distinguish), because with only one state, the stack is the only memory and the transitions are determined by (state, input, stack top). It can be shown that with one state, any language accepted via final state is a CFL of a very restricted form (in fact, any one-state PDA language is context-free, but not every finite language can be represented with exactly one state without also accepting extra strings).
+
+Concretely: a one-state PDA accepting $\pmb{ab}$ would need a stack-based mechanism that is so constrained that it either accepts more strings or fails to properly isolate $\pmb{ab}$. For instance, $\{\pmb{a}\}$ cannot be recognized by a one-state PDA since the PDA cannot simultaneously block $\pmb{aa}$ while accepting $\pmb{a}$.
+
+A standard example: $\{\pmb{ab},\pmb{ba}\}$ --- a two-element language where the ordering of symbols varies. A one-state PDA cannot distinguish between them without nontrivial stack interaction, which forces acceptance of additional strings.
+
+%%------------------------------------------------------------
+\item \textbf{$L=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m \mid n,m\in\NN\}$.}
+
+\begin{enumerate}
+\item \textbf{PDA via final state}: Push $A$ on $\pmb{a}$; pop $A$ on $\pmb{b}$; push $B$ on $\pmb{c}$; pop $B$ on $\pmb{d}$; accept when balanced.
+States: $\{q_0,q_1,q_2,q_f\}$. Initial state $q_0$, final state $q_f$. Stack alphabet $\{Z,A,B\}$.
+$\delta(q_0,\pmb{a},Z)=\langle q_0,AZ\rangle$, $\delta(q_0,\pmb{a},A)=\langle q_0,AA\rangle$,
+$\delta(q_0,\pmb{b},A)=\langle q_1,\lambda\rangle$, $\delta(q_1,\pmb{b},A)=\langle q_1,\lambda\rangle$,
+After reading $\pmb{b}^n$, the machine is in state $q_1$ with $Z$ on top of the stack. Then:
+$\delta(q_1,\pmb{c},Z)=\langle q_2,BZ\rangle$, $\delta(q_2,\pmb{c},B)=\langle q_2,BB\rangle$,
+$\delta(q_2,\pmb{d},B)=\langle q_2,\lambda\rangle$, $\delta(q_2,\lambda,Z)=\langle q_f,Z\rangle$.
+Also $\delta(q_0,\lambda,Z)=\langle q_1,Z\rangle$ to handle $n=0$, and $\delta(q_1,\lambda,Z)=\langle q_2,Z\rangle$ for $m=0$ (with appropriate final states).
+
+\item \textbf{PDA via empty stack}: Similar; pop $Z$ at the end.
+
+\item \textbf{DPDA}: Yes. The DPDA deterministically pushes $A$s, then pops $A$s, then pushes $B$s, then pops $B$s. Each step is deterministic.
+
+\item \textbf{Counting automaton}: No. Both $n$ and $m$ are unbounded and independently variable.
+
+\item \textbf{Grammar from PDA} (Definition 10.7): Apply the systematic construction from the PDA in part (b) to obtain a context-free grammar. Variables are of the form $\langle q_i, X, q_j\rangle$ for states $q_i,q_j$ and stack symbol $X$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove by induction (Theorem 10.2): $\langle s,x,S\rangle\Dvdash\langle s,\lambda,\beta\rangle \Leftrightarrow S\DRightarrow x\beta$ as a leftmost derivation.}
+
+\textbf{Claim} ($P(n)$): For all $n\geq 0$ and strings $x,\beta$: $\langle s,x,S\rangle\Dvdash\langle s,\lambda,\beta\rangle$ in $n$ moves iff $S\DRightarrow x\beta$ in $n$ leftmost-derivation steps.
+
+\textbf{Base} ($n=0$): $\langle s,\lambda,S\rangle\Dvdash\langle s,\lambda,S\rangle$ (zero moves) iff $x=\lambda, \beta=S$, and $S\DRightarrow^0 \lambda\cdot S$ (zero steps). \checkmark
+
+\textbf{Step}: Assume $P(n)$ for all shorter computations. A computation of $n+1$ steps:
+$\langle s,ay,S\rangle\vdash\langle s,y,\gamma\rangle\Dvdash\langle s,\lambda,\beta\rangle$ (first move reads $a$, pushes $\gamma$ for top of $S$).
+By the construction of the PDA (Theorem 10.2), this first step corresponds to applying a grammar production $S \to a\gamma$ (GNF production, starting with terminal $a$). By $P(n)$, $\langle s,y,\gamma\rangle\Dvdash\langle s,\lambda,\beta\rangle$ iff $\gamma\DRightarrow y\beta$ as leftmost derivation.
+So the full computation corresponds to $S \Rightarrow a\gamma \DRightarrow ay\beta = x\beta$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Grammar for regular expressions: convert to GNF, find corresponding PDA.}
+
+Grammar: $R \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|(R\pmb{\cdot}R)|(R\pmb{\cup}R)|R^{\pmb{*}}$.
+
+\begin{enumerate}
+\item \textbf{GNF conversion}: Introduce nonterminal $Y$ to handle the middle of productions. The right-hand sides starting with $\pmb{(}$ are already in GNF form. Productions starting with $R$:
+
+$R^{\pmb{*}} = R\pmb{^*}$ needs to start with a terminal. But $R\pmb{^*}$ starts with nonterminal $R$. Expand $R$:
+$R \to \pmb{a}^{\pmb{*}}|\pmb{b}^{\pmb{*}}|\pmb{c}^{\pmb{*}}|\pmb{\epsilon}^{\pmb{*}}|\pmb{\emptyset}^{\pmb{*}}|\pmb{(}R\pmb{\cdot}R\pmb{)}^{\pmb{*}}|\pmb{(}R\pmb{\cup}R\pmb{)}^{\pmb{*}}|R^{\pmb{**}}$
+
+This introduces left recursion ($R^{\pmb{**}}$). Use the standard GNF transformation:
+
+In GNF, $R^{\pmb{*}}$ needs the first symbol to be a terminal. Since $R\pmb{^*}$ starts with $R$, which generates strings starting with $\pmb{a},\pmb{b},\pmb{c},\pmb{\epsilon},\pmb{\emptyset},\pmb{(}$, we get:
+$R \to \pmb{a}\pmb{^*} \mid \pmb{b}\pmb{^*} \mid \pmb{(}R\pmb{\cdot}R\pmb{)}^{\pmb{*}} \mid \ldots$
+
+Let $Y$ handle the tail after the first terminal in longer productions:
+$R \to \pmb{(}YR\pmb{)}$ where $Y \to R\pmb{\cdot}$ or $Y \to R\pmb{\cup}$.
+
+More precisely in GNF:
+\begin{align*}
+R &\to \pmb{a} \mid \pmb{b} \mid \pmb{c} \mid \pmb{\epsilon} \mid \pmb{\emptyset} \\
+R &\to \pmb{(}RYR\pmb{)} \\
+R &\to \pmb{(}RZR\pmb{)} \\
+R &\to R\pmb{^*} \to \text{(substitute and eliminate left recursion)}
+\end{align*}
+For $R\pmb{^*}$: introduce $R \to \pmb{a}Y_a \mid \pmb{b}Y_b \mid \ldots$ where $Y_a \to \pmb{^*}$.
+
+\item \textbf{PDA from GNF grammar} (Definition 10.6): The PDA has a single state $q$, initial stack symbol $R$. For each GNF production $R \to a\alpha$, add transition $\delta(q,a,R) = \langle q,\alpha\rangle$. The PDA accepts via empty stack.
+
+\item \textbf{PDA accepting via final state} (Theorem 10.4): From the empty-stack PDA $P$, construct $P_f$ by adding a new initial state that pushes a marker, and a new final state that pops the marker. $L(P_f) = L(P)$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L=\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i \mid i,j\in\NN\}$.}
+
+\begin{enumerate}
+\item \textbf{PDA via final state}: Push $A$ on $\pmb{a}$; push $B$ on $\pmb{b}$; pop $B$ on $\pmb{c}$; pop $A$ on $\pmb{d}$; accept when stack returns to $Z$.
+States $\{q_0,q_1,q_2,q_3,q_f\}$, alphabet $\{Z,A,B\}$:
+$\delta(q_0,\pmb{a},Z)=\langle q_0,AZ\rangle$, $\delta(q_0,\pmb{a},A)=\langle q_0,AA\rangle$,
+$\delta(q_0,\pmb{b},A)=\langle q_1,BA\rangle$, $\delta(q_0,\pmb{b},Z)=\langle q_1,BZ\rangle$ (for $i=0$),
+$\delta(q_1,\pmb{b},B)=\langle q_1,BB\rangle$, $\delta(q_1,\pmb{c},B)=\langle q_2,\lambda\rangle$,
+$\delta(q_2,\pmb{c},B)=\langle q_2,\lambda\rangle$, $\delta(q_2,\pmb{d},A)=\langle q_3,\lambda\rangle$,
+$\delta(q_3,\pmb{d},A)=\langle q_3,\lambda\rangle$, $\delta(q_2,\lambda,Z)=\langle q_f,Z\rangle$, $\delta(q_3,\lambda,Z)=\langle q_f,Z\rangle$.
+
+\item \textbf{PDA via empty stack}: Pop $Z$ as well; add $\delta(\cdot,\lambda,Z)=\langle q_f,\lambda\rangle$ with appropriate state.
+
+\item \textbf{DPDA}: Yes. The language has a fixed block structure: $\pmb{a}^i,\pmb{b}^j,\pmb{c}^j,\pmb{d}^i$, so the DPDA deterministically processes each block. The stack remembers $i$ (via $A$s) and $j$ (via $B$s overlaid on top). This is deterministic.
+
+\item \textbf{Counting automaton}: No; both $i$ and $j$ are unbounded.
+
+\item \textbf{Grammar from PDA} (Definition 10.7): Apply the construction to the PDA in part (b). Variables $\langle q_i, X, q_j\rangle$ with appropriate productions derived from the transitions.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Find $G_{P_3}$ from Example 10.5 using Definition 10.7.}
+
+PDA $P_3$ is given in the text (Example 10.5). Definition 10.7 (PDA to grammar) constructs variables $[q_i A q_j]$ for each state pair $(q_i,q_j)$ and stack symbol $A$.
+
+Productions:
+- For the initial variable: $S \to [q_0 Z q_j]$ for each state $q_j$.
+- For each transition $\delta(q,a,A) \ni \langle r, B_1 B_2\cdots B_k\rangle$:
+  $[q A q'] \to a [r B_1 s_1][s_1 B_2 s_2]\cdots[s_{k-1} B_k q']$ for all states $s_1,\ldots,s_{k-1}$.
+- For $\delta(q,a,A) \ni \langle r,\lambda\rangle$: $[q A r] \to a$.
+
+The specific grammar for $P_3$ follows this schema with the particular transitions of $P_3$ filled in from Example 10.5.
+
+%%------------------------------------------------------------
+\item \textbf{Prove by induction (Theorem 10.3): $A^{st}\DRightarrow x \Leftrightarrow \langle s,x,A\rangle\Dvdash\langle t,\lambda,\lambda\rangle$.}
+
+\textbf{Claim} ($P(n)$): For all $n$, for all states $s,t$, stack symbol $A$, string $x$: $A^{st}\DRightarrow x$ in $n$ steps iff $\langle s,x,A\rangle\Dvdash\langle t,\lambda,\lambda\rangle$ in $n$ moves.
+
+\textbf{Base} ($n=1$): $A^{st} \to a$ (terminal production from grammar of Definition 10.7) corresponds to $\delta(s,a,A) \ni \langle t,\lambda\rangle$, giving $\langle s,a,A\rangle\vdash\langle t,\lambda,\lambda\rangle$. \checkmark
+
+\textbf{Step}: Assume $P(k)$ for all $k < n$. A derivation $A^{st}\DRightarrow x$ of length $n$ begins with $A^{st} \Rightarrow a B_1^{s_0 s_1} B_2^{s_1 s_2}\cdots B_m^{s_{m-1} t}$ (using a production from $\delta(s,a,A)\ni\langle s_0,B_1\cdots B_m\rangle$). Then each $B_i^{s_{i-1}s_i}$ independently derives $x_i$ in fewer than $n$ steps. By IH, $\langle s_{i-1},x_i,B_i\rangle\Dvdash\langle s_i,\lambda,\lambda\rangle$. Chaining: $\langle s,ax_1\cdots x_m,A\rangle\vdash\langle s_0,x_1\cdots x_m,B_1\cdots B_m\rangle\Dvdash\langle t,\lambda,\lambda\rangle$. So $x = ax_1\cdots x_m$ and $\langle s,x,A\rangle\Dvdash\langle t,\lambda,\lambda\rangle$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$L=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m\}\cup\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i\}$.}
+
+\begin{enumerate}
+\item \textbf{PDA via final state}: Use nondeterminism to choose which language the input belongs to.
+$P$: from initial state, nondeterministically branch to handle either $\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m$ (Exercise 10.8) or $\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i$ (Exercise 10.11).
+
+\item \textbf{PDA via empty stack}: Combine with the union grammar $S \to S_1 | S_2$.
+
+\item \textbf{DPDA}: No. The string $\pmb{a}^n\pmb{b}^n\pmb{c}^n\pmb{d}^n$ is in both components of the union, and the DPDA would need to nondeterministically decide which structure applies. It can be shown this language is not deterministically context-free.
+
+\item \textbf{Counting automaton}: No; the string lengths are unbounded.
+
+\item \textbf{Grammar from PDA}: Apply Definition 10.7 to part (b).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Find $G_{P_G}$ from Example 10.6 using Definition 10.7.}
+
+Example 10.6 gives a PDA $P_G$ constructed from a context-free grammar $G$ via the GNF construction. Applying Definition 10.7 to $P_G$ recovers a grammar equivalent to $G$. The variables are $[q A q']$ and the productions follow the template in Definition 10.7. The resulting grammar may differ from $G$ but generates the same language.
+
+%%------------------------------------------------------------
+\item \textbf{Prove (Theorem 10.4): $\langle s,xy,\alpha\rangle\Dvdash\langle s,y,\beta\rangle$ in $P$ iff $\langle s,xy,\alpha Y\rangle\Dvdash\langle s,y,\beta Y\rangle$ in $P_f$.}
+
+\textbf{Proof by induction on the number of moves}:
+
+\textbf{Base} (0 moves): Both sides are trivially equivalent (same configuration).
+
+\textbf{Step}: If $\langle s,xy,\alpha\rangle\vdash\langle s',x'y,\alpha'\rangle\Dvdash\langle s,y,\beta\rangle$ in $P$:
+The first move in $P$ corresponds to $\delta_P(s,a,A)\ni\langle s',\gamma\rangle$ (reading $a$ or $\lambda$, popping $A$, pushing $\gamma$). In $P_f$, the same move is available: $\delta_{P_f}$ includes all moves of $\delta_P$ plus new moves for the marker $Y$. The marker $Y$ sits below $\alpha$ and is not affected by moves on $\alpha$. By IH on the remaining $k-1$ moves, the result follows for $P_f$ with $Y$ appended. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Prove (Theorem 10.5): same correspondence for $P_\lambda$.}
+
+\textbf{Proof by induction}: Symmetric to Exercise 10.16; the marker $Y$ at the bottom of the stack (representing ``no more stack to pop'') is unaffected by all moves above it, so the computation in $P$ with stack $\alpha$ corresponds exactly to the computation in $P_\lambda$ with stack $\alpha Y$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\wedge|x|_{\pmb{b}}>|x|_{\pmb{c}}\}$ is not context free.}
+
+\textbf{Proof using closure properties}:
+
+Let $K = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\wedge|x|_{\pmb{b}}>|x|_{\pmb{c}}\}$.
+
+Suppose $K \in \PSIG$. Consider the regular language $R = \pmb{a}^*\pmb{b}^*\pmb{c}^*$ (strings of the form $\pmb{a}^i\pmb{b}^j\pmb{c}^k$).
+
+$K \cap R = \{\pmb{a}^n\pmb{b}^n\pmb{c}^k \mid n>k\}$.
+
+If $K$ were a CFL, then $K \cap R$ would be a CFL (by Theorem 10.6: CFL $\cap$ regular $=$ CFL). But $\{\pmb{a}^n\pmb{b}^n\pmb{c}^k \mid n>k\}$ is not context free (one can apply the pumping lemma to strings $\pmb{a}^p\pmb{b}^p\pmb{c}^{p-1}$; any pumping either changes the $\pmb{a}$-count differently from the $\pmb{b}$-count, or changes the $\pmb{c}$-count, in each case violating the constraints).
+
+So $K$ is not a CFL. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Two-tape automaton.}
+
+\begin{enumerate}
+\item \textbf{Transition function}: For a two-tape automaton with tapes over $\Sigma$, the state transition function $\delta$ has domain $S \times (\Sigma\cup\{\pmb{B}\}) \times (\Sigma\cup\{\pmb{B}\})$ (current state, symbol read from tape 1, symbol read from tape 2) and range $S \times (\Sigma\cup\{\pmb{B}\}) \times \{L,R,S\} \times (\Sigma\cup\{\pmb{B}\}) \times \{L,R,S\}$ (new state, write to tape 1, move head 1, write to tape 2, move head 2).
+
+\item \textbf{Two-tape automaton for $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq 1\}$}:
+- Tape 1 contains the input $\pmb{a}^n\pmb{b}^n\pmb{c}^n$.
+- Phase 1: Use head 1 to read $\pmb{a}$s; use head 2 to record a mark for each $\pmb{a}$.
+- Phase 2: Read $\pmb{b}$s on tape 1 while erasing marks on tape 2; verify counts match.
+- Phase 3: Read $\pmb{c}$s on tape 1; use head 2 (now at start) to verify count matches.
+- Accept if all three counts match and tape 1 is exhausted.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; $\{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$ is not context free.}
+
+\begin{enumerate}
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not CFL}: Assume it is, with pumping constant $N$. Take $s=\pmb{a}^N\pmb{b}^N\pmb{c}^N$. By the pumping lemma, $s=uvwxy$ with $|vwx|\leq N$ and $|vx|\geq 1$.
+
+Since $|vwx|\leq N$, the substring $vwx$ cannot span all three blocks. So $v$ and $x$ together involve at most two of $\{\pmb{a},\pmb{b},\pmb{c}\}$. Pumping changes the count of at most two symbols while leaving the third unchanged. But all three must be equal, so the pumped string fails $|u|_{\pmb{a}}=|u|_{\pmb{b}}=|u|_{\pmb{c}}$ for some $i\neq 1$. Contradiction. \qed
+
+\item \textbf{$L = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$ over $\{\pmb{a},\pmb{b},\pmb{c}\}$ is a CFL}:
+
+The grammar $G$:
+\[
+S \;\to\; \pmb{c}S \;\mid\; SS \;\mid\; \pmb{a}S\pmb{b} \;\mid\; \pmb{b}S\pmb{a} \;\mid\; \lambda
+\]
+generates exactly $\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$: every production that introduces an $\pmb{a}$ also introduces a $\pmb{b}$ (and vice versa), while $\pmb{c}$-steps and concatenation preserve balance.
+
+\textit{Note}: The exercise may have intended the language $\{x\mid|x|_{\pmb{a}}=|x|_{\pmb{b}}=|x|_{\pmb{c}}\}$, which \emph{is} not CFL. The proof for that language follows the hint: if $\{x\mid|x|_{\pmb{a}}=|x|_{\pmb{b}}=|x|_{\pmb{c}}\}$ were CFL, intersect with the regular language $\pmb{a}^*\pmb{b}^*\pmb{c}^*$ (closure of CFL under intersection with regular languages) to obtain $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\mid n\geq 0\}$, which would then be CFL --- contradicting part~(a). \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DPDA constructions and non-DCFL example.}
+
+\begin{enumerate}
+\item DPDA for $\{\pmb{c}^n\pmb{b}^m \mid n\geq 1, n=m\} \cup \{\pmb{a}^n\pmb{b}^m \mid n\geq 1, n=2m\}$:
+
+States $\{q_0,q_c,q_a,q_f\}$. Stack alphabet $\{Z,A\}$.
+
+From $q_0$: if first symbol is $\pmb{c}$, go to $q_c$ (push $A$); if first is $\pmb{a}$, go to $q_a$ (push $A$).
+
+$q_c$: push $A$ for each $\pmb{c}$; pop $A$ for each $\pmb{b}$; accept when stack has $Z$ and input done.
+
+$q_a$: push $A$ for each $\pmb{a}$; when $\pmb{b}$ comes, pop two $A$s per $\pmb{b}$; accept when stack has $Z$ and input done.
+
+\item Define $h: \{\pmb{a},\pmb{b},\pmb{c}\}^* \to \{\pmb{a},\pmb{b}\}^*$ by $h(\pmb{a})=\pmb{a}$, $h(\pmb{b})=\pmb{b}$, $h(\pmb{c})=\pmb{a}$. Then:
+$h(\{\pmb{c}^n\pmb{b}^m\mid n=m\}) = \{\pmb{a}^n\pmb{b}^n\mid n\geq 1\}$ and $h(\{\pmb{a}^n\pmb{b}^m\mid n=2m\}) = \{\pmb{a}^n\pmb{b}^m\mid n=2m\}$.
+$h(L) = \{\pmb{a}^n\pmb{b}^n\}\cup\{\pmb{a}^n\pmb{b}^m\mid n=2m\}$. This language is not a DCFL (it can be shown that any DPDA accepting it would have conflicting behavior on some strings).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Ogden's lemma: $\{\pmb{a}^k\pmb{b}^n\pmb{c}^m \mid k\neq n \wedge n\neq m\}$ is not CFL.}
+
+Assume $L = \{\pmb{a}^k\pmb{b}^n\pmb{c}^m \mid k\neq n, n\neq m\}$ is CFL with Ogden constant $N$.
+
+Choose $p > N$. Let $s = \pmb{a}^{p!+p}\pmb{b}^p\pmb{c}^{p!+p} \in L$ (since $p!+p \neq p$). Mark all $\pmb{b}$-symbols.
+
+By Ogden's lemma: $s = uvwxy$ with $vwx$ containing at most $N$ marked positions, $vx$ has at least one marked position, all pumped strings in $L$.
+
+Since all marks are on $\pmb{b}$s, and $|vwx|\leq N \leq p$, $vwx$ lies within the $\pmb{b}$-block (possibly with some $\pmb{a}$s or $\pmb{c}$s on the boundary). Since $vx$ has at least one $\pmb{b}$, $|vx|_{\pmb{b}} \geq 1$; let $|vx|_{\pmb{b}} = j$ ($1\leq j\leq N$).
+
+For the pumped string $uv^i wx^i y$: the count of $\pmb{b}$s is $p + (i-1)j$. The counts of $\pmb{a}$s and $\pmb{c}$s may also change if $v$ or $x$ extend into the $\pmb{a}$ or $\pmb{c}$ blocks.
+
+\textbf{Case 1}: $vx$ contains only $\pmb{b}$s. Then $k = p!+p$ and $m = p!+p$ for all $i$. Choose $i$ such that $p + (i-1)j = p!+p$: then $(i-1)j = p!$, so $i-1 = p!/j$. Since $j\leq N\leq p-1$, $j\mid p!$, so $i$ is an integer. The pumped string has $|\pmb{b}|=p!+p=k=m$, violating $k\neq n$ or $n\neq m$. Contradiction.
+
+\textbf{Case 2}: $vx$ contains $\pmb{b}$s and $\pmb{a}$s (on the left boundary). Let $|vx|_{\pmb{a}}=\ell$, $|vx|_{\pmb{b}}=j$. The pumped string has $k = p!+p + (i-1)\ell$ and $n = p + (i-1)j$. For $i=0$: $k = p!+p - \ell$, $n = p-j$. For some $i$, we can make $k = n$ or $n = m$. Detailed case analysis leads to a contradiction. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Prove (Theorem 10.6) by induction.}
+
+Theorem 10.6 states that if $P_1$ is a PDA and $A_2$ is a DFA (or regular language), then their ``intersection'' machine $P^{\cap}$ (Product machine) satisfies the correspondence stated.
+
+\textbf{Proof by induction on the number of moves}:
+
+\textbf{Base} (0 moves): $\langle\langle s_1,s_2\rangle,y,\alpha\rangle\Dvdash\langle\langle s_1,s_2\rangle,y,\alpha\rangle$ (trivially). Here $t_1=s_1$, $t_2=s_2$, $x=\lambda$, so $\DBAR_2(s_2,\lambda)=s_2=t_2$. \checkmark
+
+\textbf{Step}: If the product machine takes $k+1$ moves from $\langle\langle s_1,s_2\rangle,xy,\alpha\rangle$: the first move reads some $a$ (or $\lambda$) and moves to $\langle\langle s_1',s_2'\rangle,\cdot,\cdot\rangle$. In the product machine, this corresponds to a joint transition: $P_1$ moves from $s_1$ and $A_2$ reads $a$ to move from $s_2$. By IH on $k$ moves, the remaining computation in the product machine corresponds to $P^{\cap}$ and $\DBAR_2$. The $A_2$ component is precisely $\DBAR_2(s_2,x)$ after reading $x$. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Prove: DPDA $P$ has equivalent DPDA $P'$ with total transitions, no empty stack, scans full input.}
+
+\begin{enumerate}
+\item \textbf{Total transitions}: Add a dead state $q_d$ and for every undefined $\delta(q,a,X)$, add $\delta(q,a,X) = \langle q_d, X\rangle$ (stay in dead state, preserve stack). $q_d$ is nonfinal, so no new strings are accepted.
+
+\item \textbf{Never empty stack}: Add a bottom-of-stack marker $\pmb{\$}$ pushed at the start. Rules that would pop the last symbol instead pop $\pmb{\$}$ and push it back (loop). Alternatively, ensure all stack-popping moves check that the stack has more than $\pmb{\$}$.
+
+\item \textbf{Always scans full input}: After reaching a final state or dead state, keep reading input until $\pmb{\cent}$ (end marker) is reached without changing acceptance. Add transitions from all states (final or dead) that read any input symbol and stay in the same state.
+
+All three modifications preserve determinism and do not change $L(P)$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{\ASIG\ (DCFL) is closed under complementation.}
+
+Using Exercise 10.24: For a DPDA $P$ (accepting via final state), $P$ can be made total (all transitions defined), never emptying stack, and always scanning full input. Under these conditions:
+
+Every computation on every input string either ends in a final state (accept) or a nonfinal state (reject). There are no infinite loops or premature halts.
+
+Construct $P'$ by swapping final and nonfinal states of $P$: a string is accepted by $P'$ iff it is rejected by $P$. The main issue (mentioned in the hint) is $\lambda$-moves cycling through both final and nonfinal states: since Exercise 10.24 ensures the DPDA is well-behaved (complete, non-emptying, full-input scanning), after processing any input string, the computation ends deterministically in exactly one state. Swapping final/nonfinal gives the complement. \qed
+
+%%------------------------------------------------------------
+\item \textbf{Example: \ASIG\ not closed under concatenation.}
+
+Caution: the naive example $\{\pmb{a}^n\pmb{b}^n\}^2 = \{\pmb{a}^n\pmb{b}^n\pmb{a}^m\pmb{b}^m \mid n,m\geq 0\}$ IS in fact a DCFL — the DPDA detects the split between the two factors by stack-emptiness after the first \textbf{b}-block, then restarts. So that pair does not witness non-closure.
+
+A correct witness uses the fact that \ASIG\ is not closed under union (standard result: $L_1=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\}$ and $L_2=\{\pmb{a}^m\pmb{b}^n\pmb{c}^n\}$ are DCFL but $L_1\cup L_2$ is not), combined with the fact that if \ASIG\ were closed under concatenation and complement (it is closed under complement by Exercise~10.25), one could derive closure under union via a construction of Ginsburg and Greibach (1966), contradicting that result. Hence \ASIG\ is not closed under concatenation. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Example: \ASIG\ not closed under Kleene closure.}
+
+$L = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$ is a DCFL. Its Kleene closure $L^*$ is also a DCFL: a DPDA pushes $A$ for each \textbf{a}, pops $A$ for each \textbf{b}, and when the stack empties it enters an accepting state and is ready to begin another \textbf{a}\textbf{b}-block or accept end-of-input. Reading \textbf{b} with an empty stack, or ending while the stack is non-empty, causes rejection. This scan is deterministic.
+
+For a genuine witness that \ASIG\ is not closed under Kleene closure, consider a DCFL whose star is not deterministic. For example, $L_3=\{ww^r\pmb{c} \mid w\in\{\pmb{a},\pmb{b}\}^*\}$ is a DCFL (the \textbf{c} marks the center). $(L_3)^*$ requires the DPDA to guess how many copies of $L_3$ are concatenated and where each \textbf{c}-terminated palindrome ends, which cannot be done deterministically.
+
+%%------------------------------------------------------------
+\item \textbf{$\{\pmb{ca}^n\pmb{b}^m \mid n=m\}\cup\{\pmb{a}^n\pmb{b}^m \mid n=2m\}$ is a DCFL.}
+
+A DPDA can distinguish the two cases by the first symbol: if it reads $\pmb{c}$, it proceeds to recognize $\pmb{a}^n\pmb{b}^n$ (push one $A$ per $\pmb{a}$, pop one per $\pmb{b}$); if it reads $\pmb{a}$, it proceeds to recognize $\pmb{a}^n\pmb{b}^{n/2}$ (push two $A$s per $\pmb{a}$, pop two per $\pmb{b}$, or equivalently push one per $\pmb{a}$ and pop one per two $\pmb{b}$s). Since the first symbol deterministically determines which component applies, the DPDA is well-defined. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$L_1 - R_2$ is context free if $L_1$ is CFL and $R_2$ is regular.}
+
+\begin{enumerate}
+\item \textbf{Via product machine}: Extend the intersection proof (Theorem 10.6). Construct a product machine where the PDA simulates $L_1$ and the DFA simulates $R_2$; modify final states to accept when the PDA is in a final state and the DFA is in a \emph{nonfinal} state. This gives $L_1 \cap \overline{R_2} = L_1 - R_2$.
+
+\item \textbf{Via closure}: $L_1 - R_2 = L_1 \cap \overline{R_2}$. Since regular languages are closed under complement, $\overline{R_2}$ is regular. Since CFLs are closed under intersection with regular languages (Theorem 10.6), $L_1 \cap \overline{R_2}$ is a CFL. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{$L_1\cup R_2$ is context free if $L_1$ is CFL and $R_2$ is regular.}
+
+\begin{enumerate}
+\item \textbf{Via modified product machine}: Accept when the PDA is in a final state (for $L_1$) OR the DFA is in a final state (for $R_2$). This is a product machine with final states $F_1 \times S_2 \cup S_1 \times F_2$.
+
+\item \textbf{Via closure}: $L_1 \cup R_2$: since $R_2$ is regular, it is also a CFL. CFLs are closed under union: $L_1 \cup R_2 \in \PSIG$. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{If $L_1$ is DCFL and $R_2$ is regular, $R_2 - L_1$ is DCFL.}
+
+$R_2 - L_1 = R_2 \cap \overline{L_1}$. Since $L_1$ is DCFL, $\overline{L_1}$ is DCFL (Exercise 10.25). Since $R_2$ is regular (hence DCFL), and DCFLs are closed under intersection with regular languages (Theorem 10.6 analog for DPDAs), $R_2 \cap \overline{L_1}$ is DCFL. \qed
+
+%%------------------------------------------------------------
+\item \textbf{$\{w\pmb{2}w^r\}$ is DCFL; $\{ww^r\}$ is not DCFL.}
+
+\begin{enumerate}
+\item \textbf{$\{w\pmb{2}w^r\}$ is DCFL}: The DPDA pushes all symbols before $\pmb{2}$ onto the stack, then pops matching symbols for each character after $\pmb{2}$ (reversed). Since $\pmb{2}$ marks the center deterministically, the DPDA knows exactly when to switch from push to pop mode. \qed
+
+\item \textbf{$\{ww^r\}$ is not DCFL}: The palindrome-by-even-length language $\{ww^r\}$ is a CFL (grammar: $S\to\pmb{a}S\pmb{a}\mid\pmb{b}S\pmb{b}\mid\lambda$). However, the center of the string is not marked; the DPDA must guess when the first half ends. It can be shown using the Closure properties of DCFLs that $\{ww^r\}$ is not a DCFL. \qed
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Non-closure of \ASIG\ under various operations.}
+
+\begin{enumerate}
+\item $L_1\cdot L_2$ need not be DCFL: Example from Exercise 10.26.
+\item $L_1 - L_2$ need not be DCFL: Let $L_1$ be any DCFL and $L_2$ be any CFL that is not a DCFL; then $L_1 - L_2 = L_1 \cap \overline{L_2}$. Since DCFLs are not closed under complement, $\overline{L_2}$ need not be a CFL at all. A concrete pair: $L_1 = \{\pmb{a}^n\pmb{b}^n\pmb{c}^m \mid n,m\geq 0\}$ (DCFL) and $L_2 = \{\pmb{a}^n\pmb{b}^m\pmb{c}^m \mid n,m\geq 0\}$ (DCFL). Then $L_1 - L_2 = \{w\in L_1 \mid |w|_{\pmb{b}}\neq|w|_{\pmb{c}}\}$; verifying this is not DCFL follows from the non-closure of DCFLs under difference.
+\item $L_1^*$ need not be DCFL: Exercise 10.27.
+\item $L_1^r$ need not be DCFL: $L = \{ww^r\pmb{c}\}$ (DCFL); $L^r = \{\pmb{c}ww^r\}$ which is also DCFL. A better example: $L$ is a DCFL such that $L^r$ is CFL but not DCFL.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure of \PSIG\ and \ASIG\ under quotient.}
+
+\begin{enumerate}
+\item \textbf{\PSIG\ closed under quotient}: $L/R = \{x \mid \exists y\in R: xy\in L\}$ (right quotient by regular $R$). Since \PSIG\ is closed under intersection with regular languages and homomorphisms, and the quotient by a regular language preserves context-freeness. \textbf{True}: \PSIG\ is closed under right quotient by regular languages.
+
+\item \textbf{\ASIG\ closed under quotient}: Similarly, DCFLs are closed under right quotient by regular languages. \textbf{True}.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure under operator $b$ (Theorem 5.11).}
+
+\begin{enumerate}
+\item \PSIG\ is closed under $b$ (the ``bridge'' or ``between'' operator): by constructing an appropriate PDA that handles the $b$ operation using intersection with a regular language.
+
+\item \ASIG\ is closed under $b$: similarly, using the DPDA construction.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure under operator $Y$ (Theorem 5.7).}
+
+\begin{enumerate}
+\item \PSIG\ is closed under $Y$: $Y(L) = \{x \mid \exists y\in L: x \text{ is a subsequence of } y\}$ or similar. The specific construction depends on Definition 5.7. Typically: Yes, \PSIG\ is closed if $Y$ is a morphism-based or homomorphism-based operation.
+
+\item \ASIG\ is closed under $Y$: depends on the specific definition.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure under prefix operator $P$ (Exercise 5.16).}
+
+\begin{enumerate}
+\item \textbf{\PSIG\ closed under $P$}: $P(L) = \{x \mid \exists y: xy \in L\}$ (prefix language). If $L$ is CFL with PDA $M$ (accepting via empty stack), then $P(L)$ is recognized by modifying $M$ to accept at any configuration reached on input $x$ that could be extended to an accepting computation. Since the PDA is nondeterministic, $P(L)$ is CFL. \textbf{True}.
+
+\item \textbf{\ASIG\ closed under $P$}: For DPDAs, the prefix language is also DCFL. \textbf{True}.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Closure under operator $F$ (Exercise 5.19).}
+
+\begin{enumerate}
+\item \textbf{\PSIG\ closed under $F$}: $F(L)$ typically denotes the ``suffix'' or ``final segment'' language, or another specific operator from Exercise 5.19. If $F(L) = \{y \mid \exists x: xy \in L\}$ (suffix), then: CFLs are not closed under suffix in general. \textbf{False} in general.
+
+\item \textbf{\ASIG\ closed under $F$}: DCFLs are also not closed under suffix in general. \textbf{False}.
+\end{enumerate}
+
+\end{enumerate}

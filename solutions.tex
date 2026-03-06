@@ -1,0 +1,947 @@
+\documentclass[11pt]{book}
+\usepackage{fourier,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage[leqno]{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{enumerate}
+\usepackage{mathcomp,textcomp}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{array}
+
+%% Reproduce the macros from book.tex
+\def\NN{\mathbb{N}}
+\def\RN{\mathbb{R}}
+\def\ZN{\mathbb{Z}}
+\def\IN{\mathbb{I}}
+\def\QN{\mathbb{Q}}
+\def\EN{\mathbb{E}}
+\def\NNN{\mathbb{P}}
+\def\<{\text{\textless}}
+\def\>{\text{\textgreater}}
+\def\cent{\text{\textcent}}
+\def\DBAR{\ensuremath{\overline{\delta}}}
+\def\PBAR{\ensuremath{\overline{\psi}}}
+\def\OBAR{\ensuremath{\overline{\omega}}}
+\newcommand{\deltabar}[1]{\overline{\delta^{#1}}}
+\def\DSIG{\ensuremath{\mathfrak{D}_\Sigma}}
+\def\WSIG{\ensuremath{\mathfrak{W}_\Sigma}}
+\def\NSIG{\ensuremath{\mathfrak{N}_\Sigma}}
+\def\RSIG{\ensuremath{\mathfrak{R}_\Sigma}}
+\def\GSIG{\ensuremath{\mathfrak{G}_\Sigma}}
+\def\CSIG{\ensuremath{\mathfrak{C}_\Sigma}}
+\def\USIG{\ensuremath{\mathfrak{U}_\Sigma}}
+\def\XSIG{\ensuremath{\mathfrak{X}_\Sigma}}
+\def\PSIG{\ensuremath{\mathfrak{P}_\Sigma}}
+\def\FSIG{\ensuremath{\mathfrak{F}_\Sigma}}
+\def\ASIG{\ensuremath{\cal{A}_\Sigma}}
+\def\TSIG{\ensuremath{\mathfrak{T}_\Sigma}}
+\def\LSIG{\ensuremath{\mathfrak{L}_\Sigma}}
+\def\ZSIG{\ensuremath{\mathfrak{Z}_\Sigma}}
+\def\OSIG{\ensuremath{\mathfrak{O}_\Sigma}}
+\def\HSIG{\ensuremath{\mathfrak{H}_\Sigma}}
+\DeclareMathOperator{\DRightarrow}{^*\!\!\!\!\!\!\!\Rightarrow}
+\DeclareMathOperator{\Dvdash}{\vdash^{\!\!\!\!\!\!{*}}\ }
+
+\newtheorem{dfn}{Definition}[chapter]
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lmm}{Lemma}[chapter]
+
+\title{Solutions Manual\\
+\large Theory of Finite Automata with an Introduction to Formal Languages}
+\author{John Carroll and Darrell Long}
+
+\setcounter{chapter}{-1}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+%% ============================================================
+\chapter{Preliminaries --- Solutions}
+%% ============================================================
+
+\begin{enumerate}[{0.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{Construct truth tables for:}
+
+\begin{enumerate}
+\item $\neg r \vee (\neg p \downarrow \neg q)$
+
+Recall that $p \downarrow q$ (NOR) is $\neg(p \vee q)$.
+
+\[
+\begin{array}{ccc|cc|cc|c}
+p & q & r & \neg p & \neg q & \neg p \downarrow \neg q & \neg r & \neg r \vee (\neg p \downarrow \neg q)\\
+\hline
+0 & 0 & 0 & 1 & 1 & 0 & 1 & 1\\
+0 & 0 & 1 & 1 & 1 & 0 & 0 & 0\\
+0 & 1 & 0 & 1 & 0 & 0 & 1 & 1\\
+0 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 0 & 1 & 1\\
+1 & 0 & 1 & 0 & 1 & 0 & 0 & 0\\
+1 & 1 & 0 & 0 & 0 & 1 & 1 & 1\\
+1 & 1 & 1 & 0 & 0 & 1 & 0 & 1\\
+\end{array}
+\]
+
+\item $(p \wedge \neg q) \vee \neg(p \uparrow q)$
+
+Recall that $p \uparrow q$ (NAND) is $\neg(p \wedge q)$.
+
+\[
+\begin{array}{cc|c|c|c|c}
+p & q & p \wedge \neg q & p \uparrow q & \neg(p \uparrow q) & (p \wedge \neg q)\vee\neg(p\uparrow q)\\
+\hline
+0 & 0 & 0 & 1 & 0 & 0\\
+0 & 1 & 0 & 1 & 0 & 0\\
+1 & 0 & 1 & 1 & 0 & 1\\
+1 & 1 & 0 & 0 & 1 & 1\\
+\end{array}
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Draw circuit diagrams for:}
+
+\begin{enumerate}
+\item $\neg(r \vee (\neg p \downarrow \neg q)) \uparrow (s \wedge p)$
+
+This expression is built from NOT, NOR, NAND, and AND gates. The circuit computes:
+\begin{enumerate}[i.]
+  \item $A = \neg p$, $B = \neg q$ (NOT gates on $p$ and $q$)
+  \item $C = A \downarrow B = \neg(A \vee B)$ (NOR gate)
+  \item $D = r \vee C$ (OR gate)
+  \item $E = \neg D$ (NOT gate)
+  \item $F = s \wedge p$ (AND gate)
+  \item Output $= E \uparrow F = \neg(E \wedge F)$ (NAND gate)
+\end{enumerate}
+
+\item $(p \wedge \neg q) \vee \neg(p \uparrow q)$
+
+\begin{enumerate}[i.]
+  \item $A = \neg q$ (NOT gate)
+  \item $B = p \wedge A$ (AND gate)
+  \item $C = p \uparrow q = \neg(p\wedge q)$ (NAND gate)
+  \item $D = \neg C$ (NOT gate)
+  \item Output $= B \vee D$ (OR gate)
+\end{enumerate}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show that $\{1,2\}\times\{a,b\}$ and $\{a,b\}\times\{1,2\}$ are not equal.}
+
+\[
+\{1,2\}\times\{a,b\} = \{\langle 1,a\rangle,\langle 1,b\rangle,\langle 2,a\rangle,\langle 2,b\rangle\}
+\]
+\[
+\{a,b\}\times\{1,2\} = \{\langle a,1\rangle,\langle a,2\rangle,\langle b,1\rangle,\langle b,2\rangle\}
+\]
+Since $\langle 1,a\rangle \in \{1,2\}\times\{a,b\}$ but $\langle 1,a\rangle \notin \{a,b\}\times\{1,2\}$ (the first component of any element of $\{a,b\}\times\{1,2\}$ is a letter, not a number), the two sets are not equal.
+
+%%------------------------------------------------------------
+\item \textbf{Let $X=\{1,2,3,4\}$.}
+
+\begin{enumerate}
+\item $< \;=\{\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+
+\item $= \;= \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle\}$
+
+\item $=\;\cup\;<\;= \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle,\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+
+\item $\leq \;= =\;\cup\;<\;$, which is the set computed in part (c).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show that $\equiv_n$ is an equivalence relation.}
+
+We must show reflexivity, symmetry, and transitivity.
+
+\textit{Reflexivity}: $a - a = 0 = 0 \cdot n$, so $a \equiv_n a$.
+
+\textit{Symmetry}: If $a \equiv_n b$, then $n \mid (a-b)$, so $a - b = kn$ for some $k \in \ZN$. Then $b - a = (-k)n$, so $n \mid (b-a)$, giving $b \equiv_n a$.
+
+\textit{Transitivity}: If $a \equiv_n b$ and $b \equiv_n c$, then $a - b = kn$ and $b - c = mn$ for integers $k,m$. Then $a - c = (a-b)+(b-c) = (k+m)n$, so $a \equiv_n c$.
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_0$ on $\NN$.}
+
+$a \equiv_0 b$ means $0 \mid (a-b)$, i.e., $a - b = 0$, i.e., $a = b$. So the equivalence classes are all singletons: $\{0\}, \{1\}, \{2\}, \ldots$
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_1$ on $\NN$.}
+
+$a \equiv_1 b$ means $1 \mid (a - b)$, which is always true. So there is exactly one equivalence class: $\NN$ itself.
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_1$ on $\RN$.}
+
+Here $x \equiv_1 y$ means $1 \mid (x-y)$, i.e., $x - y \in \mathbb{Z}$ (the difference is an integer).
+Two reals are equivalent iff they have the same fractional part $\{x\} = x - \lfloor x\rfloor$.
+The equivalence classes are the cosets of $\mathbb{Z}$ in $(\mathbb{R},+)$:
+\[
+  [r]_{\equiv_1} = \{r + n \mid n \in \mathbb{Z}\}, \qquad r \in [0,1).
+\]
+There are uncountably many such classes, one for each $r \in [0,1)$.
+
+%%------------------------------------------------------------
+\item \textbf{Prove the distinct equivalence classes of $R$ form a partition of $X$.}
+
+Let $[x]_R = \{y \in X \mid x\,R\,y\}$.
+
+\textit{Coverage}: For any $x \in X$, reflexivity gives $x \in [x]_R$, so every element of $X$ belongs to at least one class.
+
+\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z\,R\,x$ and $z\,R\,y$. By symmetry $x\,R\,z$, and by transitivity $x\,R\,y$. For any $w \in [x]_R$ we have $w\,R\,x\,R\,y$ so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
+
+Hence the distinct classes are disjoint and cover $X$, forming a partition.
+
+%%------------------------------------------------------------
+\item \textbf{Prove $X$ equals the union of the sets in $P$.}
+
+Let $P = \{A_1,\ldots,A_n\}$ be a partition of $X$.
+
+By definition of partition, each $A_i \subseteq X$, so $\bigcup_i A_i \subseteq X$.
+
+Also by definition, every $x \in X$ belongs to some $A_i$, so $X \subseteq \bigcup_i A_i$.
+
+Therefore $X = \bigcup_{i=1}^n A_i$.
+
+%%------------------------------------------------------------
+\item \textbf{Prove $R(P)$ is an equivalence relation.}
+
+Define $x\,R(P)\,y$ iff $x$ and $y$ belong to the same block of $P$.
+
+\textit{Reflexivity}: $x$ is in the same block as itself.
+
+\textit{Symmetry}: If $x$ and $y$ are in the same block, so are $y$ and $x$.
+
+\textit{Transitivity}: If $x,y$ are in block $A_i$ and $y,z$ are in block $A_j$, then since $y \in A_i \cap A_j$ and blocks are disjoint, $A_i = A_j$. So $x$ and $z$ are in the same block.
+
+%%------------------------------------------------------------
+\item \textbf{Let $X = \{1,2,3,4\}$.}
+
+\begin{enumerate}
+\item Example where $R(P)$ is a function: $P = \{\{1\},\{2\},\{3\},\{4\}\}$. Then $R(P) = \{\langle x,x\rangle \mid x \in X\}$, which is the identity function.
+
+\item Example where $R(P)$ is not a function: $P = \{\{1,2\},\{3,4\}\}$. Then $\langle 1,1\rangle,\langle 1,2\rangle \in R(P)$, so 1 maps to two elements; it is not a function.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Find the flaw in the ``proof'' that symmetric and transitive implies reflexive.}
+
+The flaw is in the first step. Symmetry says: if $x\,R\,y$ then $y\,R\,x$. This requires the hypothesis that $x\,R\,y$. If $x$ is not related to any $y$ at all, we cannot conclude $x\,R\,x$.
+
+\textit{Counterexample}: Let $X = \{1,2,3\}$ and $R = \{\langle 1,1\rangle, \langle 2,2\rangle, \langle 1,2\rangle, \langle 2,1\rangle\}$. Then $R$ is symmetric and transitive but $3 \not\mathrel{R} 3$, so $R$ is not reflexive.
+
+%%------------------------------------------------------------
+\item \textbf{Prove equality refines $R$.}
+
+We need: $x = y \Rightarrow x\,R\,y$. If $x = y$, then by reflexivity of $R$, $x\,R\,x = x\,R\,y$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{The ``function'' $t: \RN \to \RN$, $x \mapsto \arccos(x)$.}
+
+\begin{enumerate}
+\item $t$ is not a total function $\mathbb{R}\to\mathbb{R}$ because for every $x \notin [-1,1]$ there is no real $\theta$ satisfying $\cos\theta = x$, so $t(x)$ is undefined outside $[-1,1]$.
+A total function must be defined on its entire claimed domain, so $t$ fails on this count alone.
+
+\item Restrict domain to $[-1,1]$ and range to $[0,\pi]$: $t: [-1,1] \to [0,\pi]$, $t(x) = \arccos(x)$, is a valid function.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show the converse of $s': \RN \to \RN$, $s'(x)=x^2$, is not a function.}
+
+$s'^{-1}$ (converse) is $\{\langle y, x\rangle \mid x^2 = y\}$. For $y = 1$, both $x=1$ and $x=-1$ satisfy $x^2=1$, so $\langle 1,1\rangle$ and $\langle 1,-1\rangle$ are both in the converse, which is therefore not a function (1 maps to two values).
+
+%%------------------------------------------------------------
+\item \textbf{Show $s^{-1}$ exists for $s: \NNN \to \NNN$, $s(x)=x^2$, where $\NNN$ is nonneg.\ reals.}
+
+$s$ is injective: if $x^2 = y^2$ and $x,y \geq 0$ then $x = y$. $s$ is surjective onto $\NNN$: for any $y \geq 0$, $x = \sqrt{y} \geq 0$ satisfies $s(x)=y$. Since $s$ is a bijection, $s^{-1}(y) = \sqrt{y}$ exists.
+
+%%------------------------------------------------------------
+\item \textbf{Prove: converse of $f: X \to Y$ is a function iff $f$ is a bijection.}
+
+($\Rightarrow$) Suppose $\tilde{f} = \{\langle y,x\rangle \mid \langle x,y\rangle \in f\}$ is a function (from $Y$ to $X$). Then every $y \in Y$ has a unique pre-image under $f$. \textit{Injectivity}: if $f(x_1)=f(x_2)=y$, then $\tilde{f}(y)$ must equal both $x_1$ and $x_2$; since $\tilde{f}$ is a function, $x_1=x_2$. \textit{Surjectivity}: since $\tilde{f}$ is a function \emph{with domain $Y$}, every $y \in Y$ is in the domain of $\tilde{f}$, meaning there exists $x$ with $f(x)=y$. Hence $f$ is surjective. (Note: totality of $f$ does not by itself imply surjectivity; surjectivity follows here from $\tilde{f}$ being defined on \emph{all} of $Y$.)
+
+($\Leftarrow$) If $f$ is injective, each $y$ has at most one pre-image, so $\tilde{f}$ assigns at most one value. If $f$ is surjective, each $y \in Y$ has at least one pre-image, so $\tilde{f}$ is defined everywhere on $Y$. Together, $\tilde{f}$ is a function.
+
+%%------------------------------------------------------------
+\item
+\begin{enumerate}
+\item $\sim(\sim A)= A$: By definition, $\sim A = \{x \mid x \notin A\}$. Then $\sim(\sim A) = \{x \mid x \notin \sim A\} = \{x \mid x \in A\} = A$.
+
+\item $\sim(\sim R)= R$ for a relation $R$ (where $\sim R$ is the converse): $\sim R = \{\langle y,x\rangle \mid \langle x,y\rangle \in R\}$. Then $\sim(\sim R) = \{\langle x,y\rangle \mid \langle y,x\rangle \in \sim R\} = \{\langle x,y\rangle \mid \langle x,y\rangle \in R\} = R$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{If $f: X\to Y$ and $g: Y\to Z$ are one-to-one, prove $g\circ f$ is one-to-one.}
+
+Suppose $(g\circ f)(x_1) = (g\circ f)(x_2)$. Then $g(f(x_1))=g(f(x_2))$. Since $g$ is injective, $f(x_1)=f(x_2)$. Since $f$ is injective, $x_1=x_2$.
+
+%%------------------------------------------------------------
+\item \textbf{If $f: X\to Y$ and $g: Y\to Z$ are onto, prove $g\circ f$ is onto.}
+
+Let $z \in Z$. Since $g$ is surjective, $\exists y \in Y$ with $g(y)=z$. Since $f$ is surjective, $\exists x \in X$ with $f(x)=y$. Then $(g\circ f)(x)=g(f(x))=g(y)=z$.
+
+%%------------------------------------------------------------
+\item \textbf{Define two functions for which $f\circ g = g\circ f$.}
+
+Let $f,g: \RN \to \RN$, $f(x) = x+1$, $g(x) = x+2$. Then $(f\circ g)(x) = f(x+2)=x+3 = g(x+1) = (g\circ f)(x)$.
+
+%%------------------------------------------------------------
+\item \textbf{Define bijections.}
+
+\begin{enumerate}
+\item $\NN$ and $\ZN$: $f: \NN \to \ZN$ defined by
+\[ f(n) = \begin{cases} n/2 & \text{if } n \text{ is even}\\ -(n+1)/2 & \text{if } n \text{ is odd}\end{cases} \]
+maps $0\mapsto 0, 1\mapsto -1, 2\mapsto 1, 3\mapsto -2, 4\mapsto 2,\ldots$
+
+\item $\NN$ and $\NN\times\NN$: Use the Cantor pairing function $f(m,n) = \frac{(m+n)(m+n+1)}{2}+n$. Its inverse gives a bijection $\NN \to \NN\times\NN$.
+
+\item $\NN$ and $\QN$: The positive rationals can be arranged in a grid and enumerated by diagonals (Cantor's enumeration). Combined with the bijection $\NN \to \ZN$ from part (a), one obtains a bijection $\NN \to \QN$.
+
+\item $\NN$ and $\{a,b,c\}$: No bijection exists, since $\NN$ is infinite and $\{a,b,c\}$ has only 3 elements.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Use induction to prove $\sum_{k=1}^n k^3 = \frac{n^2(n+1)^2}{4}$.}
+
+\textit{Base case} ($n=1$): $1^3 = 1 = \frac{1\cdot 4}{4}$. \checkmark
+
+\textit{Inductive step}: Assume $\sum_{k=1}^n k^3 = \frac{n^2(n+1)^2}{4}$. Then
+\begin{align*}
+\sum_{k=1}^{n+1} k^3 &= \frac{n^2(n+1)^2}{4} + (n+1)^3\\
+&= \frac{n^2(n+1)^2 + 4(n+1)^3}{4}\\
+&= \frac{(n+1)^2(n^2 + 4(n+1))}{4}\\
+&= \frac{(n+1)^2(n^2+4n+4)}{4}\\
+&= \frac{(n+1)^2(n+2)^2}{4}.
+\end{align*}
+This is the formula with $n$ replaced by $n+1$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $\sum_{k=1}^n k < n^2$ for $n > 1$.}
+
+\textit{Base case} ($n=2$): $1+2=3 < 4=2^2$. \checkmark
+
+\textit{Inductive step}: Assume $\sum_{k=1}^n k < n^2$. Then
+\[
+\sum_{k=1}^{n+1} k = \sum_{k=1}^n k + (n+1) < n^2 + n + 1.
+\]
+We need $n^2 + n + 1 \leq (n+1)^2 = n^2+2n+1$, which holds since $n \geq 1$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $n! > n^2$ for $n > 3$.}
+
+\textit{Base case} ($n=4$): $4! = 24 > 16 = 4^2$. \checkmark
+
+\textit{Inductive step}: Assume $n! > n^2$ for some $n \geq 4$. Then
+\[
+(n+1)! = (n+1)\cdot n! > (n+1)\cdot n^2.
+\]
+We need $(n+1)n^2 \geq (n+1)^2$, i.e., $n^2 \geq n+1$, i.e., $n^2 - n - 1 \geq 0$. For $n \geq 4$, $n^2 \geq 16 > 5 > n+1$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $n! > 2^n$ for $n > 3$.}
+
+\textit{Base case} ($n=4$): $24 > 16$. \checkmark
+
+\textit{Inductive step}: Assume $n! > 2^n$ for $n \geq 4$. Then
+\[
+(n+1)! = (n+1)\cdot n! > (n+1)\cdot 2^n \geq 5\cdot 2^n > 2 \cdot 2^n = 2^{n+1}. \quad\square
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Prove $1^2+2^2+\cdots+n^2 = \frac{n(n+1)(2n+1)}{6}$.}
+
+\textit{Base case} ($n=1$): $1 = \frac{1\cdot 2\cdot 3}{6}=1$. \checkmark
+
+\textit{Inductive step}: Assume the formula holds for $n$. Then
+\begin{align*}
+\sum_{k=1}^{n+1}k^2 &= \frac{n(n+1)(2n+1)}{6} + (n+1)^2\\
+&= \frac{n(n+1)(2n+1)+6(n+1)^2}{6}\\
+&= \frac{(n+1)[n(2n+1)+6(n+1)]}{6}\\
+&= \frac{(n+1)(2n^2+7n+6)}{6}\\
+&= \frac{(n+1)(n+2)(2n+3)}{6}. \quad\square
+\end{align*}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $X\cap(X_1\cup\cdots\cup X_n) = (X\cap X_1)\cup\cdots\cup(X\cap X_n)$ by induction.}
+
+\textit{Base case} ($n=1$): $X\cap X_1 = X\cap X_1$. \checkmark
+
+\textit{Inductive step}: Assume the result for $n$. Then
+\begin{align*}
+X\cap\Bigl(\bigcup_{i=1}^{n+1}X_i\Bigr)
+&= X\cap\Bigl(\Bigl(\bigcup_{i=1}^n X_i\Bigr)\cup X_{n+1}\Bigr)\\
+&= \Bigl(X\cap\bigcup_{i=1}^n X_i\Bigr)\cup(X\cap X_{n+1}) \quad\text{(distributivity for }n=2\text{)}\\
+&= \Bigl(\bigcup_{i=1}^n(X\cap X_i)\Bigr)\cup(X\cap X_{n+1}) \quad\text{(inductive hypothesis)}\\
+&= \bigcup_{i=1}^{n+1}(X\cap X_i). \quad\square
+\end{align*}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $\sim(X_1\cup\cdots\cup X_n) = (\sim X_1)\cap\cdots\cap(\sim X_n)$ by induction.}
+
+\textit{Base case} ($n=2$): De Morgan's law: $\sim(X_1\cup X_2)=(\sim X_1)\cap(\sim X_2)$. \checkmark
+
+\textit{Inductive step}: Assume for $n$. Then
+\[
+\sim\Bigl(\bigcup_{i=1}^{n+1}X_i\Bigr) = \sim\Bigl(\bigcup_{i=1}^n X_i \cup X_{n+1}\Bigr) = \sim\Bigl(\bigcup_{i=1}^n X_i\Bigr)\cap(\sim X_{n+1}) = \Bigl(\bigcap_{i=1}^n\sim X_i\Bigr)\cap(\sim X_{n+1}) = \bigcap_{i=1}^{n+1}\sim X_i. \quad\square
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Prove $|\wp(A)| = 2^{|A|}$ by induction.}
+
+\textit{Base case} ($|A|=0$): $\wp(\emptyset)=\{\emptyset\}$, so $|\wp(\emptyset)|=1=2^0$. \checkmark
+
+\textit{Inductive step}: Assume $|\wp(A)|=2^n$ for all sets with $|A|=n$. Let $|B|=n+1$ and pick any $b\in B$. Set $A=B\setminus\{b\}$. Every subset of $B$ either contains $b$ or not. Those not containing $b$ are exactly $\wp(A)$ ($2^n$ of them). Those containing $b$ are in bijection with $\wp(A)$ via $S\mapsto S\setminus\{b\}$ ($2^n$ more). Total: $2^n+2^n=2^{n+1}$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove strong induction is equivalent to ordinary induction.}
+
+Let $P(n)$ be a statement and $Q(n) = (\forall i \leq n) P(i)$.
+
+($\Rightarrow$) Assume ordinary induction. The strong induction hypotheses are $P(0)$ and $(\forall m)((\forall i\leq m)P(i)\Rightarrow P(m+1))$. Define $Q(n) = (\forall i\leq n)P(i)$. Clearly $Q(0)\Leftrightarrow P(0)$. The strong hypothesis says $Q(m)\Rightarrow P(m+1)$, which means $Q(m)\Rightarrow Q(m+1)$ (since $Q(m+1) = Q(m)\wedge P(m+1)$). By ordinary induction on $Q$, $(\forall n)Q(n)$, hence $(\forall n)P(n)$.
+
+($\Leftarrow$) Ordinary induction is the special case of strong induction where the hypothesis uses only $P(m)$ instead of $(\forall i\leq m)P(i)$.
+
+%%------------------------------------------------------------
+\item \textbf{Determine what strings the BNF defines.}
+
+The grammar defines \emph{real number constants} (possibly with a sign and decimal/exponent part) in the style of FORTRAN: integers, signed integers, decimals, and floating-point constants with an \textbf{E} exponent. Examples: \texttt{42}, \texttt{-3.14}, \texttt{+2.5E-10}, \texttt{0.001E3}.
+
+%%------------------------------------------------------------
+\item \textbf{Cofinite sets with universal set $\ZN$.}
+
+\begin{enumerate}
+\item A finite set: $\{-5,0,3,7\}$.
+\item A cofinite set: $\ZN\setminus\{0\} = \{n\in\ZN \mid n\neq 0\}$ (complement is $\{0\}$, which is finite).
+\item Neither: $2\ZN = \{\ldots,-4,-2,0,2,4,\ldots\}$, the even integers. Its complement is the set of odd integers, which is infinite; so it is not cofinite. It is infinite, so not finite.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove the equipotent relation is an equivalence relation.}
+
+Recall: $A \sim B$ iff there exists a bijection $f: A\to B$.
+
+\begin{enumerate}
+\item \textit{Reflexive}: $\mathrm{id}_A: A\to A$ is a bijection, so $A\sim A$.
+\item \textit{Symmetric}: If $f: A\to B$ is a bijection, then $f^{-1}: B\to A$ is also a bijection.
+\item \textit{Transitive}: If $f: A\to B$ and $g: B\to C$ are bijections, then $g\circ f: A\to C$ is a bijection.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Define a function showing $|\NN|=|\NN\times\NN|$.}
+
+Use the Cantor pairing function: $f: \NN\times\NN\to\NN$, $f(m,n)=\frac{(m+n)(m+n+1)}{2}+n$. This is a bijection. Its inverse $f^{-1}: \NN\to\NN\times\NN$ is the desired function.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\NN$ is equipotent to $\NN$.}
+
+$\mathrm{id}_\NN$ is a bijection. Alternatively, $f(n)=n$.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\NN$ is equipotent to $\QN$.}
+
+The positive rationals $\QN^+$ can be enumerated by listing $p/q$ in a grid (rows indexed by $p$, columns by $q$) and enumerating by anti-diagonals (skipping non-reduced fractions). Combined with the bijection from $\NN$ to $\ZN$ (hence handling negative rationals and zero), one obtains a bijection $\NN\to\QN$.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\wp(\NN)$ is equipotent to $\{f:\NN\to\{\text{Yes,No}\}\}$.}
+
+Define $\phi: \wp(\NN)\to\{f:\NN\to\{\text{Yes,No}\}\}$ by $\phi(A) = \chi_A$, where $\chi_A(n)=\text{Yes}$ if $n\in A$ and $\text{No}$ otherwise. This is clearly a bijection (its inverse maps $f$ to $\{n\mid f(n)=\text{Yes}\}$).
+
+%%------------------------------------------------------------
+\item \textbf{Show $\wp(\NN)$ is equipotent to $\RN$.}
+
+Identify each subset $A\subseteq\NN$ with its characteristic sequence $(a_0,a_1,a_2,\ldots)\in\{0,1\}^\NN$. Map this to the real number $0.a_0a_1a_2\ldots$ in binary. This gives a surjection from $\wp(\NN)$ onto $[0,1]$, which has the same cardinality as $\RN$. (More carefully: use a Cantor-Bernstein argument to handle the non-injectivity at dyadic rationals.)
+
+%%------------------------------------------------------------
+\item \textbf{Draw a circuit for $q$ (Figure 0.8).}
+
+The truth table shows $q=1$ when $(p_1,p_2,p_3)\in\{(0,1,0),(1,0,0),(1,1,1)\}$.
+
+The minimal sum of products (minterms 2, 4, 7):
+\[
+q = (\bar p_1 p_2\bar p_3)\vee(p_1\bar p_2\bar p_3)\vee(p_1 p_2 p_3).
+\]
+This can be factored as:
+\[
+q = \neg p_3(p_1\oplus p_2)\vee p_1 p_2 p_3.
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Draw circuits for $q_1, q_2, q_3$ (Figure 0.9).}
+
+Reading the truth table row by row (rows indexed 0--15, with $p_1p_2p_3p_4$ in binary):
+
+\textit{$q_1 = 1$} at rows 0,2,3,5,6,8,9,12 (i.e., minterms $m_0,m_2,m_3,m_5,m_6,m_8,m_9,m_{12}$):
+$(0000),(0010),(0011),(0101),(0110),(1000),(1001),(1100)$.
+
+\textit{$q_2 = 1$} at rows 0,1,3,4,6,10,12,13,14 (minterms $m_0,m_1,m_3,m_4,m_6,m_{10},m_{12},m_{13},m_{14}$):
+$(0000),(0001),(0011),(0100),(0110),(1010),(1100),(1101),(1110)$.
+
+\textit{$q_3 = 1$} at rows 0,4,8,12,14 (minterms $m_0,m_4,m_8,m_{12},m_{14}$):
+$(0000),(0100),(1000),(1100),(1110)$.
+
+Applying four-variable Karnaugh maps over $p_1,p_2,p_3,p_4$ yields the following minimal sum-of-products expressions (bars denote complementation):
+
+\[
+q_1 \;=\; p_1\bar p_2\bar p_3
+       +\; p_1\bar p_3\bar p_4
+       +\; \bar p_1\bar p_2 p_3
+       +\; \bar p_1 p_3\bar p_4
+       +\; \bar p_1 p_2\bar p_3 p_4
+       +\; \bar p_2\bar p_3\bar p_4
+\]
+(6 prime implicants; $m_5 = \bar p_1 p_2\bar p_3 p_4$ is an isolated essential implicant.)
+
+\[
+q_2 \;=\; p_2\bar p_4
+       +\; p_1 p_3\bar p_4
+       +\; p_1 p_2\bar p_3
+       +\; \bar p_1\bar p_2 p_4
+       +\; \bar p_1\bar p_2\bar p_3
+\]
+(The quad $p_2\bar p_4$ covers $m_4,m_6,m_{12},m_{14}$; the last two terms together cover $m_0,m_1,m_3$.)
+
+\[
+q_3 \;=\; \bar p_3\bar p_4 + p_1 p_2\bar p_4
+\]
+(The quad $\bar p_3\bar p_4$ covers $m_0,m_4,m_8,m_{12}$; the pair $p_1p_2\bar p_4$ covers $m_{12},m_{14}$.)
+
+Each minimized expression is implemented as a two-level AND-OR circuit (one AND gate per product term, one final OR gate per output), with NOT gates on the complemented inputs.
+
+\end{enumerate}
+
+%% ============================================================
+\chapter{Introduction and Basic Definitions --- Solutions}
+%% ============================================================
+
+\begin{enumerate}[{1.}1.]
+
+%%------------------------------------------------------------
+\item \textbf{Show $\DBAR_t = \DBAR_h$.}
+
+Let $P(n)$: $(\forall s\in S)(\forall x\in\Sigma^n)(\DBAR_t(s,x)=\DBAR_h(s,x))$.
+
+\textit{Base}: $n=0$: $\DBAR_t(s,\lambda)=s=\DBAR_h(s,\lambda)$. For $n=1$: $\DBAR_t(s,\mathbf{a})=\delta(s,\mathbf{a})=\DBAR_h(s,\mathbf{a})$.
+
+\textit{Inductive step}: Let $x=ya$ where $|y|=n$ and $a\in\Sigma$. Assume $\DBAR_t(s,y)=\DBAR_h(s,y)$ for all $s,y$ with $|y|\leq n$.
+
+\[
+\DBAR_t(s,ya) = \DBAR_t(s,a\cdot a_1\cdots a_n) \text{ [writing $y=a_1\cdots a_n$]}
+\]
+By the tail-recursive definition: $\DBAR_t(s,ya) = \DBAR_t(\delta(s,a_1\cdots),\text{suffix})$\ldots
+
+More cleanly: We prove $\DBAR_t(s,wa)=\delta(\DBAR_t(s,w),a)$ for all $w\in\Sigma^*$, $a\in\Sigma$, $s\in S$, by induction on $|w|$.
+
+If $|w|=0$: $\DBAR_t(s,a) = \delta(s,a)$. \checkmark
+
+If $|w|=n+1$, write $w=bv$ with $b\in\Sigma$: $\DBAR_t(s,bva) = \DBAR_t(\delta(s,b),va) = \delta(\DBAR_t(\delta(s,b),v),a)$ [IH] $= \delta(\DBAR_t(s,bv),a)$. This establishes the claim. Now:
+\[
+\DBAR_h(s,wa) = \delta(\DBAR_h(s,w),a) = \delta(\DBAR_t(s,w),a) \text{ [IH]} = \DBAR_t(s,wa). \quad\square
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Modify vending machine to include coin-return $r$.}
+
+Add a new input symbol $\mathbf{r}$ (coin return). When $\mathbf{r}$ is pressed, transition back to the initial state $s_0$ (0 cents deposited) from any state. All other transitions remain unchanged. Formally, for every state $s_i$ (representing $i$ cents), $\delta(s_i, \mathbf{r}) = s_0$.
+
+%%------------------------------------------------------------
+\item \textbf{The DFA of Figure 1.26.}
+
+\begin{enumerate}
+\item The quintuple: $A = \langle\Sigma, S, s_0, \delta, F\rangle$ where $\Sigma$ and $S$ are as shown in the figure, $s_0$ is the start state, $\delta$ follows the labeled arrows, and $F$ is the set of double-circled states.
+
+\item The language: the machine of Figure 1.26 is a 2-state DFA over $\{\mathbf{a},\mathbf{b}\}$ that accepts all words in which the number of $\mathbf{b}$s is odd.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Build a DFA accepting $L = \{x \mid |x|$ is a multiple of 2 or 3$\}$ over $\{\mathbf{a},\mathbf{b},\mathbf{c}\}$.}
+
+We need $|x| \equiv 0\pmod{2}$ or $|x|\equiv 0\pmod{3}$, i.e., $|x| \in \{0,2,3,4,6,8,9,\ldots\}$. The complement is $\{|x|\equiv 1\pmod{6}$ or $|x|\equiv 5\pmod{6}\}$. Use a 6-state DFA tracking $|x|\bmod 6$, with final states $\{0,2,3,4\}$ (i.e., everything except 1 and 5 mod 6).
+
+$S = \{q_0,q_1,q_2,q_3,q_4,q_5\}$, $s_0 = q_0$, $F = \{q_0,q_2,q_3,q_4\}$, $\delta(q_i, a) = q_{(i+1)\bmod 6}$ for all $a\in\Sigma$.
+
+%%------------------------------------------------------------
+\item \textbf{DFAs for $L_1, L_2, L_3$ over $\{0,1\}$.}
+
+\begin{enumerate}
+\item $L_1 = \{x \mid |x|\bmod 7 = 4\}$: 7-state DFA with states $q_0,\ldots,q_6$, $F=\{q_4\}$, $\delta(q_i,a)=q_{(i+1)\bmod 7}$.
+
+\item $L_2 = \Sigma^* \setminus \{w \mid w \text{ ends in }1\}$: The complement is all words ending in \textbf{1}. So $L_2$ accepts words not ending in \textbf{1}: either $\lambda$, or words ending in \textbf{0}. Two-state DFA: $s_0$ (start, final -- not ending in 1, or empty), $s_1$ (ending in 1, nonfinal). $\delta(s_0,\mathbf{0})=s_0$, $\delta(s_0,\mathbf{1})=s_1$, $\delta(s_1,\mathbf{0})=s_0$, $\delta(s_1,\mathbf{1})=s_1$.
+
+\item $L_3 = \{y \mid |y|_0 = |y|_1\}$: Not FAD (by pumping lemma). No DFA can accept this.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFAs $A_1, A_2, A_3, A_4$ over $\{\mathbf{a},\mathbf{b}\}$.}
+
+\begin{enumerate}
+\item Use a 4-state DFA with states $\{ee, eo, oe, oo\}$ (parity of \#a, parity of \#b). $A_1$: $F=\{oe\}$ (\#a odd, \#b even). $A_2$: $F=\{eo,oe,oo\}$ (not $ee$). $A_3$: $F=\{oe,eo\}$ (exactly one count even). $A_4$: $F=\{ee,oe\}$ (\#a even).
+
+\item Each machine is a quotient or sub-machine of the 4-state product machine from Example 1.10, which tracks parities of \#a and \#b.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Modify $M$ to accept $L(M)-\{\lambda\}$.}
+
+If $s_0 \notin F$ then $\lambda\notin L(M)$ and $M$ already accepts $L(M)\setminus\{\lambda\}=L(M)$; nothing to do.
+
+If $s_0\in F$, add a fresh nonfinal start state $s_0'$ and set
+\[
+  \delta'(s_0',a)=\delta(s_0,a)\quad\text{for all }a\in\Sigma,
+\]
+leaving all other transitions and the final-state set $F$ unchanged.
+The new machine $M'=(\Sigma,S\cup\{s_0'\},s_0',\delta',F)$ accepts exactly $L(M)\setminus\{\lambda\}$.
+
+\emph{Correctness}: $\lambda$ is rejected because $s_0'\notin F$. For any nonempty $x=a_1\cdots a_k$, the computation in $M'$ follows $s_0'\xrightarrow{a_1}\delta(s_0,a_1)\xrightarrow{a_2}\cdots$, which mirrors the computation of $M$ from $s_0$ on $x$, so $x\in L(M')$ iff $x\in L(M)$.
+
+\emph{Why not remove $s_0$ from $F$?} That would reject nonempty strings $x$ with $\bar\delta(s_0,x)=s_0$, which belong to $L(M)$ and should remain accepted.
+
+%%------------------------------------------------------------
+\item \textbf{General procedure to modify $M$ to accept $L(M)\cup\{\lambda\}$.}
+
+If $s_0\in F$ already, $M$ already accepts $\lambda$. Otherwise, add $s_0$ to $F$: $F' = F\cup\{s_0\}$. All transitions stay the same. This accepts $L(M)\cup\{\lambda\}$.
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $\Psi = \{x\mid (x\text{ begins with }\mathbf{d})\vee(x\text{ contains }\mathbf{bb})\}$.}
+
+The machine must distinguish ``first character is \textbf{d}'' (which makes the string accepted regardless of what follows) from ``\textbf{d} appears later''.
+A 3-state machine conflates these; the minimal DFA has \textbf{4 states}:
+
+\begin{itemize}
+  \item $q_s$: start (no characters read yet).
+  \item $q_m$: at least one character read; string does not start with \textbf{d} and no \textbf{bb} seen; last char was not \textbf{b}.
+  \item $q_b$: same as $q_m$ but last char was \textbf{b} (pending \textbf{bb}).
+  \item $q_1$: accepting sink (string starts with \textbf{d}, or \textbf{bb} has been seen).
+\end{itemize}
+$F=\{q_1\}$.
+\[
+\begin{array}{c|ccc}
+       & \mathbf{a} & \mathbf{b} & \mathbf{d} \\\hline
+q_s    & q_m        & q_b        & q_1        \\
+q_m    & q_m        & q_b        & q_m        \\
+q_b    & q_m        & q_1        & q_m        \\
+q_1    & q_1        & q_1        & q_1
+\end{array}
+\]
+\emph{Spot-check}: \textbf{bd} — $q_s\xrightarrow{b}q_b\xrightarrow{d}q_m$, rejected. \checkmark\quad
+\textbf{bb} — $q_s\xrightarrow{b}q_b\xrightarrow{b}q_1$, accepted. \checkmark\quad
+\textbf{d} — $q_s\xrightarrow{d}q_1$, accepted. \checkmark
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $\Phi = \{x\mid\text{every \textbf{b} in }x\text{ is immediately followed by }\mathbf{c}\}$.}
+
+States: $q_0$ (ok, last char not \textbf{b}), $q_b$ (last char was \textbf{b}), $q_{err}$ (dead state). $F = \{q_0\}$.
+\[
+\delta(q_0,\mathbf{a})=q_0,\quad\delta(q_0,\mathbf{b})=q_b,\quad\delta(q_0,\mathbf{c})=q_0,
+\]
+\[
+\delta(q_b,\mathbf{c})=q_0,\quad\delta(q_b,\mathbf{a})=q_{err},\quad\delta(q_b,\mathbf{b})=q_{err},
+\]
+\[
+\delta(q_{err},\mathbf{a})=\delta(q_{err},\mathbf{b})=\delta(q_{err},\mathbf{c})=q_{err}.
+\]
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $\Omega$ (numbers divisible by 7).}
+
+The key insight: if the current state represents $n\bmod 7$ (the value of the number read so far), then reading digit $d$ gives the new value $(10n+d)\bmod 7$.
+
+States $q_0,\ldots,q_6$ (representing $0,\ldots,6\bmod 7$). $s_0=q_0$, $F=\{q_0\}$.
+\[
+\delta(q_i, d) = q_{(10i+d)\bmod 7}.
+\]
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $\Gamma$ (divisible by 3).}
+
+Three states $q_0,q_1,q_2$ (representing $0,1,2\bmod 3$). $F=\{q_0\}$.
+\[
+\delta(q_i,d) = q_{(i+d)\bmod 3}
+\]
+since $(10i+d)\bmod 3 = (i+d)\bmod 3$ (because $10\equiv 1\pmod 3$).
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $K$ (divisible by 5).}
+
+Since $10\equiv 0\pmod 5$, we have $(10i+d)\bmod 5 = d\bmod 5$. So only the last digit matters.
+
+\textit{Five-state DFA}: $\delta(q_i,d) = q_{d\bmod 5}$; $F=\{q_0\}$.
+
+\textit{Two-state DFA}: $q_0$ (final, last digit in $\{0,5\}$), $q_1$ (nonfinal, last digit not in $\{0,5\}$). $\delta(q_i,d)=q_0$ if $d\in\{0,5\}$, else $q_1$.
+
+%%------------------------------------------------------------
+\item \textbf{DFA for the first eight primes: $\{2,3,5,7,11,13,17,19\}$.}
+
+This is a finite set, so it is FAD. The DFA can be built by a trie-like construction that recognizes exactly these 8 strings over $\Sigma=\{0,\ldots,9\}$. It has enough states to uniquely identify each prime and reject everything else. The exact diagram requires a multi-state machine; the key is that any finite set is regular.
+
+%%------------------------------------------------------------
+\item \textbf{Combinations of $u,v,w$ with $uvw = \mathbf{cab}$.}
+
+\begin{enumerate}
+\item The string $\mathbf{cab}$ has length 3. We must split it as $uvw$ with $u,v,w\in\Sigma^*$. The split points are $i=|u|,j=|u|+|v|$ with $0\leq i\leq j\leq 3$. There are $\binom{n+2}{2}=\binom{5}{2}=10$ ways for length 3:
+
+$(u,v,w)$: $(\lambda,\lambda,\mathbf{cab})$, $(\lambda,\mathbf{c},\mathbf{ab})$, $(\lambda,\mathbf{ca},\mathbf{b})$, $(\lambda,\mathbf{cab},\lambda)$, $(\mathbf{c},\lambda,\mathbf{ab})$, $(\mathbf{c},\mathbf{a},\mathbf{b})$, $(\mathbf{c},\mathbf{ab},\lambda)$, $(\mathbf{ca},\lambda,\mathbf{b})$, $(\mathbf{ca},\mathbf{b},\lambda)$, $(\mathbf{cab},\lambda,\lambda)$.
+
+\item For a string of length $n$: the number of ways to choose split points $0\leq i\leq j\leq n$ is $\binom{n+2}{2} = \frac{(n+1)(n+2)}{2}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $\Xi = \{x\mid x$ contains $\geq 2$ consecutive \textbf{b}s and does not contain $\mathbf{aa}\}$.}
+
+The DFA tracks two conditions simultaneously: whether $\mathbf{aa}$ has ever appeared, and whether $\mathbf{bb}$ has ever appeared. Once $\mathbf{aa}$ appears the string is rejected regardless; once $\mathbf{bb}$ appears we continue watching for $\mathbf{aa}$.
+
+\medskip
+\noindent\textbf{States} (6 total):
+\begin{itemize}
+  \item $q_0$: start; no $\mathbf{bb}$, no $\mathbf{aa}$, last char none.
+  \item $q_a$: no $\mathbf{bb}$, no $\mathbf{aa}$, last char $= \mathbf{a}$.
+  \item $q_b$: no $\mathbf{bb}$, no $\mathbf{aa}$, last char $= \mathbf{b}$.
+  \item $q_{bb}$: seen $\mathbf{bb}$, no $\mathbf{aa}$, last char $= \mathbf{b}$.
+  \item $q_{bb,a}$: seen $\mathbf{bb}$, no $\mathbf{aa}$, last char $= \mathbf{a}$.
+  \item $q_{dead}$: seen $\mathbf{aa}$ (trap).
+\end{itemize}
+$F = \{q_{bb},\, q_{bb,a}\}.$
+
+\medskip
+\noindent\textbf{Transitions}:
+\[
+\begin{array}{c|cc}
+       & \mathbf{a}    & \mathbf{b}    \\\hline
+q_0    & q_a           & q_b           \\
+q_a    & q_{dead}      & q_b           \\
+q_b    & q_a           & q_{bb}        \\
+q_{bb} & q_{bb,a}      & q_{bb}        \\
+q_{bb,a} & q_{dead}    & q_{bb}        \\
+q_{dead} & q_{dead}    & q_{dead}
+\end{array}
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Modify Figure 1.11 to reject DO and DATA.}
+
+Add states that track the prefixes $\mathbf{D}$, $\mathbf{DO}$, $\mathbf{DA}$, $\mathbf{DAT}$, $\mathbf{DATA}$. When the word ends exactly as $\mathbf{DO}$ or $\mathbf{DATA}$ (with \textless EOS\textgreater), route to a dead (nonfinal) state. All other valid FORTRAN identifiers (alphabetic words not equal to DO or DATA) go to the accepting state.
+
+%%------------------------------------------------------------
+\item \textbf{Modify machine for real-number constants (extended BNF).}
+
+The new BNF allows leading decimal points like \texttt{.5} and \texttt{+.5}. Modify the DFA from Figure 1.13 to add transitions that accept the input immediately after a sign symbol or at the start by going to a decimal-point state, from which digits are read as the fractional part.
+
+\begin{enumerate}
+\item Add states for: start (may see optional sign), integer part, decimal point seen with no prior integer, fractional part, exponent indicator \textbf{E}, optional exponent sign, exponent digits. The modified machine handles all cases in the extended BNF.
+
+\item A program reads a line, runs it through this DFA character by character, and outputs ``accepted'' or ``rejected'' based on the final state.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show Definition 1.11(i) is implied by (ii) and (iii).}
+
+Definition 1.11 for $\DBAR$: (i) $\DBAR(s,\lambda)=s$; (ii) $\DBAR(s,a)=\delta(s,a)$; (iii) $\DBAR(s,xa)=\delta(\DBAR(s,x),a)$.
+
+From (ii) and (iii) with $x=\lambda$: $\DBAR(s,a) = \delta(s,a)$ and $\DBAR(s,\lambda a) = \delta(\DBAR(s,\lambda),a)$.
+Since $\lambda a = a$, these give $\delta(s,a) = \delta(\DBAR(s,\lambda),a)$ for all $a\in\Sigma$.
+
+\textit{Note}: this equation alone does \emph{not} imply $\DBAR(s,\lambda)=s$ in general, because $\delta$ need not be injective in its first argument.
+\textit{Counterexample}: Let $\Sigma=\{\mathbf{a}\}$, $S=\{0,1\}$, $\delta(0,\mathbf{a})=\delta(1,\mathbf{a})=0$, and define $\DBAR(s,\lambda)=1$ for all $s$.
+Then (ii) gives $\DBAR(s,\mathbf{a})=\delta(s,\mathbf{a})=0$, and (iii) gives $\DBAR(s,\mathbf{a})=\delta(\DBAR(s,\lambda),\mathbf{a})=\delta(1,\mathbf{a})=0$; (ii) and (iii) are both satisfied, yet $\DBAR(s,\lambda)=1\neq s$.
+
+Therefore clause~(i) is an \emph{independent axiom}: it cannot be derived from (ii) and (iii) without additional assumptions (such as $\delta$ being injective for each input symbol).
+
+%%------------------------------------------------------------
+\item \textbf{Develop a succinct description of the transition function from Example 1.9.}
+
+The FORTRAN identifier machine from Example 1.9 has a regular structure: letter transitions from $q_0$ go to the ``identifier body'' state $q_1$ (final), and from $q_1$, both letters and digits stay in $q_1$. All other transitions go to the dead state $q_{dead}$. The transition function can be written:
+\[
+\delta(q_0, a) = \begin{cases} q_1 & a\in\{\text{A--Z}\}\\ q_{dead} & \text{otherwise}\end{cases},\qquad
+\delta(q_1, a) = \begin{cases} q_1 & a\in\{\text{A--Z,0--9}\}\\ q_{dead} & \text{otherwise}\end{cases}.
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Finite, cofinite, neither over $\{\mathbf{a},\mathbf{b}\}^*$.}
+
+\begin{enumerate}
+\item Finite: $\{\mathbf{a},\mathbf{ab}\}$.
+\item Cofinite: $\{\mathbf{a},\mathbf{b}\}^*\setminus\{\mathbf{a}\}$ (complement is $\{\mathbf{a}\}$, finite).
+\item Neither: $\{\mathbf{a}^n\mid n\text{ even}\}$. Infinite, and its complement $\{\mathbf{a}^n\mid n\text{ odd}\}\cup\{x\mid x\text{ contains }\mathbf{b}\}$ is also infinite.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA of Figure 1.27.}
+
+\begin{enumerate}
+\item Read the quintuple directly from Figure~1.27: $(\Sigma,\,S,\,s_0,\,\delta,\,F)$, where $\Sigma$ is the input alphabet, $S$ is the set of states (nodes of the diagram), $s_0$ is the state with the incoming arrow, $F$ is the set of double-circled states, and $\delta(s,a)$ is the state reached by following the arc labeled $a$ from $s$.
+\item Trace paths from $s_0$ to identify which strings reach states in $F$; the accepted language is the set of all such strings. To describe it concisely, trace what combination of input characters is needed to enter (and stay in) each final state.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Names of everyone in China -- FAD?}
+
+The set is finite (China has a finite population), hence regular (every finite language is FAD). Yes.
+
+%%------------------------------------------------------------
+\item \textbf{Legal infix arithmetic expressions -- FAD?}
+
+No. The set requires balanced nesting of operators with operands; the pumping lemma shows this requires unbounded memory. The language of valid infix expressions over $\{A,B,+,-,\times,/\}$ is not regular.
+
+%%------------------------------------------------------------
+\item \textbf{Properties of a DFA $M$.}
+
+\begin{enumerate}
+\item $\lambda\in L(M)$ iff $s_0\in F$.
+\item $L(M)=\Sigma^*$ iff every \emph{reachable} state is a final state.
+(Unreachable non-final states do not affect the language: a DFA with one reachable final start state and one unreachable non-final state still accepts $\Sigma^*$.)
+\item $L(M)=\emptyset$ iff no final state is reachable from $s_0$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFAs for substring recognition.}
+
+\begin{enumerate}
+\item $\{\mathbf{abc}$ is a substring$\}$: Build a DFA with states tracking the longest prefix of $\mathbf{abc}$ seen so far. States: $q_0$ (none), $q_1$ (saw $\mathbf{a}$), $q_2$ (saw $\mathbf{ab}$), $q_3$ (saw $\mathbf{abc}$, accepting sink). Use standard Knuth-Morris-Pratt failure links for transitions.
+
+\item $\{\mathbf{acaba}$ is a substring$\}$: Similarly, 6 states tracking longest prefix of $\mathbf{acaba}$ seen, with appropriate failure-link transitions.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Add pennies to vending machine.}
+
+The original machine tracks deposited amounts in multiples of 5\cent, needing 7 states (0, 5, 10, 15, 20, 25, 30\cent).
+Adding pennies requires tracking every cent from 0 to 30, so the minimum number of states is \textbf{31}: states $q_0, q_1, \ldots, q_{30}$ representing $0, 1, \ldots, 30$ cents deposited.
+State $q_{30}$ is the accepting (dispensing) state; from $q_{30}$ all additional input is ignored (or loops back).
+Each extra penny input on state $q_i$ (for $i < 30$) transitions to $q_{i+1}$.
+
+%%------------------------------------------------------------
+\item \textbf{The DFA $(t_0, t_1)$ of Exercise 1.29.}
+
+\begin{enumerate}
+\item The language: $L = \{x\in\{\mathbf{a},\mathbf{b}\}^* \mid |x|_\mathbf{b}\text{ is odd}\}$, i.e., strings with an odd number of $\mathbf{b}$s. ($t_0$ = even \#b, $t_1$ = odd \#b, $F=\{t_1\}$.)
+
+\item \textit{Proof}: By induction on $|x|=n$. Let $P(n)$: $(\forall x\in\Sigma^n)(\DBAR(t_0,x)=t_0\Leftrightarrow|x|_\mathbf{b}\text{ even})\wedge(\DBAR(t_0,x)=t_1\Leftrightarrow|x|_\mathbf{b}\text{ odd})$.
+
+\textit{Base} ($n=0$): $\DBAR(t_0,\lambda)=t_0$, $|\lambda|_\mathbf{b}=0$ (even). \checkmark
+
+\textit{Step}: Let $x=ya$, $|y|=n$. Case $a=\mathbf{a}$: $\DBAR(t_0,ya)=\delta(\DBAR(t_0,y),\mathbf{a})$. Since $\delta(t_0,\mathbf{a})=t_0$ and $\delta(t_1,\mathbf{a})=t_1$, the state after $ya$ equals the state after $y$, and $|ya|_\mathbf{b}=|y|_\mathbf{b}$. Case $a=\mathbf{b}$: $\delta$ flips the state; $|ya|_\mathbf{b}=|y|_\mathbf{b}+1$ changes parity. Both cases follow from the IH. $\square$
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Vending machine: pennies, nickels, dimes, quarters, 10\cent\ bars.}
+
+\begin{enumerate}
+\item States $q_0,q_1,\ldots,q_{10}$ where $q_i$ = $i$ cents deposited so far, $q_{10}$ = accepting (dispensing) sink. $\delta(q_i,p)=q_{\min(i+1,10)}$, $\delta(q_i,n)=q_{\min(i+5,10)}$, $\delta(q_i,d)=q_{\min(i+10,10)}$, $\delta(q_i,q)=q_{\min(i+25,10)}\to q_{10}$. $F=\{q_{10}\}$.
+
+\item 11 states.
+
+\item The minimum is 11 states (must track exact amount from 0 to 10 cents).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Vending machine: nickels, dimes, quarters, 10\cent\ bars.}
+
+\begin{enumerate}
+\item States $q_0,q_5,q_{10}$ (representing 0, 5, 10+ cents). $\delta(q_0,n)=q_5$, $\delta(q_0,d)=\delta(q_5,n)=q_{10}$, $\delta(q_0,q)=\delta(q_5,d)=\delta(q_5,q)=q_{10}$, $\delta(q_{10},-)=q_{10}$. $F=\{q_{10}\}$.
+
+\item Minimum: 3 states (0, 5, $\geq$10 cents).
+
+\item Circuit: 2 bits for state encoding (3 states). See standard circuit realization with D flip-flops.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Exercise 1.29 DFA.}
+\begin{enumerate}
+\item Include both \textless SOS\textgreater\ and \textless EOS\textgreater: add transitions for SOS (move to initial state) and EOS (check if final).
+\item No SOS/EOS: standard combinational logic with state register.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Exercise 1.7 DFA.}
+
+Similar to above; encode the 6 states of $L(A_1)\cup\ldots$ in 3 bits and realize with standard combinational logic.
+
+%%------------------------------------------------------------
+\item \textbf{Modify Example 1.12 to correctly handle \textless SOS\textgreater.}
+
+Add a new initial state $q_{SOS}$ that transitions to the original start state on \textless SOS\textgreater, and transitions to a dead state on any other input (since no word should begin without the SOS sentinel). Redraw the circuit accordingly.
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Example 1.6 machine.}
+\begin{enumerate}
+\item Include both SOS/EOS.
+\item Neither SOS/EOS.
+\end{enumerate}
+Both realized from the transition table using standard binary encodings.
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Example 1.10 machine.}
+
+The machine tracks parity of \#a and \#b (4 states, 2 bits). Truth tables for next-state and output functions are straightforward.
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Example 1.14 (vending machine), with EOS.}
+
+Encode 7 states (0 to 30 cents in 5-cent increments) in 3 bits. The EOS transition checks if current state $\geq$ 30 cents (final state).
+
+%%------------------------------------------------------------
+\item \textbf{Circuit for Example 1.16, with SOS and EOS.}
+
+Encode the states of the protocol machine in minimal bits, realize next-state and output with Boolean logic.
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $L=\{x\in\{\mathbf{a},\mathbf{b},\mathbf{c}\}^*\mid|x|_\mathbf{b}=2\}$.}
+
+\begin{enumerate}
+\item Three states $q_0,q_1,q_2$ (counting \#b seen so far, capped at 2), plus a dead state $q_3$. $F=\{q_2\}$.
+$\delta(q_i,\mathbf{a})=\delta(q_i,\mathbf{c})=q_i$; $\delta(q_0,\mathbf{b})=q_1$; $\delta(q_1,\mathbf{b})=q_2$; $\delta(q_2,\mathbf{b})=q_3$; $\delta(q_3,-)=q_3$.
+
+\item Quintuple: $\Sigma=\{\mathbf{a},\mathbf{b},\mathbf{c}\}$, $S=\{q_0,q_1,q_2,q_3\}$, $s_0=q_0$, $F=\{q_2\}$, $\delta$ as above.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA for every \textbf{b} eventually followed by \textbf{c}.}
+
+States: $q_0$ (no pending \textbf{b}), $q_b$ (last unresolved \textbf{b}), $q_{err}$ (dead). $F=\{q_0\}$.
+$\delta(q_0,\mathbf{b})=q_b$, $\delta(q_0,\mathbf{a})=\delta(q_0,\mathbf{c})=q_0$,
+$\delta(q_b,\mathbf{c})=q_0$, $\delta(q_b,\mathbf{b})=q_b$, $\delta(q_b,\mathbf{a})=q_b$.
+
+Every \textbf{b} must be followed by a \textbf{c} at \emph{some} later position (not necessarily immediately). The machine tracks whether there is an outstanding \textbf{b} with no subsequent \textbf{c} yet. Reading \textbf{c} in state $q_b$ resolves all pending \textbf{b}s (returning to $q_0$); reading \textbf{a} or another \textbf{b} leaves the pending flag set. When input ends, reject if in $q_b$ (an unresolved \textbf{b} exists), accept if in $q_0$.
+
+$q_0$: no unresolved \textbf{b} (final if EOS comes here),
+$q_b$: at least one unresolved \textbf{b} (nonfinal at EOS).
+$\delta(q_0,\mathbf{a})=q_0$, $\delta(q_0,\mathbf{b})=q_b$, $\delta(q_0,\mathbf{c})=q_0$,
+$\delta(q_b,\mathbf{a})=q_b$, $\delta(q_b,\mathbf{b})=q_b$, $\delta(q_b,\mathbf{c})=q_0$.
+$F=\{q_0\}$.
+
+%%------------------------------------------------------------
+\item \textbf{DFA for no consecutive $\mathbf{a}$s and no consecutive $\mathbf{b}$s.}
+
+\begin{enumerate}
+\item States: $q_0$ (start/even alternation), $q_a$ (last char \textbf{a}), $q_b$ (last char \textbf{b}), $q_{dead}$. $F=\{q_0,q_a,q_b\}$.
+$\delta(q_0,\mathbf{a})=q_a$, $\delta(q_0,\mathbf{b})=q_b$,
+$\delta(q_a,\mathbf{a})=q_{dead}$, $\delta(q_a,\mathbf{b})=q_b$,
+$\delta(q_b,\mathbf{b})=q_{dead}$, $\delta(q_b,\mathbf{a})=q_a$,
+$\delta(q_{dead},-)=q_{dead}$.
+
+\item Quintuple: $\Sigma=\{\mathbf{a},\mathbf{b}\}$, $S=\{q_0,q_a,q_b,q_{dead}\}$, $s_0=q_0$, $F=\{q_0,q_a,q_b\}$, $\delta$ as above.
+\end{enumerate}
+
+\end{enumerate}
+
+%% Note: Chapters 2-12 solutions continue below in separate included files
+%% for typesetting convenience.
+
+\input{sol-ch02}
+\input{sol-ch03}
+\input{sol-ch04}
+\input{sol-ch05}
+\input{sol-ch06}
+\input{sol-ch07}
+\input{sol-ch08}
+\input{sol-ch09}
+\input{sol-ch10}
+\input{sol-ch11}
+\input{sol-ch12}
+
+\end{document}
