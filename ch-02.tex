@@ -100,7 +100,7 @@ $\{\lambda\}$.
 The relation $R_2$ was based on the placement of letters within words, while
 Example 2.1 was based solely on the length of the words. The following
 definition illustrates a way to produce a relation in $\Sigma^*$ based on a
-given set of words
+given set of words $L$.
 
 % Definition 2.2
 \begin{dfn}\label{dfn-2.2}
@@ -264,8 +264,8 @@ $[\pmb{aa}]_Q$ can belong to $L$.
 % Figure 2.1
 \begin{figure}
 \centerline{\epsfig{figure=ToFAfigures/fig2-1.eps,width=4in}}
-\caption{(a) The automaton for $L_1$ in Example \ref{fig-2.4} (b) The automaton for $L_2$
-in Example \ref{fig-2.4}}\label{fig-2.1}
+\caption{(a) The automaton for $L_1$ in Example 2.4 (b) The automaton for $L_2$
+in Example 2.4}\label{fig-2.1}
 \end{figure}
 
 \section{Nerode's Theorem}\label{sec-2.2}
@@ -448,7 +448,7 @@ union of all the equivalence classes that correspond to final states in $N$, as
 required by (2). To illustrate (2) $\Rightarrow$ (3), let $R$ be the equivalence
 relation $R^N$ defined above, let $L$ again be $\Sigma^+$, and note that (2) is
 satisfied: $L=[\pmb{1}]_R \cup [\pmb{11}]_R \cup [\pmb{000}]_R$, the union of
-3 of the equivalence class of a right congruence of rank 4 (which is finite).
+3 of the equivalence classes of a right congruence of rank 4 (which is finite).
 
 As in the proof of (2) $\Rightarrow$ (3), $R_L$ is refined by $R$, but in this
 case $R$ and $R_L$ are not equal. All the relations from $R$ still hold, such as
@@ -459,7 +459,7 @@ were not related by $R$ (apply the definition of $R_L$ to convince yourself of
 this). Thus, everything in $[\pmb{11}]_R$ is related by $R_L$ to everything in
 $[\pmb{000}]_R$; that is, all the strings belong to the same equivalence class
 \emph{of} $R_L$, even though they formed separate equivalence classes \emph{in}
-$R$. It may at first appear strange, but the fact that there are {\emph more} relations
+$R$. It may at first appear strange, but the fact that there are \emph{more} relations
 in $R_L$ means that there are \emph{fewer} equivalence classes in $R_L$ than in
 $R$. Indeed, $R_L$ has only two equivalence classes, $\{\lambda\}$ and $L$. In
 this case, three equivalence classes of $R$ collapse to form one large
@@ -737,10 +737,10 @@ Since $|uv| \leq n$ and the first $n$ letters of $x$ are all $\pmb{a}$s, there
 must exist integers $j,\ k$, and $m$ for which $u=\pmb{a}^j$ and $v=\pmb{a}^k$,
 and $w$ must be the ``rest of the string''; that is, $w=\pmb{a}^m
 \pmb{b}^{(p-1)!}$. The constraints on $u,\ v$, and $w$ imply that $j + k \leq n$,
-$k \geq 1$, and $j + k + m = p$. If $i = 0$, we have that $uv^{\circ} w =
+$k \geq 1$, and $j + k + m = p$. If $i = 0$, we have that $uv^{0} w =
 \pmb{a}^{p-k}\pmb{b}^{(p-1)!}$. But $p-k$ is a number between $p-1$ and $p-n$
 and hence must match one of the nontrivial factors in $(p-1)!$, which means that
-$uv^{\circ} w \notin L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
+$uv^{0} w \notin L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
 could not have been FAD.
 
 The details of the basic argument used to prove the pumping lemma can be varied
@@ -895,7 +895,7 @@ which implies that
 	\text{ is odd} \wedge |y|\text{ is even})]. \]
 \begin{enumerate}
 \item Show that $Q$ is a right congruence. and list the equivalence classes.
-\item Define $L=[\lambda]_Q \cup [\pmb{aa}]_Q$. Find a simple decryption for
+\item Define $L=[\lambda]_Q \cup [\pmb{aa}]_Q$. Find a simple description for
 $L$, and list the equivalence classes of $R_L$. (Note that $Q$ does refine
 $R_L$.)
 \item Draw a machine with states corresponding to the equivalence classes of
@@ -1054,7 +1054,7 @@ be an equivalence relation then $R \cup S$ will be a right congruence, also.
 \item Give an example of two right congruences $R_1$ and $R_2$ over $\Sigma^*$
 for which $R_1 \cup R_2$ is not a right congruence.
 
-\item Let $I=\{\pmb{a},\pmb{b}\}$ and let $\Gamma=\{\lambda,\pmb{a},\pmb{ab},
+\item Let $\Sigma=\{\pmb{a},\pmb{b}\}$ and let $\Gamma=\{\lambda,\pmb{a},\pmb{ab},
 \pmb{ba},\pmb{bb},\pmb{bbb}\} \cup \{x \in \Sigma^*\ |\ \ |x| \geq 4\}$.
 \begin{enumerate}
 \item Use the definition of $R_{\Gamma}$ to show $\pmb{ab}\ R_{\Gamma}\
