@@ -18,16 +18,17 @@
 ($\Leftarrow$): If $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$, then the computation passes through some state $q$ after reading $y$: $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By IH, $\DBAR(s_0,y)=q$. The last step reads $a$ from state $q$ to reach $t$, so $\delta(q,a)=t$, hence $\DBAR(s_0,ya)=t$. \qed
 
 %%------------------------------------------------------------
-\item \textbf{Define a one-state DPDA $P'_1$ accepting $\{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$ via final state.}
+\item \textbf{Define a one-state DPDA $P'_1$ accepting $\{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$ via final state.}
+
+A one-state DPDA accepting via final state always accepts $\lambda$: the unique state must be both the initial state and the only final state, so the machine is in a final state at the very start with empty input. Hence the best a one-state final-state DPDA can achieve is $\{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$ (which includes $\lambda$).
 
 Let $P'_1 = \langle\{\pmb{a},\pmb{b}\},\{Z,A\},\{t\},t,\delta,Z,\{t\}\rangle$ where:
 \begin{align*}
 \delta(t,\pmb{a},Z) &= \langle t, AZ\rangle \quad\text{(push $A$ on reading first \pmb{a})} \\
-\delta(t,\pmb{a},A) &= \langle t, AA\rangle \quad\text{(push another $A$ for each \pmb{a})} \\
-\delta(t,\pmb{b},A) &= \langle t, \lambda\rangle \quad\text{(pop $A$ on reading \pmb{b})} \\
-\delta(t,\lambda,Z) &= \langle t, Z\rangle \quad\text{(accept: stack has only $Z$, input exhausted)}
+\delta(t,\pmb{a},A) &= \langle t, AA\rangle \quad\text{(push another $A$ for each subsequent \pmb{a})} \\
+\delta(t,\pmb{b},A) &= \langle t, \lambda\rangle \quad\text{(pop $A$ on reading \pmb{b})}
 \end{align*}
-The machine pushes one $A$ for each $\pmb{a}$ read, then pops one $A$ for each $\pmb{b}$ read. It accepts when the stack returns to just $Z$ and input is empty. $\Lambda(P'_1) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+The machine pushes one $A$ for each $\pmb{a}$ read, then pops one $A$ for each $\pmb{b}$ read. It accepts when the input is exhausted in state $t$: this occurs precisely when the $\pmb{a}$s and $\pmb{b}$s are balanced (stack returned to $Z$) or when the input is empty. Note: $\delta(t,\pmb{b},Z)$ is undefined, so a string with more $\pmb{b}$s than $\pmb{a}$s causes the machine to get stuck (reject). Hence $\Lambda(P'_1) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$.
 
 %%------------------------------------------------------------
 \item \textbf{PDA $P'_2$: proofs and language.}
@@ -53,11 +54,11 @@ So $\alpha\in\{SC^{i+1},C^{i+1}\}$. \qed
 
 \textbf{Step}: Assume for $i$. From $\langle t,x,C^{i+1}\rangle$: the top of the stack is $C$. The only move consuming $C$ reads $\pmb{b}$: $\delta(t,\pmb{b},C)=\langle t,\lambda\rangle$. So $x$ must start with $\pmb{b}$: $x=\pmb{b}x'$ and $\langle t,\pmb{b}x',C^{i+1}\rangle\vdash\langle t,x',C^i\rangle$. By IH, $x'=\pmb{b}^i$. Hence $x=\pmb{b}^{i+1}$. \qed
 
-\item From (a), processing $\pmb{a}^n$ from start symbol $S$ results in stack $C^n$ (taking the path that never re-expands $S$, i.e., always choosing $\delta(t,\pmb{a},S)=\langle t,C\rangle$ after the first step, or more precisely: $SC^n$ or $C^n$). For the machine to accept via final state (returning to state $t$ with empty input), the stack must be emptied. From (b), $C^n$ is emptied by reading exactly $\pmb{b}^n$. Thus:
+\item $P'_2$ accepts by empty stack (the final-state component $\{t\}$ is not used for acceptance here; a string is accepted iff the machine empties its stack while in state $t$ with empty input). From (a), processing $\pmb{a}^n$ from start symbol $S$ can yield stack $C^n$ (by choosing $\delta(t,\pmb{a},S)=\langle t,SC\rangle$ at each of the first $n-1$ steps and then $\langle t,C\rangle$ at the last, so the final stack is $C^n$). From (b), the stack $C^n$ is emptied by reading exactly $\pmb{b}^n$. Thus:
 \[
 L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}.
 \]
-For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack, so the empty-stack acceptance condition fails and $\lambda\notin L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack with no moves available, so the stack is never emptied and $\lambda\notin L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -117,15 +118,11 @@ Accept by final state: $\delta(q,\lambda,Z)=\langle f,Z\rangle$ (fires when inpu
 %%------------------------------------------------------------
 \item \textbf{A finite language not recognized by any one-state PDA via final state.}
 
-\textbf{Example}: $L = \{\pmb{ab}\}$ (just one string).
+\textbf{Example}: $L = \{\pmb{ab}\}$.
 
-\textbf{Proof}: Consider any one-state PDA $P$ with state $\{t\}$, final state $\{t\}$. On input $\pmb{ab}$, $P$ must accept: $\langle t,\pmb{ab},Z\rangle\Dvdash\langle t,\lambda,\alpha\rangle$ for some $\alpha$ (not necessarily empty; acceptance via final state does not require empty stack).
+\textbf{Proof}: Every one-state PDA $P$ with state set $\{t\}$, start state $t$, and final states $\{t\}$ trivially accepts $\lambda$: the initial configuration has $P$ already in the (unique) final state with empty input, so $\lambda$ is accepted regardless of the stack content. Since $\lambda \notin L = \{\pmb{ab}\}$, no one-state PDA via final state can recognize $L$.
 
-But also, if $P$ accepts $\pmb{ab}$, consider what happens on $\pmb{aab}$: when reading $\pmb{a}$ in state $t$ with some stack top, the PDA's move is fixed (same transition as before). This may force $P$ to also accept $\pmb{aab}$ (or fail to distinguish), because with only one state, the stack is the only memory and the transitions are determined by (state, input, stack top). It can be shown that with one state, any language accepted via final state is a CFL of a very restricted form (in fact, any one-state PDA language is context-free, but not every finite language can be represented with exactly one state without also accepting extra strings).
-
-Concretely: a one-state PDA accepting $\pmb{ab}$ would need a stack-based mechanism that is so constrained that it either accepts more strings or fails to properly isolate $\pmb{ab}$. For instance, $\{\pmb{a}\}$ cannot be recognized by a one-state PDA since the PDA cannot simultaneously block $\pmb{aa}$ while accepting $\pmb{a}$.
-
-A standard example: $\{\pmb{ab},\pmb{ba}\}$ --- a two-element language where the ordering of symbols varies. A one-state PDA cannot distinguish between them without nontrivial stack interaction, which forces acceptance of additional strings.
+More generally, any finite language that does not contain $\lambda$ is not recognizable by any one-state PDA via final state, since such a machine always accepts $\lambda$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{$L=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m \mid n,m\in\NN\}$.}
@@ -355,7 +352,9 @@ For the pumped string $uv^i wx^i y$: the count of $\pmb{b}$s is $p + (i-1)j$. Th
 
 \textbf{Case 1}: $vx$ contains only $\pmb{b}$s. Then $k = p!+p$ and $m = p!+p$ for all $i$. Choose $i$ such that $p + (i-1)j = p!+p$: then $(i-1)j = p!$, so $i-1 = p!/j$. Since $j\leq N\leq p-1$, $j\mid p!$, so $i$ is an integer. The pumped string has $|\pmb{b}|=p!+p=k=m$, violating $k\neq n$ or $n\neq m$. Contradiction.
 
-\textbf{Case 2}: $vx$ contains $\pmb{b}$s and $\pmb{a}$s (on the left boundary). Let $|vx|_{\pmb{a}}=\ell$, $|vx|_{\pmb{b}}=j$. The pumped string has $k = p!+p + (i-1)\ell$ and $n = p + (i-1)j$. For $i=0$: $k = p!+p - \ell$, $n = p-j$. For some $i$, we can make $k = n$ or $n = m$. Detailed case analysis leads to a contradiction. \qed
+\textbf{Case 2}: $vx$ spans the $\pmb{a}$/$\pmb{b}$ boundary. Let $|vx|_{\pmb{a}}=\ell \geq 0$ and $|vx|_{\pmb{b}}=j \geq 1$ (at least one marked $\pmb{b}$). Choose $i - 1 = p!/j$ (an integer since $j \leq N < p$). Then the pumped string has $n = p + p! = p!+p$ and $m = p!+p$ (the $\pmb{c}$-block is untouched), so $n = m$, violating $n\neq m$. Contradiction.
+
+\textbf{Case 3}: $vx$ spans the $\pmb{b}$/$\pmb{c}$ boundary. Let $|vx|_{\pmb{b}}=j \geq 1$ and $|vx|_{\pmb{c}}=r \geq 0$. Choose $i-1 = p!/j$. The pumped string has $n = p!+p$ and $k = p!+p$ (the $\pmb{a}$-block is untouched), so $k = n$, violating $k\neq n$. Contradiction. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Prove (Theorem 10.6) by induction.}

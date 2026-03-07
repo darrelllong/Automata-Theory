@@ -358,7 +358,7 @@ For $i=2$: length $= 2^j + m$. We need $2^j + m$ to be a power of 2. But $2^j < 
 \begin{enumerate}
 \item \textbf{$\Phi$ is not context free}: Assume $\Phi$ is context free with pumping constant $n$. Let $j > n$; take $s = \pmb{a}^{j^2}$.
 
-By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| = m \geq 1$. Then pumped strings have length $j^2 + (i-1)m$. For $i=2$: length $j^2 + m$. We need $j^2 + m$ to be a perfect square. But $j^2 < j^2 + m \leq j^2 + n < j^2 + 2j + 1 = (j+1)^2$ (since $n < j^2 \leq j^2$ and we can choose $j$ large enough that $n < 2j$). So $j^2 + m$ is strictly between two consecutive perfect squares, hence not a perfect square. Contradiction. \qed
+By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| = m \geq 1$. Then pumped strings have length $j^2 + (i-1)m$. For $i=2$: length $j^2 + m$. We need $j^2 + m$ to be a perfect square. Choose $j > n/2$ so that $n < 2j$; then $j^2 < j^2 + m \leq j^2 + n < j^2 + 2j + 1 = (j+1)^2$. So $j^2 + m$ is strictly between two consecutive perfect squares, hence not a perfect square. Contradiction. \qed
 
 \item \textbf{$\Phi'$ not context free via homomorphism}: Define $h: \{\pmb{b},\pmb{c},\pmb{d}\}^* \to \{\pmb{a}\}^*$ by $h(\pmb{c}) = \pmb{a}$ and $h(\pmb{b}) = h(\pmb{d}) = \lambda$. If $\Phi'$ were a CFL, then $h(\Phi') = \Phi$ would also be a CFL (CFLs are closed under homomorphism), contradicting part~(a). Hence $\Phi' \notin \CSIG$.
 
@@ -398,7 +398,7 @@ Then $w \in L(G^\cup)$ iff $Z \DRightarrow w$ iff $Z \Rightarrow S_i \DRightarro
 \item \textbf{Closure properties of $\XSIG$ (languages that are NOT context free).}
 
 \begin{enumerate}
-\item \textbf{Union}: Not closed. $L_1 = \{\pmb{a}^n\pmb{b}^n\pmb{c}^m \mid n\neq m\}$ and $L_2 = \{\pmb{a}^n\pmb{b}^m\pmb{c}^m \mid n\neq m\}$ are in \XSIG\ (not context free), but $L_1 \cup L_2 \supseteq \{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ and $L_1\cup L_2 = \{a^ib^jc^k \mid i\neq k \text{ or } j\neq k\}$ which is not context free. But also $\Sigma^*$ (CFL) is the complement of $\emptyset$ (CFL)... a simpler counterexample: $\overline{L} \cup L = \Sigma^*$ is a CFL, so if both $L$ and $\overline{L}$ are in \XSIG, their union is a CFL $\notin$ \XSIG. So \XSIG\ is \emph{not} closed under union.
+\item \textbf{Union}: Not closed. Let $L = \{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n \geq 0\}$. Then $L \notin \CSIG$ (standard pumping argument) and $\overline{L} \notin \CSIG$ (if $\overline{L}$ were a CFL, then $L = \overline{\overline{L}}$ would be a CFL by closure under complement restricted to this context — more directly: the complement of a non-CFL need not be a CFL, but here $\overline{L} \cap \pmb{a}^*\pmb{b}^*\pmb{c}^* = \pmb{a}^*\pmb{b}^*\pmb{c}^* \setminus L$, and if $\overline{L}$ were a CFL its intersection with the regular language $\pmb{a}^*\pmb{b}^*\pmb{c}^*$ would be a CFL, but that intersection is not a CFL). So $L, \overline{L} \in \XSIG$, yet $L \cup \overline{L} = \Sigma^* \in \CSIG \setminus \XSIG$. Hence \XSIG\ is \emph{not} closed under union.
 
 \item \textbf{Complement}: Not closed. If $L \in \XSIG$ (L is not CFL), $\overline{L}$ may or may not be in \XSIG. Since CFLs are not closed under complement, there exist non-CFLs whose complements are also non-CFLs, and non-CFLs whose complements are CFLs.
 
@@ -514,6 +514,15 @@ Choose $p > N$ and let $s = \pmb{a}^{p!+p}\pmb{b}^p\pmb{c}^{p!+p} \in L$ (since 
 
 By Ogden's lemma: $s = uvwxy$ where $vwx$ contains at most $N \leq p$ marked positions, $vx$ contains at least 1 marked position, and all pumped strings $uv^i wx^i y \in L$.
 
-Since marked positions are all in the $\pmb{b}$-block, $vwx$ lies within the $\pmb{b}$-block (at most). Then $v$ and $x$ consist only of $\pmb{b}$s (or $\pmb{a}$s on the boundary, or $\pmb{c}$s on the boundary). If $vx$ contains only $\pmb{b}$s, pumping changes $|w|_{\pmb{b}}$ while $|w|_{\pmb{a}} = p!+p$ and $|w|_{\pmb{c}} = p!+p$ remain fixed. At some $i$, $|w|_{\pmb{b}} = p!+p$ (i.e., $p + (i-1)|vx| = p!+p$, so $(i-1)|vx| = p!$, giving $i-1 = p!/|vx|$ which is an integer since $|vx| \leq p$ divides $p!$). But then $k = n = p!+p$ and $n = m = p!+p$, so the pumped string is not in $L$ (requires $k\neq n$ and $n\neq m$). Contradiction. \qed
+Let $m = |vx|_{\pmb{b}} \geq 1$ (the number of $\pmb{b}$s in $vx$; at least 1 since $vx$ contains a marked symbol). Choose $i - 1 = p!/m$, which is a positive integer since $m \leq N < p$ implies $m \leq p-1$ and hence $m \mid p!$. The pumped string has $\pmb{b}$-count equal to $p + (i-1)m = p + p! = p!+p$.
+
+Since $|vwx| \leq N < p$ and the $\pmb{b}$-block has exactly $p$ symbols, the window $vwx$ cannot reach both the $\pmb{a}$-block on the left and the $\pmb{c}$-block on the right simultaneously. Let $s_a = |vx|_{\pmb{a}}$ and $s_c = |vx|_{\pmb{c}}$. Then either $s_a = 0$ (window does not touch the $\pmb{a}$-block) or $s_c = 0$ (window does not touch the $\pmb{c}$-block).
+
+\begin{itemize}
+\item If $s_a = 0$: the $\pmb{a}$-count remains $p!+p = $ $\pmb{b}$-count, so $k = n = p!+p$, violating $k \neq n$. Contradiction.
+\item If $s_c = 0$: the $\pmb{c}$-count remains $p!+p = $ $\pmb{b}$-count, so $n = m = p!+p$, violating $n \neq m$. Contradiction.
+\end{itemize}
+
+In every case the pumped string lies outside $L$, contradicting Ogden's lemma. \qed
 
 \end{enumerate}

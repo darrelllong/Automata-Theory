@@ -44,7 +44,7 @@
 
 \begin{enumerate}[(a)]
   \item \textbf{Complementation: Yes.}  The complement of a finite language is cofinite and vice versa.
-  \item \textbf{Union: No.}  $L_1=\{\pmb{a}^{2n}\mid n\ge 0\}$ (infinite but not cofinite) is not in $B_\Sigma$.  But for $L_1,L_2\in B_\Sigma$: if both finite, union is finite.  If one is cofinite, union is cofinite.  If both cofinite, union is cofinite.  \textbf{Yes, closed.}
+  \item \textbf{Union: Yes.}  If both $L_1,L_2$ are finite, $L_1\cup L_2$ is finite.  If one is cofinite, $L_1\cup L_2$ is cofinite.  If both are cofinite, $L_1\cup L_2$ is cofinite (by 5.2b).  \textbf{Closed.}
   \item \textbf{Intersection: Yes.}  If both finite: finite.  If one cofinite and one finite: finite.  If both cofinite: cofinite (by 5.2c).
   \item \textbf{Concatenation: No.}  Let $L_1=C_\Sigma$ element and $L_2=C_\Sigma$ element; concatenation is cofinite (by 5.2d).  Let $L_1,L_2\in F_\Sigma$; product is finite.  Let $L_1\in F_\Sigma$ and $L_2\in C_\Sigma$ or vice versa: if $L_1=\emptyset$, product is $\emptyset\in F_\Sigma$.  If $L_1$ is finite and nonempty: the product may be neither finite nor cofinite.  \textbf{Counterexample:} $L_1=\{\pmb{a}\}$ (finite), $L_2=\Sigma^*\setminus\{\pmb{aa}\}$ (cofinite).  Then $L_1\cdot L_2$ = all words of the form $\pmb{a}w$ where $w\neq\pmb{aa}$, i.e., all words starting with $\pmb{a}$ except $\pmb{aaa}$.  This is neither finite nor cofinite (it's infinite and its complement is infinite).  So \textbf{not closed}.
   \item \textbf{Kleene closure: No.}  $\{\pmb{a}\}^*$ is infinite but $\{\pmb{a}\}\in F_\Sigma$; $\{\pmb{a}\}^*$ is not in $F_\Sigma$.  Is it cofinite?  $\{\pmb{a}\}^*=\{\lambda,\pmb{a},\pmb{aa},\ldots\}$, and its complement contains all words with any $\pmb{b}$ (if $|\Sigma|\ge 2$), which is infinite, so $\{\pmb{a}\}^*$ is not cofinite.  \textbf{Not closed.}
@@ -70,9 +70,9 @@
   \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite, i.e., $\sim L\in I_\Sigma$.  Then $\sim(\sim L)=L$; is $\sim L\in J_\Sigma$?  $\sim(\sim L)=L$ is infinite (since $L\in J_\Sigma$ is not cofinite, its complement is infinite, so $L$ itself need not be infinite).  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\notin J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
   \item \textbf{Union: No.}  $L_1=\emptyset,L_2=\Sigma^*\setminus\{\pmb{a}\}$.  Both have infinite complements.  $L_1\cup L_2=\Sigma^*\setminus\{\pmb{a}\}$, complement is $\{\pmb{a}\}$, finite.  So $L_1\cup L_2\in C_\Sigma$, not in $J_\Sigma$.  \textbf{Not closed.}
   \item \textbf{Intersection: Yes.}  If $\sim L_1$ and $\sim L_2$ are both infinite, then $\sim(L_1\cap L_2)=\sim L_1\cup\sim L_2\supseteq\sim L_1$, which is infinite.
-  \item \textbf{Concatenation: No.}  Counterexample needed; this is complex. $\emptyset\in J_\Sigma$ but $\emptyset\cdot L=\emptyset$; $\sim\emptyset=\Sigma^*$ is infinite so $\emptyset\in J_\Sigma$ and $\emptyset\cdot L=\emptyset\in J_\Sigma$.  Let $L_1=\{\pmb{a}\}^*$ (complement contains all words with a $\pmb{b}$, infinite if $|\Sigma|\ge 2$): $L_1\in J_\Sigma$.  $L_1\cdot L_1=L_1$.  This doesn't give a counterexample easily.  \textbf{Not determined here; left as investigation.}
-  \item \textbf{Kleene closure: No.}  $\emptyset^*=\{\lambda\}$.  $\sim\{\lambda\}=\Sigma^*\setminus\{\lambda\}$ is infinite, so $\{\lambda\}\in J_\Sigma$.  But $\emptyset\in J_\Sigma$ and $\emptyset^*=\{\lambda\}\in J_\Sigma$---this is closed.  Let $L=\{\lambda\}$: $L^*=\{\lambda\}$, still in $J_\Sigma$.  Counterexample: hard to find; likely \textbf{closed}.
-  \item \textbf{Relative complement: No.}  $L_1\setminus L_2=L_1\cap\sim L_2$.  $\sim L_2$ could be very large; hard to get control.
+  \item \textbf{Concatenation: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L_1=\{\pmb{a}^n\mid n\text{ odd or }n=2\}$ and $L_2=\{\pmb{a}^{2k}\mid k\ge 1\}$.  Then $\sim L_1=\{\lambda,\pmb{a}^4,\pmb{a}^6,\ldots\}$ and $\sim L_2=\{\lambda,\pmb{a},\pmb{a}^3,\pmb{a}^5,\ldots\}$ are both infinite, so $L_1,L_2\in J_\Sigma$.  But $L_1\cdot L_2=\{\pmb{a}^n\mid n\ge 3\}$ (any $n\ge 3$ is expressible as odd$+$even or $2+$even), whose complement $\{\lambda,\pmb{a},\pmb{a}^2\}$ is finite---so $L_1\cdot L_2\notin J_\Sigma$.
+  \item \textbf{Kleene closure: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L=\{\pmb{a}^n\mid n\text{ odd}\}$.  Then $\sim L=\{\lambda,\pmb{a}^2,\pmb{a}^4,\ldots\}$ is infinite, so $L\in J_\Sigma$.  But odd$+$odd$=$even, even$+$odd$=$odd, so $L^k$ contains all $\pmb{a}$-strings of the right parity at length $\ge k$; inductively $L^*=\{\pmb{a}\}^*=\Sigma^*$.  Then $\sim L^*=\emptyset$ is finite, so $L^*\notin J_\Sigma$.
+  \item \textbf{Relative complement: Yes.}  $\sim(L_1\setminus L_2)=\sim(L_1\cap\sim L_2)=\sim L_1\cup L_2\supseteq\sim L_1$.  Since $L_1\in J_\Sigma$, $\sim L_1$ is infinite, so $\sim(L_1\setminus L_2)$ is infinite, hence $L_1\setminus L_2\in J_\Sigma$. \qed
 \end{enumerate}
 
 %% 5.6
@@ -299,13 +299,7 @@ The remaining cases to verify are typically: (i) $\lambda\in L(A_*)$ (by constru
 %% 5.29
 \item \textbf{Collection closed under union, concatenation, Kleene closure, but not intersection.}
 
-Let $\mathcal{C}$ be the class of FAD (regular) languages.  This is closed under union, concatenation, and Kleene closure.  But... it is also closed under intersection.  We need a different example.
-
-Let $\mathcal{C}$ consist of all languages of the form $R^*$ for $R$ a regular expression (i.e., Kleene closures of FAD languages).  Every such language is FAD; closed under Kleene closure ($({R^*})^*=R^*$); closed under concatenation ($R_1^*\cdot R_2^*\subseteq(R_1|R_2)^*$ and can be shown FAD).
-Note: the identity $R_1^*\cup R_2^*=(R_1|R_2)^*$ is \emph{false} in general (e.g., $R_1=\mathbf{a}$, $R_2=\mathbf{b}$: the left side is $\mathbf{a}^*\cup\mathbf{b}^*$ while the right is $(\mathbf{a}|\mathbf{b})^*$, and $\mathbf{ab}$ is in the right but not the left).
-But intersection: $\{a\}^*\cap\{b\}^*=\{\lambda\}=(\lambda)^*$, which is in $\mathcal{C}$; this particular case closes. The collection $\mathcal{C}$ is not a clean counterexample here.
-
-\textbf{A non-trivial example:} the collection of all context-free languages is closed under union and concatenation but not under intersection.
+The class of all context-free languages (CFLs) is closed under union (by grammar union), concatenation (by grammar concatenation), and Kleene closure (by adding a new start production)---but \emph{not} under intersection: $L_1=\{a^nb^nc^m\}$ and $L_2=\{a^mb^nc^n\}$ are both CFLs, but $L_1\cap L_2=\{a^nb^nc^n\}$ is not (by the CFL pumping lemma). $\square$
 
 %% 5.30
 \item \textbf{Closed under union does not imply closed under intersection.}

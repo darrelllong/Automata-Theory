@@ -11,7 +11,7 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 
 \textit{Base} ($n=0$): $\mu(\DBAR(s,\lambda))=\mu(s)=\DBAR_{R_L}(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: $x=ya$, $|y|=n$. $\mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\mu(\DBAR(s,y))\cdot?$ ... using the homomorphism property of $\mu$: $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$. So:
+\textit{Step}: $x=ya$, $|y|=n$. Using the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$:
 \[
 \mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\delta_{R_L}(\mu(\DBAR(s,y)),a)=\delta_{R_L}(\DBAR_{R_L}(\mu(s),y),a)=\DBAR_{R_L}(\mu(s),ya). \quad\square
 \]
@@ -37,7 +37,7 @@ $E_A$ (state equivalence): $s\,E_A\,t\Leftrightarrow L(A^s)=L(A^t)$ where $A^s$ 
 
 ($\supseteq$): $E_A\subseteq E_{iA}$ for all $i$ (by induction on $i$). $i=0$: $s\,E_A\,t\Rightarrow L(A^s)=L(A^t)\Rightarrow(\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t))\Rightarrow(s\in F\Leftrightarrow t\in F)$. Step: if $E_A\subseteq E_{iA}$ and $s\,E_A\,t$, then $\delta(s,a)\,E_A\,\delta(t,a)$ (since $E_A$ is a right congruence on states -- actually prove this: $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$). So $\delta(s,a)\,E_A\,\delta(t,a)$, and by IH $\delta(s,a)\,E_{iA}\,\delta(t,a)$; also $s\,E_{iA}\,t$ by IH. Hence $s\,E_{i+1,A}\,t$. So $E_A\subseteq\bigcap_j E_{jA}$.
 
-($\subseteq$): Show $\bigcap_j E_{jA}\subseteq E_A$. Suppose $s\,E_{jA}\,t$ for all $j$. By induction on $|x|$: $\DBAR(s,x)\,E_{0A}\,\DBAR(t,x)$ for all $x$, which means $\DBAR(s,x)\in F\Leftrightarrow\DBAR(t,x)\in F$, i.e., $x\in L(A^s)\Leftrightarrow x\in L(A^t)$. Proof: $|x|=0$: $s\,E_{0A}\,t$ (given). $|x|=n+1$, $x=ay$: $\DBAR(s,ay)=\DBAR(\delta(s,a),y)$. Since $s\,E_{n+1,A}\,t$ (given, as $n+1\leq j$ for large enough $j$... actually all $j$): $\delta(s,a)\,E_{nA}\,\delta(t,a)$ and $\delta(s,a)\,E_{jA}\,\delta(t,a)$ for all $j\geq 1$. By IH: $\DBAR(\delta(s,a),y)\,E_{0A}\,\DBAR(\delta(t,a),y)$. So $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$. $\square$
+($\subseteq$): Show $\bigcap_j E_{jA}\subseteq E_A$. Suppose $s\,E_{jA}\,t$ for all $j$. By induction on $|x|$: $\DBAR(s,x)\,E_{0A}\,\DBAR(t,x)$ for all $x$, which means $\DBAR(s,x)\in F\Leftrightarrow\DBAR(t,x)\in F$, i.e., $x\in L(A^s)\Leftrightarrow x\in L(A^t)$. Proof: $|x|=0$: $s\,E_{0A}\,t$ (given). $|x|=n+1$, $x=ay$: $\DBAR(s,ay)=\DBAR(\delta(s,a),y)$. Since $s\,E_{jA}\,t$ for all $j$ (given), in particular $s\,E_{n+1,A}\,t$, so $\delta(s,a)\,E_{nA}\,\delta(t,a)$ and $\delta(s,a)\,E_{jA}\,\delta(t,a)$ for all $j\geq 1$. By IH: $\DBAR(\delta(s,a),y)\,E_{0A}\,\DBAR(\delta(t,a),y)$. So $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{E_A}$ in Definition 3.8 is well defined.}
@@ -111,7 +111,7 @@ So $\mu$ is a homomorphism. $\square$
 \item \textbf{Show there exists a homomorphism from connected $A$ to $A_{R_{L(A)}}$.}
 
 \begin{enumerate}
-\item Define $\psi: S\to\{R_{L(A)}\text{-classes}\}$ by $\psi(s)=[\DBAR^{-1}_{A}(s_{0A},\cdot)(s)]_{R_{L(A)}}$, i.e., $\psi(s)=[x]_{R_{L(A)}}$ where $x$ is any string reaching $s$ from $s_0$ (well-defined if $A$ is connected and consistent -- see (b)).
+\item Define $\psi: S\to\{R_{L(A)}\text{-classes}\}$ by $\psi(s)=[x_s]_{R_{L(A)}}$ where $x_s$ is any string with $\DBAR(s_{0A},x_s)=s$ (well-defined by part (b)).
 
 More precisely: since $A$ is connected, for each $s\in S$ there exists $x_s\in\Sigma^*$ with $\DBAR(s_{0A},x_s)=s$. Define $\psi(s)=[x_s]_{R_{L(A)}}$.
 
@@ -416,11 +416,13 @@ Correctness: by Exercise 3.48, $C_i$ is exactly the reachable states within dept
 %%------------------------------------------------------------
 \item \textbf{Give two DFAs with homomorphisms in both directions but no isomorphism.}
 
-Let $A$ and $B$ both have 2 states over $\Sigma=\{a\}$, where $A$ accepts $\{a^{2k}\}$ and $B$ accepts $\{a^{2k+1}\}$. There is a homomorphism $A\to B$ (map $q_0\mapsto p_1$, $q_1\mapsto p_0$: send start/final of $A$ to nonfinal/final of $B$)... actually this needs to satisfy $\mu(s_0)=s_{0B}$. Let $A$: $q_0\to q_1\to q_0$, $F=\{q_0\}$; $B$: $p_0\to p_1\to p_0$, $F=\{p_1\}$. Then $\mu: q_i\mapsto p_i$ is a homomorphism from $A$ to $B$? Check: $\mu(q_0)=p_0=s_{0B}$. $\mu(\delta_A(q_0,a))=\mu(q_1)=p_1=\delta_B(p_0,a)=\delta_B(\mu(q_0),a)$. $q_0\in F_A$ but $\mu(q_0)=p_0\notin F_B$! So this fails.
+Let $L = \{a^{2k} : k\geq 0\}$. Let $A$ be the minimal 2-state DFA for $L$: states $q_0, q_1$ cycling on $a$, $F_A = \{q_0\}$. Let $B$ be a non-minimal 3-state DFA for $L$: states $p_0, p_1, p_2$ with $p_0 \sim p_2$ (both accepting, both cycling with step 2), $F_B = \{p_0, p_2\}$.
 
-Correct: $\mu: q_0\mapsto p_1$, $q_1\mapsto p_0$... but then $\mu(s_{0A})=\mu(q_0)=p_1\neq p_0=s_{0B}$. Also fails. So $A$ and $B$ (with $L(A)\neq L(B)$) have no homomorphism.
+There is a homomorphism $\mu: B\to A$ collapsing $p_0,p_2\mapsto q_0$ and $p_1\mapsto q_1$: this satisfies $\delta_A(\mu(p),a)=\mu(\delta_B(p,a))$ and $p\in F_B\Leftrightarrow\mu(p)\in F_A$.
 
-Instead: Let both $A$ and $B$ be non-minimal for the same language but with different numbers of states. $A$: 3 states, $B$: 4 states. There's a homomorphism $B\to A$ (quotient by equivalence) and $A\to B$ (include $A$ as a subgraph of $B$ via some injection). But this requires careful construction. Example: $A$ has states $q_0,q_1,q_2$ (with $q_0\sim q_2$), $B$ has states $p_0,p_1,p_2,p_3$ (with $p_0\sim p_2$ and $p_1\sim p_3$). No isomorphism (different number of states), but homomorphisms exist in both directions.
+There is also a homomorphism $\nu: A\to B$ sending $q_0\mapsto p_0$ and $q_1\mapsto p_1$ (the natural inclusion into the connected part of $B$): $\nu(\delta_A(q,a))=\delta_B(\nu(q),a)$ since $\delta_A(q_0,a)=q_1$ and $\delta_B(p_0,a)=p_1=\nu(q_1)$, and $q_0\in F_A\Leftrightarrow p_0\in F_B$.
+
+But $A\not\cong B$ since they have different numbers of states.
 
 %%------------------------------------------------------------
 \item \textbf{$R$ and $Q$ right congruences of finite rank, $R$ refines $Q$, $L$ union of $Q$-classes.}

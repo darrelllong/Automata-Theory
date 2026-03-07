@@ -7,7 +7,7 @@
 %% 6.1
 \item Even-length words over $\{\pmb{a},\pmb{b}\}$:
 \[
-  (\pmb{a}\cup\pmb{b})^2)^* = ((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}))^*
+  ((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}))^*
 \]
 
 %% 6.2
@@ -21,16 +21,12 @@
 
 %% 6.4
 \item Odd-length words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ not ending in $\pmb{b}$:
+
+A word of odd length not ending in $\pmb{b}$ has an even-length prefix (possibly empty) followed by a non-$\pmb{b}$ letter:
 \[
-  (\pmb{a}\cup\pmb{b}\cup\pmb{c})((\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*(\pmb{a}\cup\pmb{c})
-  \;\cup\;
-  (\pmb{a}\cup\pmb{c})
+  ((\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*(\pmb{a}\cup\pmb{c})
 \]
-More compactly (letting $\Sigma=\pmb{a}\cup\pmb{b}\cup\pmb{c}$):
-a word of odd length not ending in $\pmb{b}$ is either a single non-$\pmb{b}$ letter, or has length $\ge 3$ with any prefix of even length followed by a non-$\pmb{b}$ letter:
-\[
-  (\pmb{a}\cup\pmb{c}) \cup (\pmb{a}\cup\pmb{b}\cup\pmb{c})((\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{a}\cup\pmb{b}\cup\pmb{c}))^*(\pmb{a}\cup\pmb{c})
-\]
+(When the Kleene star produces $k$ pairs, the total length is $2k+1$, which is odd.)
 
 %% 6.5
 \item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ not containing $\pmb{cc}$:
@@ -302,14 +298,11 @@ $L_2=(\pmb{ba}\cup\pmb{a})^*$: strings over $\{\pmb{a},\pmb{b}\}$ that are conca
 
 $L_1$ ends in $\pmb{a}$.  $L_2=(\pmb{ba}\cup\pmb{a})^*$ consists of all strings that decompose as concatenations of $\pmb{a}$ and $\pmb{ba}$.
 
-$L_1\cap L_2$: strings that end in $\pmb{a}$ (from $L_1$) and belong to $L_2$.  By inspection, $\pmb{a}\in L_1\cap L_2$, $\pmb{ba}\in L_1\cap L_2$ (since $\pmb{b}\in(\pmb{ab}\cup\pmb{b})^*$ is false... $\pmb{b}\in(\pmb{b})^1\subseteq(\pmb{ab}\cup\pmb{b})^*$, yes; and $\pmb{ba}\in(\pmb{ba})^1\subseteq L_2$).  The intersection is: $\pmb{a}^*(\pmb{ba})^*$? Let's verify: $\pmb{a}\in L_1\cap L_2$; $\pmb{ba}\in L_1\cap L_2$; $\pmb{aba}\in L_1$ (as $\pmb{ab}\cdot\pmb{a}$), $\pmb{aba}\in L_2$ (as $\pmb{a}\cdot\pmb{ba}$); $\pmb{bba}\notin L_2$ (can't decompose $\pmb{bb}$ as $\pmb{a}$ or $\pmb{ba}$)...
-
-The intersection can be expressed as $(\pmb{a}\cup\pmb{ba})^*\pmb{a}$ (strings in $L_2$ that end in $\pmb{a}$, where $L_2=(\pmb{a}\cup\pmb{ba})^*$).  But we also need the prefix to be in $(\pmb{ab}\cup\pmb{b})^*$.  This requires simultaneous satisfaction; the exact regular expression requires the product DFA computation.
-
+$L_2=(\pmb{ba}\cup\pmb{a})^*$ means every $\pmb{b}$ is immediately followed by $\pmb{a}$.  A word in $L_1=(\pmb{ab}\cup\pmb{b})^*\pmb{a}$ has prefix in $(\pmb{ab}\cup\pmb{b})^*$, so every $\pmb{a}$ in the prefix is immediately followed by $\pmb{b}$.  Combining both constraints on the prefix atoms: each atom (whether $\pmb{ab}$ or $\pmb{b}$) must be immediately followed by something starting with $\pmb{a}$ (since the atom ends in $\pmb{b}$, and every $\pmb{b}$ must be followed by $\pmb{a}$).  Consequently, $\pmb{b}$-atoms can appear only once, at the start (any $\pmb{b}$-atom followed by another $\pmb{b}$-atom would put $\pmb{b}$ before $\pmb{b}$, violating $L_2$); and $\pmb{ab}$-atoms must be followed by $\pmb{ab}$-atoms or the final $\pmb{a}$.  The intersection is therefore:
 \[
-  L_1\cap L_2 = (\pmb{a}\cup\pmb{ba})^+\text{-ending-in-}\pmb{a}\cap(\pmb{ab}\cup\pmb{b})^*\pmb{a}
+  L_1\cap L_2 = (\epsilon\cup\pmb{b})(\pmb{ab})^*\pmb{a}
 \]
-A valid expression: $\pmb{a}\cup(\pmb{ba})^+$ (by direct analysis: $\pmb{a}$ and $\pmb{ba}(\pmb{ba})^*$ both work).  But this needs careful verification.
+Verification: $(\epsilon\cup\pmb{b})(\pmb{ab})^k\pmb{a}$ gives words $\pmb{a}, \pmb{aba}, \pmb{ababa},\ldots$ and $\pmb{ba}, \pmb{baba}, \pmb{bababa},\ldots$, all of which belong to both $L_1$ and $L_2$; and any word in $L_1\cap L_2$ has this form by the above analysis.
 
 %% 6.24
 \item \textbf{Algorithm for intersection of two regular expressions.}
@@ -432,19 +425,21 @@ Then back-substitute to get $X_1$.
 \item \begin{enumerate}[(a)]
   \item Words ending with $\pmb{c}$ with no $\pmb{aa}$, $\pmb{bb}$, $\pmb{cc}$ substrings:
 
-  Letters after any $\pmb{a}$ must be $\pmb{b}$ or $\pmb{c}$; after any $\pmb{b}$ must be $\pmb{a}$ or $\pmb{c}$; no $\pmb{cc}$.  The last letter is $\pmb{c}$.  Let $T=(\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})$ (pairs avoiding doubles).  Words of even length with no doubles: $T^*$.  Add odd-length prefix:
+  Build the DFA with states $q_0$ (start), $q_a$ (last letter $\pmb{a}$), $q_b$ (last letter $\pmb{b}$), $q_c$ (last letter $\pmb{c}$, accepting), and dead state $q_d$; transitions $q_x\xrightarrow{x}q_d$ and $q_x\xrightarrow{y}q_y$ for $y\neq x$.  Write state equations for strings reaching $q_c$:
+  \begin{align*}
+    X_a &= \pmb{b}\,X_b \cup \pmb{c}\,X_c \\
+    X_b &= \pmb{a}\,X_a \cup \pmb{c}\,X_c \\
+    X_c &= \epsilon \cup \pmb{a}\,X_a \cup \pmb{b}\,X_b
+  \end{align*}
+  Eliminate $X_a$: substituting $X_b = \pmb{a}X_a\cup\pmb{c}X_c$ into $X_a$ gives $X_a = \pmb{ba}X_a\cup(\pmb{bc}\cup\pmb{c})X_c$, so $X_a=(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\,X_c$.  Then $X_b = \pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\,X_c\cup\pmb{c}\,X_c$.  Substituting into $X_c$:
   \[
-    ((\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})^*\cup(\pmb{a}\cup\pmb{b}\cup\pmb{c})(\pmb{ab}\cup\pmb{ac}\cup\pmb{ba}\cup\pmb{bc}\cup\pmb{ca}\cup\pmb{cb})^*)\cap(\text{ends in }\pmb{c})
+    X_c = \epsilon \cup \bigl((\pmb{a}\cup\pmb{ba})(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{bc}\bigr)X_c
   \]
-  Simplified:
+  Since $\lambda$ is absent from the coefficient, $X_c = A^*$ where
   \[
-    (\pmb{a}\cup\pmb{b})^?\cdot((\pmb{ab}\cup\pmb{ba})^*\cup\text{with }c\text{s inserted})\cdot\pmb{c}
+    A = (\pmb{a}\cup\pmb{ba})(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{bc}.
   \]
-  This is complex; one valid expression:
-  \[
-    ((\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{b}))^*(\pmb{a}\cup\pmb{b})\pmb{c}\cup\pmb{c}
-    \quad\text{(oversimplified)}
-  \]
+  The language is $L = \pmb{a}\,X_a\cup\pmb{b}\,X_b\cup\pmb{c}\,X_c = (\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c} \cup \pmb{b}(\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{c})\cup\pmb{c})\,A^*$.
 
   \item Words beginning with $\pmb{c}$ with no $\pmb{aa}$, $\pmb{bb}$, $\pmb{cc}$ substrings:
   Similar constraint; the word starts with $\pmb{c}$ and the next letter (if any) must not be $\pmb{c}$:

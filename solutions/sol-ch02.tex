@@ -79,7 +79,16 @@ $Q$ has three equivalence classes: $[x]_Q$ depends on $|x|_\mathbf{a}\bmod 3$. S
 
 \item $A_Q$ with relabeled final states: Yes. $C_e\cup[\lambda]_Q$ vs.\ $C_o$ -- this collapses to $A_{R_L}$.
 
-\item The eight languages: each union of some subset of $\{[\lambda]_Q, C_e, C_o\}$. The ones satisfying part (e) are those where the machine $A_Q$ with those final states gives $A_{R_K}\cong A_Q$ (i.e., the machine is minimal). This happens when $K$ is $\emptyset$, $\Sigma^*$, or the complement of one class.
+\item The eight languages are the $2^3=8$ unions of subsets of $\{[\lambda]_Q, C_e, C_o\}$. A language $K$ satisfies the criterion of part (e) iff $R_K = Q$, i.e., $A_Q$ (relabeled with new final states for $K$) is already minimal.
+
+Checking all eight: $\emptyset$ and $\Sigma^*$ give $\mathrm{rk}(R_K)=1$; $\{\lambda\}$, all-even $(\{\lambda\}\cup C_e)$, $C_o$, and $\Sigma^+$ $(=C_e\cup C_o)$ give $\mathrm{rk}(R_K)=2$ (two of the three $Q$-classes merge in each case). Only two choices keep all three $Q$-classes distinct:
+
+\begin{itemize}
+\item $K = C_e$: $z=\lambda$ distinguishes $[\lambda]$ from $C_e$ (since $\lambda\notin K$ but $aa\in K$); $z=\lambda$ distinguishes $C_e$ from $C_o$ (since $aa\in K$ but $a\notin K$). So $R_K=Q$.
+\item $K = \{\lambda\}\cup C_o$: $z=aa$ distinguishes $[\lambda]$ from $C_o$ ($\lambda\cdot aa=aa\notin K$ but $a\cdot aa=aaa\in K$); $z=\lambda$ distinguishes $C_o$ from $C_e$ ($a\in K$ but $aa\notin K$). So $R_K=Q$.
+\end{itemize}
+
+These are the only two of the eight languages satisfying part (e).
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -103,7 +112,7 @@ Let $M$ be the two-state DFA: $\Sigma=\{\mathbf{a}\}$, $S=\{q_0,q_1\}$, $s_0=q_0
 %%------------------------------------------------------------
 \item \textbf{Show $F_{R_L}$ is well defined.}
 
-$F_{R_L}=\{[x]_{R_L}\mid x\in L\}$. We must show: if $[x]_{R_L}=[y]_{R_L}$ and $x\in L$, then $y\in L$. Since $[x]_{R_L}=[y]_{R_L}$, we have $x\,R_L\,y$, meaning $(\forall z\in\Sigma^*)(xz\in L\Leftrightarrow yz\in L)$. Taking $z=\lambda$: $x\in L\Leftrightarrow y\in L$. So if $x\in L$ then $y\in L$. $\square$
+$F_{R_L}=\{[x]_{R_L}\mid x\in L\}$. We must show: if $[x]_{R_L}=[y]_{R_L}$, then $x\in L\Leftrightarrow y\in L$ (so each $R_L$-class is either entirely inside $L$ or entirely outside $L$, making the assignment of classes to $F_{R_L}$ unambiguous). Since $[x]_{R_L}=[y]_{R_L}$, we have $x\,R_L\,y$, meaning $(\forall z\in\Sigma^*)(xz\in L\Leftrightarrow yz\in L)$. Taking $z=\lambda$: $x\in L\Leftrightarrow y\in L$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{R_L}$ is well defined.}
@@ -155,12 +164,14 @@ Theorem 2.1 states: $L$ is FAD iff $R_L$ has finite rank.
 ($\Leftarrow$) If $R_L$ has finite rank $k$, construct the minimal machine $A_{R_L}=\langle\Sigma,[{\cdot}]_{R_L},[\lambda]_{R_L},\delta_{R_L},F_{R_L}\rangle$ with $k$ states (shown well-defined in Exercises 2.11--2.12). Show $L(A_{R_L})=L$: $x\in L(A_{R_L})\Leftrightarrow\DBAR_{R_L}([\lambda],x)\in F_{R_L}\Leftrightarrow[x]\in F_{R_L}\Leftrightarrow x\in L$.
 
 %%------------------------------------------------------------
-\item \textbf{Show the language $I$ (identity relation on $\{\mathbf{a}\}^*$) gives no FAD language.}
+\item \textbf{Find a language giving rise to $I$ (identity on $\{\mathbf{a}\}^*$); show it cannot be FAD.}
 
 \begin{enumerate}
-\item $L$ giving rise to $I$: $R_L=I$ requires every pair of distinct strings to have different futures. For instance, $L=\{\mathbf{a}\}$ over $\{\mathbf{a}\}^*$ has $R_L$ with only 3 classes: $\{\lambda\}$, $\{\mathbf{a}\}$, and $\mathbf{a}^{\geq 2}$. A language with $R_L=I$ must have infinitely many classes — one per string.
+\item Take $L=\{\mathbf{a}^p\mid p\text{ prime}\}$ over $\{\mathbf{a}\}^*$. We claim $R_L=I$, i.e., for every pair of distinct strings $\mathbf{a}^i$ and $\mathbf{a}^j$ ($i<j$), $\mathbf{a}^i\not R_L\,\mathbf{a}^j$.
 
-\item Such a language cannot be FAD (Nerode's theorem: infinite rank $\Rightarrow$ not FAD).
+Let $d=j-i\geq 1$. Since prime gaps are unbounded, there exists a prime $p>j$ such that no integer in $(p,\,p+d]$ is prime (i.e., the gap to the next prime exceeds $d$). Set $z=\mathbf{a}^{p-i}$; then $\mathbf{a}^i z=\mathbf{a}^p\in L$ (prime), while $\mathbf{a}^j z=\mathbf{a}^{p+d}$ lies strictly between two consecutive primes, so $\mathbf{a}^j z\notin L$. Hence $\mathbf{a}^i\not R_L\,\mathbf{a}^j$, and $R_L=I$ (every string is its own equivalence class).
+
+\item Such a language cannot be FAD: $R_L=I$ has infinite rank (one class per string in $\{\mathbf{a}\}^*$), so by Nerode's theorem $L$ is not FAD. $\square$
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -281,14 +292,25 @@ For $n$ given: $\mathbf{b}^1,\mathbf{b}^2,\ldots,\mathbf{b}^n$ are in distinct c
 %%------------------------------------------------------------
 \item \textbf{Find $R_\Omega$ for $\Omega=\{y\mid(y\text{ has exactly one }\mathbf{0})\vee(y\text{ has even \#1s})\}$.}
 
-A string $x$ is characterized by: (a) $|x|_\mathbf{0}$ (at least for small values), (b) parity of $|x|_\mathbf{1}$.
+$xz\in\Omega$ iff $(|x|_\mathbf{0}+|z|_\mathbf{0}=1)$ or $(|x|_\mathbf{1}+|z|_\mathbf{1}\equiv 0\pmod 2)$.
+The future of $x$ (i.e., which $z$ satisfy $xz\in\Omega$) depends only on $c_0=|x|_\mathbf{0}$ (capped at $2$) and $p=|x|_\mathbf{1}\bmod 2$.
+Writing $(c_0,p)$ for these two pieces of information, the six cases yield the following future descriptions:
 
-Class analysis: The condition $|y|_\mathbf{0}=1$ or $|y|_\mathbf{1}$ even is complex. Track state as pair (number of 0s seen, capped at 2, parity of 1s). Classes of $R_\Omega$:
 \begin{itemize}
-\item $|x|_\mathbf{0}=0$, even \#1: future needs: if $z$ has exactly one 0 and even \#1, or \#1 is even.
-\item etc.
+\item $(0,0)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{0}=1$ or $|z|_\mathbf{1}$ even.
+\item $(0,1)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{0}=1$ or $|z|_\mathbf{1}$ odd.
+\item $(1,0)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{0}=0$ or $|z|_\mathbf{1}$ even.
+\item $(1,1)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{0}=0$ or $|z|_\mathbf{1}$ odd.
+\item $(2,0)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{1}$ even. \quad ($|xz|_\mathbf{0}\geq 2$ so the first disjunct can never hold.)
+\item $(2,1)$: $xz\in\Omega\Leftrightarrow |z|_\mathbf{1}$ odd.
 \end{itemize}
-More carefully: $x\,R_\Omega\,y$ iff for all $z$, $xz\in\Omega\Leftrightarrow yz\in\Omega$. The future of $x$ depends on $(|x|_\mathbf{0}\text{ capped at 2}, |x|_\mathbf{1}\bmod 2)$. This gives at most $3\times 2=6$ classes (and some may merge). The exact classes require detailed analysis of the DFA for $\Omega$.
+
+All six futures are distinct (for example, $(0,0)$ and $(2,0)$ differ on $z=\mathbf{01}$: the first accepts it since $|z|_\mathbf{0}=1$, the second rejects since $|z|_\mathbf{1}=1$ is odd; and so on for the other pairs). Hence $R_\Omega$ has exactly \textbf{6} equivalence classes:
+\[
+C_{c_0,p}=\{x\in\{\mathbf{0},\mathbf{1}\}^*\mid |x|_\mathbf{0}=c_0\text{ (or }\geq 2\text{ if }c_0=2)\text{ and }|x|_\mathbf{1}\equiv p\pmod 2\},
+\]
+for $(c_0,p)\in\{0,1,2\}\times\{0,1\}$.
+The minimal DFA for $\Omega$ has 6 states. Final states are those in $\Omega$: $(1,0),(1,1),(0,0),(2,0)$ — i.e., strings with exactly one $\mathbf{0}$ (states $(1,\cdot)$) or with even \#$\mathbf{1}$s (states $(\cdot,0)$).
 
 %%------------------------------------------------------------
 \item \textbf{Which of $L_1,L_2,L_1\cap L_2,\sim L_2,L_1\cup L_2$ are FAD?}
@@ -327,7 +349,7 @@ Let $R=R_2$ and $S=R_3$. As shown above, $R_2\cup R_3$ is not even an equivalenc
 \item \textbf{Analysis of $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$.}
 
 \begin{enumerate}
-\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: both in $\Gamma$. If $|z|\geq 1$: $|\mathbf{ab}z|=2+|z|\geq 3$. For $|z|=1$: $|\mathbf{ab}z|=3$, and $\mathbf{abz}\in\Gamma$ iff $\mathbf{abz}\in\{x:|x|=3\}\setminus\{\mathbf{bbb}\}$... checking: $\mathbf{aba}$, $\mathbf{abb}$, $\mathbf{baa}$, $\mathbf{bab}$, $\mathbf{bba}$ are all in $\Gamma$ (since $|\cdot|=3$ and they're not $\mathbf{bbb}$). $\mathbf{bbb}$: $\mathbf{ab}\cdot z$ can't equal $\mathbf{bbb}$. So both $\mathbf{abz}$ and $\mathbf{baz}$ are in $\Gamma$. For $|z|\geq 2$: $|\cdot|\geq 4$, automatically in $\Gamma$. So yes, $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
+\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
 
 \item $\mathbf{ab}$ not related to $\mathbf{bb}$: Take $z=\mathbf{b}$: $\mathbf{abb}\in\{x:|x|=3\}\setminus\{\mathbf{bbb}\}\subseteq\Gamma$ (yes). $\mathbf{bbb}\in\Gamma$ (yes, it's listed). Now $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$. The length-3 strings NOT in $\Gamma$ are all length-3 strings except $\mathbf{bbb}$. Take $z=\mathbf{b}$: $\mathbf{ab}\cdot\mathbf{b}=\mathbf{abb}\notin\Gamma$ (length 3, $\neq\mathbf{bbb}$), but $\mathbf{bb}\cdot\mathbf{b}=\mathbf{bbb}\in\Gamma$. Hence $\mathbf{ab}\not R_\Gamma\,\mathbf{bb}$. $\square$
 
@@ -616,7 +638,7 @@ The strings in $L$ are all prefixes of this infinite sequence. Consider prefix $
 %%------------------------------------------------------------
 \item \textbf{Show the ``simple'' BNF language is not FAD.}
 
-$\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\rangle\mathbf{)}$. The language is $\{\mathbf{(}^n\mathbf{a}\mathbf{)}^n\mid n\geq 0\}$. By pumping lemma (or Myhill-Nerode): the strings $\mathbf{(}^0,\mathbf{(}^1,\ldots,\mathbf{(}^n$ are in distinct $R_L$-classes (future of $\mathbf{(}^k$ is $\{\mathbf{a}^{\mathbf{)}^k}\}$ essentially). Not FAD. $\square$
+$\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\rangle\mathbf{)}$. The language is $L=\{\mathbf{(}^n\mathbf{a}\mathbf{)}^n\mid n\geq 0\}$. By Myhill-Nerode: the strings $\mathbf{(}^0,\mathbf{(}^1,\ldots,\mathbf{(}^n$ are pairwise in distinct $R_L$-classes. The distinguishing suffix for $\mathbf{(}^j$ vs.\ $\mathbf{(}^k$ (with $j\neq k$) is $z=\mathbf{a}\mathbf{)}^j$: $\mathbf{(}^j\mathbf{a}\mathbf{)}^j\in L$ but $\mathbf{(}^k\mathbf{a}\mathbf{)}^j\notin L$ (since $k\neq j$). Hence $R_L$ has infinite rank and $L$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$L_2$ (binary powers of 2) is FAD; $L_{10}$ (decimal powers of 2) is not.}
@@ -624,7 +646,7 @@ $\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\ra
 \begin{enumerate}
 \item $L_2=\{\mathbf{1},\mathbf{10},\mathbf{100},\mathbf{1000},\ldots\}$: strings that are \textbf{1} followed by any number of \textbf{0}s. Regular expression: $\mathbf{1}\mathbf{0}^*$. FAD (2-state DFA: $q_0\xrightarrow{\mathbf{1}}q_1\xrightarrow{\mathbf{0}}q_1$, $F=\{q_1\}$, dead state for other transitions).
 
-\item $L_{10}=\{1,2,4,8,16,32,\ldots\}$ in decimal: by Myhill-Nerode. The strings $1,2,4,\ldots,2^n$ for large $n$ in decimal: these are all distinct $n$-digit (roughly) numbers, and their futures differ (since appending digits to get another power of 2 from $2^k$ is different from $2^j$). More precisely: for any two powers $2^i$ and $2^j$ ($i\neq j$), they are in different $R_{L_{10}}$-classes, since $2^i\cdot z=2^i$ (numerically, but the string concatenation $\langle 2^i\rangle z$ for decimal strings is different from $\langle 2^j\rangle z$). The formal argument: the strings $\langle 2^0\rangle=\mathbf{1},\langle 2^1\rangle=\mathbf{2},\ldots$ are pairwise not $R_{L_{10}}$-related (since $\langle 2^k\rangle\lambda=\langle 2^k\rangle$ is in $L_{10}$ but differs per $k$, and appending $\lambda$ distinguishes them). So infinitely many classes. Not FAD. $\square$
+\item $L_{10}=\{1,2,4,8,16,32,\ldots\}$ in decimal: by Myhill-Nerode. We show the strings $\langle 2^0\rangle=\mathbf{1},\langle 2^1\rangle=\mathbf{2},\langle 2^2\rangle=\mathbf{4},\ldots$ are pairwise not $R_{L_{10}}$-related. \emph{Note}: appending $z=\lambda$ does not distinguish them (both $\langle 2^i\rangle$ and $\langle 2^j\rangle$ are in $L_{10}$). Instead, we find a suffix for each pair. For example, $z=\mathbf{6}$ witnesses $\langle 2^0\rangle\not R_{L_{10}}\langle 2^1\rangle$: $\mathbf{16}=2^4\in L_{10}$ but $\mathbf{26}\notin L_{10}$. More generally, for any $i<j$, choose the suffix $z$ such that $\langle 2^i\rangle z$ is the decimal representation of some power of 2 (such $z$ exists since there are infinitely many powers of 2 with $\langle 2^i\rangle$ as a prefix, by equidistribution of $\{k\log_{10}2\}$); then $\langle 2^j\rangle z$ is a different string of a different length, and will not be a power of 2 for appropriate choice of such a power. Hence all $\langle 2^k\rangle$ lie in distinct $R_{L_{10}}$-classes, giving infinite rank. Not FAD. $\square$
 \end{enumerate}
 
 \end{enumerate}

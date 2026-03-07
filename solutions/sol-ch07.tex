@@ -88,10 +88,9 @@ By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.
 \begin{enumerate}[(a)]
   \item \textbf{Statement:}  Let $f:\Sigma^*\to\Gamma^*$ be FTD, implemented by a Mealy machine $M$ with $n$ states.  Then for any $x\in\Sigma^*$ with $|x|\ge n$, there exist strings $u,v,w$ with $x=uvw$, $|uv|\le n$, $|v|\ge 1$, such that for all $k\ge 0$:
   \[
-    f(uv^kw) = f(uv^0w)\text{'s prefix of length }|u|\cdot\frac{|f(uvw)|}{|x|}
-    \cup\text{repeating }f(v)\text{ block}\cdot f(w\text{'s portion}).
+    f(uv^kw) = \OBAR(s_0,u)\cdot\OBAR(\DBAR(s_0,u),v)^k\cdot\OBAR(\DBAR(s_0,uv),w).
   \]
-  More precisely: the output of processing $uv^kw$ consists of the output of $u$, then $k$ copies of the output of $v$ (starting from the state reached after $u$), then the output of $w$ from the state reached after $v$.
+  That is, the output of $uv^kw$ consists of the output while processing $u$, followed by $k$ repetitions of the output while processing $v$ (each time starting from state $\DBAR(s_0,u)$), followed by the output while processing $w$ from state $\DBAR(s_0,uv)=\DBAR(s_0,u)$.
 
   \item \textbf{Proof:}  Since $|x|\ge n$ and $M$ has $n$ states, by the pigeonhole principle the sequence of states $s_0,\DBAR(s_0,u),\DBAR(s_0,uv),\ldots$ must repeat a state within the first $n+1$ steps.  Let $u,v,w$ be such that $uvw=x$, $v$ causes a cycle: $\DBAR(s_0,u)=\DBAR(s_0,uv)$.  Then for any $k\ge 0$, $\DBAR(s_0,uv^k)=\DBAR(s_0,u)$, so the machine processes $w$ from the same state regardless of $k$.  Thus $f(uv^kw)=\OBAR(s_0,u)\cdot\OBAR(\DBAR(s_0,u),v)^k\cdot\OBAR(\DBAR(s_0,uv),w)$.  \qed
 \end{enumerate}
