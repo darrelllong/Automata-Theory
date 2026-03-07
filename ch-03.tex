@@ -160,7 +160,7 @@ relation on $A$, defined by \\
 \end{dfn}
 In other words, we will relate $s$ and $t$ \emph{iff} it is not possible to
 distinguish whether we are starting from state $s$ or state $t$; each string
-$x \in \Sigma^*$ will \emph{either} take $x$ to a final state when starting from
+$x \in \Sigma^*$ will \emph{either} take us to a final state when starting from
 $s$ and also take $x$ to a final state from $t$, \emph{or} neither $s$ nor $t$ will
 take $x$ to a final state.
 
@@ -440,7 +440,7 @@ $$ \mu(s)=[x_s]_{R_L} $$
 An immediate question comes to mind: There may be several strings that we could
 use for $x_s$; does it matter which one we choose to find the equivalence class?
 It would not do if, say, $R_L$ consisted of two equivalence classes, the
-even-length strings = $[\pmb{11}]_RL$ and the odd-length strings =
+even-length strings = $[\pmb{11}]_{R_L}$ and the odd-length strings =
 $[\pmb{0}]_{R_L}$, and both $\DBAR(s_0,\pmb{0})$ and $\DBAR(s_0,\pmb{11})$ equaled $s$. Then, on
 the one hand, $\mu(s)$ should be $[\pmb{0}]_{R_L}$ and, on the other hand, it should
 be $[\pmb{11}]_{R_L}$. $\mu$ must be a function; it cannot send $s$ to two different
@@ -834,7 +834,7 @@ the property that $L(A^c) = L(A) = L$.
 Furthermore, there exists an algorithm for computing $E_{A^c}$ the state equivalence
 relation on $A^c$; consequently, there is an algorithm for constructing
 $A^c\!/\!_{E_{A^c}}$, which is a reduced, connected automaton with the property that
-$L(A^c\!/\!_{E_{A^c}}) \cong L(A^c) = L(A) = L$
+$L(A^c\!/\!_{E_{A^c}}) = L(A^c) = L(A) = L$
 
 From the main theorem on minimization (Theorem \ref{thm-3.1}), we know that
 $A^c\!/\!_{E_{A^c}} \cong A_{R_L}$, and $A_{R_L}$ is the unique (up to isomorphism)
@@ -994,7 +994,7 @@ $s E_{i+1A} t$ & $\Leftrightarrow$ & $(\forall x \in \Sigma^* \ni |x| \leq i+1)
 \in F \Leftrightarrow \DBAR(t,\pmb{a}x) \in F)$ \\
 & $\Leftrightarrow$ & $s E_{iA} t \wedge$ \\
 && $(\forall \pmb{a} \in \Sigma)(\forall x \in \Sigma^* \ni |x| \leq i)
-(\DBAR(\delta(s,\pmb{a}),x) \in F \Leftrightarrow \DBAR(\delta(t,\pmb{a})x) \in F)$ \\
+(\DBAR(\delta(s,\pmb{a}),x) \in F \Leftrightarrow \DBAR(\delta(t,\pmb{a}),x) \in F)$ \\
 & $\Leftrightarrow$ & $s E_{iA} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,\pmb{a})
 E_{iA} \delta(t,\pmb{a}))$
 \end{tabular}
@@ -1036,12 +1036,12 @@ $q,r \in S$:
 \begin{center}
 \begin{tabular}{rl}
 $q E_{mA}r$ & $\Rightarrow$ (by assumption) \\
-$q E_{m+lA} r$ & $\Rightarrow$ (by Theorem \ref{thm-3.9}) \\
+$q E_{m+1A} r$ & $\Rightarrow$ (by Theorem \ref{thm-3.9}) \\
 $(\forall j \geq m)(q E_{jA} r)$ &
 \end{tabular}
 \end{center}
 Furthermore, by Lemma \ref{lmm-3.1}, $(\forall j \leq m)(q E_{jA} r)$, and so
-$(\forall j \in \NN)(q E_{jA} r)$; but by definition or $E_A$, this implies
+$(\forall j \in \NN)(q E_{jA} r)$; but by definition of $E_A$, this implies
 $q E_A r$. We have just shown that $q E_{mA} r \Rightarrow q E_A r$.
 \item Combining (1) and (2), we have
 $(\forall q,r \in S)(q E_{mA} r \Leftrightarrow q E_A r)$, and so $E_{mA}=E_A$.
@@ -1274,7 +1274,7 @@ $A/_{E_A}$.
 
 \item Given a \emph{connected} finite automaton
 $A=\langle\Sigma,S,s_0,\delta,F\rangle$, show there exists a homomorphism from
-$A$ to $A_{R_L}(A)$ by:
+$A$ to $A_{R_{L(A)}}$ by:
 \begin{enumerate}
 \item Define a mapping $\psi$ from $A$ to $A_{R_{L(A)}}$. (No justification need
 be given.)
@@ -1356,7 +1356,7 @@ Note that your answer to part (e) might contain some disconnected states.
 % Figure 3.10
 \begin{figure}
 \centerline{\epsfig{figure=ToFAfigures/fig3-10.eps,height=7.8in}}
-\caption{(a) The DFA $A$ discussed in Exercise 3.23 (b) The DFA $B$ iscussed in
+\caption{(a) The DFA $A$ discussed in Exercise 3.23 (b) The DFA $B$ discussed in
 Exercise 3.24 (c) The DFA $C$ discussed in Exercise 3.25 (d) The DFA $D$
 discussed in Exercise 3.26}\label{fig-3.10}
 \end{figure}
