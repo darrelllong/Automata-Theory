@@ -89,7 +89,7 @@ In symbols, this can be abbreviated as:
 $$(p \wedge q) \vee (\neg p \wedge \neg q)$$
 The truth table covering the four combinations of truth values of $p$ and $q$
 can be built from the truth tables defining $\wedge$, $\vee$, and $\neg$, as
-shown in \ref{fig-0.2}. The truth table shows that the assertion is indeed
+shown in Figure~\ref{fig-0.2}. The truth table shows that the assertion is indeed
 true in the two cases where $p$ and $q$ reflect the same values, and false in
 the two cases where the values assigned to $p$ and $q$ differ. When the statement
 that $r$ and $s$ always take on the same value is indeed true, we often write
@@ -401,7 +401,7 @@ $R(P)$ thus relates elements that belong to the same subset of $P$.
 \subsection*{Example 0.8}
 
 Let $X = \{1, 2, 3, 4, 5\}$ and consider the relation $Q = R(S)$ induced by the
-partition $S = \{\langle 1, 2\rangle,\langle 3, 5\rangle,\langle 4\rangle\}$.
+partition $S = \{\{1, 2\},\{3, 5\},\{4\}\}$.
 Since 1 and 2 are in the same set, they should be related by $Q$, while
 $1$$\not\!\!\!Q 4$ because $1$ and $4$ belong to different sets of the partition.
 Q can be described by
@@ -478,7 +478,7 @@ and $(\forall x_1 \in X)(\forall x_2 \in X)(x_1 = x_2
 \subsection*{Example 0.10}
 
 Let $n$ be a positive integer. Define $f_n$: $\NN \rightarrow \NN$ by $f_{n}(j)
-=$ the smallest natural number $i$ for which $j \equiv i \bmod{n}, f_3 (j)$,
+=$ the smallest natural number $i$ for which $j \equiv i \bmod{n}$. $f_3 (j)$,
 for example, is a function and is represented by the ordered pairs
 $f_3: \{\langle 0, 0\rangle, \langle 1, 1\rangle, \langle 2, 2\rangle,
 \langle 3, 0\rangle, \\ \langle 4,1\rangle, \ldots \}$. This implies that
@@ -546,7 +546,7 @@ $$\chi_{B}\left(\frac{m}{n}\right) = 0\text{ if $m$ is even}$$
 
 This characteristic function suffers from flaws similar to those found in the
 function $g$ in Example 0.11. $\frac{1}{4} = \frac{2}{8}$ and yet
-$X_B \left(\frac{1}{4}\right) = 1$ while $X_B \left(\frac{2}{8}\right) = 0$,
+$\chi_B \left(\frac{1}{4}\right) = 1$ while $\chi_B \left(\frac{2}{8}\right) = 0$,
 which implies that the fraction $\frac{1}{4}$ belongs to $B$, while
 $\frac{2}{8}$ is not an element of $B$. Due to this ambiguous definition of set
 membership, $B$ is not a well-defined set. $B$ failed to pass the test: if
@@ -658,8 +658,8 @@ $g\circ f(x)=g(f(x))$.
 \subsection*{Example 0.17}
 
 Consider the functions $f_3$ from Example 0.10 and $f$ from Example 0.14, where
-$f_3$: $\NN\rightarrow\NN$ was defined by $f_3(i) =$ the smallest natural number
-$i$ for which $j = i \bmod{3}$, and the function $f$: $\NN\rightarrow\NN$ is
+$f_3$: $\NN\rightarrow\NN$ was defined by $f_3(j) =$ the smallest natural number
+$i$ for which $j \equiv i \bmod{3}$, and the function $f$: $\NN\rightarrow\NN$ is
 defined by $f(i) = i + 1$. $f \circ f_3$ consists of the ordered pairs
 $\{\langle 0,1\rangle,\langle 1,2\rangle,\langle 2,3\rangle,\langle 3,1\rangle,
 \langle 4,2\rangle,\langle 5,3\rangle, \ldots \}$ and is represented by the rule
@@ -890,7 +890,7 @@ you wished $((\forall n \in \NN)P(n))$.
 
 Similar statements can be made from other starting points; for example,
 beginning with $P(4)$ and $(\forall m$$>$$4)(P(m) \Rightarrow P(m + 1)$, we can
-derive the conclusion $(\forall m > 4)P(n)$; had we started on the fourth floor
+derive the conclusion $(\forall m > 4)P(m)$; had we started on the fourth floor
 of the building, we could reach \emph{any} of the higher floors.
 
 \subsection*{Example 0.21}
@@ -937,7 +937,7 @@ $P(n):$ Any statement formula using $n$ or \emph{fewer} variables has an
 equivalent expression that contains less than $n \cdot 2^n$ operators.
 \end{quote}
 
-\emph{Basis step:} A statement formula in one variable must be either be
+\emph{Basis step:} A statement formula in one variable must either be
 $p$, $\neg p$, {\bf T}, or {\bf F}, each of which requires at most one
 operator, and since $1<1\cdot 2^1$, $P(1)$ is true.
 
@@ -964,7 +964,7 @@ ensures that they each have equivalent representations using no more than
 $m \cdot 2^m$ operators. $S$ can therefore be written in a form containing at
 most $4 + m \cdot 2^m + m \cdot 2^m$ operators, which can be shown to be less
 than $(m + 1)\cdot 2^{m+1}$ for all positive numbers $m$. Since $S$ was an
-arbitrary expression with $m + 1$ operators, we have shown that $any$ statement
+arbitrary expression with $m + 1$ operators, we have shown that \emph{any} statement
 formula using exactly $m + 1$ variables has an equivalent expression that
 contains no more than $(m + 1) \cdot 2^{m + 1}$ operators.
 
@@ -1280,7 +1280,7 @@ example of
 
 \item Define a function that will show that $\|\NN\| = \|\NN \times \NN\|$
 
-\item Show that $\NN$ is equipotent to $\NN$.
+\item Show that $\NN$ is equipotent to $\ZN$.
 
 \item Show that $\NN$ is equipotent to $\QN$.
 
