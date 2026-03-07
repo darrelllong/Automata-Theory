@@ -134,8 +134,8 @@ second string.
 
 % Definition 1.4
 \begin{dfn}\label{dfn-1.4}\index{concatenation!of strings}
-Given an alphabet $\Sigma$, let $x = \pmb{a}_1,\ldots\pmb{a}_n$ and $y=\pmb{b}_1,
-\ldots\pmb{b}_m$, be strings where each $\pmb{a}_i\in\Sigma$ and each $\pmb{b}_j
+Given an alphabet $\Sigma$, let $x = \pmb{a}_1\ldots\pmb{a}_n$ and $y=\pmb{b}_1
+\ldots\pmb{b}_m$ be strings where each $\pmb{a}_i\in\Sigma$ and each $\pmb{b}_j
 \in\Sigma$. The \emph{concatenation} of the strings $x$ and $y$, denoted by $x\cdot y$,
 is the juxtaposition of $x$ and $y$; that is, $x\cdot y=\pmb{a}_1\ldots\pmb{a}_n
 \pmb{b}_1\ldots\pmb{b}_m$.
@@ -149,7 +149,7 @@ examples of string concatenation are
 \item $\pmb{a}^2\cdot\pmb{b}^3=\pmb{aabbb}$
 \end{enumerate}
 
-Example (iii) illustrates a shorthand for denoting strings. Placing a
+Example (iii) illustrates a shorthand notation for denoting strings. Placing a
 superscript after a symbol means that this entity is a string made by
 concatenating it to itself the specified number of times. In a similar fashion,
 $(\pmb{ac})^3$ is meant to express  $\pmb{acacac}$. Note that an \emph{equal}
@@ -587,7 +587,7 @@ $=\DBAR(s,yx)$
 \emph{Inductive step}: Assume $P(m)$:
 \[ (\forall x \in \Sigma^*)(\forall y \in \Sigma^m)(\forall s \in S)
 	(\DBAR(s,yx) = \DBAR(\DBAR(s,y),x)), \]
-For any $z \in \Sigma^{m+l},(\exists \pmb{a} \in \Sigma^1)(\exists y \in
+For any $z \in \Sigma^{m+1},(\exists \pmb{a} \in \Sigma^1)(\exists y \in
 \Sigma^m) \ni z = \pmb{a}y$. Then
 \begin{center}\begin{tabular}{r@{ }l@{$\qquad$}l}
 & $\DBAR(s,zx)$ & (by definition of $z$) \\
@@ -1179,7 +1179,7 @@ Now that we have described the mathematical nature of deterministic finite
 automata, let us turn to the physical implementation of such devices. We will
 investigate the sort of physical components that actually go into the ``brain''
 of, say, a vending machine. Recall that the basic building blocks of digital
-logic circuits are {\emph{\Index{logic gates}}; using $\pmb{0}$ or {\bf False}
+logic circuits are \emph{\Index{logic gates}}; using $\pmb{0}$ or {\bf False}
 to represent a low voltage (ground) and $\pmb{1}$ or {\bf True} to represent a
 higher voltage (often +5 volts), the basic gates have the truth tables shown in
 Figure \ref{fig-1.14}.
@@ -1275,7 +1275,7 @@ changes to $\pmb{1}$, and note that, although some internal values may change,
 $p$ and $\neg p$ remain at $\pmb{0}$ and $\pmb{1}$, respectively; the old value
 of $p'$ has been ``remembered'' by the D flip-flop. Contrast this with the
 behavior when we strobe the clock: assume that the clock now also changes to
-$\pmb{1}$ so that we now have clock $=p=p'=\pmb{1}$, and $p=\pmb{0}$. When the
+$\pmb{1}$ so that we now have clock $=p'=\neg p=\pmb{1}$, and $p=\pmb{0}$. When the
 signal propagates through the network, we find that $p$ and $\neg p$ have
 changed to reflect the new value of $p'$; clock $=p=p'=\pmb{1}$, and $\neg p=
 \pmb{0}$.
@@ -1324,7 +1324,7 @@ is scanned by the input head.
 
 When building a logical circuit from the definition of a DFA, we will find it
 convenient to treat \<EOS\> as an input symbol, and define the state transition
-function for it by $(\forall s \in S)(\delta(s_1,\<EOS\>) = s)$. Thus, the DFA
+function for it by $(\forall s \in S)(\delta(s,\<EOS\>) = s)$. Thus, the DFA
 in Figure \ref{fig-1.17}a should be thought of as shown in Figure
 \ref{fig-1.17}b. As we have only two states, a single state bit will suffice,
 representing $s_0$ by $t_1=\pmb{0}$ and $s_1$ by $t_1=\pmb{1}$. Since $\Sigma=
@@ -1554,7 +1554,7 @@ in Figure \ref{fig-1.22}. The corresponding quintuple is $\langle\{\pmb{n},
 \pmb{d},\pmb{q}\},\{s_0,s_5,s_{10},s_{15},s_{20},s_{25},s_{30}\},s_0,\delta,
 \{s_{30}\}\rangle$, where for each state $s_i$, $\delta$ is defined by
 \begin{align*}
-\delta(s_i,\pmb{n}) = s_{min\{30,i+5)\}} \\
+\delta(s_i,\pmb{n}) = s_{min\{30,i+5\}} \\
 \delta(s_i,\pmb{d}) = s_{min\{30,i+10\}} \\
 \delta(s_i,\pmb{q}) = s_{min\{30,i+25\}}
 \end{align*}
