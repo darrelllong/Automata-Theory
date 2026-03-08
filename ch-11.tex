@@ -87,7 +87,7 @@ that this goal is impossible to achieve.
 % Figure 11.1
 \begin{figure}[tbh]
 \centerline{\epsfig{figure=ToFAfigures/fig11-1.eps,width=3.4in}}
-\caption{A model of a Turning machine.}\label{fig-11.1}
+\caption{A model of a Turing machine.}\label{fig-11.1}
 \end{figure}
 
 A conceptual model of a Turing machine is shown in Figure \ref{fig-11.1}.
@@ -591,7 +591,7 @@ $\Gamma$ can be expanded as necessary, as long as it remains finite. In
 particular, it is possible to expand the information content of each cell by
 adding a second ``track'' to the tape. For example, we may wish to add check
 marks to certain designated cells, as shown in Figure \ref{fig-11.7}. The lower track
-would contain the original symbols, and the upper track mayor may not have a
+would contain the original symbols, and the upper track may or may not have a
 check mark. This can be accomplished by doubling the combined size of the
 alphabets $\Sigma$ and $\Gamma$ to include all symbols without check marks and
 the same symbols with check marks. The new symbols can be thought of as ordered
@@ -1698,7 +1698,7 @@ easier to use.
 
 % Theorem 11.6
 \begin{thm}\label{thm-11.6}
-Let $\Sigma$ be an alphabet. Then $\TSIG$, is closed under union.
+Let $\Sigma$ be an alphabet. Then $\TSIG$ is closed under union.
 
 \emph{Proof.} If $L_1$ and $L_2$ are two Turing-acceptable languages, then by
 Theorem \ref{thm-11.4} there are type 0 grammars $G_1=\langle\Omega_1,\Sigma,S_1,P_1
@@ -1828,7 +1828,7 @@ turn properly contained the regular languages. In Chapter \ref{ch-10}, the
 languages. The context-sensitive language $\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ 
 \ |x|_{\pmb{a}}=|x|_{\pmb{b}}=|x|_{\pmb{c}}\}$ is not context free, so the type
 1 languages properly contain the type 2 languages. In this chapter, the linear
-bounded automata were shown to be recognize exactly the type 1 languages and
+bounded automata were shown to recognize exactly the type 1 languages and
 Turing machines were shown to accept the type 0 languages. Corollary \ref{cor-12.4} will
 show that the type 1 languages are properly included in the type 0 languages.
 \end{thm}
