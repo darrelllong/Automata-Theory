@@ -852,7 +852,7 @@ In this context, $\PBAR$$: \wp(\Sigma^*) \rightarrow \wp(\Gamma^*)$.
 
 Let $\Sigma =\{\pmb{a},\pmb{b}\}$ and $\Gamma =\{\pmb{c},\pmb{d}\}$, and define
 $\psi$ by $\psi(\pmb{a})=\pmb{cd}$ and $\psi(\pmb{b})=\pmb{d}$. For
-$K=\{\lambda,\pmb{ab},\pmb{bb}\}$, $\psi(K)=\{\lambda,\pmb{cdd},\pmb{dd}\}$,
+$K=\{\lambda,\pmb{ab},\pmb{bb}\}$, $\PBAR(K)=\{\lambda,\pmb{cdd},\pmb{dd}\}$,
 while for $L=\{\pmb{a},\pmb{b}\}^*$, $\PBAR(L)$ represents all words over
 $\{\pmb{c},\pmb{d}\}$ in which every $\pmb{c}$ is immediately followed by $\pmb{d}$.
 
@@ -1156,7 +1156,7 @@ automaton that accepts $L_1/L_2$ can be defined by
 $A^/=\langle\Sigma,S_1,s_{0_1},\delta_1,F^/\rangle$, where $F^/$ is defined to
 be the set of all states $t$ for which there is a word in $L_2$ that reaches a
 final state from $t$. That is, $F^/=\{t$ $|$ $\exists y \in \Sigma^*\ni (y \in L_2
-\wedge \delta_1(t,y) \in F)\}$. It can be shown that $A^/$ does indeed accept
+\wedge \DBAR_1(t,y) \in F)\}$. It can be shown that $A^/$ does indeed accept
 $L_1/L_2$, and hence \DSIG\ is closed under quotient (see the exercises).
 \end{thm}
 
