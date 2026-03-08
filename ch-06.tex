@@ -37,10 +37,9 @@ sequence of applications of the following rules:
 \item $\{\lambda\}$ (the set containing only the empty \emph{word}) is a regular set.
 \item If $L_1$ and $L_2$ are regular sets, then so is $L_1 \cdot L_2$.
 \item If $L_1$ and $L_2$ are regular sets, then so is $L_1 \cup L_2$.
-\item If $L_1$ is a regular set, then so is $L_1^*$
+\item If $L_1$ is a regular set, then so is $L_1^*$.
 \end{enumerate}
 \end{dfn}
-.
 \subsection*{Example 6.1}
 
 Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages are
@@ -604,7 +603,7 @@ then the substitution will yield \\
 \begin{tabular}{lll}
 $X_k$ & $=$ & $E_k \cup A_{k1}X_1 \cup A_{k2}X_2 \cup \cdots$ \\
 && $\cup (A_{kn} \cdot (A^*_{nn} \cdot E_n \cup A^*_{nn} \cdot A_{n1}X_1 \cup
-	\cdot A^*_{nn} \cdot A_{n2}X_2 \cup \cdots \cup \cdot A^*_{nn} \cdot
+	A^*_{nn} \cdot A_{n2}X_2 \cup \cdots \cup A^*_{nn} \cdot
 	A_{n(n-1)}X_{n-1}))$
 \end{tabular} \\
 By using the distributive law, this becomes \\
@@ -756,7 +755,7 @@ NDFAs, since the state transition function is slightly different:
 \[ A_{ij} = \bigcup\limits_{\pmb{a}\,\in\,\Sigma\,\wedge\,s_j\,\in\,\delta(s_i,
 	\pmb{a})}\pmb{a}\qquad\text{for }i,j=1,2, \ldots ,n \]
 
-An $n$-state NDFA therefore gives rise to $n$ equation in $n$ unknowns, which
+An $n$-state NDFA therefore gives rise to $n$ equations in $n$ unknowns, which
 can be solved as outlined by Theorems \ref{thm-6.2} and \ref{thm-6.1}. While Definition \ref{dfn-4.5} need not
 be used as a conversion step, an NDFA with $\lambda$-moves will have to be
 transformed into an equivalent NDFA without $\lambda$-moves. An appropriate
@@ -949,7 +948,7 @@ leaves $s_1$ (for the last time) for a final state.
 % Figure 6.8
 \begin{figure}
 \centerline{\epsfig{figure=ToFAfigures/fig6-8.eps,width=2.5in}}
-\caption{The NDFA discussed in Example 6.12}\label{fig-6.8}
+\caption{The DFA discussed in Example 6.12}\label{fig-6.8}
 \end{figure}
 
 In general, the final coefficient and constant terms can always be interpreted
@@ -1068,12 +1067,12 @@ systems.
 \begin{thm}\label{thm-6.4}
 Let $n$ and $m$ be positive integers and let $m \leq n$. Consider the system of
 $n \geq 2$ equations in the unknowns $Y_1,Y_2,\ldots,Y_n$ given by
-\[ Y_k = I_k\cup Y_1B_{k1} \cup Y_2B_{k2} \cup\cdots\cup Y_nB_{kN},\qquad
+\[ Y_k = I_k\cup Y_1B_{k1} \cup Y_2B_{k2} \cup\cdots\cup Y_nB_{kn},\qquad
 	\text{for }k = 1,2,\ldots,n \]
 in which $(\forall i,j)(\lambda \notin B_{ij})$.
 \begin{enumerate}[a.]
 \item The unknown $Y_m$ can be eliminated from this system to form the following
-$n-1$ equations in the unknowns $Y_1,Y_2, \ldots , Y_{m-l},Y_{m+l},\ldots,Y_n$.
+$n-1$ equations in the unknowns $Y_1,Y_2, \ldots , Y_{m-1},Y_{m+1},\ldots,Y_n$.
 \[ Y_k = \hat{I}_k \cup Y_1\hat{B}_{k1} \cup Y_2\hat{B}_{k2} \cup\cdots\cup
 	Y_{m-1}\hat{B}_{k(m-1)}\cup Y_{m+1}\hat{B}_{k(m+1)} \cup\cdots\cup
 	Y_n\hat{B}_{kn}, \]
@@ -1299,7 +1298,7 @@ Definition \ref{dfn-5.8} and represents a language homomorphism.
 % Corollary 6.3
 \begin{cor}\label{cor-6.3}\index{closure!under language homomorphism}
 Let $\Sigma$ be an alphabet, and let $\psi:\ \Sigma \rightarrow \Sigma^*$ be a
-language homomorphism. Then \RSIG\ closed under \PBAR.
+language homomorphism. Then \RSIG\ is closed under \PBAR.
 
 \emph{Proof.} The proof follows immediately from Theorem \ref{thm-6.6}, since a language
 homomorphism is a special type of substitution.
@@ -1431,8 +1430,8 @@ the unique solution even if $\lambda \in A$.
 \item Solve the following set of language equations for $X_0$ \emph{and} $X_1$
 over $\{\pmb{0},\pmb{1}\}^*$:
 \begin{center}\begin{tabular}{r@{ = }l}
-$X_1$ & $(\pmb{0}\cup\pmb{1})X_1$ \\
-$X_2$ & $\epsilon\cup\pmb{1}X_0\cup\pmb{0}X_1$
+$X_0$ & $(\pmb{0}\cup\pmb{1})X_1$ \\
+$X_1$ & $\epsilon\cup\pmb{1}X_0\cup\pmb{0}X_1$
 \end{tabular}\end{center}
 Do you see any relation between these equations and the DFA $A$ in Example 3.4?
 
@@ -1472,7 +1471,7 @@ generate an expression describing their intersection.
 \pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*$ is a solution to
 \begin{center}\begin{tabular}{r@{ = }l}
 $X_1$ & $\epsilon\cup\pmb{a}\cdot X_1\cup\pmb{b}\cdot X_2$ \\
-$X_2$ & $\emptyset\cup\pmb{b}\cdot X_2 \cup\emptyset\cdot X_2$
+$X_2$ & $\emptyset\cup\pmb{b}\cdot X_1 \cup\emptyset\cdot X_2$
 \end{tabular}\end{center}
 
 \item \begin{enumerate}
