@@ -73,7 +73,7 @@ formed by repeated application of the following rules:
 \end{enumerate}
 The conditions set forth above could have instead been succinctly specified by
 the BNF shown below.
-\[ R:: =\pmb{a}|\pmb{b}]\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|\pmb{(}R\pmb\cdot R\pmb{}|\pmb{(}R\cup R\pmb{)}|R^{\pmb *} \]
+\[ R:: =\pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|\pmb{(}R\pmb{\cdot} R\pmb{)}|\pmb{(}R\cup R\pmb{)}|R^{\pmb *} \]
 The following is a typical derivation, culminating in the regular expression
 $\pmb{(a\pmb\cdot(c\pmb\cup\epsilon))^{\pmb *}}$
 \begin{center}\begin{tabular}{r@{ $\Rightarrow$ }l}
@@ -510,7 +510,7 @@ literature.
 
 Let $G_1 = \langle\{T,S\},\{\pmb{a},\pmb{b}\},S,\{S\rightarrow\pmb{a}S,S
 \rightarrow\pmb{b}T,T\rightarrow\pmb{aa}\}\rangle$.Then $S\ \DRightarrow\pmb{aabaa}$,
-since by Definition \ref{dfn-8.2}, with $x_1=\lambda,\ x_2=\pmb{a},\ x_3=\pmb{aa},\ x_4 =
+since by Definition \ref{dfn-8.8}, with $x_1=\lambda,\ x_2=\pmb{a},\ x_3=\pmb{aa},\ x_4 =
 \pmb{aab},\ x_5=\pmb{aabaa},\ A_1=A_2=A_3=S,\ A_4=T$, and $A_5=\lambda$.
 \begin{center}\begin{tabular}{r@{ $\Rightarrow$ }ll}
 $S$ & $\pmb{a}S$& (by applying $S\rightarrow\pmb{a}S$) \\
