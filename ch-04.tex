@@ -355,7 +355,7 @@ $\pmb{010010}$, it is clear that the last state cannot be reached unless the
 sequence $\pmb{010010}$ is actually scanned at some point during the processing
 of the input string. Thus, the NDFA clearly accepts no word that should be
 rejected. Conversely, since \emph{all} possible legal paths are explored by an
-NDFA, valid strings \emph{will} find a way to the final state. lt is sometimes
+NDFA, valid strings \emph{will} find a way to the final state. It is sometimes
 helpful to think of the NDFA as remaining in $s_0$ while the initial part of the
 input string is being processed and then ``guessing'' when it is the right time
 to move to $s_1$.
@@ -365,7 +365,7 @@ recording device off (see the exercises). The device would remain in various
 final states until a valid end-of-transmission string was scanned, at which
 point it would return to the (nonfinal) start state.
 
-While the NDFA given in Example 4.6 is very straightforward, it appears to be
+While the NDFA given in Example 4.7 is very straightforward, it appears to be
 hard to simulate this nondeterminism in real time with a deterministic computer.
 It has not been difficult to keep track of the multiple paths in the simple
 machines seen so far. However, if each state has multiple transitions for a
@@ -817,7 +817,7 @@ before being ANDed with the \<EOS\> condition.
 An interesting exercise involves converting the NDFA $D$ given in Example 4.1
 to the equivalent DFA $D^d$, which will have four states: $\emptyset,\ \{s_1\},\
 \{s_2\}$, and $\{s_1,s_2\}$. The deterministic automaton $D^d$ can be realized
-by a circuit diagram as specified in Chapter \ref{ch-1}. This four-stare DFA will require
+by a circuit diagram as specified in Chapter \ref{ch-1}. This four-state DFA will require
 2 bits of state data. If the state encoding conventions $\emptyset=\pmb{00}$,
 $\{s_1\}=\pmb{10}$, $\{s_2\}=\pmb{01}$, and $\{s_1,s_2\}=\pmb{11}$ are used, the
 circuitry for the DFA $D^d$ will be identical to that for the NDFA $D$.
@@ -1122,7 +1122,7 @@ following example.
 \subsection*{Example 4.17}
 
 As an illustration of how circuitry can be defined for machines with
-$\lambda$-transitions, consider the DFA $E$ given in Figure \ref{fig-4.23}. This machine
+$\lambda$-transitions, consider the NDFA $E$ given in Figure \ref{fig-4.23}. This machine
 is similar to the NDFA $D$ in Example 4.13, but a $\lambda$-transition has been
 added from $s_1$ to $s_2$; that is, $\delta(s_1,\lambda)=\{s_2\}$. This
 transition implies that $s_2$ should be considered active whenever $s_1$ is
