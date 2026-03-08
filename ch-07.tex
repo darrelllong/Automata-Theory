@@ -542,7 +542,7 @@ $s^c_0 = s_0$
 \end{tabular}\end{center}
 $\delta^c$ is essentially the restriction of $\delta$ to $S^c\!\times \Sigma$$:
 (\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a})=\delta(s,\pmb{a}))$,
-and $\omega^c$ is the restriction of $\omega to\ S^c\!\times \Sigma$$:
+and $\omega^c$ is the restriction of $\omega$ to $S^c\!\times \Sigma$:
 (\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\omega^c(s,\pmb{a}) =
 \omega(s,\pmb{a}))$.
 \end{dfn}
@@ -740,7 +740,7 @@ proof of this part of the theorem.
 \end{thm}
 
 Note that Theorem \ref{thm-7.5} implies that, as long as we are dealing with reduced and
-connected machines, $f_{M_1}=f_{M_2}$ \emph{iff} $M1 \cong M2$. The conclusions
+connected machines, $f_{M_1}=f_{M_2}$ \emph{iff} $M_1 \cong M_2$. The conclusions
 discussed earlier now follow immediately from Theorem \ref{thm-7.5}.
 
 % Corollary 7.4
@@ -812,7 +812,7 @@ Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 \Sigma)(\omega(s,\pmb{a})=\omega(t,\pmb{a}))$.
 \item For $i \geq 1,\ E_{i+1M}$ can be computed from $E_{iM}$ as follows:
 \[ (\forall s \in S)(\forall t \in S)(\forall i \geq 1)(s E_{i+1M} t
-	\Leftrightarrow S E_{iM} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,
+	\Leftrightarrow s E_{iM} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,
 	\pmb{a})E_{iM}\delta(t,\pmb{a}))). \]
 \end{enumerate}
 \emph{Proof.} The proof is similar to the proofs given in Chapter \ref{ch-3} for $E_{iA}$
@@ -1008,7 +1008,7 @@ s_0,\delta,\omega'\rangle$ is then given by
 \[ \Sigma=\{\pmb{a},\pmb{b}\},\quad \Gamma=\{\pmb{0},\pmb{1}\},\quad
 	S=\{r_0,r_1,r_2,r_3\},\quad s_0 = r_0 \]
 and the state transition table and the output function table are specified as
-in Tables 7.4a and 7.4b.
+in Tables 7.3a and 7.3b.
 % Table 7.3a & 7.3b
 \begin{table}[h]\label{table-7.3}
 \begin{center}
@@ -1371,12 +1371,12 @@ minimal.
 
 % Theorem 7.10
 \begin{thm}\label{thm-7.10}
-\item Given a MSM $M$:
+Given a MSM $M$:
 \begin{enumerate}[(a)]
 \item
 A necessary and sufficient condition for $M$ to be
 	minimal is that $M$ is both reduced and connected.
-\item $M^c\!/\!\!_{E_{M^c}}$, is minimal.
+\item $M^c\!/\!\!_{E_{M^c}}$ is minimal.
 \end{enumerate}
 
 \emph{Proof.} See the exercises.
@@ -1466,7 +1466,7 @@ comprise the output alphabet of our model. During a file transfer, the states of
 the receiving portion of Kermit on the destination host are $R$ (awaiting a
 transfer request), $RF$ (awaiting the name of the file to be transferred),
 $RD$ (awaiting more data to be placed in the new file), and $A$ (abort due to an
-unrecoverable error). The set of states will again be $A,R,RD,RF\}$.
+unrecoverable error). The set of states will again be $\{A,R,RD,RF\}$.
 
 Expected inputs are represented by  $\pmb{S}$ (an initialization packet, indicating
 that a transfer is requested), $\pmb{H}$ (a header packet, containing the name of
