@@ -609,7 +609,7 @@ $R$ & $\pmb{(}R\pmb{\cup}R\pmb{)}$ \\
 \end{tabular}\end{center}
 $P_G$ simulates this derivation with the following steps:
 \begin{center}\begin{tabular}{r@{ $\vdash$ }l}
-$\langle s,\pmb{(a\cup(b\cdot c))},R)\rangle$ & $\langle s,\pmb{a\cup(b\cdot
+$\langle s,\pmb{(a\cup(b\cdot c))},R\rangle$ & $\langle s,\pmb{a\cup(b\cdot
 	c))},R\pmb{\cup}R\pmb{)}\rangle$ \\
 & $\langle s,\pmb{\cup(b\cdot c))},\pmb{\cup}R\pmb{)}\rangle$ \\
 & $\langle s,\pmb{(b\cdot c))},R\pmb{)}\rangle$ \\
@@ -1017,7 +1017,7 @@ Define $P_{\lambda}$ by choosing new stack symbols $Y$ and $Z$ such that $Y,Z
 \rangle$, where $\delta_{\lambda}$ is defined by:
 \begin{enumerate}
 \item $\delta_{\lambda}(s_0,\lambda,Z) = \{\langle s_0,BY\rangle\}$
-\item $(\forall a\in\Sigma)(\forall A\in\Gamma)(\forall s\in S)(\delta_{\lambda}
+\item $(\forall \pmb{a}\in\Sigma)(\forall A\in\Gamma)(\forall s\in S)(\delta_{\lambda}
 	(s,\pmb{a},A) = \delta(s,\pmb{a},A))$
 \item $(\forall A\in\Gamma)(\forall s\in S-F)(\delta_{\lambda}(s,\lambda,A) =
 	\delta(s,\lambda,A))$
@@ -1118,7 +1118,7 @@ the case, as shown by the following theorem.
 % Theorem 10.6
 \begin{thm}\label{thm-10.6}
 \CSIG\ is closed under intersection with a regular set. That is, if $L_1$ is
-context free and $R_2 $is regular, $L_1\cap R_2$ is always context free.
+context free and $R_2$ is regular, $L_1\cap R_2$ is always context free.
 
 \emph{Proof.} Let $L_1$ be a context-free language and let $R_2$ be a regular
 set. Since $\CSIG=\FSIG$ there must be a PDA $P_1=\langle\Sigma,\Gamma_1,S_1,
@@ -1146,7 +1146,7 @@ In particular, it can be shown for any $\alpha,\beta\in\Gamma^*$ that
 $(\forall x\in\Sigma^*)(\forall s_1,t_1\in S_1)(\forall s_2,t_2\in S_2)
 	(\langle\langle s_1,s_2\rangle,xy,\alpha\rangle\Dvdash\langle\langle
 	t_1,t_2\rangle,y,\beta\rangle\text{ in }P_1\Leftrightarrow$ \\
-$((\langle s_1,xy,	\alpha)\Dvdash\langle t_1,y,\beta\rangle\text{ in }
+$((\langle s_1,xy,\alpha\rangle)\Dvdash\langle t_1,y,\beta\rangle\text{ in }
 	P^{\cap})\wedge(t_2=\DBAR_2(s_2,x))))$
 \end{tabular}\end{center}
 From this, with $\alpha=B_1$, $s_1 = s_{0_1}$, $s_2 = s_{0_2}$ and the observation that $\langle t_1,t_2\rangle\in
@@ -1727,7 +1727,7 @@ $R_2$ is regular, $L_1\cup R_2$ is always context free.
 for complement and intersection.
 \end{enumerate}
 
-\item Argue that if $L_1 $is a DCFL and $R_2$ is regular, $R_2-L_1$ is always a
+\item Argue that if $L_1$ is a DCFL and $R_2$ is regular, $R_2-L_1$ is always a
 DCFL.
 
 \item \begin{enumerate}
