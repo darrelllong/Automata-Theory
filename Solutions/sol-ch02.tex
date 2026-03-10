@@ -167,9 +167,27 @@ Theorem 2.1 states: $L$ is FAD iff $R_L$ has finite rank.
 \item \textbf{Find a language giving rise to $I$ (identity on $\{\mathbf{a}\}^*$); show it cannot be FAD.}
 
 \begin{enumerate}
-\item Take $L=\{\mathbf{a}^p\mid p\text{ prime}\}$ over $\{\mathbf{a}\}^*$. We claim $R_L=I$, i.e., for every pair of distinct strings $\mathbf{a}^i$ and $\mathbf{a}^j$ ($i<j$), $\mathbf{a}^i\not R_L\,\mathbf{a}^j$.
-
-Let $d=j-i\geq 1$. Since prime gaps are unbounded, there exists a prime $p>j$ such that no integer in $(p,\,p+d]$ is prime (i.e., the gap to the next prime exceeds $d$). Set $z=\mathbf{a}^{p-i}$; then $\mathbf{a}^i z=\mathbf{a}^p\in L$ (prime), while $\mathbf{a}^j z=\mathbf{a}^{p+d}$ lies strictly between two consecutive primes, so $\mathbf{a}^j z\notin L$. Hence $\mathbf{a}^i\not R_L\,\mathbf{a}^j$, and $R_L=I$ (every string is its own equivalence class).
+\item Take
+\[
+L=\{\mathbf a^{2^m}\mid m\ge0\}\subseteq\{\mathbf a\}^*.
+\]
+We claim $R_L=I$.
+Let $i<j$ and $d=j-i\ge1$.
+Choose $m$ so that $2^m>d$, and set $z=\mathbf a^{2^m-i}$.
+Then
+\[
+\mathbf a^i z=\mathbf a^{2^m}\in L,
+\]
+but
+\[
+\mathbf a^j z=\mathbf a^{2^m+d}
+\]
+with
+\[
+2^m<2^m+d<2^{m+1},
+\]
+so $2^m+d$ is not a power of 2. Hence $\mathbf a^j z\notin L$.
+Thus $\mathbf a^i\not R_L\,\mathbf a^j$ for all $i\ne j$, so every class is a singleton and $R_L=I$.
 
 \item Such a language cannot be FAD: $R_L=I$ has infinite rank (one class per string in $\{\mathbf{a}\}^*$), so by Nerode's theorem $L$ is not FAD. $\square$
 \end{enumerate}
@@ -193,18 +211,54 @@ Theorem 2.5: $L$ is FAD $\Leftrightarrow$ there exists a right congruence $R$ of
 %%------------------------------------------------------------
 \item \textbf{Prove Theorem 2.6.}
 
-Theorem 2.6: $A_{R_L}$ is the unique minimal DFA accepting $L$ (up to isomorphism).
+Theorem 2.6 states:
+\[
+(\exists n)(\forall x\notin L,\ |x|\ge n)(\exists u,v,w)\bigl[x=uvw,\ |uv|\le n,\ |v|\ge1,\ (\forall i\ge0)\ uv^iw\notin L\bigr].
+\]
 
-Existence: $A_{R_L}$ has $\mathrm{rk}(R_L)$ states and accepts $L$.
-
-Minimality: Any DFA for $L$ has at least $\mathrm{rk}(R_L)$ states (since its state-equivalence relation refines $R_L$).
-
-Uniqueness: Any two minimal DFAs for $L$ are isomorphic (proved in Chapter 3).
+Assume $L$ is FAD, accepted by DFA $M=\langle\Sigma,S,s_0,\delta,F\rangle$, with $|S|=n$.
+Take any $x\notin L$ with $|x|\ge n$.
+Look at the first $n+1$ states on the run of $x$:
+\[
+s_0,\ \DBAR(s_0,a_1),\ \DBAR(s_0,a_1a_2),\ \ldots,\ \DBAR(s_0,a_1\cdots a_n).
+\]
+By pigeonhole, two are equal. So for some decomposition $x=uvw$ with $|uv|\le n$, $|v|\ge1$,
+\[
+\DBAR(s_0,u)=\DBAR(s_0,uv)=q.
+\]
+Hence $v$ is a loop at $q$, so for every $i\ge0$,
+\[
+\DBAR(s_0,uv^iw)=\DBAR(q,w)=\DBAR(s_0,uvw)=\DBAR(s_0,x).
+\]
+Since $x\notin L$, $\DBAR(s_0,x)\notin F$. Therefore $\DBAR(s_0,uv^iw)\notin F$, i.e.,
+$uv^iw\notin L$ for all $i\ge0$. This is exactly Theorem 2.6. $\square$
 
 %%------------------------------------------------------------
-\item \textbf{Prove Theorem 2.7 (pumping lemma).}
+\item \textbf{Prove Theorem 2.7.}
 
-Let $M$ accept $L$, $|S|=n$. Let $w\in L$, $|w|\geq n$. The sequence $s_0,\DBAR(s_0,w_1),\DBAR(s_0,w_1w_2),\ldots$ has $|w|+1>n$ states, so by pigeonhole some state repeats: $\DBAR(s_0,u)=\DBAR(s_0,uv)=s$ for $u=w_1\cdots w_i$, $v=w_{i+1}\cdots w_j$ with $i<j\leq n$ and $|v|\geq 1$. Set $w=uvw'$. Then for all $i\geq 0$: $uv^iw'\in L$ (by Exercise 2.15). $\square$
+Theorem 2.7 states: if $M$ is an $n$-state DFA accepting $L$, then every
+$x=a_1a_2\cdots a_m\in L$ with $m\ge n$ has a subsequence
+$a_{i_1}a_{i_2}\cdots a_{i_j}\in L$ with $j<n$.
+
+Let $x\in L$, $|x|=m\ge n$.
+By Theorem 2.3 (or Exercise 2.16), we can write
+\[
+x=u_1v_1w_1,\quad |u_1v_1|\le n,\ |v_1|\ge1,\ \text{and }u_1v_1^iw_1\in L\ \forall i\ge0.
+\]
+In particular, with $i=0$, $x_1=u_1w_1\in L$ and $|x_1|<|x|$.
+
+If $|x_1|<n$, stop. Otherwise apply the same argument to $x_1$.
+Each step removes at least one symbol and keeps membership in $L$, so after finitely many steps we obtain
+\[
+y\in L,\quad |y|<n,
+\]
+and $y$ is obtained from $x$ by deleting some blocks.
+Therefore $y$ is a subsequence of $x$:
+\[
+y=a_{i_1}a_{i_2}\cdots a_{i_j}
+\]
+for an increasing index sequence $i_1<i_2<\cdots<i_j$, with $j=|y|<n$.
+This is exactly Theorem 2.7. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x\mid|x|_\mathbf{a}<|x|_\mathbf{b}\}$ is not FAD.}
@@ -229,7 +283,28 @@ For any $n$, consider $w_n=\mathbf{0}^n\mathbf{2}\mathbf{0}^n\in\Gamma$. The str
 %%------------------------------------------------------------
 \item \textbf{Show $\Psi=\{ww\mid w\in\{\mathbf{0},\mathbf{1}\}^*\}$ is not FAD.}
 
-For any $n$, consider the strings $\mathbf{0}^0,\mathbf{0}^1,\ldots,\mathbf{0}^n$. We show these are in distinct $R_\Psi$-classes: $\mathbf{0}^i\,R_\Psi\,\mathbf{0}^j$ iff $(\forall z)(\mathbf{0}^iz\in\Psi\Leftrightarrow\mathbf{0}^jz\in\Psi)$. Take $z=\mathbf{0}^i$: $\mathbf{0}^{2i}\in\Psi$ (yes, $w=\mathbf{0}^i$); $\mathbf{0}^{j+i}\in\Psi$ iff $j+i$ is even and $\mathbf{0}^{(j+i)/2}\cdot\mathbf{0}^{(j+i)/2}=\mathbf{0}^{j+i}$, which is true iff $j=i$. So $\mathbf{0}^i\not R_\Psi\,\mathbf{0}^j$ for $i\neq j$. Infinite rank. Not FAD. $\square$
+For each $n\ge 0$, let $x_n=\mathbf{0}^n\mathbf{1}$.
+We show the $x_n$ are pairwise in distinct $R_\Psi$-classes.
+
+Fix $i\neq j$ and take suffix $z_i=\mathbf{0}^i\mathbf{1}$.
+Then
+\[
+x_i z_i=\mathbf{0}^i\mathbf{1}\mathbf{0}^i\mathbf{1}=ww\in\Psi
+\]
+with $w=\mathbf{0}^i\mathbf{1}$.
+
+Now consider
+\[
+x_j z_i=\mathbf{0}^j\mathbf{1}\mathbf{0}^i\mathbf{1}.
+\]
+Suppose this were in $\Psi$, so $x_j z_i=tt$ for some $t$.
+The string has exactly two $\mathbf{1}$s, so each half must contain exactly one $\mathbf{1}$.
+Hence the position of the second $\mathbf{1}$ must be ``half-length'' after the first.
+Its first $\mathbf{1}$ is at position $j+1$, second at $j+i+2$, so the half-length must be $i+1$.
+But half-length is also $\frac{i+j+2}{2}$, giving $\frac{i+j+2}{2}=i+1$, hence $j=i$, contradiction.
+Therefore $x_j z_i\notin\Psi$.
+
+So $x_i\not R_\Psi x_j$ for $i\neq j$, giving infinitely many Nerode classes. Thus $\Psi$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $K=\{w\mid w=w^r\}$ (palindromes) is not FAD.}
@@ -246,9 +321,11 @@ Use the Myhill-Nerode approach. For any $n$, consider $\mathbf{a}^3\mathbf{b}^i$
 %%------------------------------------------------------------
 \item \textbf{Show $C=\{\mathbf{d}^q\mid q\text{ non-prime}\}$ is not FAD.}
 
-The complement $\sim C=P\cup\{\lambda,\mathbf{d}\}$ (primes plus short strings). By the pumping lemma argument in Exercise 2.25, $P$ is not FAD. By Exercise 2.20 (Theorem 2.6: complement of FAD is FAD), if $C$ were FAD, $\sim C$ would be FAD, hence $P\setminus\{\lambda,\mathbf{d}\}$ would be FAD (finite union of FAD is FAD). But $P$ is not FAD. Contradiction.
-
-Alternatively: for any $n$, take $q$ a large composite $q>n$ with $q=p\cdot m$ ($p,m\geq 2$). Then... use a more direct Myhill-Nerode argument.
+Over $\{\mathbf d\}^*$, the complement of $C$ is exactly
+\[
+\sim C=\{\mathbf d^p\mid p\text{ prime}\}=P.
+\]
+Exercise 2.25 already proved $P$ is not FAD. If $C$ were FAD, then $\sim C$ would be FAD (closure under complement), contradicting that result. Therefore $C$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$R_L$ with 3 classes: $\{\lambda\}$, odd-length, even-length$\setminus\{\lambda\}$.}
@@ -256,9 +333,21 @@ Alternatively: for any $n$, take $q$ a large composite $q>n$ with $q=p\cdot m$ (
 \begin{enumerate}
 \item Why $L=\{x\mid|x|\text{ odd}\}$ can't give this $R_L$: Compute $R_{\{x:|x|\text{ odd}\}}$. We need $x\,R_L\,y\Leftrightarrow(\forall z)(|xz|\text{ odd}\Leftrightarrow|yz|\text{ odd})$, i.e., $|x|\equiv|y|\pmod 2$. So $R_L$ has only 2 classes (even-length, odd-length), not 3. $\lambda$ is not distinguished from other even-length strings.
 
-\item Languages giving 3-class $R_L$: $L$ must distinguish $\lambda$ from other even-length strings. Possible languages (unions of the 3 classes):
-$\{\lambda\}$, $\{\lambda\}\cup\text{(odd)}$, $\{\lambda\}\cup\text{(even}\setminus\{\lambda\})$, $\text{(odd)}$, $\text{(odd)}\cup(\text{even}\setminus\{\lambda\})$, $\text{(even}\setminus\{\lambda\})$.
-(Excluding $\emptyset$ and $\Sigma^*$ which collapse classes.)
+\item Let
+\[
+A=\{\lambda\},\quad B=\{x:|x|\text{ odd}\},\quad C=\{x:|x|\text{ even and }x\neq\lambda\}.
+\]
+Checking all 8 unions of $A,B,C$, exactly two give this same 3-class relation:
+\[
+L=C \quad\text{and}\quad L=A\cup B.
+\]
+For each of these, $A,B,C$ are pairwise distinguishable:
+\begin{itemize}
+\item $A$ vs $C$: suffix $z=\lambda$.
+\item $A$ vs $B$: suffix $z$ of odd length.
+\item $B$ vs $C$: suffix $z=\lambda$.
+\end{itemize}
+All other unions merge at least one pair of classes.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -266,27 +355,87 @@ $\{\lambda\}$, $\{\lambda\}\cup\text{(odd)}$, $\{\lambda\}\cup\text{(even}\setmi
 
 $R_\Psi$ classes: we need to determine when $x,y$ have the same future w.r.t.\ $\Psi$. The future of $x$ depends on: (1) parity of $|x|_\mathbf{a}$, and (2) whether $x$ ends with $\mathbf{b}$.
 
-Classes of $R_\Psi$: (i) $|x|_\mathbf{a}$ even, $x$ ends with $\mathbf{b}$ (or $x=\lambda$ ... no, $\lambda$ ends with nothing); (ii) $|x|_\mathbf{a}$ even, $x$ does not end with $\mathbf{b}$; (iii) $|x|_\mathbf{a}$ odd, $x$ ends with $\mathbf{b}$; (iv) $|x|_\mathbf{a}$ odd, $x$ does not end with $\mathbf{b}$.
+Thus $R_\Psi$ has four classes:
+\begin{itemize}
+\item $C_{e,b}=\{x\mid |x|_\mathbf{a}\text{ even and }x\text{ ends with }\mathbf{b}\}$.
+\item $C_{e,\neg b}=\{x\mid |x|_\mathbf{a}\text{ even and }x\text{ does not end with }\mathbf{b}\}$.
+\item $C_{o,b}=\{x\mid |x|_\mathbf{a}\text{ odd and }x\text{ ends with }\mathbf{b}\}$.
+\item $C_{o,\neg b}=\{x\mid |x|_\mathbf{a}\text{ odd and }x\text{ does not end with }\mathbf{b}\}$.
+\end{itemize}
+Here $\lambda\in C_{e,\neg b}$ (even number of $\mathbf a$'s, and it does not end with $\mathbf b$).
 
-But $x=\lambda$: $|x|_\mathbf{a}=0$ (even), doesn't end with $\mathbf{b}$. Is $\lambda$ in its own class? $\lambda\,R_\Psi\,\mathbf{aa}$: $(\lambda\cdot z\in\Psi\Leftrightarrow\mathbf{aa}\cdot z\in\Psi)$ for all $z$. Both have even \#a at start; future behavior identical. So $[\lambda]=\{x:|x|_\mathbf{a}\text{ even}, x\text{ not ending in }\mathbf{b}\}$. Similarly for others. Machine: 4 states (the 4 classes), start state is class (ii), final state is class (i).
+So the minimal DFA has 4 states, start state $C_{e,\neg b}$, and unique final state $C_{e,b}$.
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Xi=\{\lambda,\mathbf{a},\mathbf{a}^4,\mathbf{a}^9,\ldots\}$ (perfect square lengths) is not FAD.}
 
-For any $n$: strings $\mathbf{a}^0,\mathbf{a}^1,\ldots,\mathbf{a}^n$ are in distinct $R_\Xi$-classes. Indeed, $\mathbf{a}^i\,R_\Xi\,\mathbf{a}^j$ requires: $(\forall k)(\mathbf{a}^{i+k}\in\Xi\Leftrightarrow\mathbf{a}^{j+k}\in\Xi)$, i.e., $i+k$ is a perfect square iff $j+k$ is. Take $k=(m-i)$ where $m$ is the smallest perfect square $>i$: then $i+k=m$ (square), but $(j+k)=j+(m-i)$. For $i\neq j$, we can choose $m$ so that $j+(m-i)$ is not a perfect square (since squares are sparse). Infinite rank. $\square$
+For distinct $i<j$, we show $\mathbf{a}^i\not R_\Xi \mathbf{a}^j$.
+Let $d=j-i\ge1$. Choose $n$ with $2n+1>d$, and set
+\[
+k=n^2-i.
+\]
+Then
+\[
+i+k=n^2
+\]
+is a perfect square, so $\mathbf{a}^{i+k}\in\Xi$.
+But
+\[
+j+k=n^2+d,
+\]
+and since $0<d<2n+1$, we have
+\[
+n^2< n^2+d < (n+1)^2.
+\]
+So $n^2+d$ is not a perfect square, hence $\mathbf{a}^{j+k}\notin\Xi$.
+Therefore $\mathbf{a}^i$ and $\mathbf{a}^j$ are distinguishable; infinitely many classes follow, so $\Xi$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Phi=\{\mathbf{b},\mathbf{b}^2,\mathbf{b}^4,\mathbf{b}^8,\ldots\}$ (powers of 2) is not FAD.}
 
-For $n$ given: $\mathbf{b}^1,\mathbf{b}^2,\ldots,\mathbf{b}^n$ are in distinct classes. $\mathbf{b}^i\,R_\Phi\,\mathbf{b}^j$ requires $i+k$ is a power of 2 iff $j+k$ is for all $k$. Take the smallest power of 2 greater than $i$, say $2^m>i$; set $k=2^m-i$. Then $i+k=2^m\in\Phi$; but $j+k=j+2^m-i$. For $j>i$, $j+k=2^m+(j-i)>2^m$, and the next power of 2 is $2^{m+1}>2^m+(j-i)$ for large enough $m$. So $j+k$ is not a power of 2. Distinct classes. $\square$
+For distinct $i<j$, let $d=j-i\ge1$. Choose $m$ with $2^m>d$, and set
+\[
+k=2^m-i.
+\]
+Then
+\[
+i+k=2^m
+\]
+is a power of $2$, so $\mathbf{b}^{i+k}\in\Phi$.
+But
+\[
+j+k=2^m+d
+\]
+satisfies
+\[
+2^m<2^m+d<2^{m+1}
+\]
+because $0<d<2^m$.
+So $2^m+d$ is not a power of $2$, hence $\mathbf{b}^{j+k}\notin\Phi$.
+Thus $\mathbf{b}^i$ and $\mathbf{b}^j$ are distinguishable; therefore $R_\Phi$ has infinite rank and $\Phi$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Five-class $R_L$ over $\{\mathbf{a},\mathbf{b}\}$.}
 
 \begin{enumerate}
-\item The class that could be $L$: $L$ must be a union of $R_L$-classes, and $L$ consists of exactly one class. The final states of $A_{R_L}$ correspond to $L$. Given the 5 classes, the machine accepts words reaching the class $\{x:x\text{ contains a }\mathbf{b}\}$ or one of the specific prefix classes. \emph{Only one class can be $L$ by itself}: it must be self-consistent. Each of the 5 classes is a valid candidate; the problem asks which single class gives the $R_L$ with exactly those 5 classes. The answer is: $L=\{\mathbf{a}^3,\mathbf{a}^4,\ldots\}$ gives $R_L$ with those 5 classes, as one can verify.
+\item Let
+\[
+C_0=\{\lambda\},\; C_1=\{\mathbf a\},\; C_2=\{\mathbf{aa}\},\; C_3=\{\mathbf a^k:k\ge 3\},\; C_4=\{x:x\text{ contains a }\mathbf b\}.
+\]
+If $L$ is exactly one class and still has $R_L$ equal to this 5-class partition, the only possibility is
+\[
+L=C_3=\{\mathbf a^3,\mathbf a^4,\ldots\}.
+\]
+Choosing any other single class merges some classes under $R_L$.
 
-\item Other languages: any of the $2^5-2=30$ nonempty proper unions of the 5 classes.
+\item The other languages $L$ that still give this same $R_L$ are exactly:
+\[
+C_0\cup C_3,\quad C_1\cup C_3,\quad C_0\cup C_1\cup C_3,
+\]
+\[
+C_2\cup C_4,\quad C_0\cup C_2\cup C_4,\quad C_1\cup C_2\cup C_4,\quad C_0\cup C_1\cup C_2\cup C_4.
+\]
+Together with part (a), there are 8 such languages.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -349,13 +498,55 @@ Let $R=R_2$ and $S=R_3$. As shown above, $R_2\cup R_3$ is not even an equivalenc
 \item \textbf{Analysis of $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$.}
 
 \begin{enumerate}
-\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
+\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
 
-\item $\mathbf{ab}$ not related to $\mathbf{bb}$: Take $z=\mathbf{b}$: $\mathbf{abb}\in\{x:|x|=3\}\setminus\{\mathbf{bbb}\}\subseteq\Gamma$ (yes). $\mathbf{bbb}\in\Gamma$ (yes, it's listed). Now $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$. The length-3 strings NOT in $\Gamma$ are all length-3 strings except $\mathbf{bbb}$. Take $z=\mathbf{b}$: $\mathbf{ab}\cdot\mathbf{b}=\mathbf{abb}\notin\Gamma$ (length 3, $\neq\mathbf{bbb}$), but $\mathbf{bb}\cdot\mathbf{b}=\mathbf{bbb}\in\Gamma$. Hence $\mathbf{ab}\not R_\Gamma\,\mathbf{bb}$. $\square$
+\item $\mathbf{ab}$ is not related to $\mathbf{bb}$: take $z=\mathbf{b}$. Then
+\[
+\mathbf{ab}z=\mathbf{abb}\notin\Gamma
+\]
+because among length-3 strings only $\mathbf{bbb}$ is in $\Gamma$.
+But
+\[
+\mathbf{bb}z=\mathbf{bbb}\in\Gamma.
+\]
+So $\mathbf{ab}\not R_\Gamma\,\mathbf{bb}$. $\square$
 
-\item The 8 equivalence classes as given can be verified by exhaustive case analysis of the future of each string under $\Gamma$.
+\item The 8 classes are exactly:
+\[
+C_0=\{\lambda\},\ C_1=\{\mathbf a\},\ C_2=\{\mathbf b\},\ C_3=\{\mathbf{aa}\},\ C_4=\{\mathbf{bb}\},
+\]
+\[
+C_5=\{\mathbf{ab},\mathbf{ba}\},\ C_6=\{x:|x|=3,\ x\neq \mathbf{bbb}\},\ C_7=\{\mathbf{bbb}\}\cup\{x:|x|\ge4\}.
+\]
+These are pairwise distinct by suitable suffixes (for instance, $C_4$ vs $C_5$ by suffix $\mathbf b$:
+$\mathbf{bb}\mathbf b=\mathbf{bbb}\in\Gamma$ but $\mathbf{ab}\mathbf b=\mathbf{abb}\notin\Gamma$).
 
-\item Minimal DFA: 8 states (one per class), with transitions determined by appending $\mathbf{a}$ or $\mathbf{b}$ and seeing which class the result falls into.
+\item Minimal DFA has these 8 states, start $C_0$, final states
+\[
+F=\{C_0,C_1,C_4,C_5,C_7\}.
+\]
+Transition function:
+\[
+\delta(C_0,\mathbf a)=C_1,\ \delta(C_0,\mathbf b)=C_2,
+\]
+\[
+\delta(C_1,\mathbf a)=C_3,\ \delta(C_1,\mathbf b)=C_5,
+\]
+\[
+\delta(C_2,\mathbf a)=C_5,\ \delta(C_2,\mathbf b)=C_4,
+\]
+\[
+\delta(C_3,\mathbf a)=C_6,\ \delta(C_3,\mathbf b)=C_6,
+\]
+\[
+\delta(C_4,\mathbf a)=C_6,\ \delta(C_4,\mathbf b)=C_7,
+\]
+\[
+\delta(C_5,\mathbf a)=C_6,\ \delta(C_5,\mathbf b)=C_6,
+\]
+\[
+\delta(C_6,\mathbf a)=C_7,\ \delta(C_6,\mathbf b)=C_7,\ \delta(C_7,\mathbf a)=C_7,\ \delta(C_7,\mathbf b)=C_7.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -368,7 +559,25 @@ If $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then for any $z$: $\DBAR(s_0,xz)=\DBAR(s,z)=\D
 %%------------------------------------------------------------
 \item \textbf{Is Pascal (set of all valid Pascal programs) FAD?}
 
-No. By the pumping lemma: consider the programs \texttt{begin}$^n$ \texttt{end}$^n$-style constructs (or deeply nested \texttt{if/begin/end} blocks). If Pascal were FAD with $N$ states, we could pump a string of $N+1$ nested constructs, producing a syntactically invalid program that would still be accepted. More precisely, the language of balanced begin/end pairs is not regular (it's context-free), and valid Pascal programs must have balanced such constructs, so Pascal is not FAD.
+No.
+Let
+\[
+R=\{\texttt{program p;}~\texttt{begin}^*~\texttt{end}^*~\texttt{.}\},
+\]
+which is regular (fixed keywords plus two starred blocks).
+Then
+\[
+\text{Pascal}\cap R
+=\{\texttt{program p;}~\texttt{begin}^n~\texttt{end}^n~\texttt{.}\mid n\ge1\},
+\]
+since valid nesting requires matching numbers of \texttt{begin}/\texttt{end}.
+Erase the fixed prefix/suffix with a homomorphism; the image is
+\[
+\{\texttt{begin}^n\texttt{end}^n\mid n\ge1\},
+\]
+which is not regular.
+If Pascal were FAD, then $\text{Pascal}\cap R$ would be FAD (closure under intersection with regular languages), and its homomorphic image would be FAD, contradiction.
+So Pascal is not FAD.
 
 %%------------------------------------------------------------
 \item \textbf{Is Short Pascal (programs with $<10^6$ characters) FAD?}
@@ -379,9 +588,35 @@ Yes. Short Pascal is a finite language (finitely many programs of length $<10^6$
 \item \textbf{$L=\{\mathbf{a}^n\mathbf{b}^k\mathbf{c}^j\mid n<3\text{ or }(n\geq 3\text{ and }k=j)\}$.}
 
 \begin{enumerate}
-\item $L$ is \emph{not} FAD. The strings with $n\geq 3$ form $\mathbf{a}^{\geq 3}\cdot\{x\in\{\mathbf{b},\mathbf{c}\}^*:|x|_\mathbf{b}=|x|_\mathbf{c}\}$, which is not regular (by pumping), so $L$ itself is not regular.
+\item \textbf{Hypothesis false, conclusion true.}
 
-Theorem 2.3 says: if $L$ is FAD, then the pumping lemma holds. The \emph{conclusion} of Theorem 2.3 (pumping lemma) might still hold vacuously or for other reasons. Let's check: does the pumping lemma hold for this $L$? For any long string $w=\mathbf{a}^n\mathbf{b}^k\mathbf{c}^k\in L$ with $n\geq 3$ and $|w|\geq n$ (for our chosen $n$): if we pump within the $\mathbf{a}$-block (say $v=\mathbf{a}^j$), pumping up gives $\mathbf{a}^{n+j}\mathbf{b}^k\mathbf{c}^k\in L$ (still $k=k$). So the pumping conclusion holds. But the hypothesis of Theorem 2.3 ($L$ is FAD) does not hold.
+First, the hypothesis ``$L$ is FAD'' is false. Intersect with the regular language
+$R=\mathbf a^3\mathbf b^*\mathbf c^*$:
+\[
+L\cap R=\{\mathbf a^3\mathbf b^k\mathbf c^k\mid k\ge0\},
+\]
+which is not regular (standard $\mathbf b^k\mathbf c^k$ argument). Hence $L$ is not FAD.
+
+Now show the pumping \emph{conclusion} of Theorem 2.3 does hold for $L$.
+Take pumping length $N=3$. Let
+\[
+x=\mathbf a^n\mathbf b^k\mathbf c^j\in L,\quad |x|\ge3.
+\]
+We choose a decomposition $x=uvw$ with $|uv|\le3$, $|v|\ge1$, and show $uv^mw\in L$ for all $m\ge0$.
+
+Case 1: $n\ge3$ (so $k=j$). Choose
+\[
+u=\lambda,\ v=\mathbf a,\ w=\mathbf a^{n-1}\mathbf b^k\mathbf c^k.
+\]
+Then $uv^mw=\mathbf a^{n-1+m}\mathbf b^k\mathbf c^k$.
+If $n-1+m<3$, it is in $L$ by the $n<3$ clause.
+If $n-1+m\ge3$, it is in $L$ because $k=j$ still holds.
+
+Case 2: $n<3$. Since $|x|\ge3$, there is at least one non-$\mathbf a$ symbol, and its position is at most $3$.
+Let $v$ be that first non-$\mathbf a$ symbol (either $\mathbf b$ or $\mathbf c$), with $u$ the preceding prefix.
+Then $|uv|\le3$, $|v|=1$. Pumping changes only the number of $\mathbf b$'s or $\mathbf c$'s, not the number of $\mathbf a$'s, so $n<3$ remains true for all $m$. Therefore $uv^mw\in L$ for all $m\ge0$.
+
+So the pumping conclusion holds even though $L$ is not FAD.
 
 \item The contrapositive of Theorem 2.3: ``if pumping fails then $L$ is not FAD.'' This is trivially true (it's logically equivalent to Theorem 2.3). But here pumping doesn't fail, so the contrapositive doesn't give us information. The converse (``if pumping holds then $L$ is FAD'') is \emph{false}, as this example shows.
 \end{enumerate}
@@ -425,13 +660,25 @@ Theorem 2.3 states: FAD $\Rightarrow$ pumping. The converse is false. We exhibit
 
 \textbf{Counterexample.} Let $L=\{a^ib^jc^k\mid i=0\text{ or }j=k\}$ over $\{a,b,c\}$.
 
-\emph{$L$ is not FAD.} For any $n\geq 1$, take $x=ab^nc^n\in L$ and $y=ab^nc^{n+1}\notin L$. Then $[ab^n]_{R_L}\neq[ab^nc]_{R_L}$, and in fact all classes $[ab^mc^m]$ for distinct $m$ are mutually inequivalent. So $R_L$ has infinitely many classes.
+\emph{$L$ is not FAD.} Intersect with the regular language $R=a\,b^*c^*$:
+\[
+L\cap R=\{ab^nc^n\mid n\ge0\},
+\]
+which is not regular. Therefore $L$ is not FAD.
 
-\emph{$L$ satisfies the pumping condition.} Given any $w\in L$ with $|w|\geq 1$:
+\emph{$L$ satisfies the pumping condition.} Take pumping length $N=1$.
+For any $w\in L$ with $|w|\ge1$, write $w=uvw'$ with $u=\lambda$ and $|v|=1$ as follows:
 \begin{itemize}
-\item If $w=b^jc^j$ (i.e.\ $i=0$): pump any nonempty block $v$ within $b^j$; every pumped string has $i=0\in L$.
-\item If $w=a^ib^jc^j$ with $i\geq 1$: choose the decomposition $u=\lambda$, $v=a$, $w'=a^{i-1}b^jc^j$. Then $uv^mw'=a^mb^jc^j$: for $m=0$ we get $b^jc^j\in L$ (since $i=0$); for $m\geq 1$ we get $a^mb^jc^j\in L$ (since $j=j$). $\square$
+\item If $w$ starts with $\mathbf b$ or $\mathbf c$, then necessarily $i=0$.
+Choose $v$ as that first symbol.
+For every $m\ge0$, $uv^mw'$ still has $i=0$, hence stays in $L$.
+\item If $w$ starts with $\mathbf a$, then $i\ge1$ and (because $w\in L$) we have $j=k$.
+Choose $v=\mathbf a$.
+Then $uv^mw'=a^{i-1+m}b^jc^j$.
+If $i-1+m=0$, first disjunct ($i=0$) holds; if $i-1+m\ge1$, second disjunct ($j=k$) holds.
+So $uv^mw'\in L$ for all $m\ge0$.
 \end{itemize}
+Thus pumping holds although $L$ is not FAD, so the converse of Theorem 2.3 is false. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x:|x|_\mathbf{a}=2|x|_\mathbf{b}\}$ is not FAD.}
@@ -441,9 +688,30 @@ For any $n$: strings $\mathbf{a}^0,\mathbf{a}^2,\mathbf{a}^4,\ldots,\mathbf{a}^{
 %%------------------------------------------------------------
 \item \textbf{$K$ palindromes: $[\mathbf{110}]_{R_K}$ and description of $R_K$.}
 
-$[\mathbf{110}]_{R_K}=\{y\mid y\,R_K\,\mathbf{110}\}=\{y\mid(\forall z)(yz\in K\Leftrightarrow\mathbf{110}z\in K)\}$. A string $\mathbf{110}z\in K$ iff $\mathbf{110}z$ is a palindrome, i.e., $\mathbf{110}z=(110z)^r=z^r011$. This requires $z^r=\mathbf{110}$ i.e., $z=\mathbf{011}$. So $\mathbf{110z}\in K\Leftrightarrow z=\mathbf{011}$. Similarly, $yz\in K\Leftrightarrow z=y^r$. So $y\,R_K\,\mathbf{110}\Leftrightarrow[y^r=\mathbf{011}\Leftrightarrow z=\mathbf{011}$ gives $yz\in K]$, which means $y^r=\mathbf{011}$... This shows $[\mathbf{110}]_{R_K}=\{\mathbf{110}\}$ (only the string itself, since reverses must match).
+Let $K=\{w\mid w=w^r\}$.
 
-The $R_K$-class of $x$ for palindromes consists of all $y$ such that $yz\in K\Leftrightarrow xz\in K$ for all $z$. Since $xz\in K\Leftrightarrow xz=(xz)^r=z^rx^r\Leftrightarrow z=x^r$ (for strings where $xz$ is a palindrome only if $x$ is the first half reversed of $xz$). More precisely: $xz$ is a palindrome iff $xz=(xz)^r$. For distinct $x$, the future sets $\{z:xz\in K\}$ are distinct (since $x^r$ is in the future of $x$ but $y^r\neq x^r$ if $y\neq x$). So $R_K$ has infinitely many classes (one per string), confirming $K$ is not FAD.
+To describe $R_K$, suppose $x\,R_K\,y$.
+Take suffixes
+\[
+z_0=\mathbf{0}x^r,\qquad z_1=\mathbf{1}x^r.
+\]
+Both $xz_0=x\mathbf{0}x^r$ and $xz_1=x\mathbf{1}x^r$ are palindromes, so by $x\,R_K\,y$, both $yz_0$ and $yz_1$ must be palindromes.
+
+Now:
+\begin{itemize}
+\item If a palindrome ends with $\mathbf{0}x^r$, it begins with $x\mathbf{0}$.
+\item If a palindrome ends with $\mathbf{1}x^r$, it begins with $x\mathbf{1}$.
+\end{itemize}
+Hence if $|y|\ge |x|+1$, the first $|x|+1$ symbols of $y$ would have to be both $x\mathbf{0}$ and $x\mathbf{1}$, impossible. So $|y|\le |x|$.
+By symmetry (since equivalence relations are symmetric), also $|x|\le |y|$. Therefore $|x|=|y|$.
+With equal lengths, from $yz_0$ palindrome we get that the first $|x|$ symbols of $yz_0$ equal $x$; those first $|x|$ symbols are exactly $y$. So $y=x$.
+
+Thus $x\,R_K\,y\Rightarrow x=y$, and the converse is trivial. Therefore $R_K$ is the identity relation on $\{\mathbf{0},\mathbf{1}\}^*$.
+
+So
+\[
+[\mathbf{110}]_{R_K}=\{\mathbf{110}\}.
+\]
 
 %%------------------------------------------------------------
 \item \textbf{Prove or disprove: $R_{L_1}\cap R_{L_2}=R_{L_1\cap L_2}$.}
@@ -468,12 +736,59 @@ $R$ is a right congruence of rank $n$. Consider the DFA $A_R$ with $n$ states. B
 %%------------------------------------------------------------
 \item \textbf{Find all $L$ with $R_L=R^N$ for $R^N$ from Example 2.6.}
 
-The classes of $R^N$ correspond to states of the machine $N$ in Example 2.6. Any language $L$ that is a union of some subset of these state-classes gives $R_L=R^N$ (as long as the union doesn't collapse any two classes). These are all nonempty proper unions of the $R^N$-classes.
+Let the four $R^N$-classes from Example 2.6 be
+\[
+A_0=[\lambda],\quad A_1=[\mathbf{1}],\quad A_2=[\mathbf{11}],\quad A_3=[\mathbf{000}].
+\]
+Not every union of these classes preserves $R_L=R^N$; many choices collapse states.
+The unions that keep all four classes pairwise Nerode-distinct are exactly:
+\[
+L=A_0\cup A_1,\quad
+L=A_1\cup A_2,\quad
+L=A_0\cup A_3,\quad
+L=A_2\cup A_3.
+\]
+These are precisely the languages with $R_L=R^N$.
 
 %%------------------------------------------------------------
 \item \textbf{Right congruences for languages of Exercise 1.6.}
 
-The four languages from Exercise 1.6 each give a right congruence $R_L$ with classes determined by the states of their minimal DFAs. For each, $R_L$ is the state-equivalence relation of the minimal machine (which coincides with $R^M$ for the minimal machine).
+In Exercise 1.6(a), let
+\[
+p(x)=\bigl(|x|_\mathbf a \bmod 2,\ |x|_\mathbf b \bmod 2\bigr)\in\{0,1\}^2.
+\]
+Appending a suffix adds parities mod 2, so each $R_L$ is determined by which
+parity information must be remembered.
+
+\begin{enumerate}
+\item $L_1=\{x:(|x|_\mathbf a\text{ odd})\wedge(|x|_\mathbf b\text{ even})\}$.
+\[
+x\,R_{L_1}\,y \Longleftrightarrow p(x)=p(y).
+\]
+So there are 4 classes (one per parity pair).
+
+\item $L_2=\{x:(|x|_\mathbf a\text{ even})\vee(|x|_\mathbf b\text{ odd})\}$.
+Again all 4 parity pairs are distinguishable, so
+\[
+x\,R_{L_2}\,y \Longleftrightarrow p(x)=p(y).
+\]
+
+\item $L_3=\{x:(|x|_\mathbf a\text{ even})\overline{\vee}(|x|_\mathbf b\text{ even})\}$.
+This depends only on whether the two parities are equal or different:
+\[
+x\,R_{L_3}\,y \Longleftrightarrow
+\bigl(|x|_\mathbf a+|x|_\mathbf b\bmod2\bigr)=
+\bigl(|y|_\mathbf a+|y|_\mathbf b\bmod2\bigr).
+\]
+So there are 2 classes: ``same parity'' and ``different parity''.
+
+\item $L_4=\{x:|x|_\mathbf a\text{ even}\}$.
+Only parity of $\mathbf a$ matters:
+\[
+x\,R_{L_4}\,y \Longleftrightarrow |x|_\mathbf a\equiv |y|_\mathbf a\pmod2.
+\]
+So there are 2 classes.
+\end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{$L\subseteq\{\mathbf{a}\}^*$, $\lambda\,R_L\,\mathbf{a}$.}
@@ -504,7 +819,34 @@ $(\forall z)(z\in L\Leftrightarrow\mathbf{aa}z\in L)$. So $\mathbf{a}^n\in L\Lef
 %%------------------------------------------------------------
 \item \textbf{Find $R^M$ and $R_{L(M)}$ for machine of Example 1.5.}
 
-Example 1.5 is a specific DFA; $R^M$ has as many classes as there are reachable states, and $R_{L(M)}$ has as many as the minimal machine. If Example 1.5 is minimal, they coincide; otherwise $R^M$ strictly refines $R_{L(M)}$.
+In Example 1.5 (vending machine), states track deposited amount in
+\[
+T=\{0,5,10,15,20,25,30,35,40,45,50\}
+\]
+(capped at 50), and final states are amounts $\ge30$.
+
+\textbf{$R^M$.}
+\[
+x\,R^M\,y \Longleftrightarrow \DBAR(s_0,x)=\DBAR(s_0,y).
+\]
+So $R^M$ has one class for each amount in $T$ (11 classes).
+
+\textbf{$R_{L(M)}$.}
+All classes for amounts $<30$ remain distinct, while all amounts $\ge30$
+merge into one Nerode class.
+
+Why amounts $<30$ are distinct: if $t_1<t_2<30$, append coins totaling
+$30-t_2$ (possible with $\mathbf n,\mathbf d,\mathbf q$); then from $t_2$ the result
+is accepted (reaches 30), while from $t_1$ it is still $<30$ and rejected.
+
+Why amounts $\ge30$ are equivalent: once at least 30 cents has been deposited,
+any further input keeps the machine in accepting territory.
+
+Hence $R_{L(M)}$ has 7 classes:
+\[
+[0],[5],[10],[15],[20],[25],\ [\ge30].
+\]
+So $R^M$ is strictly finer than $R_{L(M)}$.
 
 %%------------------------------------------------------------
 \item \textbf{Is $A_{R_{L(A)}}$ always equivalent to $A$?}
@@ -514,7 +856,8 @@ Yes. $A_{R_{L(A)}}$ is the minimal DFA for $L(A)$, hence $L(A_{R_{L(A)}})=L(A)$.
 %%------------------------------------------------------------
 \item \textbf{$L_4=\{y:|y|_\mathbf{0}=|y|_\mathbf{1}\}$: does the example $u,v,w$ show $L_4$ is FAD?}
 
-No. The pumping lemma says: for any $w\in L$ with $|w|\geq n$, \emph{there exist} $u,v,w'$ with the property. Finding \emph{one} decomposition that works does not prove $L_4$ is FAD; we need \emph{all} such words to pump. To show $L_4$ is not FAD, we find \emph{some} word and show \emph{all} decompositions fail. E.g., $y=(\mathbf{01})^n$: any $v$ in the first $n$ characters must be a mix of 0s and 1s; pumping changes the count imbalance.
+No. The pumping lemma says: for each sufficiently long word in a regular language, there exists \emph{some} decomposition that pumps. Finding one convenient decomposition for one word does not prove regularity.
+To prove non-regularity, we choose one long word and show that \emph{every} allowed decomposition fails. For $L_4$, a standard choice is $y=\mathbf{0}^n\mathbf{1}^n$: any $v$ with $|uv|\le n$ lies in the $\mathbf{0}$-block, and pumping changes the $\mathbf{0}/\mathbf{1}$ balance, leaving $L_4$.
 
 %%------------------------------------------------------------
 \item \textbf{Find $R_{L_4}$.}
@@ -592,9 +935,28 @@ In each case $xa\,Q\,ya$. $\square$
 \item \textbf{Which of $L_1,\ldots,L_5$ are FAD?}
 
 \begin{enumerate}
-\item $L_1$ = last letter matches first letter: FAD. Track the first letter (fixed after reading it) and the last letter (updated at each step). Over $\Sigma=\{\mathbf{a},\mathbf{b}\}$, the states are: $q_\varepsilon$ (start, no input yet), and the four pairs (first~$\in\{\mathbf{a},\mathbf{b}\}$, last~$\in\{\mathbf{a},\mathbf{b}\}$): $(a,a),(a,b),(b,a),(b,b)$, giving 5 states total. A dead state $q_\emptyset$ handles the empty string if $\lambda\notin L_1$, giving 7 states when including rejection of $\lambda$ explicitly; if $\lambda\in L_1$ by convention the 5-state machine suffices. Final states: $(a,a)$ and $(b,b)$. FAD.
+\item $L_1$ = last letter matches first letter: FAD. Use 5 states:
+$q_\varepsilon$ (no input yet), and $(a,a),(a,b),(b,a),(b,b)$ where the first component is the first symbol seen and the second is the current last symbol. Final states are $(a,a)$ and $(b,b)$ (and include/exclude $q_\varepsilon$ depending on the convention for $\lambda$).
 
-\item $L_2$ = odd-length words whose first letter equals the center letter: Not FAD. The center position $\lceil|x|/2\rceil$ grows with $|x|$, so no fixed-size DFA can track it. By Nerode: for each $n$, the strings $u_n = \mathbf{a}\,\mathbf{c}^n$ are mutually distinguishable (the future $\mathbf{c}^n\mathbf{b}$ completes $u_n$ to $\mathbf{a}\,\mathbf{c}^{2n}\,\mathbf{b}\in L_2$ but completes $u_m$ to a string whose center letter is $\mathbf{c}\neq\mathbf{a}$ when $m\neq n$), so $R_{L_2}$ has infinite rank and $L_2$ is not FAD.
+\item $L_2$ = odd-length words whose first letter equals the center letter: Not FAD.
+Intersect with the regular language $R=\mathbf{a}\mathbf{b}^*\mathbf{a}\mathbf{b}^*$.
+Then
+\[
+L_2\cap R=\{\mathbf{a}\mathbf{b}^n\mathbf{a}\mathbf{b}^{n+1}\mid n\ge 0\}.
+\]
+(In $\mathbf{a}\mathbf{b}^i\mathbf{a}\mathbf{b}^j$, being odd-length with center letter $\mathbf a$ forces $j=i+1$.)
+This language is not regular by pumping: for pumping length $p$, take
+\[
+w=\mathbf{a}\mathbf{b}^p\mathbf{a}\mathbf{b}^{p+1}.
+\]
+Any split $w=uvw'$ with $|uv|\le p+1$, $|v|\ge1$ has $v$ in the initial $\mathbf{a}\mathbf{b}^p$ segment.
+If $v$ includes the first $\mathbf a$, pumping down removes that initial form.
+If $v=\mathbf b^t$ in the first $\mathbf b$-block, pumping down gives
+\[
+\mathbf{a}\mathbf{b}^{p-t}\mathbf{a}\mathbf{b}^{p+1},
+\]
+which no longer has second block length = first block length + 1.
+So $L_2\cap R$ is not regular, hence $L_2$ is not FAD.
 
 \item $L_3$ = last letter does not appear in any earlier position: \textbf{FAD}. The DFA tracks (i) the set of characters seen in positions $1,\ldots,n-1$ and (ii) the current last character. Since $\Sigma$ is fixed and finite, there are at most $2^{|\Sigma|}\times|\Sigma|$ states (plus a start state for $\lambda$). Accept when the last character is not in the set of characters seen before it. Both components update in one step: reading $a$ sets last-char $= a$ and adds the previous last-char to the "seen" set. This is a finite machine.
 
@@ -646,7 +1008,71 @@ $\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\ra
 \begin{enumerate}
 \item $L_2=\{\mathbf{1},\mathbf{10},\mathbf{100},\mathbf{1000},\ldots\}$: strings that are \textbf{1} followed by any number of \textbf{0}s. Regular expression: $\mathbf{1}\mathbf{0}^*$. FAD (2-state DFA: $q_0\xrightarrow{\mathbf{1}}q_1\xrightarrow{\mathbf{0}}q_1$, $F=\{q_1\}$, dead state for other transitions).
 
-\item $L_{10}=\{1,2,4,8,16,32,\ldots\}$ in decimal: by Myhill-Nerode. We show the strings $\langle 2^0\rangle=\mathbf{1},\langle 2^1\rangle=\mathbf{2},\langle 2^2\rangle=\mathbf{4},\ldots$ are pairwise not $R_{L_{10}}$-related. \emph{Note}: appending $z=\lambda$ does not distinguish them (both $\langle 2^i\rangle$ and $\langle 2^j\rangle$ are in $L_{10}$). Instead, we find a suffix for each pair. For example, $z=\mathbf{6}$ witnesses $\langle 2^0\rangle\not R_{L_{10}}\langle 2^1\rangle$: $\mathbf{16}=2^4\in L_{10}$ but $\mathbf{26}\notin L_{10}$. More generally, for any $i<j$, choose the suffix $z$ such that $\langle 2^i\rangle z$ is the decimal representation of some power of 2 (such $z$ exists since there are infinitely many powers of 2 with $\langle 2^i\rangle$ as a prefix, by equidistribution of $\{k\log_{10}2\}$); then $\langle 2^j\rangle z$ is a different string of a different length, and will not be a power of 2 for appropriate choice of such a power. Hence all $\langle 2^k\rangle$ lie in distinct $R_{L_{10}}$-classes, giving infinite rank. Not FAD. $\square$
+\item $L_{10}=\{1,2,4,8,16,32,\ldots\}$ (decimal powers of 2) is not FAD.
+\textit{Proof (by pumping lemma and modular arithmetic).}
+Assume $L_{10}$ is FAD with pumping length $p$.
+Choose $n$ so large that if $w$ is the decimal representation of $2^n$, then
+\[
+|w|=d>p+2
+\]
+and
+\[
+4\cdot 5^{\,d-p-1}>(p+1)\log_2 10.
+\]
+Write $w=xyz$ with $|xy|\le p$, $|y|=t\ge1$, and let $|z|=r$.
+Then $r=d-|xy|\ge d-p$.
+
+By pumping, $xy^2z\in L_{10}$, so for some $m>n$,
+\[
+\operatorname{val}(xy^2z)=2^m,\qquad \operatorname{val}(xyz)=2^n.
+\]
+Because pumping duplicates a block before the final $z$, both numbers end with the same $r$ digits $z$.
+Hence
+\[
+2^m\equiv 2^n \pmod{10^r},
+\]
+so
+\[
+2^{m-n}\equiv 1 \pmod{5^r}. \tag{*}
+\]
+
+\textbf{Lemma.} If $2^q\equiv1\pmod{5^r}$, then $4\cdot 5^{r-1}\mid q$.
+
+\textit{Why:} the order of $2$ modulo $5^r$ is $4\cdot 5^{r-1}$.
+Base $r=1$: order mod $5$ is $4$.
+Induction step: if the order mod $5^r$ is $4\cdot5^{r-1}$, then
+\[
+2^{4\cdot5^{r-1}}=1+u5^r,\quad 5\nmid u,
+\]
+so
+\[
+2^{4\cdot5^r}=(1+u5^r)^5\equiv 1+u5^{r+1}\not\equiv1\pmod{5^{r+2}},
+\]
+which shows the order at the next level is multiplied by $5$.
+Thus order$(2\bmod 5^r)=4\cdot5^{r-1}$ for all $r\ge1$.
+
+Applying the lemma to $(*)$ gives
+\[
+m-n\ge 4\cdot 5^{r-1}\ge 4\cdot 5^{d-p-1}. \tag{1}
+\]
+
+Now get an upper bound for $m-n$ from decimal length.
+The pumped string $xy^2z$ has length $d+t\le d+p$, so
+\[
+2^m=\operatorname{val}(xy^2z)<10^{d+t}\le 10^{d+p}.
+\]
+Also $2^n=\operatorname{val}(w)\ge 10^{d-1}$.
+Therefore
+\[
+2^{m-n}<10^{p+1},
+\]
+so
+\[
+m-n<(p+1)\log_2 10. \tag{2}
+\]
+
+(1) and (2) contradict our choice of $n$.
+Hence $L_{10}$ is not FAD. $\square$
 \end{enumerate}
 
 \end{enumerate}
