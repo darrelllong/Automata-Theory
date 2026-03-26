@@ -14,7 +14,11 @@
 \usetikzlibrary{automata,positioning,arrows.meta}
 \tikzset{
   every state/.style={thick, fill=gray!10, minimum size=8mm},
-  initial text={}
+  initial text={},
+  logicblock/.style={draw, thick, rectangle, rounded corners=2pt, minimum width=11mm, minimum height=6mm, fill=gray!10, font=\small, align=center},
+  termblock/.style={draw, thick, rectangle, rounded corners=2pt, minimum width=38mm, minimum height=6mm, fill=gray!10, font=\scriptsize, align=center},
+  wire/.style={thick},
+  io/.style={font=\small}
 }
 
 %% Reproduce the macros from book.tex
@@ -116,25 +120,72 @@ p & q & p \wedge \neg q & p \uparrow q & \neg(p \uparrow q) & (p \wedge \neg q)\
 \begin{enumerate}
 \item $\neg(r \vee (\neg p \downarrow \neg q)) \uparrow (s \wedge p)$
 
-This expression is built from NOT, NOR, NAND, and AND gates. The circuit computes:
-\begin{enumerate}[i.]
-  \item $A = \neg p$, $B = \neg q$ (NOT gates on $p$ and $q$)
-  \item $C = A \downarrow B = \neg(A \vee B)$ (NOR gate)
-  \item $D = r \vee C$ (OR gate)
-  \item $E = \neg D$ (NOT gate)
-  \item $F = s \wedge p$ (AND gate)
-  \item Output $= E \uparrow F = \neg(E \wedge F)$ (NAND gate)
-\end{enumerate}
+One corresponding circuit is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[io] (p) at (0,3.1) {$p$};
+\node[io] (q) at (0,2.1) {$q$};
+\node[io] (r) at (0,1.1) {$r$};
+\node[io] (s) at (0,0.1) {$s$};
+
+\node[logicblock] (notp) at (2.0,3.6) {NOT};
+\node[logicblock] (notq) at (2.0,2.4) {NOT};
+\node[logicblock] (nor1) at (4.3,3.0) {NOR};
+\node[logicblock] (or1)  at (6.5,2.0) {OR};
+\node[logicblock] (not1) at (8.5,2.0) {NOT};
+\node[logicblock] (and1) at (6.5,0.2) {AND};
+\node[logicblock] (nand1) at (10.8,1.1) {NAND};
+\node[io] (outa) at (12.3,1.1) {output};
+
+\draw[wire] (p.east) -- (0.8,3.1) coordinate (pb);
+\draw[wire] (pb) |- (notp.west);
+\draw[wire] (pb) |- (and1.west);
+\draw[wire] (q.east) -- (1.0,2.1) coordinate (qb);
+\draw[wire] (qb) |- (notq.west);
+\draw[wire] (r.east) -- (or1.west |- r.east);
+\draw[wire] (s.east) -- (1.0,0.1) coordinate (sb);
+\draw[wire] (sb) -- (and1.west |- sb);
+
+\draw[wire] (notp.east) -- (nor1.west |- notp.east);
+\draw[wire] (notq.east) -- (nor1.west |- notq.east);
+\draw[wire] (nor1.east) -- (or1.west |- nor1.east);
+\draw[wire] (or1.east) -- (not1.west);
+\draw[wire] (not1.east) -- (nand1.west |- not1.east);
+\draw[wire] (and1.east) -- (nand1.west |- and1.east);
+\draw[wire] (nand1.east) -- (outa.west);
+\end{tikzpicture}
+\end{center}
 
 \item $(p \wedge \neg q) \vee \neg(p \uparrow q)$
 
-\begin{enumerate}[i.]
-  \item $A = \neg q$ (NOT gate)
-  \item $B = p \wedge A$ (AND gate)
-  \item $C = p \uparrow q = \neg(p\wedge q)$ (NAND gate)
-  \item $D = \neg C$ (NOT gate)
-  \item Output $= B \vee D$ (OR gate)
-\end{enumerate}
+One corresponding circuit is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[io] (pb2) at (0,2.0) {$p$};
+\node[io] (qb2) at (0,0.8) {$q$};
+
+\node[logicblock] (notq2) at (2.0,0.8) {NOT};
+\node[logicblock] (and2)  at (4.3,2.0) {AND};
+\node[logicblock] (nand2) at (4.3,0.4) {NAND};
+\node[logicblock] (not2)  at (6.5,0.4) {NOT};
+\node[logicblock] (or2)   at (8.7,1.2) {OR};
+\node[io] (outb) at (10.2,1.2) {output};
+
+\draw[wire] (pb2.east) -- (1.0,2.0) coordinate (pb2b);
+\draw[wire] (pb2b) -- (and2.west |- pb2b);
+\draw[wire] (pb2b) |- (nand2.west);
+\draw[wire] (qb2.east) -- (1.0,0.8) coordinate (qb2b);
+\draw[wire] (qb2b) -- (notq2.west);
+\draw[wire] (qb2b) |- (nand2.west);
+\draw[wire] (notq2.east) |- (and2.west);
+\draw[wire] (and2.east) -- (or2.west |- and2.east);
+\draw[wire] (nand2.east) -- (not2.west);
+\draw[wire] (not2.east) -- (or2.west |- not2.east);
+\draw[wire] (or2.east) -- (outb.west);
+\end{tikzpicture}
+\end{center}
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -196,11 +247,11 @@ There are uncountably many such classes, one for each $r \in [0,1)$.
 %%------------------------------------------------------------
 \item \textbf{Prove the distinct equivalence classes of $R$ form a partition of $X$.}
 
-Let $[x]_R = \{y \in X \mid x\,R\,y\}$.
+Let $[x]_R = \{y \in X \mid y\,R\,x\}$.
 
 \textit{Coverage}: For any $x \in X$, reflexivity gives $x \in [x]_R$, so every element of $X$ belongs to at least one class.
 
-\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z\,R\,x$ and $z\,R\,y$. By symmetry $x\,R\,z$, and by transitivity $x\,R\,y$. For any $w \in [x]_R$ we have $w\,R\,x\,R\,y$ so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
+\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z\,R\,x$ and $z\,R\,y$. By symmetry $x\,R\,z$, and by transitivity $x\,R\,y$. For any $w \in [x]_R$ we have $w\,R\,x\,R\,y$, so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
 
 Hence the distinct classes are disjoint and cover $X$, forming a partition.
 
@@ -251,8 +302,11 @@ We need: $x = y \Rightarrow x\,R\,y$. If $x = y$, then by reflexivity of $R$, $x
 \item \textbf{The ``function'' $t: \RN \to \RN$, $x \mapsto \arccos(x)$.}
 
 \begin{enumerate}
-\item $t$ is not a total function $\mathbb{R}\to\mathbb{R}$ because for every $x \notin [-1,1]$ there is no real $\theta$ satisfying $\cos\theta = x$, so $t(x)$ is undefined outside $[-1,1]$.
-A total function must be defined on its entire claimed domain, so $t$ fails on this count alone.
+\item $t$ is not well defined. A function must assign \emph{exactly one} output to each input in its domain. But if $x \in [-1,1]$, there are generally many real numbers whose cosine is $x$. For example,
+\[
+\cos\!\left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos\!\left(\frac{5\pi}{3}\right),
+\]
+so the input $x=\frac{1}{2}$ would have more than one output. Also, if $x\notin[-1,1]$, there is no real number whose cosine is $x$, so the proposed rule is not even defined everywhere on $\RN$.
 
 \item Restrict domain to $[-1,1]$ and range to $[0,\pi]$: $t: [-1,1] \to [0,\pi]$, $t(x) = \arccos(x)$, is a valid function.
 \end{enumerate}
@@ -444,9 +498,22 @@ Recall: $A \sim B$ iff there exists a bijection $f: A\to B$.
 Use the Cantor pairing function: $f: \NN\times\NN\to\NN$, $f(m,n)=\frac{(m+n)(m+n+1)}{2}+n$. This is a bijection. Its inverse $f^{-1}: \NN\to\NN\times\NN$ is the desired function.
 
 %%------------------------------------------------------------
-\item \textbf{Show $\NN$ is equipotent to $\NN$.}
+\item \textbf{Show $\NN$ is equipotent to $\ZN$.}
 
-$\mathrm{id}_\NN$ is a bijection. Alternatively, $f(n)=n$.
+One bijection $f:\NN\to\ZN$ is
+\[
+f(n)=
+\begin{cases}
+n/2, & \text{if $n$ is even},\\
+-(n+1)/2, & \text{if $n$ is odd}.
+\end{cases}
+\]
+Thus
+\[
+0\mapsto 0,\quad 1\mapsto -1,\quad 2\mapsto 1,\quad 3\mapsto -2,\quad
+4\mapsto 2,\quad 5\mapsto -3,\ \ldots
+\]
+so every integer appears exactly once. Hence $\NN$ and $\ZN$ are equipotent.
 
 %%------------------------------------------------------------
 \item \textbf{Show $\NN$ is equipotent to $\QN$.}
@@ -461,7 +528,56 @@ Define $\phi: \wp(\NN)\to\{f:\NN\to\{\text{Yes,No}\}\}$ by $\phi(A) = \chi_A$, w
 %%------------------------------------------------------------
 \item \textbf{Show $\wp(\NN)$ is equipotent to $\RN$.}
 
-Identify each subset $A\subseteq\NN$ with its characteristic sequence $(a_0,a_1,a_2,\ldots)\in\{0,1\}^\NN$. Map this to the real number $0.a_0a_1a_2\ldots$ in binary. This gives a surjection from $\wp(\NN)$ onto $[0,1]$, which has the same cardinality as $\RN$. (More carefully: use a Cantor-Bernstein argument to handle the non-injectivity at dyadic rationals.)
+By Exercise 0.39, $\wp(\NN)$ is equipotent to the set
+\[
+B=\{(a_0,a_1,a_2,\ldots)\mid a_i\in\{0,1\}\}
+\]
+of infinite binary sequences. It therefore suffices to show that $B$ is equipotent
+to $\RN$.
+
+Let $E\subseteq B$ be the set of sequences that are eventually all 1s. This set is
+countable, because such a sequence is determined by a finite initial segment and
+the position after which only 1s occur. Let
+\[
+D=\left\{\frac{k}{2^n}\ \middle|\ n\in\NN,\ 0\le k\le 2^n\right\}
+\]
+be the set of dyadic rationals in $[0,1]$; $D$ is also countable. Choose a
+bijection $\eta:E\to D$.
+
+Now define $\Phi:B\to[0,1]$ by
+\[
+\Phi(a_0,a_1,a_2,\ldots)=
+\begin{cases}
+\displaystyle \sum_{i=0}^{\infty}\frac{a_i}{2^{i+1}}, & \text{if }(a_0,a_1,a_2,\ldots)\notin E,\\[1.2ex]
+\eta(a_0,a_1,a_2,\ldots), & \text{if }(a_0,a_1,a_2,\ldots)\in E.
+\end{cases}
+\]
+If a sequence is not eventually all 1s, its binary expansion is the unique binary
+expansion of a nondyadic real in $[0,1]$. Thus the first clause is a bijection
+from $B\setminus E$ onto $[0,1]\setminus D$. The second clause is a bijection from
+$E$ onto $D$. Therefore $\Phi$ is a bijection from $B$ onto $[0,1]$.
+
+It remains to show that $[0,1]$ is equipotent to $\RN$. First define a bijection
+$j:[0,1]\to(0,1)$ by
+\[
+j(x)=
+\begin{cases}
+\frac{1}{2}, & x=0,\\
+\frac{1}{4}, & x=1,\\
+\frac{1}{2^{n+2}}, & x=\frac{1}{2^n}\text{ for }n\ge 1,\\
+x, & \text{otherwise.}
+\end{cases}
+\]
+This simply shifts the countable set $\{1,1/2,1/4,1/8,\ldots\}$ inward and fixes
+all other points. Next define
+\[
+g:(0,1)\to\RN,\qquad g(x)=\tan\!\left(\pi x-\frac{\pi}{2}\right).
+\]
+This is a bijection from $(0,1)$ onto $\RN$. Hence $g\circ j$ is a bijection from
+$[0,1]$ onto $\RN$.
+
+Since $\wp(\NN)\sim B$, $B\sim[0,1]$, and $[0,1]\sim\RN$, the equipotent relation
+is transitive, so $\wp(\NN)\sim\RN$.
 
 %%------------------------------------------------------------
 \item \textbf{Draw a circuit for $q$ (Figure 0.8).}
@@ -476,6 +592,51 @@ This can be factored as:
 \[
 q = \neg p_3(p_1\oplus p_2)\vee p_1 p_2 p_3.
 \]
+
+One corresponding AND-OR circuit is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[io] (p1) at (0,3.0) {$p_1$};
+\node[io] (p2) at (0,2.0) {$p_2$};
+\node[io] (p3) at (0,1.0) {$p_3$};
+
+\node[logicblock] (np1) at (2.0,3.6) {NOT};
+\node[logicblock] (np2) at (2.0,2.3) {NOT};
+\node[logicblock] (np3) at (2.0,1.0) {NOT};
+
+\node[logicblock] (tq1) at (5.0,3.6) {AND};
+\node[logicblock] (tq2) at (5.0,2.2) {AND};
+\node[logicblock] (tq3) at (5.0,0.8) {AND};
+\node[logicblock] (orq) at (7.3,2.2) {OR};
+\node[io] (outq) at (8.8,2.2) {$q$};
+
+\draw[wire] (p1.east) -- (0.9,3.0) coordinate (p1b);
+\draw[wire] (p2.east) -- (0.9,2.0) coordinate (p2b);
+\draw[wire] (p3.east) -- (0.9,1.0) coordinate (p3b);
+
+\draw[wire] (p1b) |- (np1.west);
+\draw[wire] (p2b) |- (np2.west);
+\draw[wire] (p3b) -- (np3.west);
+
+\draw[wire] (np1.east) |- (tq1.west);
+\draw[wire] (p2b) |- (tq1.west);
+\draw[wire] (np3.east) |- (tq1.west);
+
+\draw[wire] (p1b) |- (tq2.west);
+\draw[wire] (np2.east) |- (tq2.west);
+\draw[wire] (np3.east) |- (tq2.west);
+
+\draw[wire] (p1b) |- (tq3.west);
+\draw[wire] (p2b) |- (tq3.west);
+\draw[wire] (p3b) |- (tq3.west);
+
+\draw[wire] (tq1.east) -- (orq.west |- tq1.east);
+\draw[wire] (tq2.east) -- (orq.west |- tq2.east);
+\draw[wire] (tq3.east) -- (orq.west |- tq3.east);
+\draw[wire] (orq.east) -- (outq.west);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Draw circuits for $q_1, q_2, q_3$ (Figure 0.9).}
@@ -518,6 +679,71 @@ q_3 \;=\; \bar p_3\bar p_4 + p_1 p_2\bar p_4
 (The quad $\bar p_3\bar p_4$ covers $m_0,m_4,m_8,m_{12}$; the pair $p_1p_2\bar p_4$ covers $m_{12},m_{14}$.)
 
 Each minimized expression is implemented as a two-level AND-OR circuit (one AND gate per product term, one final OR gate per output), with NOT gates on the complemented inputs.
+
+The following block diagrams show those two-level realizations. In each case, the
+rectangles on the left are AND subcircuits computing the indicated product terms
+from $p_1,p_2,p_3,p_4$ and their complements.
+
+\begin{enumerate}
+\item For $q_1$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[termblock] (q1a) at (0,4.5) {$p_1\bar p_2\bar p_3$};
+\node[termblock] (q1b) at (0,3.5) {$p_1\bar p_3\bar p_4$};
+\node[termblock] (q1c) at (0,2.5) {$\bar p_1\bar p_2p_3$};
+\node[termblock] (q1d) at (0,1.5) {$\bar p_1p_3\bar p_4$};
+\node[termblock] (q1e) at (0,0.5) {$\bar p_1p_2\bar p_3p_4$};
+\node[termblock] (q1f) at (0,-0.5) {$\bar p_2\bar p_3\bar p_4$};
+\node[logicblock] (orq1) at (4.0,2.0) {OR};
+\node[io] (outq1) at (5.5,2.0) {$q_1$};
+
+\draw[wire] (q1a.east) -- (orq1.west |- q1a.east);
+\draw[wire] (q1b.east) -- (orq1.west |- q1b.east);
+\draw[wire] (q1c.east) -- (orq1.west |- q1c.east);
+\draw[wire] (q1d.east) -- (orq1.west |- q1d.east);
+\draw[wire] (q1e.east) -- (orq1.west |- q1e.east);
+\draw[wire] (q1f.east) -- (orq1.west |- q1f.east);
+\draw[wire] (orq1.east) -- (outq1.west);
+\end{tikzpicture}
+\end{center}
+
+\item For $q_2$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[termblock] (q2a) at (0,3.5) {$p_2\bar p_4$};
+\node[termblock] (q2b) at (0,2.5) {$p_1p_3\bar p_4$};
+\node[termblock] (q2c) at (0,1.5) {$p_1p_2\bar p_3$};
+\node[termblock] (q2d) at (0,0.5) {$\bar p_1\bar p_2p_4$};
+\node[termblock] (q2e) at (0,-0.5) {$\bar p_1\bar p_2\bar p_3$};
+\node[logicblock] (orq2) at (4.0,1.5) {OR};
+\node[io] (outq2) at (5.5,1.5) {$q_2$};
+
+\draw[wire] (q2a.east) -- (orq2.west |- q2a.east);
+\draw[wire] (q2b.east) -- (orq2.west |- q2b.east);
+\draw[wire] (q2c.east) -- (orq2.west |- q2c.east);
+\draw[wire] (q2d.east) -- (orq2.west |- q2d.east);
+\draw[wire] (q2e.east) -- (orq2.west |- q2e.east);
+\draw[wire] (orq2.east) -- (outq2.west);
+\end{tikzpicture}
+\end{center}
+
+\item For $q_3$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[termblock] (q3a) at (0,1.0) {$\bar p_3\bar p_4$};
+\node[termblock] (q3b) at (0,0.0) {$p_1p_2\bar p_4$};
+\node[logicblock] (orq3) at (4.0,0.5) {OR};
+\node[io] (outq3) at (5.5,0.5) {$q_3$};
+
+\draw[wire] (q3a.east) -- (orq3.west |- q3a.east);
+\draw[wire] (q3b.east) -- (orq3.west |- q3b.east);
+\draw[wire] (orq3.east) -- (outq3.west);
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
 
 \end{enumerate}
 
