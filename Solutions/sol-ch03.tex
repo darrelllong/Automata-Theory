@@ -174,17 +174,101 @@ More precisely: since $A$ is connected, for each $s\in S$ there exists $x_s\in\S
 %%------------------------------------------------------------
 \item \textbf{Show there may not be a homomorphism $A\to A_{R_{L(A)}}$ if $A$ is not connected.}
 
-Let $A$ have states $\{s_0,s_1\}$, $s_0$ connected (only $s_0$ reachable), $s_1$ unreachable with $L(A^{s_1})\neq L(A^{s_0})$. Then $A_{R_{L(A)}}$ has only one state ($[x]=[\lambda]$ for all $x$ -- if $L(A)=\Sigma^*$). Any $\psi: S\to S_{R_{L(A)}}$ must map $s_0\mapsto[\lambda]$, and $s_1$ maps to something. If $\psi(s_1)\neq\psi(s_0)$ and $S_{R_{L(A)}}$ has one state, this is impossible.
+Take $\Sigma=\{\pmb{0}\}$ and let
+\[
+A=\langle \{\pmb{0}\},\{s_0,s_1\},s_0,\delta,\{s_1\}\rangle
+\]
+where $\delta(s_0,\pmb{0})=s_0$ and $\delta(s_1,\pmb{0})=s_1$. The state $s_1$ is
+unreachable, so $A$ is not connected. Since the reachable part is just the
+nonfinal loop at $s_0$, we have $L(A)=\emptyset$. Therefore $A_{R_{L(A)}}$ is the
+one-state DFA for $\emptyset$, with a single nonfinal state $q$ and
+$\delta(q,\pmb{0})=q$.
+
+If there were a homomorphism $\psi:A\to A_{R_{L(A)}}$, then $\psi(s_0)=q$ because
+$s_0$ is the start state. But a homomorphism must also preserve finality:
+\[
+s_1\in F_A \Leftrightarrow \psi(s_1)\in F_{R_{L(A)}}.
+\]
+This is impossible, because $q$ is the only state of $A_{R_{L(A)}}$ and $q$ is
+not final. Hence no such homomorphism exists.
 
 %%------------------------------------------------------------
 \item \textbf{Show there may still be a homomorphism $A\to A_{R_{L(A)}}$ if $A$ is not connected.}
 
-If $s_1$ is unreachable but $L(A^{s_1})=L(A^{s_0})$, so $s_1\,E_A\,s_0$, then map $s_1\mapsto\psi(s_0)=[x_{s_0}]_{R_L}$. This extends the homomorphism to the disconnected state.
+Take $\Sigma=\{\pmb{0}\}$ and let
+\[
+A=\langle \{\pmb{0}\},\{s_0,s_1\},s_0,\delta,\{s_0,s_1\}\rangle
+\]
+where $\delta(s_0,\pmb{0})=s_0$ and $\delta(s_1,\pmb{0})=s_1$. The state $s_1$ is
+unreachable, so $A$ is not connected, but $L(A)=\Sigma^*$ because every string
+keeps the start state $s_0$ in a final state.
+
+Therefore $A_{R_{L(A)}}$ is the one-state DFA
+\[
+\langle \{\pmb{0}\},\{q\},q,\delta',\{q\}\rangle
+\]
+with $\delta'(q,\pmb{0})=q$. Define $\psi:A\to A_{R_{L(A)}}$ by
+\[
+\psi(s_0)=q,\qquad \psi(s_1)=q.
+\]
+This is a homomorphism: the start state is preserved, finality is preserved
+because all three states involved are final, and
+\[
+\psi(\delta(s_i,\pmb{0}))=\psi(s_i)=q=\delta'(q,\pmb{0})
+=\delta'(\psi(s_i),\pmb{0})
+\]
+for $i=0,1$.
 
 %%------------------------------------------------------------
 \item \textbf{Show there need not be a homomorphism from $A_{R_L}$ to $A_R$.}
 
-Let $R$ refine $R_L$ strictly (more classes). Then $A_R$ has more states than $A_{R_L}$. A homomorphism $A_{R_L}\to A_R$ would map fewer states to more, which can be done (not injective), but the structure might not match. Specifically, $A_{R_L}$ is minimal and $A_R$ has extra states; if the extra states in $A_R$ are distinguishable but correspond to indistinguishable states in $A_{R_L}$, then the $\delta$-compatibility fails.
+Let $\Sigma=\{\pmb{a}\}$ and let $Q$ be the right congruence with two classes
+\[
+[\lambda]_Q=\{\lambda\}, \qquad [\pmb{a}]_Q=\{x\in\Sigma^*:|x|\geq 1\}.
+\]
+Let $R$ refine $Q$ by splitting the nonempty strings according to parity:
+\[
+[\lambda]_R=\{\lambda\},\qquad
+[\pmb{a}]_R=\{x:|x|\text{ is odd}\},\qquad
+[\pmb{aa}]_R=\{x:|x|\text{ is even and }|x|\geq 2\}.
+\]
+Take $L=\{\lambda\}$, which is a union of $Q$-classes. Then
+$A_Q$ has two states,
+\[
+q_0=[\lambda]_Q \quad\text{(start and final)},\qquad q_1=[\pmb{a}]_Q
+\]
+with $\delta_Q(q_0,\pmb{a})=q_1$ and $\delta_Q(q_1,\pmb{a})=q_1$.
+
+The DFA $A_R$ has three states,
+\[
+r_0=[\lambda]_R \quad\text{(start and final)},\qquad
+r_1=[\pmb{a}]_R,\qquad
+r_2=[\pmb{aa}]_R,
+\]
+with transitions
+\[
+\delta_R(r_0,\pmb{a})=r_1,\qquad
+\delta_R(r_1,\pmb{a})=r_2,\qquad
+\delta_R(r_2,\pmb{a})=r_1.
+\]
+
+Assume there is a homomorphism $\psi:A_Q\to A_R$. Since start states must map to
+start states, $\psi(q_0)=r_0$. Then
+\[
+\psi(q_1)=\psi(\delta_Q(q_0,\pmb{a}))
+        =\delta_R(\psi(q_0),\pmb{a})
+        =\delta_R(r_0,\pmb{a})
+        =r_1.
+\]
+But now
+\[
+\psi(q_1)=\psi(\delta_Q(q_1,\pmb{a}))
+        =\delta_R(\psi(q_1),\pmb{a})
+        =\delta_R(r_1,\pmb{a})
+        =r_2,
+\]
+which says $r_1=r_2$, a contradiction. Therefore there need not be a
+homomorphism from $A_Q$ to $A_R$.
 
 %%------------------------------------------------------------
 \item \textbf{Is $\cong$ appropriate to ask if it's a right congruence?}
@@ -978,7 +1062,47 @@ But $A\not\cong B$ since they have different numbers of states.
 
 \item Homomorphism $A_R\to A_Q$: Define $\mu([x]_R)=[x]_Q$ (well-defined since $R$ refines $Q$: $[x]_R=[y]_R\Rightarrow x\,R\,y\Rightarrow x\,Q\,y\Rightarrow[x]_Q=[y]_Q$). Check: $\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_Q=s_{0,Q}$. $\mu(\delta_R([x]_R,a))=\mu([xa]_R)=[xa]_Q=\delta_Q([x]_Q,a)=\delta_Q(\mu([x]_R),a)$. $[x]_R\in F_R\Leftrightarrow x\in L\Leftrightarrow[x]_Q\in F_Q\Leftrightarrow\mu([x]_R)\in F_Q$.
 
-\item No homomorphism $A_Q\to A_R$ in general: $A_Q$ has fewer states than $A_R$ (since $Q$ is coarser). A homomorphism would need to be injective (by Exercise 3.21 if both reduced), but an injective map from fewer to more states can't preserve structure in general.
+\item Not in general. Use the same style of example as in the earlier exercise.
+Take $\Sigma=\{\pmb{a}\}$, let
+\[
+[\lambda]_Q=\{\lambda\}, \qquad [\pmb{a}]_Q=\{x\in\Sigma^*:|x|\geq 1\},
+\]
+and let $R$ refine $Q$ by splitting the nonempty strings according to parity:
+\[
+[\lambda]_R=\{\lambda\},\qquad
+[\pmb{a}]_R=\{x:|x|\text{ is odd}\},\qquad
+[\pmb{aa}]_R=\{x:|x|\text{ is even and }|x|\geq 2\}.
+\]
+Let $L=\{\lambda\}$, which is a union of $Q$-classes. Then $A_Q$ has two states,
+$q_0=[\lambda]_Q$ (start and final) and $q_1=[\pmb{a}]_Q$, with
+\[
+\delta_Q(q_0,\pmb{a})=q_1,\qquad \delta_Q(q_1,\pmb{a})=q_1.
+\]
+The DFA $A_R$ has three states, $r_0=[\lambda]_R$ (start and final),
+$r_1=[\pmb{a}]_R$, and $r_2=[\pmb{aa}]_R$, with
+\[
+\delta_R(r_0,\pmb{a})=r_1,\qquad
+\delta_R(r_1,\pmb{a})=r_2,\qquad
+\delta_R(r_2,\pmb{a})=r_1.
+\]
+
+Assume there is a homomorphism $\psi:A_Q\to A_R$. Since start states must map to
+start states, $\psi(q_0)=r_0$. Then
+\[
+\psi(q_1)=\psi(\delta_Q(q_0,\pmb{a}))
+        =\delta_R(\psi(q_0),\pmb{a})
+        =\delta_R(r_0,\pmb{a})
+        =r_1.
+\]
+But also
+\[
+\psi(q_1)=\psi(\delta_Q(q_1,\pmb{a}))
+        =\delta_R(\psi(q_1),\pmb{a})
+        =\delta_R(r_1,\pmb{a})
+        =r_2,
+\]
+which is impossible. Therefore there need not be a homomorphism from $A_Q$ to
+$A_R$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -999,12 +1123,51 @@ $\mu^{-1}: B\to A$ is also an isomorphism. By Exercise 3.56, $A$ is connected. $
 %%------------------------------------------------------------
 \item \textbf{Disprove: homomorphism $A\to B$, $A$ connected $\Rightarrow$ $B$ connected.}
 
-Counterexample: $B$ has disconnected states; map all reachable states of $A$ to the connected part of $B$, and the disconnected states of $B$ have no preimage. The homomorphism $\mu$ maps $S_A$ into the connected part of $B$, and $B$ has extra states. $\mu$ is a valid homomorphism (on the domain $S_A$) but $B$ is not connected.
+Take
+\[
+A=\langle\{\pmb{0}\},\{s\},s,\delta_A,\{s\}\rangle
+\]
+with $\delta_A(s,\pmb{0})=s$. This DFA is connected. Let
+\[
+B=\langle\{\pmb{0}\},\{t,u\},t,\delta_B,\{t\}\rangle
+\]
+where $\delta_B(t,\pmb{0})=t$ and $\delta_B(u,\pmb{0})=u$. The state $u$ is
+unreachable from $t$, so $B$ is not connected.
+
+Define $\mu:A\to B$ by $\mu(s)=t$. Then $\mu$ preserves the start state, it
+preserves finality because $s$ and $t$ are both final, and
+\[
+\mu(\delta_A(s,\pmb{0}))=\mu(s)=t=\delta_B(t,\pmb{0})
+=\delta_B(\mu(s),\pmb{0}).
+\]
+Hence $\mu$ is a homomorphism even though $B$ is not connected.
 
 %%------------------------------------------------------------
 \item \textbf{Disprove: homomorphism $A\to B$, $B$ connected $\Rightarrow$ $A$ connected.}
 
-$A$ has an unreachable state $s_*$; $\mu(s_*)=$ any state of $B$. $B$ is connected but $A$ is not.
+Take
+\[
+A=\langle\{\pmb{0}\},\{s_0,s_1\},s_0,\delta_A,\{s_0,s_1\}\rangle
+\]
+with $\delta_A(s_0,\pmb{0})=s_0$ and $\delta_A(s_1,\pmb{0})=s_1$. The state $s_1$
+is unreachable, so $A$ is not connected. Let
+\[
+B=\langle\{\pmb{0}\},\{t\},t,\delta_B,\{t\}\rangle
+\]
+with $\delta_B(t,\pmb{0})=t$; this DFA is connected.
+
+Define $\mu:A\to B$ by
+\[
+\mu(s_0)=t,\qquad \mu(s_1)=t.
+\]
+Then $\mu$ preserves the start state, it preserves finality because all these
+states are final, and
+\[
+\mu(\delta_A(s_i,\pmb{0}))=\mu(s_i)=t=\delta_B(t,\pmb{0})
+=\delta_B(\mu(s_i),\pmb{0})
+\]
+for $i=0,1$. So there is a homomorphism from $A$ to connected $B$ even though
+$A$ is not connected.
 
 %%------------------------------------------------------------
 \item \textbf{$A_{R^A}\cong A^c$: define $\psi$ and prove it is an isomorphism.}
@@ -1027,7 +1190,31 @@ $(\mu\circ\psi)(s)=\mu(\psi(s))$. For connected $A$: $s=\DBAR_A(s_0,x)$ for some
 %%------------------------------------------------------------
 \item \textbf{Give example for which $\psi\neq\mu^{-1}$ (not connected).}
 
-Let $A$ have two disconnected components: $\{q_0,q_1\}$ (connected part) and $\{q_2\}$ (unreachable). Define $\psi,\mu$ that agree on the connected part but map $q_2$ differently. Then $\psi\neq\mu^{-1}$ on $q_2$.
+Take $A=B$ to be the DFA
+\[
+\langle\{\pmb{0}\},\{q_0,q_1,q_2\},q_0,\delta,\{q_0\}\rangle
+\]
+where
+\[
+\delta(q_0,\pmb{0})=q_0,\qquad \delta(q_1,\pmb{0})=q_1,\qquad
+\delta(q_2,\pmb{0})=q_2.
+\]
+This machine is not connected because $q_1$ and $q_2$ are unreachable.
+
+Let $\psi:A\to B$ be the identity isomorphism:
+\[
+\psi(q_i)=q_i \qquad (i=0,1,2).
+\]
+Let $\mu:B\to A$ swap the two unreachable states:
+\[
+\mu(q_0)=q_0,\qquad \mu(q_1)=q_2,\qquad \mu(q_2)=q_1.
+\]
+Because $q_1$ and $q_2$ have exactly the same final/nonfinal status and the same
+loop transition on $\pmb{0}$, $\mu$ is also an isomorphism. But
+\[
+\mu^{-1}=\mu\neq\psi,
+\]
+since, for example, $\mu^{-1}(q_1)=q_2$ while $\psi(q_1)=q_1$.
 
 %%------------------------------------------------------------
 \item \textbf{Three-state DFA with $E_{0A}$ having one class. Can $E_{0A}\neq E_{1A}$?}
@@ -1037,7 +1224,29 @@ $E_{0A}$ has one class iff all states are equivalent under $E_{0A}$, i.e., all a
 %%------------------------------------------------------------
 \item \textbf{If $A,B$ reduced and connected and $\psi: A\to B$ is a homomorphism, must $\psi$ be an isomorphism?}
 
-Yes. By Exercise 3.21, $\psi$ is injective (since $A,B$ reduced). By Exercise 3.56, since $A$ is connected, $B$ is connected (homomorphism image covers all reachable states). The image of $\psi$ is all of $S_B$ (surjective), since $B$ is reduced + connected = minimal, and $|S_A|=|S_B|=\mathrm{rk}(R_L)$ (both are minimal for the same language). So $\psi$ is a bijective homomorphism = isomorphism. $\square$
+Yes. Since $\psi$ is a homomorphism, it already satisfies the start-state,
+final-state, and transition conditions from Definition 3.5. We only need to show
+that $\psi$ is one-to-one and onto.
+
+To prove injectivity, assume $\psi(s)=\psi(t)$. Then certainly
+$\psi(s)\,E_B\,\psi(t)$, and Exercise 3.20 gives
+\[
+\psi(s)\,E_B\,\psi(t)\Leftrightarrow s\,E_A\,t.
+\]
+Since $A$ is reduced, $s\,E_A\,t$ implies $s=t$. Thus $\psi$ is one-to-one.
+
+To prove surjectivity, let $u\in S_B$. Because $B$ is connected, there exists
+$x\in\Sigma^*$ such that $\DBAR_B(s_{0B},x)=u$. Let
+$s=\DBAR_A(s_{0A},x)\in S_A$. By Exercise 3.10,
+\[
+\psi(s)=\psi(\DBAR_A(s_{0A},x))
+=\DBAR_B(\psi(s_{0A}),x)
+=\DBAR_B(s_{0B},x)
+=u.
+\]
+So every state of $B$ lies in the image of $\psi$.
+
+Therefore $\psi$ is a bijective homomorphism, hence an isomorphism. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove Corollary 3.2.}
@@ -1067,9 +1276,24 @@ This is the definition of $E_A$. Formally: $s\,E_A\,t$ is defined as $L(A^s)=L(A
 \begin{enumerate}
 \item $\{I(A,t)\mid t\in S\}$ partitions $\Sigma^*$: Each $x\in\Sigma^*$ reaches exactly one state $\DBAR(s_0,x)=t$. So $x\in I(A,t)$ for exactly one $t$. The sets are disjoint and cover $\Sigma^*$. $\square$
 
-\item Terminal sets might not partition $\Sigma^*$: $T(A,t)=\{x:\DBAR(t,x)\in F\}$. Multiple states $t,t'$ may have $T(A,t)\cap T(A,t')\neq\emptyset$ (e.g., if $t$ and $t'$ are equivalent, their terminal sets are equal but they're distinct states).
+\item Terminal sets need not partition $\Sigma^*$. For example, let
+$A=\langle\{\pmb{a}\},\{q_0,q_1\},q_0,\delta,\{q_0,q_1\}\rangle$ with
+$\delta(q_0,\pmb{a})=q_0$ and $\delta(q_1,\pmb{a})=q_1$. Then
+\[
+T(A,q_0)=\Sigma^*=T(A,q_1).
+\]
+Thus the terminal sets are not disjoint, so they do not form a partition.
 
-\item Terminal sets might partition $\Sigma^*$: if $A$ is minimal, different states have distinct terminal sets, but distinct sets can still intersect. The terminal sets partition $\Sigma^*$ only in special cases (e.g., when the machine is a group automaton).
+\item Terminal sets can partition $\Sigma^*$. Let
+$A=\langle\{\pmb{a},\pmb{b}\},\{q_0,q_1\},q_0,\delta,\{q_0\}\rangle$ where both
+letters toggle the states:
+\[
+\delta(q_0,\pmb{a})=\delta(q_0,\pmb{b})=q_1,\qquad
+\delta(q_1,\pmb{a})=\delta(q_1,\pmb{b})=q_0.
+\]
+Then $T(A,q_0)$ is the set of even-length strings, while $T(A,q_1)$ is the set
+of odd-length strings. These two sets are disjoint and their union is all of
+$\Sigma^*$, so in this example the terminal sets do form a partition.
 \end{enumerate}
 
 \end{enumerate}
