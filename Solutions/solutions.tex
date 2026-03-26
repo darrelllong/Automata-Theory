@@ -1182,7 +1182,7 @@ var
    ch : char;
 function Accepting(t : State) : boolean;
 begin
-   Accepting := t in [intpart, dotafterint, fracpart, expdigits]
+   Accepting := t in [intpart, dotafterint, fracpart, expdigits];
 end;
 begin
    s := start;
@@ -2225,6 +2225,7 @@ program Roman(input, output);
 var
    s : string;
    i, n : integer;
+   ok : boolean;
 
 function Take(c : char) : boolean;
 begin
@@ -2240,27 +2241,48 @@ end;
 procedure Thousands;
 begin
    while Take('M') do
-      { keep consuming M's }
+      ;
 end;
 
-procedure Block(one, five, ten : char);
+function Block(one, five, ten : char) : boolean;
+var
+   start : integer;
 begin
+   start := i;
    if Take(one) then
       begin
-         if not (Take(five) or Take(ten)) then
+         if Take(ten) then
+            Block := true
+         else if Take(five) then
+            Block := true
+         else
             begin
+               Take(one);
+               Take(one);
                if Take(one) then
-                  if Take(one) then
-                     { at most three of "one" }
+                  begin
+                     i := start;
+                     Block := false
+                  end
+               else
+                  Block := true
             end
       end
    else if Take(five) then
       begin
+         Take(one);
+         Take(one);
+         Take(one);
          if Take(one) then
-            if Take(one) then
-               if Take(one) then
-                  { at most three after five }
+            begin
+               i := start;
+               Block := false
+            end
+         else
+            Block := true
       end
+   else
+      Block := true
 end;
 
 begin
@@ -2272,10 +2294,12 @@ begin
    else
       begin
          Thousands;
-         Block('C','D','M');
-         Block('X','L','C');
-         Block('I','V','X');
-         if i > n then
+         ok := Block('C','D','M');
+         if ok then
+            ok := Block('X','L','C');
+         if ok then
+            ok := Block('I','V','X');
+         if ok and (i > n) then
             writeln(output, 'Accepted')
          else
             writeln(output, 'Rejected')
