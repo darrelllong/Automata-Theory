@@ -554,30 +554,39 @@ Transition function:
 
 $R^M$: $x\,R^M\,y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$.
 
-If $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then for any $z$: $\DBAR(s_0,xz)=\DBAR(s,z)=\DBAR(s_0,yz)$. So $xz\,R^M\,yz$. $\square$
+Since this relation is defined by equality of destination state, it is immediately an equivalence relation: reflexive, symmetric, and transitive all follow from equality.
+
+To check the right-congruence property, assume $x\,R^M\,y$, so $\DBAR(s_0,x)=\DBAR(s_0,y)=s$. Then for any $z\in\Sigma^*$,
+\[
+\DBAR(s_0,xz)=\DBAR(s,z)=\DBAR(s_0,yz),
+\]
+so $xz\,R^M\,yz$. Therefore $R^M$ is a right congruence. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Is Pascal (set of all valid Pascal programs) FAD?}
 
 No.
-Let
+We use a Chapter 2 distinct-futures argument: matching nested \texttt{begin}/\texttt{end} blocks requires arbitrarily many different continuations.
+
+For each $n\geq 1$, let $x_n$ be the ASCII string
 \[
-R=\{\texttt{program p;}~\texttt{begin}^*~\texttt{end}^*~\texttt{.}\},
+\texttt{program p; begin begin ... begin }
 \]
-which is regular (fixed keywords plus two starred blocks).
-Then
+with exactly $n$ occurrences of the keyword \texttt{begin}, and let $z_n$ be the ASCII string
 \[
-\text{Pascal}\cap R
-=\{\texttt{program p;}~\texttt{begin}^n~\texttt{end}^n~\texttt{.}\mid n\ge1\},
+\texttt{end end ... end.}
 \]
-since valid nesting requires matching numbers of \texttt{begin}/\texttt{end}.
-Erase the fixed prefix/suffix with a homomorphism; the image is
+with exactly $n$ occurrences of the keyword \texttt{end}.
+
+Then $x_nz_n$ is a valid Pascal program: after the header \texttt{program p;}, the body is a nested compound statement with $n$ occurrences of \texttt{begin} followed by the matching $n$ occurrences of \texttt{end}, and then the final period.
+
+If $m\neq n$, then $x_mz_n$ is not a valid Pascal program. If $m<n$, there are too many \texttt{end}s; if $m>n$, there are unmatched \texttt{begin}s left over before the final period.
+
+Therefore $x_n$ and $x_m$ have different futures with respect to the language Pascal, since
 \[
-\{\texttt{begin}^n\texttt{end}^n\mid n\ge1\},
+x_nz_n\in\text{Pascal}\qquad\text{but}\qquad x_mz_n\notin\text{Pascal}\ \ (m\neq n).
 \]
-which is not regular.
-If Pascal were FAD, then $\text{Pascal}\cap R$ would be FAD (closure under intersection with regular languages), and its homomorphic image would be FAD, contradiction.
-So Pascal is not FAD.
+So the strings $x_1,x_2,x_3,\ldots$ lie in distinct $R_{\text{Pascal}}$-classes. Hence $R_{\text{Pascal}}$ has infinitely many equivalence classes, and Pascal is not FAD.
 
 %%------------------------------------------------------------
 \item \textbf{Is Short Pascal (programs with $<10^6$ characters) FAD?}
@@ -624,12 +633,30 @@ So the pumping conclusion holds even though $L$ is not FAD.
 %%------------------------------------------------------------
 \item \textbf{Show $F_Q$ in Definition 2.5 is well defined.}
 
-$F_Q=\{[x]_Q\mid x\in L\}$. If $[x]_Q=[y]_Q$ and $x\in L$: since $Q$ refines $R_L$, $[x]_Q\subseteq[x]_{R_L}$. So $x\,Q\,y$ implies $x\,R_L\,y$ (since $Q$ refines $R_L$). Then $x\in L\Leftrightarrow y\in L$ (by definition of $R_L$ with $z=\lambda$). So $y\in L$, and $[y]_Q\in F_Q$. $\square$
+$F_Q=\{[x]_Q\mid x\in L\}$.
+
+First, this is defined everywhere it needs to be: if $x\in L$, then certainly $x\in\Sigma^*$, so its equivalence class $[x]_Q$ exists and is an element of
+\[
+S_Q=\{[y]_Q\mid y\in\Sigma^*\}.
+\]
+
+Second, it is not multiply defined. Suppose $[x]_Q=[y]_Q$ and $x\in L$. Then $x$ and $y$ lie in the same $Q$-class. Since $L$ is assumed to be a union of $Q$-classes, the whole class $[x]_Q=[y]_Q$ is either contained in $L$ or disjoint from $L$. Because $x\in L$, that class must be contained in $L$, so $y\in L$ as well.
+
+Thus the choice of representative does not matter, and $F_Q$ is a well-defined subset of $S_Q$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_Q$ in Definition 2.5 is well defined.}
 
-$\delta_Q([x]_Q,a)=[xa]_Q$. If $[x]_Q=[y]_Q$ then $x\,Q\,y$. Since $Q$ is a right congruence, $xa\,Q\,ya$, so $[xa]_Q=[ya]_Q$. $\square$
+$\delta_Q([x]_Q,a)=[xa]_Q$.
+
+First, it is defined for every state and input letter: if $[x]_Q\in S_Q$ and $a\in\Sigma$, then $xa\in\Sigma^*$, so $[xa]_Q\in S_Q$.
+
+Second, it is independent of the chosen representative of the class. If $[x]_Q=[y]_Q$, then $x\,Q\,y$. Since $Q$ is a right congruence, $xa\,Q\,ya$, and therefore
+\[
+[xa]_Q=[ya]_Q.
+\]
+
+So $\delta_Q$ is well defined. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $\DBAR_Q([x]_Q,y)=[xy]_Q$ by induction.}
@@ -656,29 +683,13 @@ By Exercise 2.43 applied with $Q=R_L$: $R^{A_{R_L}}=R_L$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Show the converse of Theorem 2.3 is false.}
 
-Theorem 2.3 states: FAD $\Rightarrow$ pumping. The converse is false. We exhibit a language satisfying pumping that is not FAD.
-
-\textbf{Counterexample.} Let $L=\{a^ib^jc^k\mid i=0\text{ or }j=k\}$ over $\{a,b,c\}$.
-
-\emph{$L$ is not FAD.} Intersect with the regular language $R=a\,b^*c^*$:
+The converse would say: if a language satisfies the conclusion of Theorem 2.3, then it must be FAD. The immediately preceding exercise already provides a counterexample:
 \[
-L\cap R=\{ab^nc^n\mid n\ge0\},
+L=\{\mathbf{a}^n\mathbf{b}^k\mathbf{c}^j\mid n<3\text{ or }(n\geq 3\text{ and }k=j)\}.
 \]
-which is not regular. Therefore $L$ is not FAD.
+Part (a) showed that the pumping conclusion of Theorem 2.3 does hold for this language, while the hypothesis fails because $L$ is not FAD.
 
-\emph{$L$ satisfies the pumping condition.} Take pumping length $N=1$.
-For any $w\in L$ with $|w|\ge1$, write $w=uvw'$ with $u=\lambda$ and $|v|=1$ as follows:
-\begin{itemize}
-\item If $w$ starts with $\mathbf b$ or $\mathbf c$, then necessarily $i=0$.
-Choose $v$ as that first symbol.
-For every $m\ge0$, $uv^mw'$ still has $i=0$, hence stays in $L$.
-\item If $w$ starts with $\mathbf a$, then $i\ge1$ and (because $w\in L$) we have $j=k$.
-Choose $v=\mathbf a$.
-Then $uv^mw'=a^{i-1+m}b^jc^j$.
-If $i-1+m=0$, first disjunct ($i=0$) holds; if $i-1+m\ge1$, second disjunct ($j=k$) holds.
-So $uv^mw'\in L$ for all $m\ge0$.
-\end{itemize}
-Thus pumping holds although $L$ is not FAD, so the converse of Theorem 2.3 is false. $\square$
+So a language can satisfy the pumping conclusion without being FAD. Therefore the converse of Theorem 2.3 is false. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x:|x|_\mathbf{a}=2|x|_\mathbf{b}\}$ is not FAD.}
@@ -716,17 +727,30 @@ So
 %%------------------------------------------------------------
 \item \textbf{Prove or disprove: $R_{L_1}\cap R_{L_2}=R_{L_1\cap L_2}$.}
 
-This is false in general. Counterexample: $L_1=\{x:|x|\text{ even}\}$, $L_2=\{x:|x|_\mathbf{a}\text{ even}\}$ over $\{\mathbf{a},\mathbf{b}\}$.
+This is false in general.
 
-$R_{L_1}$: 2 classes (even/odd length). $R_{L_2}$: 2 classes (even/odd \#a). $R_{L_1}\cap R_{L_2}$: 4 classes (pairs of parities).
+However, $R_{L_1}\cap R_{L_2}$ always refines $R_{L_1\cap L_2}$. Indeed, if $x\,R_{L_1}\,y$ and $x\,R_{L_2}\,y$, then for every $z$,
+\[
+xz\in L_1\cap L_2
+\Leftrightarrow (xz\in L_1\text{ and }xz\in L_2)
+\Leftrightarrow (yz\in L_1\text{ and }yz\in L_2)
+\Leftrightarrow yz\in L_1\cap L_2,
+\]
+so $x\,R_{L_1\cap L_2}\,y$.
 
-$L_1\cap L_2=\{x:|x|\text{ even and }|x|_\mathbf{a}\text{ even}\}$. $R_{L_1\cap L_2}$: track (parity of length, parity of \#a). Also 4 classes. In this case they agree.
+Sometimes equality does happen. For example, over $\{\mathbf{a},\mathbf{b}\}$ let
+\[
+L_1=\{x:|x|\text{ even}\},\qquad L_2=\{x:|x|_\mathbf{a}\text{ even}\}.
+\]
+Then both $R_{L_1}\cap R_{L_2}$ and $R_{L_1\cap L_2}$ have the same four classes, determined by the parity of $|x|$ and the parity of $|x|_\mathbf{a}$.
 
-For a counterexample where they differ: $\Sigma=\{\mathbf{a}\}$, $L_1=\{\mathbf{a}^{2k}:k\geq 0\}$, $L_2=\{\mathbf{a}^{3k}:k\geq 0\}$. Then $R_{L_1}$: 2 classes ($\bmod 2$). $R_{L_2}$: 3 classes ($\bmod 3$). $R_{L_1}\cap R_{L_2}$: 6 classes ($\bmod 6$). But $L_1\cap L_2=\{\mathbf{a}^{6k}\}$, so $R_{L_1\cap L_2}$ also has 6 classes ($\bmod 6$). They agree again.
+But in general the equality can fail. Let $L_1=\{\lambda\}$ and $L_2=\{\mathbf{a}\}$ over $\{\mathbf{a}\}^*$. Then $R_{L_1}$ has 2 classes, $R_{L_2}$ has 3 classes, and so $R_{L_1}\cap R_{L_2}$ has 3 classes. On the other hand,
+\[
+L_1\cap L_2=\emptyset,
+\]
+so $R_{L_1\cap L_2}=R_\emptyset$ has just one class, namely all of $\Sigma^*$.
 
-In general, $R_{L_1}\cap R_{L_2}$ always refines $R_{L_1\cap L_2}$ (if $x\,R_{L_1}\,y$ and $x\,R_{L_2}\,y$, then $xz\in L_1\cap L_2\Leftrightarrow xz\in L_1$ and $xz\in L_2\Leftrightarrow yz\in L_1$ and $yz\in L_2\Leftrightarrow yz\in L_1\cap L_2$, so $x\,R_{L_1\cap L_2}\,y$). So $R_{L_1}\cap R_{L_2}$ refines $R_{L_1\cap L_2}$, but may be strictly finer.
-
-Counterexample for strict: Let $L_1=\{\lambda\}$, $L_2=\{\mathbf{a}\}$ over $\{\mathbf{a}\}^*$. $R_{L_1}$ has 2 classes: $\{\lambda\}$ and $\mathbf{a}^+$. $R_{L_2}$ has 3 classes: $\{\lambda\}$, $\{\mathbf{a}\}$, $\mathbf{a}^{\geq 2}$. $R_{L_1}\cap R_{L_2}$ has 3 classes. But $L_1\cap L_2=\emptyset$, so $R_{L_1\cap L_2}$ has 1 class (all strings equivalent). They differ.
+Therefore $R_{L_1}\cap R_{L_2}=R_{L_1\cap L_2}$ is false in general. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove: each $R$-class has a representative of length $<n$.}
