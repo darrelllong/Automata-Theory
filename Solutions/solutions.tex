@@ -780,9 +780,22 @@ Add a new input symbol $\mathbf{r}$ (coin return). When $\mathbf{r}$ is pressed,
 \item \textbf{The DFA of Figure 1.26.}
 
 \begin{enumerate}
-\item The quintuple: $A = \langle\Sigma, S, s_0, \delta, F\rangle$ where $\Sigma$ and $S$ are as shown in the figure, $s_0$ is the start state, $\delta$ follows the labeled arrows, and $F$ is the set of double-circled states.
+\item The quintuple is
+\[
+A=\langle\{\pmb{0},\pmb{1}\},\{q_0,q_1\},q_0,\delta,\{q_1\}\rangle,
+\]
+where
+\[
+\delta(q_0,\pmb{0})=q_1,\quad \delta(q_0,\pmb{1})=q_1,\quad
+\delta(q_1,\pmb{0})=q_1,\quad \delta(q_1,\pmb{1})=q_0.
+\]
 
-\item The language: the machine of Figure 1.26 is a 2-state DFA over $\{\mathbf{a},\mathbf{b}\}$ that accepts all words in which the number of $\mathbf{b}$s is odd.
+\item The language is
+\[
+L(A)=\Sigma^*\pmb{0}(\pmb{11})^* \cup \pmb{1}(\pmb{11})^*,
+\qquad \Sigma=\{\pmb{0},\pmb{1}\}.
+\]
+Equivalently, a word is accepted iff it either ends in $\pmb{0}$ followed by an even number of trailing $\pmb{1}$s, or consists entirely of an odd number of $\pmb{1}$s.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -818,7 +831,17 @@ $S = \{q_0,q_1,q_2,q_3,q_4,q_5\}$, $s_0 = q_0$, $F = \{q_0,q_2,q_3,q_4\}$, $\del
 
 \item $L_2 = \Sigma^* \setminus \{w \mid w \text{ ends in }1\}$: The complement is all words ending in \textbf{1}. So $L_2$ accepts words not ending in \textbf{1}: either $\lambda$, or words ending in \textbf{0}. Two-state DFA: $s_0$ (start, final -- not ending in 1, or empty), $s_1$ (ending in 1, nonfinal). $\delta(s_0,\mathbf{0})=s_0$, $\delta(s_0,\mathbf{1})=s_1$, $\delta(s_1,\mathbf{0})=s_0$, $\delta(s_1,\mathbf{1})=s_1$.
 
-\item $L_3 = \{y \mid |y|_0 = |y|_1\}$: Not FAD (by pumping lemma). No DFA can accept this.
+\item $L_3 = \{y \mid |y|_0 = |y|_1\}$: not FAD. Suppose some DFA with $n$ states accepted it. Consider the $n+1$ strings
+\[
+\lambda,\ \pmb{0},\ \pmb{00},\ \ldots,\ \pmb{0}^n.
+\]
+Two of them, say $\pmb{0}^i$ and $\pmb{0}^j$ with $i<j$, must lead from the start state to the same state. Then appending $\pmb{1}^i$ would give the same final outcome for both strings. But
+\[
+\pmb{0}^i\pmb{1}^i \in L_3
+\quad\text{while}\quad
+\pmb{0}^j\pmb{1}^i \notin L_3,
+\]
+since the second string has more $\pmb{0}$s than $\pmb{1}$s. This contradiction shows that no DFA can accept $L_3$.
 \end{enumerate}
 
 The 2-state DFA for $L_2$:
@@ -1006,7 +1029,23 @@ Since $10\equiv 0\pmod 5$, we have $(10i+d)\bmod 5 = d\bmod 5$. So only the last
 %%------------------------------------------------------------
 \item \textbf{DFA for the first eight primes: $\{2,3,5,7,11,13,17,19\}$.}
 
-This is a finite set, so it is FAD. The DFA can be built by a trie-like construction that recognizes exactly these 8 strings over $\Sigma=\{0,\ldots,9\}$. It has enough states to uniquely identify each prime and reject everything else. The exact diagram requires a multi-state machine; the key is that any finite set is regular.
+This language is finite, so it is FAD. A concrete DFA is the prefix-tree machine for the set
+\[
+P=\{\lambda,\pmb{1},\pmb{11},\pmb{13},\pmb{17},\pmb{19},\pmb{2},\pmb{3},\pmb{5},\pmb{7}\}.
+\]
+Let the states be $\{q_x\mid x\in P\}\cup\{q_{dead}\}$, with start state $q_\lambda$ and final states
+\[
+F=\{q_{\pmb{2}},q_{\pmb{3}},q_{\pmb{5}},q_{\pmb{7}},q_{\pmb{11}},q_{\pmb{13}},q_{\pmb{17}},q_{\pmb{19}}\}.
+\]
+For any state $q_x$ and any digit $\pmb{d}$, define
+\[
+\delta(q_x,\pmb{d})=
+\begin{cases}
+q_{x\pmb{d}} & \text{if } x\pmb{d}\in P,\\
+q_{dead} & \text{otherwise.}
+\end{cases}
+\]
+Also $\delta(q_{dead},\pmb{d})=q_{dead}$ for every digit $\pmb{d}$. Thus $q_\lambda$ branches to $q_{\pmb{2}},q_{\pmb{3}},q_{\pmb{5}},q_{\pmb{7}}$, and to $q_{\pmb{1}}$ on input $\pmb{1}$; then $q_{\pmb{1}}$ branches to $q_{\pmb{11}},q_{\pmb{13}},q_{\pmb{17}},q_{\pmb{19}}$ on inputs $\pmb{1},\pmb{3},\pmb{7},\pmb{9}$, respectively. Every other transition goes to $q_{dead}$, so the machine accepts exactly the first eight primes.
 
 %%------------------------------------------------------------
 \item \textbf{Combinations of $u,v,w$ with $uvw = \mathbf{cab}$.}
@@ -1076,7 +1115,30 @@ q_{dead} & q_{dead}    & q_{dead}
 %%------------------------------------------------------------
 \item \textbf{Modify Figure 1.11 to reject DO and DATA.}
 
-Add states that track the prefixes $\mathbf{D}$, $\mathbf{DO}$, $\mathbf{DA}$, $\mathbf{DAT}$, $\mathbf{DATA}$. When the word ends exactly as $\mathbf{DO}$ or $\mathbf{DATA}$ (with \textless EOS\textgreater), route to a dead (nonfinal) state. All other valid FORTRAN identifiers (alphabetic words not equal to DO or DATA) go to the accepting state.
+Keep the structure of Example 1.9, but split the ordinary identifier states so that the machine can remember the exceptional prefixes $\pmb{D}$, $\pmb{DO}$, $\pmb{DA}$, $\pmb{DAT}$, and $\pmb{DATA}$ until it is clear whether the identifier is exactly one of the reserved words.
+
+One convenient design uses the states
+\[
+s_0,\ d_1,\ do_2,\ da_2,\ dat_3,\ data_4,\ g_1,\ g_2,\ g_3,\ g_4,\ g_5,\ g_6,\ s_7,
+\]
+where $g_i$ means ``a legal identifier of length $i$ whose prefix is no longer one of the exceptional words,'' and $s_7$ is the dead state. Embedded blanks behave exactly as in Example 1.9: they loop in every nondead state.
+
+The key transitions are:
+\begin{itemize}
+\item From $s_0$, the letter $\pmb{D}$ goes to $d_1$, every other letter goes to $g_1$, digits and characters from $\Gamma$ go to $s_7$, and $\diamond$ loops to $s_0$.
+\item From $d_1$, the letter $\pmb{O}$ goes to $do_2$, $\pmb{A}$ goes to $da_2$, and every other letter or digit goes to $g_2$.
+\item From $do_2$, any further letter or digit goes to $g_3$; if the identifier ends while the machine is still in $do_2$, the word is rejected.
+\item From $da_2$, the letter $\pmb{T}$ goes to $dat_3$; every other letter or digit goes to $g_3$.
+\item From $dat_3$, the letter $\pmb{A}$ goes to $data_4$; every other letter or digit goes to $g_4$.
+\item From $data_4$, any further letter or digit goes to $g_5$; if the identifier ends while the machine is still in $data_4$, the word is rejected.
+\item The states $g_1,\ldots,g_6$ behave exactly like the length-counting states $s_1,\ldots,s_6$ of Example 1.9.
+\end{itemize}
+
+The final states are
+\[
+\{d_1,da_2,dat_3,g_1,g_2,g_3,g_4,g_5,g_6\}.
+\]
+So identifiers such as $\pmb{D}$, $\pmb{DA}$, $\pmb{DAT}$, $\pmb{DOG}$, and $\pmb{DATA1}$ are accepted, while exactly $\pmb{DO}$ and exactly $\pmb{DATA}$ are rejected.
 
 %%------------------------------------------------------------
 \item \textbf{Modify machine for real-number constants (extended BNF).}
@@ -1084,33 +1146,133 @@ Add states that track the prefixes $\mathbf{D}$, $\mathbf{DO}$, $\mathbf{DA}$, $
 The new BNF allows leading decimal points like \texttt{.5} and \texttt{+.5}. Modify the DFA from Figure 1.13 to add transitions that accept the input immediately after a sign symbol or at the start by going to a decimal-point state, from which digits are read as the fractional part.
 
 \begin{enumerate}
-\item Add states for: start (may see optional sign), integer part, decimal point seen with no prior integer, fractional part, exponent indicator \textbf{E}, optional exponent sign, exponent digits. The modified machine handles all cases in the extended BNF.
+\item A concrete modified DFA is obtained by using the states
+\[
+s_0=\text{start},\quad s_1=\text{sign},\quad s_2=\text{integer part},\quad s_3=\text{dot after integer},
+\]
+\[
+s_4=\text{E just read},\quad s_5=\text{sign after E},\quad s_6=\text{exponent digits},
+\]
+\[
+s_8=\text{fractional digits},\quad s_9=\text{leading dot before any digit},\quad s_7=\text{dead}.
+\]
+The accepting states are $\{s_2,s_3,s_8,s_6\}$. The important transitions are:
+\begin{align*}
+\delta(s_0,\text{digit})&=s_2, & \delta(s_0,\pmb{+})&=s_1, & \delta(s_0,\pmb{-})&=s_1, & \delta(s_0,\pmb{.})&=s_9,\\
+\delta(s_1,\text{digit})&=s_2, & \delta(s_1,\pmb{.})&=s_9,\\
+\delta(s_2,\text{digit})&=s_2, & \delta(s_2,\pmb{.})&=s_3,\\
+\delta(s_3,\text{digit})&=s_8,\\
+\delta(s_8,\text{digit})&=s_8, & \delta(s_8,\pmb{E})&=s_4,\\
+\delta(s_9,\text{digit})&=s_8,\\
+\delta(s_4,\text{digit})&=s_6, & \delta(s_4,\pmb{+})&=s_5, & \delta(s_4,\pmb{-})&=s_5,\\
+\delta(s_5,\text{digit})&=s_6,\\
+\delta(s_6,\text{digit})&=s_6.
+\end{align*}
+All unspecified transitions go to $s_7$, and $s_7$ loops to itself. This accepts strings such as \texttt{.5}, \texttt{+.5}, and \texttt{-.5E7}, while still rejecting strings such as \texttt{8.E-10}, because there must be at least one digit after the decimal point if an exponent is present.
 
-\item A program reads a line, runs it through this DFA character by character, and outputs ``accepted'' or ``rejected'' based on the final state.
+\item Here is a Pascal implementation of that DFA.
+
+\begin{verbatim}
+program RealConst(input, output);
+type
+   State = (start, sign, intpart, dotafterint, expmark,
+            expsign, expdigits, dead, fracpart, leadingdot);
+var
+   s : State;
+   ch : char;
+function Accepting(t : State) : boolean;
+begin
+   Accepting := t in [intpart, dotafterint, fracpart, expdigits]
+end;
+begin
+   s := start;
+   while not eoln(input) do
+      begin
+         ch := input^;
+         case s of
+            start:
+               if ch in ['0'..'9'] then s := intpart
+               else if ch in ['+','-'] then s := sign
+               else if ch = '.' then s := leadingdot
+               else s := dead;
+            sign:
+               if ch in ['0'..'9'] then s := intpart
+               else if ch = '.' then s := leadingdot
+               else s := dead;
+            intpart:
+               if ch in ['0'..'9'] then s := intpart
+               else if ch = '.' then s := dotafterint
+               else s := dead;
+            dotafterint:
+               if ch in ['0'..'9'] then s := fracpart
+               else s := dead;
+            leadingdot:
+               if ch in ['0'..'9'] then s := fracpart
+               else s := dead;
+            fracpart:
+               if ch in ['0'..'9'] then s := fracpart
+               else if ch = 'E' then s := expmark
+               else s := dead;
+            expmark:
+               if ch in ['0'..'9'] then s := expdigits
+               else if ch in ['+','-'] then s := expsign
+               else s := dead;
+            expsign:
+               if ch in ['0'..'9'] then s := expdigits
+               else s := dead;
+            expdigits:
+               if ch in ['0'..'9'] then s := expdigits
+               else s := dead;
+            dead:
+               s := dead
+         end;
+         get(input)
+      end;
+   if Accepting(s) then
+      writeln(output, 'Accepted')
+   else
+      writeln(output, 'Rejected')
+end.
+\end{verbatim}
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Show Definition 1.11(i) is implied by (ii) and (iii).}
 
-Definition 1.11 for $\DBAR$: (i) $\DBAR(s,\lambda)=s$; (ii) $\DBAR(s,a)=\delta(s,a)$; (iii) $\DBAR(s,xa)=\delta(\DBAR(s,x),a)$.
-
-From (ii) and (iii) with $x=\lambda$: $\DBAR(s,a) = \delta(s,a)$ and $\DBAR(s,\lambda a) = \delta(\DBAR(s,\lambda),a)$.
-Since $\lambda a = a$, these give $\delta(s,a) = \delta(\DBAR(s,\lambda),a)$ for all $a\in\Sigma$.
-
-\textit{Note}: this equation alone does \emph{not} imply $\DBAR(s,\lambda)=s$ in general, because $\delta$ need not be injective in its first argument.
-\textit{Counterexample}: Let $\Sigma=\{\mathbf{a}\}$, $S=\{0,1\}$, $\delta(0,\mathbf{a})=\delta(1,\mathbf{a})=0$, and define $\DBAR(s,\lambda)=1$ for all $s$.
-Then (ii) gives $\DBAR(s,\mathbf{a})=\delta(s,\mathbf{a})=0$, and (iii) gives $\DBAR(s,\mathbf{a})=\delta(\DBAR(s,\lambda),\mathbf{a})=\delta(1,\mathbf{a})=0$; (ii) and (iii) are both satisfied, yet $\DBAR(s,\lambda)=1\neq s$.
-
-Therefore clause~(i) is an \emph{independent axiom}: it cannot be derived from (ii) and (iii) without additional assumptions (such as $\delta$ being injective for each input symbol).
+In Definition 1.11, part (i) is the statement
+\[
+(\forall s\in S)(\forall \pmb{a}\in\Sigma)\ \DBAR(s,\pmb{a})=\delta(s,\pmb{a}).
+\]
+Assume only parts (ii) and (iii). Then for any state $s$ and any letter $\pmb{a}$,
+\[
+\DBAR(s,\pmb{a})=\DBAR(s,\pmb{a}\lambda)
+\]
+because $\pmb{a}\lambda=\pmb{a}$. Now apply part (iii) with $x=\lambda$:
+\[
+\DBAR(s,\pmb{a}\lambda)=\DBAR(\delta(s,\pmb{a}),\lambda).
+\]
+Finally, by part (ii),
+\[
+\DBAR(\delta(s,\pmb{a}),\lambda)=\delta(s,\pmb{a}).
+\]
+Therefore $\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$ for every $s\in S$ and every $\pmb{a}\in\Sigma$, which is exactly part (i).
 
 %%------------------------------------------------------------
 \item \textbf{Develop a succinct description of the transition function from Example 1.9.}
 
-The FORTRAN identifier machine from Example 1.9 has a regular structure: letter transitions from $q_0$ go to the ``identifier body'' state $q_1$ (final), and from $q_1$, both letters and digits stay in $q_1$. All other transitions go to the dead state $q_{dead}$. The transition function can be written:
-\[
-\delta(q_0, a) = \begin{cases} q_1 & a\in\{\text{A--Z}\}\\ q_{dead} & \text{otherwise}\end{cases},\qquad
-\delta(q_1, a) = \begin{cases} q_1 & a\in\{\text{A--Z,0--9}\}\\ q_{dead} & \text{otherwise}\end{cases}.
-\]
+Let $\Gamma$ be the set defined in Example 1.9, so that the alphabet is partitioned into letters, digits, blanks $\diamond$, and the remaining symbols $\Gamma$. Then the transition function can be described uniformly as follows:
+\begin{align*}
+\delta(s_0,\text{letter})&=s_1, &
+\delta(s_0,\text{digit})&=s_7, &
+\delta(s_0,\diamond)&=s_0, &
+\delta(s_0,\gamma)&=s_7\quad(\gamma\in\Gamma),\\
+\delta(s_i,\text{letter or digit})&=s_{i+1}\qquad (1\leq i\leq 5),\\
+\delta(s_i,\diamond)&=s_i\qquad (1\leq i\leq 6),\\
+\delta(s_i,\gamma)&=s_7\qquad (1\leq i\leq 6,\ \gamma\in\Gamma),\\
+\delta(s_6,\text{letter or digit})&=s_7,\\
+\delta(s_7,\sigma)&=s_7\qquad (\sigma\in\Sigma).
+\end{align*}
+So $s_i$ means ``a legal identifier of length $i$ has been seen,'' blanks do not change the current length, and any illegal character or seventh nonblank character forces the machine into the dead state $s_7$.
 
 %%------------------------------------------------------------
 \item \textbf{Finite, cofinite, neither over $\{\mathbf{a},\mathbf{b}\}^*$.}
@@ -1125,8 +1287,28 @@ The FORTRAN identifier machine from Example 1.9 has a regular structure: letter 
 \item \textbf{DFA of Figure 1.27.}
 
 \begin{enumerate}
-\item Read the quintuple directly from Figure~1.27: $(\Sigma,\,S,\,s_0,\,\delta,\,F)$, where $\Sigma$ is the input alphabet, $S$ is the set of states (nodes of the diagram), $s_0$ is the state with the incoming arrow, $F$ is the set of double-circled states, and $\delta(s,a)$ is the state reached by following the arc labeled $a$ from $s$.
-\item Trace paths from $s_0$ to identify which strings reach states in $F$; the accepted language is the set of all such strings. To describe it concisely, trace what combination of input characters is needed to enter (and stay in) each final state.
+\item The quintuple is
+\[
+\langle\{\pmb{a},\pmb{b}\},\{q_0,q_1,q_2,q_3,q_4\},q_0,\delta,\{q_2,q_3\}\rangle,
+\]
+where
+\begin{align*}
+\delta(q_0,\pmb{a})&=q_1, & \delta(q_0,\pmb{b})&=q_0,\\
+\delta(q_1,\pmb{a})&=q_2, & \delta(q_1,\pmb{b})&=q_1,\\
+\delta(q_2,\pmb{a})&=q_2, & \delta(q_2,\pmb{b})&=q_4,\\
+\delta(q_3,\pmb{a})&=q_3, & \delta(q_3,\pmb{b})&=q_2,\\
+\delta(q_4,\pmb{a})&=q_4, & \delta(q_4,\pmb{b})&=q_3.
+\end{align*}
+
+\item The machine first waits for two occurrences of $\pmb{a}$. The state $q_2$ is reached as soon as the second $\pmb{a}$ is seen. After that, only the number of $\pmb{b}$s modulo $3$ matters:
+\[
+q_2 \equiv 0,\qquad q_4 \equiv 1,\qquad q_3 \equiv 2 \pmod 3.
+\]
+Since $q_2$ and $q_3$ are final and $q_4$ is not, the language is
+\[
+\{\,\pmb{b}^i\pmb{a}\pmb{b}^j\pmb{a}x \mid i,j\geq 0,\ x\in\{\pmb{a},\pmb{b}\}^*,\ |x|_{\pmb{b}}\equiv 0 \text{ or }2 \pmod 3\,\}.
+\]
+Equivalently: the string must contain at least two $\pmb{a}$s, and after the second $\pmb{a}$ the number of $\pmb{b}$s must not be congruent to $1 \pmod 3$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1137,7 +1319,24 @@ The set is finite (China has a finite population), hence regular (every finite l
 %%------------------------------------------------------------
 \item \textbf{Legal infix arithmetic expressions -- FAD?}
 
-No. The set requires balanced nesting of operators with operands; the pumping lemma shows this requires unbounded memory. The language of valid infix expressions over $\{A,B,+,-,\times,/\}$ is not regular.
+Yes. Without parentheses, normal precedence rules affect evaluation, not syntactic well-formedness. A DFA only has to remember whether the next symbol should be an operand or an operator. The symbol $\pmb{-}$ is special because it can serve as unary negation while the machine is expecting an operand, and as subtraction while the machine is expecting an operator.
+
+A suitable DFA has three states:
+\begin{itemize}
+\item $q_E$: expecting an operand,
+\item $q_O$: expecting an operator or the end of the string,
+\item $q_D$: dead state.
+\end{itemize}
+The start state is $q_E$, the only final state is $q_O$, and the transitions are
+\[
+\begin{array}{c|cccccc}
+ & \pmb{A} & \pmb{B} & \pmb{+} & \pmb{-} & \pmb{\times} & \pmb{/} \\\hline
+q_E & q_O & q_O & q_D & q_E & q_D & q_D \\
+q_O & q_D & q_D & q_E & q_E & q_E & q_E \\
+q_D & q_D & q_D & q_D & q_D & q_D & q_D
+\end{array}
+\]
+Thus $\pmb{A}$, $\pmb{-A}$, $\pmb{A-B}$, and $\pmb{A\times-B}$ are accepted, while strings such as $\pmb{+A}$, $\pmb{AB}$, and $\pmb{A/}$ are rejected.
 
 %%------------------------------------------------------------
 \item \textbf{Properties of a DFA $M$.}
@@ -1153,9 +1352,30 @@ No. The set requires balanced nesting of operators with operands; the pumping le
 \item \textbf{DFAs for substring recognition.}
 
 \begin{enumerate}
-\item $\{\mathbf{abc}$ is a substring$\}$: Build a DFA with states tracking the longest prefix of $\mathbf{abc}$ seen so far. States: $q_0$ (none), $q_1$ (saw $\mathbf{a}$), $q_2$ (saw $\mathbf{ab}$), $q_3$ (saw $\mathbf{abc}$, accepting sink). Use standard Knuth-Morris-Pratt failure links for transitions.
+\item For ``$\pmb{abc}$ is a substring,'' use the states $q_0,q_1,q_2,q_3$, where $q_i$ means that the longest suffix seen so far that is also a prefix of $\pmb{abc}$ has length $i$. Let $q_3$ be an accepting sink. The transition table is
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c} \\\hline
+q_0 & q_1 & q_0 & q_0 \\
+q_1 & q_1 & q_2 & q_0 \\
+q_2 & q_1 & q_0 & q_3 \\
+q_3 & q_3 & q_3 & q_3
+\end{array}
+\]
 
-\item $\{\mathbf{acaba}$ is a substring$\}$: Similarly, 6 states tracking longest prefix of $\mathbf{acaba}$ seen, with appropriate failure-link transitions.
+\item For ``$\pmb{acaba}$ is a substring,'' use the states $p_0,p_1,p_2,p_3,p_4,p_5$, where $p_5$ is an accepting sink. The transition table is
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c} \\\hline
+p_0 & p_1 & p_0 & p_0 \\
+p_1 & p_1 & p_0 & p_2 \\
+p_2 & p_3 & p_0 & p_0 \\
+p_3 & p_1 & p_4 & p_2 \\
+p_4 & p_5 & p_0 & p_0 \\
+p_5 & p_5 & p_5 & p_5
+\end{array}
+\]
+Again, $p_i$ records the longest suffix that is also a prefix of $\pmb{acaba}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1198,48 +1418,374 @@ Each extra penny input on state $q_i$ (for $i < 30$) transitions to $q_{i+1}$.
 
 \item Minimum: 3 states (0, 5, $\geq$10 cents).
 
-\item Circuit: 2 bits for state encoding (3 states). See standard circuit realization with D flip-flops.
+\item Encode the states by
+\[
+q_0=\pmb{00},\qquad q_5=\pmb{01},\qquad q_{10}=\pmb{10},
+\]
+with $\pmb{11}$ unused. Encode the input alphabet $\{\<EOS\>,\pmb{n},\pmb{d},\pmb{q}\}$ by
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{n}=\pmb{01},\qquad \pmb{d}=\pmb{10},\qquad \pmb{q}=\pmb{11}.
+\]
+Let the state bits be $t_1,t_2$, and the input bits be $\pmb{a}_1,\pmb{a}_2$. One corresponding circuit uses two D flip-flops with inputs
+\[
+t_1'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge t_1)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2\wedge (t_1\vee t_2))\vee \pmb{a}_1,
+\]
+\[
+t_2'=\neg \pmb{a}_1\wedge\big((\neg \pmb{a}_2\wedge t_2)\vee
+(\pmb{a}_2\wedge \neg t_1\wedge \neg t_2)\big).
+\]
+The accept light should turn on exactly when \<EOS\> is scanned in state $q_{10}$, so
+\[
+\textbf{accept}=t_1\wedge \neg t_2\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+
+One corresponding circuit diagram is:
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {next-state logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=0.5cm] (ff1) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-0.7cm] (ff2) {DFF $t_2$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff2] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff1.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff2.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Exercise 1.29 DFA.}
 \begin{enumerate}
-\item Include both \textless SOS\textgreater\ and \textless EOS\textgreater: add transitions for SOS (move to initial state) and EOS (check if final).
-\item No SOS/EOS: standard combinational logic with state register.
+\item Use one state bit $t_1$, with $t_1=\pmb{0}$ for state $t_0$ and $t_1=\pmb{1}$ for state $t_1$. Encode
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{a}=\pmb{01},\qquad \pmb{b}=\pmb{10},\qquad \<SOS\>=\pmb{11}.
+\]
+Then \<EOS\> and $\pmb{a}$ leave the parity unchanged, $\pmb{b}$ toggles it, and \<SOS\> resets to the start state. Thus one D flip-flop with input
+\[
+t_1'=(t_1\wedge \neg \pmb{a}_1)\vee(\neg t_1\wedge \pmb{a}_1\wedge \neg \pmb{a}_2)
+\]
+implements the next-state logic. The accept circuitry is
+\[
+\textbf{accept}=t_1\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2,
+\]
+since the string is accepted exactly when \<EOS\> is scanned in the odd-$\pmb{b}$ state.
+
+\item Without \<SOS\> and \<EOS\>, only one input bit is needed; let $x=\pmb{0}$ represent $\pmb{a}$ and $x=\pmb{1}$ represent $\pmb{b}$. The next state is just
+\[
+t_1'=t_1\oplus x.
+\]
+So the circuit is a single D flip-flop whose input is the exclusive-or of the current state bit and the input bit.
+
+A corresponding circuit diagram for the version with \<SOS\> and \<EOS\> is:
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {next-state logic};
+  \node[draw, rectangle, minimum width=1.7cm, minimum height=0.9cm, right=of logic] (ff) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff);
+  \draw[->] (ff.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Exercise 1.7 DFA.}
 
-Similar to above; encode the 6 states of $L(A_1)\cup\ldots$ in 3 bits and realize with standard combinational logic.
+It is convenient to implement the language of Exercise 1.7 by keeping the parity bits from Example 1.10 together with one extra bit $u$ that records whether at least one input symbol has been read. Let
+\[
+p=\text{parity of }|x|_{\pmb{a}},\qquad q=\text{parity of }|x|_{\pmb{b}},\qquad u=\text{``have seen input''}.
+\]
+Then the machine accepts exactly when $p=q=\pmb{0}$ and $u=\pmb{1}$.
+
+\begin{enumerate}
+\item With \<SOS\> and \<EOS\>, use the encoding
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{a}=\pmb{01},\qquad \pmb{b}=\pmb{10},\qquad \<SOS\>=\pmb{11}.
+\]
+One corresponding circuit uses three D flip-flops with inputs
+\[
+p'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge p)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2\wedge \neg p)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge p),
+\]
+\[
+q'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge q)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2\wedge q)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge \neg q),
+\]
+\[
+u'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge u)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2).
+\]
+The accept light is
+\[
+\textbf{accept}=\neg p\wedge \neg q\wedge u\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+
+\item Without \<SOS\> and \<EOS\>, use one input bit $x$ with $x=\pmb{0}$ for $\pmb{a}$ and $x=\pmb{1}$ for $\pmb{b}$. Then
+\[
+p'=p\oplus \neg x,\qquad q'=q\oplus x,\qquad u'=\pmb{1}.
+\]
+After the last clock pulse, the machine accepts iff $\neg p\wedge \neg q\wedge u$.
+\end{enumerate}
+
+One corresponding circuit diagram for the \<SOS\>/\<EOS\> version is:
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {next-state logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=1.0cm] (ff1) {DFF $p$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic] (ff2) {DFF $q$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-1.0cm] (ff3) {DFF $u$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff3] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (logic) -- (ff3.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+  \draw[->] (ff3.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff1.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff2.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff3.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Modify Example 1.12 to correctly handle \textless SOS\textgreater.}
 
-Add a new initial state $q_{SOS}$ that transitions to the original start state on \textless SOS\textgreater, and transitions to a dead state on any other input (since no word should begin without the SOS sentinel). Redraw the circuit accordingly.
+Use the same one-bit state encoding as Example 1.12: $s_0=\pmb{0}$ and $s_1=\pmb{1}$. Keep the book's input convention and encode
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{b}=\pmb{01},\qquad \pmb{c}=\pmb{10},\qquad \<SOS\>=\pmb{11}.
+\]
+The only extra requirement is that scanning \<SOS\> from either state must send the machine to $s_0$. The resulting next-state function is
+\[
+t_1'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge t_1)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge \neg t_1).
+\]
+This agrees with Example 1.12 on $\pmb{b}$, $\pmb{c}$, and \<EOS\>, and forces a reset to the start state on \<SOS\>. The accept circuitry is unchanged:
+\[
+\textbf{accept}=t_1\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+So the corrected circuit is exactly the Example 1.12 circuit with the input combination $\pmb{11}$ wired to force the next state to $\pmb{0}$.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {reset-aware logic};
+  \node[draw, rectangle, minimum width=1.7cm, minimum height=0.9cm, right=of logic] (ff) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff);
+  \draw[->] (ff.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Example 1.6 machine.}
 \begin{enumerate}
-\item Include both SOS/EOS.
-\item Neither SOS/EOS.
+\item Encode the states by
+\[
+s_0=\pmb{00},\qquad s_1=\pmb{01},\qquad s_2=\pmb{10},
+\]
+with $\pmb{11}$ unused. Use the standard input encoding
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{a}=\pmb{01},\qquad \pmb{b}=\pmb{10},\qquad \<SOS\>=\pmb{11}.
+\]
+If $t_1,t_2$ are the state bits, then a corresponding pair of D inputs is
+\[
+t_1'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge t_1)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge \neg t_1),
+\]
+\[
+t_2'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge t_2)\vee(\neg \pmb{a}_1\wedge \pmb{a}_2).
+\]
+The machine accepts in state $s_1$, so the accept circuitry is
+\[
+\textbf{accept}=\neg t_1\wedge t_2\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+
+\item Without \<SOS\> and \<EOS\>, only one input bit $x$ is needed, with $x=\pmb{0}$ for $\pmb{a}$ and $x=\pmb{1}$ for $\pmb{b}$. Then
+\[
+t_1'=x\wedge \neg t_1,\qquad t_2'=\neg x.
+\]
+Thus two D flip-flops together with the above combinational logic implement the machine.
 \end{enumerate}
-Both realized from the transition table using standard binary encodings.
+
+One corresponding circuit diagram for the \<SOS\>/\<EOS\> version is:
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {next-state logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=0.5cm] (ff1) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-0.7cm] (ff2) {DFF $t_2$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff2] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff1.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff2.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Example 1.10 machine.}
 
-The machine tracks parity of \#a and \#b (4 states, 2 bits). Truth tables for next-state and output functions are straightforward.
+Let $p$ and $q$ be the parity bits for $|x|_{\pmb{a}}$ and $|x|_{\pmb{b}}$, respectively. Then the four states of Example 1.10 are exactly the four combinations of $(p,q)$.
+
+\begin{enumerate}
+\item With \<SOS\> and \<EOS\>, use
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{a}=\pmb{01},\qquad \pmb{b}=\pmb{10},\qquad \<SOS\>=\pmb{11}.
+\]
+Then \<EOS\> leaves the state unchanged, $\pmb{a}$ flips $p$, $\pmb{b}$ flips $q$, and \<SOS\> resets both bits to $\pmb{0}$. One corresponding circuit uses two D flip-flops with
+\[
+p'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge p)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2\wedge \neg p)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge p),
+\]
+\[
+q'=(\neg \pmb{a}_1\wedge \neg \pmb{a}_2\wedge q)\vee
+(\neg \pmb{a}_1\wedge \pmb{a}_2\wedge q)\vee
+(\pmb{a}_1\wedge \neg \pmb{a}_2\wedge \neg q).
+\]
+The accept light turns on exactly at \<EOS\> when $p=q=\pmb{0}$:
+\[
+\textbf{accept}=\neg p\wedge \neg q\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+
+\item Without \<SOS\> and \<EOS\>, let $x=\pmb{0}$ encode $\pmb{a}$ and $x=\pmb{1}$ encode $\pmb{b}$. Then
+\[
+p'=p\oplus \neg x,\qquad q'=q\oplus x.
+\]
+So the circuit is just two D flip-flops fed by these two exclusive-or subcircuits.
+\end{enumerate}
+
+One corresponding circuit diagram for the \<SOS\>/\<EOS\> version is:
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.2cm, minimum height=1cm, right=of in] (logic) {parity logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=0.5cm] (ff1) {DFF $p$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-0.7cm] (ff2) {DFF $q$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff2] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff1.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff2.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Example 1.14 (vending machine), with EOS.}
 
-Encode 7 states (0 to 30 cents in 5-cent increments) in 3 bits. The EOS transition checks if current state $\geq$ 30 cents (final state).
+Encode the seven states of Example 1.14 by the binary codes for the numbers $0$ through $6$:
+\[
+s_0=\pmb{000},\ s_5=\pmb{001},\ s_{10}=\pmb{010},\ s_{15}=\pmb{011},\ s_{20}=\pmb{100},\ s_{25}=\pmb{101},\ s_{30}=\pmb{110},
+\]
+leaving $\pmb{111}$ unused. Encode the input alphabet by
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{n}=\pmb{01},\qquad \pmb{d}=\pmb{10},\qquad \pmb{q}=\pmb{11}.
+\]
+
+One clean circuit design uses three D flip-flops together with a combinational subcircuit that does the following:
+\begin{itemize}
+\item decode the current state bits as the number $i\in\{0,1,\ldots,6\}$,
+\item decode the input bits as the increment $c$, where $c=0$ for \<EOS\>, $c=1$ for $\pmb{n}$, $c=2$ for $\pmb{d}$, and $c=5$ for $\pmb{q}$,
+\item compute $j=\min\{6,i+c\}$,
+\item write the three-bit encoding of $j$ into the D inputs.
+\end{itemize}
+The accept light is on exactly when \<EOS\> is scanned in state $s_{30}$:
+\[
+\textbf{accept}=t_1\wedge t_2\wedge \neg t_3\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2,
+\]
+if $t_1t_2t_3$ is the chosen encoding of the current state and $s_{30}=\pmb{110}$.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2$};
+  \node[draw, rectangle, minimum width=3.5cm, minimum height=1.1cm, right=of in] (logic) {saturating adder logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=1.0cm] (ff1) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic] (ff2) {DFF $t_2$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-1.0cm] (ff3) {DFF $t_3$};
+  \node[draw, rectangle, minimum width=1.8cm, minimum height=0.8cm, below=of ff3] (acc) {accept};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (logic) -- (ff3.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+  \draw[->] (ff3.south) |- (logic.south east);
+  \draw[->] (in) |- (acc.west);
+  \draw[->] (ff1.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff2.east) -- ++(0.8,0) |- (acc.east);
+  \draw[->] (ff3.east) -- ++(0.8,0) |- (acc.east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{Circuit for Example 1.16, with SOS and EOS.}
 
-Encode the states of the protocol machine in minimal bits, realize next-state and output with Boolean logic.
+The protocol machine has four states, so two state bits suffice. For example, use
+\[
+A=\pmb{00},\qquad R=\pmb{01},\qquad RF=\pmb{10},\qquad RD=\pmb{11}.
+\]
+The input alphabet is $\{B,D,Z,H,S,\<EOS\>,\<SOS\>\}$, so use three input bits and encode
+\[
+\<EOS\>=\pmb{000},\quad B=\pmb{001},\quad D=\pmb{010},\quad H=\pmb{011},
+\]
+\[
+S=\pmb{100},\quad Z=\pmb{101},\quad \<SOS\>=\pmb{111},
+\]
+leaving $\pmb{110}$ unused.
+
+The next-state combinational block should implement exactly the protocol described in Example 1.16:
+\begin{itemize}
+\item scanning \<SOS\> from any state sends the machine to $R$,
+\item scanning \<EOS\> leaves the current state unchanged,
+\item from $R$, only $S$ is legal and sends the machine to $RF$,
+\item from $RF$, only $H$ is legal and sends the machine to $RD$,
+\item from $RD$, $D$ stays in $RD$, $Z$ goes to $RF$, and $B$ goes to $R$,
+\item every unexpected packet sends the machine to $A$,
+\item from $A$, every packet except \<SOS\> leaves the machine in $A$.
+\end{itemize}
+Thus the circuit consists of two D flip-flops whose inputs are the Boolean functions defined by this complete transition table. Since Example 1.16 is being used as a control automaton rather than as a language acceptor, there is no separate accept light; the outputs of interest are simply the state bits themselves.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, node distance=1.6cm]
+  \node (in) {$\pmb{a}_1,\pmb{a}_2,\pmb{a}_3$};
+  \node[draw, rectangle, minimum width=3.5cm, minimum height=1.1cm, right=of in] (logic) {protocol next-state logic};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=0.5cm] (ff1) {DFF $t_1$};
+  \node[draw, rectangle, minimum width=1.6cm, minimum height=0.9cm, right=of logic, yshift=-0.7cm] (ff2) {DFF $t_2$};
+  \draw[->] (in) -- (logic);
+  \draw[->] (logic) -- (ff1.west);
+  \draw[->] (logic) -- (ff2.west);
+  \draw[->] (ff1.south) |- (logic.south east);
+  \draw[->] (ff2.south) |- (logic.south east);
+\end{tikzpicture}
+\end{center}
 
 %%------------------------------------------------------------
 \item \textbf{DFA for $L=\{x\in\{\mathbf{a},\mathbf{b},\mathbf{c}\}^*\mid|x|_\mathbf{b}=2\}$.}
@@ -1277,6 +1823,517 @@ $\delta(q_{dead},-)=q_{dead}$.
 
 \item Quintuple: $\Sigma=\{\mathbf{a},\mathbf{b}\}$, $S=\{q_0,q_a,q_b,q_{dead}\}$, $s_0=q_0$, $F=\{q_0,q_a,q_b\}$, $\delta$ as above.
 \end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA for $L=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\mid |x|_{\pmb{a}}\equiv 0 \bmod 3\}$.}
+
+\begin{enumerate}
+\item Use three states $r_0,r_1,r_2$, where $r_i$ means that the number of $\pmb{a}$s seen so far is congruent to $i \pmod 3$. The start state is $r_0$, the only final state is $r_0$, and
+\[
+\delta(r_i,\pmb{a})=r_{i+1 \bmod 3},\qquad
+\delta(r_i,\pmb{b})=r_i,\qquad
+\delta(r_i,\pmb{c})=r_i.
+\]
+
+\item The quintuple is
+\[
+\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{r_0,r_1,r_2\},r_0,\delta,\{r_0\}\rangle,
+\]
+with $\delta$ defined exactly as above.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFAs for Pascal comments.}
+
+\begin{enumerate}
+\item For ``exactly one valid Pascal comment and no illegal comment fragments,'' a DFA can use the following states:
+\[
+P_0,P_{(},P_{*},I_0,I_{*},Q_0,Q_{(},Q_{*},D.
+\]
+Here $P$ means ``before the unique comment,'' $I$ means ``inside the comment,'' $Q$ means ``after the unique comment,'' and $D$ is dead. The one-character memory states $P_{(},P_{*},Q_{(},Q_{*}$ remember a possible start or end delimiter.
+
+The key transitions are:
+\begin{itemize}
+\item Before the comment:
+\[
+\delta(P_0,\pmb{(})=P_{(},\quad \delta(P_0,\pmb{*})=P_{*},
+\]
+and letters $\pmb{a},\pmb{b}$ and the symbol $\pmb{)}$ stay in $P_0$.
+\item A valid opening delimiter is recognized by
+\[
+\delta(P_{(},\pmb{*})=I_0.
+\]
+If the next symbol after $\pmb{(}$ is anything else, the machine returns to the appropriate outside state.
+\item A stray closing delimiter outside a comment is illegal:
+\[
+\delta(P_{*},\pmb{)})=D,\qquad \delta(Q_{*},\pmb{)})=D.
+\]
+\item Inside a comment, everything stays in $I_0$ except that $\pmb{*}$ moves to $I_{*}$:
+\[
+\delta(I_0,\pmb{*})=I_{*}.
+\]
+Then
+\[
+\delta(I_{*},\pmb{)})=Q_0
+\]
+closes the unique comment; on another $\pmb{*}$ the machine stays in $I_{*}$, and on any other symbol it returns to $I_0$.
+\item After the unique comment, the outside-text behavior is the same as before, except that a second opening delimiter is forbidden:
+\[
+\delta(Q_{(},\pmb{*})=D.
+\]
+\end{itemize}
+The accepting states are $Q_0,Q_{(},Q_{*}$, because a complete input must contain exactly one closed comment and must not end inside a comment.
+
+\item For ``zero or more valid unnested Pascal comments,'' the same idea works with only five essential states:
+\[
+O_0,O_{(},O_{*},I_0,I_{*},D.
+\]
+Here $O$ means ``outside any comment.'' The transitions are exactly as above, except that after closing a comment
+\[
+\delta(I_{*},\pmb{)})=O_0,
+\]
+so another comment may begin later, and
+\[
+\delta(O_{(},\pmb{*})=I_0
+\]
+is always allowed. The accepting states are $O_0,O_{(},O_{*}$, since the input is valid iff it ends outside a comment and never produces an illegal delimiter fragment.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Postfix expressions.}
+
+\begin{enumerate}
+\item Yes. A convenient DFA for the case ``at most $2$ operators'' uses states
+\[
+q_{d,m}\qquad (0\leq d\leq 3,\ 0\leq m\leq 2),
+\]
+together with a dead state $q_{dead}$. Here $d$ is the current stack surplus
+\[
+d=(\#\text{operands read})-(\#\text{operators read}),
+\]
+and $m$ is the number of operators used so far. The start state is $q_{0,0}$. On an operand $\pmb{A}$ or $\pmb{B}$,
+\[
+\delta(q_{d,m},\pmb{A})=\delta(q_{d,m},\pmb{B})=
+\begin{cases}
+q_{d+1,m} & d<3,\\
+q_{dead} & d=3,
+\end{cases}
+\]
+and on any operator $\odot\in\{\pmb{+},\pmb{-},\pmb{\times},\pmb{/}\}$,
+\[
+\delta(q_{d,m},\odot)=
+\begin{cases}
+q_{d-1,m+1} & d\geq 2 \text{ and } m<2,\\
+q_{dead} & \text{otherwise.}
+\end{cases}
+\]
+The final states are the states $q_{1,0},q_{1,1},q_{1,2}$, because a complete postfix expression leaves exactly one value on the stack. This is the required machine.
+
+\item For four or fewer operators, use exactly the same construction with
+\[
+q_{d,m}\qquad (0\leq d\leq 5,\ 0\leq m\leq 4),
+\]
+again plus a dead state. The same transition rules apply, with the bounds $3$ and $2$ replaced by $5$ and $4$, respectively. The final states are all $q_{1,m}$ with $0\leq m\leq 4$.
+
+\item For eight or fewer operators, use the same DFA schema once more, now with
+\[
+q_{d,m}\qquad (0\leq d\leq 9,\ 0\leq m\leq 8),
+\]
+plus a dead state. On operands the machine increments $d$; on operators it checks that $d\geq 2$ and then decrements $d$ while incrementing $m$. The final states are all $q_{1,m}$ with $0\leq m\leq 8$.
+
+\item The set of \emph{all} postfix expressions is not FAD. Intuitively, a recognizer must keep track of how many partial results are currently on the stack, and that number is unbounded. More formally, the strings
+\[
+\pmb{A},\ \pmb{AA},\ \pmb{AAA},\ \ldots,\ \pmb{A}^n,\ \ldots
+\]
+have pairwise different futures: from $\pmb{A}^n$, the continuation $\pmb{+}^{\,n-1}$ completes a legal postfix expression, but the same continuation does not complete a legal expression from $\pmb{A}^m$ when $m\neq n$. Therefore infinitely many distinct states would be required.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA for words that begin and end with different letters.}
+
+\begin{enumerate}
+\item Use one start state $s$, and for each ordered pair $(u,v)\in\{\pmb{a},\pmb{b},\pmb{c}\}^2$ a state $q_{uv}$ meaning ``the first letter seen was $u$ and the current last letter is $v$.'' From the start state,
+\[
+\delta(s,\pmb{a})=q_{aa},\qquad \delta(s,\pmb{b})=q_{bb},\qquad \delta(s,\pmb{c})=q_{cc}.
+\]
+Thereafter,
+\[
+\delta(q_{uv},w)=q_{uw}\qquad\text{for all }u,v,w\in\{\pmb{a},\pmb{b},\pmb{c}\}.
+\]
+The accepting states are precisely the six states $q_{uv}$ with $u\neq v$.
+
+\item The quintuple is
+\[
+\langle\{\pmb{a},\pmb{b},\pmb{c}\},S,s,\delta,F\rangle,
+\]
+where
+\[
+S=\{s\}\cup\{q_{uv}\mid u,v\in\{\pmb{a},\pmb{b},\pmb{c}\}\},
+\]
+and
+\[
+F=\{q_{uv}\mid u\neq v\}.
+\]
+The transition function is exactly the one described in part (a).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA that rejects words whose last two letters match.}
+
+\begin{enumerate}
+\item A convenient DFA uses the seven states
+\[
+s,\ a,\ b,\ c,\ aa,\ bb,\ cc.
+\]
+The start state is $s$. The states $a,b,c$ mean that the current last letter is $\pmb{a},\pmb{b},\pmb{c}$ and the last two letters do \emph{not} match; the states $aa,bb,cc$ mean that the last two letters are equal. The transitions are:
+\[
+\delta(s,\pmb{a})=a,\quad \delta(s,\pmb{b})=b,\quad \delta(s,\pmb{c})=c,
+\]
+\[
+\delta(a,\pmb{a})=aa,\ \delta(a,\pmb{b})=b,\ \delta(a,\pmb{c})=c,
+\]
+\[
+\delta(b,\pmb{a})=a,\ \delta(b,\pmb{b})=bb,\ \delta(b,\pmb{c})=c,
+\]
+\[
+\delta(c,\pmb{a})=a,\ \delta(c,\pmb{b})=b,\ \delta(c,\pmb{c})=cc,
+\]
+and from $aa,bb,cc$ the same rule applies: a repeated last letter stays in the corresponding double-letter state, while a different last letter moves to $a,b,$ or $c$.
+The accepting states are $s,a,b,c$.
+
+\item The quintuple is
+\[
+\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{s,a,b,c,aa,bb,cc\},s,\delta,\{s,a,b,c\}\rangle,
+\]
+with $\delta$ defined as in part (a).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{DFA that rejects words whose first two letters match.}
+
+\begin{enumerate}
+\item Use the six states
+\[
+s,\ a,\ b,\ c,\ q_{acc},\ q_{rej}.
+\]
+After the first input symbol, the machine remembers that symbol in one of the states $a,b,c$. On the second symbol it decides permanently:
+\[
+\delta(a,\pmb{a})=q_{rej},\quad \delta(a,\pmb{b})=\delta(a,\pmb{c})=q_{acc},
+\]
+and similarly for $b$ and $c$. Both $q_{acc}$ and $q_{rej}$ are sink states. The accepting states are $s,a,b,c,q_{acc}$, since words of length $0$ or $1$ do not have matching first two letters.
+
+\item The quintuple is
+\[
+\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{s,a,b,c,q_{acc},q_{rej}\},s,\delta,\{s,a,b,c,q_{acc}\}\rangle,
+\]
+where
+\[
+\delta(s,\pmb{a})=a,\qquad \delta(s,\pmb{b})=b,\qquad \delta(s,\pmb{c})=c,
+\]
+the second-symbol transitions are as described above, and
+\[
+\delta(q_{acc},x)=q_{acc},\qquad \delta(q_{rej},x)=q_{rej}
+\]
+for every $x\in\{\pmb{a},\pmb{b},\pmb{c}\}$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove that the empty word is unique.}
+
+Suppose $x$ and $y$ are both empty words. By definition, this means $|x|=0$ and $|y|=0$. The definition of equality of strings says that two strings are equal iff they have the same length and agree in every position. Here the lengths are equal, and there are no positions at all to check because the common length is $0$. Thus the positional condition is vacuously satisfied, so $x=y$.
+
+%%------------------------------------------------------------
+\item \textbf{Show that $|xy| = |x| + |y|$.}
+
+We prove this by induction on $|y|$.
+
+\textit{Base case}: If $|y|=0$, then $y=\lambda$, so
+\[
+|xy|=|x\lambda|=|x|=|x|+0=|x|+|y|.
+\]
+
+\textit{Inductive step}: Assume that $|xz|=|x|+|z|$ whenever $|z|=n$. Let $|y|=n+1$, so $y=\pmb{a}z$ for some letter $\pmb{a}$ and some string $z$ of length $n$. Then
+\[
+|xy|=|x\pmb{a}z|=|(x\pmb{a})z|.
+\]
+By the induction hypothesis,
+\[
+|(x\pmb{a})z|=|x\pmb{a}|+|z|=(|x|+1)+|z|=|x|+(1+|z|)=|x|+|y|.
+\]
+Hence $|xy|=|x|+|y|$ for all strings $x$ and $y$.
+
+%%------------------------------------------------------------
+\item \textbf{The DFA $C$.}
+
+\begin{enumerate}
+\item The state transition diagram has two states, $t_0$ and $t_1$, with $t_0$ as start state and $t_1$ final. The transitions are
+\[
+\delta(t_0,\pmb{a})=t_0,\quad \delta(t_0,\pmb{b})=t_1,\quad \delta(t_0,\pmb{c})=t_1,
+\]
+\[
+\delta(t_1,\pmb{a})=t_0,\quad \delta(t_1,\pmb{b})=t_1,\quad \delta(t_1,\pmb{c})=t_0.
+\]
+
+\item The letter $\pmb{a}$ always resets the machine to $t_0$. After the last $\pmb{a}$, the state depends only on the remaining suffix over $\{\pmb{b},\pmb{c}\}$. Starting from $t_0$, a $\pmb{b}$ moves to $t_1$ and then further $\pmb{b}$s leave the machine there, while each $\pmb{c}$ toggles the state. Therefore $L(C)$ consists exactly of those strings for which, after the last $\pmb{a}$, either
+\begin{itemize}
+\item there is no $\pmb{b}$ and the number of $\pmb{c}$s is odd, or
+\item there is a last $\pmb{b}$ and it is followed by an even number of $\pmb{c}$s.
+\end{itemize}
+
+\item Use one state bit $t$, with $t=\pmb{0}$ for $t_0$ and $t=\pmb{1}$ for $t_1$. Encode
+\[
+\<EOS\>=\pmb{00},\qquad \pmb{a}=\pmb{01},\qquad \pmb{b}=\pmb{10},\qquad \pmb{c}=\pmb{11}.
+\]
+Then \<EOS\> leaves the state unchanged, $\pmb{a}$ sends the machine to $t_0$, $\pmb{b}$ sends it to $t_1$, and $\pmb{c}$ toggles the state. So one D flip-flop with input
+\[
+t'=(\neg t\wedge \pmb{a}_1)\vee(t\wedge \neg \pmb{a}_2)
+\]
+implements the next-state logic. The accept circuitry is
+\[
+\textbf{accept}=t\wedge \neg \pmb{a}_1\wedge \neg \pmb{a}_2.
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Roman numerals.}
+
+\begin{enumerate}
+\item For strict-order Roman numerals, a DFA is
+\[
+\langle\{\pmb{I},\pmb{V},\pmb{X},\pmb{L},\pmb{C},\pmb{D},\pmb{M}\},
+\{q_s,q_M,q_D,q_C,q_L,q_X,q_V,q_I,q_{dead}\},q_s,\delta,F\rangle,
+\]
+where
+\[
+F=\{q_M,q_D,q_C,q_L,q_X,q_V,q_I\}.
+\]
+The states represent the highest-valued symbol class that may still appear. The transitions are:
+\begin{align*}
+\delta(q_s,\pmb{M})&=q_M, & \delta(q_s,\pmb{D})&=q_D, & \delta(q_s,\pmb{C})&=q_C,\\
+\delta(q_s,\pmb{L})&=q_L, & \delta(q_s,\pmb{X})&=q_X, & \delta(q_s,\pmb{V})&=q_V, & \delta(q_s,\pmb{I})&=q_I,\\[4pt]
+\delta(q_M,\pmb{M})&=q_M, & \delta(q_M,\pmb{D})&=q_D, & \delta(q_M,\pmb{C})&=q_C,\\
+\delta(q_M,\pmb{L})&=q_L, & \delta(q_M,\pmb{X})&=q_X, & \delta(q_M,\pmb{V})&=q_V, & \delta(q_M,\pmb{I})&=q_I,\\[4pt]
+\delta(q_D,\pmb{C})&=q_C, & \delta(q_D,\pmb{L})&=q_L, & \delta(q_D,\pmb{X})&=q_X, & \delta(q_D,\pmb{V})&=q_V, & \delta(q_D,\pmb{I})&=q_I,\\[4pt]
+\delta(q_C,\pmb{C})&=q_C, & \delta(q_C,\pmb{L})&=q_L, & \delta(q_C,\pmb{X})&=q_X, & \delta(q_C,\pmb{V})&=q_V, & \delta(q_C,\pmb{I})&=q_I,\\[4pt]
+\delta(q_L,\pmb{X})&=q_X, & \delta(q_L,\pmb{V})&=q_V, & \delta(q_L,\pmb{I})&=q_I,\\[4pt]
+\delta(q_X,\pmb{X})&=q_X, & \delta(q_X,\pmb{V})&=q_V, & \delta(q_X,\pmb{I})&=q_I,\\[4pt]
+\delta(q_V,\pmb{I})&=q_I,\qquad
+\delta(q_I,\pmb{I})=q_I.
+\end{align*}
+Every unspecified transition goes to $q_{dead}$, and $q_{dead}$ loops to itself. This accepts exactly the strings of the form
+\[
+\pmb{M}^*\pmb{D}^{0,1}\pmb{C}^*\pmb{L}^{0,1}\pmb{X}^*\pmb{V}^{0,1}\pmb{I}^*,
+\]
+excluding the empty word.
+
+\item For ordinary Roman numerals, a DFA can be built from four deterministic phases: thousands, hundreds, tens, and ones. One explicit state set is
+\[
+\{q_s,q_M,q_T,q_{HC},q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC},
+\]
+\[
+q_{TX},q_{TXX},q_{TXXX},q_{TL},q_{TLX},q_{TLXX},q_{TLXXX},
+q_{OI},q_{OII},q_{OIII},q_{OV},q_{OVI},q_{OVII},q_{OVIII},q_O,q_{done},q_{dead}\}.
+\]
+Here $q_T$ means ``the thousands and hundreds phases are complete and the tens phase has not yet begun,'' and $q_O$ means ``the tens phase is complete and the ones phase has not yet begun.'' The start state is $q_s$, the dead state is $q_{dead}$, and every state except $q_s$ and $q_{dead}$ that represents a completed legal prefix is final.
+
+The transition rules are as follows.
+\begin{itemize}
+\item Thousands:
+\[
+\delta(q_s,\pmb{M})=q_M,\qquad \delta(q_M,\pmb{M})=q_M.
+\]
+From either $q_s$ or $q_M$, a first hundreds symbol sends the machine into the hundreds module, a first tens symbol into the tens module, and a first ones symbol into the ones module:
+\[
+\delta(q_s,\pmb{C})=\delta(q_M,\pmb{C})=q_{HC},\qquad
+\delta(q_s,\pmb{D})=\delta(q_M,\pmb{D})=q_{HD},
+\]
+\[
+\delta(q_s,\pmb{X})=\delta(q_M,\pmb{X})=q_{TX},\qquad
+\delta(q_s,\pmb{L})=\delta(q_M,\pmb{L})=q_{TL},
+\]
+\[
+\delta(q_s,\pmb{I})=\delta(q_M,\pmb{I})=q_{OI},\qquad
+\delta(q_s,\pmb{V})=\delta(q_M,\pmb{V})=q_{OV}.
+\]
+
+\item Hundreds:
+\[
+\delta(q_{HC},\pmb{M})=q_T,\qquad \delta(q_{HC},\pmb{D})=q_T,\qquad \delta(q_{HC},\pmb{C})=q_{HCC},
+\]
+and on $\pmb{X},\pmb{L},\pmb{I},\pmb{V}$ the machine leaves the hundreds phase and enters the appropriate lower module:
+\[
+\delta(q_{HC},\pmb{X})=q_{TX},\ \delta(q_{HC},\pmb{L})=q_{TL},\ \delta(q_{HC},\pmb{I})=q_{OI},\ \delta(q_{HC},\pmb{V})=q_{OV}.
+\]
+Similarly,
+\[
+\delta(q_{HCC},\pmb{C})=q_{HCCC},\qquad
+\delta(q_{HD},\pmb{C})=q_{HDC},\qquad
+\delta(q_{HDC},\pmb{C})=q_{HDCC},\qquad
+\delta(q_{HDCC},\pmb{C})=q_{HDCCC},
+\]
+and from each of $q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC}$ the symbols $\pmb{X},\pmb{L},\pmb{I},\pmb{V}$ move to $q_{TX},q_{TL},q_{OI},q_{OV}$, respectively. All other hundreds-phase violations go to $q_{dead}$.
+
+\item Tens:
+\[
+\delta(q_T,\pmb{X})=q_{TX},\qquad \delta(q_T,\pmb{L})=q_{TL},\qquad
+\delta(q_T,\pmb{I})=q_{OI},\qquad \delta(q_T,\pmb{V})=q_{OV}.
+\]
+Then
+\[
+\delta(q_{TX},\pmb{C})=q_O,\qquad \delta(q_{TX},\pmb{L})=q_O,\qquad \delta(q_{TX},\pmb{X})=q_{TXX},
+\]
+\[
+\delta(q_{TXX},\pmb{X})=q_{TXXX},
+\]
+and the symbols $\pmb{I},\pmb{V}$ leave the tens phase from any of $q_{TX},q_{TXX},q_{TXXX}$:
+\[
+\delta(q_{TX},\pmb{I})=\delta(q_{TXX},\pmb{I})=\delta(q_{TXXX},\pmb{I})=q_{OI},
+\]
+\[
+\delta(q_{TX},\pmb{V})=\delta(q_{TXX},\pmb{V})=\delta(q_{TXXX},\pmb{V})=q_{OV}.
+\]
+Likewise,
+\[
+\delta(q_{TL},\pmb{X})=q_{TLX},\quad
+\delta(q_{TLX},\pmb{X})=q_{TLXX},\quad
+\delta(q_{TLXX},\pmb{X})=q_{TLXXX},
+\]
+and from any of $q_{TL},q_{TLX},q_{TLXX},q_{TLXXX}$ the symbols $\pmb{I},\pmb{V}$ move to $q_{OI}$ or $q_{OV}$, respectively.
+
+\item Ones:
+\[
+\delta(q_O,\pmb{I})=q_{OI},\qquad \delta(q_O,\pmb{V})=q_{OV},
+\]
+\[
+\delta(q_{OI},\pmb{X})=q_{done},\qquad \delta(q_{OI},\pmb{V})=q_{done},\qquad \delta(q_{OI},\pmb{I})=q_{OII},
+\]
+\[
+\delta(q_{OII},\pmb{I})=q_{OIII},
+\]
+\[
+\delta(q_{OV},\pmb{I})=q_{OVI},\qquad
+\delta(q_{OVI},\pmb{I})=q_{OVII},\qquad
+\delta(q_{OVII},\pmb{I})=q_{OVIII}.
+\]
+All outgoing transitions from $q_{done}$ and $q_{OIII}$ and $q_{OVIII}$ go to $q_{dead}$, and every unspecified transition anywhere also goes to $q_{dead}$. This DFA accepts exactly the standard Roman numerals.
+\end{itemize}
+
+\item The following Pascal program recognizes exactly the language of part (b).
+
+\begin{verbatim}
+program Roman(input, output);
+var
+   s : string;
+   i, n : integer;
+
+function Take(c : char) : boolean;
+begin
+   if (i <= n) and (s[i] = c) then
+      begin
+         i := i + 1;
+         Take := true
+      end
+   else
+      Take := false
+end;
+
+procedure Thousands;
+begin
+   while Take('M') do
+      { keep consuming M's }
+end;
+
+procedure Block(one, five, ten : char);
+begin
+   if Take(one) then
+      begin
+         if not (Take(five) or Take(ten)) then
+            begin
+               if Take(one) then
+                  if Take(one) then
+                     { at most three of "one" }
+            end
+      end
+   else if Take(five) then
+      begin
+         if Take(one) then
+            if Take(one) then
+               if Take(one) then
+                  { at most three after five }
+      end
+end;
+
+begin
+   readln(s);
+   n := length(s);
+   i := 1;
+   if n = 0 then
+      writeln(output, 'Rejected')
+   else
+      begin
+         Thousands;
+         Block('C','D','M');
+         Block('X','L','C');
+         Block('I','V','X');
+         if i > n then
+            writeln(output, 'Accepted')
+         else
+            writeln(output, 'Rejected')
+      end
+end.
+\end{verbatim}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Describe the set of words accepted by the DFA in Figure 1.9.}
+
+Let $y$ be the suffix of the input after the last occurrence of $\pmb{b}$; if no $\pmb{b}$ occurs, let $y$ be the entire string. The DFA accepts exactly those words for which
+\[
+|y|_{\pmb{a}}+2|y|_{\pmb{c}}\equiv 2 \pmod 3.
+\]
+Equivalently, $\pmb{b}$ resets the machine to state $s_0$, while $\pmb{a}$ adds $1$ modulo $3$ and $\pmb{c}$ adds $2$ modulo $3$, so acceptance depends only on the contribution of the suffix after the last $\pmb{b}$.
+
+%%------------------------------------------------------------
+\item \textbf{The languages $L_7$, $L_3$, and $L_n$ for digit sums.}
+
+\begin{enumerate}
+\item For $L_7$, use seven states $q_0,\ldots,q_6$, where $q_i$ means that the sum of the digits seen so far is congruent to $i \pmod 7$. The start state is $q_0$, the only final state is $q_0$, and
+\[
+\delta(q_i,\pmb{d})=q_{\,i+d \bmod 7}.
+\]
+
+\item The corresponding quintuple is
+\[
+\langle\{\pmb{0},\pmb{1},\ldots,\pmb{9}\},\{q_0,\ldots,q_6\},q_0,\delta,\{q_0\}\rangle,
+\]
+with $\delta(q_i,\pmb{d})=q_{\,i+d \bmod 7}$.
+
+\item For $L_3$, use three states $r_0,r_1,r_2$, where $r_i$ records the digit sum modulo $3$. Again $r_0$ is both the start state and the only final state, and
+\[
+\delta(r_i,\pmb{d})=r_{\,i+d \bmod 3}.
+\]
+
+\item The corresponding quintuple is
+\[
+\langle\{\pmb{0},\pmb{1},\ldots,\pmb{9}\},\{r_0,r_1,r_2\},r_0,\delta,\{r_0\}\rangle,
+\]
+with $\delta(r_i,\pmb{d})=r_{\,i+d \bmod 3}$.
+
+\item In general,
+\[
+\langle\{\pmb{0},\pmb{1},\ldots,\pmb{9}\},\{s_0,\ldots,s_{n-1}\},s_0,\delta,\{s_0\}\rangle
+\]
+recognizes $L_n$ if
+\[
+\delta(s_i,\pmb{d})=s_{\,i+d \bmod n}
+\]
+for every residue class $i$ and every digit $\pmb{d}$. The state always records the current digit sum modulo $n$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Explain the last row of Table 1.3.}
+
+The last row corresponds to the case where the circuitry has somehow been initialized to the unused state $\pmb{11}$ and then scans \<SOS\>, which is also encoded by $\pmb{11}$. Unlike the other rows containing unused state/input combinations, this one is \emph{not} a don't-care, because the text explicitly requires \<SOS\> to reset the machine to the real start state. Therefore the outputs in that row must be fixed so that the circuit moves from the bogus state back to $s_0$ rather than behaving arbitrarily.
 
 \end{enumerate}
 
