@@ -11,6 +11,7 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
 \usetikzlibrary{automata,positioning,arrows.meta}
 \tikzset{
   every state/.style={thick, fill=gray!10, minimum size=8mm},
@@ -470,7 +471,17 @@ Let $P(n)$ be a statement and $Q(n) = (\forall i \leq n) P(i)$.
 %%------------------------------------------------------------
 \item \textbf{Determine what strings the BNF defines.}
 
-The grammar defines \emph{real number constants} (possibly with a sign and decimal/exponent part) in the style of FORTRAN: integers, signed integers, decimals, and floating-point constants with an \textbf{E} exponent. Examples: \texttt{42}, \texttt{-3.14}, \texttt{+2.5E-10}, \texttt{0.001E3}.
+The grammar defines exactly the strings of the following four forms:
+\[
+\langle\text{integer}\rangle,\qquad
+\langle\text{integer}\rangle.,\qquad
+\langle\text{integer}\rangle.\langle\text{natural}\rangle,\qquad
+\langle\text{integer}\rangle.\langle\text{natural}\rangle E \langle\text{integer}\rangle.
+\]
+Here $\langle\text{natural}\rangle$ is any nonempty string of decimal digits, and
+$\langle\text{integer}\rangle$ is either a natural number or a sign followed by a
+natural number. Thus the BNF defines signed or unsigned decimal numerals, with
+an optional fractional part and an optional exponent part.
 
 %%------------------------------------------------------------
 \item \textbf{Cofinite sets with universal set $\ZN$.}
@@ -495,7 +506,26 @@ Recall: $A \sim B$ iff there exists a bijection $f: A\to B$.
 %%------------------------------------------------------------
 \item \textbf{Define a function showing $|\NN|=|\NN\times\NN|$.}
 
-Use the Cantor pairing function: $f: \NN\times\NN\to\NN$, $f(m,n)=\frac{(m+n)(m+n+1)}{2}+n$. This is a bijection. Its inverse $f^{-1}: \NN\to\NN\times\NN$ is the desired function.
+Let $T_k=\frac{k(k+1)}{2}$ be the $k$th triangular number. For each $n\in\NN$
+there are unique integers $k,m$ with
+\[
+n=T_k+m,\qquad 0\le m\le k.
+\]
+Define $f:\NN\to\NN\times\NN$ by
+\[
+f(n)=\langle k-m,m\rangle.
+\]
+Thus
+\[
+f(0)=\langle 0,0\rangle,\quad
+f(1)=\langle 1,0\rangle,\quad
+f(2)=\langle 0,1\rangle,\quad
+f(3)=\langle 2,0\rangle,\quad
+f(4)=\langle 1,1\rangle,\quad
+f(5)=\langle 0,2\rangle,\ \ldots
+\]
+so $f$ lists the pairs by diagonals. Every pair $\langle a,b\rangle$ occurs exactly
+once, namely when $k=a+b$ and $m=b$, so $f$ is a bijection.
 
 %%------------------------------------------------------------
 \item \textbf{Show $\NN$ is equipotent to $\ZN$.}
@@ -518,7 +548,33 @@ so every integer appears exactly once. Hence $\NN$ and $\ZN$ are equipotent.
 %%------------------------------------------------------------
 \item \textbf{Show $\NN$ is equipotent to $\QN$.}
 
-The positive rationals $\QN^+$ can be enumerated by listing $p/q$ in a grid (rows indexed by $p$, columns by $q$) and enumerating by anti-diagonals (skipping non-reduced fractions). Combined with the bijection from $\NN$ to $\ZN$ (hence handling negative rationals and zero), one obtains a bijection $\NN\to\QN$.
+Let
+\[
+S=\{\langle a,b\rangle \mid a,b\in\{1,2,3,\ldots\}\text{ and }\gcd(a,b)=1\}.
+\]
+Order the pairs in $S$ first by increasing $a+b$, and among pairs with the same
+sum, by increasing $a$. This gives a list
+\[
+\langle a_1,b_1\rangle,\ \langle a_2,b_2\rangle,\ \langle a_3,b_3\rangle,\ \ldots
+\]
+Define $h:\{1,2,3,\ldots\}\to\QN^+$ by
+\[
+h(n)=\frac{a_n}{b_n}.
+\]
+Every positive rational number has a unique reduced form $a/b$ with
+$\gcd(a,b)=1$, so $h$ is a bijection from the positive integers onto $\QN^+$.
+
+Now define $f:\NN\to\QN$ by
+\[
+f(0)=0,\qquad
+f(2n-1)=h(n),\qquad
+f(2n)=-h(n)\quad(n\ge 1).
+\]
+Then $f$ lists $0$, then the positive rationals, then their negatives:
+\[
+0,\ h(1),\ -h(1),\ h(2),\ -h(2),\ldots
+\]
+Hence $f$ is a bijection from $\NN$ onto $\QN$, so $\NN$ and $\QN$ are equipotent.
 
 %%------------------------------------------------------------
 \item \textbf{Show $\wp(\NN)$ is equipotent to $\{f:\NN\to\{\text{Yes,No}\}\}$.}
@@ -527,6 +583,8 @@ Define $\phi: \wp(\NN)\to\{f:\NN\to\{\text{Yes,No}\}\}$ by $\phi(A) = \chi_A$, w
 
 %%------------------------------------------------------------
 \item \textbf{Show $\wp(\NN)$ is equipotent to $\RN$.}
+
+One explicit bijection is as follows.
 
 By Exercise 0.39, $\wp(\NN)$ is equipotent to the set
 \[
@@ -571,9 +629,17 @@ x, & \text{otherwise.}
 This simply shifts the countable set $\{1,1/2,1/4,1/8,\ldots\}$ inward and fixes
 all other points. Next define
 \[
-g:(0,1)\to\RN,\qquad g(x)=\tan\!\left(\pi x-\frac{\pi}{2}\right).
+g:(0,1)\to\RN,\qquad
+g(x)=
+\begin{cases}
+2-\frac{1}{x}, & 0<x<\frac12,\\[1ex]
+0, & x=\frac12,\\[1ex]
+\frac{1}{1-x}-2, & \frac12<x<1.
+\end{cases}
 \]
-This is a bijection from $(0,1)$ onto $\RN$. Hence $g\circ j$ is a bijection from
+The first branch maps $(0,\frac12)$ onto $(-\infty,0)$, the middle point maps to
+$0$, and the third branch maps $(\frac12,1)$ onto $(0,\infty)$. Hence $g$ is a
+bijection from $(0,1)$ onto $\RN$, and $g\circ j$ is a bijection from
 $[0,1]$ onto $\RN$.
 
 Since $\wp(\NN)\sim B$, $B\sim[0,1]$, and $[0,1]\sim\RN$, the equipotent relation
@@ -584,16 +650,11 @@ is transitive, so $\wp(\NN)\sim\RN$.
 
 The truth table shows $q=1$ when $(p_1,p_2,p_3)\in\{(0,1,0),(1,0,0),(1,1,1)\}$.
 
-The minimal sum of products (minterms 2, 4, 7):
+Using the rows with $q=1$, the PDNF is
 \[
 q = (\bar p_1 p_2\bar p_3)\vee(p_1\bar p_2\bar p_3)\vee(p_1 p_2 p_3).
 \]
-This can be factored as:
-\[
-q = \neg p_3(p_1\oplus p_2)\vee p_1 p_2 p_3.
-\]
-
-One corresponding AND-OR circuit is:
+The corresponding AND-OR circuit is:
 
 \begin{center}
 \begin{tikzpicture}[x=1cm,y=1cm]
@@ -652,51 +713,126 @@ $(0000),(0001),(0011),(0100),(0110),(1010),(1100),(1101),(1110)$.
 \textit{$q_3 = 1$} at rows 0,4,8,12,14 (minterms $m_0,m_4,m_8,m_{12},m_{14}$):
 $(0000),(0100),(1000),(1100),(1110)$.
 
-Applying four-variable Karnaugh maps over $p_1,p_2,p_3,p_4$ yields the following minimal sum-of-products expressions (bars denote complementation):
+Using the PDNF construction from the text, the required formulas are:
 
 \[
-q_1 \;=\; p_1\bar p_2\bar p_3
-       +\; p_1\bar p_3\bar p_4
-       +\; \bar p_1\bar p_2 p_3
-       +\; \bar p_1 p_3\bar p_4
-       +\; \bar p_1 p_2\bar p_3 p_4
-       +\; \bar p_2\bar p_3\bar p_4
+\begin{aligned}
+q_1 ={}&
+\bar p_1\bar p_2\bar p_3\bar p_4
+\vee \bar p_1\bar p_2 p_3\bar p_4
+\vee \bar p_1\bar p_2 p_3 p_4
+\vee \bar p_1 p_2\bar p_3 p_4\\
+&{}\vee \bar p_1 p_2 p_3\bar p_4
+\vee p_1\bar p_2\bar p_3\bar p_4
+\vee p_1\bar p_2\bar p_3 p_4
+\vee p_1 p_2\bar p_3\bar p_4
+\end{aligned}
 \]
-(6 prime implicants; $m_5 = \bar p_1 p_2\bar p_3 p_4$ is an isolated essential implicant.)
 
 \[
-q_2 \;=\; p_2\bar p_4
-       +\; p_1 p_3\bar p_4
-       +\; p_1 p_2\bar p_3
-       +\; \bar p_1\bar p_2 p_4
-       +\; \bar p_1\bar p_2\bar p_3
+\begin{aligned}
+q_2 ={}&
+\bar p_1\bar p_2\bar p_3\bar p_4
+\vee \bar p_1\bar p_2\bar p_3 p_4
+\vee \bar p_1\bar p_2 p_3 p_4
+\vee \bar p_1 p_2\bar p_3\bar p_4\\
+&{}\vee \bar p_1 p_2 p_3\bar p_4
+\vee p_1\bar p_2 p_3\bar p_4
+\vee p_1 p_2\bar p_3\bar p_4
+\vee p_1 p_2\bar p_3 p_4
+\vee p_1 p_2 p_3\bar p_4
+\end{aligned}
 \]
-(The quad $p_2\bar p_4$ covers $m_4,m_6,m_{12},m_{14}$; the last two terms together cover $m_0,m_1,m_3$.)
 
 \[
-q_3 \;=\; \bar p_3\bar p_4 + p_1 p_2\bar p_4
+\begin{aligned}
+q_3 ={}&
+\bar p_1\bar p_2\bar p_3\bar p_4
+\vee \bar p_1 p_2\bar p_3\bar p_4
+\vee p_1\bar p_2\bar p_3\bar p_4\\
+&{}\vee p_1 p_2\bar p_3\bar p_4
+\vee p_1 p_2 p_3\bar p_4
+\end{aligned}
 \]
-(The quad $\bar p_3\bar p_4$ covers $m_0,m_4,m_8,m_{12}$; the pair $p_1p_2\bar p_4$ covers $m_{12},m_{14}$.)
 
-Each minimized expression is implemented as a two-level AND-OR circuit (one AND gate per product term, one final OR gate per output), with NOT gates on the complemented inputs.
-
-The following block diagrams show those two-level realizations. In each case, the
-rectangles on the left are AND subcircuits computing the indicated product terms
-from $p_1,p_2,p_3,p_4$ and their complements.
+Each circuit below is the corresponding two-level PDNF circuit: NOT gates first,
+then one AND subcircuit for each product term, feeding a final OR gate.
 
 \begin{enumerate}
 \item For $q_1$:
 
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-\node[termblock] (q1a) at (0,4.5) {$p_1\bar p_2\bar p_3$};
-\node[termblock] (q1b) at (0,3.5) {$p_1\bar p_3\bar p_4$};
-\node[termblock] (q1c) at (0,2.5) {$\bar p_1\bar p_2p_3$};
-\node[termblock] (q1d) at (0,1.5) {$\bar p_1p_3\bar p_4$};
-\node[termblock] (q1e) at (0,0.5) {$\bar p_1p_2\bar p_3p_4$};
-\node[termblock] (q1f) at (0,-0.5) {$\bar p_2\bar p_3\bar p_4$};
-\node[logicblock] (orq1) at (4.0,2.0) {OR};
-\node[io] (outq1) at (5.5,2.0) {$q_1$};
+\begin{tikzpicture}[x=0.85cm,y=0.85cm]
+\node[io] (p1) at (0,11.5) {$p_1$};
+\node[io] (p2) at (0,8.5) {$p_2$};
+\node[io] (p3) at (0,5.5) {$p_3$};
+\node[io] (p4) at (0,2.5) {$p_4$};
+
+\node[logicblock] (np1) at (2,12.4) {NOT};
+\node[logicblock] (np2) at (2,9.4) {NOT};
+\node[logicblock] (np3) at (2,6.4) {NOT};
+\node[logicblock] (np4) at (2,3.4) {NOT};
+
+\node[termblock] (q1a) at (7,14.5) {$\bar p_1\bar p_2\bar p_3\bar p_4$};
+\node[termblock] (q1b) at (7,12.5) {$\bar p_1\bar p_2 p_3\bar p_4$};
+\node[termblock] (q1c) at (7,10.5) {$\bar p_1\bar p_2 p_3 p_4$};
+\node[termblock] (q1d) at (7,8.5) {$\bar p_1 p_2\bar p_3 p_4$};
+\node[termblock] (q1e) at (7,6.5) {$\bar p_1 p_2 p_3\bar p_4$};
+\node[termblock] (q1f) at (7,4.5) {$p_1\bar p_2\bar p_3\bar p_4$};
+\node[termblock] (q1g) at (7,2.5) {$p_1\bar p_2\bar p_3 p_4$};
+\node[termblock] (q1h) at (7,0.5) {$p_1 p_2\bar p_3\bar p_4$};
+\node[logicblock] (orq1) at (12.4,7.5) {OR};
+\node[io] (outq1) at (14.0,7.5) {$q_1$};
+
+\draw[wire] (p1.east) -- (1.0,11.5) coordinate (p1b);
+\draw[wire] (p2.east) -- (1.0,8.5) coordinate (p2b);
+\draw[wire] (p3.east) -- (1.0,5.5) coordinate (p3b);
+\draw[wire] (p4.east) -- (1.0,2.5) coordinate (p4b);
+
+\draw[wire] (p1b) |- (np1.west);
+\draw[wire] (p2b) |- (np2.west);
+\draw[wire] (p3b) |- (np3.west);
+\draw[wire] (p4b) |- (np4.west);
+
+\draw[wire] (np1.east) |- (q1a.west);
+\draw[wire] (np2.east) |- (q1a.west);
+\draw[wire] (np3.east) |- (q1a.west);
+\draw[wire] (np4.east) |- (q1a.west);
+
+\draw[wire] (np1.east) |- (q1b.west);
+\draw[wire] (np2.east) |- (q1b.west);
+\draw[wire] (p3b) |- (q1b.west);
+\draw[wire] (np4.east) |- (q1b.west);
+
+\draw[wire] (np1.east) |- (q1c.west);
+\draw[wire] (np2.east) |- (q1c.west);
+\draw[wire] (p3b) |- (q1c.west);
+\draw[wire] (p4b) |- (q1c.west);
+
+\draw[wire] (np1.east) |- (q1d.west);
+\draw[wire] (p2b) |- (q1d.west);
+\draw[wire] (np3.east) |- (q1d.west);
+\draw[wire] (p4b) |- (q1d.west);
+
+\draw[wire] (np1.east) |- (q1e.west);
+\draw[wire] (p2b) |- (q1e.west);
+\draw[wire] (p3b) |- (q1e.west);
+\draw[wire] (np4.east) |- (q1e.west);
+
+\draw[wire] (p1b) |- (q1f.west);
+\draw[wire] (np2.east) |- (q1f.west);
+\draw[wire] (np3.east) |- (q1f.west);
+\draw[wire] (np4.east) |- (q1f.west);
+
+\draw[wire] (p1b) |- (q1g.west);
+\draw[wire] (np2.east) |- (q1g.west);
+\draw[wire] (np3.east) |- (q1g.west);
+\draw[wire] (p4b) |- (q1g.west);
+
+\draw[wire] (p1b) |- (q1h.west);
+\draw[wire] (p2b) |- (q1h.west);
+\draw[wire] (np3.east) |- (q1h.west);
+\draw[wire] (np4.east) |- (q1h.west);
 
 \draw[wire] (q1a.east) -- (orq1.west |- q1a.east);
 \draw[wire] (q1b.east) -- (orq1.west |- q1b.east);
@@ -704,6 +840,8 @@ from $p_1,p_2,p_3,p_4$ and their complements.
 \draw[wire] (q1d.east) -- (orq1.west |- q1d.east);
 \draw[wire] (q1e.east) -- (orq1.west |- q1e.east);
 \draw[wire] (q1f.east) -- (orq1.west |- q1f.east);
+\draw[wire] (q1g.east) -- (orq1.west |- q1g.east);
+\draw[wire] (q1h.east) -- (orq1.west |- q1h.east);
 \draw[wire] (orq1.east) -- (outq1.west);
 \end{tikzpicture}
 \end{center}
@@ -711,20 +849,93 @@ from $p_1,p_2,p_3,p_4$ and their complements.
 \item For $q_2$:
 
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-\node[termblock] (q2a) at (0,3.5) {$p_2\bar p_4$};
-\node[termblock] (q2b) at (0,2.5) {$p_1p_3\bar p_4$};
-\node[termblock] (q2c) at (0,1.5) {$p_1p_2\bar p_3$};
-\node[termblock] (q2d) at (0,0.5) {$\bar p_1\bar p_2p_4$};
-\node[termblock] (q2e) at (0,-0.5) {$\bar p_1\bar p_2\bar p_3$};
-\node[logicblock] (orq2) at (4.0,1.5) {OR};
-\node[io] (outq2) at (5.5,1.5) {$q_2$};
+\begin{tikzpicture}[x=0.85cm,y=0.85cm]
+\node[io] (p1) at (0,12.5) {$p_1$};
+\node[io] (p2) at (0,9.5) {$p_2$};
+\node[io] (p3) at (0,6.5) {$p_3$};
+\node[io] (p4) at (0,3.5) {$p_4$};
+
+\node[logicblock] (np1) at (2,13.4) {NOT};
+\node[logicblock] (np2) at (2,10.4) {NOT};
+\node[logicblock] (np3) at (2,7.4) {NOT};
+\node[logicblock] (np4) at (2,4.4) {NOT};
+
+\node[termblock] (q2a) at (7,16.5) {$\bar p_1\bar p_2\bar p_3\bar p_4$};
+\node[termblock] (q2b) at (7,14.5) {$\bar p_1\bar p_2\bar p_3 p_4$};
+\node[termblock] (q2c) at (7,12.5) {$\bar p_1\bar p_2 p_3 p_4$};
+\node[termblock] (q2d) at (7,10.5) {$\bar p_1 p_2\bar p_3\bar p_4$};
+\node[termblock] (q2e) at (7,8.5) {$\bar p_1 p_2 p_3\bar p_4$};
+\node[termblock] (q2f) at (7,6.5) {$p_1\bar p_2 p_3\bar p_4$};
+\node[termblock] (q2g) at (7,4.5) {$p_1 p_2\bar p_3\bar p_4$};
+\node[termblock] (q2h) at (7,2.5) {$p_1 p_2\bar p_3 p_4$};
+\node[termblock] (q2i) at (7,0.5) {$p_1 p_2 p_3\bar p_4$};
+\node[logicblock] (orq2) at (12.4,8.5) {OR};
+\node[io] (outq2) at (14.0,8.5) {$q_2$};
+
+\draw[wire] (p1.east) -- (1.0,12.5) coordinate (p1b);
+\draw[wire] (p2.east) -- (1.0,9.5) coordinate (p2b);
+\draw[wire] (p3.east) -- (1.0,6.5) coordinate (p3b);
+\draw[wire] (p4.east) -- (1.0,3.5) coordinate (p4b);
+
+\draw[wire] (p1b) |- (np1.west);
+\draw[wire] (p2b) |- (np2.west);
+\draw[wire] (p3b) |- (np3.west);
+\draw[wire] (p4b) |- (np4.west);
+
+\draw[wire] (np1.east) |- (q2a.west);
+\draw[wire] (np2.east) |- (q2a.west);
+\draw[wire] (np3.east) |- (q2a.west);
+\draw[wire] (np4.east) |- (q2a.west);
+
+\draw[wire] (np1.east) |- (q2b.west);
+\draw[wire] (np2.east) |- (q2b.west);
+\draw[wire] (np3.east) |- (q2b.west);
+\draw[wire] (p4b) |- (q2b.west);
+
+\draw[wire] (np1.east) |- (q2c.west);
+\draw[wire] (np2.east) |- (q2c.west);
+\draw[wire] (p3b) |- (q2c.west);
+\draw[wire] (p4b) |- (q2c.west);
+
+\draw[wire] (np1.east) |- (q2d.west);
+\draw[wire] (p2b) |- (q2d.west);
+\draw[wire] (np3.east) |- (q2d.west);
+\draw[wire] (np4.east) |- (q2d.west);
+
+\draw[wire] (np1.east) |- (q2e.west);
+\draw[wire] (p2b) |- (q2e.west);
+\draw[wire] (p3b) |- (q2e.west);
+\draw[wire] (np4.east) |- (q2e.west);
+
+\draw[wire] (p1b) |- (q2f.west);
+\draw[wire] (np2.east) |- (q2f.west);
+\draw[wire] (p3b) |- (q2f.west);
+\draw[wire] (np4.east) |- (q2f.west);
+
+\draw[wire] (p1b) |- (q2g.west);
+\draw[wire] (p2b) |- (q2g.west);
+\draw[wire] (np3.east) |- (q2g.west);
+\draw[wire] (np4.east) |- (q2g.west);
+
+\draw[wire] (p1b) |- (q2h.west);
+\draw[wire] (p2b) |- (q2h.west);
+\draw[wire] (np3.east) |- (q2h.west);
+\draw[wire] (p4b) |- (q2h.west);
+
+\draw[wire] (p1b) |- (q2i.west);
+\draw[wire] (p2b) |- (q2i.west);
+\draw[wire] (p3b) |- (q2i.west);
+\draw[wire] (np4.east) |- (q2i.west);
 
 \draw[wire] (q2a.east) -- (orq2.west |- q2a.east);
 \draw[wire] (q2b.east) -- (orq2.west |- q2b.east);
 \draw[wire] (q2c.east) -- (orq2.west |- q2c.east);
 \draw[wire] (q2d.east) -- (orq2.west |- q2d.east);
 \draw[wire] (q2e.east) -- (orq2.west |- q2e.east);
+\draw[wire] (q2f.east) -- (orq2.west |- q2f.east);
+\draw[wire] (q2g.east) -- (orq2.west |- q2g.east);
+\draw[wire] (q2h.east) -- (orq2.west |- q2h.east);
+\draw[wire] (q2i.east) -- (orq2.west |- q2i.east);
 \draw[wire] (orq2.east) -- (outq2.west);
 \end{tikzpicture}
 \end{center}
@@ -732,14 +943,65 @@ from $p_1,p_2,p_3,p_4$ and their complements.
 \item For $q_3$:
 
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-\node[termblock] (q3a) at (0,1.0) {$\bar p_3\bar p_4$};
-\node[termblock] (q3b) at (0,0.0) {$p_1p_2\bar p_4$};
-\node[logicblock] (orq3) at (4.0,0.5) {OR};
-\node[io] (outq3) at (5.5,0.5) {$q_3$};
+\begin{tikzpicture}[x=0.85cm,y=0.85cm]
+\node[io] (p1) at (0,9.5) {$p_1$};
+\node[io] (p2) at (0,6.5) {$p_2$};
+\node[io] (p3) at (0,3.5) {$p_3$};
+\node[io] (p4) at (0,0.5) {$p_4$};
+
+\node[logicblock] (np1) at (2,10.4) {NOT};
+\node[logicblock] (np2) at (2,7.4) {NOT};
+\node[logicblock] (np3) at (2,4.4) {NOT};
+\node[logicblock] (np4) at (2,1.4) {NOT};
+
+\node[termblock] (q3a) at (7,8.5) {$\bar p_1\bar p_2\bar p_3\bar p_4$};
+\node[termblock] (q3b) at (7,6.5) {$\bar p_1 p_2\bar p_3\bar p_4$};
+\node[termblock] (q3c) at (7,4.5) {$p_1\bar p_2\bar p_3\bar p_4$};
+\node[termblock] (q3d) at (7,2.5) {$p_1 p_2\bar p_3\bar p_4$};
+\node[termblock] (q3e) at (7,0.5) {$p_1 p_2 p_3\bar p_4$};
+\node[logicblock] (orq3) at (12.4,4.5) {OR};
+\node[io] (outq3) at (14.0,4.5) {$q_3$};
+
+\draw[wire] (p1.east) -- (1.0,9.5) coordinate (p1b);
+\draw[wire] (p2.east) -- (1.0,6.5) coordinate (p2b);
+\draw[wire] (p3.east) -- (1.0,3.5) coordinate (p3b);
+\draw[wire] (p4.east) -- (1.0,0.5) coordinate (p4b);
+
+\draw[wire] (p1b) |- (np1.west);
+\draw[wire] (p2b) |- (np2.west);
+\draw[wire] (p3b) |- (np3.west);
+\draw[wire] (p4b) |- (np4.west);
+
+\draw[wire] (np1.east) |- (q3a.west);
+\draw[wire] (np2.east) |- (q3a.west);
+\draw[wire] (np3.east) |- (q3a.west);
+\draw[wire] (np4.east) |- (q3a.west);
+
+\draw[wire] (np1.east) |- (q3b.west);
+\draw[wire] (p2b) |- (q3b.west);
+\draw[wire] (np3.east) |- (q3b.west);
+\draw[wire] (np4.east) |- (q3b.west);
+
+\draw[wire] (p1b) |- (q3c.west);
+\draw[wire] (np2.east) |- (q3c.west);
+\draw[wire] (np3.east) |- (q3c.west);
+\draw[wire] (np4.east) |- (q3c.west);
+
+\draw[wire] (p1b) |- (q3d.west);
+\draw[wire] (p2b) |- (q3d.west);
+\draw[wire] (np3.east) |- (q3d.west);
+\draw[wire] (np4.east) |- (q3d.west);
+
+\draw[wire] (p1b) |- (q3e.west);
+\draw[wire] (p2b) |- (q3e.west);
+\draw[wire] (p3b) |- (q3e.west);
+\draw[wire] (np4.east) |- (q3e.west);
 
 \draw[wire] (q3a.east) -- (orq3.west |- q3a.east);
 \draw[wire] (q3b.east) -- (orq3.west |- q3b.east);
+\draw[wire] (q3c.east) -- (orq3.west |- q3c.east);
+\draw[wire] (q3d.east) -- (orq3.west |- q3d.east);
+\draw[wire] (q3e.east) -- (orq3.west |- q3e.east);
 \draw[wire] (orq3.east) -- (outq3.west);
 \end{tikzpicture}
 \end{center}
@@ -1170,65 +1432,97 @@ The accepting states are $\{s_2,s_3,s_8,s_6\}$. The important transitions are:
 \end{align*}
 All unspecified transitions go to $s_7$, and $s_7$ loops to itself. This accepts strings such as \texttt{.5}, \texttt{+.5}, and \texttt{-.5E7}, while still rejecting strings such as \texttt{8.E-10}, because there must be at least one digit after the decimal point if an exponent is present.
 
-\item Here is a Pascal implementation of that DFA.
+\item Here is a Pascal implementation in the same style as Figures 1.4--1.8.
 
 \begin{verbatim}
 program RealConst(input, output);
 type
+   Sigma = (digit, plus, minus, dot, emark, other);
    State = (start, sign, intpart, dotafterint, expmark,
             expsign, expdigits, dead, fracpart, leadingdot);
 var
-   s : State;
-   ch : char;
-function Accepting(t : State) : boolean;
+   TransitionTable : array [State, Sigma] of State;
+   FinalState : set of State;
+
+function ClassOf(c : char) : Sigma;
 begin
-   Accepting := t in [intpart, dotafterint, fracpart, expdigits];
-end;
+   if c in ['0'..'9'] then
+      ClassOf := digit
+   else if c = '+' then
+      ClassOf := plus
+   else if c = '-' then
+      ClassOf := minus
+   else if c = '.' then
+      ClassOf := dot
+   else if c = 'E' then
+      ClassOf := emark
+   else
+      ClassOf := other
+end; { ClassOf }
+
+function Delta(s : State; a : Sigma) : State;
 begin
-   s := start;
+   Delta := TransitionTable[s, a]
+end; { Delta }
+
+function DeltaBar(s : State) : State;
+var
+   t : State;
+begin
+   t := s;
    while not eoln(input) do
       begin
-         ch := input^;
-         case s of
-            start:
-               if ch in ['0'..'9'] then s := intpart
-               else if ch in ['+','-'] then s := sign
-               else if ch = '.' then s := leadingdot
-               else s := dead;
-            sign:
-               if ch in ['0'..'9'] then s := intpart
-               else if ch = '.' then s := leadingdot
-               else s := dead;
-            intpart:
-               if ch in ['0'..'9'] then s := intpart
-               else if ch = '.' then s := dotafterint
-               else s := dead;
-            dotafterint:
-               if ch in ['0'..'9'] then s := fracpart
-               else s := dead;
-            leadingdot:
-               if ch in ['0'..'9'] then s := fracpart
-               else s := dead;
-            fracpart:
-               if ch in ['0'..'9'] then s := fracpart
-               else if ch = 'E' then s := expmark
-               else s := dead;
-            expmark:
-               if ch in ['0'..'9'] then s := expdigits
-               else if ch in ['+','-'] then s := expsign
-               else s := dead;
-            expsign:
-               if ch in ['0'..'9'] then s := expdigits
-               else s := dead;
-            expdigits:
-               if ch in ['0'..'9'] then s := expdigits
-               else s := dead;
-            dead:
-               s := dead
-         end;
+         t := Delta(t, ClassOf(input^));
          get(input)
       end;
-   if Accepting(s) then
+   DeltaBar := t
+end; { DeltaBar }
+
+function Accept : boolean;
+begin
+   Accept := DeltaBar(start) in FinalState
+end; { Accept }
+
+procedure Initialize;
+var
+   s : State;
+   a : Sigma;
+begin
+   FinalState := [intpart, dotafterint, fracpart, expdigits];
+
+   for s := start to leadingdot do
+      for a := digit to other do
+         TransitionTable[s, a] := dead;
+
+   TransitionTable[start, digit] := intpart;
+   TransitionTable[start, plus] := sign;
+   TransitionTable[start, minus] := sign;
+   TransitionTable[start, dot] := leadingdot;
+
+   TransitionTable[sign, digit] := intpart;
+   TransitionTable[sign, dot] := leadingdot;
+
+   TransitionTable[intpart, digit] := intpart;
+   TransitionTable[intpart, dot] := dotafterint;
+
+   TransitionTable[dotafterint, digit] := fracpart;
+   TransitionTable[leadingdot, digit] := fracpart;
+
+   TransitionTable[fracpart, digit] := fracpart;
+   TransitionTable[fracpart, emark] := expmark;
+
+   TransitionTable[expmark, digit] := expdigits;
+   TransitionTable[expmark, plus] := expsign;
+   TransitionTable[expmark, minus] := expsign;
+
+   TransitionTable[expsign, digit] := expdigits;
+
+   TransitionTable[expdigits, digit] := expdigits
+end; { Initialize }
+
+begin
+   Initialize;
+   if Accept then
       writeln(output, 'Accepted')
    else
       writeln(output, 'Rejected')
@@ -1794,7 +2088,23 @@ Thus the circuit consists of two D flip-flops whose inputs are the Boolean funct
 \item Three states $q_0,q_1,q_2$ (counting \#b seen so far, capped at 2), plus a dead state $q_3$. $F=\{q_2\}$.
 $\delta(q_i,\mathbf{a})=\delta(q_i,\mathbf{c})=q_i$; $\delta(q_0,\mathbf{b})=q_1$; $\delta(q_1,\mathbf{b})=q_2$; $\delta(q_2,\mathbf{b})=q_3$; $\delta(q_3,-)=q_3$.
 
-\item Quintuple: $\Sigma=\{\mathbf{a},\mathbf{b},\mathbf{c}\}$, $S=\{q_0,q_1,q_2,q_3\}$, $s_0=q_0$, $F=\{q_2\}$, $\delta$ as above.
+\item The quintuple is
+\[
+\langle\{\mathbf{a},\mathbf{b},\mathbf{c}\},\{q_0,q_1,q_2,q_3\},q_0,\delta,\{q_2\}\rangle,
+\]
+where
+\[
+\delta(q_0,\mathbf{a})=q_0,\quad \delta(q_0,\mathbf{b})=q_1,\quad \delta(q_0,\mathbf{c})=q_0,
+\]
+\[
+\delta(q_1,\mathbf{a})=q_1,\quad \delta(q_1,\mathbf{b})=q_2,\quad \delta(q_1,\mathbf{c})=q_1,
+\]
+\[
+\delta(q_2,\mathbf{a})=q_2,\quad \delta(q_2,\mathbf{b})=q_3,\quad \delta(q_2,\mathbf{c})=q_2,
+\]
+\[
+\delta(q_3,\mathbf{a})=q_3,\quad \delta(q_3,\mathbf{b})=q_3,\quad \delta(q_3,\mathbf{c})=q_3.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1821,7 +2131,23 @@ $\delta(q_a,\mathbf{a})=q_{dead}$, $\delta(q_a,\mathbf{b})=q_b$,
 $\delta(q_b,\mathbf{b})=q_{dead}$, $\delta(q_b,\mathbf{a})=q_a$,
 $\delta(q_{dead},-)=q_{dead}$.
 
-\item Quintuple: $\Sigma=\{\mathbf{a},\mathbf{b}\}$, $S=\{q_0,q_a,q_b,q_{dead}\}$, $s_0=q_0$, $F=\{q_0,q_a,q_b\}$, $\delta$ as above.
+\item The quintuple is
+\[
+\langle\{\mathbf{a},\mathbf{b}\},\{q_0,q_a,q_b,q_{dead}\},q_0,\delta,\{q_0,q_a,q_b\}\rangle,
+\]
+where
+\[
+\delta(q_0,\mathbf{a})=q_a,\quad \delta(q_0,\mathbf{b})=q_b,
+\]
+\[
+\delta(q_a,\mathbf{a})=q_{dead},\quad \delta(q_a,\mathbf{b})=q_b,
+\]
+\[
+\delta(q_b,\mathbf{a})=q_a,\quad \delta(q_b,\mathbf{b})=q_{dead},
+\]
+\[
+\delta(q_{dead},\mathbf{a})=q_{dead},\quad \delta(q_{dead},\mathbf{b})=q_{dead}.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1839,64 +2165,77 @@ $\delta(q_{dead},-)=q_{dead}$.
 \[
 \langle\{\pmb{a},\pmb{b},\pmb{c}\},\{r_0,r_1,r_2\},r_0,\delta,\{r_0\}\rangle,
 \]
-with $\delta$ defined exactly as above.
+where
+\[
+\delta(r_0,\pmb{a})=r_1,\quad \delta(r_0,\pmb{b})=r_0,\quad \delta(r_0,\pmb{c})=r_0,
+\]
+\[
+\delta(r_1,\pmb{a})=r_2,\quad \delta(r_1,\pmb{b})=r_1,\quad \delta(r_1,\pmb{c})=r_1,
+\]
+\[
+\delta(r_2,\pmb{a})=r_0,\quad \delta(r_2,\pmb{b})=r_2,\quad \delta(r_2,\pmb{c})=r_2.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{DFAs for Pascal comments.}
 
 \begin{enumerate}
-\item For ``exactly one valid Pascal comment and no illegal comment fragments,'' a DFA can use the following states:
+\item For ``exactly one valid Pascal comment and no illegal comment fragments,'' use
 \[
-P_0,P_{(},P_{*},I_0,I_{*},Q_0,Q_{(},Q_{*},D.
+A=\langle\Sigma,S,P_0,\delta,F\rangle,
 \]
-Here $P$ means ``before the unique comment,'' $I$ means ``inside the comment,'' $Q$ means ``after the unique comment,'' and $D$ is dead. The one-character memory states $P_{(},P_{*},Q_{(},Q_{*}$ remember a possible start or end delimiter.
+where
+\[
+\Sigma=\{\pmb{a},\pmb{b},\pmb{(},\pmb{*},\pmb{)}\},
+\]
+\[
+S=\{P_0,P_{(},P_{*},I_0,I_{*},Q_0,Q_{(},Q_{*},D\},
+\qquad
+F=\{Q_0,Q_{(},Q_{*}\}.
+\]
+Here $P$ means ``before the unique comment,'' $I$ means ``inside the comment,''
+$Q$ means ``after the unique comment,'' and $D$ is dead. The full transition
+function is:
+\[
+\begin{array}{c|ccccc}
+      & \pmb{a} & \pmb{b} & \pmb{(} & \pmb{*} & \pmb{)} \\\hline
+P_0   & P_0 & P_0 & P_{(} & P_{*} & P_0 \\
+P_{(} & P_0 & P_0 & P_{(} & I_0   & P_0 \\
+P_{*} & P_0 & P_0 & P_{(} & P_{*} & D   \\
+I_0   & I_0 & I_0 & I_0   & I_{*} & I_0 \\
+I_{*} & I_0 & I_0 & I_0   & I_{*} & Q_0 \\
+Q_0   & Q_0 & Q_0 & Q_{(} & Q_{*} & Q_0 \\
+Q_{(} & Q_0 & Q_0 & Q_{(} & D     & Q_0 \\
+Q_{*} & Q_0 & Q_0 & Q_{(} & Q_{*} & D   \\
+D     & D   & D   & D     & D     & D
+\end{array}
+\]
 
-The key transitions are:
-\begin{itemize}
-\item Before the comment:
+\item For ``zero or more valid unnested Pascal comments,'' use
 \[
-\delta(P_0,\pmb{(})=P_{(},\quad \delta(P_0,\pmb{*})=P_{*},
+B=\langle\Sigma,T,O_0,\delta,F'\rangle,
 \]
-and letters $\pmb{a},\pmb{b}$ and the symbol $\pmb{)}$ stay in $P_0$.
-\item A valid opening delimiter is recognized by
+where
 \[
-\delta(P_{(},\pmb{*})=I_0.
+T=\{O_0,O_{(},O_{*},I_0,I_{*},D\},
+\qquad
+F'=\{O_0,O_{(},O_{*}\}.
 \]
-If the next symbol after $\pmb{(}$ is anything else, the machine returns to the appropriate outside state.
-\item A stray closing delimiter outside a comment is illegal:
+Here $O$ means ``outside any comment.'' The full transition function is:
 \[
-\delta(P_{*},\pmb{)})=D,\qquad \delta(Q_{*},\pmb{)})=D.
+\begin{array}{c|ccccc}
+      & \pmb{a} & \pmb{b} & \pmb{(} & \pmb{*} & \pmb{)} \\\hline
+O_0   & O_0 & O_0 & O_{(} & O_{*} & O_0 \\
+O_{(} & O_0 & O_0 & O_{(} & I_0   & O_0 \\
+O_{*} & O_0 & O_0 & O_{(} & O_{*} & D   \\
+I_0   & I_0 & I_0 & I_0   & I_{*} & I_0 \\
+I_{*} & I_0 & I_0 & I_0   & I_{*} & O_0 \\
+D     & D   & D   & D     & D     & D
+\end{array}
 \]
-\item Inside a comment, everything stays in $I_0$ except that $\pmb{*}$ moves to $I_{*}$:
-\[
-\delta(I_0,\pmb{*})=I_{*}.
-\]
-Then
-\[
-\delta(I_{*},\pmb{)})=Q_0
-\]
-closes the unique comment; on another $\pmb{*}$ the machine stays in $I_{*}$, and on any other symbol it returns to $I_0$.
-\item After the unique comment, the outside-text behavior is the same as before, except that a second opening delimiter is forbidden:
-\[
-\delta(Q_{(},\pmb{*})=D.
-\]
-\end{itemize}
-The accepting states are $Q_0,Q_{(},Q_{*}$, because a complete input must contain exactly one closed comment and must not end inside a comment.
-
-\item For ``zero or more valid unnested Pascal comments,'' the same idea works with only five essential states:
-\[
-O_0,O_{(},O_{*},I_0,I_{*},D.
-\]
-Here $O$ means ``outside any comment.'' The transitions are exactly as above, except that after closing a comment
-\[
-\delta(I_{*},\pmb{)})=O_0,
-\]
-so another comment may begin later, and
-\[
-\delta(O_{(},\pmb{*})=I_0
-\]
-is always allowed. The accepting states are $O_0,O_{(},O_{*}$, since the input is valid iff it ends outside a comment and never produces an illegal delimiter fragment.
+This machine accepts exactly the strings that end outside a comment and never
+produce an illegal delimiter fragment.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1974,7 +2313,16 @@ and
 \[
 F=\{q_{uv}\mid u\neq v\}.
 \]
-The transition function is exactly the one described in part (a).
+The transition function is
+\[
+\delta(s,\pmb{a})=q_{aa},\qquad \delta(s,\pmb{b})=q_{bb},\qquad \delta(s,\pmb{c})=q_{cc},
+\]
+and for every $u,v\in\{\pmb{a},\pmb{b},\pmb{c}\}$,
+\[
+\delta(q_{uv},\pmb{a})=q_{ua},\qquad
+\delta(q_{uv},\pmb{b})=q_{ub},\qquad
+\delta(q_{uv},\pmb{c})=q_{uc}.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -2005,7 +2353,28 @@ The accepting states are $s,a,b,c$.
 \[
 \langle\{\pmb{a},\pmb{b},\pmb{c}\},\{s,a,b,c,aa,bb,cc\},s,\delta,\{s,a,b,c\}\rangle,
 \]
-with $\delta$ defined as in part (a).
+where
+\[
+\delta(s,\pmb{a})=a,\quad \delta(s,\pmb{b})=b,\quad \delta(s,\pmb{c})=c,
+\]
+\[
+\delta(a,\pmb{a})=aa,\quad \delta(a,\pmb{b})=b,\quad \delta(a,\pmb{c})=c,
+\]
+\[
+\delta(b,\pmb{a})=a,\quad \delta(b,\pmb{b})=bb,\quad \delta(b,\pmb{c})=c,
+\]
+\[
+\delta(c,\pmb{a})=a,\quad \delta(c,\pmb{b})=b,\quad \delta(c,\pmb{c})=cc,
+\]
+\[
+\delta(aa,\pmb{a})=aa,\quad \delta(aa,\pmb{b})=b,\quad \delta(aa,\pmb{c})=c,
+\]
+\[
+\delta(bb,\pmb{a})=a,\quad \delta(bb,\pmb{b})=bb,\quad \delta(bb,\pmb{c})=c,
+\]
+\[
+\delta(cc,\pmb{a})=a,\quad \delta(cc,\pmb{b})=b,\quad \delta(cc,\pmb{c})=cc.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -2030,7 +2399,16 @@ where
 \[
 \delta(s,\pmb{a})=a,\qquad \delta(s,\pmb{b})=b,\qquad \delta(s,\pmb{c})=c,
 \]
-the second-symbol transitions are as described above, and
+\[
+\delta(a,\pmb{a})=q_{rej},\qquad \delta(a,\pmb{b})=q_{acc},\qquad \delta(a,\pmb{c})=q_{acc},
+\]
+\[
+\delta(b,\pmb{a})=q_{acc},\qquad \delta(b,\pmb{b})=q_{rej},\qquad \delta(b,\pmb{c})=q_{acc},
+\]
+\[
+\delta(c,\pmb{a})=q_{acc},\qquad \delta(c,\pmb{b})=q_{acc},\qquad \delta(c,\pmb{c})=q_{rej},
+\]
+and
 \[
 \delta(q_{acc},x)=q_{acc},\qquad \delta(q_{rej},x)=q_{rej}
 \]
@@ -2126,184 +2504,250 @@ Every unspecified transition goes to $q_{dead}$, and $q_{dead}$ loops to itself.
 \]
 excluding the empty word.
 
-\item For ordinary Roman numerals, a DFA can be built from four deterministic phases: thousands, hundreds, tens, and ones. One explicit state set is
+\item For ordinary Roman numerals, one explicit DFA is
 \[
-\{q_s,q_M,q_T,q_{HC},q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC},
+A=\langle\Sigma,S,q_s,\delta,F\rangle,
+\]
+where
+\[
+\Sigma=\{\pmb{I},\pmb{V},\pmb{X},\pmb{L},\pmb{C},\pmb{D},\pmb{M}\},
+\]
+\[
+S=\{q_s,q_M,q_T,q_{HC},q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC},
 \]
 \[
 q_{TX},q_{TXX},q_{TXXX},q_{TL},q_{TLX},q_{TLXX},q_{TLXXX},
-q_{OI},q_{OII},q_{OIII},q_{OV},q_{OVI},q_{OVII},q_{OVIII},q_O,q_{done},q_{dead}\}.
-\]
-Here $q_T$ means ``the thousands and hundreds phases are complete and the tens phase has not yet begun,'' and $q_O$ means ``the tens phase is complete and the ones phase has not yet begun.'' The start state is $q_s$, the dead state is $q_{dead}$, and every state except $q_s$ and $q_{dead}$ that represents a completed legal prefix is final.
-
-The transition rules are as follows.
-\begin{itemize}
-\item Thousands:
-\[
-\delta(q_s,\pmb{M})=q_M,\qquad \delta(q_M,\pmb{M})=q_M.
-\]
-From either $q_s$ or $q_M$, a first hundreds symbol sends the machine into the hundreds module, a first tens symbol into the tens module, and a first ones symbol into the ones module:
-\[
-\delta(q_s,\pmb{C})=\delta(q_M,\pmb{C})=q_{HC},\qquad
-\delta(q_s,\pmb{D})=\delta(q_M,\pmb{D})=q_{HD},
+q_O,q_{OI},q_{OII},q_{OIII},q_{OV},q_{OVI},q_{OVII},q_{OVIII},q_{done},q_{dead}\},
 \]
 \[
-\delta(q_s,\pmb{X})=\delta(q_M,\pmb{X})=q_{TX},\qquad
-\delta(q_s,\pmb{L})=\delta(q_M,\pmb{L})=q_{TL},
+F=S-\{q_s,q_{dead}\}.
 \]
-\[
-\delta(q_s,\pmb{I})=\delta(q_M,\pmb{I})=q_{OI},\qquad
-\delta(q_s,\pmb{V})=\delta(q_M,\pmb{V})=q_{OV}.
-\]
-
-\item Hundreds:
-\[
-\delta(q_{HC},\pmb{M})=q_T,\qquad \delta(q_{HC},\pmb{D})=q_T,\qquad \delta(q_{HC},\pmb{C})=q_{HCC},
-\]
-and on $\pmb{X},\pmb{L},\pmb{I},\pmb{V}$ the machine leaves the hundreds phase and enters the appropriate lower module:
-\[
-\delta(q_{HC},\pmb{X})=q_{TX},\ \delta(q_{HC},\pmb{L})=q_{TL},\ \delta(q_{HC},\pmb{I})=q_{OI},\ \delta(q_{HC},\pmb{V})=q_{OV}.
-\]
-Similarly,
-\[
-\delta(q_{HCC},\pmb{C})=q_{HCCC},\qquad
-\delta(q_{HD},\pmb{C})=q_{HDC},\qquad
+The state names indicate the phase that has been reached: $q_T$ means that the
+thousands and hundreds phases are complete and the tens phase has not yet begun,
+while $q_O$ means that the tens phase is complete and the ones phase has not yet
+begun. The transition function is:
+\begin{align*}
+\delta(q_s,\pmb{M})&=q_M,      & \delta(q_s,\pmb{C})&=q_{HC}, & \delta(q_s,\pmb{D})&=q_{HD},\\
+\delta(q_s,\pmb{X})&=q_{TX},   & \delta(q_s,\pmb{L})&=q_{TL}, & \delta(q_s,\pmb{I})&=q_{OI},\qquad
+\delta(q_s,\pmb{V})=q_{OV},\\[4pt]
+\delta(q_M,\pmb{M})&=q_M,      & \delta(q_M,\pmb{C})&=q_{HC}, & \delta(q_M,\pmb{D})&=q_{HD},\\
+\delta(q_M,\pmb{X})&=q_{TX},   & \delta(q_M,\pmb{L})&=q_{TL}, & \delta(q_M,\pmb{I})&=q_{OI},\qquad
+\delta(q_M,\pmb{V})=q_{OV},\\[4pt]
+\delta(q_{HC},\pmb{M})&=q_T,   & \delta(q_{HC},\pmb{D})&=q_T, & \delta(q_{HC},\pmb{C})&=q_{HCC},\\
+\delta(q_{HC},\pmb{X})&=q_{TX},& \delta(q_{HC},\pmb{L})&=q_{TL}, & \delta(q_{HC},\pmb{I})&=q_{OI},\qquad
+\delta(q_{HC},\pmb{V})=q_{OV},\\[4pt]
+\delta(q_{HCC},\pmb{C})&=q_{HCCC}, &
+\delta(r,\pmb{X})&=q_{TX}, &
+\delta(r,\pmb{L})&=q_{TL},\\
+\delta(r,\pmb{I})&=q_{OI}, &
+\delta(r,\pmb{V})&=q_{OV}
+&&\text{for }r\in\{q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC}\},\\[4pt]
+\delta(q_{HD},\pmb{C})&=q_{HDC},\qquad
 \delta(q_{HDC},\pmb{C})=q_{HDCC},\qquad
-\delta(q_{HDCC},\pmb{C})=q_{HDCCC},
-\]
-and from each of $q_{HCC},q_{HCCC},q_{HD},q_{HDC},q_{HDCC},q_{HDCCC}$ the symbols $\pmb{X},\pmb{L},\pmb{I},\pmb{V}$ move to $q_{TX},q_{TL},q_{OI},q_{OV}$, respectively. All other hundreds-phase violations go to $q_{dead}$.
-
-\item Tens:
-\[
-\delta(q_T,\pmb{X})=q_{TX},\qquad \delta(q_T,\pmb{L})=q_{TL},\qquad
-\delta(q_T,\pmb{I})=q_{OI},\qquad \delta(q_T,\pmb{V})=q_{OV}.
-\]
-Then
-\[
-\delta(q_{TX},\pmb{C})=q_O,\qquad \delta(q_{TX},\pmb{L})=q_O,\qquad \delta(q_{TX},\pmb{X})=q_{TXX},
-\]
-\[
-\delta(q_{TXX},\pmb{X})=q_{TXXX},
-\]
-and the symbols $\pmb{I},\pmb{V}$ leave the tens phase from any of $q_{TX},q_{TXX},q_{TXXX}$:
-\[
-\delta(q_{TX},\pmb{I})=\delta(q_{TXX},\pmb{I})=\delta(q_{TXXX},\pmb{I})=q_{OI},
-\]
-\[
-\delta(q_{TX},\pmb{V})=\delta(q_{TXX},\pmb{V})=\delta(q_{TXXX},\pmb{V})=q_{OV}.
-\]
-Likewise,
-\[
-\delta(q_{TL},\pmb{X})=q_{TLX},\quad
-\delta(q_{TLX},\pmb{X})=q_{TLXX},\quad
-\delta(q_{TLXX},\pmb{X})=q_{TLXXX},
-\]
-and from any of $q_{TL},q_{TLX},q_{TLXX},q_{TLXXX}$ the symbols $\pmb{I},\pmb{V}$ move to $q_{OI}$ or $q_{OV}$, respectively.
-
-\item Ones:
-\[
-\delta(q_O,\pmb{I})=q_{OI},\qquad \delta(q_O,\pmb{V})=q_{OV},
-\]
-\[
-\delta(q_{OI},\pmb{X})=q_{done},\qquad \delta(q_{OI},\pmb{V})=q_{done},\qquad \delta(q_{OI},\pmb{I})=q_{OII},
-\]
-\[
-\delta(q_{OII},\pmb{I})=q_{OIII},
-\]
-\[
-\delta(q_{OV},\pmb{I})=q_{OVI},\qquad
+\delta(q_{HDCC},\pmb{C})=q_{HDCCC},\\[4pt]
+\delta(q_T,\pmb{X})&=q_{TX},   & \delta(q_T,\pmb{L})&=q_{TL}, & \delta(q_T,\pmb{I})&=q_{OI},\qquad
+\delta(q_T,\pmb{V})=q_{OV},\\[4pt]
+\delta(q_{TX},\pmb{C})&=q_O,   & \delta(q_{TX},\pmb{L})&=q_O, & \delta(q_{TX},\pmb{X})&=q_{TXX},\\
+\delta(q_{TX},\pmb{I})&=q_{OI},& \delta(q_{TX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TXX},\pmb{X})&=q_{TXXX}, &
+\delta(q_{TXX},\pmb{I})&=q_{OI}, &
+\delta(q_{TXX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TXXX},\pmb{I})&=q_{OI}, &
+\delta(q_{TXXX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TL},\pmb{X})&=q_{TLX}, &
+\delta(q_{TL},\pmb{I})&=q_{OI}, &
+\delta(q_{TL},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TLX},\pmb{X})&=q_{TLXX}, &
+\delta(q_{TLX},\pmb{I})&=q_{OI}, &
+\delta(q_{TLX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TLXX},\pmb{X})&=q_{TLXXX}, &
+\delta(q_{TLXX},\pmb{I})&=q_{OI}, &
+\delta(q_{TLXX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{TLXXX},\pmb{I})&=q_{OI}, &
+\delta(q_{TLXXX},\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_O,\pmb{I})&=q_{OI},   & \delta(q_O,\pmb{V})&=q_{OV},\\[4pt]
+\delta(q_{OI},\pmb{I})&=q_{OII}, &
+\delta(q_{OI},\pmb{V})&=q_{done}, &
+\delta(q_{OI},\pmb{X})&=q_{done},\\[4pt]
+\delta(q_{OII},\pmb{I})&=q_{OIII},\\[4pt]
+\delta(q_{OV},\pmb{I})&=q_{OVI},\qquad
 \delta(q_{OVI},\pmb{I})=q_{OVII},\qquad
 \delta(q_{OVII},\pmb{I})=q_{OVIII}.
+\end{align*}
+For every state $q\in S$ and every input letter not covered by the equations above,
+\[
+\delta(q,\sigma)=q_{dead},
 \]
-All outgoing transitions from $q_{done}$ and $q_{OIII}$ and $q_{OVIII}$ go to $q_{dead}$, and every unspecified transition anywhere also goes to $q_{dead}$. This DFA accepts exactly the standard Roman numerals.
-\end{itemize}
+and $q_{dead}$ loops to itself on every input letter. This machine accepts exactly
+the standard Roman numerals.
 
-\item The following Pascal program recognizes exactly the language of part (b).
+\item The following Pascal program recognizes exactly the language of part (b),
+using a transition table and a clean $\delta$ function.
 
 \begin{verbatim}
 program Roman(input, output);
+type
+   Sigma = (symI, symV, symX, symL, symC, symD, symM, other);
+   State = (qs, qM, qT, qHC, qHCC, qHCCC, qHD, qHDC, qHDCC, qHDCCC,
+            qTX, qTXX, qTXXX, qTL, qTLX, qTLXX, qTLXXX,
+            qOI, qOII, qOIII, qOV, qOVI, qOVII, qOVIII, qO, qdone, qdead);
 var
-   s : string;
-   i, n : integer;
-   ok : boolean;
+   TransitionTable : array [State, Sigma] of State;
+   FinalState : set of State;
 
-function Take(c : char) : boolean;
+function ClassOf(c : char) : Sigma;
 begin
-   if (i <= n) and (s[i] = c) then
-      begin
-         i := i + 1;
-         Take := true
-      end
+   case c of
+      'I': ClassOf := symI;
+      'V': ClassOf := symV;
+      'X': ClassOf := symX;
+      'L': ClassOf := symL;
+      'C': ClassOf := symC;
+      'D': ClassOf := symD;
+      'M': ClassOf := symM
    else
-      Take := false
-end;
+      ClassOf := other
+   end
+end; { ClassOf }
 
-procedure Thousands;
+function Delta(s : State; a : Sigma) : State;
 begin
-   while Take('M') do
-      ;
-end;
+   Delta := TransitionTable[s, a]
+end; { Delta }
 
-function Block(one, five, ten : char) : boolean;
+function DeltaBar(s : State) : State;
 var
-   start : integer;
+   t : State;
 begin
-   start := i;
-   if Take(one) then
+   t := s;
+   while not eoln(input) do
       begin
-         if Take(ten) then
-            Block := true
-         else if Take(five) then
-            Block := true
-         else
-            begin
-               Take(one);
-               Take(one);
-               if Take(one) then
-                  begin
-                     i := start;
-                     Block := false
-                  end
-               else
-                  Block := true
-            end
-      end
-   else if Take(five) then
-      begin
-         Take(one);
-         Take(one);
-         Take(one);
-         if Take(one) then
-            begin
-               i := start;
-               Block := false
-            end
-         else
-            Block := true
-      end
-   else
-      Block := true
-end;
+         t := Delta(t, ClassOf(input^));
+         get(input)
+      end;
+   DeltaBar := t
+end; { DeltaBar }
+
+function Accept : boolean;
+begin
+   Accept := DeltaBar(qs) in FinalState
+end; { Accept }
+
+procedure Initialize;
+var
+   s : State;
+   a : Sigma;
+begin
+   FinalState := [qM, qT, qHC, qHCC, qHCCC, qHD, qHDC, qHDCC, qHDCCC,
+                  qTX, qTXX, qTXXX, qTL, qTLX, qTLXX, qTLXXX,
+                  qOI, qOII, qOIII, qOV, qOVI, qOVII, qOVIII, qO, qdone];
+
+   for s := qs to qdead do
+      for a := symI to other do
+         TransitionTable[s, a] := qdead;
+
+   for a := symI to other do
+      TransitionTable[qdead, a] := qdead;
+
+   TransitionTable[qs, symM] := qM;
+   TransitionTable[qM, symM] := qM;
+
+   TransitionTable[qs, symC] := qHC;
+   TransitionTable[qM, symC] := qHC;
+   TransitionTable[qs, symD] := qHD;
+   TransitionTable[qM, symD] := qHD;
+   TransitionTable[qs, symX] := qTX;
+   TransitionTable[qM, symX] := qTX;
+   TransitionTable[qs, symL] := qTL;
+   TransitionTable[qM, symL] := qTL;
+   TransitionTable[qs, symI] := qOI;
+   TransitionTable[qM, symI] := qOI;
+   TransitionTable[qs, symV] := qOV;
+   TransitionTable[qM, symV] := qOV;
+
+   TransitionTable[qHC, symM] := qT;
+   TransitionTable[qHC, symD] := qT;
+   TransitionTable[qHC, symC] := qHCC;
+   TransitionTable[qHC, symX] := qTX;
+   TransitionTable[qHC, symL] := qTL;
+   TransitionTable[qHC, symI] := qOI;
+   TransitionTable[qHC, symV] := qOV;
+
+   TransitionTable[qHCC, symC] := qHCCC;
+   TransitionTable[qHD, symC] := qHDC;
+   TransitionTable[qHDC, symC] := qHDCC;
+   TransitionTable[qHDCC, symC] := qHDCCC;
+
+   TransitionTable[qHCC, symX] := qTX;
+   TransitionTable[qHCC, symL] := qTL;
+   TransitionTable[qHCC, symI] := qOI;
+   TransitionTable[qHCC, symV] := qOV;
+   TransitionTable[qHCCC, symX] := qTX;
+   TransitionTable[qHCCC, symL] := qTL;
+   TransitionTable[qHCCC, symI] := qOI;
+   TransitionTable[qHCCC, symV] := qOV;
+   TransitionTable[qHD, symX] := qTX;
+   TransitionTable[qHD, symL] := qTL;
+   TransitionTable[qHD, symI] := qOI;
+   TransitionTable[qHD, symV] := qOV;
+   TransitionTable[qHDC, symX] := qTX;
+   TransitionTable[qHDC, symL] := qTL;
+   TransitionTable[qHDC, symI] := qOI;
+   TransitionTable[qHDC, symV] := qOV;
+   TransitionTable[qHDCC, symX] := qTX;
+   TransitionTable[qHDCC, symL] := qTL;
+   TransitionTable[qHDCC, symI] := qOI;
+   TransitionTable[qHDCC, symV] := qOV;
+   TransitionTable[qHDCCC, symX] := qTX;
+   TransitionTable[qHDCCC, symL] := qTL;
+   TransitionTable[qHDCCC, symI] := qOI;
+   TransitionTable[qHDCCC, symV] := qOV;
+
+   TransitionTable[qT, symX] := qTX;
+   TransitionTable[qT, symL] := qTL;
+   TransitionTable[qT, symI] := qOI;
+   TransitionTable[qT, symV] := qOV;
+
+   TransitionTable[qTX, symC] := qO;
+   TransitionTable[qTX, symL] := qO;
+   TransitionTable[qTX, symX] := qTXX;
+   TransitionTable[qTXX, symX] := qTXXX;
+   TransitionTable[qTX, symI] := qOI;
+   TransitionTable[qTXX, symI] := qOI;
+   TransitionTable[qTXXX, symI] := qOI;
+   TransitionTable[qTX, symV] := qOV;
+   TransitionTable[qTXX, symV] := qOV;
+   TransitionTable[qTXXX, symV] := qOV;
+
+   TransitionTable[qTL, symX] := qTLX;
+   TransitionTable[qTLX, symX] := qTLXX;
+   TransitionTable[qTLXX, symX] := qTLXXX;
+   TransitionTable[qTL, symI] := qOI;
+   TransitionTable[qTLX, symI] := qOI;
+   TransitionTable[qTLXX, symI] := qOI;
+   TransitionTable[qTLXXX, symI] := qOI;
+   TransitionTable[qTL, symV] := qOV;
+   TransitionTable[qTLX, symV] := qOV;
+   TransitionTable[qTLXX, symV] := qOV;
+   TransitionTable[qTLXXX, symV] := qOV;
+
+   TransitionTable[qO, symI] := qOI;
+   TransitionTable[qO, symV] := qOV;
+   TransitionTable[qOI, symX] := qdone;
+   TransitionTable[qOI, symV] := qdone;
+   TransitionTable[qOI, symI] := qOII;
+   TransitionTable[qOII, symI] := qOIII;
+   TransitionTable[qOV, symI] := qOVI;
+   TransitionTable[qOVI, symI] := qOVII;
+   TransitionTable[qOVII, symI] := qOVIII
+end; { Initialize }
 
 begin
-   readln(s);
-   n := length(s);
-   i := 1;
-   if n = 0 then
+   Initialize;
+   if Accept then
+      writeln(output, 'Accepted')
+   else
       writeln(output, 'Rejected')
-   else
-      begin
-         Thousands;
-         ok := Block('C','D','M');
-         if ok then
-            ok := Block('X','L','C');
-         if ok then
-            ok := Block('I','V','X');
-         if ok and (i > n) then
-            writeln(output, 'Accepted')
-         else
-            writeln(output, 'Rejected')
-      end
 end.
 \end{verbatim}
 \end{enumerate}
