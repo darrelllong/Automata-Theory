@@ -34,10 +34,6 @@ Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is foll
 \[
   (N \cup \pmb{c}N)^*(N \cup \pmb{c} \cup \epsilon)
 \]
-More precisely:
-\[
-  (N\cup\pmb{c}N)^*(\epsilon\cup\pmb{c})
-\]
 
 %% 6.6
 \item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ containing $\pmb{cc}$:
@@ -197,7 +193,14 @@ The NDFA:
   \item $R_1\cup\epsilon\neq R_1$: Let $R_1=\pmb{a}$.  Then $R_1\cup\epsilon=\{\lambda,\pmb{a}\}\neq\{\pmb{a}\}=R_1$.
   \item $R_1\cdot R_2\neq R_2\cdot R_1$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$.  $\pmb{ab}\neq\pmb{ba}$.
   \item $R_1\cdot R_1\neq R_1$: Let $R_1=\pmb{a}$.  $\pmb{aa}\neq\pmb{a}$.
-  \item $R_1\cup(R_2\cdot R_3)\neq(R_1\cup R_2)\cdot(R_1\cup R_3)$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$, $R_3=\pmb{c}$.  LHS: $\{\pmb{a},\pmb{bc}\}$.  RHS: $\{\pmb{a},\pmb{b},\pmb{c}\}\cdot\{\pmb{a},\pmb{b},\pmb{c}\}=\{\pmb{aa},\pmb{ab},\pmb{ac},\pmb{ba},\pmb{bb},\pmb{bc},\pmb{ca},\pmb{cb},\pmb{cc}\}\cup\ldots$.  Not equal.
+  \item $R_1\cup(R_2\cdot R_3)\neq(R_1\cup R_2)\cdot(R_1\cup R_3)$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$, $R_3=\pmb{c}$.  Then
+  \[
+    R_1\cup(R_2\cdot R_3)=\{\pmb{a},\pmb{bc}\},
+    \qquad
+    (R_1\cup R_2)\cdot(R_1\cup R_3)=\{\pmb{a},\pmb{b}\}\cdot\{\pmb{a},\pmb{c}\}
+    =\{\pmb{aa},\pmb{ac},\pmb{ba},\pmb{bc}\}.
+  \]
+  These two sets are not equal.
   \item $(R_1\cdot R_2)^*\neq(R_1^*\cdot R_2^*)^*$: Let $R_1=\pmb{a}$, $R_2=\pmb{b}$.  $(ab)^*=\{\lambda,\pmb{ab},\pmb{abab},\ldots\}$.  $(a^*b^*)^*=(\pmb{a}\cup\pmb{b})^*$.  Not equal.
   \item $(R_1\cdot R_2)^*\neq(R_1^*\cup R_2^*)^*$: Same example.  $(R_1^*\cup R_2^*)^*=(a^*\cup b^*)^*=(a\cup b)^*$.  Not equal to $(\pmb{ab})^*$.
 \end{enumerate}
@@ -241,7 +244,14 @@ Let $L_i=L(R_i)$.  Each identity follows directly from the definitions.
 
   Let $A=\{\lambda,\pmb{a}\}=\epsilon\cup\pmb{a}$ and $E=\{\pmb{b}\}$.
   Then $A^*E=\{\pmb{a}\}^*\{\pmb{b}\}=\{\pmb{a}^n\pmb{b}\mid n\ge 0\}$.
-  But $X=\Sigma^*\{\pmb{b}\}$ also satisfies $X=A\cdot X\cup E$ since $\lambda\in A$ means $A^*E\subseteq X$ for any superset $X$ that is a fixed point.  Specifically, check $X=\Sigma^*$: $A\cdot\Sigma^*\cup\{\pmb{b}\}=\Sigma^*\cup\{\pmb{b}\}=\Sigma^*=X$.  So $\Sigma^*$ is also a solution, but $\Sigma^*\neq A^*E$.  Hence the solution is not unique.
+  But $X=\Sigma^*$ also satisfies $X=A\cdot X\cup E$: indeed,
+  \[
+    A\cdot\Sigma^*\cup\{\pmb{b}\}
+    =(\{\lambda,\pmb{a}\}\cdot\Sigma^*)\cup\{\pmb{b}\}
+    =\Sigma^*\cup\{\pmb{b}\}
+    =\Sigma^*.
+  \]
+  So $\Sigma^*$ is also a solution, but $\Sigma^*\neq A^*E$.  Hence the solution is not unique.
 
   \item \textbf{$A^*E$ as unique solution even if $\lambda\in A$.}
 
@@ -341,7 +351,9 @@ So $P(m+1)$ holds.  By induction, every regular expression represents a FAD lang
 %% 6.21
 \item \textbf{All solutions to $X=X\cup\{\pmb{b}\}$ over $\{\pmb{a},\pmb{b},\pmb{c}\}^*$.}
 
-$X=X\cup\{\pmb{b}\}$ means $\{\pmb{b}\}\subseteq X$ and $X=X$ (which is always true).  The solutions are all languages $X$ containing $\pmb{b}$: $X=\{L\mid\pmb{b}\in L\}$.  Every such language is a solution.  The smallest solution is $\{\pmb{b}\}$.
+$X=X\cup\{\pmb{b}\}$ means exactly that $\{\pmb{b}\}\subseteq X$.  Hence the
+solutions are precisely the languages $X$ with $\pmb{b}\in X$.  Every such
+language is a solution, and the smallest one is $\{\pmb{b}\}$.
 
 %% 6.22
 \item \textbf{Prove $A^*E=E\cup A\cdot(A^*E)$ for any languages $A$ and $E$.}
@@ -928,11 +940,14 @@ substring gives:
 %% 6.47
 \item \begin{enumerate}[(a)]
   \item Every $\pmb{b}$ eventually followed by $\pmb{c}$ (not necessarily immediately):
-  Words where no $\pmb{b}$ appears after the last $\pmb{c}$ in a trailing position, i.e., every $\pmb{b}$ is followed somewhere later by $\pmb{c}$:
+  A word is in the language iff either it has no $\pmb{b}$ at all after its
+  last $\pmb{c}$, or it has no $\pmb{c}$ and then must contain only $\pmb{a}$s.
+  Thus the suffix after the last $\pmb{c}$ must lie in $\pmb{a}^*$:
   \[
-    (\pmb{a}\cup\pmb{c}\cup\pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{c})^*
+    \pmb{a}^* \;\cup\; (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{c}\pmb{a}^*
   \]
-  (Each $\pmb{b}$ is followed eventually by $\pmb{c}$ with possible $\pmb{a}$s and $\pmb{b}$s in between.)
+  Any $\pmb{b}$ before the last $\pmb{c}$ is discharged by that final
+  $\pmb{c}$, and after the last $\pmb{c}$ only $\pmb{a}$s may remain.
 
   \item Every $\pmb{b}$ immediately followed by $\pmb{c}$: (same as Exercise~6.11)
   \[
@@ -1092,26 +1107,44 @@ By Theorem~6.5, every FAD language has a regular expression.  Let
 $L_1=L(R_1)$ and $L_2=L(R_2)$.
 
 For union, work over the alphabet $\{\pmb{a},\pmb{b}\}$ with the regular
-language $\{\pmb{a},\pmb{b}\}$.  Define a substitution by
-$s(\pmb{a})=R_1$ and $s(\pmb{b})=R_2$.  Then
+expression
 \[
-\overline{s}(\{\pmb{a},\pmb{b}\})=L_1\cup L_2,
+Q=\pmb{a}\cup\pmb{b}.
 \]
-so $L_1\cup L_2$ is regular by Theorem~6.6.
+Define a substitution by
+\[
+s(\pmb{a})=R_1,\qquad s(\pmb{b})=R_2.
+\]
+Then the substituted expression is
+\[
+\overline{s}(Q)=R_1\cup R_2,
+\]
+whose language is $L_1\cup L_2$.  So $L_1\cup L_2$ is regular by Theorem~6.6.
 
-For concatenation, use the regular language $\{\pmb{ab}\}$ with the same
-substitution.  Then
+For concatenation, use the regular expression
 \[
-\overline{s}(\{\pmb{ab}\})=L_1\cdot L_2,
+Q=\pmb{ab}
 \]
-so $L_1\cdot L_2$ is regular.
+with the same substitution.  Then
+\[
+\overline{s}(Q)=R_1R_2,
+\]
+whose language is $L_1\cdot L_2$.  So $L_1\cdot L_2$ is regular.
 
 For Kleene closure, work over the alphabet $\{\pmb{a}\}$ and use the regular
-language $\{\pmb{a}\}^*$.  Define $s(\pmb{a})=R_1$.  Then
+expression
 \[
-\overline{s}(\{\pmb{a}\}^*)=L_1^*,
+Q=\pmb{a}^*.
 \]
-so $L_1^*$ is regular.
+Define
+\[
+s(\pmb{a})=R_1.
+\]
+Then
+\[
+\overline{s}(Q)=(R_1)^*,
+\]
+whose language is $L_1^*$.  So $L_1^*$ is regular.
 
 Thus Theorems~5.2, 5.4, and 5.5 follow as corollaries of Theorem~6.6.
 
