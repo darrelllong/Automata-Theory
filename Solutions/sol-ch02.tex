@@ -693,12 +693,21 @@ Yes. Short Pascal is a finite language (finitely many programs of length $<10^6$
 \begin{enumerate}
 \item \textbf{Hypothesis false, conclusion true.}
 
-First, the hypothesis ``$L$ is FAD'' is false. Intersect with the regular language
-$R=\mathbf a^3\mathbf b^*\mathbf c^*$:
+First, the hypothesis ``$L$ is FAD'' is false. For each $r\in\NN$, let
 \[
-L\cap R=\{\mathbf a^3\mathbf b^k\mathbf c^k\mid k\ge0\},
+x_r=\mathbf a^3\mathbf b^r.
 \]
-which is not regular (standard $\mathbf b^k\mathbf c^k$ argument). Hence $L$ is not FAD.
+If $r\neq s$, append the suffix $z=\mathbf c^r$. Then
+\[
+x_rz=\mathbf a^3\mathbf b^r\mathbf c^r\in L,
+\]
+but
+\[
+x_sz=\mathbf a^3\mathbf b^s\mathbf c^r\notin L
+\]
+because the $\mathbf b$- and $\mathbf c$-counts are unequal.
+So the strings $x_0,x_1,x_2,\ldots$ lie in distinct $R_L$-classes.
+Hence $R_L$ has infinite rank, and by Theorem 2.1 the language $L$ is not FAD.
 
 Now show the pumping \emph{conclusion} of Theorem 2.3 does hold for $L$.
 Take pumping length $N=3$. Let
@@ -1182,7 +1191,7 @@ $\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\ra
 \item \textbf{$L_2$ (binary powers of 2) is FAD; $L_{10}$ (decimal powers of 2) is not.}
 
 \begin{enumerate}
-\item $L_2=\{\mathbf{1},\mathbf{10},\mathbf{100},\mathbf{1000},\ldots\}$: strings that are \textbf{1} followed by any number of \textbf{0}s. Regular expression: $\mathbf{1}\mathbf{0}^*$. FAD (2-state DFA: $q_0\xrightarrow{\mathbf{1}}q_1\xrightarrow{\mathbf{0}}q_1$, $F=\{q_1\}$, dead state for other transitions).
+\item $L_2=\{\mathbf{1},\mathbf{10},\mathbf{100},\mathbf{1000},\ldots\}$: these are exactly the strings whose first symbol is $\mathbf 1$ and whose remaining symbols, if any, are all $\mathbf 0$. This is FAD: use a 2-state DFA with $q_0\xrightarrow{\mathbf{1}}q_1$, $q_1\xrightarrow{\mathbf{0}}q_1$, $F=\{q_1\}$, and a dead state for all other transitions.
 
 \item $L_{10}=\{1,2,4,8,16,32,\ldots\}$ (decimal powers of 2) is not FAD.
 \textit{Proof (by pumping lemma and modular arithmetic).}
