@@ -67,7 +67,8 @@
 %% 7.3
 \item \textbf{Prove Corollary~7.3.}
 
-Corollary~7.3 states (typically): if there is a homomorphism $\mu:A\to B$ between connected Mealy machines, then $B$ is a homomorphic image of $A$ and $A$ is equivalent to $B$.
+If there is a homomorphism $\mu:A\to B$ between connected Mealy machines, then
+$A$ and $B$ are equivalent.
 
 \begin{proof}
 By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.  Since $\mu(s_{0_A})=s_{0_B}$ (by definition of homomorphism), $\OBAR_A(s_{0_A},x)=\OBAR_B(s_{0_B},x)$, i.e., $f_A(x)=f_B(x)$ for all $x$.  Hence $A\equiv B$. \qed
@@ -77,9 +78,16 @@ By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.
 \item \textbf{Prove Corollary~7.4: $M$ is minimal iff $M$ is reduced and connected.}
 
 \begin{proof}
-($\Rightarrow$) If $M$ is minimal, it is the smallest machine computing $f_M$.  Any disconnected state can be removed without changing $f_M$ (since the machine starts at $s_0$ and disconnected states are unreachable).  Any reducible machine (with two equivalent states) can be merged.  Both would yield a smaller equivalent machine, contradicting minimality.  Hence $M$ is reduced and connected.
+($\Rightarrow$) If $M$ is minimal, then $M$ must be connected by
+Corollary~7.2.  Also, $M$ must be reduced by Corollary~7.3.  Hence $M$ is both
+reduced and connected.
 
-($\Leftarrow$) If $M$ is reduced and connected, assume for contradiction there is an equivalent machine $M'$ with fewer states.  By Theorem~7.5, the minimal machine is unique (up to isomorphism); since $M$ is reduced and connected, it has no redundant states.  If $M'$ has fewer states, some states of $M$ must correspond to multiple states of $M'$ via any homomorphism, but this contradicts $M$ being reduced.  Hence $M$ is minimal. \qed
+($\Leftarrow$) Assume that $M$ is reduced and connected.  Let $A$ be any minimal
+FST equivalent to $M$.  By Corollaries~7.2 and~7.3, $A$ is also reduced and
+connected.  Therefore Theorem~7.5 applies, so $A\cong M$.  Isomorphic machines
+have the same number of states, hence $\|S_A\|=\|S_M\|$.  Since $A$ was chosen
+minimal, no equivalent machine has fewer states than $A$, and therefore no
+equivalent machine has fewer states than $M$.  Thus $M$ is minimal. \qed
 \end{proof}
 
 %% 7.5
@@ -98,40 +106,76 @@ By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.
 %% 7.6
 \item \textbf{Prove Lemma~7.3 parts a--e.}
 
-(Lemma~7.3 typically gives properties of the equivalence relation $E_M$ on states of a Mealy machine.)
-
 \begin{enumerate}[(a)]
-  \item \textbf{Lemma~7.3a:} $s E_M t$ iff $\forall x\in\Sigma^*,\OBAR(s,x)=\OBAR(t,x)$.
+  \item \textbf{Part (a):} $E_{m+1,M}$ is a refinement of $E_{mM}$.
 
   \begin{proof}
-  $s E_M t$ is defined exactly this way: two states are equivalent iff they produce the same output on every input string.  This is the definition. \qed
+  If $s E_{m+1,M} t$, then by definition the states $s$ and $t$ agree on all
+  input strings of length at most $m+1$.  In particular, they agree on all
+  strings of length at most $m$.  Hence $s E_{mM} t$. \qed
   \end{proof}
 
-  \item \textbf{Lemma~7.3b:} $E_M$ is an equivalence relation.
+  \item \textbf{Part (b):} $E_M$ is a refinement of $E_{mM}$.
 
   \begin{proof}
-  \emph{Reflexivity:} $\OBAR(s,x)=\OBAR(s,x)$ trivially, so $s E_M s$.
-  \emph{Symmetry:} If $\OBAR(s,x)=\OBAR(t,x)$ for all $x$, then $\OBAR(t,x)=\OBAR(s,x)$ for all $x$.
-  \emph{Transitivity:} If $s E_M t$ and $t E_M u$, then $\OBAR(s,x)=\OBAR(t,x)=\OBAR(u,x)$ for all $x$. \qed
+  If $s E_M t$, then $\OBAR(s,x)=\OBAR(t,x)$ for every $x\in\Sigma^*$.  In
+  particular, the two states agree on all strings of length at most $m$, so
+  $s E_{mM} t$.  Therefore $E_M\subseteq E_{mM}$. \qed
   \end{proof}
 
-  \item \textbf{Lemma~7.3c:} $s E_M t$ implies $\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$ for all $\pmb{a}\in\Sigma$.
+  \item \textbf{Part (c):} If $E_{mM}=E_{m+1,M}$, then
+  $E_{m+k,M}=E_{mM}$ for every $k\in\NN$.
 
   \begin{proof}
-  For any $x\in\Sigma^*$ and $\pmb{a}\in\Sigma$:
-  $\OBAR(\delta(s,\pmb{a}),x)=\OBAR(s,\pmb{a}x)/\omega(s,\pmb{a})$ (the output of $\pmb{a}x$ from $s$, stripping the first output letter).
-  More precisely: $\OBAR(s,\pmb{a}x)=\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),x)$.
-  Since $s E_M t$: $\OBAR(s,\pmb{a}x)=\OBAR(t,\pmb{a}x)$, i.e., $\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),x)=\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),x)$.
-  Since $s E_M t$ implies $\omega(s,\pmb{a})=\omega(t,\pmb{a})$ (single-letter case), we get $\OBAR(\delta(s,\pmb{a}),x)=\OBAR(\delta(t,\pmb{a}),x)$ for all $x$, so $\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$. \qed
+  We use induction on $k$.  The case $k=0$ is trivial, and the case $k=1$ is the
+  hypothesis.  Assume $E_{m+k,M}=E_{mM}$ for some $k\ge 1$.  By part~(a),
+  $E_{m+k+1,M}\subseteq E_{m+k,M}=E_{mM}$, so only the reverse inclusion needs
+  proof.
+
+  Let $s E_{mM} t$.  Since $E_{mM}=E_{m+1,M}$, we also have $s E_{m+1,M} t$.
+  Therefore, for every $\pmb{a}\in\Sigma$, the successor states
+  $\delta(s,\pmb{a})$ and $\delta(t,\pmb{a})$ agree on all strings of length at
+  most $m$, so
+  \[
+    \delta(s,\pmb{a}) E_{mM} \delta(t,\pmb{a}).
+  \]
+  By the induction hypothesis this implies
+  \[
+    \delta(s,\pmb{a}) E_{m+k,M} \delta(t,\pmb{a})
+  \]
+  for every $\pmb{a}$.  Hence $s$ and $t$ agree on all strings of length at most
+  $m+k+1$, so $s E_{m+k+1,M} t$.  Thus $E_{mM}\subseteq E_{m+k+1,M}$, and
+  therefore $E_{m+k+1,M}=E_{mM}$. \qed
   \end{proof}
 
-  \item \textbf{Lemma~7.3d:} $E_M$ is the coarsest congruence consistent with the output function.
+  \item \textbf{Part (d):} There exists $m\le \|S\|$ such that
+  $E_{mM}=E_{m+1,M}$.
 
-  (This follows from 7.3a--c and the fact that any finer relation satisfying the same properties must equal $E_M$.)
+  \begin{proof}
+  By part~(a), the relations
+  \[
+    E_{0M},E_{1M},E_{2M},\ldots
+  \]
+  form a descending chain of refinements.  Every proper refinement increases the
+  number of equivalence classes by at least one.  Since there are only $\|S\|$
+  states, there can be at most $\|S\|$ equivalence classes.  Therefore the chain
+  cannot refine properly more than $\|S\|-1$ times, and for some
+  $m\le \|S\|$ we must have $E_{mM}=E_{m+1,M}$. \qed
+  \end{proof}
 
-  \item \textbf{Lemma~7.3e:} The quotient machine $M/_{E_M}$ is well-defined.
+  \item \textbf{Part (e):} If $E_{mM}=E_{m+1,M}$, then $E_{mM}=E_M$.
 
-  (Follows from Lemma~7.3c: $\delta_{E_M}$ is well-defined because equivalent states are mapped to equivalent successors.)
+  \begin{proof}
+  By part~(b), $E_M\subseteq E_{mM}$.  For the reverse inclusion, let
+  $s E_{mM} t$ and let $x\in\Sigma^*$ be arbitrary, say $|x|=k$.  By part~(c),
+  \[
+    E_{m+k,M}=E_{mM},
+  \]
+  so $s E_{m+k,M} t$.  By definition of $E_{m+k,M}$, the states $s$ and $t$
+  agree on every input string of length at most $m+k$, and in particular on the
+  string $x$.  Thus $\OBAR(s,x)=\OBAR(t,x)$.  Since $x$ was arbitrary, $s E_M t$.
+  Hence $E_{mM}\subseteq E_M$, and therefore $E_{mM}=E_M$. \qed
+  \end{proof}
 \end{enumerate}
 
 %% 7.7
@@ -163,53 +207,219 @@ By Exercise~7.2(b), $\OBAR_A(s_0,x)=\OBAR_B(\mu(s_0),x)$ for all $x\in\Sigma^*$.
 For a Moore machine $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 
 \begin{proof}
-By induction on $|x|$.
+We prove that
+\[
+  (\forall x\in\Sigma^*)(\forall y\in\Sigma^*)(\forall t\in S)\,
+  \OBAR(t,yx)=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)
+\]
+by induction on $|y|$.
 
-\emph{Base ($|x|=0$):}  $\OBAR(t,y\lambda)=\OBAR(t,y)=\OBAR(t,y)\cdot\lambda=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),\lambda)$, where $\OBAR(\cdot,\lambda)=\omega(\cdot)$ for the initial state output.
+\emph{Base ($|y|=0$):} If $y=\lambda$, then
+\[
+  \OBAR(t,\lambda x)=\OBAR(t,x)=\lambda\cdot\OBAR(t,x)
+  =\OBAR(t,\lambda)\cdot\OBAR(\DBAR(t,\lambda),x),
+\]
+since $\OBAR(t,\lambda)=\lambda$ and $\DBAR(t,\lambda)=t$.
 
-\emph{Step:}  Let $x=x'\pmb{a}$.  In a Moore machine, $\OBAR(t,x)=\omega(t)\cdot\omega(\delta(t,x_1))\cdots$ (output depends on states visited, not transitions).  The concatenation property follows from the state-sequence decomposition:
-$\OBAR(t,yx'\pmb{a})=\OBAR(t,yx')\cdot\omega(\DBAR(t,yx'))=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x')\cdot\omega(\DBAR(t,yx'))$.
-Since $\DBAR(t,yx')=\DBAR(\DBAR(t,y),x')$ (by Exercise~7.1b), this equals $\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x'\pmb{a})=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)$. \qed
+\emph{Step:} Assume the identity holds for a word $y$.  Let $\pmb{a}\in\Sigma$.
+Then, by Definition~7.17,
+\[
+  \OBAR(t,\pmb{a}yx)
+  =\omega(\delta(t,\pmb{a}))\cdot\OBAR(\delta(t,\pmb{a}),yx).
+\]
+Apply the inductive hypothesis with start state $\delta(t,\pmb{a})$:
+\[
+  \OBAR(t,\pmb{a}yx)
+  =\omega(\delta(t,\pmb{a}))\cdot\OBAR(\delta(t,\pmb{a}),y)\cdot
+    \OBAR(\DBAR(\delta(t,\pmb{a}),y),x).
+\]
+Again by Definition~7.17, the first two factors are exactly
+$\OBAR(t,\pmb{a}y)$, and by Exercise~7.1(b),
+$\DBAR(\delta(t,\pmb{a}),y)=\DBAR(t,\pmb{a}y)$.  Hence
+\[
+  \OBAR(t,\pmb{a}yx)=\OBAR(t,\pmb{a}y)\cdot\OBAR(\DBAR(t,\pmb{a}y),x).
+\]
+This proves the result. \qed
 \end{proof}
 
 %% 7.9
 \item \textbf{Prove Theorem~7.7.}
 
-Theorem~7.7 (typically): For any Mealy machine $M$, there exists an equivalent Moore machine $M'$.
-
 \begin{proof}
-Given $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, construct $M'=\langle\Sigma,\Gamma,S',s'_0,\delta',\omega'\rangle$ where:
-$S'=\{[s,\pmb{a}]\mid s\in S,\pmb{a}\in\Sigma\}\cup\{[s_0,\text{init}]\}$ (pairs of state and last input letter).
-$s'_0=[s_0,\text{init}]$.
-$\delta'([s,\pmb{b}],\pmb{a})=[\delta(s,\pmb{a}),\pmb{a}]$.
-$\omega'([s,\pmb{b}])=\omega(s,\pmb{b})$ (output is the Mealy output for the last transition).
-$\omega'(s'_0)=\lambda$ (or an arbitrary default).
+Let
+\[
+  A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle
+\]
+be a Moore machine, and let
+\[
+  M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega'\rangle
+\]
+be the corresponding Mealy machine from Definition~7.19, where
+$\omega'(s,\pmb{a})=\omega(\delta(s,\pmb{a}))$.
 
-By induction on $|x|$, $\OBAR_{M'}(s'_0,x)=\OBAR_M(s_0,x)$ for all $x\in\Sigma^+$.  Hence $M'\equiv M$. \qed
+We prove by induction on $|x|$ that
+\[
+  (\forall s\in S)(\forall x\in\Sigma^*)\,
+  \OBAR_M(s,x)=\OBAR_A(s,x).
+\]
+
+\emph{Base:} If $x=\lambda$, then both sides equal $\lambda$.
+
+\emph{Step:} Let $x=\pmb{a}y$.  Then
+\[
+  \OBAR_M(s,\pmb{a}y)
+  =\omega'(s,\pmb{a})\cdot\OBAR_M(\delta(s,\pmb{a}),y)
+  =\omega(\delta(s,\pmb{a}))\cdot\OBAR_M(\delta(s,\pmb{a}),y).
+\]
+By the inductive hypothesis applied to the state $\delta(s,\pmb{a})$,
+\[
+  \OBAR_M(s,\pmb{a}y)
+  =\omega(\delta(s,\pmb{a}))\cdot\OBAR_A(\delta(s,\pmb{a}),y)
+  =\OBAR_A(s,\pmb{a}y),
+\]
+by Definition~7.17.  Therefore $\OBAR_M(s,x)=\OBAR_A(s,x)$ for all $s$ and
+$x$.  In particular,
+$f_M(x)=\OBAR_M(s_0,x)=\OBAR_A(s_0,x)=f_A(x)$, so $M\equiv A$. \qed
 \end{proof}
 
 %% 7.10
 \item \textbf{Prove Theorem~7.8.}
 
-Theorem~7.8 (typically): For any Moore machine, there exists an equivalent Mealy machine.
-
 \begin{proof}
-Given Moore machine $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define Mealy machine $M'=\langle\Sigma,\Gamma,S,s_0,\delta,\omega'\rangle$ where $\omega'(s,\pmb{a})=\omega(\delta(s,\pmb{a}))$ (the output is the Moore output of the successor state).
+Let
+\[
+  M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle
+\]
+be a Mealy machine, and let
+\[
+  A=\langle\Sigma,\Gamma,S\times\Gamma,\langle s_0,\alpha\rangle,\delta',\omega'\rangle
+\]
+be the corresponding Moore machine from Definition~7.20.
 
-By induction on $|x|$: $\OBAR_{M'}(s_0,x)=\OBAR_M(s_0,x)$ for all $x\in\Sigma^*$.
+We prove the stronger statement
+\[
+  (\forall s\in S)(\forall \pmb{b}\in\Gamma)(\forall x\in\Sigma^*)\,
+  \OBAR_A(\langle s,\pmb{b}\rangle,x)=\OBAR_M(s,x).
+\]
 
-\emph{Base:} $\OBAR_{M'}(s_0,\lambda)=\lambda$ and $\OBAR_M(s_0,\lambda)=\omega(s_0)$... there is a discrepancy if the Moore machine outputs at each state including the initial.  The conversion shifts the output by one step, which is handled by noting that the initial output $\omega(s_0)$ of the Moore machine is prepended; the Mealy machine matches from the first letter onward. \qed
+\emph{Base:} If $x=\lambda$, then both sides are $\lambda$.
+
+\emph{Step:} Let $x=\pmb{a}y$.  By Definition~7.17 for Moore machines,
+\[
+  \OBAR_A(\langle s,\pmb{b}\rangle,\pmb{a}y)
+  =\omega'(\delta'(\langle s,\pmb{b}\rangle,\pmb{a}))\cdot
+    \OBAR_A(\delta'(\langle s,\pmb{b}\rangle,\pmb{a}),y).
+\]
+By Definition~7.20,
+\[
+  \delta'(\langle s,\pmb{b}\rangle,\pmb{a})
+  =\langle\delta(s,\pmb{a}),\omega(s,\pmb{a})\rangle
+\]
+and
+\[
+  \omega'(\langle\delta(s,\pmb{a}),\omega(s,\pmb{a})\rangle)=\omega(s,\pmb{a}).
+\]
+Hence
+\[
+  \OBAR_A(\langle s,\pmb{b}\rangle,\pmb{a}y)
+  =\omega(s,\pmb{a})\cdot
+    \OBAR_A(\langle\delta(s,\pmb{a}),\omega(s,\pmb{a})\rangle,y).
+\]
+Apply the inductive hypothesis:
+\[
+  \OBAR_A(\langle s,\pmb{b}\rangle,\pmb{a}y)
+  =\omega(s,\pmb{a})\cdot\OBAR_M(\delta(s,\pmb{a}),y)
+  =\OBAR_M(s,\pmb{a}y).
+\]
+Therefore $\OBAR_A(\langle s,\pmb{b}\rangle,x)=\OBAR_M(s,x)$ for all states and
+inputs.  In particular,
+\[
+  f_A(x)=\OBAR_A(\langle s_0,\alpha\rangle,x)=\OBAR_M(s_0,x)=f_M(x),
+\]
+so $A\equiv M$. \qed
 \end{proof}
 
 %% 7.11
 \item \textbf{Use Lemma~7.6 to find $E_C$ in Example~7.10.}
 
-Lemma~7.6 gives an iterative algorithm: compute $E_0,E_1,E_2,\ldots$ until stabilization.  Starting from $E_0$ (all states equivalent), refine using the output function and transition function of the machine in Example~7.10.  The specific $E_C$ depends on the machine; apply the iterative refinement until no further partitioning occurs.  (Since Example~7.10 is in the printed text, the reader should apply the algorithm to the specific machine given.)
+For the Moore machine $C$ of Example~7.10,
+\[
+  \omega(r_0)=\omega(r_2)=\pmb{0},\qquad
+  \omega(r_1)=\omega(r_3)=\pmb{1}.
+\]
+Hence
+\[
+  E_{0C}=\bigl\{\{r_0,r_2\},\{r_1,r_3\}\bigr\}.
+\]
+Now apply Lemma~7.6(b).  The states $r_0$ and $r_2$ are separated at the next
+stage because
+\[
+  \delta(r_0,\pmb{a})=r_0,\qquad \delta(r_2,\pmb{a})=r_1,
+\]
+and $r_0$ and $r_1$ are in different $E_{0C}$-classes.  Likewise, $r_1$ and
+$r_3$ are separated because
+\[
+  \delta(r_1,\pmb{a})=r_0,\qquad \delta(r_3,\pmb{a})=r_1,
+\]
+again landing in different $E_{0C}$-classes.  Therefore
+\[
+  E_{1C}=\bigl\{\{r_0\},\{r_1\},\{r_2\},\{r_3\}\bigr\}.
+\]
+Since $E_{1C}$ is already the identity relation, the process has stabilized and
+\[
+  E_C=E_{1C}.
+\]
 
 %% 7.12
 \item \textbf{Homomorphism from machine $M$ (Example~7.11) to machine $B$ (Example~7.2).}
 
-Define $\mu:S_M\to S_B$ by mapping each state of $M$ to the corresponding state of $B$ that produces the same output behavior.  Verify: (i) $\mu(s_{0_M})=s_{0_B}$; (ii) $\mu(\delta_M(s,\pmb{a}))=\delta_B(\mu(s),\pmb{a})$ for all $s,\pmb{a}$; (iii) $\omega_M(s,\pmb{a})=\omega_B(\mu(s),\pmb{a})$.  The specific mapping depends on the machines in Examples~7.11 and~7.2.
+Let the states of $M$ be $\{r_0,r_1,r_2,r_3\}$, as in Example~7.11, and let
+the states of $B$ be $\{s_0,s_1\}$.  Define
+\[
+  \mu(r_0)=\mu(r_1)=s_0,\qquad \mu(r_2)=\mu(r_3)=s_1.
+\]
+This is the natural choice because in Example~7.11 the states $r_0,r_1$ print
+only $\pmb{0}$, while $r_2,r_3$ print only $\pmb{1}$, exactly as $s_0$ and
+$s_1$ do in Example~7.2.
+
+We check the homomorphism conditions.
+\begin{enumerate}[(i)]
+  \item $\mu(r_0)=s_0$, so start states are preserved.
+  \item For $\pmb{a}$, Example~7.11 gives
+  \[
+    \delta_M(r_0,\pmb{a})=\delta_M(r_1,\pmb{a})=r_0,\qquad
+    \delta_M(r_2,\pmb{a})=\delta_M(r_3,\pmb{a})=r_1.
+  \]
+  Therefore
+  \[
+    \mu(\delta_M(r_i,\pmb{a}))=s_0=\delta_B(\mu(r_i),\pmb{a})
+  \]
+  for every $i$, since $\delta_B(s_0,\pmb{a})=\delta_B(s_1,\pmb{a})=s_0$ in
+  Example~7.2.
+
+  For $\pmb{b}$, Example~7.11 gives
+  \[
+    \delta_M(r_0,\pmb{b})=\delta_M(r_1,\pmb{b})=r_2,\qquad
+    \delta_M(r_2,\pmb{b})=\delta_M(r_3,\pmb{b})=r_3.
+  \]
+  Hence
+  \[
+    \mu(\delta_M(r_i,\pmb{b}))=s_1=\delta_B(\mu(r_i),\pmb{b})
+  \]
+  for every $i$, since $\delta_B(s_0,\pmb{b})=\delta_B(s_1,\pmb{b})=s_1$.
+  \item The output table of Example~7.11 gives
+  \[
+    \omega_M(r_0,\pmb{a})=\omega_M(r_0,\pmb{b})
+    =\omega_M(r_1,\pmb{a})=\omega_M(r_1,\pmb{b})=\pmb{0},
+  \]
+  and
+  \[
+    \omega_M(r_2,\pmb{a})=\omega_M(r_2,\pmb{b})
+    =\omega_M(r_3,\pmb{a})=\omega_M(r_3,\pmb{b})=\pmb{1}.
+  \]
+  These agree exactly with the outputs of $B$ at $s_0$ and $s_1$.
+\end{enumerate}
+Thus $\mu$ is a homomorphism from $M$ onto $B$.
 
 %% 7.13
 \item \textbf{Prove $\OBAR(t,\pmb{a})=\omega(t,\pmb{a})$ for any FST.}
@@ -296,42 +506,334 @@ $\OBAR(x_1x_2\cdots x_m)=\pmb{x}\cdot x_1\cdots x_{m-1}$ (output is $\pmb{x}$ fo
 \item \textbf{Circuit for vending machine (Example~7.1).}
 
 \begin{enumerate}[(a)]
-  \item \textbf{EOS:} No strong reason; the vending machine processes coins continuously without a defined end signal.  The output (dispensing a product) happens at a specific state transition, not at the end.
+  \item \textbf{EOS:} No.  The machine operates continuously, and the candy bar is
+  dispensed on the transition where the button is pushed.
 
-  \item \textbf{SOS:} Useful to reset the machine to the initial state (0 cents accumulated); corresponds to powering on or resetting the machine.
+  \item \textbf{SOS:} Yes.  As the text points out, a vending machine should reset
+  to its zero-credit state after power is restored.
 
-  \item \textbf{Input encoding:} If inputs are $\pmb{5}$ (nickel), $\pmb{10}$ (dime), $\pmb{25}$ (quarter), that's 3 symbols, needing $\lceil\log_2 3\rceil=2$ bits.  E.g., $00=\pmb{5}$, $01=\pmb{10}$, $10=\pmb{25}$, $11=$unused.
+  \item \textbf{Input encoding:} We want codes for
+  $\{\pmb{b},\pmb{d},\pmb{n},\pmb{q},\<SOS\>\}$, so three bits suffice.
+  One convenient assignment is
+  \[
+    \pmb{b}=000,\qquad \pmb{d}=001,\qquad \pmb{n}=010,\qquad
+    \pmb{q}=011,\qquad \<SOS\>=111,
+  \]
+  with $100,101,110$ unused.
 
-  \item \textbf{Output encoding:} If outputs are ``nothing'' or ``dispense product,'' 1 bit suffices.
+  \item \textbf{Output encoding:} The output alphabet is
+  \[
+    \{\pmb{c}_0,\pmb{c}_1,\pmb{c}_2,\pmb{c}_3,\pmb{c}_4,\pmb{d'},\pmb{n'},
+    \pmb{q'},\pmb{\varphi}\},
+  \]
+  so four bits are needed.  Let
+  \[
+    \pmb{c}_0=0000,\ \pmb{c}_1=0001,\ \pmb{c}_2=0010,\ \pmb{c}_3=0011,\ 
+    \pmb{c}_4=0100,\ \pmb{d'}=0101,\ \pmb{n'}=0110,\ \pmb{q'}=0111,\ 
+    \pmb{\varphi}=1000.
+  \]
 
-  \item \textbf{State encoding:} If the machine has states $\{s_0,s_5,s_{10},s_{15},s_{20}\}$ (5 states), need $\lceil\log_2 5\rceil=3$ bits.
+  \item \textbf{State encoding:} Write $s_i$ for the state representing
+  $5i$\cent\ for $0\leq i\leq 10$.  Then 11 states require four bits; for
+  example
+  \[
+    s_0=0000,\ s_1=0001,\ \ldots,\ s_{10}=1010,
+  \]
+  with $1011,1100,1101,1110,1111$ unused.
 
-  \item \textbf{$t_2$ truth table:} Depends on the specific state encoding chosen.  After encoding states and inputs as binary, construct the Karnaugh map for next-state bit $t_2$ and minimize.
+  \item \textbf{$t_2$ truth table and Boolean function:}
+  \[
+  \begin{array}{c|ccccc}
+  & \pmb{b} & \pmb{d} & \pmb{n} & \pmb{q} & \<SOS\> \\
+  \hline
+  s_0   & 0&1&0&0&0\\
+  s_1   & 0&1&1&1&0\\
+  s_2   & 1&0&1&1&0\\
+  s_3   & 1&0&0&0&0\\
+  s_4   & 0&1&0&0&0\\
+  s_5   & 0&1&1&1&0\\
+  s_6   & 0&1&1&1&0\\
+  s_7   & 0&1&1&1&0\\
+  s_8   & 0&0&0&0&0\\
+  s_9   & 0&0&0&0&0\\
+  s_{10}& 0&1&1&1&0
+  \end{array}
+  \]
+  and one minimized sum-of-products is
+  \[
+  \begin{aligned}
+  t_2'={}&(\neg t_4\wedge \neg t_2\wedge t_1\wedge \neg a_3\wedge a_2)\ \vee\
+          (t_3\wedge t_2\wedge \neg a_3\wedge a_2)\ \vee\\
+        &(\neg t_4\wedge \neg t_3\wedge t_2\wedge \neg a_2\wedge \neg a_1)\ \vee\
+          (t_4\wedge t_2\wedge \neg a_3\wedge a_1)\ \vee\\
+        &(t_2\wedge \neg t_1\wedge \neg a_3\wedge a_2)\ \vee\
+          (t_3\wedge \neg a_2\wedge a_1)\ \vee\
+          (\neg t_4\wedge \neg t_2\wedge \neg a_2\wedge a_1).
+  \end{aligned}
+  \]
 
-  \item \textbf{$w_2$ truth table:} Similarly for output bit $w_2$.
+  \item \textbf{$w_2$ truth table and Boolean function:}
+  \[
+  \begin{array}{c|ccccc}
+  & \pmb{b} & \pmb{d} & \pmb{n} & \pmb{q} & \<SOS\> \\
+  \hline
+  s_0   & 0&0&0&0&0\\
+  s_1   & 0&0&0&0&0\\
+  s_2   & 0&0&0&0&0\\
+  s_3   & 0&0&0&0&0\\
+  s_4   & 0&0&0&0&0\\
+  s_5   & 0&0&0&0&0\\
+  s_6   & 0&0&1&1&0\\
+  s_7   & 0&0&1&1&0\\
+  s_8   & 1&0&1&1&0\\
+  s_9   & 1&0&1&1&0\\
+  s_{10}& 0&0&1&1&0
+  \end{array}
+  \]
+  and a minimized form is
+  \[
+    w_2=(t_4\wedge \neg t_2\wedge \neg a_1)\ \vee\
+        (t_3\wedge t_2\wedge \neg a_3\wedge a_2)\ \vee\
+        (t_4\wedge \neg a_3\wedge a_2).
+  \]
 
-  \item The complete circuit combines the minimized Boolean functions into a synchronous sequential circuit with flip-flops for state and combinational logic for next-state and output.
+  \item The complete circuit uses four D flip-flops for the state bits
+  $t_1,t_2,t_3,t_4$, three input lines $a_1,a_2,a_3$, and four output networks
+  $w_1,w_2,w_3,w_4$.  The full transition/output table is exactly the one read
+  from Figure~7.2: for $0\leq i\leq 5$, pushing $\pmb{b}$ leaves $s_i$ fixed with
+  output $\pmb{\varphi}$, while $\pmb{n},\pmb{d},\pmb{q}$ send $s_i$ to
+  $s_{i+1},s_{i+2},s_{i+5}$ with output $\pmb{\varphi}$; for $6\leq i\leq 10$,
+  pushing $\pmb{b}$ sends $s_i$ to $s_0$ with output $\pmb{c}_{i-6}$, while
+  $\pmb{n},\pmb{d},\pmb{q}$ self-loop with outputs $\pmb{n'},\pmb{d'},\pmb{q'}$;
+  and $\<SOS\>$ sends every real state to $s_0$ with output
+  $\pmb{\varphi}$.  The other next-state bits and output bits are obtained from
+  this same table in exactly the same way.
 \end{enumerate}
 
 %% 7.22
 \item \textbf{Circuit for modified vending machine (Exercise~7.14).}
 
-Similar to Exercise~7.21 but with the coin-return input $\pmb{r}$ added.  The input encoding now needs 2 bits for 4 inputs ($\pmb{5},\pmb{10},\pmb{25},\pmb{r}$).  The state encoding is the same.  The truth table for $t_3$ includes the new $\pmb{r}$ transitions.
+\begin{enumerate}[(a)]
+  \item \textbf{EOS:} No.
+
+  \item \textbf{Input encoding:}  We again keep a reset code, so use three bits
+  for
+  $\{\pmb{b},\pmb{d},\pmb{n},\pmb{q},\pmb{r},\<SOS\>\}$:
+  \[
+    \pmb{b}=000,\qquad \pmb{d}=001,\qquad \pmb{n}=010,\qquad
+    \pmb{q}=011,\qquad \pmb{r}=100,\qquad \<SOS\>=111.
+  \]
+
+  \item \textbf{Output encoding:}  There are now ten outputs
+  $\{\pmb{a},\pmb{c}_0,\pmb{c}_1,\pmb{c}_2,\pmb{c}_3,\pmb{c}_4,\pmb{d'},
+  \pmb{n'},\pmb{q'},\pmb{\varphi}\}$, so four bits suffice.  One convenient code
+  is
+  \[
+    \pmb{a}=0000,\ \pmb{c}_0=0001,\ \pmb{c}_1=0010,\ \pmb{c}_2=0011,\ 
+    \pmb{c}_3=0100,\ \pmb{c}_4=0101,\ \pmb{d'}=0110,\ \pmb{n'}=0111,\ 
+    \pmb{q'}=1000,\ \pmb{\varphi}=1001.
+  \]
+
+  \item \textbf{State encoding:}  Keep the state encoding from Exercise~7.21:
+  $s_i$ means $5i$\cent\ for $0\leq i\leq 10$, with
+  $s_0=0000,\ldots,s_{10}=1010$.
+
+  \item \textbf{$t_3$ truth table and Boolean function:}
+  \[
+  \begin{array}{c|cccccc}
+  & \pmb{b} & \pmb{d} & \pmb{n} & \pmb{q} & \pmb{r} & \<SOS\> \\
+  \hline
+  s_0   & 0&0&0&1&0&0\\
+  s_1   & 0&0&0&1&0&0\\
+  s_2   & 0&1&0&1&0&0\\
+  s_3   & 0&1&1&0&0&0\\
+  s_4   & 1&1&1&0&0&0\\
+  s_5   & 1&1&1&0&0&0\\
+  s_6   & 0&1&1&1&0&0\\
+  s_7   & 0&1&1&1&0&0\\
+  s_8   & 0&0&0&0&0&0\\
+  s_9   & 0&0&0&0&0&0\\
+  s_{10}& 0&0&0&0&0&0
+  \end{array}
+  \]
+  and one minimized form is
+  \[
+  \begin{aligned}
+  t_3'={}&(\neg t_4\wedge t_2\wedge \neg t_1\wedge \neg a_3\wedge a_1)\ \vee\
+          (t_2\wedge t_1\wedge a_2\wedge \neg a_1)\ \vee\\
+        &(t_3\wedge a_2\wedge \neg a_1)\ \vee\
+          (\neg t_4\wedge t_2\wedge \neg a_2\wedge a_1)\ \vee\
+          (t_3\wedge t_2\wedge \neg a_3\wedge a_2)\ \vee\\
+        &(t_3\wedge \neg t_2\wedge \neg a_3\wedge \neg a_2)\ \vee\
+          (\neg t_4\wedge \neg t_3\wedge \neg t_2\wedge \neg a_3\wedge a_2\wedge a_1).
+  \end{aligned}
+  \]
+
+  \item \textbf{$w_3$ truth table and Boolean function:}
+  \[
+  \begin{array}{c|cccccc}
+  & \pmb{b} & \pmb{d} & \pmb{n} & \pmb{q} & \pmb{r} & \<SOS\> \\
+  \hline
+  s_0   & 0&0&0&0&0&0\\
+  s_1   & 0&0&0&0&0&0\\
+  s_2   & 0&0&0&0&0&0\\
+  s_3   & 0&0&0&0&0&0\\
+  s_4   & 0&0&0&0&0&0\\
+  s_5   & 0&0&0&0&0&0\\
+  s_6   & 0&1&1&0&0&0\\
+  s_7   & 0&1&1&0&0&0\\
+  s_8   & 0&1&1&0&0&0\\
+  s_9   & 1&1&1&0&0&0\\
+  s_{10}& 1&1&1&0&0&0
+  \end{array}
+  \]
+  and a minimized form is
+  \[
+  \begin{aligned}
+  w_3={}&(t_4\wedge \neg a_2\wedge a_1)\ \vee\
+         (t_4\wedge t_1\wedge \neg a_3\wedge \neg a_1)\ \vee\
+         (t_3\wedge t_2\wedge \neg a_2\wedge a_1)\ \vee\\
+       &(t_3\wedge t_2\wedge a_2\wedge \neg a_1)\ \vee\
+         (t_4\wedge a_2\wedge \neg a_1)\ \vee\
+         (t_4\wedge t_2\wedge \neg a_3\wedge \neg a_1).
+  \end{aligned}
+  \]
+
+  \item The complete circuit is obtained from Exercise~7.21 by adding one new
+  input column for $\pmb{r}$ and changing the output table accordingly.  Every
+  real state goes to $s_0$ on $\pmb{r}$ and produces $\pmb{a}$; every real state
+  goes to $s_0$ on $\<SOS\>$ and produces $\pmb{\varphi}$; and all
+  $\pmb{b},\pmb{d},\pmb{n},\pmb{q}$ entries are unchanged from
+  Exercise~7.21.  The other state and output bits are obtained from this same
+  combined table.
+\end{enumerate}
 
 %% 7.23
 \item \textbf{Circuit for Example~7.2.}
 
-Apply the standard encoding conventions: assign binary codes to states, inputs, and outputs; write the next-state and output truth tables; minimize Boolean functions; draw the sequential logic circuit.
+Let $a_1=0$ code $\pmb{a}$ and $a_1=1$ code $\pmb{b}$; let $t_1=0$ code $s_0$
+and $t_1=1$ code $s_1$; and let $w_1=0,1$ code the output symbols
+$\pmb{0},\pmb{1}$.  Then
+\[
+\begin{array}{cc|c}
+t_1 & a_1 & t_1'\\
+\hline
+0&0&0\\
+0&1&1\\
+1&0&0\\
+1&1&1
+\end{array}
+\qquad
+\begin{array}{cc|c}
+t_1 & a_1 & w_1\\
+\hline
+0&0&0\\
+0&1&0\\
+1&0&1\\
+1&1&1
+\end{array}
+\]
+so the minimized equations are
+\[
+  t_1'=a_1,\qquad w_1=t_1.
+\]
+Thus the circuit uses one D flip-flop holding $t_1$, the input line $a_1$
+feeding the D input, and the present-state line $t_1$ feeding the output line
+$w_1$.
 
 %% 7.24
 \item \textbf{Circuit for Example~7.6.}
 
-Same procedure as Exercise~7.23.
+Encode the four states of Figure~7.4 by
+\[
+  t_0=00,\qquad t_1=01,\qquad t_2=10,\qquad t_3=11,
+\]
+let $a_1=0$ code $\pmb{a}$ and $a_1=1$ code $\pmb{b}$, and let $w_1=0,1$ code
+the output symbols $\pmb{0},\pmb{1}$.  To avoid confusion with the state names,
+write the two state bits as $u_2u_1$.
+
+The truth tables are
+\[
+\begin{array}{ccc|cc}
+u_2&u_1&a_1&u_2'&u_1'\\
+\hline
+0&0&0&0&1\\
+0&0&1&0&0\\
+0&1&0&1&0\\
+0&1&1&0&0\\
+1&0&0&1&0\\
+1&0&1&1&1\\
+1&1&0&0&1\\
+1&1&1&0&0
+\end{array}
+\qquad
+\begin{array}{ccc|c}
+u_2&u_1&a_1&w_1\\
+\hline
+0&0&0&0\\
+0&0&1&0\\
+0&1&0&0\\
+0&1&1&0\\
+1&0&0&0\\
+1&0&1&1\\
+1&1&0&0\\
+1&1&1&0
+\end{array}
+\]
+and the minimized equations are
+\[
+  u_2'=(u_2\wedge \neg u_1)\ \vee\ (\neg u_2\wedge u_1\wedge \neg a_1),
+\]
+\[
+  u_1'=(\neg u_2\wedge \neg u_1\wedge \neg a_1)\ \vee\
+        (u_2\wedge \neg u_1\wedge a_1)\ \vee\
+        (u_2\wedge u_1\wedge \neg a_1),
+\]
+\[
+  w_1=u_2\wedge \neg u_1\wedge a_1.
+\]
+So the circuit has two D flip-flops holding $u_2,u_1$, a combinational network
+for $u_2',u_1'$, and one output gate computing $w_1$.
 
 %% 7.25
 \item \textbf{Circuit for FST $D$ (Example~7.8).}
 
-Same procedure.
+Encode the states of Figure~7.5 by
+\[
+  q_0=00,\qquad q_1=01,\qquad q_2=10,
+\]
+leaving $11$ as a don't-care code.  Let $a_1=0$ code $\pmb{a}$ and $a_1=1$ code
+$\pmb{b}$, and let $u_2u_1$ again denote the state bits.  Then
+\[
+\begin{array}{ccc|cc}
+u_2&u_1&a_1&u_2'&u_1'\\
+\hline
+0&0&0&0&1\\
+0&0&1&0&0\\
+0&1&0&1&0\\
+0&1&1&0&0\\
+1&0&0&1&0\\
+1&0&1&0&0
+\end{array}
+\qquad
+\begin{array}{ccc|c}
+u_2&u_1&a_1&w_1\\
+\hline
+0&0&0&0\\
+0&0&1&0\\
+0&1&0&0\\
+0&1&1&0\\
+1&0&0&0\\
+1&0&1&1
+\end{array}
+\]
+with minimized equations
+\[
+  u_2'=\neg a_1\wedge (u_1\vee u_2),\qquad
+  u_1'=\neg u_2\wedge \neg u_1\wedge \neg a_1,\qquad
+  w_1=u_2\wedge a_1.
+\]
+Thus the circuit again has two D flip-flops and one output gate.
 
 %% 7.26
 \item \textbf{Connected is not sufficient for minimality.}
@@ -346,56 +848,213 @@ Both states output $\pmb{0}$ on $\pmb{a}$ and alternate, so $s_0 E_M s_1$.  $M$ 
 $\OBAR(x_1\cdots x_m)=\pmb{xx}x_1\cdots x_{m-2}$.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Mealy sextuple:}  States encode the last two inputs: $\{s_{00},s_{01},s_{10},s_{11},s_{x0},s_{x1},s_{xx}\}$ where the subscripts denote the last two letters ($\pmb{a}=0$, $\pmb{b}=1$, $\pmb{x}$=not yet seen).
-  Initial state: $s_{xx}$.
-  $\omega(s_{xx},\pmb{a})=\pmb{x}$, $\omega(s_{xa},\sigma)=\pmb{x}$, $\omega(s_{ab},\sigma)=\pmb{a}$, etc.
-  The output at any transition is the letter that was processed two steps ago.
+  \item \textbf{Mealy sextuple:}
 
-  \item--\item[d.] The diagrams and Moore version follow the same pattern as Exercise~7.20 but with 7 states encoding the last two inputs.
+  Let
+  \[
+    M=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},S,s_{xx},\delta,\omega\rangle,
+  \]
+  where
+  \[
+    S=\{s_{xx},s_{xa},s_{xb},s_{aa},s_{ab},s_{ba},s_{bb}\}.
+  \]
+  The state remembers the last two input symbols, using $\pmb{x}$ as a padding
+  symbol before enough input has been seen.  The transition function is
+  \[
+    \delta(s_{uv},\sigma)=s_{v\sigma},
+  \]
+  where $u,v\in\{\pmb{x},\pmb{a},\pmb{b}\}$ and the only states of this form that
+  occur are the seven listed above.  The output function is
+  \[
+    \omega(s_{uv},\sigma)=u.
+  \]
+  Thus the machine prints the symbol seen two steps earlier; from the start
+  state $s_{xx}$ the first two outputs are $\pmb{x}$.
+
+  \item \textbf{Mealy machine diagram:}
+
+  The state transition diagram has the seven states above.  Every arrow into
+  $s_{v\sigma}$ is labeled $\sigma/u$, where $u$ is the first component of the
+  source state $s_{uv}$.  Concretely,
+  \[
+    s_{xx}\xrightarrow{\pmb{a}/\pmb{x}}s_{xa},\qquad
+    s_{xx}\xrightarrow{\pmb{b}/\pmb{x}}s_{xb},
+  \]
+  \[
+    s_{xa}\xrightarrow{\pmb{a}/\pmb{x}}s_{aa},\qquad
+    s_{xa}\xrightarrow{\pmb{b}/\pmb{x}}s_{ab},
+  \]
+  \[
+    s_{xb}\xrightarrow{\pmb{a}/\pmb{x}}s_{ba},\qquad
+    s_{xb}\xrightarrow{\pmb{b}/\pmb{x}}s_{bb},
+  \]
+  and from each state $s_{uv}$ with $u,v\in\{\pmb{a},\pmb{b}\}$,
+  \[
+    s_{uv}\xrightarrow{\pmb{a}/u}s_{va},\qquad
+    s_{uv}\xrightarrow{\pmb{b}/u}s_{vb}.
+  \]
+
+  \item \textbf{Moore sextuple:}
+
+  Let
+  \[
+    A=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},S,s_{xx},\delta,\eta\rangle,
+  \]
+  where $S$ and $\delta$ are exactly as above, and the Moore output function is
+  \[
+    \eta(s_{uv})=u.
+  \]
+  Since the destination state records the two most recent input symbols, its
+  first component is precisely the letter seen two steps earlier.
+
+  \item \textbf{Moore machine diagram:}
+
+  Use the same transition graph as in part~(b), but label each state by its
+  Moore output:
+  \[
+    s_{xx}/\pmb{x},\qquad s_{xa}/\pmb{x},\qquad s_{xb}/\pmb{x},
+  \]
+  \[
+    s_{aa}/\pmb{a},\qquad s_{ab}/\pmb{a},\qquad
+    s_{ba}/\pmb{b},\qquad s_{bb}/\pmb{b}.
+  \]
 \end{enumerate}
 
 %% 7.28
 \item \begin{enumerate}[(a)]
-  \item If $M_1$ is not reduced: two states $s,t\in S_1$ with $s E_{M_1} t$ but $s\neq t$.  Then $\mu(s)$ and $\mu(t)$ would both map to the same state in any reduced machine, but $\mu$ might be forced to map them differently (since $M_1$ is not reduced, $\mu$ need not be injective).  The isomorphism fails because it would not be one-to-one.
-  \item Without reducedness, $\mu$ fails to be injective (part~(d) of Exercise~7.19).
+  \item Take $M_1=C$ from Example~7.6 and $M_2=D$ from Example~7.8.  These two
+  transducers are equivalent, but $C$ has four states while $D$ has only three,
+  so they cannot be isomorphic.  Thus the conclusion of Theorem~7.5 fails if
+  $M_1$ is not reduced.
+
+  \item The missing property is that the proposed map $\mu$ need not be
+  one-to-one.
 \end{enumerate}
 
 %% 7.29
 \item \begin{enumerate}[(a)]
-  \item If $M_1$ is not connected: some state $s\in S_1$ is not reachable from $s_{0_1}$.  Then $\mu(s)$ is not defined (since $\mu(s)=\DBAR_2(s_{0_2},x)$ requires $x$ to reach $s$, which is impossible).
-  \item The property lost is surjectivity ($\mu$ onto $S_2$) or the domain of $\mu$ is incomplete.
+  \item Let $M_2=D$ from Example~7.8.  Let $M_1$ be obtained from $D$ by adding
+  one extra unreachable state $r$ with the same outgoing arrows as $q_0$:
+  \[
+    \delta(r,\pmb{a})=q_1,\qquad \delta(r,\pmb{b})=r,\qquad
+    \omega(r,\pmb{a})=\omega(r,\pmb{b})=\pmb{0}.
+  \]
+  Then $M_1$ and $M_2$ are equivalent, but they are not isomorphic because
+  $M_1$ has an extra unreachable state.
+
+  \item The missing property is that $\mu$ need not even be well defined on all
+  of $S_1$, since the definition of $\mu(s)$ requires a string reaching $s$ from
+  the start state.
 \end{enumerate}
 
 %% 7.30
 \item \begin{enumerate}[(a)]
-  \item If $M_2$ is not reduced: $\mu$ cannot be an isomorphism because $M_1$ and $M_2$ might have different numbers of states (since two equivalent states of $M_2$ could be collapsed).
-  \item The property lost is injectivity or the counting argument fails.
+  \item Again take $M_1=D$ from Example~7.8 and $M_2=C$ from Example~7.6.
+  They are equivalent, but $C$ is not reduced and has one extra state, so the
+  machines are not isomorphic.
+
+  \item The missing property is that $\mu$ need not be onto $S_2$.
 \end{enumerate}
 
 %% 7.31
 \item \begin{enumerate}[(a)]
-  \item If $M_2$ is not connected: $\mu$ onto $S_2$ might not hold if unreachable states of $M_2$ have no preimage.
-  \item Surjectivity of $\mu$ fails.
+  \item Let $M_1=D$ from Example~7.8, and let $M_2$ be obtained from $D$ by
+  adjoining one extra unreachable state $r$ with
+  \[
+    \delta(r,\pmb{a})=q_1,\qquad \delta(r,\pmb{b})=r,\qquad
+    \omega(r,\pmb{a})=\omega(r,\pmb{b})=\pmb{0}.
+  \]
+  Then $M_1\equiv M_2$, but the two machines are not isomorphic because $M_2$
+  has an unreachable state that $M_1$ does not have.
+
+  \item The missing property is surjectivity of $\mu$ onto $S_2$.
 \end{enumerate}
 
 %% 7.32
 \item \begin{enumerate}[(a)]
-  \item FST $A$ not reduced and $A^c$ not reduced: Let $A$ have two equivalent states; the connected portion $A^c$ (connected component of $A$) might still have those two equivalent states.
+  \item Let $A=C$ from Example~7.6.  The machine $C$ is connected, so $A^c=A$.
+  But $C$ is not reduced, since Example~7.8 shows that it has an equivalent
+  three-state quotient.  Hence $A$ is not reduced and $A^c$ is not reduced.
 
-  \item FST $A$ not reduced and $A^c$ reduced: Take $A$ with an isolated duplicate state not in the connected portion; $A^c$ is the connected part which might already be reduced.
+  \item Let $A$ be obtained from $D$ in Example~7.8 by adjoining one extra
+  unreachable state $r$ satisfying
+  \[
+    \delta(r,\pmb{a})=q_1,\qquad \delta(r,\pmb{b})=r,\qquad
+    \omega(r,\pmb{a})=\omega(r,\pmb{b})=\pmb{0}.
+  \]
+  Then $r$ is equivalent to $q_0$, so $A$ is not reduced.  However, the
+  connected part $A^c$ throws away $r$ and is exactly $D$, which is reduced.
 \end{enumerate}
 
 %% 7.33
 \item \textbf{Complete proof of Theorem~7.4.}
 
 \begin{enumerate}[(a)]
-  \item $\OBAR(t,y)=\OBAR_{E_M}([t]_{E_M},y)$: By induction on $|y|$, using the fact that $\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$ and $\delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}$.
+  \item $\OBAR(t,y)=\OBAR_{E_M}([t]_{E_M},y)$:
 
-  \item $M/_{E_M}\equiv M$: Both produce the same output for all input strings (from part~(a)).
+  \begin{proof}
+  By induction on $|y|$.
 
-  \item $M/_{E_M}$ is reduced: Suppose $[s]_{E_M} E_{M/E_M} [t]_{E_M}$.  Then for all $y$, $\OBAR_{E_M}([s]_{E_M},y)=\OBAR_{E_M}([t]_{E_M},y)$, which means $\OBAR(s,y)=\OBAR(t,y)$ for all $y$, so $s E_M t$, so $[s]_{E_M}=[t]_{E_M}$.
+  \emph{Base:} If $y=\lambda$, then both sides equal $\lambda$.
 
-  \item If $M$ connected, $M/_{E_M}$ connected: Every equivalence class $[t]_{E_M}$ is reachable in $M/_{E_M}$ because $t$ is reachable in $M$ (via some $x$), and $[\DBAR(s_0,x)]_{E_M}=\DBAR_{E_M}([s_0]_{E_M},x)$.
+  \emph{Step:} Let $y=\pmb{a}x$.  Then
+  \[
+    \OBAR_{E_M}([t]_{E_M},\pmb{a}x)
+    =\omega_{E_M}([t]_{E_M},\pmb{a})\cdot
+      \OBAR_{E_M}(\delta_{E_M}([t]_{E_M},\pmb{a}),x).
+  \]
+  By the definitions of $\omega_{E_M}$ and $\delta_{E_M}$, this is
+  \[
+    \omega(t,\pmb{a})\cdot
+      \OBAR_{E_M}([\delta(t,\pmb{a})]_{E_M},x).
+  \]
+  Apply the inductive hypothesis to the state $\delta(t,\pmb{a})$:
+  \[
+    \OBAR_{E_M}([t]_{E_M},\pmb{a}x)
+    =\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),x)
+    =\OBAR(t,\pmb{a}x).
+  \]
+  \end{proof}
+
+  \item $M/_{E_M}\equiv M$:
+
+  \begin{proof}
+  Part~(a) with $t=s_0$ gives
+  \[
+    \OBAR_{E_M}([s_0]_{E_M},y)=\OBAR(s_0,y)
+  \]
+  for every input string $y$.  Since $[s_0]_{E_M}$ is the start state of
+  $M/_{E_M}$, the two machines define the same translation.
+  \end{proof}
+
+  \item $M/_{E_M}$ is reduced:
+
+  \begin{proof}
+  Suppose $[s]_{E_M}$ and $[t]_{E_M}$ are equivalent states of $M/_{E_M}$.  Then
+  for every $y\in\Sigma^*$,
+  \[
+    \OBAR_{E_M}([s]_{E_M},y)=\OBAR_{E_M}([t]_{E_M},y).
+  \]
+  By part~(a), this implies
+  \[
+    \OBAR(s,y)=\OBAR(t,y)
+  \]
+  for every $y$.  Hence $s E_M t$, so $[s]_{E_M}=[t]_{E_M}$.  Therefore
+  $M/_{E_M}$ is reduced.
+  \end{proof}
+
+  \item If $M$ connected, $M/_{E_M}$ connected:
+
+  \begin{proof}
+  Let $[t]_{E_M}$ be any state of the quotient.  Since $M$ is connected, there
+  exists $x\in\Sigma^*$ with $\DBAR(s_0,x)=t$.  We claim that
+  \[
+    \DBAR_{E_M}([s_0]_{E_M},x)=[t]_{E_M}.
+  \]
+  This follows by induction on $|x|$ from the definition of $\delta_{E_M}$.
+  Hence every quotient state is reachable from the quotient start state, so the
+  quotient is connected.
+  \end{proof}
 \end{enumerate}
 
 %% 7.34
@@ -426,67 +1085,544 @@ $\DBAR(s_0,x)$ is some state $s$.  Then $f(xy)=\OBAR(s_0,xy)=\OBAR(s_0,x)\cdot\O
 \item \textbf{Elevator transducer.}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Input alphabet:} $\Sigma=\{\pmb{u},\pmb{d},\pmb{1},\pmb{2},\pmb{none}\}$ ($\pmb{u}$=up button floor 1, $\pmb{d}$=down button floor 2, $\pmb{1}$=button inside for floor 1, $\pmb{2}$=button inside for floor 2, $\pmb{none}$=no button pressed).
+  \item \textbf{Input alphabet:}  Since several buttons may be active
+  simultaneously, use
+  \[
+    \Sigma=\{0,1\}^4,
+  \]
+  with an input written $\langle u,d,c_1,c_2\rangle$.  Here $u$ is the hall call
+  ``up from floor 1,'' $d$ is the hall call ``down from floor 2,'' and
+  $c_1,c_2$ are the car buttons for floors 1 and 2.
 
-  \item \textbf{Output alphabet:} $\Gamma=\{\text{close},\text{open},\text{goto1},\text{goto2}\}$.
+  \item \textbf{Output alphabet:}
+  \[
+    \Gamma=\{\text{close},\text{open},\text{goto1},\text{goto2}\}.
+  \]
 
-  \item \textbf{Mealy sextuple:} States represent (floor, door-state): e.g., $s_{1c}$ = floor 1, doors closed; $s_{1o}$ = floor 1, doors open; $s_{2c}$ = floor 2, closed; $s_{2o}$ = floor 2, open.  Transitions handle button presses and move accordingly.
+  \item \textbf{Mealy sextuple:}  Let
+  \[
+    M=\langle \Sigma,\Gamma,S,(1,\text{closed},\emptyset),\delta,\omega\rangle,
+  \]
+  where
+  \[
+    S=\{(f,m,P)\mid f\in\{1,2\},\ m\in\{\text{open},\text{closed}\},\
+    P\subseteq\{1,2\}\}.
+  \]
+  Here $f$ is the current floor, $m$ is the door status, and $P$ is the set of
+  pending requests.  For an input $x=\langle u,d,c_1,c_2\rangle$, define
+  \[
+    R(x)=\{\,1\mid u=1\text{ or }c_1=1\,\}\cup
+         \{\,2\mid d=1\text{ or }c_2=1\,\},
+  \]
+  and let $P^*=P\cup R(x)$.  Then:
+  \begin{enumerate}[(i)]
+    \item if $m=\text{open}$, then
+    \[
+      \delta((f,\text{open},P),x)=(f,\text{closed},P^*),\qquad
+      \omega((f,\text{open},P),x)=\text{close};
+    \]
+    \item if $m=\text{closed}$ and $f\in P^*$, then
+    \[
+      \delta((f,\text{closed},P),x)=(f,\text{open},P^*\setminus\{f\}),\qquad
+      \omega((f,\text{closed},P),x)=\text{open};
+    \]
+    \item if $m=\text{closed}$, $f=1$, and $2\in P^*$, then
+    \[
+      \delta((1,\text{closed},P),x)=(2,\text{closed},P^*\setminus\{2\}),\qquad
+      \omega((1,\text{closed},P),x)=\text{goto2};
+    \]
+    \item if $m=\text{closed}$, $f=2$, and $1\in P^*$, then
+    \[
+      \delta((2,\text{closed},P),x)=(1,\text{closed},P^*\setminus\{1\}),\qquad
+      \omega((2,\text{closed},P),x)=\text{goto1};
+    \]
+    \item if $m=\text{closed}$ and $P^*=\emptyset$, then
+    \[
+      \delta((f,\text{closed},\emptyset),x)=(f,\text{closed},\emptyset),\qquad
+      \omega((f,\text{closed},\emptyset),x)=\text{close}.
+    \]
+  \end{enumerate}
 
-  \item--\item[g.] Detailed diagrams and circuit depend on the exact state machine chosen; the above framework is the formal starting point.
+  \item \textbf{Mealy machine diagram:}  The diagram is exactly the directed graph
+  of the sextuple in part~(c): each state is a triple $(f,m,P)$, and each edge
+  is labeled by the corresponding input/output pair from the five cases above.
+
+  \item \textbf{Moore sextuple:}  A Moore version can use
+  \[
+    S'=\{C_{f,P},O_{f,P}\mid f\in\{1,2\},\ P\subseteq\{1,2\}\}\cup
+       \{U_P,D_P\mid P\subseteq\{1,2\}\},
+  \]
+  where $C_{f,P}$ means ``at floor $f$, doors closed, pending set $P$,''
+  $O_{f,P}$ means ``doors open,'' $U_P$ means ``travelling to floor 2,'' and
+  $D_P$ means ``travelling to floor 1.''  The output function is
+  \[
+    \omega(C_{f,P})=\text{close},\qquad \omega(O_{f,P})=\text{open},\qquad
+    \omega(U_P)=\text{goto2},\qquad \omega(D_P)=\text{goto1}.
+  \]
+  The transition function is the Moore analogue of part~(c):
+  \[
+    \delta(O_{f,P},x)=C_{f,P\cup R(x)},
+  \]
+  \[
+    \delta(C_{1,P},x)=
+    \begin{cases}
+      O_{1,P^*\setminus\{1\}} & \text{if }1\in P^*,\\
+      U_{P^*} & \text{if }1\notin P^*\text{ and }2\in P^*,\\
+      C_{1,P^*} & \text{if }P^*=\emptyset,
+    \end{cases}
+  \]
+  \[
+    \delta(C_{2,P},x)=
+    \begin{cases}
+      O_{2,P^*\setminus\{2\}} & \text{if }2\in P^*,\\
+      D_{P^*} & \text{if }2\notin P^*\text{ and }1\in P^*,\\
+      C_{2,P^*} & \text{if }P^*=\emptyset,
+    \end{cases}
+  \]
+  \[
+    \delta(U_P,x)=C_{2,(P\cup R(x))\setminus\{2\}},\qquad
+    \delta(D_P,x)=C_{1,(P\cup R(x))\setminus\{1\}}.
+  \]
+
+  \item \textbf{Moore machine diagram:}  The diagram is the directed graph of the
+  Moore sextuple in part~(e).
+
+  \item \textbf{Circuit:}  The Mealy machine in part~(c) has 16 states, so four
+  state bits suffice.  The input is already given as four bits
+  $\langle u,d,c_1,c_2\rangle$, and the outputs can be encoded by two bits, for
+  example
+  \[
+    \text{close}=00,\qquad \text{open}=01,\qquad
+    \text{goto1}=10,\qquad \text{goto2}=11.
+  \]
+  The required circuit is therefore the standard four-flip-flop sequential
+  network implementing the transition and output rules from part~(c).
 \end{enumerate}
 
 %% 7.38
 \item \textbf{Mealy machine for traffic signal (Example~7.16).}
 
-Build a Mealy machine with states representing each phase of the traffic cycle (east-west green, east-west yellow, north-south green, north-south yellow, etc.) and transitions triggered by sensor inputs and timer signals, with outputs being the light configurations.
+Let
+\[
+  \Sigma=\{\langle 0,0\rangle,\langle 0,1\rangle,\langle 1,0\rangle,\langle 1,1\rangle\}
+\]
+on the sensor pair $\langle \alpha,\beta\rangle$.  A correct Mealy machine is
+obtained from the Moore machine of Figure~7.15 by placing the output of the
+destination state on each edge.  Use the state set
+$\{s_0,s_1,s_2,s_3,s_4,s_5,s_6,s_7\}$ with
+\[
+\begin{aligned}
+o(s_0)&=\langle G,R,G,R\rangle, &
+o(s_1)&=\langle Y,R,Y,R\rangle,\\
+o(s_2)&=\langle R,R,R,G\rangle, &
+o(s_3)&=\langle G,R,Y,R\rangle,\\
+o(s_4)&=\langle R,R,R,Y\rangle, &
+o(s_5)&=\langle G,Y,R,R\rangle,\\
+o(s_6)&=\langle G,G,R,R\rangle, &
+o(s_7)&=\langle Y,Y,R,R\rangle.
+\end{aligned}
+\]
+The transition table is
+\[
+\begin{array}{c|cccc}
+& \langle 0,0\rangle & \langle 0,1\rangle & \langle 1,0\rangle & \langle 1,1\rangle\\
+\hline
+s_0 & s_0 & s_1 & s_3 & s_1\\
+s_1 & s_2 & s_2 & s_2 & s_2\\
+s_2 & s_4 & s_2 & s_4 & s_2\\
+s_3 & s_6 & s_6 & s_6 & s_6\\
+s_4 & s_0 & s_0 & s_6 & s_6\\
+s_5 & s_0 & s_0 & s_0 & s_0\\
+s_6 & s_5 & s_7 & s_6 & s_6\\
+s_7 & s_2 & s_2 & s_2 & s_2
+\end{array}
+\]
+and the Mealy output on any transition $(s,x)$ is
+\[
+  \omega(s,x)=o(\delta(s,x)).
+\]
 
 %% 7.39
 \item \textbf{Traffic signal with walk signals.}
 
-Extend the machine from Exercise~7.38 with additional states for the walk phase.
-
 \begin{enumerate}[(a)]
-  \item Input: add $\gamma$ (pedestrian button); output: add $\pmb{W}/\pmb{D}$ component.
-  \item--\item[c.] Diagrams extend the traffic signal machine with walk-phase states.
+  \item The new alphabets are
+  \[
+    \Sigma=\{0,1\}^3
+  \]
+  on $\langle \alpha,\beta,\gamma\rangle$, and
+  \[
+    \Gamma=\{R,Y,G\}^4\times\{D,W\}.
+  \]
+
+  \item \textbf{Moore machine:}  Use the states
+  \[
+    s_0,\ s_1^D,\ s_1^W,\ s_2^D,\ s_2^W,\ s_3,\ s_4,\ s_5,\ s_6,\ s_7,
+  \]
+  with outputs
+  \[
+  \begin{aligned}
+  \omega(s_0)&=\langle G,R,G,R,D\rangle, &
+  \omega(s_1^D)&=\langle Y,R,Y,R,D\rangle,\\
+  \omega(s_1^W)&=\langle Y,R,Y,R,D\rangle, &
+  \omega(s_2^D)&=\langle R,R,R,G,D\rangle,\\
+  \omega(s_2^W)&=\langle R,R,R,G,W\rangle, &
+  \omega(s_3)&=\langle G,R,Y,R,D\rangle,\\
+  \omega(s_4)&=\langle R,R,R,Y,D\rangle, &
+  \omega(s_5)&=\langle G,Y,R,R,D\rangle,\\
+  \omega(s_6)&=\langle G,G,R,R,D\rangle, &
+  \omega(s_7)&=\langle Y,Y,R,R,D\rangle.
+  \end{aligned}
+  \]
+  The transition policy is:
+  \begin{enumerate}[(i)]
+    \item from $s_0$, stay in $s_0$ on $000$; go to $s_3$ on $100$; and whenever
+    $\beta=1$ or $\gamma=1$, go to $s_1^W$ if $\gamma=1$ and to $s_1^D$
+    otherwise;
+    \item $s_1^D$ goes to $s_2^D$ on every input, and $s_1^W$ goes to $s_2^W$ on
+    every input;
+    \item $s_2^W$ goes to $s_2^D$ on every input, so the walk signal reverts to
+    $D$ before the side-street light turns yellow;
+    \item $s_2^D$ stays in $s_2^D$ while $\beta=1$ and goes to $s_4$ when
+    $\beta=0$;
+    \item $s_4$ goes to $s_6$ if $\alpha=1$ and to $s_0$ otherwise;
+    \item $s_3$ goes to $s_6$ on every input;
+    \item $s_6$ stays in $s_6$ while $\alpha=1$; if $\alpha=0$ and either
+    $\beta=1$ or $\gamma=1$, it goes to $s_7$; otherwise it goes to $s_5$;
+    \item $s_5$ goes to $s_0$ on every input, and $s_7$ goes to $s_2^W$ when
+    $\gamma=1$ and to $s_2^D$ otherwise.
+  \end{enumerate}
+
+  \item \textbf{Mealy machine:}  Use the same directed graph as in part~(b), but
+  place on each edge the output of the destination state.  If $o(t)$ denotes the
+  five-component output attached to the Moore state $t$, then
+  \[
+    \omega(s,x)=o(\delta(s,x)).
+  \]
 \end{enumerate}
 
 %% 7.40
 \item \textbf{Intersection with left-turn signals.}
 
-Extend with states for left-turn phases triggered by sensors $\gamma$ and $\delta$.
+Let
+\[
+  \Sigma=\{0,1\}^4
+\]
+on $\langle \alpha,\beta,\gamma,\delta\rangle$, and let
+\[
+  \Gamma=\{R,Y,G\}^8
+\]
+with coordinates ordered by signals $1,2,3,4,5,6,7,8$ in Figure~7.20.
+
+A convenient Moore controller uses the twelve phase states
+\[
+  EW_G,\ EW_Y,\ NS_G,\ NS_Y,\ WB_G,\ WB_Y,\ NB_G,\ NB_Y,\ EB_G,\ EB_Y,\ SB_G,\ SB_Y,
+\]
+with outputs
+\[
+\begin{aligned}
+EW_G&=\langle G,R,G,R,R,R,R,R\rangle, &
+EW_Y&=\langle Y,R,Y,R,R,R,R,R\rangle,\\
+NS_G&=\langle R,G,R,G,R,R,R,R\rangle, &
+NS_Y&=\langle R,Y,R,Y,R,R,R,R\rangle,\\
+WB_G&=\langle G,R,R,R,G,R,R,R\rangle, &
+WB_Y&=\langle Y,R,R,R,Y,R,R,R\rangle,\\
+NB_G&=\langle R,G,R,R,R,G,R,R\rangle, &
+NB_Y&=\langle R,Y,R,R,R,Y,R,R\rangle,\\
+EB_G&=\langle R,R,G,R,R,R,G,R\rangle, &
+EB_Y&=\langle R,R,Y,R,R,R,Y,R\rangle,\\
+SB_G&=\langle R,R,R,G,R,R,R,G\rangle, &
+SB_Y&=\langle R,R,R,Y,R,R,R,Y\rangle.
+\end{aligned}
+\]
+One explicit transition policy is:
+\begin{enumerate}[(i)]
+  \item start in $EW_G$; remain there while no sensor is active, and move to
+  $EW_Y$ as soon as some request appears;
+  \item from $EW_Y$, give priority to the two sensor-controlled lanes on the
+  north-south side: go to $NB_G$ if $\beta=1$, else to $SB_G$ if $\delta=1$,
+  else to $NS_G$;
+  \item $NB_G$ stays in $NB_G$ while $\beta=1$, then goes to $NB_Y$, and
+  $NB_Y$ goes to $SB_G$ if $\delta=1$ and otherwise to $NS_G$;
+  \item $SB_G$ stays in $SB_G$ while $\delta=1$, then goes to $SB_Y$, and
+  $SB_Y$ goes to $NS_G$;
+  \item $NS_G$ remains in $NS_G$ while $\alpha=\gamma=0$, and moves to $NS_Y$
+  once some east-west left-turn request appears;
+  \item from $NS_Y$, give priority first to $\alpha$ and then to $\gamma$: go
+  to $WB_G$ if $\alpha=1$, else to $EB_G$ if $\gamma=1$, else to $EW_G$;
+  \item $WB_G$ stays in $WB_G$ while $\alpha=1$, then goes to $WB_Y$, and
+  $WB_Y$ goes to $EB_G$ if $\gamma=1$ and otherwise to $EW_G$;
+  \item $EB_G$ stays in $EB_G$ while $\gamma=1$, then goes to $EB_Y$, and
+  $EB_Y$ goes to $EW_G$.
+\end{enumerate}
+This gives a complete Moore machine.  The corresponding Mealy machine uses the
+same graph and places the output of the destination phase on each transition.
 
 %% 7.41
 \item \textbf{Base-3 adder.}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Input alphabet:} Pairs of base-3 digits: $\Sigma=\{0,1,2\}\times\{0,1,2\}$ (9 symbols), or encoded as digit pairs.
-  \item \textbf{Output alphabet:} $\Gamma=\{0,1,2\}$ (one base-3 digit per step, with carry handled by state).
-  \item \textbf{States:} $\{s_0,s_1\}$ where $s_0$ = no carry, $s_1$ = carry.
-  $\delta(s_0,(a,b))=s_1$ if $a+b\ge 3$, else $s_0$.
-  $\omega(s_0,(a,b))=(a+b)\bmod 3$.
-  $\delta(s_1,(a,b))=s_1$ if $a+b+1\ge 3$, else $s_0$.
-  $\omega(s_1,(a,b))=(a+b+1)\bmod 3$.
-  \item For the Moore version: states encode both the carry and the last output digit.
-  \item Circuit: implement $\delta$ and $\omega$ as combinational logic; use one flip-flop for the carry bit.
+  \item \textbf{Input alphabet:}
+  \[
+    \Sigma=\{0,1,2\}\times\{0,1,2\}.
+  \]
+
+  \item \textbf{Output alphabet:}
+  \[
+    \Gamma=\{0,1,2\}.
+  \]
+
+  \item \textbf{Mealy machine:}  Let
+  \[
+    M=\langle \Sigma,\Gamma,\{C_0,C_1\},C_0,\delta,\omega\rangle,
+  \]
+  where $C_0$ means ``no carry'' and $C_1$ means ``carry 1.''  For
+  $\langle a,b\rangle\in\Sigma$, define
+  \[
+    \delta(C_i,\langle a,b\rangle)=
+    \begin{cases}
+      C_1 & \text{if }a+b+i\ge 3,\\
+      C_0 & \text{if }a+b+i\le 2,
+    \end{cases}
+  \]
+  and
+  \[
+    \omega(C_i,\langle a,b\rangle)\equiv a+b+i \pmod 3.
+  \]
+  This is exactly the base-3 analogue of the binary adder in Example~7.15.
+
+  \item \textbf{Moore machine:}  A corresponding Moore machine is
+  \[
+    A=\langle \Sigma,\Gamma,S,q_*,\delta',\eta\rangle,
+  \]
+  where
+  \[
+    S=\{q_*\}\cup\{q_{ij}\mid i\in\{0,1\},\ j\in\{0,1,2\}\},
+  \]
+  the output function is
+  \[
+    \eta(q_*)=0,\qquad \eta(q_{ij})=j,
+  \]
+  and the transition function is
+  \[
+    \delta'(q_*,\langle a,b\rangle)=q_{c,s},
+  \]
+  \[
+    \delta'(q_{ij},\langle a,b\rangle)=q_{c',s'},
+  \]
+  where
+  \[
+    s\equiv a+b \pmod 3,\qquad
+    c=
+    \begin{cases}
+      1 & \text{if }a+b\ge 3,\\
+      0 & \text{if }a+b\le 2,
+    \end{cases}
+  \]
+  and
+  \[
+    s'\equiv a+b+i \pmod 3,\qquad
+    c'=
+    \begin{cases}
+      1 & \text{if }a+b+i\ge 3,\\
+      0 & \text{if }a+b+i\le 2.
+    \end{cases}
+  \]
+  Thus the Moore state records both the current carry and the digit that is to
+  be printed.
+
+  \item \textbf{Circuit with \<EOS\> and \<SOS\>:}  Encode each trit by two bits,
+  for example $0=00$, $1=01$, $2=10$, and encode a column
+  $\langle a,b\rangle$ by the four bits of the two trits.  Reserve extra input
+  codes for $\<SOS\>$ and $\<EOS\>$.  One flip-flop stores the carry bit $c$.
+  The $\<SOS\>$ input forces $c=0$.  On an ordinary input column
+  $\langle a,b\rangle$, the combinational network computes
+  \[
+    s\equiv a+b+c \pmod 3,\qquad
+    c'=
+    \begin{cases}
+      1 & \text{if }a+b+c\ge 3,\\
+      0 & \text{if }a+b+c\le 2,
+    \end{cases}
+  \]
+  and sends the two-bit code of $s$ to the output device.  On $\<EOS\>$, the
+  circuit outputs the final carry digit: print $1$ if $c=1$ and $0$ if $c=0$,
+  then reset the flip-flop to $0$.  This is the required circuit implementation
+  of the Mealy machine in part~(c).
 \end{enumerate}
 
 %% 7.42
 \item \textbf{Base-10 adder.}
 
-Similar to Exercise~7.41 but with $\Sigma=\{0,\ldots,9\}\times\{0,\ldots,9\}$, $\Gamma=\{0,\ldots,9\}$, and 2 states (carry/no-carry).  Formulas: $\omega(s_c,(a,b))=(a+b+c)\bmod 10$; $\delta(s_c,(a,b))=s_{(a+b+c)\ge 10}$.
+\begin{enumerate}[(a)]
+  \item \textbf{Input and output alphabets:}
+
+  \[
+    \Sigma=\{0,1,\ldots,9\}\times\{0,1,\ldots,9\},\qquad
+    \Gamma=\{0,1,\ldots,9\}.
+  \]
+  As in Example~7.15, one input symbol is a column of two digits, and the
+  transducer reads the columns from right to left.
+
+  \item \textbf{Mealy sextuple:}
+
+  Let
+  \[
+    M=\langle\Sigma,\Gamma,\{N,C\},N,\delta,\omega\rangle,
+  \]
+  where $N$ means ``no carry'' and $C$ means ``carry.''  For
+  $(i,j)\in\Sigma$, define
+  \[
+    \omega(N,(i,j))=(i+j)\bmod 10,\qquad
+    \delta(N,(i,j))=
+    \begin{cases}
+      C & \text{if } i+j\ge 10,\\
+      N & \text{if } i+j<10,
+    \end{cases}
+  \]
+  and
+  \[
+    \omega(C,(i,j))=(i+j+1)\bmod 10,\qquad
+    \delta(C,(i,j))=
+    \begin{cases}
+      C & \text{if } i+j+1\ge 10,\\
+      N & \text{if } i+j+1<10.
+    \end{cases}
+  \]
+
+  \item \textbf{Moore sextuple:}
+
+  A convenient Moore version uses one start state $s$ together with states
+  \[
+    q_{c,d}\qquad(c\in\{0,1\},\ d\in\{0,1,\ldots,9\}),
+  \]
+  where $c$ records the carry to be used on the next column and $d$ is the most
+  recently produced output digit.  Let
+  \[
+    A=\langle\Sigma,\Gamma,\{s\}\cup\{q_{c,d}\mid c\in\{0,1\},0\le d\le 9\},
+    s,\delta',\eta\rangle.
+  \]
+  The output function is
+  \[
+    \eta(q_{c,d})=d,
+  \]
+  while the value of $\eta(s)$ is irrelevant because the start state's output is
+  not used on empty input.  For $(i,j)\in\Sigma$, define
+  \[
+    \delta'(s,(i,j))=q_{c',d'},
+  \]
+  where
+  \[
+    d'=(i+j)\bmod 10,\qquad
+    c'=
+    \begin{cases}
+      1 & \text{if } i+j\ge 10,\\
+      0 & \text{if } i+j<10,
+    \end{cases}
+  \]
+  and in general
+  \[
+    \delta'(q_{c,d},(i,j))=q_{c',d'},
+  \]
+  where
+  \[
+    d'=(i+j+c)\bmod 10,\qquad
+    c'=
+    \begin{cases}
+      1 & \text{if } i+j+c\ge 10,\\
+      0 & \text{if } i+j+c<10.
+    \end{cases}
+  \]
+
+  \item \textbf{Circuit:}
+
+  Using \<EOS\> and \<SOS\>, encode each decimal digit in BCD and use one extra
+  carry flip-flop.  The combinational part computes
+  \[
+    s=i+j+c,
+  \]
+  outputs the BCD code for $s\bmod 10$, and feeds back the carry bit indicating
+  whether $s\ge 10$.  The \<SOS\> input initializes the carry flip-flop to $0$,
+  and the \<EOS\> input can be used to report whether a final overflow carry is
+  present.
+\end{enumerate}
 
 %% 7.43
 \item \textbf{Left-to-right addition is not FTD.}
 
-In right-to-left addition (Example~7.15), the carry propagates from right to left, allowing online processing.  In left-to-right addition, the carry at each position depends on all digits to the right (which have not yet been seen), requiring unbounded lookahead.  By the pumping lemma for FTD functions: consider adding two numbers where carrying propagates across an arbitrarily long prefix.  For any $n$-state machine, two numbers differing only in the rightmost digits but affecting carries at position 1 can be constructed; the machine would need $>n$ states to distinguish all carry lengths.  Hence $f_4$ is not FTD.
+Assume for contradiction that the left-to-right addition function $f_4$ is FTD.
+Then Exercise~7.36 applies: for every $n$, whenever two inputs agree on their
+first $n$ symbols, the first $n$ output symbols must also agree.
+
+Fix any $n\ge 1$.  Consider the following two length-$(n+1)$ input strings of
+column pairs:
+\[
+  x=\langle 0,0\rangle\langle 0,1\rangle^{n-1}\langle 1,1\rangle
+  \qquad\text{and}\qquad
+  y=\langle 0,0\rangle\langle 0,1\rangle^{n-1}\langle 0,1\rangle.
+\]
+These two inputs agree on their first $n$ symbols.  However, their first output
+symbols are different when the addition is carried out correctly from right to
+left:
+\begin{itemize}
+  \item For $x$, the last column $\langle 1,1\rangle$ generates a carry.  Each
+  middle column $\langle 0,1\rangle$ propagates that carry, so a carry reaches
+  the first column $\langle 0,0\rangle$.  Hence the first output bit is
+  $\pmb{1}$.
+  \item For $y$, the last column $\langle 0,1\rangle$ generates no carry, so no
+  carry reaches the first column.  Hence the first output bit is $\pmb{0}$.
+\end{itemize}
+Thus the first output symbols of $f_4(x)$ and $f_4(y)$ differ, even though the
+first $n$ input symbols of $x$ and $y$ are identical.  This contradicts
+Exercise~7.36.  Therefore $f_4$ is not FTD.
 
 %% 7.44
 \item \textbf{Prove Theorem~7.9 for MSM.}
 
 \begin{enumerate}[(a)]
-  \item $M/_{E_M}\equiv M$: Same argument as Exercise~7.33(b).
-  \item $M/_{E_M}$ is reduced: Same argument as Exercise~7.33(c).
-  \item If $M$ connected, $M/_{E_M}$ connected: Same as Exercise~7.33(d).
+  \item $M/_{E_M}\equiv M$:
+
+  \begin{proof}
+  As in the Mealy case, one first proves by induction on $|y|$ that for every
+  state $t$ of $M$,
+  \[
+    \OBAR_M(t,y)=\OBAR_{E_M}([t]_{E_M},y).
+  \]
+  The base case is immediate since both sides are $\lambda$ on empty input.  For
+  the inductive step, use the Moore-machine definition of \OBAR, together with
+  the facts that
+  \[
+    \delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}
+    \quad\text{and}\quad
+    \omega_{E_M}([s]_{E_M})=\omega(s).
+  \]
+  Taking $t=s_0$ yields
+  $f_{M/_{E_M}}=f_M$, so the quotient is equivalent to $M$.
+  \end{proof}
+
+  \item $M/_{E_M}$ is reduced:
+
+  \begin{proof}
+  Suppose $[s]_{E_M}$ and $[t]_{E_M}$ are equivalent states of the quotient.
+  Then
+  \[
+    \OBAR_{E_M}([s]_{E_M},y)=\OBAR_{E_M}([t]_{E_M},y)
+  \]
+  for all $y\in\Sigma^*$.  By part~(a), this implies
+  $\OBAR_M(s,y)=\OBAR_M(t,y)$ for all $y$, so $s E_M t$.  Therefore
+  $[s]_{E_M}=[t]_{E_M}$, and the quotient is reduced.
+  \end{proof}
+
+  \item If $M$ connected, $M/_{E_M}$ connected:
+
+  \begin{proof}
+  Let $[t]_{E_M}$ be any state of the quotient.  Since $M$ is connected, there
+  exists $x\in\Sigma^*$ with $\DBAR_M(s_0,x)=t$.  By induction on $|x|$,
+  \[
+    \DBAR_{E_M}([s_0]_{E_M},x)=[\DBAR_M(s_0,x)]_{E_M}=[t]_{E_M}.
+  \]
+  Thus every quotient state is reachable, so the quotient is connected.
+  \end{proof}
 \end{enumerate}
 
 %% 7.45
@@ -500,47 +1636,241 @@ Suppose the minimal Moore machine $M$ for $f$ is not reduced.  Then two states $
 \item \textbf{Theorem~7.10 for MSM.}
 
 \begin{enumerate}[(a)]
-  \item $M$ minimal iff $M$ is reduced and connected: Same argument as for Mealy machines (Exercise~7.4).
-  \item $M^c/_{E_{M^c}}$ is minimal: $M^c$ is the connected portion (remove unreachable states); $M^c/_{E_{M^c}}$ is the quotient (merge equivalent states).  The result is reduced (by quotient) and connected (by taking connected portion), hence minimal.
+  \item $M$ minimal iff $M$ is reduced and connected:
+
+  \begin{proof}
+  If $M$ is minimal, then it must be connected, since unreachable states can be
+  deleted without changing the translation.  It must also be reduced by
+  Theorem~7.9(d).  Hence minimality implies reduced and connected.
+
+  Conversely, assume $M$ is reduced and connected.  Let $B$ be any Moore machine
+  equivalent to $M$.  Replace $B$ by $B^c/_{E_{B^c}}$ if necessary.  By
+  Theorem~7.9(a)--(c), this replacement is equivalent to $B$, reduced, and
+  connected, and it has no more states than $B$.  So it is enough to prove that
+  every reduced connected Moore machine equivalent to $M$ has at least as many
+  states as $M$.
+
+  Let $B$ now be reduced, connected, and equivalent to $M$.  Since $M$ is
+  connected, for each state $s\in S_M$ choose a string $x_s\in\Sigma^*$ such
+  that
+  \[
+    \DBAR_M(s_{0_M},x_s)=s.
+  \]
+  Define
+  \[
+    \mu(s)=\DBAR_B(s_{0_B},x_s).
+  \]
+  We show that $\mu$ is well defined and one-to-one.
+
+  First, suppose $x_s$ and $y_s$ both reach the same state $s$ in $M$.  For any
+  $z\in\Sigma^*$, Theorem~7.6 gives
+  \[
+    \OBAR_M(s,z)=\OBAR_B(\DBAR_B(s_{0_B},x_s),z)
+  \]
+  and also
+  \[
+    \OBAR_M(s,z)=\OBAR_B(\DBAR_B(s_{0_B},y_s),z),
+  \]
+  because $M$ and $B$ are equivalent and both starts have processed the same
+  prefixes $x_s$ and $y_s$.  Thus the two states of $B$ reached by $x_s$ and
+  $y_s$ are equivalent.  Since $B$ is reduced, they are equal.  Hence $\mu$ is
+  well defined.
+
+  Next, suppose $\mu(s)=\mu(t)$.  Then for every $z\in\Sigma^*$,
+  \[
+    \OBAR_M(s,z)=\OBAR_B(\mu(s),z)=\OBAR_B(\mu(t),z)=\OBAR_M(t,z),
+  \]
+  so $s E_M t$.  Because $M$ is reduced, $s=t$.  Therefore $\mu$ is injective.
+
+  Since $\mu$ is an injective map from $S_M$ into $S_B$,
+  \[
+    \|S_M\|\le \|S_B\|.
+  \]
+  Hence no equivalent Moore machine can have fewer states than $M$, and $M$ is
+  minimal.
+  \end{proof}
+
+  \item $M^c/_{E_{M^c}}$ is minimal:
+
+  \begin{proof}
+  By Theorem~7.9, the quotient $M^c/_{E_{M^c}}$ is equivalent to $M^c$, reduced,
+  and connected.  Since $M^c$ is equivalent to $M$, the quotient is also
+  equivalent to $M$.  Part~(a) now implies that $M^c/_{E_{M^c}}$ is minimal.
+  \end{proof}
 \end{enumerate}
 
 %% 7.47
 \item \textbf{Prove Lemma~7.5 and Corollary~7.9 for MSMs.}
 
 \begin{enumerate}[(a)]
-  \item Same as Exercise~7.2(a) (replace $\omega_A,\omega_B$ with Moore output functions).
-  \item Same as Exercise~7.2(b).
-  \item $A\equiv B$: $\OBAR_A(s_{0_A},x)=\OBAR_B(\mu(s_{0_A}),x)=\OBAR_B(s_{0_B},x)$ for all $x$.
+  \item $(\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) =
+  \DBAR_B(\mu(s),x))$.
+
+  \begin{proof}
+  By induction on $|x|$.
+
+  \emph{Base:} If $x=\lambda$, then
+  $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$.
+
+  \emph{Step:} Let $x=y\pmb{a}$.  Then
+  \[
+    \mu(\DBAR_A(s,y\pmb{a}))
+    =\mu(\delta_A(\DBAR_A(s,y),\pmb{a}))
+    =\delta_B(\mu(\DBAR_A(s,y)),\pmb{a}),
+  \]
+  by the homomorphism property.  Apply the inductive hypothesis to obtain
+  \[
+    \mu(\DBAR_A(s,y\pmb{a}))=\delta_B(\DBAR_B(\mu(s),y),\pmb{a})
+    =\DBAR_B(\mu(s),y\pmb{a}).
+  \]
+  \end{proof}
+
+  \item $(\forall s \in S_A)(\forall x \in \Sigma^*)(\OBAR_A(s,x)=
+  \OBAR_B(\mu(s),x))$.
+
+  \begin{proof}
+  By induction on $|x|$.
+
+  \emph{Base:} If $x=\lambda$, then both sides equal $\lambda$.
+
+  \emph{Step:} Let $x=\pmb{a}y$.  By Definition~7.17,
+  \[
+    \OBAR_A(s,\pmb{a}y)
+    =\omega_A(\delta_A(s,\pmb{a}))\cdot\OBAR_A(\delta_A(s,\pmb{a}),y).
+  \]
+  Since $\mu$ is a Moore homomorphism,
+  \[
+    \omega_A(\delta_A(s,\pmb{a}))
+    =\omega_B(\mu(\delta_A(s,\pmb{a})))
+    =\omega_B(\delta_B(\mu(s),\pmb{a})).
+  \]
+  Applying the inductive hypothesis to the state $\delta_A(s,\pmb{a})$ gives
+  \[
+    \OBAR_A(s,\pmb{a}y)
+    =\omega_B(\delta_B(\mu(s),\pmb{a}))\cdot
+      \OBAR_B(\delta_B(\mu(s),\pmb{a}),y)
+    =\OBAR_B(\mu(s),\pmb{a}y).
+  \]
+  \end{proof}
+
+  \item $A\equiv B$:
+
+  \begin{proof}
+  Taking $s=s_{0_A}$ in part~(b), and using $\mu(s_{0_A})=s_{0_B}$, we obtain
+  \[
+    \OBAR_A(s_{0_A},x)=\OBAR_B(s_{0_B},x)
+  \]
+  for every $x\in\Sigma^*$.  Hence $f_A=f_B$.
+  \end{proof}
 \end{enumerate}
 
 %% 7.48
 \item \textbf{Prove Corollary~7.10.}
 
-Corollary~7.10 (typically): The quotient $M/_{E_M}$ is the unique minimal machine equivalent to $M$ (up to isomorphism).
-
 \begin{proof}
-By Theorem~7.9/Theorem~7.4, $M/_{E_M}$ is reduced and connected (if $M$ is connected).  By Theorem~7.5, any two minimal equivalent machines are isomorphic.  Hence $M/_{E_M}$ is the unique minimal machine (up to isomorphism) equivalent to $M$. \qed
+Start with $E_{0M}$, which groups together exactly those states that print the
+same output symbol.  By Lemma~7.6(b), compute successively
+$E_{1M},E_{2M},\ldots$ from the transition function.  By Lemma~7.3(d), some
+equality $E_{mM}=E_{m+1,M}$ must occur after finitely many steps, and by
+Lemma~7.3(e), that stabilized relation is exactly $E_M$.  Thus there is an
+algorithm for computing $E_M$. \qed
 \end{proof}
 
 %% 7.49
 \item \textbf{Prove Corollary~7.11.}
 
-(The specific content of Corollary~7.11 depends on the text; it typically follows from the preceding theorems about minimization and isomorphism.)
+\begin{proof}
+Compute the connected part $M^c$ by the usual reachability algorithm.  Then use
+Corollary~7.10 to compute $E_{M^c}$.  Finally, form the quotient
+$M^c/_{E_{M^c}}$.  By Theorem~7.10(b), this quotient is the minimal Moore
+machine equivalent to $M$.  Hence there is an algorithm for computing the
+minimal machine equivalent to $M$. \qed
+\end{proof}
 
 %% 7.50
 \item \textbf{$\delta_{E_M}$ and $\omega_{E_M}$ well-defined for FST quotient.}
 
 \begin{enumerate}[(a)]
-  \item $\delta_{E_M}$ well-defined: See Exercise~7.15.
-  \item $\omega_{E_M}$ well-defined: See Exercise~7.16.
+  \item $\delta_{E_M}$ is well-defined:
+
+  \begin{proof}
+  Define
+  \[
+    \delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}.
+  \]
+  If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$.  By Lemma~7.3(c),
+  \[
+    \delta(s,\pmb{a}) E_M \delta(t,\pmb{a}),
+  \]
+  so
+  \[
+    [\delta(s,\pmb{a})]_{E_M}=[\delta(t,\pmb{a})]_{E_M}.
+  \]
+  Therefore $\delta_{E_M}$ does not depend on the chosen representative.
+  \end{proof}
+
+  \item $\omega_{E_M}$ is well-defined:
+
+  \begin{proof}
+  Define
+  \[
+    \omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a}).
+  \]
+  If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$, so the states $s$ and $t$ agree on
+  every one-letter input.  In particular,
+  \[
+    \omega(s,\pmb{a})=\omega(t,\pmb{a}).
+  \]
+  Hence $\omega_{E_M}$ is independent of the representative.
+  \end{proof}
 \end{enumerate}
 
 %% 7.51
 \item \textbf{$\delta_{E_M}$ and $\omega_{E_M}$ well-defined for MSM quotient.}
 
 \begin{enumerate}[(a)]
-  \item $\delta_{E_M}$: Same argument as Exercise~7.15 (using $s E_M t\Rightarrow\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$).
-  \item $\omega_{E_M}([s]_{E_M})=\omega(s)$: If $s E_M s'$, then $s$ and $s'$ produce the same output on all strings, in particular $\lambda$ (i.e., $\omega(s)=\omega(s')$).
+  \item $\delta_{E_M}$ is well-defined:
+
+  \begin{proof}
+  Define
+  \[
+    \delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}.
+  \]
+  Suppose $[s]_{E_M}=[t]_{E_M}$, so $s E_M t$.  Then $s$ and $t$ produce the
+  same output on every continuation.  In particular, for every
+  $x\in\Sigma^*$,
+  \[
+    \OBAR(s,\pmb{a}x)=\OBAR(t,\pmb{a}x).
+  \]
+  By the Moore-machine definition of \OBAR, this implies
+  \[
+    \omega(\delta(s,\pmb{a}))\cdot\OBAR(\delta(s,\pmb{a}),x)
+    =
+    \omega(\delta(t,\pmb{a}))\cdot\OBAR(\delta(t,\pmb{a}),x).
+  \]
+  Hence $\delta(s,\pmb{a}) E_M \delta(t,\pmb{a})$, and so
+  \[
+    [\delta(s,\pmb{a})]_{E_M}=[\delta(t,\pmb{a})]_{E_M}.
+  \]
+  Therefore $\delta_{E_M}$ does not depend on the representative chosen.
+  \end{proof}
+
+  \item $\omega_{E_M}$ is well-defined:
+
+  \begin{proof}
+  Define
+  \[
+    \omega_{E_M}([s]_{E_M})=\omega(s).
+  \]
+  If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$.  By Lemma~7.3(b), the full state
+  equivalence relation $E_M$ is a refinement of $E_{0M}$, so $s E_{0M} t$.
+  Lemma~7.6(a) says that $s E_{0M} t$ is exactly the statement that the two
+  states have the same Moore output.  Hence
+  \[
+    \omega(s)=\omega(t).
+  \]
+  Thus $\omega_{E_M}$ is independent of the chosen representative.
+  \end{proof}
 \end{enumerate}
 
 %% 7.52
@@ -549,13 +1879,30 @@ By Theorem~7.9/Theorem~7.4, $M/_{E_M}$ is reduced and connected (if $M$ is conne
 \begin{enumerate}[(a)]
   \item \textbf{Mealy machines:}  Let $\psi:S_A\to S_B$ be an isomorphism.  Every $t\in S_B$ has a preimage $s=\psi^{-1}(t)$.  Since $A$ is connected, $s=\DBAR_A(s_{0_A},x)$ for some $x$.  Then $t=\psi(s)=\psi(\DBAR_A(s_{0_A},x))=\DBAR_B(\psi(s_{0_A}),x)=\DBAR_B(s_{0_B},x)$.  So $t$ is reachable in $B$.
 
-  \item \textbf{Moore machines:}  Same argument.
+  \item \textbf{Moore machines:}  Let $\psi:S_A\to S_B$ be a Moore
+  isomorphism.  For any state $t\in S_B$, choose $s=\psi^{-1}(t)$.  Since $A$
+  is connected, there exists $x\in\Sigma^*$ with
+  \[
+    s=\DBAR_A(s_{0_A},x).
+  \]
+  Because an isomorphism commutes with the transition function,
+  \[
+    t=\psi(s)=\psi(\DBAR_A(s_{0_A},x))=\DBAR_B(\psi(s_{0_A}),x)=\DBAR_B(s_{0_B},x).
+  \]
+  Thus every state of $B$ is reachable, so $B$ is connected.
 \end{enumerate}
 
 %% 7.53
 \item \textbf{Isomorphism from $A$ to $B$ and $B$ connected $\Rightarrow$ $A$ connected.}
 
-Since $\psi$ is an isomorphism, $\psi^{-1}$ is also an isomorphism from $B$ to $A$.  By Exercise~7.52, $B$ connected and isomorphism $\psi^{-1}$ implies $A$ connected.
+\begin{proof}
+If $\psi:A\to B$ is an isomorphism, then by Exercise~7.65(a) its inverse
+\[
+  \psi^{-1}:B\to A
+\]
+is also an isomorphism.  Since $B$ is connected, Exercise~7.52 applied to
+$\psi^{-1}$ shows that $A$ is connected. \qed
+\end{proof}
 
 %% 7.54
 \item \textbf{Homomorphism from $A$ to $B$ and $A$ connected does NOT imply $B$ connected.}
@@ -563,7 +1910,10 @@ Since $\psi$ is an isomorphism, $\psi^{-1}$ is also an isomorphism from $B$ to $
 \begin{enumerate}[(a)]
   \item \textbf{Mealy counterexample:}  Let $A$ have state $\{s_0\}$ (connected), $\Sigma=\{\pmb{a}\}$, $\delta_A(s_0,\pmb{a})=s_0$, $\omega_A(s_0,\pmb{a})=\pmb{0}$.  Let $B$ have states $\{t_0,t_1\}$ where $t_1$ is unreachable from $t_0$; $\delta_B(t_0,\pmb{a})=t_0$, $\omega_B(t_0,\pmb{a})=\pmb{0}$, $\delta_B(t_1,\pmb{a})=t_1$, $\omega_B(t_1,\pmb{a})=\pmb{0}$.  Map $\mu(s_0)=t_0$.  Then $\mu$ is a homomorphism, $A$ is connected, but $B$ is not connected ($t_1$ unreachable).
 
-  \item \textbf{Moore machines:} Same construction.
+  \item \textbf{Moore machines:} Use the same state graph and the same map
+  $\mu(s_0)=t_0$, but interpret outputs as state outputs rather than transition
+  outputs.  Then $\mu$ is again a homomorphism from a connected machine onto a
+  machine with an unreachable state.
 \end{enumerate}
 
 %% 7.55
@@ -572,7 +1922,10 @@ Since $\psi$ is an isomorphism, $\psi^{-1}$ is also an isomorphism from $B$ to $
 \begin{enumerate}[(a)]
   \item \textbf{Counterexample:}  Let $A$ have states $\{s_0,s_1\}$ where $s_1$ is unreachable; $B$ has state $\{t_0\}$ (trivially connected).  Map $\mu(s_0)=\mu(s_1)=t_0$.  $\mu$ is a homomorphism, $B$ is connected, but $A$ is not connected.
 
-  \item Same for Moore.
+  \item \textbf{Moore machines:} Use the same two-state domain and one-state
+  codomain, but interpret outputs as state outputs.  The map sending both states
+  of $A$ to the single state of $B$ is again a homomorphism, while $A$ remains
+  disconnected.
 \end{enumerate}
 
 %% 7.56
@@ -585,22 +1938,136 @@ $\mu\circ\psi:S_A\to S_A$ is an isomorphism (composition of isomorphisms).  For 
 %% 7.57
 \item \textbf{If $A,B$ are FSTs (possibly not connected), $\psi=\mu^{-1}$ may fail.}
 
-\textbf{Example:} Let $A=B$ have states $\{s_0,s_1\}$ where both are unreachable from each other (two isolated states, each with self-loops).  The function $\psi(s_0)=s_0,\psi(s_1)=s_1$ and $\mu(s_0)=s_1,\mu(s_1)=s_0$ are both isomorphisms (since the machines are symmetric), but $\mu\neq\psi^{-1}$.
+\textbf{Example:}  Let $A=B$ have states $\{s_0,u,v\}$, start state $s_0$,
+alphabet $\{\pmb{a}\}$, and output alphabet $\{\pmb{0}\}$, with
+\[
+  \delta(s_0,\pmb{a})=s_0,\qquad \delta(u,\pmb{a})=u,\qquad \delta(v,\pmb{a})=v,
+\]
+and every transition printing $\pmb{0}$.  The states $u$ and $v$ are both
+unreachable from the start state, so the machines are not connected.  Now
+\[
+  \psi=\text{id}_{\{s_0,u,v\}}
+\]
+is an isomorphism from $A$ to $B$, and so is
+\[
+  \mu(s_0)=s_0,\qquad \mu(u)=v,\qquad \mu(v)=u.
+\]
+But $\psi^{-1}=\psi\neq \mu$.  Thus the conclusion of Exercise~7.56 fails
+without connectedness.
 
 %% 7.58
 \item \textbf{Three-state MSM with $E_{0A}$ having one class; can $E_{0A}\neq E_{1A}$?}
 
-$E_{0A}$ always has exactly one class for any MSM (by definition/Lemma~7.4a).  $E_{0A}\neq E_{1A}$ iff not all states have the same output ($\omega$ not constant).  Yes, this is possible: if three states $s_0,s_1,s_2$ have $\omega(s_0)\neq\omega(s_1)$, then $E_{1A}$ will separate them.
+Yes, such a three-state Moore machine exists: take
+\[
+  A=\langle \{\pmb{a}\},\{\pmb{0}\},\{r_0,r_1,r_2\},r_0,\delta,\omega\rangle,
+\]
+where
+\[
+  \omega(r_0)=\omega(r_1)=\omega(r_2)=\pmb{0}.
+\]
+and
+\[
+  \delta(r_0,\pmb{a})=r_1,\qquad
+  \delta(r_1,\pmb{a})=r_2,\qquad
+  \delta(r_2,\pmb{a})=r_2.
+\]
+Then Lemma~7.6(a) gives
+\[
+  E_{0A}=\{(r_i,r_j)\mid 0\leq i,j\leq 2\},
+\]
+so $E_{0A}$ has exactly one equivalence class.
+
+However, in this situation it is \emph{not} possible for $E_{0A}$ to differ from
+$E_{1A}$.  By Lemma~7.6(b),
+\[
+  s E_{1A} t\iff s E_{0A} t\ \wedge\ (\forall \pmb{a}\in\Sigma)\,
+  (\delta(s,\pmb{a})E_{0A}\delta(t,\pmb{a})).
+\]
+If $E_{0A}$ has only one equivalence class, then every pair of successor states
+is automatically $E_{0A}$-related.  Hence every pair of states is also
+$E_{1A}$-related, so in fact
+\[
+  E_{1A}=E_{0A}.
+\]
 
 %% 7.59
 \item \begin{enumerate}[(a)]
-  \item Mealy $M$ not connected and $M/_{E_M}$ not connected: Take $M$ with states $\{s_0,s_1,s_2\}$ where $s_2$ is unreachable and $s_1\not E_M s_2$.  Then $M/_{E_M}$ has classes $\{[s_0],[s_1],[s_2]\}$, and $[s_2]$ is unreachable.
+  \item Mealy $M$ not connected and $M/_{E_M}$ not connected: take
+  \[
+    M=\langle \{\pmb{a}\},\{\pmb{0},\pmb{1}\},\{s_0,s_1,s_2\},s_0,\delta,\omega\rangle
+  \]
+  where
+  \[
+    \delta(s_0,\pmb{a})=s_1,\qquad
+    \delta(s_1,\pmb{a})=s_1,\qquad
+    \delta(s_2,\pmb{a})=s_2,
+  \]
+  and
+  \[
+    \omega(s_0,\pmb{a})=\pmb{0},\qquad
+    \omega(s_1,\pmb{a})=\pmb{0},\qquad
+    \omega(s_2,\pmb{a})=\pmb{1}.
+  \]
+  The state $s_2$ is unreachable, so $M$ is not connected.  Also
+  $s_2\not E_M s_0$ and $s_2\not E_M s_1$, because on the one-letter input
+  $\pmb{a}$ it outputs $\pmb{1}$ while the reachable states output $\pmb{0}$.
+  Hence $[s_2]$ remains a separate unreachable state in the quotient, so
+  $M/_{E_M}$ is not connected.
 
-  \item Mealy $M$ not connected but $M/_{E_M}$ connected: Take $M$ with $s_2$ unreachable but $s_2 E_M s_0$.  Then in $M/_{E_M}$, $[s_2]=[s_0]$, and the quotient's states are a subset of the original, with the unreachable class merged into a reachable one.
+  \item Mealy $M$ not connected but $M/_{E_M}$ connected: take
+  \[
+    M=\langle \{\pmb{a}\},\{\pmb{0}\},\{t_0,t_1,t_2\},t_0,\delta,\omega\rangle
+  \]
+  where every state loops on $\pmb{a}$ and always outputs $\pmb{0}$:
+  \[
+    \delta(t_j,\pmb{a})=t_j,\qquad \omega(t_j,\pmb{a})=\pmb{0}
+    \qquad (j=0,1,2).
+  \]
+  The states $t_1$ and $t_2$ are unreachable from $t_0$, so $M$ is not
+  connected.  But all three states are equivalent, since every input word
+  produces the same output word $\pmb{0}^{|x|}$ no matter where we start.
+  Therefore
+  \[
+    [t_0]=[t_1]=[t_2],
+  \]
+  so $M/_{E_M}$ has just one state and is therefore connected.
 \end{enumerate}
 
 %% 7.60
-\item Similar to Exercise~7.59 for Moore machines.
+\item \begin{enumerate}[(a)]
+  \item Moore $M$ not connected and $M/_{E_M}$ not connected: take a machine
+  with states $\{r_0,r_1,r_2\}$, start state $r_0$, alphabet $\{\pmb{a}\}$,
+  outputs
+  \[
+    \omega(r_0)=\pmb{0},\qquad \omega(r_1)=\pmb{1},\qquad \omega(r_2)=\pmb{0},
+  \]
+  and transitions
+  \[
+    \delta(r_0,\pmb{a})=r_1,\qquad
+    \delta(r_1,\pmb{a})=r_1,\qquad
+    \delta(r_2,\pmb{a})=r_2.
+  \]
+  The state $r_2$ is unreachable, so $M$ is not connected.  Also, $r_2$ is not
+  equivalent to either reachable state: it outputs $\pmb{0}$ forever, while
+  $r_0$ leads to $\pmb{1}$ after one step and $r_1$ already outputs $\pmb{1}$.
+  Hence the quotient still has an unreachable class, so $M/_{E_M}$ is not
+  connected.
+
+  \item Moore $M$ not connected but $M/_{E_M}$ connected: take states
+  $\{r_0,r_1\}$ with start state $r_0$, alphabet $\{\pmb{a}\}$, outputs
+  \[
+    \omega(r_0)=\omega(r_1)=\pmb{0},
+  \]
+  and transitions
+  \[
+    \delta(r_0,\pmb{a})=r_0,\qquad \delta(r_1,\pmb{a})=r_1.
+  \]
+  The state $r_1$ is unreachable, so $M$ is not connected.  But $r_0$ and $r_1$
+  are equivalent, since both produce only $\pmb{0}$ on every input.  Therefore
+  the quotient merges them into one state, and that one-state quotient is
+  connected.
+\end{enumerate}
 
 %% 7.61
 \item \textbf{Prove $\mu(s) E_B \mu(t) \Leftrightarrow s E_A t$ for Mealy homomorphism.}
@@ -612,31 +2079,215 @@ $(\Leftarrow)$ If $s E_A t$: $\OBAR_A(s,x)=\OBAR_A(t,x)$ for all $x$.  So $\OBAR
 \end{proof}
 
 %% 7.62
-\item Same as Exercise~7.61 for Moore machines.
+\item \textbf{Prove $\mu(s) E_B \mu(t) \Leftrightarrow s E_A t$ for Moore homomorphism.}
+
+\begin{proof}
+$(\Rightarrow)$ Suppose $\mu(s) E_B \mu(t)$.  Then
+\[
+  \OBAR_B(\mu(s),x)=\OBAR_B(\mu(t),x)
+\]
+for every $x\in\Sigma^*$.  By Exercise~7.47(b),
+\[
+  \OBAR_A(s,x)=\OBAR_B(\mu(s),x)
+  \quad\text{and}\quad
+  \OBAR_A(t,x)=\OBAR_B(\mu(t),x),
+\]
+so $\OBAR_A(s,x)=\OBAR_A(t,x)$ for all $x$.  Hence $s E_A t$.
+
+$(\Leftarrow)$ Suppose $s E_A t$.  Then
+\[
+  \OBAR_A(s,x)=\OBAR_A(t,x)
+\]
+for every $x\in\Sigma^*$.  Again using Exercise~7.47(b),
+\[
+  \OBAR_B(\mu(s),x)=\OBAR_A(s,x)=\OBAR_A(t,x)=\OBAR_B(\mu(t),x).
+\]
+Therefore $\mu(s) E_B \mu(t)$. \qed
+\end{proof}
 
 %% 7.63
-\item Exercises~7.63 and~7.64: Same as Exercises~7.32(a) and (b).
+\item \begin{enumerate}[(a)]
+  \item FST $A$ not reduced and $A^c$ not reduced:
+
+  Let
+  \[
+    A=\langle\{\pmb{a}\},\{\pmb{0}\},\{s_0,s_1,s_2\},s_0,\delta,\omega\rangle,
+  \]
+  where
+  \[
+    \delta(s_0,\pmb{a})=s_1,\qquad
+    \delta(s_1,\pmb{a})=s_1,\qquad
+    \delta(s_2,\pmb{a})=s_2,
+  \]
+  and every transition prints $\pmb{0}$.  The states $s_1$ and $s_2$ are
+  equivalent, so $A$ is not reduced.  Both $s_0$ and $s_1$ are reachable from
+  $s_0$, and $s_0$ and $s_1$ are also equivalent, so the connected part $A^c$
+  still has equivalent distinct states.  Hence $A^c$ is not reduced.
+
+  \item FST $A$ not reduced and $A^c$ reduced:
+
+  Let
+  \[
+    A=\langle\{\pmb{a}\},\{\pmb{0},\pmb{1}\},\{s_0,s_1,s_2\},s_0,\delta,\omega\rangle,
+  \]
+  where
+  \[
+    \delta(s_0,\pmb{a})=s_1,\qquad
+    \delta(s_1,\pmb{a})=s_1,\qquad
+    \delta(s_2,\pmb{a})=s_2,
+  \]
+  and
+  \[
+    \omega(s_0,\pmb{a})=\pmb{0},\qquad
+    \omega(s_1,\pmb{a})=\omega(s_2,\pmb{a})=\pmb{1}.
+  \]
+  Then $s_1 E_A s_2$, so $A$ is not reduced.  But $s_2$ is unreachable, while
+  the connected part $A^c=\{s_0,s_1\}$ is reduced because $s_0$ and $s_1$ have
+  different output behavior.
+\end{enumerate}
 
 %% 7.64
-\item Same as Exercise~7.32 for MSMs.
+\item \begin{enumerate}[(a)]
+  \item Moore machine $A$ not reduced and $A^c$ not reduced:
+
+  Let the states be $\{r_0,r_1,r_2\}$ with start state $r_0$, alphabet
+  $\{\pmb{a}\}$, transitions
+  \[
+    \delta(r_0,\pmb{a})=r_1,\qquad
+    \delta(r_1,\pmb{a})=r_1,\qquad
+    \delta(r_2,\pmb{a})=r_2,
+  \]
+  and outputs
+  \[
+    \omega(r_0)=\omega(r_1)=\omega(r_2)=\pmb{0}.
+  \]
+  Then all states are equivalent, so $A$ is not reduced.  The connected part
+  $A^c$ consists of $r_0$ and $r_1$, which are still equivalent, so $A^c$ is
+  not reduced.
+
+  \item Moore machine $A$ not reduced and $A^c$ reduced:
+
+  Let the states be $\{r_0,r_1,r_2\}$ with start state $r_0$, alphabet
+  $\{\pmb{a}\}$, transitions
+  \[
+    \delta(r_0,\pmb{a})=r_1,\qquad
+    \delta(r_1,\pmb{a})=r_1,\qquad
+    \delta(r_2,\pmb{a})=r_2,
+  \]
+  and outputs
+  \[
+    \omega(r_0)=\pmb{0},\qquad \omega(r_1)=\omega(r_2)=\pmb{1}.
+  \]
+  Then $r_1 E_A r_2$, so $A$ is not reduced.  But $r_2$ is unreachable, while
+  the connected part $A^c=\{r_0,r_1\}$ is reduced because $r_0$ and $r_1$ have
+  different output behavior.
+\end{enumerate}
 
 %% 7.65
 \item \textbf{Isomorphism $\cong$ is an equivalence relation on Mealy machines.}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Symmetry:} If $\psi:S_A\to S_B$ is an isomorphism, then $\psi^{-1}:S_B\to S_A$ is also an isomorphism (verify all homomorphism properties hold for $\psi^{-1}$).
+  \item \textbf{Symmetry:} If $\psi:A\to B$ is an isomorphism, then $\psi$ is
+  bijective and satisfies
+  \[
+    \psi(s_{0_A})=s_{0_B},\qquad
+    \psi(\delta_A(s,\pmb{a}))=\delta_B(\psi(s),\pmb{a}),\qquad
+    \omega_A(s,\pmb{a})=\omega_B(\psi(s),\pmb{a}).
+  \]
+  Applying $\psi^{-1}$ to these identities shows that
+  \[
+    \psi^{-1}(s_{0_B})=s_{0_A},\qquad
+    \psi^{-1}(\delta_B(t,\pmb{a}))=\delta_A(\psi^{-1}(t),\pmb{a}),
+  \]
+  and
+  \[
+    \omega_B(t,\pmb{a})=\omega_A(\psi^{-1}(t),\pmb{a}).
+  \]
+  Hence $\psi^{-1}:B\to A$ is also an isomorphism.
 
-  \item \textbf{Reflexivity:} The identity $\text{id}:S_A\to S_A$ is an isomorphism.
+  \item \textbf{Reflexivity:} The identity map $\mathrm{id}_{S_A}$ preserves the
+  start state, transition function, and output function, so it is an
+  isomorphism from $A$ to itself.
 
-  \item \textbf{Composition:} If $\psi:A\to B$ and $\varphi:B\to C$ are isomorphisms, verify that $\varphi\circ\psi:S_A\to S_C$ satisfies all isomorphism properties (by chaining the homomorphism properties).
+  \item \textbf{Composition:} If $\psi:A\to B$ and $\varphi:B\to C$ are
+  isomorphisms, then $\varphi\circ\psi$ is bijective.  Also,
+  \[
+    (\varphi\circ\psi)(s_{0_A})=\varphi(s_{0_B})=s_{0_C},
+  \]
+  and for every state $s$ and input $\pmb{a}$,
+  \[
+    (\varphi\circ\psi)(\delta_A(s,\pmb{a}))
+    =\varphi(\delta_B(\psi(s),\pmb{a}))
+    =\delta_C((\varphi\circ\psi)(s),\pmb{a}),
+  \]
+  while
+  \[
+    \omega_A(s,\pmb{a})
+    =\omega_B(\psi(s),\pmb{a})
+    =\omega_C((\varphi\circ\psi)(s),\pmb{a}).
+  \]
+  Thus $\varphi\circ\psi$ is an isomorphism.
 
-  \item \textbf{Equivalence:} From (a), (b), and (c) (which gives transitivity via $\varphi\circ\psi$), $\cong$ is reflexive, symmetric, and transitive.
+  \item \textbf{Equivalence:} Parts (a), (b), and (c) show that $\cong$ is
+  symmetric, reflexive, and transitive.  Therefore it is an equivalence
+  relation.
 
-  \item \textbf{Homomorphism is not an equivalence relation:} Not symmetric: a homomorphism $\mu:A\to B$ need not have an inverse that is a homomorphism from $B$ to $A$ (e.g., if $\mu$ is not injective, no inverse exists).
+  \item \textbf{Homomorphism is not an equivalence relation:} Homomorphism need
+  not be symmetric.  Let $A$ have two distinct states $s_0,s_1$ with the same
+  transition and output behavior, and let $B$ be the one-state machine obtained
+  by identifying them.  Then there is a homomorphism $A\to B$, but no inverse
+  map $B\to A$ exists, so homomorphism is not symmetric.
 \end{enumerate}
 
 %% 7.66
-\item Same argument as Exercise~7.65 for Moore machines.
+\item \textbf{Isomorphism $\cong$ is an equivalence relation on Moore machines; homomorphism is not.}
+
+\begin{enumerate}[(a)]
+  \item \textbf{Symmetry:} If $\psi:A\to B$ is a Moore isomorphism, then
+  $\psi^{-1}$ preserves the start state, transition function, and state-output
+  function, so $\psi^{-1}:B\to A$ is also an isomorphism.
+
+  \item \textbf{Reflexivity:} The identity map on the state set of a Moore
+  machine is an isomorphism.
+
+  \item \textbf{Composition:} The composition of two Moore isomorphisms again
+  preserves start state, transitions, and outputs, hence is an isomorphism.
+
+  \item \textbf{Equivalence:} Therefore Moore-machine isomorphism is reflexive,
+  symmetric, and transitive.
+
+  \item \textbf{Homomorphism is not an equivalence relation:}  It is not
+  symmetric.  Let
+  \[
+    A=\langle\{\pmb{a}\},\{\pmb{0}\},\{r_0,r_1\},r_0,\delta_A,\omega_A\rangle
+  \]
+  with
+  \[
+    \omega_A(r_0)=\omega_A(r_1)=\pmb{0},\qquad
+    \delta_A(r_0,\pmb{a})=r_1,\qquad
+    \delta_A(r_1,\pmb{a})=r_1,
+  \]
+  and let
+  \[
+    B=\langle\{\pmb{a}\},\{\pmb{0}\},\{s_0\},s_0,\delta_B,\omega_B\rangle
+  \]
+  with
+  \[
+    \omega_B(s_0)=\pmb{0},\qquad \delta_B(s_0,\pmb{a})=s_0.
+  \]
+  The map $\mu(r_0)=\mu(r_1)=s_0$ is a homomorphism $A\to B$.  But there is no
+  homomorphism $B\to A$: any such map must send $s_0$ to the start state $r_0$,
+  and then
+  \[
+    \mu(\delta_B(s_0,\pmb{a}))=\mu(s_0)=r_0
+  \]
+  would have to equal
+  \[
+    \delta_A(r_0,\pmb{a})=r_1,
+  \]
+  which is impossible.  So homomorphism is not symmetric, and therefore not an
+  equivalence relation.
+\end{enumerate}
 
 %% 7.67
 \item \textbf{Prove homomorphism $\mu:M\to M/_{E_M}$ exists.}
@@ -644,33 +2295,148 @@ $(\Leftarrow)$ If $s E_A t$: $\OBAR_A(s,x)=\OBAR_A(t,x)$ for all $x$.  So $\OBAR
 \begin{proof}
 Define $\mu:S\to S_{E_M}$ by $\mu(s)=[s]_{E_M}$.
 
-Check homomorphism properties:
+We verify the homomorphism properties.
 \begin{enumerate}[(i)]
-  \item $\mu(s_0)=[s_0]_{E_M}=s_{0_{E_M}}$. \checkmark
-  \item $\mu(\delta(s,\pmb{a}))=[\delta(s,\pmb{a})]_{E_M}=\delta_{E_M}([s]_{E_M},\pmb{a})=\delta_{E_M}(\mu(s),\pmb{a})$. \checkmark
-  \item $\omega(s,\pmb{a})=\omega_{E_M}([s]_{E_M},\pmb{a})=\omega_{E_M}(\mu(s),\pmb{a})$. \checkmark
-\end{enumerate} \qed
+  \item $\mu(s_0)=[s_0]_{E_M}$, which is the start state of the quotient.
+  \item For every state $s$ and input $\pmb{a}$,
+  \[
+    \mu(\delta(s,\pmb{a}))
+    =[\delta(s,\pmb{a})]_{E_M}
+    =\delta_{E_M}([s]_{E_M},\pmb{a})
+    =\delta_{E_M}(\mu(s),\pmb{a}).
+  \]
+  \item For every state $s$ and input $\pmb{a}$,
+  \[
+    \omega_{E_M}(\mu(s),\pmb{a})
+    =\omega_{E_M}([s]_{E_M},\pmb{a})
+    =\omega(s,\pmb{a}).
+  \]
+\end{enumerate}
+Thus $\mu$ is a homomorphism from $M$ onto $M/_{E_M}$. \qed
 \end{proof}
 
 %% 7.68
-\item Same as Exercise~7.67 for Moore machines.
+\item \textbf{Prove homomorphism $\mu:M\to M/_{E_M}$ exists for Moore machines.}
+
+\begin{proof}
+Define $\mu(s)=[s]_{E_M}$ from the state set of $M$ onto the state set of the
+quotient.
+
+We verify the homomorphism properties.
+\begin{enumerate}[(i)]
+  \item $\mu(s_0)=[s_0]_{E_M}$ is the start state of the quotient.
+  \item For every state $s$ and input $\pmb{a}$,
+  \[
+    \mu(\delta(s,\pmb{a}))
+    =[\delta(s,\pmb{a})]_{E_M}
+    =\delta_{E_M}([s]_{E_M},\pmb{a})
+    =\delta_{E_M}(\mu(s),\pmb{a}).
+  \]
+  \item For every state $s$,
+  \[
+    \omega_{E_M}(\mu(s))
+    =\omega_{E_M}([s]_{E_M})
+    =\omega(s).
+  \]
+\end{enumerate}
+Hence $\mu$ is a Moore homomorphism from $M$ onto $M/_{E_M}$. \qed
+\end{proof}
 
 %% 7.69
 \item \textbf{Limit time in state $s_2$ to 3 clock cycles.}
 
 \begin{enumerate}[(a)]
-  \item Replace $s_2$ with a chain $s_2^{(1)},s_2^{(2)},s_2^{(3)}$ where: at $s_2^{(1)}$, if sensor still active, go to $s_2^{(2)}$; at $s_2^{(2)}$, if still active, go to $s_2^{(3)}$; at $s_2^{(3)}$, regardless of sensor, proceed to the next phase (yellow light).  All three states output $\langle R,R,R,G\rangle$.
+  \item Replace $s_2$ by three states $s_{2a},s_{2b},s_{2c}$, all with output
+  $\langle R,R,R,G\rangle$.  The old transition $s_1\to s_2$ becomes
+  $s_1\to s_{2a}$.  Then define
+  \[
+  \begin{array}{c|cccc}
+  & \langle 0,0\rangle & \langle 0,1\rangle & \langle 1,0\rangle & \langle 1,1\rangle\\
+  \hline
+  s_{2a} & s_4 & s_{2b} & s_4 & s_{2b}\\
+  s_{2b} & s_4 & s_{2c} & s_4 & s_{2c}\\
+  s_{2c} & s_4 & s_4 & s_4 & s_4
+  \end{array}
+  \]
+  so the configuration $\langle R,R,R,G\rangle$ can last for one, two, or three
+  cycles, but never four.
 
-  \item--\item[c.] Similar expansions for $s_6$.
+  \item Replace $s_6$ by three states $s_{6a},s_{6b},s_{6c}$, all with output
+  $\langle G,G,R,R\rangle$.  Every old edge entering $s_6$ now enters
+  $s_{6a}$.  Then define
+  \[
+  \begin{array}{c|cccc}
+  & \langle 0,0\rangle & \langle 0,1\rangle & \langle 1,0\rangle & \langle 1,1\rangle\\
+  \hline
+  s_{6a} & s_5 & s_7 & s_{6b} & s_{6b}\\
+  s_{6b} & s_5 & s_7 & s_{6c} & s_{6c}\\
+  s_{6c} & s_5 & s_7 & s_5 & s_7
+  \end{array}
+  \]
+  which bounds the left-turn green in the same way.
+
+  \item To guarantee a \emph{minimum} of two cycles and a \emph{maximum} of four
+  cycles for the left-turn green, replace $s_6$ by four states
+  $s_{6a},s_{6b},s_{6c},s_{6d}$, all outputting $\langle G,G,R,R\rangle$, and
+  let
+  \[
+  \begin{array}{c|cccc}
+  & \langle 0,0\rangle & \langle 0,1\rangle & \langle 1,0\rangle & \langle 1,1\rangle\\
+  \hline
+  s_{6a} & s_{6b} & s_{6b} & s_{6b} & s_{6b}\\
+  s_{6b} & s_5 & s_7 & s_{6c} & s_{6c}\\
+  s_{6c} & s_5 & s_7 & s_{6d} & s_{6d}\\
+  s_{6d} & s_5 & s_7 & s_5 & s_7
+  \end{array}
+  \]
+  so the first transition out of $s_{6a}$ is forced, the machine may remain in
+  the green left-turn configuration for two, three, or four cycles, and the
+  fourth cycle is the last possible one.
 \end{enumerate}
 
 %% 7.70
 \item \textbf{Ensure east-west traffic gets green occasionally.}
 
 \begin{enumerate}[(a)]
-  \item Without new states: add a time-out counter within the existing state structure; when the sensor is active too long, force a transition to $s_0$ (east-west green).
+  \item Without adding states, force every excursion away from $s_0$ to return to
+  $s_0$ after one service.  Concretely, remove the self-loops on $s_2$ and $s_6$,
+  and redefine
+  \[
+    \delta(s_2,\langle i,j\rangle)=s_4\qquad\text{for all }i,j\in\{0,1\},
+  \]
+  \[
+    \delta(s_6,\langle 0,0\rangle)=s_5,\quad
+    \delta(s_6,\langle 1,0\rangle)=s_5,\quad
+    \delta(s_6,\langle 0,1\rangle)=s_7,\quad
+    \delta(s_6,\langle 1,1\rangle)=s_7,
+  \]
+  and then force the yellow states back to east-west green:
+  \[
+    \delta(s_4,\langle i,j\rangle)=\delta(s_5,\langle i,j\rangle)=
+    \delta(s_7,\langle i,j\rangle)=s_0
+  \]
+  for all $i,j$.  Then the machine must revisit
+  $\langle G,R,G,R\rangle$ regularly.
 
-  \item With new states: add a ``fairness counter'' that remembers how many cycles each lane has gotten; add states encoding the last lane served and guarantee round-robin.
+  \item To obtain a genuine fairness controller, pair each phase state with a
+  memory set $H\subseteq\{A,B\}$, where $A$ means ``the $\alpha$ left-turn lane
+  has already had green'' and $B$ means ``the $\beta$ side-street lane has
+  already had green'' since the last visit to $s_0$.  Use states $(s,H)$ with
+  $s\in\{s_0,\ldots,s_7\}$ and start state $(s_0,\emptyset)$.  Whenever the
+  machine enters the old state $s_2$, replace $H$ by $H\cup\{B\}$; whenever it
+  enters the old state $s_6$, replace $H$ by $H\cup\{A\}$; whenever it returns to
+  $s_0$, reset the memory to $\emptyset$.  The yellow states now dispatch
+  according to the set of sensor-driven lanes that are still owed service:
+  \begin{enumerate}[(i)]
+    \item from a yellow state that follows $B$-service, if $\alpha$ is active and
+    $A\notin H$, go next to the $A$-branch instead of returning to $s_0$;
+    otherwise return to $s_0$;
+    \item from a yellow state that follows $A$-service, if $\beta$ is active and
+    $B\notin H$, go next to the $B$-branch instead of returning to $s_0$;
+    otherwise return to $s_0$.
+  \end{enumerate}
+  Thus no sensor-controlled lane can receive a second green before every other
+  active sensor-controlled lane has received a first one.
 \end{enumerate}
 
 %% 7.71

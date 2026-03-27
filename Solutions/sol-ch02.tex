@@ -278,7 +278,45 @@ Suppose $P$ is FAD with $n$ states. Take a prime $p>n$ and $w=\mathbf{d}^p\in P$
 %%------------------------------------------------------------
 \item \textbf{Show $\Gamma=\{w\cdot\mathbf{2}\cdot w\mid w\in\{\mathbf{0},\mathbf{1}\}^*\}$ is not FAD.}
 
-For any $n$, consider $w_n=\mathbf{0}^n\mathbf{2}\mathbf{0}^n\in\Gamma$. The strings $\mathbf{0}^n$ and $\mathbf{0}^m$ ($n\neq m$) are in different $R_\Gamma$-classes: $\mathbf{0}^n\cdot(\mathbf{2}\mathbf{0}^n)\in\Gamma$ but $\mathbf{0}^m\cdot(\mathbf{2}\mathbf{0}^n)\notin\Gamma$ (since $m\neq n$). So $R_\Gamma$ has infinitely many classes. Not FAD. $\square$
+We use Theorem 2.6. Suppose $\Gamma$ were FAD, and let $n$ be the number
+supplied by that theorem.
+
+Take
+\[
+x=\mathbf{0}^{\,n!}\mathbf{2}\mathbf{0}^{\,2n!}.
+\]
+This string is \emph{not} in $\Gamma$, because the block to the left of
+$\mathbf{2}$ has length $n!$ while the block to the right has length $2n!$, so
+the two sides are unequal.
+
+By Theorem 2.6 there should be a decomposition
+\[
+x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
+\]
+such that
+\[
+uv^iw\notin\Gamma\qquad\text{for every }i\ge0.
+\]
+
+Since the first $n$ symbols of $x$ are all $\mathbf{0}$'s, the substring $v$
+must be of the form $\mathbf{0}^k$ for some $1\le k\le n$.
+Because $k\le n$, the integer $k$ divides $n!$.
+Choose
+\[
+i=\frac{n!}{k}+1.
+\]
+Then pumping $v$ changes only the block of $\mathbf{0}$'s to the left of
+$\mathbf{2}$, and its new length is
+\[
+n!+(i-1)k=n!+\frac{n!}{k}k=2n!.
+\]
+Therefore
+\[
+uv^iw=\mathbf{0}^{\,2n!}\mathbf{2}\mathbf{0}^{\,2n!}\in\Gamma.
+\]
+This contradicts Theorem 2.6.
+
+Hence $\Gamma$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Psi=\{ww\mid w\in\{\mathbf{0},\mathbf{1}\}^*\}$ is not FAD.}
