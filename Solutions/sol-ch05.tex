@@ -26,7 +26,8 @@
 \item Let $C_\Sigma$ be the collection of all cofinite languages (complements of finite languages).
 
 \begin{enumerate}[(a)]
-  \item \textbf{Complementation: Yes.}  If $L=\Sigma^*\setminus F$ with $F$ finite, then $\sim L=F\in F_\Sigma$, so $\sim(\sim L)=L\in C_\Sigma$.
+  \item \textbf{Complementation: No.}  Let $L=\Sigma^*\setminus\{\pmb{a}\}$.  Then
+  $L\in C_\Sigma$, but $\sim L=\{\pmb{a}\}$ is finite, hence not in $C_\Sigma$.
 
   \item \textbf{Union: Yes.}  If $L_1=\Sigma^*\setminus F_1$ and $L_2=\Sigma^*\setminus F_2$, then $L_1\cup L_2=\Sigma^*\setminus(F_1\cap F_2)$.  Since $F_1\cap F_2$ is finite, $L_1\cup L_2\in C_\Sigma$.
 
@@ -34,7 +35,11 @@
 
   \item \textbf{Concatenation: Yes.}  If $L_1,L_2\in C_\Sigma$ (both infinite), then $L_1\cdot L_2$ contains arbitrarily long words, but let us verify cofiniteness.  Since $\Sigma^*\setminus(L_1\cdot L_2)\subseteq$ the set of words not writable as a product from $L_1$ and $L_2$; this set is finite because $L_1$ and $L_2$ each omit only finitely many words.  More precisely: there exists $N_1$ such that all words of length $\ge N_1$ are in $L_1$, and similarly $N_2$ for $L_2$.  Then any word of length $\ge N_1+N_2$ can be split so that both parts are in $L_1$ and $L_2$, so $L_1\cdot L_2$ is cofinite.
 
-  \item \textbf{Kleene closure: Yes.}  If $L\in C_\Sigma$, then $\lambda\in L^*$ and since $L$ contains all sufficiently long words, $L^*=\Sigma^*$.  So $L^*=\Sigma^*\in C_\Sigma$.
+  \item \textbf{Kleene closure: Yes.}  Since $L$ is cofinite, there is an $N$
+  such that every word of length at least $N$ lies in $L$.  Hence every word of
+  length at least $N$ also lies in $L^*$ (just take it as a one-factor product).
+  Therefore $\Sigma^*\setminus L^*$ contains only words of length $<N$, so it is
+  finite and $L^*\in C_\Sigma$.
 
   \item \textbf{Relative complement: No.}  $L_1\setminus L_2=L_1\cap\sim L_2$.  Here $\sim L_2$ is finite, so $L_1\setminus L_2\subseteq\sim L_2$ is finite, not cofinite in general.  Counterexample: $L_1=\Sigma^*\setminus\emptyset=\Sigma^*$ and $L_2=\Sigma^*\setminus\{\pmb{a}\}$.  Then $L_1\setminus L_2=\{\pmb{a}\}$, which is finite, not cofinite.
 \end{enumerate}
@@ -48,7 +53,12 @@
   \item \textbf{Intersection: Yes.}  If both finite: finite.  If one cofinite and one finite: finite.  If both cofinite: cofinite (by 5.2c).
   \item \textbf{Concatenation: No.}  Let $L_1=C_\Sigma$ element and $L_2=C_\Sigma$ element; concatenation is cofinite (by 5.2d).  Let $L_1,L_2\in F_\Sigma$; product is finite.  Let $L_1\in F_\Sigma$ and $L_2\in C_\Sigma$ or vice versa: if $L_1=\emptyset$, product is $\emptyset\in F_\Sigma$.  If $L_1$ is finite and nonempty: the product may be neither finite nor cofinite.  \textbf{Counterexample:} $L_1=\{\pmb{a}\}$ (finite), $L_2=\Sigma^*\setminus\{\pmb{aa}\}$ (cofinite).  Then $L_1\cdot L_2$ = all words of the form $\pmb{a}w$ where $w\neq\pmb{aa}$, i.e., all words starting with $\pmb{a}$ except $\pmb{aaa}$.  This is neither finite nor cofinite (it's infinite and its complement is infinite).  So \textbf{not closed}.
   \item \textbf{Kleene closure: No.}  $\{\pmb{a}\}^*$ is infinite but $\{\pmb{a}\}\in F_\Sigma$; $\{\pmb{a}\}^*$ is not in $F_\Sigma$.  Is it cofinite?  $\{\pmb{a}\}^*=\{\lambda,\pmb{a},\pmb{aa},\ldots\}$, and its complement contains all words with any $\pmb{b}$ (if $|\Sigma|\ge 2$), which is infinite, so $\{\pmb{a}\}^*$ is not cofinite.  \textbf{Not closed.}
-  \item \textbf{Relative complement: No.}  Same counterexample as 5.2(f): cofinite minus cofinite can be finite; finite minus finite is fine; but cofinite minus cofinite is finite (not necessarily cofinite), and finite minus cofinite can be empty (fine).  So relative complement maps $B_\Sigma$ into $F_\Sigma\cup C_\Sigma$ sometimes: if $L_1\in C_\Sigma$ and $L_2\in C_\Sigma$, then $L_1\setminus L_2=L_1\cap\sim L_2$ where $\sim L_2$ is finite, so result is finite $\in F_\Sigma$. If $L_1\in F_\Sigma$, $L_2\in B_\Sigma$: result $\subseteq L_1$ is finite.  \textbf{Closed}: $B_\Sigma$ is closed under relative complement.
+  \item \textbf{Relative complement: Yes.}  If $L_1\in C_\Sigma$ and
+  $L_2\in C_\Sigma$, then $L_1\setminus L_2=L_1\cap\sim L_2$ where
+  $\sim L_2$ is finite, so the result is finite and therefore belongs to
+  $F_\Sigma\subseteq B_\Sigma$.  If $L_1\in F_\Sigma$, then
+  $L_1\setminus L_2\subseteq L_1$ is finite.  Hence $B_\Sigma$ is closed under
+  relative complement.
 \end{enumerate}
 
 %% 5.4
@@ -68,7 +78,10 @@
 
 \begin{enumerate}[(a)]
   \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite, i.e., $\sim L\in I_\Sigma$.  Then $\sim(\sim L)=L$; is $\sim L\in J_\Sigma$?  $\sim(\sim L)=L$ is infinite (since $L\in J_\Sigma$ is not cofinite, its complement is infinite, so $L$ itself need not be infinite).  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\notin J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
-  \item \textbf{Union: No.}  $L_1=\emptyset,L_2=\Sigma^*\setminus\{\pmb{a}\}$.  Both have infinite complements.  $L_1\cup L_2=\Sigma^*\setminus\{\pmb{a}\}$, complement is $\{\pmb{a}\}$, finite.  So $L_1\cup L_2\in C_\Sigma$, not in $J_\Sigma$.  \textbf{Not closed.}
+  \item \textbf{Union: No.}  Over $\Sigma=\{\pmb{a}\}$, let
+  $L_1=\{\pmb{a}^{2n}\mid n\ge 0\}$ and $L_2=\{\pmb{a}^{2n+1}\mid n\ge 0\}$.
+  Both have infinite complements, so both belong to $J_\Sigma$.  But
+  $L_1\cup L_2=\Sigma^*$, whose complement is finite, so $L_1\cup L_2\notin J_\Sigma$.
   \item \textbf{Intersection: Yes.}  If $\sim L_1$ and $\sim L_2$ are both infinite, then $\sim(L_1\cap L_2)=\sim L_1\cup\sim L_2\supseteq\sim L_1$, which is infinite.
   \item \textbf{Concatenation: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L_1=\{\pmb{a}^n\mid n\text{ odd or }n=2\}$ and $L_2=\{\pmb{a}^{2k}\mid k\ge 1\}$.  Then $\sim L_1=\{\lambda,\pmb{a}^4,\pmb{a}^6,\ldots\}$ and $\sim L_2=\{\lambda,\pmb{a},\pmb{a}^3,\pmb{a}^5,\ldots\}$ are both infinite, so $L_1,L_2\in J_\Sigma$.  But $L_1\cdot L_2=\{\pmb{a}^n\mid n\ge 3\}$ (any $n\ge 3$ is expressible as odd$+$even or $2+$even), whose complement $\{\lambda,\pmb{a},\pmb{a}^2\}$ is finite---so $L_1\cdot L_2\notin J_\Sigma$.
   \item \textbf{Kleene closure: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L=\{\pmb{a}^n\mid n\text{ odd}\}$.  Then $\sim L=\{\lambda,\pmb{a}^2,\pmb{a}^4,\ldots\}$ is infinite, so $L\in J_\Sigma$.  But odd$+$odd$=$even, even$+$odd$=$odd, so $L^k$ contains all $\pmb{a}$-strings of the right parity at length $\ge k$; inductively $L^*=\{\pmb{a}\}^*=\Sigma^*$.  Then $\sim L^*=\emptyset$ is finite, so $L^*\notin J_\Sigma$.
@@ -82,7 +95,11 @@
   \item \textbf{Complementation: No.}  $\sim L$ contains all words \emph{not} in $L$; since $L$ contains $\pmb{abba}$, $\sim L$ does not contain $\pmb{abba}$, so $\sim L\notin\pmb{E}$.
   \item \textbf{Union: Yes.}  If $\pmb{abba}\in L_1$, then $\pmb{abba}\in L_1\cup L_2$.
   \item \textbf{Intersection: Yes.}  If $L_1,L_2\in\pmb{E}$ then both contain $\pmb{abba}$, so $L_1\cap L_2$ also contains $\pmb{abba}$.  \textbf{Closed.}
-  \item \textbf{Concatenation: Yes.}  If $\pmb{abba}\in L_1$, then $\pmb{abba}\cdot\lambda\in L_1\cdot L_2$ (if $\lambda\in L_2$); but $\lambda$ may not be in $L_2$.  Counterexample: $L_1=\{\pmb{abba}\}$, $L_2=\{\pmb{a}\}$.  Then $L_1\cdot L_2=\{\pmb{abbaa}\}$; does $\pmb{abbaa}$ contain $\pmb{abba}$ as a prefix?  Yes!  $\pmb{abbaa}=\pmb{abba}\cdot\pmb{a}$ contains $\pmb{abba}$ as a substring.  But take $L_1=\{\pmb{abba}\}$, $L_2=\{\pmb{c}\}$ (not over $\{\pmb{a},\pmb{b}\}$)---invalid.  Over $\{\pmb{a},\pmb{b}\}$: $L_1\cdot L_2=\{\pmb{abbaa},\pmb{abbab}\}$; both contain $\pmb{abba}$.  In general, any word in $L_1\cdot L_2$ begins with a word from $L_1$ which itself contains $\pmb{abba}$, so the concatenated word contains $\pmb{abba}$.  \textbf{Yes, closed.}
+  \item \textbf{Concatenation: No.}  Here $\pmb{E}$ means languages that have
+  the specific word $\pmb{abba}$ as an element.  Let
+  $L_1=L_2=\{\pmb{abba}\}$.  Then $L_1,L_2\in\pmb{E}$, but
+  $L_1\cdot L_2=\{\pmb{abbaabba}\}$, which does not contain $\pmb{abba}$ as a
+  member.  So $\pmb{E}$ is not closed under concatenation.
   \item \textbf{Kleene closure: Yes.}  $L^*$ contains $L^1=L$, so $\pmb{abba}\in L\subseteq L^*$.
   \item \textbf{Relative complement: No.}  $L_1\setminus L_2$ might not contain $\pmb{abba}$ if $\pmb{abba}\in L_2$.  E.g., $L_1=L_2=\{\pmb{abba}\}$: $L_1\setminus L_2=\emptyset\notin\pmb{E}$.
 \end{enumerate}
@@ -117,7 +134,17 @@ Let $\mathcal{C}$ be the collection of all languages of the form $\{w\}^*$ for s
 %% 5.11
 \item \textbf{Closed under complement does not imply closed under relative complement.}
 
-\textbf{Counterexample.}  The class $C_\Sigma$ of cofinite languages is closed under complement (5.2a): $\sim L$ is finite, hence $\sim(\sim L)=L\in C_\Sigma$.  But $C_\Sigma$ is not closed under relative complement: take $L_1=L_2\in C_\Sigma$; then $L_1\setminus L_2=\emptyset\notin C_\Sigma$ (since $\emptyset$ is finite, not cofinite over an infinite $\Sigma^*$). $\square$
+\textbf{Counterexample.}  Let
+\[
+K=\{\emptyset,\Sigma^*\}\cup\{\{w\}\mid w\in\Sigma^*\}\cup
+\{\Sigma^*\setminus\{w\}\mid w\in\Sigma^*\}.
+\]
+This collection is closed under complement by construction.  But it is not
+closed under relative complement: if $u\neq v$, then
+\[
+(\Sigma^*\setminus\{u\})\setminus\{v\}=\Sigma^*\setminus\{u,v\}\notin K.
+\]
+So closure under complement does not imply closure under relative complement.
 
 %% 5.12
 \item \textbf{A finite set of numbers closed under $\sqrt{\ }$:}
@@ -188,11 +215,12 @@ Since $F'$ is computable (for each state $s$, check if any state in $F$ is reach
 \begin{enumerate}[(a)]
   \item \textbf{Construction.}  Given DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$,
   build NDFA $A'=\langle\Sigma,S,S_0',\delta,F\rangle$ where
-  $S_0'=S$ (make every state a start state).
+  $S_0'=\{\deltabar{}(s_0,y)\mid y\in\Sigma^*\}$, the set of states reachable
+  from $s_0$.
 
   \item \textbf{Proof.}  $x\in S(L)$ iff $\exists y\in\Sigma^*\ni yx\in L$
   iff $\exists y\in\Sigma^*\ni\deltabar{}(s_0,yx)\in F$
-  iff $\exists s=\deltabar{}(s_0,y)\in S\ni\deltabar{}(s,x)\in F$
+  iff $\exists s=\deltabar{}(s_0,y)\in S_0'\ni\deltabar{}(s,x)\in F$
   iff $\DBAR'(\{s\},x)\cap F\neq\emptyset$ for some $s\in S_0'$
   iff $x\in L(A')$.
 
@@ -203,13 +231,14 @@ Since $F'$ is computable (for each state $s$, check if any state in $F$ is reach
 \item \textbf{\DSIG\ is closed under the center operator $C$.}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Construction.}  Build an NDFA $A'$ with start state set $S$ (all states)
-  and transition function $\delta$; $A'=\langle\Sigma,S,S,\delta,F'\rangle$ where
+  \item \textbf{Construction.}  Let
+  $R=\{\deltabar{}(s_0,y)\mid y\in\Sigma^*\}$ be the set of reachable states.
+  Build an NDFA $A'=\langle\Sigma,S,R,\delta,F'\rangle$ where
   $F'=\{s\in S\mid\exists y\in\Sigma^*\ni\deltabar{}(s,y)\in F\}$ (states from which $F$ is reachable).
 
   \item \textbf{Proof.}  $x\in C(L)$ iff $\exists y,z\ni yxz\in L$
   iff $\exists y,z\ni\deltabar{}(\deltabar{}(\deltabar{}(s_0,y),x),z)\in F$
-  iff $\exists s=\deltabar{}(s_0,y)\in S_0'$ and $\deltabar{}(s,x)\in F'$
+  iff $\exists s=\deltabar{}(s_0,y)\in R$ and $\deltabar{}(s,x)\in F'$
   iff $x\in L(A')$.
 
   \item Since $A'$ is an NDFA, $C(L)\in\DSIG$. \qed
@@ -219,11 +248,11 @@ Since $F'$ is computable (for each state $s$, check if any state in $F$ is reach
 \item \textbf{\DSIG\ is closed under $F$ (maximal words not extended in $L$).}
 
 Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a minimal DFA for $L$.
-$F(L)=\{x\in L\mid\forall\pmb{a}\in\Sigma, x\pmb{a}\notin L\}$
-(all words in $L$ with no proper extension in $L$).
+$F(L)=\{x\in L\mid \text{no nonempty word }y\text{ satisfies }xy\in L\}$.
 Define $A'=\langle\Sigma,S,s_0,\delta,F''\rangle$ where
-$F''=\{s\in F\mid\forall\pmb{a}\in\Sigma,\delta(s,\pmb{a})\notin F\}$.
-Then $x\in L(A')$ iff $\deltabar{}(s_0,x)\in F''$ iff $x\in L$ and $\forall\pmb{a},x\pmb{a}\notin L$ iff $x\in F(L)$.
+$F''=\{s\in F\mid(\forall y\in\Sigma^+)(\deltabar{}(s,y)\notin F)\}$.
+Then $x\in L(A')$ iff $\deltabar{}(s_0,x)\in F''$ iff $x\in L$ and there is no
+nonempty $y$ with $\deltabar{}(s_0,xy)\in F$, iff $x\in F(L)$.
 So $F(L)=L(A')\in\DSIG$. \qed
 
 %% 5.20
@@ -247,29 +276,56 @@ So $F(L)=L(A')\in\DSIG$. \qed
 
   Let $L=\Sigma^*$ over $\Sigma=\{\pmb{a},\pmb{b}\}$.  Then $G(L)=\{w^rw\mid w\in\Sigma^*\}$, the set of even-length palindromes (of the form $w^rw$).  By the pumping lemma, this is not FAD: take $w=\pmb{a}^n\pmb{b}^n$; then $w^rw=\pmb{b}^n\pmb{a}^n\pmb{a}^n\pmb{b}^n\in G(L)$.  If $G(L)$ were FAD with $n$ states, pump the string $\pmb{b}^n\pmb{a}^n\pmb{a}^n\pmb{b}^n$ to get a contradiction (pumping the first block of $\pmb{b}$s destroys the palindrome structure).
 
-  \item \textbf{\NSIG\ is closed under $G$.}  In the textbook, $\NSIG$ denotes the class of languages recognized by nondeterministic finite automata (equivalently, $\NSIG=\DSIG$ by the subset construction). Since $\DSIG$ is not closed under $G$ (part~(a)), $\NSIG$ is not closed under $G$ either. If the problem intends a broader $\NSIG$ (e.g., languages accepted by nondeterministic PDAs, i.e., the CFLs), then closure holds: build a PDA that nondeterministically guesses $w$, pushes $w$ while reading $w^r$ (the first half), then pops while verifying the second half equals $w$.
+  \item \textbf{\NSIG\ is closed under $G$.}  Let $L\in\NSIG$.  If $G(L)$ were
+  FAD, then Theorem~5.11 would imply that $G(L)^b$ is FAD.  But
+  $G(L)^b=L^r$, and Exercise~5.20 shows that reversal preserves the FAD
+  languages.  Hence $L=(L^r)^r$ would be FAD, contradicting $L\in\NSIG$.
+  Therefore $G(L)\in\NSIG$.
 
-  \item \textbf{\NSIG\ is not closed under $b$.}  Left as exercise per text.
+  \item \textbf{\NSIG\ is not closed under $b$.}  By Lemma~5.6,
+  $L=\{\pmb{a}^n\pmb{b}^n\mid n\ge 0\}\in\NSIG$, but
+  $L^b=\{\pmb{a}^n\mid n\ge 0\}$ is FAD.
 \end{enumerate}
 
 %% 5.22
 \item \textbf{\NSIG\ is closed under reversal.}
 
-Since $\NSIG\supseteq\DSIG$ and reversal preserves the class (by Exercise~5.20 and its analogue for nondeterministic machines), and since the construction of $A^r$ (reverse arrows, swap start/final) always yields another machine of the same class, $\NSIG$ is closed under $r$.
+Assume $L\in\NSIG$ but $L^r\notin\NSIG$.  Then $L^r\in\DSIG$.  By
+Exercise~5.20, \DSIG\ is closed under reversal, so
+$L=(L^r)^r\in\DSIG$, a contradiction.  Hence $L^r\in\NSIG$ whenever
+$L\in\NSIG$.
 
 %% 5.23
 \item \textbf{\NSIG\ is \emph{not} closed under $P$ (prefix operator).}
 
-If $\NSIG$ refers to a class strictly between FAD and context-free: the prefix of a non-FAD language in $\NSIG$ may fall outside $\NSIG$.  This requires a specific counterexample from the text's definition of $\NSIG$.  (If $\NSIG=\DSIG$, then closure follows from Exercise~5.16; the problem statement implies $\NSIG$ is a different class.)
+Let $K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$.  This
+language belongs to \NSIG\ (it is the language used in Lemma~5.4).  But
+$P(K)=\{\pmb{a},\pmb{b}\}^*$: given any word $x$, if
+$|x|_{\pmb{a}}-|x|_{\pmb{b}}=d$, append $|d|$ copies of the deficient symbol to
+obtain a balanced word.  Thus $P(K)$ is FAD, so \NSIG\ is not closed under $P$.
 
 %% 5.24
-\item \textbf{\NSIG\ is not closed under $S$ (suffix operator).}  Similar argument to 5.23.
+\item \textbf{\NSIG\ is not closed under $S$ (suffix operator).}
+
+Using the same language $K$, we have $S(K)=\{\pmb{a},\pmb{b}\}^*$: for any word
+$x$, prefix it by enough copies of the deficient symbol to balance the counts.
+Since $K\in\NSIG$ but $S(K)$ is FAD, \NSIG\ is not closed under $S$.
 
 %% 5.25
-\item \textbf{\NSIG\ is not closed under $C$ (center operator).}  Similar argument to 5.23.
+\item \textbf{\NSIG\ is not closed under $C$ (center operator).}
+
+Again let $K=\{x\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$.  Then
+$C(K)=\{\pmb{a},\pmb{b}\}^*$, because for any word $x$ we can choose
+$y=\pmb{a}^m$ and $z=\pmb{b}^{m+|x|_{\pmb{a}}-|x|_{\pmb{b}}}$ with $m$ large
+enough so that $yxz$ has equally many $\pmb{a}$s and $\pmb{b}$s.  Hence $C(K)$
+is FAD while $K\in\NSIG$.
 
 %% 5.26
-\item \textbf{\NSIG\ is not closed under $F$.}  Similar argument to 5.23.
+\item \textbf{\NSIG\ is not closed under $F$.}
+
+For the same language $K$, every word in $K$ has a proper extension in $K$:
+if $x\in K$, then $x\pmb{ab}\in K$.  Therefore $F(K)=\emptyset$, which is FAD.
+So \NSIG\ is not closed under $F$.
 
 %% 5.27
 \item \textbf{Complementing final states of an NDFA does not give complement language.}
@@ -286,40 +342,86 @@ But $\pmb{a}\in L(A)$, so $\pmb{a}\notin\sim L(A)$.  Thus $\pmb{a}\in L(A^\sim)$
 %% 5.28
 \item \textbf{Complete the proof of Lemma~5.7.}
 
-Lemma~5.7 (Kleene closure closure): Given DFA $A$ for $L$, the NDFA $A_*$ constructed in Theorem~5.5 satisfies $L(A_*)=L^*$.
-
-The remaining cases to verify are typically: (i) $\lambda\in L(A_*)$ (by construction, $q_0\in F_*$), and (ii) the inductive step: if $x_1,\ldots,x_k\in L$ then $x_1\cdots x_k\in L(A_*)$.  The key is that upon reaching a final state of $A$, the machine can either stop or loop back via the new start state $q_0$ using a $\lambda$-transition.
-
 \begin{proof}
-\emph{$L^*\subseteq L(A_*)$:}  By induction on $k$ (number of concatenated words).  $k=0$: $\lambda\in L(A_*)$ since $q_0\in F_*$.  Assume $x_1\cdots x_k\in L(A_*)$.  Given $x_{k+1}\in L$, we have a path in $A$ from $s_0$ to some $f\in F$.  In $A_*$, from $f$ we can $\lambda$-transition to $q_0$, then $\lambda$-transition back to $s_0$, and run $x_{k+1}$ to $f$.  So $x_1\cdots x_kx_{k+1}\in L(A_*)$.
+Let
+$L=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}\neq |x|_{\pmb{b}}\}$, the
+language used in Lemma~5.7.  We show that $L/L=\Sigma^*$.
 
-\emph{$L(A_*)\subseteq L^*$:}  Any accepting path in $A_*$ from $q_0$ that touches final states of $A_*$ must visit $q_0$ (or a copy) between segments; each segment is a word in $L$.  The full word is thus a concatenation of words in $L$, i.e., in $L^*$.
+Take any $x\in\Sigma^*$ and let $d=|x|_{\pmb{a}}-|x|_{\pmb{b}}$.  Define
+$y=\pmb{a}^{|d|+1}$.  Then $y\in L$, because it has strictly more $\pmb{a}$s
+than $\pmb{b}$s.  Also
+\[
+|xy|_{\pmb{a}}-|xy|_{\pmb{b}}
+= d+(|d|+1)\neq 0,
+\]
+so $xy\in L$ as well.  Hence $x\in L/L$.  Since $x$ was arbitrary,
+$L/L=\Sigma^*$.  Therefore \NSIG\ is not closed under quotient.
 \end{proof}
 
 %% 5.29
 \item \textbf{Collection closed under union, concatenation, Kleene closure, but not intersection.}
 
-The class of all context-free languages (CFLs) is closed under union (by grammar union), concatenation (by grammar concatenation), and Kleene closure (by adding a new start production)---but \emph{not} under intersection: $L_1=\{a^nb^nc^m\}$ and $L_2=\{a^mb^nc^n\}$ are both CFLs, but $L_1\cap L_2=\{a^nb^nc^n\}$ is not (by the CFL pumping lemma). $\square$
+Take $\mathcal{C}=I_\Sigma$, the collection of all infinite languages from
+Exercise~5.4.  Exercise~5.4 shows that $I_\Sigma$ is closed under union,
+concatenation, and Kleene closure, but not under intersection.  So
+$I_\Sigma$ is the required example.
 
 %% 5.30
 \item \textbf{Closed under union does not imply closed under intersection.}
 
-\textbf{Counterexample.}  The class of all context-free languages (CFLs) is closed under union but not under intersection.  Classic witness: $L_1=\{a^nb^nc^m\mid n,m\geq 0\}$ and $L_2=\{a^mb^nc^n\mid n,m\geq 0\}$ are both CFLs, but $L_1\cap L_2=\{a^nb^nc^n\mid n\geq 0\}$ is not context-free (by the CFL pumping lemma).  $\square$
+\textbf{Counterexample.}  Again use $I_\Sigma$, the infinite languages.
+Exercise~5.4(b) shows it is closed under union, while Exercise~5.4(c) shows it
+is not closed under intersection.
 
 %% 5.31
 \item \textbf{Prove $L(A^\bullet)=L_1\cdot L_2$ (Theorem~5.4 construction).}
 
-The machine $A^\bullet$ is constructed (from DFAs $A_1$ for $L_1$ and $A_2$ for $L_2$) as:
-states $S_1\cup S_2$, start state $s^1_0$, transitions from $A_1$ within $S_1$, and when $A_1$ reaches a final state $f\in F_1$, it $\lambda$-transitions to $s^2_0$, then $A_2$ continues.  The final states are $F_2$.
-
 \begin{proof}
-$w\in L(A^\bullet)$ iff there is an accepting path in $A^\bullet$, which by construction must have the form: start at $s^1_0$, process $w_1$ to reach $f\in F_1$, $\lambda$-move to $s^2_0$, process $w_2$ to reach $f_2\in F_2$, with $w=w_1w_2$.  This holds iff $w_1\in L_1$ and $w_2\in L_2$, i.e., $w\in L_1\cdot L_2$.  (The full inductive proof uses the extended transition function; the key step is that $\lambda$-transitions are properly handled via $\DBAR_\lambda$.) \qed
+If $x\in L_1\cdot L_2$, write $x=uv$ with $u\in L_1$ and $v\in L_2$.
+Run $A_1$ on $u$ from $s_{0_1}$ to some state of $F_1$.
+
+If $v=\lambda$, then $\lambda\in L_2$, so Theorem~5.4 makes every state of
+$F_1$ final in $A^\bullet$; hence the same path accepts $x$.
+
+If $v=\pmb{a}w$ is nonempty, then from the final state reached after $u$ the
+definition of $\delta^\bullet$ allows the next input letter $\pmb{a}$ to be
+processed exactly as it would be from $s_{0_2}$ in $A_2$.  The rest of $v$ then
+follows the transitions of $A_2$, so some path in $A^\bullet$ accepts $x$.
+Thus $L_1\cdot L_2\subseteq L(A^\bullet)$.
+
+Conversely, let $x\in L(A^\bullet)$.  An accepting path either stays entirely in
+$S_1$ and ends in a state of $F_1$; this can happen only when $\lambda\in L_2$,
+so then $x\in L_1=L_1\cdot\lambda\subseteq L_1\cdot L_2$.  Otherwise there is a
+first transition that enters $S_2$.  Just before that step, the path is at some
+state $f\in F_1$, so the already-read prefix $u$ lies in $L_1$.  The rest of the
+input, beginning with the symbol that caused the move into $S_2$, follows
+$A_2$ from $s_{0_2}$ to a final state, so it lies in $L_2$.  Hence
+$x=uv\in L_1\cdot L_2$.
 \end{proof}
 
 %% 5.32
 \item \textbf{Prove $L(A_*)=L^*$ (Theorem~5.5 construction).}
 
-See Exercise~5.28.  The construction adds a fresh start state $q_0$ (made final) with $\lambda$-transitions to $s_0$ and from each $f\in F$ back to $q_0$.  The accepting paths correspond exactly to concatenations of words in $L$, as shown in Exercise~5.28. \qed
+\begin{proof}
+Since $q_0\in F_*$, the empty word is accepted, so $L^0=\{\lambda\}\subseteq L(A_*)$.
+
+Now let $x=x_1x_2\cdots x_k$ with each $x_i\in L$.  Run the original machine $A$
+on $x_1$ from some start state in $S_0$ to a final state in $F$.  Whenever one
+factor ends and the next factor begins with a letter $\pmb{a}$, the definition of
+$\delta_*$ for final states adds the transitions
+$\bigcup_{t\in S_0}\delta(t,\pmb{a})$, so the same input letter can also begin a
+new run of $A$ on the next factor.  Repeating this for all factors yields an
+accepting path for $x$, so $L^*\subseteq L(A_*)$.
+
+Conversely, consider an accepting path of $A_*$ on some nonempty word $x$.
+Because $\delta_*(q_0,\pmb{a})=\emptyset$, the path must begin in some state of
+$S_0$.  Each time the path uses one of the extra transitions
+$\bigcup_{t\in S_0}\delta(t,\pmb{a})$ from a final state, it starts a fresh copy
+of the original machine on the next factor of the input.  Thus the input splits
+into finitely many consecutive blocks, each of which labels a path in $A$ from a
+start state to a final state; hence each block lies in $L$.  Therefore
+$x\in L^*$.
+\end{proof}
 
 %% 5.33
 \item \textbf{Amplify the proof of Theorem~5.2 (union).}
@@ -362,17 +464,25 @@ $\{a^nb^n\mid n\ge 0\}$ is not FAD (by the pumping lemma).
 %% 5.38
 \item \textbf{If $L\in\NSIG$, must all subsets be in \NSIG?}
 
-(Assuming $\NSIG$ is a class properly containing $\DSIG$, e.g., context-free languages.)  \textbf{No.}  Similar argument: $\Sigma^*$ is context-free; its subset $\{a^nb^nc^n\}$ is not.
+\textbf{No.}  Let
+$K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}\in\NSIG$.
+Then $\{\lambda\}\subseteq K$, but $\{\lambda\}\in\DSIG$.
 
 %% 5.39
 \item \textbf{If $L\in\NSIG$, must all supersets be in \NSIG?}
 
-\textbf{No.}  The superset $\Sigma^*$ is always in $\NSIG$, but arbitrary supersets need not be.  (The class $\NSIG$ is generally not closed under taking supersets.)
+\textbf{No.}  With the same language $K\in\NSIG$, we have
+$K\subseteq\{\pmb{a},\pmb{b}\}^*$, but $\{\pmb{a},\pmb{b}\}^*\in\DSIG$.
 
 %% 5.40
 \item \textbf{Why is $q_0$ needed in the Kleene closure construction (Theorem~5.5)?}
 
-The extra start state $q_0$ handles the case $\lambda\in L^*$ (which is always true) independently from the rest of the machine.  Without $q_0$, making $s_0$ both the start and a final state (to accept $\lambda$) could create spurious acceptance: words that loop back through $s_0$ might be accepted even if they are not concatenations of words from $L$.  The isolated $q_0$ cleanly accepts $\lambda$ (since $q_0\in F_*$) and provides a clean entry point, while $\lambda$-transitions from $q_0$ to $s_0$ and from $F$ to $q_0$ ensure proper concatenation.
+The extra start state $q_0$ handles the case $\lambda\in L^*$ (which is always
+true) independently from the rest of the machine.  Without $q_0$, making $s_0$
+both the start and a final state could create spurious acceptance: words that
+loop back through the original start states might be accepted even when they are
+not valid concatenations of words from $L$.  The new state $q_0$ is needed only
+to accept $\lambda$ without changing the behavior of the original start states.
 
 %% 5.41
 \item \textbf{Redesign Theorem~5.4 (concatenation) using $\lambda$-transitions.}
@@ -394,16 +504,57 @@ This avoids the extra $q_0$ because the $\lambda$-back-edges from $F$ to $s_0$ d
 \item \textbf{Redesign Theorem~5.4 for NDFAs $A_1$ and $A_2$.}
 
 Given NDFAs $A_1=\langle\Sigma,S_1,S^1_0,\delta_1,F_1\rangle$ and $A_2=\langle\Sigma,S_2,S^2_0,\delta_2,F_2\rangle$ with $S_1\cap S_2=\emptyset$:
-Define $A^\bullet=\langle\Sigma,S_1\cup S_2,S^1_0,\delta^\bullet,F_2\rangle$ where:
-$\delta^\bullet(s,\pmb{a})=\delta_1(s,\pmb{a})\cup(S^2_0\text{ if }\delta_1(s,\pmb{a})\cap F_1\neq\emptyset)$ for $s\in S_1$,
-$\delta^\bullet(s,\pmb{a})=\delta_2(s,\pmb{a})$ for $s\in S_2$.
-This routes transitions that enter $F_1$ simultaneously into $S^2_0$ to continue with $A_2$.
+Define
+\[
+A^\bullet=\langle\Sigma,S_1\cup S_2,S^1_0,\delta^\bullet,F^\bullet\rangle,
+\]
+where
+\[
+F^\bullet=
+\left\{
+\begin{array}{ll}
+F_2, & \lambda\notin L_2,\\
+F_1\cup F_2, & \lambda\in L_2,
+\end{array}
+\right.
+\]
+and
+\[
+\delta^\bullet(s,\pmb{a})=
+\left\{
+\begin{array}{ll}
+\delta_1(s,\pmb{a}), & s\in S_1-F_1,\\
+\delta_1(s,\pmb{a})\cup\displaystyle\bigcup_{t\in S^2_0}\delta_2(t,\pmb{a}),
+  & s\in F_1,\\
+\delta_2(s,\pmb{a}), & s\in S_2.
+\end{array}
+\right.
+\]
+This is the exact NDFA analogue of Theorem~5.4: when the current state is
+already in $F_1$, the same input symbol may also start a run of $A_2$ from any
+start state in $S^2_0$.
 
 %% 5.44
 \item \textbf{Redesign Theorem~5.5 for DFA $A$.}
 
-Identical to the original construction (Theorem~5.5 already uses a DFA as input).  The construction is:
-$A_*=\langle\Sigma,S\cup\{q_0\},q_0,\delta_*,F\cup\{q_0\}\rangle$ where $\delta_*(q_0,\pmb{a})=\delta_*(s_0,\pmb{a})$ and $\delta_*(f,\pmb{a})=\delta(f,\pmb{a})\cup\{q_0\text{'s equivalent}\}$.  (Same as before.)
+If $A=\langle\Sigma,S,s_0,\delta,F\rangle$ is deterministic, the redesigned
+machine is the NDFA
+\[
+A_*=\langle\Sigma,S\cup\{q_0\},\{q_0,s_0\},\delta_*,F\cup\{q_0\}\rangle,
+\]
+where
+\[
+\delta_*(s,\pmb{a})=
+\left\{
+\begin{array}{ll}
+\{\delta(s,\pmb{a})\}, & s\in S-F,\\
+\{\delta(s,\pmb{a}),\delta(s_0,\pmb{a})\}, & s\in F,\\
+\emptyset, & s=q_0.
+\end{array}
+\right.
+\]
+This is the DFA-specialized form of Theorem~5.5, with singleton outputs exactly
+because the old transition function $\delta$ is deterministic.
 
 %% 5.45
 \item \textbf{Comparing $R_L$ and $R_{\sim L}$.}
@@ -418,7 +569,13 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
   Let $L_1=L_2$ be any FAD language.  Then $L_1\cap L_2=L_1$, so $R_{L_1\cap L_2}=R_{L_1}=R_{L_1}\cap R_{L_1}=R_{L_1}\cap R_{L_2}$.
 
   \item \textbf{Examples where $R_{L_1\cap L_2}\neq R_{L_1}\cap R_{L_2}$.}
-  Generally, the Myhill--Nerode classes of $L_1\cap L_2$ can be finer than those of the product machine.  Let $L_1=\{a^nb^n\mid n\ge 0\}$ (not FAD) and $L_2=\Sigma^*$.  Then $L_1\cap L_2=L_1$ has infinitely many classes.  $R_{L_2}$ has one class ($\Sigma^*$ is trivial), so $R_{L_1}\cap R_{L_2}=R_{L_1}$.  But here they are equal.  Finding a case where they differ requires $L_1,L_2$ both FAD but $L_1\cap L_2$'s congruence differs from the product.  This happens when the minimal DFA for $L_1\cap L_2$ (the product DFA) has some state identifications relative to $R_{L_1}\cap R_{L_2}$ (the grid).
+  Let $L_1=\{\pmb{a}\}$ and $L_2=\{\pmb{b}\}$ over $\Sigma=\{\pmb{a},\pmb{b}\}$.
+  Then $L_1\cap L_2=\emptyset$, so $R_{L_1\cap L_2}=R_\emptyset$ is the
+  universal relation.  But $\lambda\not\mathrel{R_{L_1}}\pmb{a}$, because with
+  suffix $\lambda$ the word $\pmb{a}$ is in $L_1$ and $\lambda$ is not.  Hence
+  \[
+  R_{L_1\cap L_2}\neq R_{L_1}\cap R_{L_2}.
+  \]
 \end{enumerate}
 
 %% 5.47
@@ -471,11 +628,27 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
 
 %% 5.51
 \item \begin{enumerate}[(a)]
-  \item \textbf{\NSIG\ is not closed under relative complement.}  (If $\NSIG$ is CFLs: CFLs are not closed under relative complement.)
-  \item \textbf{\NSIG\ is closed under union.}  (CFLs are closed under union.)
-  \item \textbf{\NSIG\ is closed under concatenation.}  (CFLs are closed under concatenation.)
-  \item \textbf{\NSIG\ is closed under Kleene closure.}  (CFLs are closed under Kleene closure.)
-  \item \textbf{If $L\in\NSIG$, then $L^+\in\NSIG$.}  Yes: $L^+=L\cdot L^*$, and $L^*\in\NSIG$ (by Kleene closure); then $L^+\in\NSIG$ (by concatenation closure).
+  \item \textbf{\NSIG\ is not closed under relative complement.}  Let
+  $K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}\in\NSIG$.
+  Then $K-K=\emptyset\in\DSIG$.
+
+  \item \textbf{\NSIG\ is not closed under union.}  If $K\in\NSIG$, then
+  $\sim K\in\NSIG$ by Theorem~5.8.  But
+  $K\cup\sim K=\Sigma^*\in\DSIG$.
+
+  \item \textbf{\NSIG\ is not closed under concatenation.}  Let
+  $E=\{\pmb{a}^n\pmb{b}^n\mid n\ge 1\}$ and define
+  $L=\{\pmb{a},\pmb{b}\}^*-E$.  Since $E\in\NSIG$, Theorem~5.8 gives
+  $L\in\NSIG$.  Also $\lambda\in L$, and if $x\notin L$ then
+  $x=\pmb{a}^n\pmb{b}^n=\pmb{a}\cdot \pmb{a}^{n-1}\pmb{b}^n$ with both factors in
+  $L$.  Hence $L\cdot L=\{\pmb{a},\pmb{b}\}^*\in\DSIG$.
+
+  \item \textbf{\NSIG\ is not closed under Kleene closure.}  With the same
+  language $L$, we have $\lambda\in L$ and $L\cdot L=\Sigma^*$, so
+  $L^*=\Sigma^*\in\DSIG$.
+
+  \item \textbf{If $L\in\NSIG$, then $L^+\in\NSIG$: No.}  For the same language
+  $L$, because $\lambda\in L$ we have $L^+=L^*=\Sigma^*$, which is FAD.
 \end{enumerate}
 
 %% 5.52
@@ -484,16 +657,25 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
 If $S_1\cap S_2\neq\emptyset$, the transition function $\delta^\bullet$ would be ambiguous: for a state $s\in S_1\cap S_2$, which transitions should apply---those of $A_1$ or $A_2$?  The definition of $\delta^\bullet$ would not be well-defined.  Moreover, the proof that paths through the concatenation machine correctly simulate $A_1$ then $A_2$ relies on the fact that once the computation enters $S_2$, it stays in $S_2$ (and similarly for $S_1$).  If the state sets overlap, a path might inadvertently ``mix'' transitions from $A_1$ and $A_2$.
 
 %% 5.53
-\item \textbf{\DSIG\ is closed under $E(L)=\{z\mid\exists y\in\Sigma^+\ni yx\in L\}$.}
+\item \textbf{\DSIG\ is closed under $E(L)=\{z\mid\exists y\in\Sigma^+,\exists x\in L\ni z=yx\}$.}
 
-Recall $E(L)=\{z\mid\exists y\in\Sigma^+: yz\in L\}$: the set of strings that complete some nonempty prefix into a word of $L$.
+Here $E(L)=\Sigma^+\cdot L$, the set of words obtained by prepending a nonempty
+prefix to a word of $L$.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Construction.}  Given DFA $A$ for $L$: build NDFA $A'=\langle\Sigma,S,S_0',\delta,F\rangle$ where $S_0'=\bigcup_{s\in S}\bigcup_{\pmb{a}\in\Sigma}\delta(s,\pmb{a})$ (all states reachable by at least one step).
+  \item \textbf{Construction.}  Let $B$ be the two-state DFA for $\Sigma^+$:
+  start state $p_0$ (nonfinal), final state $p_1$, and for every
+  $\pmb{a}\in\Sigma$,
+  $\delta_B(p_0,\pmb{a})=p_1$ and $\delta_B(p_1,\pmb{a})=p_1$.  If $A$ accepts
+  $L$, apply the concatenation construction of Theorem~5.4 to $B$ and $A$.
 
-  \item \textbf{Proof.}  $z\in E(L)$ iff $\exists y\in\Sigma^+\ni yz\in L$ iff there is a state $s$ reachable by processing some $y\in\Sigma^+$ such that $\deltabar{}(s,z)\in F$.  The set of such states $s$ is exactly $S_0'=\bigcup_{\pmb{a}\in\Sigma}\delta(s',\pmb{a})$ for all $s'\in S$.  Hence $L(A')=E(L)$.
+  \item \textbf{Proof.}  A word $z$ is accepted by the new machine iff it can be
+  written as $z=yx$ where $y$ is accepted by $B$ and $x$ is accepted by $A$.
+  That is equivalent to saying $y\in\Sigma^+$ and $x\in L$, so the new machine
+  accepts exactly $E(L)$.
 
-  \item $L(A')\in\DSIG$ since $A'$ is an NDFA. \qed
+  \item Since $\Sigma^+\in\DSIG$ and \DSIG\ is closed under concatenation,
+  $E(L)=\Sigma^+\cdot L\in\DSIG$. \qed
 \end{enumerate}
 
 %% 5.54
@@ -554,35 +736,67 @@ By Exercise~5.56:
 \end{proof}
 
 %% 5.58
-\item \textbf{Prove Theorem~5.6 (\DSIG\ closed under homomorphism).}
+\item \textbf{Prove Theorem~5.6 (\DSIG\ closed under $Z$).}
 
 \begin{proof}
-Let $\psi:\Sigma^*\to\Delta^*$ be a homomorphism and $L\in\DSIG$.  We want $\psi(L)\in\DSIG$.
+Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a DFA for $L$.  Build a
+$\lambda$-NDFA $A_Z$ by adding, for every ordinary transition
+$s\xrightarrow{\pmb{a}}t$ of $A$, a matching $\lambda$-transition
+$s\xrightarrow{\lambda}t$.  Then a path in $A_Z$ may either read a letter of the
+input or skip a letter that was present in some word of $L$.
 
-Build an NDFA for $\psi(L)$ from $A$ for $L$ by replacing each transition arc $s\xrightarrow{\pmb{a}}t$ with a path that reads $\psi(\pmb{a})$ (i.e., introduce intermediate states to spell out $\psi(\pmb{a})$ one symbol at a time).  The resulting NDFA accepts exactly $\psi(L)$.  Hence $\psi(L)\in\DSIG$. \qed
+Thus $x$ is accepted by $A_Z$ iff there exists some $w\in L$ from which $x$ can
+be obtained by deleting zero or more letters, i.e., iff $x\in Z(L)$.  Hence
+$Z(L)\in\DSIG$.
 \end{proof}
 
 %% 5.59
-\item \textbf{Prove Theorem~5.7 (\DSIG\ closed under inverse homomorphism).}
+\item \textbf{Prove Theorem~5.7 (\DSIG\ closed under $Y$).}
 
 \begin{proof}
-Let $\psi:\Delta^*\to\Sigma^*$ and $L\in\DSIG$ with DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$.
-Build $A^\psi=\langle\Delta,S,s_0,\delta^\psi,F\rangle$ where
-$\delta^\psi(s,\pmb{b})=\deltabar{}(s,\psi(\pmb{b}))$ for each $\pmb{b}\in\Delta$.
+Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a DFA for $L$.  Following the text
+after Theorem~5.7, build two copies of $A$.  Being in the first copy means that
+no letter has yet been deleted; being in the second copy means that exactly one
+letter has been deleted.  Ordinary transitions stay within each copy, and for
+every transition $s\xrightarrow{\pmb{a}}t$ in the first copy add a
+$\lambda$-transition from the first-copy state $s$ to the second-copy state $t$.
 
-\emph{Claim:} $L(A^\psi)=\psi^{-1}(L)$.
-
-By induction: $\overline{\delta^\psi}(s_0,y)=\deltabar{}(s_0,\psi(y))=\deltabar{}(s_0,\overline{\psi}(y))$.
-Hence $y\in L(A^\psi)$ iff $\overline{\delta^\psi}(s_0,y)\in F$ iff $\deltabar{}(s_0,\psi(y))\in F$ iff $\psi(y)\in L$ iff $y\in\psi^{-1}(L)$. \qed
+An accepting path therefore behaves like a path of $A$ on some word of $L$, with
+exactly one letter skipped at the moment when the path moves from the first copy
+to the second.  So the resulting machine accepts exactly $Y(L)$, and therefore
+$Y(L)\in\DSIG$.
 \end{proof}
 
 %% 5.60
 \item \begin{enumerate}[(a)]
   \item \textbf{Alternative construction for Theorem~5.7 without $\lambda$-moves.}
 
-  Use the same construction as above: $\delta^\psi(s,\pmb{b})=\deltabar{}(s,\psi(\pmb{b}))$.  This is already deterministic (for DFA $A$) and uses no $\lambda$-moves, since $\psi(\pmb{b})$ is a fixed string that can be pre-computed.
+  Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a DFA for $L$.  Use state set
+  $S\times\{0,1\}$, where the second component records whether the one deletion
+  has already occurred.  The start state is $\langle s_0,0\rangle$.  Final states
+  are
+  \[
+  \{\langle s,1\rangle\mid s\in F\}\cup
+  \{\langle s,0\rangle\mid(\exists \pmb{a}\in\Sigma)\ \delta(s,\pmb{a})\in F\}.
+  \]
+  On input $\pmb{a}$, define
+  \[
+  \delta'(\langle s,0\rangle,\pmb{a})=
+  \{\langle \delta(s,\pmb{a}),0\rangle\}\cup
+  \{\langle \delta(\delta(s,\pmb{b}),\pmb{a}),1\rangle\mid \pmb{b}\in\Sigma\},
+  \]
+  and
+  \[
+  \delta'(\langle s,1\rangle,\pmb{a})=
+  \{\langle \delta(s,\pmb{a}),1\rangle\}.
+  \]
 
-  \item \textbf{Proof:}  Same as Exercise~5.59. \qed
+  \item \textbf{Proof:}  In the $0$-copy the machine either reads the current
+  input symbol normally, or guesses that one letter $\pmb{b}$ of the original
+  word was deleted immediately before it and moves into the $1$-copy.  Once in
+  the $1$-copy, the rest of the input is processed exactly as in $A$.  The extra
+  final states in the $0$-copy handle the case where the deleted letter was the
+  last letter of the original word.  Hence this NDFA accepts exactly $Y(L)$.
 \end{enumerate}
 
 %% 5.61
@@ -591,7 +805,19 @@ Hence $y\in L(A^\psi)$ iff $\overline{\delta^\psi}(s_0,y)\in F$ iff $\deltabar{}
 \begin{enumerate}[(a)]
   \item \textbf{Construction.}  Given DFA $A$ for $L$, build $\lambda$-NDFA $A'$ by adding, for each transition $s\xrightarrow{\pmb{a}}t$, an optional $\lambda$-transition $s\xrightarrow{\lambda}t$ (allowing deletion of $\pmb{a}$).  Require at least one deletion by adding a flag bit.
 
-  More precisely: $A'$ has state set $S\times\{0,1\}$ where the second component tracks whether at least one letter has been deleted.  Initial state: $\langle s_0,0\rangle$.  Final states: $\{\langle f,1\rangle\mid f\in F\}$.  Transitions: $\delta'(\langle s,b\rangle,\pmb{a})=\langle\delta(s,\pmb{a}),b\rangle$ (read $\pmb{a}$) and $\delta'(\langle s,b\rangle,\lambda)=\langle t,1\rangle$ for each $t$ with $\delta(s,\pmb{a})=t$ (delete $\pmb{a}$, set flag).
+  More precisely: $A'$ has state set $S\times\{0,1\}$ where the second
+  component tracks whether at least one letter has been deleted.  Initial
+  state: $\langle s_0,0\rangle$.  Final states:
+  $\{\langle f,1\rangle\mid f\in F\}$.  For each $c\in\Sigma$,
+  \[
+  \delta'(\langle s,b\rangle,c)=\{\langle\delta(s,c),b\rangle\},
+  \qquad
+  \delta'(\langle s,b\rangle,\lambda)
+    =\{\langle\delta(s,c),1\rangle\mid c\in\Sigma\}.
+  \]
+  The ordinary transition reads the next input symbol, while the
+  $\lambda$-transition simulates deleting one symbol $c$ from the original word
+  and moves into the ``already deleted'' copy.
 
   \item \textbf{Proof.}  A word $z$ is in $W(L)$ iff $z$ can be obtained by deleting at least one letter from some $w\in L$.  A path in $A'$ simulates a path in $A$ but uses $\lambda$-transitions to skip letters; the flag ensures at least one skip. Hence $L(A')=W(L)$.
 
@@ -641,13 +867,25 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 
   \item \textbf{$B_\Sigma$ closed under $I$? No.}  $I(\Sigma^*)=P\notin B_\Sigma$ (not finite, not cofinite).
 
-  \item \textbf{$I_\Sigma$ closed under $I$? No.}  $I(L)$ might be finite (if $L$ has only finitely many prime-length words).
+  \item \textbf{$I_\Sigma$ closed under $I$? No.}  Let $\Sigma=\{\pmb{a}\}$ and
+  $L=\{\pmb{a}^{2n}\mid n\ge 1\}$.  Then $L\in I_\Sigma$, but
+  \[
+  I(L)=L\cap P=\{\pmb{aa}\},
+  \]
+  since $2$ is the only even prime.  Thus $I(L)\notin I_\Sigma$.
 
   \item \textbf{$J_\Sigma$ closed under $I$?}  $I(L)=L\cap P$.  If $\sim L$ is infinite, $\sim(L\cap P)\supseteq\sim P$ which is infinite (non-primes).  \textbf{Yes, closed.}
 
   \item \textbf{$\pmb{E}$ closed under $I$?}  If $\pmb{abba}\in L$ and $|\pmb{abba}|=4$ is not prime, then $\pmb{abba}\notin I(L)$.  So $I(L)$ might not contain $\pmb{abba}$.  \textbf{Not closed.}
 
-  \item \textbf{\NSIG\ closed under $I$?}  (If $\NSIG=\DSIG$: no, by (a).  If $\NSIG$ is CFLs: $I(L)$ for CFL $L$ need not be CFL.)
+  \item \textbf{\NSIG\ closed under $I$? No.}  Over $\Sigma=\{\pmb{a}\}$, let
+  $P=\{\pmb{a}^p\mid p\text{ prime}\}$ and
+  $L=\{\pmb{a}\}^*-P$.  Since $P\notin\DSIG$, Theorem~5.8 implies
+  $L\in\NSIG$.  But
+  \[
+  I(L)=L\cap P=\emptyset\in\DSIG.
+  \]
+  Hence \NSIG\ is not closed under $I$.
 \end{enumerate}
 
 %% 5.66
@@ -682,21 +920,46 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 %% 5.68
 \item \begin{enumerate}[(a)]
   \item \textbf{Three homomorphisms under which \NSIG\ is not closed} (over $\Sigma=\{\pmb{a},\pmb{b}\}$):
+  Use the non-FAD language
+  $K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$ from
+  Lemma~5.4.
   \begin{enumerate}[(i)]
-    \item The specific examples depend on the textbook's definition of $\NSIG$. For $\NSIG=$ FAD languages, $\NSIG$ is closed under homomorphism (Theorem~5.7). For broader classes: inverse homomorphism $\psi^{-1}$ can map non-$\NSIG$ languages into $\NSIG$. Three examples where closure fails under inverse homomorphism are given by appropriate $\psi$ for each class. (See Exercise 5.68 statement for the intended class.)
-
-  (The specific examples depend on the text's definition of $\NSIG$; providing three general examples where the homomorphic image exits the class.)
+    \item $\xi_1(\pmb{a})=\pmb{a},\ \xi_1(\pmb{b})=\pmb{a}$.  By Lemma~5.4,
+    $\overline{\xi_1}(K)$ is the regular language of even-length $\pmb{a}$-strings.
+    \item $\xi_2(\pmb{a})=\lambda,\ \xi_2(\pmb{b})=\lambda$.  Then
+    $\overline{\xi_2}(K)=\{\lambda\}\in\DSIG$.
+    \item $\xi_3(\pmb{a})=\pmb{a},\ \xi_3(\pmb{b})=\lambda$.  For
+    $L=\{\pmb{a}^n\pmb{b}^n\mid n\ge 0\}\in\NSIG$, we get
+    $\overline{\xi_3}(L)=\{\pmb{a}^n\mid n\ge 0\}\in\DSIG$.
+  \end{enumerate}
 
   \item \textbf{Three homomorphisms under which \NSIG\ is closed:}
   \begin{enumerate}[(i)]
-    \item Identity: $\psi(\pmb{a})=\pmb{a},\psi(\pmb{b})=\pmb{b}$.
-    \item Length-preserving: any bijection on letters.
-    \item $\psi(\pmb{a})=\pmb{aa},\psi(\pmb{b})=\pmb{bb}$: doubling.
+    \item The identity map: $\psi_1(\pmb{a})=\pmb{a},\ \psi_1(\pmb{b})=\pmb{b}$.
+    \item The swap map: $\psi_2(\pmb{a})=\pmb{b},\ \psi_2(\pmb{b})=\pmb{a}$.
+    \item The doubling map: $\psi_3(\pmb{a})=\pmb{aa},\ \psi_3(\pmb{b})=\pmb{bb}$.
   \end{enumerate}
+\noindent
+For $\psi_1$ and $\psi_2$, if $\overline{\psi_i}(L)$ were FAD then applying the
+inverse letter permutation would make $L$ FAD.  For $\psi_3$, the map is
+injective, so if $\overline{\psi_3}(L)$ were FAD then
+$L=\overline{\psi_3^{-1}}(\overline{\psi_3}(L))$ would be FAD by Theorem~5.10.
 \end{enumerate}
 
 %% 5.69
-\item Over $\Sigma=\{\pmb{a}\}$, $\NSIG=\DSIG$ (since every unary language is FAD if it has a periodic structure; but $\{a^{p}\mid p\text{ prime}\}\notin\DSIG$).  For $\psi:\{\pmb{a}\}^*\to\{\pmb{a}\}^*$ with $\psi(\pmb{a})=\pmb{a}^k$ for some $k\ge 2$: $\psi^{-1}(L)=\{x\mid\psi(x)\in L\}=\{a^n\mid a^{kn}\in L\}$.  If $L=P$ (primes), $\psi^{-1}(P)=\{a^n\mid kn\text{ prime}\}$; for $k=2$: $\{a^n\mid 2n\text{ prime}\}=\{a^1\}$ (since $2\cdot 1=2$ is prime, $2\cdot 2=4$ not, $2\cdot 3=6$ not, ...) $=\{a\}$, which is FAD.  So this homomorphism does not exhibit non-closure.  Two homomorphisms under which $\NSIG$ is not closed on unary alphabets seem impossible since all homomorphisms on $\{a\}^*\to\{a\}^*$ are power maps.
+\item Over $\Sigma=\{\pmb{a}\}$ there is only one homomorphism under which
+\NSIG\ is obviously not closed, namely the erasing homomorphism
+$\psi(\pmb{a})=\lambda$.  For any non-FAD unary language $L$,
+$\overline{\psi}(L)=\{\lambda\}\in\DSIG$.
+
+For every other unary homomorphism, $\psi(\pmb{a})=\pmb{a}^k$ with $k\ge 1$.
+Such a homomorphism is injective, so if $\overline{\psi}(L)$ were FAD, then
+\[
+L=\overline{\psi^{-1}}(\overline{\psi}(L))
+\]
+would be FAD by Theorem~5.10.  Therefore \NSIG\ is closed under every nonerasing
+unary homomorphism.  So the answer is \textbf{no}: there are not two different
+unary homomorphisms under which \NSIG\ is not closed.
 
 %% 5.70
 \item \begin{enumerate}[(a)]
@@ -715,7 +978,7 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 
 %% 5.71
 \item \begin{enumerate}[(a)]
-  \item \textbf{Apparent contradiction resolved.}  $\xi(L)$ is the set of even-length $\pmb{a}$-strings; $\xi^{-1}(\xi(L))$ is the set of all strings $x$ with $\xi(x)\in\xi(L)$, not $L$ itself.  In general, $\xi^{-1}(\xi(L))\supseteq L$ and can be much larger; it is not necessarily $L$.  The inverse image lands in $\DSIG$ by Theorem~5.7, but it's $\xi^{-1}(\xi(L))$, not $L$.
+  \item \textbf{Apparent contradiction resolved.}  $\xi(L)$ is the set of even-length $\pmb{a}$-strings; $\xi^{-1}(\xi(L))$ is the set of all strings $x$ with $\xi(x)\in\xi(L)$, not $L$ itself.  In general, $\xi^{-1}(\xi(L))\supseteq L$ and can be much larger; it is not necessarily $L$.  The inverse image lands in $\DSIG$ by Theorem~5.10, but it's $\xi^{-1}(\xi(L))$, not $L$.
 
   \item \textbf{Example where $\PBAR(\psi^{-1}(L))\neq L$:} Take $\psi(\pmb{a})=\pmb{a}\pmb{a}$, $L=\{\pmb{a}\}$ (singleton).  Then $\psi^{-1}(L)=\emptyset$ (no word maps to $\pmb{a}$ under $\psi$, since $\psi$ always produces even-length strings), and $\PBAR(\emptyset)=\emptyset\neq L$.
 
@@ -732,35 +995,73 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 $L^e=\{x\mid\exists y\in\Sigma^*\ni yx\in L\wedge|x|=|y|\}$.
 
 \begin{proof}
-Given DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$ for $L$, build:
-$A^e=\langle\Sigma,S\times S,\langle s_0,s_0\rangle,\delta^e,F^e\rangle$ where
-$\delta^e(\langle s,t\rangle,\pmb{a})=\langle s',\delta(t,\pmb{a})\rangle$ for all states $s'$ reachable from $s$ via some $\pmb{a}'$ (nondeterministically advance $s$ by one step while advancing $t$ by one step on actual input).
+Observe that
+\[
+x\in L^e
+\iff \exists y\in\Sigma^*\ (yx\in L\ \wedge\ |y|=|x|)
+\iff x^r\in (L^r)^b.
+\]
+Indeed, $yx\in L$ with $|y|=|x|$ iff $x^ry^r\in L^r$ with
+$|x^r|=|y^r|$, which says exactly that $x^r$ is a first half of some word in
+$L^r$.
 
-More precisely: use a two-pointer approach.  $A^e$ is an NDFA with state set $S\times S$, start state $\{s_0\}\times S$ (or formally, start in $\langle s_0,s_0\rangle$ and have nondeterministic ``pre-advance'' for the first pointer).
-
-The standard construction: $A^e$ guesses the midpoint; at the midpoint, both pointers must have processed equal-length strings.  This requires the product of $A$ with itself, where one copy processes the first half nondeterministically and the second copy processes the second half deterministically.
-
-$F^e=\{\langle f,t\rangle\mid f\in F,t\in F^e_{\text{actual}}\}$ where $f$ is the state reached by the end of the first half and the final state reached by the end of the second half must be in $F$.
-
-The formal construction requires that the product machine's final state $\langle s,f\rangle$ satisfies $f\in F$: i.e., the second pointer ends in $F$ after processing the second half.  The first pointer ($s$) must be the state reached after the first half.
-
-A clean construction: for each state $s\in S$, define the language $L_s=\{x\mid\DBAR(s,x)\in F\}$ (words that from $s$ lead to acceptance).  Then $L^e=\bigcup_{s\in S}\{y\in\Sigma^{|x|}\mid\DBAR(s_0,y)=s\wedge|y|=|x|\text{ for some }x\in L_s\}$.  The DFA for this: use the pair $(s,t)$ where $s$ tracks the first pointer (advancing via all possible paths, nondeterministically) and $t$ tracks actual input.  Since $S$ is finite, this is a finite NDFA, and $L^e\in\DSIG$. \qed
+Therefore
+\[
+L^e=\bigl((L^r)^b\bigr)^r.
+\]
+Exercise~5.20 shows that \DSIG\ is closed under reversal, and
+Theorem~5.11 shows that it is closed under $b$.  Hence \DSIG\ is closed under
+$e$.
 \end{proof}
 
 %% 5.73
 \item \textbf{Show that redefining final states to merely ``midway'' states is incorrect.}
 
-If we set the final states of $A$ to be the ``midpoint'' states (states reached after processing the first half of words in $L$), we get an automaton that accepts words that reach these midpoint states---but the midpoint states depend on the word being processed, and cannot be determined without knowing the length of the word.  Different words lead to different midpoints; the machine cannot simultaneously track multiple midpoints.  (The ``midpoint'' set would need to be the set of all states from which any final state is reachable in the same number of steps as were taken to reach the midpoint---this is not a fixed set of states for all words.)
+Example~5.25 gives a concrete counterexample.  For the highlighted state $q$,
+\[
+I(A,q)=\{(\pmb{abc})^n\mid n\ge 1\}
+\qquad\text{and}\qquad
+T(A,q)=\{\pmb{a}^{2n}\mid n\ge 1\}.
+\]
+So a word can use $q$ as a midpoint only when its first half has a length that
+occurs in both sets, namely a length divisible by $6$.  The proof of
+Theorem~5.11 therefore keeps only
+\[
+I(A,q)\cap\overline{\psi^{-1}}(\PBAR(I(A,q))\cap\PBAR(T(A,q)))
+=\{(\pmb{abc})^{2n}\mid n\ge 1\}.
+\]
+If we simply declared $q$ to be a final state, the resulting automaton would
+accept all of $I(A,q)$, including $\pmb{abc}$.  But $\pmb{abc}$ is not a first
+half of any word in $L$, because after reaching $q$ there is no continuation of
+length $3$ to a final state.  Hence ``make the midway states final'' accepts too
+many words and is incorrect.
 
 %% 5.74
 \item \textbf{Flaw in the argument that $K$ is not FAD because $M$ is not FAD.}
 
-Theorem~5.6 states that \DSIG\ is closed under homomorphism: if $L$ is FAD and $\psi$ is a homomorphism, then $\psi(L)$ is FAD.  This does NOT mean that if $L$ is not FAD, then $\psi(L)$ is not FAD.  The image of a non-FAD language under a homomorphism can be FAD.  Specifically, $\psi$ might ``collapse'' the structure that made $M$ non-FAD, yielding a simpler (FAD) image $K=\psi(M)$.  Hence the fact that $M\notin\DSIG$ tells us nothing about whether $K=\psi(M)\in\DSIG$.
+Theorem~5.9 states that \DSIG\ is closed under homomorphism: if $L$ is FAD and
+$\psi$ is a homomorphism, then $\psi(L)$ is FAD.  This does \emph{not} mean that
+if $L$ is not FAD, then $\psi(L)$ is not FAD.  A homomorphism can collapse the
+structure that made $M$ non-FAD, yielding a simpler FAD image $K=\psi(M)$.
+Hence the fact that $M\notin\DSIG$ says nothing by itself about whether
+$K=\psi(M)$ is FAD.
 
 %% 5.75
-\item \textbf{Prove Theorem~5.9 (\DSIG\ closed under reversal).}
+\item \textbf{Prove Theorem~5.9 (\DSIG\ closed under homomorphism).}
 
-See Exercise~5.20, which gives the complete proof: reverse arrows and swap start/final states to get an NDFA for $L^r$; by Theorem~4.1 this NDFA is equivalent to a DFA. \qed
+\begin{proof}
+Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a DFA for $L$, and let
+$\psi:\Sigma\to\Sigma^*$ be a homomorphism.  For each transition
+$s\xrightarrow{\pmb{a}}t$ of $A$, replace that edge by a path labeled
+$\psi(\pmb{a})$.  If $\psi(\pmb{a})=\lambda$, use a $\lambda$-transition from
+$s$ to $t$; if $\psi(\pmb{a})=\pmb{b}_1\cdots\pmb{b}_k$ with $k\ge 1$, insert
+$k-1$ new states so that the new path reads
+$\pmb{b}_1,\pmb{b}_2,\dots,\pmb{b}_k$.
+
+The resulting finite automaton accepts exactly the homomorphic images of words in
+$L$, namely $\overline{\psi}(L)$.  Hence $\overline{\psi}(L)\in\DSIG$, proving
+Theorem~5.9.
+\end{proof}
 
 %% 5.76
 \item \textbf{Homomorphism capitalizing lowercase ASCII letters.}
@@ -809,25 +1110,49 @@ $\psi(c)=\begin{cases}\text{uppercase}(c) & \text{if }c\in\{a,\ldots,z\} \\ c & 
 %% 5.79
 \item \textbf{If $\mathcal{S}$ is closed under union, concatenation, Kleene closure, and is infinite, must every language in $\mathcal{S}$ be FAD?}
 
-\textbf{No.}  The collection of all context-free languages (CFLs) is closed under union, concatenation, and Kleene closure, is infinite, and contains non-FAD languages like $\{a^nb^n\mid n\ge 0\}$.
+\textbf{No.}  The collection $I_\Sigma$ of all infinite languages is infinite,
+and Exercise~5.4 shows that it is closed under union, concatenation, and Kleene
+closure.  But $I_\Sigma$ contains languages in \NSIG, so not every language in
+such a collection must be FAD.
 
 %% 5.80
 \item \textbf{If $\mathcal{S}$ is closed under union, concatenation, Kleene closure, and is finite, must every language be FAD?}
 
-\textbf{Not necessarily.}  $\mathcal{S}=\{\emptyset,\Sigma^*\}$ is closed under union (both elements), concatenation ($\emptyset\cdot L=\emptyset$, $\Sigma^*\cdot\Sigma^*=\Sigma^*$), and Kleene closure ($\emptyset^*=\{\lambda\}\subsetneq\Sigma^*$---this might not be in $\mathcal{S}$ unless $\Sigma=\emptyset$).
-
-For a rigorous example: if $\mathcal{S}$ is a finite set closed under these operations, it forms a finite semiring under $\cup$ and $\cdot$.  Every language expressible by a regular expression is FAD, but the set $\mathcal{S}$ itself need not consist entirely of FAD languages.  However, this is a difficult question; in general, a collection closed under these three operations need not consist entirely of FAD languages (e.g., include one non-FAD language and close under the operations---but then the collection becomes infinite).  \textbf{If $\mathcal{S}$ is finite}, the Kleene closure of any non-FAD language is also non-FAD, and must remain in $\mathcal{S}$; but finiteness of $\mathcal{S}$ is already a strong constraint.  It is plausible that all members of a finite such $\mathcal{S}$ must be FAD, but a complete proof requires deeper analysis.
+\textbf{No.}  Let
+\[
+K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\},
+\]
+which is in \NSIG\ by Lemma~5.4, and define
+\[
+\mathcal{S}=\{\emptyset,\{\lambda\},K\}.
+\]
+This collection is finite.  It is closed under union because
+$\{\lambda\}\subseteq K$, so every union is still one of the three listed
+languages.  It is closed under concatenation because
+\[
+\emptyset\cdot L=\emptyset,\qquad \{\lambda\}\cdot L=L\cdot\{\lambda\}=L,
+\qquad K\cdot K=K
+\]
+(the numbers of $\pmb{a}$s and $\pmb{b}$s add, and $\lambda\in K$).  It is also
+closed under Kleene closure:
+\[
+\emptyset^*=\{\lambda\},\qquad \{\lambda\}^*=\{\lambda\},\qquad K^*=K.
+\]
+So a finite collection with these closure properties need not consist entirely of
+FAD languages.
 
 %% 5.81 (bonus)
 \item \textbf{If $u\circ u=\text{id}$ and \DSIG\ is closed under $u$, then \NSIG\ is closed under $u$.}
 
 \begin{proof}
-Let $L\in\NSIG$.  Since $\NSIG\supseteq\DSIG$ and $u$ is a unary operator with $u(u(L))=L$:
-By Theorem~4.1, $\NSIG=\DSIG$, so $L\in\DSIG$.  Since \DSIG\ is closed under $u$, $u(L)\in\DSIG\subseteq\NSIG$.  Hence \NSIG\ is closed under $u$.  \qed
-
-(If $\NSIG\neq\DSIG$: Let $L\in\NSIG$.  Since $u(L)\in\NSIG$ iff $u(u(L))=L\in\NSIG$ (which holds), and $u$ is its own inverse, closure of $\DSIG$ under $u$ and $\DSIG\subseteq\NSIG$ implies $u(L)\in\DSIG\subseteq\NSIG$.)
+Let $L\in\NSIG$.  Suppose, toward a contradiction, that $u(L)\in\DSIG$.
+Because \DSIG\ is closed under $u$, applying $u$ again gives
+\[
+u(u(L))\in\DSIG.
+\]
+But $u\circ u=\mathrm{id}$, so $u(u(L))=L$.  Hence $L\in\DSIG$, contradicting
+$L\in\NSIG$.  Therefore $u(L)\in\NSIG$ whenever $L\in\NSIG$, so \NSIG\ is closed
+under $u$.
 \end{proof}
-
-\end{enumerate}
 
 \end{enumerate}

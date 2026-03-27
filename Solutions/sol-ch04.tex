@@ -5,90 +5,223 @@
 \begin{enumerate}[{4.}1.]
 
 %% 4.1
-\item Because Figure~4.25 is a printed figure, we describe the subset-construction
-process generically.  For each NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$
-with $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$, we build $A^d$ by:
-\begin{enumerate}[(1)]
-  \item Taking the start state of $A^d$ to be $S_0$ (treated as a single state
-        representing the set of start states).
-  \item For each state $Q\in\wp(S)$ of $A^d$ and each $\pmb{\sigma}\in\Sigma$,
-        setting $\delta^d(Q,\pmb{\sigma})=\bigcup_{q\in Q}\delta(q,\pmb{\sigma})$.
-  \item Declaring $Q$ final iff $Q\cap F\neq\emptyset$.
-  \item Retaining only the states reachable from $S_0$.
-\end{enumerate}
-The resulting DFAs for each part of Figure~4.25 are obtained by applying this
-procedure; since the figures are referenced externally, the specific transition
-tables depend on the transitions shown in the printed text.
-
-%% 4.2
-\item Consider Example~4.17: a $\lambda$-NDFA $E$ identical to the NDFA $D$
-of Example~4.13 but with the extra transition $\delta(s_1,\lambda)=\{s_2\}$.
+\item Using the local Figure~4.25, the connected deterministic equivalents are
+as follows.  In each table, $\emptyset$ is the dead state and all missing
+subsets from $\wp(S)$ are disconnected.
 
 \begin{enumerate}[(a)]
-  \item \emph{Remove $\lambda$-transitions (Definition~4.9).}  Apply
-  $\delta^{\sigma}_{\lambda}$: for each state $s$ and each input letter
-  $\pmb{a}\in\Sigma$, set
-  $\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})=\Lambda(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a}))$.
-  The $\lambda$-closures are:
-  \[
-    \Lambda(s_0)=\{s_0\},\quad \Lambda(s_1)=\{s_1,s_2\},\quad \Lambda(s_2)=\{s_2\},\quad \Lambda(s_3)=\{s_3\}.
-  \]
-  (The $\lambda$-transition $s_1\to s_2$ means $s_2\in\Lambda(s_1)$.)
-  The resulting NDFA $A^{\sigma}_\lambda$ without $\lambda$-transitions has the
-  same state set $\{s_0,s_1,s_2,s_3\}$ (plus the auxiliary start state $q_0$
-  if $\lambda$ is not accepted) and transitions derived from the formula above.
+\item Figure~4.25(a): start state $\{t\}$, final state $\{t\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{t\} & \{t\} & \emptyset & \{t\}\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
 
-  \item \emph{Convert to DFA (Definition~4.5).}  Starting from the state
-  $\{s_0\}$ (or the appropriate initial set), compute:
+\item Figure~4.25(b): start state $\{q_1\}$, final state $\{q_1\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{q_1\} & \{q_0\} & \{q_1\} & \emptyset\\
+\{q_0\} & \emptyset & \{q_1\} & \{q_0\}\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+
+\item Figure~4.25(c): start state $\{r_0\}$, final states $\{r_0\}$ and
+$\{r_0,r_1\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{r_0\} & \{r_0,r_1\} & \emptyset & \{r_1\}\\
+\{r_0,r_1\} & \{r_0,r_1\} & \{r_0\} & \{r_1\}\\
+\{r_1\} & \emptyset & \{r_0\} & \emptyset\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+
+\item Figure~4.25(d): start state $\{s_0\}$, final state $\{s_2\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{s_0\} & \{s_1\} & \emptyset & \emptyset\\
+\{s_1\} & \{s_2\} & \{s_3\} & \emptyset\\
+\{s_2\} & \emptyset & \emptyset & \emptyset\\
+\{s_3\} & \emptyset & \{s_1\} & \emptyset\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+
+\item Figure~4.25(e): start state $\{s_1\}$, final state $\{s_1,s_2\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{s_1\} & \{s_1,s_2\} & \emptyset & \emptyset\\
+\{s_1,s_2\} & \{s_1,s_2\} & \{s_1\} & \emptyset\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+
+\item Figure~4.25(f): after taking the $\lambda$-closures, the connected DFA has
+start state $\{s_0\}$ and final state $\{s_0,s_1,s_3\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{s_0\} & \{s_0,s_1\} & \emptyset & \emptyset\\
+\{s_0,s_1\} & \{s_0,s_1\} & \{s_2\} & \emptyset\\
+\{s_2\} & \emptyset & \emptyset & \{s_0,s_1,s_3\}\\
+\{s_0,s_1,s_3\} & \{s_0,s_1\} & \{s_2\} & \emptyset\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+
+\item Figure~4.25(g): start state $\{s_0\}$, final state $\{s_0\}$.
+\[
+\begin{array}{c|ccc}
+ & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+\{s_0\} & \{s_1\} & \emptyset & \emptyset\\
+\{s_1\} & \{s_0\} & \{s_3\} & \{s_2\}\\
+\{s_2\} & \emptyset & \emptyset & \{s_1\}\\
+\{s_3\} & \emptyset & \{s_1\} & \emptyset\\
+\emptyset & \emptyset & \emptyset & \emptyset
+\end{array}
+\]
+\end{enumerate}
+
+%% 4.2
+\item Consider Example~4.17, that is, the automaton $E$ of Figure~4.23.
+Reading the figure gives
+\[
+E=\langle\{\pmb{a},\pmb{b}\},\{s_1,s_2,s_3\},\{s_1\},\delta_{\lambda},\{s_2\}\rangle
+\]
+with ordinary transitions
+\[
+\delta_{\lambda}(s_1,\pmb{a})=\{s_1,s_2\},\qquad
+\delta_{\lambda}(s_1,\pmb{b})=\{s_3\},
+\]
+\[
+\delta_{\lambda}(s_2,\pmb{a})=\{s_1\},\qquad
+\delta_{\lambda}(s_2,\pmb{b})=\{s_1\},
+\]
+\[
+\delta_{\lambda}(s_3,\pmb{a})=\emptyset,\qquad
+\delta_{\lambda}(s_3,\pmb{b})=\{s_1\},
+\]
+and one $\lambda$-transition $\delta_{\lambda}(s_1,\lambda)=\{s_2\}$.
+
+\begin{enumerate}[(a)]
+  \item \emph{Remove $\lambda$-transitions (Definition~4.9).}  The
+  $\lambda$-closures are:
   \[
-    \delta^d(\{s_0\},\pmb{a}),\quad \delta^d(\{s_0\},\pmb{b}),\quad\ldots
+    \Lambda(s_1)=\{s_1,s_2\},\qquad
+    \Lambda(s_2)=\{s_2\},\qquad
+    \Lambda(s_3)=\{s_3\}.
   \]
-  and continue until closure is reached.  Since the exact transitions of $E$
-  depend on the printed Figure~4.23, the reader should apply the subset
-  construction to the NDFA $A^{\sigma}_\lambda$ produced in part~(a),
-  grouping into equivalence classes of reachable state-sets.
+  Since $\lambda\in L(E)$, Definition~4.9 adds the isolated start state $q_0$
+  and also makes $q_0$ final.  Thus
+  \[
+  E^{\sigma}_{\lambda}=\langle\{\pmb{a},\pmb{b}\},\{q_0,s_1,s_2,s_3\},\{q_0,s_1\},
+  \delta^{\sigma}_{\lambda},\{q_0,s_2\}\rangle
+  \]
+  with
+  \[
+  \delta^{\sigma}_{\lambda}(q_0,\pmb{a})=
+  \delta^{\sigma}_{\lambda}(q_0,\pmb{b})=\emptyset,
+  \]
+  \[
+  \delta^{\sigma}_{\lambda}(s_1,\pmb{a})=\{s_1,s_2\},\qquad
+  \delta^{\sigma}_{\lambda}(s_1,\pmb{b})=\{s_1,s_2,s_3\},
+  \]
+  \[
+  \delta^{\sigma}_{\lambda}(s_2,\pmb{a})=\{s_1,s_2\},\qquad
+  \delta^{\sigma}_{\lambda}(s_2,\pmb{b})=\{s_1,s_2\},
+  \]
+  \[
+  \delta^{\sigma}_{\lambda}(s_3,\pmb{a})=\emptyset,\qquad
+  \delta^{\sigma}_{\lambda}(s_3,\pmb{b})=\{s_1,s_2\}.
+  \]
+
+  \item \emph{Convert this NDFA into a DFA (Definition~4.5).}  The full
+  deterministic machine has $2^4=16$ subset states, but only three are reachable
+  from the start set $\{q_0,s_1\}$:
+  \[
+  Q_0=\{q_0,s_1\},\qquad Q_1=\{s_1,s_2\},\qquad Q_2=\{s_1,s_2,s_3\}.
+  \]
+  All three are final, because $q_0\in Q_0$ and $s_2\in Q_1\cap Q_2$. Their
+  transitions are
+  \[
+  \begin{array}{c|cc}
+   & \pmb{a} & \pmb{b}\\\hline
+  Q_0 & Q_1 & Q_2\\
+  Q_1 & Q_1 & Q_2\\
+  Q_2 & Q_1 & Q_2
+  \end{array}
+  \]
+  so the connected part of the DFA is a 3-state machine.
 \end{enumerate}
 
 %% 4.3
 \item Consider the NDFA $A$ from Example~4.4:
-$A=\langle\{\pmb{a},\pmb{b}\},\{s,r,t\},\{s\},\delta,\{r,t\}\rangle$
-with $\delta(s,\pmb{a})=\{s,r\}$, $\delta(s,\pmb{b})=\{s,t\}$,
-$\delta(r,\pmb{a})=\delta(r,\pmb{b})=\delta(t,\pmb{a})=\delta(t,\pmb{b})=\emptyset$.
+$A=\langle\{\pmb{a},\pmb{b}\},\{r,s,t\},\{r,s\},\delta,\{t\}\rangle$
+with
+\[
+\delta(r,\pmb{a})=\{s\},\quad \delta(r,\pmb{b})=\emptyset,\quad
+\delta(s,\pmb{a})=\emptyset,\quad \delta(s,\pmb{b})=\{r,t\},
+\]
+\[
+\delta(t,\pmb{a})=\emptyset,\qquad \delta(t,\pmb{b})=\{t\}.
+\]
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no \textless SOS\textgreater{} or
-    \textless EOS\textgreater).}  Encode states with two flip-flops:
-    $s=00$, $r=01$, $t=10$.  The next-state logic computes
-    $D_0,D_1$ as functions of the current state bits and the input.
-    Because the machine is nondeterministic, the circuit uses OR gates to
-    collect contributions from multiple possible transitions.
-    (The precise gate-level diagram depends on the chosen encoding and
-    hazard-minimization strategy; the reader should apply the standard
-    NDFA circuit procedure from Section~4.4 of the text.)
+    \textless EOS\textgreater).}  Using one activity bit for each state,
+    the next-state equations are
+    \[
+    r' = s\wedge \pmb{b},\qquad
+    s' = r\wedge \pmb{a},\qquad
+    t' = (s\wedge \pmb{b}) \vee (t\wedge \pmb{b}).
+    \]
+    Initially the active states are $r$ and $s$, and $t$ is inactive.
 
   \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
-    \textless EOS\textgreater).}  Add dedicated SOS and EOS inputs that
-    respectively force the machine into its start state and gate the
-    final-state outputs, following the standard encoding conventions of
-    Chapter~4.
+    \textless EOS\textgreater).}  \<SOS\> resets the activity bits to
+    $r=s=1,\ t=0$.  The accept line is $t\wedge\text{\<EOS\>}$.
 
   \item \emph{DFA via subset construction (connected portion only).}
-  The start state of $A^d$ is $\{s\}$.  Compute:
+  The start state of $A^d$ is $\{r,s\}$.  The reachable states are
+  \[
+  \{r,s\},\quad \{s\},\quad \{r,t\},\quad \{t\},\quad \emptyset.
+  \]
+  Their transition table is
   \begin{center}\begin{tabular}{c|cc}
     State & $\pmb{a}$ & $\pmb{b}$ \\\hline
-    $\{s\}$ & $\{s,r\}$ & $\{s,t\}$ \\
-    $\{s,r\}$ & $\{s,r\}$ & $\{s,t\}$ \\
-    $\{s,t\}$ & $\{s,r\}$ & $\{s,t\}$ \\
+    $\{r,s\}$ & $\{s\}$ & $\{r,t\}$ \\
+    $\{s\}$ & $\emptyset$ & $\{r,t\}$ \\
+    $\{r,t\}$ & $\{s\}$ & $\{t\}$ \\
+    $\{t\}$ & $\emptyset$ & $\{t\}$ \\
+    $\emptyset$ & $\emptyset$ & $\emptyset$ \\
   \end{tabular}\end{center}
-  Final states (sets intersecting $\{r,t\}$): $\{s,r\}$ and $\{s,t\}$.
-  The dead state $\emptyset$ is not reachable.  The connected DFA has
-  three states.
+  The final states are $\{r,t\}$ and $\{t\}$.
 
   \item \emph{DFA including disconnected portion.}
-  The full set $\wp(\{s,r,t\})=\{\emptyset,\{s\},\{r\},\{t\},\{s,r\},\{s,t\},\{r,t\},\{s,r,t\}\}$
-  yields eight states; most are unreachable from $\{s\}$.  For each
-  subset $Q$, $\delta^d(Q,\pmb{a})=\bigcup_{q\in Q}\delta(q,\pmb{a})$ and
-  similarly for $\pmb{b}$.  The complete table has 8 rows.
+  The full state set is
+  \[
+  \wp(\{r,s,t\})=\{\emptyset,\{r\},\{s\},\{t\},\{r,s\},\{r,t\},\{s,t\},\{r,s,t\}\}.
+  \]
+  Its transition table is
+  \begin{center}\begin{tabular}{c|cc}
+    State & $\pmb{a}$ & $\pmb{b}$ \\\hline
+    $\emptyset$ & $\emptyset$ & $\emptyset$ \\
+    $\{r\}$ & $\{s\}$ & $\emptyset$ \\
+    $\{s\}$ & $\emptyset$ & $\{r,t\}$ \\
+    $\{t\}$ & $\emptyset$ & $\{t\}$ \\
+    $\{r,s\}$ & $\{s\}$ & $\{r,t\}$ \\
+    $\{r,t\}$ & $\{s\}$ & $\{t\}$ \\
+    $\{s,t\}$ & $\emptyset$ & $\{r,t\}$ \\
+    $\{r,s,t\}$ & $\{s\}$ & $\{r,t\}$
+  \end{tabular}\end{center}
+  Final states are exactly those subsets containing $t$.
 
 \end{enumerate}
 
@@ -98,18 +231,61 @@ $\pmb{0}$: from $s_0$ to both $s_1$ and $s_2$.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
-    \textless EOS\textgreater).}  Encode states with two bits.  The
-    nondeterministic transitions become OR gates feeding multiple
-    flip-flop inputs simultaneously.  SOS and EOS are incorporated per
-    the standard convention.
+    \textless EOS\textgreater).}  Use one activity flip-flop for each
+    state $s_0,\dots,s_5$.  The next-state equations are
+    \[
+    s'_0=\text{\<SOS\>},\qquad
+    s'_1=(s_0\wedge \pmb{0})\vee(s_1\wedge \pmb{0})\vee(s_5\wedge \pmb{1}),
+    \]
+    \[
+    s'_2=(s_0\wedge \pmb{0})\vee(s_0\wedge \pmb{1})\vee
+         (s_4\wedge \pmb{0})\vee(s_4\wedge \pmb{1}),
+    \]
+    \[
+    s'_3=(s_0\wedge \pmb{1})\vee(s_1\wedge \pmb{1})\vee(s_3\wedge \pmb{0}),
+    \]
+    \[
+    s'_4=(s_2\wedge \pmb{0})\vee(s_2\wedge \pmb{1}),\qquad
+    s'_5=(s_3\wedge \pmb{1})\vee(s_5\wedge \pmb{0}).
+    \]
+    Since the final states in Figure~4.3 are $s_0$, $s_1$, and $s_4$, the
+    accept line is
+    \[
+      (s_0\vee s_1\vee s_4)\wedge \text{\<EOS\>}.
+    \]
 
   \item \emph{DFA via subset construction.}  Starting from the set of
-  start states $S_0$, apply $\delta^d$ iteratively.  Since the NDFA
-  from Example~4.2 accepts $L=\{x\in\{\pmb{0},\pmb{1}\}^*\mid
-  |x|\equiv 0\pmod{2}\vee|x|_{\pmb{1}}\equiv 0\pmod{3}\}$, the
-  resulting DFA can be constructed as a product of a two-state machine
-  (tracking parity of length) and a three-state machine (tracking
-  $|x|_{\pmb{1}}\bmod 3$), giving at most 6 reachable states.
+  start state $\{s_0\}$, the connected portion of the subset DFA has the
+  following reachable states:
+  \[
+  Q_0=\{s_0\},\quad
+  Q_1=\{s_1,s_2\},\quad
+  Q_2=\{s_2,s_3\},\quad
+  Q_3=\{s_1,s_4\},\quad
+  Q_4=\{s_3,s_4\},
+  \]
+  \[
+  Q_5=\{s_4,s_5\},\quad
+  Q_6=\{s_2,s_5\}.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|cc}
+   & \pmb{0} & \pmb{1}\\\hline
+  Q_0 & Q_1 & Q_2\\
+  Q_1 & Q_3 & Q_4\\
+  Q_2 & Q_4 & Q_5\\
+  Q_3 & Q_1 & Q_2\\
+  Q_4 & Q_2 & Q_6\\
+  Q_5 & Q_6 & Q_3\\
+  Q_6 & Q_5 & Q_3
+  \end{array}
+  \]
+  The final states are exactly those subsets containing one of the original
+  final states $s_0$, $s_1$, or $s_4$, namely
+  \[
+  Q_0,\ Q_1,\ Q_3,\ Q_4,\ Q_5.
+  \]
 \end{enumerate}
 
 %% 4.5
@@ -118,23 +294,85 @@ Example~4.2 but uses multiple start states instead of multiple transitions.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no \textless SOS\textgreater{} or
-    \textless EOS\textgreater).}  Each start state is handled by
-    OR-ing their outputs into the initial-state signal.
+    \textless EOS\textgreater).}  Again use one activity flip-flop per
+    state.  For the automaton of Figure~4.4,
+    \[
+    s'_1=(s_1\wedge \pmb{0})\vee(s_5\wedge \pmb{0}),\qquad
+    s'_2=(s_4\wedge \pmb{0})\vee(s_4\wedge \pmb{1}),
+    \]
+    \[
+    s'_3=(s_1\wedge \pmb{1})\vee(s_3\wedge \pmb{0}),\qquad
+    s'_4=(s_2\wedge \pmb{0})\vee(s_2\wedge \pmb{1}),
+    \]
+    \[
+    s'_5=s_3\wedge \pmb{1}.
+    \]
+    The initial configuration has $s_1=s_4=1$ and the other activity bits
+    equal to $0$.  Since the final states are $s_1$ and $s_4$, the accept
+    line is $s_1\vee s_4$.
 
   \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
-    \textless EOS\textgreater).}  SOS activates all start states
-    simultaneously.
+    \textless EOS\textgreater).}  Use the same next-state equations as in
+    part~(a), but OR the start pulse into the two start-state inputs:
+    \[
+      s'_1=\text{\<SOS\>}\vee(s_1\wedge \pmb{0})\vee(s_5\wedge \pmb{0}),
+      \qquad
+      s'_4=\text{\<SOS\>}\vee(s_2\wedge \pmb{0})\vee(s_2\wedge \pmb{1}),
+    \]
+    with the equations for $s'_2$, $s'_3$, and $s'_5$ unchanged.
+    The accept output is
+    \[
+      (s_1\vee s_4)\wedge \text{\<EOS\>}.
+    \]
 
   \item \emph{DFA (connected portion only).}  The start state of $A^d$
-  is the set of all start states of $A$.  Applying the subset
-  construction yields the connected portion of the DFA.
+  is the set of all start states, namely $\{s_1,s_4\}$.  The reachable
+  subsets are
+  \[
+  P_0=\{s_1,s_4\},\quad
+  P_1=\{s_1,s_2\},\quad
+  P_2=\{s_2,s_3\},\quad
+  P_3=\{s_3,s_4\},\quad
+  P_4=\{s_4,s_5\},\quad
+  P_5=\{s_2,s_5\},
+  \]
+  \[
+  P_6=\{s_2\},\qquad
+  P_7=\{s_4\}.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|cc}
+   & \pmb{0} & \pmb{1}\\\hline
+  P_0 & P_1 & P_2\\
+  P_1 & P_0 & P_3\\
+  P_2 & P_3 & P_4\\
+  P_3 & P_2 & P_5\\
+  P_4 & P_1 & P_6\\
+  P_5 & P_0 & P_7\\
+  P_6 & P_7 & P_7\\
+  P_7 & P_6 & P_6
+  \end{array}
+  \]
+  The final states are
+  \[
+  P_0,\ P_1,\ P_3,\ P_4,\ P_7,
+  \]
+  since these are exactly the reachable subsets containing $s_1$ or $s_4$.
 
   \item \emph{Is this DFA isomorphic to any of those in Exercise~4.4?}
-  Yes.  Both Example~4.2 and Example~4.3 accept the same language $L$.
-  The minimal DFA for $L$ is unique up to isomorphism (by
-  Theorem~3.8).  After minimizing the DFA obtained in part~(c) and the
-  DFA obtained in Exercise~4.4(b), both must produce the same minimal
-  machine (up to renaming of states).  Hence they are isomorphic.
+  No.  The DFA from Exercise~4.4(b) has seven reachable states
+  \[
+  Q_0,\ldots,Q_6,
+  \]
+  while the DFA from part~(c) above has eight reachable states
+  \[
+  P_0,\ldots,P_7.
+  \]
+  Since isomorphic automata must have the same number of states, these two
+  subset-construction DFAs are not isomorphic.  They do accept the same
+  language, but that only implies that their \emph{minimal} DFAs are
+  isomorphic, not these unreduced machines.
 \end{enumerate}
 
 %% 4.6
@@ -143,16 +381,49 @@ $\{s_0,s_1,s_2,s_3\}$ and $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram for the original $\lambda$-NDFA (no SOS/EOS).}
-  The $\lambda$-transitions are implemented by OR-ing the output of
-  the flip-flop encoding $s_i$ directly into the $D$ input of the
-  flip-flop encoding $s_j$ whenever $\delta(s_i,\lambda)=\{s_j\}$.
-  This creates a combinational path that propagates ``active'' status
-  among $\lambda$-connected states within a single clock cycle.
+  Figure~4.19 uses four activity bits, one for each state.  Ignoring the
+  $\lambda$-moves for a moment, the ordinary transitions give
+  \[
+    s'_0=0,\qquad
+    s'_1=(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=(s_1\wedge \pmb{c})\vee(s_2\wedge \pmb{d}),\qquad
+    s'_3=s_1\wedge \pmb{b}.
+  \]
+  The $\lambda$-moves $s_0\to s_1$ and $s_1\to s_2$ are implemented exactly as
+  in Example~4.17 by OR-ing the source activity line directly into the
+  destination input.  Thus the circuit can be specified by
+  \[
+    D_0=0,\qquad
+    D_1=s_0\vee(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    D_2=s_1\vee(s_1\wedge \pmb{c})\vee(s_2\wedge \pmb{d}),\qquad
+    D_3=s_1\wedge \pmb{b}.
+  \]
+  Initially only $s_0$ is active; the accept output is simply $s_2$.
 
   \item \emph{Circuit diagram for the NDFA from Definition~4.9 (part~(b) of
-  Example~4.14, no SOS/EOS).}  After eliminating $\lambda$-transitions using
-  $\delta'(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$, the resulting NDFA has only
-  ordinary transitions; draw the standard NDFA circuit for this machine.
+  Example~4.14, no SOS/EOS).}  The corresponding $\lambda$-free automaton is
+  the one shown in Figure~4.20.  Use one activity bit for each of
+  $q_0,s_0,s_1,s_2,s_3$; then
+  \[
+    q'_0=0,\qquad s'_0=0,
+  \]
+  \[
+    s'_1=(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=(s_0\wedge \pmb{a})\vee(s_0\wedge \pmb{c})\vee(s_0\wedge \pmb{d})
+       \vee(s_1\wedge \pmb{c})\vee(s_1\wedge \pmb{d})
+       \vee(s_3\wedge \pmb{b})\vee(s_2\wedge \pmb{d}),
+  \]
+  \[
+    s'_3=(s_0\wedge \pmb{b})\vee(s_1\wedge \pmb{b}).
+  \]
+  The initial activity bits are $q_0=s_0=1$ and $s_1=s_2=s_3=0$, and the
+  accept output is $q_0\vee s_2$.
 \end{enumerate}
 
 %% 4.7
@@ -163,20 +434,102 @@ immediately followed by $\pmb{c}$.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram for $A^{\sigma}_\lambda$ (with EOS but no SOS).}
-  Incorporate the $\lambda$-transitions via the standard OR-gate technique
-  and add an EOS output gate.
+  For the $\lambda$-NDFA of Figure~4.22, use one activity bit for each of
+  $s_0,s_1,s_2$.  The ordinary transitions give
+  \[
+    s'_0=s_0\wedge(\pmb{a}\vee\pmb{c}),\qquad
+    s'_1=s_0\wedge \pmb{b},
+  \]
+  \[
+    s'_2=(s_1\wedge \pmb{c})\vee(s_2\wedge(\pmb{a}\vee\pmb{c})).
+  \]
+  Because Figure~4.22 also has the $\lambda$-transition $s_2\to s_0$, OR the
+  activity line for $s_2$ directly into the input for $s_0$.  Thus
+  \[
+    D_0=s_2\vee(s_0\wedge(\pmb{a}\vee\pmb{c})),\qquad
+    D_1=s_0\wedge \pmb{b},
+  \]
+  \[
+    D_2=(s_1\wedge \pmb{c})\vee(s_2\wedge(\pmb{a}\vee\pmb{c})).
+  \]
+  The accept line is $s_2\wedge\text{\<EOS\>}$.
 
   \item \emph{NDFA without $\lambda$-transitions (Definition~4.9).}
-  Compute $\Lambda(s)$ for each state; then set
-  $\delta'(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$ for all $\pmb{a}\in\Sigma$
-  and $s\in S$.  States whose $\lambda$-closure intersects $F$ become final.
+  For Figure~4.22 the $\lambda$-closures are
+  \[
+    \Lambda(s_0)=\{s_0\},\qquad
+    \Lambda(s_1)=\{s_1\},\qquad
+    \Lambda(s_2)=\{s_0,s_2\}.
+  \]
+  Since $\lambda\notin L(A_\lambda)$, Definition~4.9 adds $q_0$ as an extra
+  disconnected start state but does not make it final.  Thus
+  \[
+    A^{\sigma}_\lambda=
+    \langle\{\pmb{a},\pmb{b},\pmb{c}\},\{q_0,s_0,s_1,s_2\},\{q_0,s_0\},
+    \delta^{\sigma}_\lambda,\{s_2\}\rangle,
+  \]
+  where
+  \[
+    \delta^{\sigma}_\lambda(q_0,\pmb{a})=
+    \delta^{\sigma}_\lambda(q_0,\pmb{b})=
+    \delta^{\sigma}_\lambda(q_0,\pmb{c})=\emptyset,
+  \]
+  \[
+    \delta^{\sigma}_\lambda(s_0,\pmb{a})=\{s_0\},\qquad
+    \delta^{\sigma}_\lambda(s_0,\pmb{b})=\{s_1\},\qquad
+    \delta^{\sigma}_\lambda(s_0,\pmb{c})=\{s_0\},
+  \]
+  \[
+    \delta^{\sigma}_\lambda(s_1,\pmb{a})=\emptyset,\qquad
+    \delta^{\sigma}_\lambda(s_1,\pmb{b})=\emptyset,\qquad
+    \delta^{\sigma}_\lambda(s_1,\pmb{c})=\{s_0,s_2\},
+  \]
+  \[
+    \delta^{\sigma}_\lambda(s_2,\pmb{a})=\{s_0,s_2\},\qquad
+    \delta^{\sigma}_\lambda(s_2,\pmb{b})=\{s_1\},\qquad
+    \delta^{\sigma}_\lambda(s_2,\pmb{c})=\{s_0,s_2\}.
+  \]
 
   \item \emph{Circuit diagram for the $\lambda$-free NDFA (with EOS, no SOS).}
-  Apply the standard circuit encoding to the machine from part~(b).
+  Use one activity bit for each of $q_0,s_0,s_1,s_2$.  The next-state
+  equations are
+  \[
+    q'_0=0,
+  \]
+  \[
+    s'_0=(s_0\wedge \pmb{a})\vee(s_0\wedge \pmb{c})
+        \vee(s_1\wedge \pmb{c})\vee(s_2\wedge \pmb{a})\vee(s_2\wedge \pmb{c}),
+  \]
+  \[
+    s'_1=(s_0\wedge \pmb{b})\vee(s_2\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=(s_1\wedge \pmb{c})\vee(s_2\wedge \pmb{a})\vee(s_2\wedge \pmb{c}).
+  \]
+  The initial configuration has $q_0=s_0=1$ and $s_1=s_2=0$, and the accept
+  line is $s_2\wedge\text{\<EOS\>}$.
 
   \item \emph{DFA (connected portion only).}
-  Apply the subset construction to the NDFA from part~(b), starting from
-  its set of initial states, and retain only the reachable portion.
+  Starting from $\{q_0,s_0\}$, the reachable states are
+  \[
+    Q_0=\{q_0,s_0\},\qquad
+    Q_1=\{s_0\},\qquad
+    Q_2=\{s_1\},\qquad
+    Q_3=\emptyset,\qquad
+    Q_4=\{s_0,s_2\}.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|ccc}
+   & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
+  Q_0 & Q_1 & Q_2 & Q_1\\
+  Q_1 & Q_1 & Q_2 & Q_1\\
+  Q_2 & Q_3 & Q_3 & Q_4\\
+  Q_3 & Q_3 & Q_3 & Q_3\\
+  Q_4 & Q_4 & Q_2 & Q_4
+  \end{array}
+  \]
+  The only final state is $Q_4$.
 \end{enumerate}
 
 %% 4.8
@@ -228,10 +581,12 @@ $f\in F$; by the $\lambda$-transition $f\xrightarrow{\lambda}q_f$, this same
 path exists in $A'$ ending at $q_f$.  Conversely, any accepting path in $A'$
 uses the initial $\lambda$-step to some $s_i\in S_0$, processes $w$ within $S$
 (by identical transitions), then uses a final $\lambda$-step to $q_f$, which
-corresponds to an accepting path in $A$.  Hence $L(A')=L(A)$.
+corresponds to an accepting path in $A$.
 
-If $\lambda\in L(A)$ (i.e., some $s\in S_0\cap F$), then we additionally make
-$q_0$ a final state.
+If $\lambda\in L(A)$, add the extra $\lambda$-transition
+$\delta'(q_0,\lambda)\ni q_f$.  Then $\lambda$ is accepted while $A'$ still has
+exactly one start state ($q_0$) and exactly one final state ($q_f$).  Hence
+$L(A')=L(A)$ in all cases.
 
 %% 4.10
 \item \textbf{Can part (ii) of Definition~4.8 be deduced from parts (i) and (iii)?}
@@ -264,22 +619,51 @@ transparent, but it is logically redundant.
 Define $S'=S$, $S'_0=\Lambda(S_0)$, $F'=F$, and
 $\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})$ for all $s\in S$, $\pmb{a}\in\Sigma$.
 
-\textbf{Does this work?}  Not in general, because the initial states are wrong.
-Setting $S'_0=\Lambda(S_0)$ means the machine starts in the $\lambda$-closure
-of the original start states, which is correct for non-empty words.  However, the
-problem is with $F'=F$: in the original $\lambda$-NDFA, a state that can reach a
-final state via $\lambda$-transitions should \emph{also} be considered final in
-the $\lambda$-free version, since accepting the empty string through those
-$\lambda$-paths must be respected.  The correct final states should be all
-$s\in S$ such that $\Lambda(s)\cap F\neq\emptyset$.
+\textbf{This construction does work.}  Let
+\[
+A'=\langle\Sigma,S,\Lambda(S_0),\delta',F\rangle.
+\]
+We show $L(A')=L(A_{\lambda})$.
 
-Specifically, if $s_0\xrightarrow{\lambda}\cdots\xrightarrow{\lambda}f\in F$ in
-the original machine, then $\lambda\in L(A_\lambda)$.  With $F'=F$, the
-$\lambda$-free machine might not accept $\lambda$ (or might accept incorrectly).
+First, for every $s\in S$ and every nonempty word $x\in\Sigma^+$,
+\[
+\overline{\delta'}(s,x)=\DBAR_{\lambda}(s,x).
+\]
+This is proved by the same induction as Lemma~4.2: for a single letter
+$\pmb{a}$, it is just the definition
+$\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})$, and the inductive step extends
+in the usual nondeterministic manner.
 
-\textbf{Fix:}  Replace $F'=F$ with $F'=\{s\in S\mid\Lambda(s)\cap F\neq\emptyset\}$.
-With this correction, the construction is equivalent to Definition~4.9 restricted
-to $S'=S$ (omitting the extra state $q_0$).
+\textbf{Case 1: $x=\lambda$.}  Then
+\[
+\lambda\in L(A')\iff \Lambda(S_0)\cap F\neq\emptyset.
+\]
+But this says exactly that some start state of $A_{\lambda}$ can reach a final
+state by $\lambda$-moves alone, which is the condition $\lambda\in L(A_{\lambda})$.
+
+\textbf{Case 2: $x\in\Sigma^+$.}  Using the identity above,
+\[
+x\in L(A')\iff
+\Bigl(\bigcup_{t\in\Lambda(S_0)}\overline{\delta'}(t,x)\Bigr)\cap F\neq\emptyset
+\iff
+\Bigl(\bigcup_{t\in\Lambda(S_0)}\DBAR_{\lambda}(t,x)\Bigr)\cap F\neq\emptyset.
+\]
+If $t\in\Lambda(S_0)$, then $t\in\Lambda(s_0)$ for some $s_0\in S_0$, so the
+initial $\lambda$-moves taking $s_0$ to $t$ may be prefixed to any path counted
+in $\DBAR_{\lambda}(t,x)$. Hence
+\[
+\bigcup_{t\in\Lambda(S_0)}\DBAR_{\lambda}(t,x)
+=
+\bigcup_{s_0\in S_0}\DBAR_{\lambda}(s_0,x),
+\]
+and therefore
+\[
+x\in L(A')\iff
+\Bigl(\bigcup_{s_0\in S_0}\DBAR_{\lambda}(s_0,x)\Bigr)\cap F\neq\emptyset
+\iff x\in L(A_{\lambda}).
+\]
+So this is a valid alternative to Definition~4.9: instead of adding $q_0$, it
+enlarges the start-state set to $\Lambda(S_0)$.
 
 %% 4.12
 \item \textbf{Algorithm for union of two FAD languages using $\lambda$-NDFAs.}
@@ -312,42 +696,64 @@ Then $A^d$ has states $\{\emptyset,\{s_0\},\{s_1\},\{s_0,s_1\}\}$ but
 $\{s_0,s_1\}$ and $\{s_1\}$ with $\delta^d(\{s_1\},\pmb{a})=\emptyset$ are
 reachable, while $\{s_0,s_1\}$ is not reached from $\{s_0\}$.
 
-\textbf{(b) $A^d$ is not reduced.}  $A^d$ contains states (such as
-$\emptyset$, the dead state) that are nonfinal and from which no final state is
-reachable.  Such states are reachable but do not lead to acceptance; removing
-them gives the reduced (trim) machine.
+\textbf{(b) $A^d$ is not reduced.}  Use a different example:
+\[
+A=\langle\{\pmb{a},\pmb{b}\},\{p,u,v\},\{p\},\delta,\{u,v\}\rangle
+\]
+where
+\[
+\delta(p,\pmb{a})=\{u\},\qquad \delta(p,\pmb{b})=\{v\},
+\]
+and all other transitions are empty.  Then the reachable subset states of $A^d$
+are
+\[
+\{p\},\qquad \{u\},\qquad \{v\},\qquad \emptyset.
+\]
+Both $\{u\}$ and $\{v\}$ are final, and from either one every input leads to
+$\emptyset$. Therefore
+\[
+\{u\}\ E_{A^d}\ \{v\},
+\]
+so $A^d$ is not reduced.
 
-\textbf{(c) $A^d$ is minimal.}  After keeping only the connected, reduced
-(trim) portion of $A^d$, the resulting DFA may already be minimal if all
-remaining states are distinguishable.  For the example above: the connected,
-reduced $A^d$ has states $\{s_0\},\{s_1\},\emptyset$; the states $\{s_0\}$ and
-$\emptyset$ are both nonfinal but distinguishable ($\pmb{a}$ from $\{s_0\}$
-reaches a final state; from $\emptyset$ it does not), so the machine is minimal.
+\textbf{(c) $A^d$ is minimal.}  Here we use a different example.  Let
+$A=\langle\{\pmb{a},\pmb{b}\},\{s\},\{s\},\delta,\{s\}\rangle$ where
+\[
+\delta(s,\pmb{a})=\{s\},\qquad \delta(s,\pmb{b})=\emptyset.
+\]
+Then $L(A)=\pmb{a}^*$.  The deterministic machine $A^d$ has exactly two states,
+$\{s\}$ and $\emptyset$, with
+\[
+\delta^d(\{s\},\pmb{a})=\{s\},\quad \delta^d(\{s\},\pmb{b})=\emptyset,\quad
+\delta^d(\emptyset,\pmb{a})=\delta^d(\emptyset,\pmb{b})=\emptyset.
+\]
+This is the standard 2-state DFA for $\pmb{a}^*$ over the alphabet
+$\{\pmb{a},\pmb{b}\}$, so $A^d$ is minimal.
 
 %% 4.14
 \item \textbf{Why was the extra state $q_0$ included in $A^{\sigma}_\lambda$?}
 
-The extra state $q_0$ is needed to handle the special case $\lambda\in L(A_\lambda)$.
+The role of $q_0$ is to preserve acceptance of $\lambda$ while leaving the
+original start states and all ordinary transitions unchanged.  In
+Definition~4.9 the extra state $q_0$ is disconnected from the rest of the
+machine, and
+\[
+q_0\in F^{\sigma}\iff \lambda\in L(A_{\lambda}).
+\]
+Thus $q_0$ serves as a separate witness for the empty word.
 
-In Definition~4.9, the machine $A^{\sigma}_\lambda$ is constructed so that
-its start state $q_0$ is \emph{disconnected} from the rest of the machine
-(it has no transitions to or from the other states via ordinary letters).
-If $\lambda\in L(A_\lambda)$---that is, if the $\lambda$-closure of some
-start state of $A_\lambda$ intersects $F$---then $q_0$ is made a final state,
-so $\lambda$ is accepted.
+\textbf{Example.}  Let
+\[
+A_{\lambda}=\langle\{\pmb{a}\},\{s_0,f\},\{s_0\},\delta_{\lambda},\{f\}\rangle
+\]
+where $\delta_{\lambda}(s_0,\lambda)=\{f\}$ and all ordinary transitions are
+empty.  Then $\lambda\in L(A_{\lambda})$ because $f\in\Lambda(s_0)$.
 
-Without $q_0$, we would have to designate some ordinary state as the start
-state, but any such state already participates in transitions that process
-non-empty strings.  Making it simultaneously responsible for the acceptance of
-$\lambda$ can create conflicts.
-
-\textbf{Example.}  Suppose $A_\lambda$ has start state $s_0$ with
-$s_0\in F$ (so $\lambda\in L(A_\lambda)$) and transitions that extend the
-language.  If we set $q_0=s_0$ without creating a separate new start state,
-the $\lambda$-closure would ``spread'' acceptance to additional states in ways
-that might incorrectly mark non-$\lambda$ prefixes as accepted.  The fresh
-isolated $q_0$ cleanly separates the ``zero-length acceptance'' case from the
-rest of the computation.
+If we try to remove $\lambda$-moves \emph{without} adding $q_0$ and keep the
+same start state $s_0$, then the new machine has no way to accept $\lambda$:
+no input is read, and $s_0$ is not final.  The disconnected state $q_0$ fixes
+exactly this problem.  We keep $s_0$ for all nonempty words, and we make $q_0$
+final so that the empty word is still accepted.
 
 %% 4.15
 \item \textbf{Union construction using NDFAs \emph{without} $\lambda$-transitions.}
@@ -365,17 +771,14 @@ rest of the computation.
   all, since we simply merge the state sets and initial-state sets.
 
   \item \textbf{Can we ensure exactly one start state and one final state?}
-  Exactly one start state: \emph{not in general} without adding a new
-  state or using $\lambda$-transitions.  If we introduce a new state $q_0$
-  and require $q_0$ to mimic all transitions from every $s\in S^1_0\cup S^2_0$
-  (setting $\delta'(q_0,\pmb{a})=\delta'(s,\pmb{a})$ for each $s$ in the
-  original start sets), we can achieve a single start state---but we must also
-  make $q_0$ final if any original start state was final (to handle $\lambda$).
-  Exactly one final state can similarly be achieved by merging: add a new
-  state $q_f$ and, for each $f\in F_1\cup F_2$, redirect: whenever $f$ would
-  have been final, instead make $q_f$ absorb $f$'s role by duplicating its
-  transitions.  Without $\lambda$-transitions this is more complex than
-  the $\lambda$-based construction.
+  Not in full generality.  The disjoint-union construction in part~(a) gives a
+  correct union machine, but it usually has several start states and several
+  final states.  If the resulting language does \emph{not} contain $\lambda$,
+  then Exercise~4.22 shows how to convert a no-$\lambda$ NDFA into another
+  no-$\lambda$ NDFA with exactly one start state and exactly one final state.
+  But Exercise~4.23 shows that this can fail when $\lambda$ is in the language.
+  So the correct conclusion is: one start state and one final state can be
+  forced under the hypothesis $\lambda\notin L$, but not uniformly in general.
 \end{enumerate}
 
 %% 4.16
@@ -385,19 +788,57 @@ Example~4.14).
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS or EOS).}
-  From Example~4.14, the $\lambda$-closures are
-  $\Lambda(s_0)=\{s_0,s_1,s_2\}$, $\Lambda(s_1)=\{s_1,s_2\}$,
-  $\Lambda(s_2)=\{s_2\}$, $\Lambda(s_3)=\{s_3\}$.
-  The transition function of $A^{\sigma}_\lambda$ (without $\lambda$-moves)
-  is $\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$.
-  Encode states with two bits; draw next-state logic using OR gates for
-  nondeterministic branches, following the method of Chapter~4.
+  Example~4.15 gives the $\lambda$-free machine of Figure~4.20, so we can use
+  one activity bit for each of $q_0,s_0,s_1,s_2,s_3$.  The next-state equations
+  are
+  \[
+    q'_0=0,\qquad s'_0=0,
+  \]
+  \[
+    s'_1=(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=(s_0\wedge \pmb{a})\vee(s_0\wedge \pmb{c})\vee(s_0\wedge \pmb{d})
+       \vee(s_1\wedge \pmb{c})\vee(s_1\wedge \pmb{d})
+       \vee(s_3\wedge \pmb{b})\vee(s_2\wedge \pmb{d}),
+  \]
+  \[
+    s'_3=(s_0\wedge \pmb{b})\vee(s_1\wedge \pmb{b}).
+  \]
+  The initial configuration has $q_0=s_0=1$ and $s_1=s_2=s_3=0$.  Since
+  $q_0$ and $s_2$ are final states in Example~4.15, the accept output is
+  $q_0\vee s_2$.
 
   \item \emph{Convert to $A^{\sigma d}_\lambda$ (connected portion only).}
-  Apply the subset construction to $A^{\sigma}_\lambda$.  Starting from the
-  initial set determined by $S_0=\{q_0\}$ (or the appropriate start state
-  of $A^{\sigma}_\lambda$), compute $\delta^d$ for each reachable subset and
-  each input letter, retaining only connected states.
+  In Example~4.15, the start states of $A^{\sigma}_\lambda$ are
+  \[
+  \{q_0,s_0\},
+  \]
+  and the final states are $q_0$ and $s_2$.  The connected part of the
+  deterministic equivalent has the reachable states
+  \[
+  R_0=\{q_0,s_0\},\quad
+  R_1=\{s_1,s_2\},\quad
+  R_2=\{s_3\},\quad
+  R_3=\{s_2\},\quad
+  R_4=\emptyset.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|cccc}
+   & \pmb{a} & \pmb{b} & \pmb{c} & \pmb{d}\\\hline
+  R_0 & R_1 & R_2 & R_3 & R_3\\
+  R_1 & R_4 & R_2 & R_3 & R_3\\
+  R_2 & R_4 & R_1 & R_4 & R_4\\
+  R_3 & R_4 & R_4 & R_4 & R_3\\
+  R_4 & R_4 & R_4 & R_4 & R_4
+  \end{array}
+  \]
+  The final states are
+  \[
+  R_0,\ R_1,\ R_3,
+  \]
+  because these are exactly the reachable subsets containing $q_0$ or $s_2$.
 \end{enumerate}
 
 %% 4.17
@@ -447,16 +888,34 @@ $L=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ begins with }\pmb{a}\vee x\text{ cont
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS/EOS).}  The NDFA has a start state
-  with multiple transitions and states tracking whether the substring $\pmb{ba}$
-  has been seen.  Encode states with the appropriate number of bits and draw
-  the next-state logic using OR gates for nondeterministic branching.
+  $q_0$, two final states $q_1,q_3$, and the transitions of Figure~4.10.
+  Using one activity bit per state, the next-state equations are
+  \[
+    q'_0=0,\qquad
+    q'_1=(q_0\wedge \pmb{a})\vee(q_1\wedge \pmb{a})\vee(q_1\wedge \pmb{b}),
+  \]
+  \[
+    q'_2=(q_0\wedge \pmb{b})\vee(q_2\wedge \pmb{b}),\qquad
+    q'_3=(q_2\wedge \pmb{a})\vee(q_3\wedge \pmb{a})\vee(q_3\wedge \pmb{b}).
+  \]
+  Initially only $q_0$ is active, and the accept line is $q_1\vee q_3$.
 
   \item \emph{DFA (connected portion only).}  Apply the subset construction
-  to the NDFA, starting from the set of initial states.  The language $L$ is
-  a union of two simpler languages ($x$ begins with $\pmb{a}$, and $x$ contains
-  $\pmb{ba}$), each recognized by small DFAs; the resulting product DFA will
-  have at most $2\times 3=6$ states (two states for ``starts with $\pmb{a}$''
-  and three for tracking the substring $\pmb{ba}$).
+  to Figure~4.10.  Starting from $\{q_0\}$, the reachable states are
+  \[
+    Q_0=\{q_0\},\qquad Q_1=\{q_1\},\qquad Q_2=\{q_2\},\qquad Q_3=\{q_3\}.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|cc}
+   & \pmb{a} & \pmb{b}\\\hline
+  Q_0 & Q_1 & Q_2\\
+  Q_1 & Q_1 & Q_1\\
+  Q_2 & Q_3 & Q_2\\
+  Q_3 & Q_3 & Q_3
+  \end{array}
+  \]
+  The final states are $Q_1$ and $Q_3$.
 \end{enumerate}
 
 %% 4.19
@@ -464,14 +923,54 @@ $L=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ begins with }\pmb{a}\vee x\text{ cont
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS/EOS).}  This NDFA is obtained by
-  reversing all arrows and swapping start and final states of the NDFA for $L$.
-  The multiple start states of $L^r$'s NDFA become multiple flip-flop inputs
-  activated at initialization.
+  reversing the arrows in Figure~4.10 and swapping the start and final
+  states.  Using activity bits $q_0,q_1,q_2,q_3$, the next-state equations are
+  \[
+    q'_0=(q_1\wedge \pmb{a})\vee(q_2\wedge \pmb{b}),
+  \]
+  \[
+    q'_1=(q_1\wedge \pmb{a})\vee(q_1\wedge \pmb{b}),\qquad
+    q'_2=(q_3\wedge \pmb{a})\vee(q_2\wedge \pmb{b}),
+  \]
+  \[
+    q'_3=(q_3\wedge \pmb{a})\vee(q_3\wedge \pmb{b}).
+  \]
+  The initial configuration has $q_1=q_3=1$ and $q_0=q_2=0$, and the accept
+  line is $q_0$.
 
-  \item \emph{DFA (connected portion only).}  Apply the subset construction.
-  Because $L^r$ is the reverse of $L$ (which is FAD), $L^r$ is also FAD by
-  Theorem~5.9 (closure under reversal).  The minimal DFA for $L^r$ can be
-  computed from the subset construction applied to the reversed NDFA.
+  \item \emph{DFA (connected portion only).}  From Figure~4.11, the NDFA has
+  start states $\{q_1,q_3\}$ and only one final state, $q_0$.  Its nonempty
+  transitions are
+  \[
+  \delta(q_1,\pmb{a})=\{q_1,q_0\},\qquad \delta(q_1,\pmb{b})=\{q_1\},
+  \]
+  \[
+  \delta(q_2,\pmb{b})=\{q_2,q_0\},\qquad
+  \delta(q_3,\pmb{a})=\{q_3,q_2\},\qquad
+  \delta(q_3,\pmb{b})=\{q_3\}.
+  \]
+  Starting from $Q_0=\{q_1,q_3\}$, Definition~4.5 gives
+  \[
+  \delta^d(Q_0,\pmb{a})=\{q_0,q_1,q_2,q_3\}=Q_1,\qquad
+  \delta^d(Q_0,\pmb{b})=\{q_1,q_3\}=Q_0.
+  \]
+  From $Q_1$ we get
+  \[
+  \delta^d(Q_1,\pmb{a})=Q_1,\qquad \delta^d(Q_1,\pmb{b})=Q_1.
+  \]
+  Therefore the connected DFA has just two states:
+  \[
+  Q_0=\{q_1,q_3\}\quad\text{(nonfinal)},\qquad
+  Q_1=\{q_0,q_1,q_2,q_3\}\quad\text{(final)},
+  \]
+  with transition table
+  \[
+  \begin{array}{c|cc}
+   & \pmb{a} & \pmb{b}\\\hline
+  Q_0 & Q_1 & Q_0\\
+  Q_1 & Q_1 & Q_1
+  \end{array}
+  \]
 \end{enumerate}
 
 %% 4.20
@@ -500,56 +999,93 @@ accepted by some NDFA iff it is accepted by some DFA iff $\equiv_L$ has
 finitely many classes iff the minimal DFA is finite.
 
 %% 4.22
-\item \textbf{Given an NDFA $A$ without $\lambda$-transitions with $\lambda\notin L(A)$,
-construct $A''$ with exactly one start state, one final state, and $L(A'')=L(A)$.}
+\item \textbf{Later no-$\lambda$ exercise: given an NDFA $A$ without $\lambda$-transitions
+with $\lambda\notin L(A)$, construct $A''$ with exactly one start state, one
+final state, and $L(A'')=L(A)$.}
 
 \textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ with
-$\lambda\notin L(A)$ (i.e., $S_0\cap F=\emptyset$).
+$\lambda\notin L(A)$, so $S_0\cap F=\emptyset$.  Define
+\[
+A''=\langle \Sigma,\, S\cup\{q_0,q_f\},\, \{q_0\},\, \delta'',\, \{q_f\}\rangle
+\]
+where $q_0$ and $q_f$ are new states and:
 \begin{enumerate}[1.]
-  \item Add a new start state $q_0$ and a new final state $q_f$.
-  \item For all $\pmb{a}\in\Sigma$:
-        $\delta''(q_0,\pmb{a})=\bigcup_{s\in S_0}\delta(s,\pmb{a})$.
-        (Simulate starting from any state in $S_0$.)
-  \item For all $s\in S$ and $\pmb{a}\in\Sigma$:
-        $\delta''(s,\pmb{a})=\delta(s,\pmb{a})$.
-  \item For all $f\in F$: whenever $f$ would be in $\delta''(s,\pmb{a})$
-        for some $s,\pmb{a}$, also add $q_f$ to $\delta''(s,\pmb{a})$.
-        (That is, $q_f$ behaves like a ``copy'' of states in $F$:
-        $\delta''(s,\pmb{a})=(\delta(s,\pmb{a})\setminus F)\cup\{q_f\mid\delta(s,\pmb{a})\cap F\neq\emptyset\}$.)
-  \item $\delta''(q_f,\pmb{a})=\emptyset$ for all $\pmb{a}$.
+  \item For each $\pmb{a}\in\Sigma$, let
+  \[
+  \delta''(q_0,\pmb{a})=
+  \Bigl(\bigcup_{s\in S_0}\delta(s,\pmb{a})\Bigr)\cup
+  \left\{\begin{array}{ll}
+  \{q_f\} & \text{if }(\bigcup_{s\in S_0}\delta(s,\pmb{a}))\cap F\neq\emptyset,\\
+  \emptyset & \text{otherwise.}
+  \end{array}\right.
+  \]
+  \item For each old state $s\in S$ and each $\pmb{a}\in\Sigma$, let
+  \[
+  \delta''(s,\pmb{a})=
+  \delta(s,\pmb{a})\cup
+  \left\{\begin{array}{ll}
+  \{q_f\} & \text{if }\delta(s,\pmb{a})\cap F\neq\emptyset,\\
+  \emptyset & \text{otherwise.}
+  \end{array}\right.
+  \]
+  \item $\delta''(q_f,\pmb{a})=\emptyset$ for every $\pmb{a}\in\Sigma$.
 \end{enumerate}
-The new machine $A''$ has start state $q_0$, final state $\{q_f\}$, and
-accepts a word $w=\pmb{a}_1\cdots\pmb{a}_k$ ($k\ge 1$) iff $A$ accepts $w$.
-Since $\lambda\notin L(A)$, we need $S_0\cap F=\emptyset$, ensuring $q_0$ need
-not be final.
+
+This machine has exactly one start state ($q_0$) and exactly one final state
+($q_f$).
+
+\textbf{Why this preserves the language.}  Since $\lambda\notin L(A)$, every
+accepted word has positive length.  Suppose
+$w=\pmb{a}_1\cdots \pmb{a}_n\in L(A)$.  Then there is a path in $A$ from some
+start state to some final state that reads all of $w$.  In $A''$, use the same
+path for the first $n-1$ letters.  On the last letter, when the old path would
+move into a final state, choose the extra target $q_f$ instead.  Thus
+$w\in L(A'')$.
+
+Conversely, any accepting path in $A''$ must end in $q_f$.  The only way to
+enter $q_f$ is on some actual input symbol $\pmb{a}$ from $q_0$ or from an old
+state $s$, and this happens only when the corresponding old transition set
+contains at least one state of $F$.  Replacing that last step by a move into
+one of those original final states yields an accepting path in $A$.  Hence
+$L(A'')=L(A)$.
 
 %% 4.23
 \item \textbf{If $\lambda\in L(A)$, the three conditions of Exercise~4.22
 may be incompatible (without $\lambda$-transitions).}
 
-\textbf{Example.}  Let $\Sigma=\{\pmb{a}\}$, $S=\{s_0\}$, $S_0=\{s_0\}$,
-$F=\{s_0\}$, $\delta(s_0,\pmb{a})=\{s_0\}$.  Then $L(A)=\{\pmb{a}\}^*$, which
-includes $\lambda$.
+\textbf{Example.}  Let
+\[
+A=\langle\{\pmb{a}\},\{s_0,s_1\},\{s_0\},\delta,\{s_0,s_1\}\rangle
+\]
+where $\delta(s_0,\pmb{a})=\{s_1\}$ and $\delta(s_1,\pmb{a})=\emptyset$.  Then
+\[
+L(A)=\{\lambda,\pmb{a}\}.
+\]
 
-We want $A''$ with: (1) one start state $q_0$; (2) one final state $q_f$; (3)
-$L(A'')=\{\pmb{a}\}^*$.
+We claim there is no NDFA without $\lambda$-transitions that has exactly one
+start state, exactly one final state, and also accepts exactly
+$\{\lambda,\pmb{a}\}$.
 
-For $\lambda\in L(A'')$, we need $q_0\in F''$, i.e., $q_0=q_f$.  But if
-$q_0=q_f$ is the unique start-and-final state, then for $A''$ to accept $\pmb{a}$,
-we need a transition from $q_f$ to some state that eventually reaches $q_f$---
-but $q_f$ is the only state, so $\delta''(q_f,\pmb{a})=\{q_f\}$.  This works
-for this particular example.
+Assume to the contrary that
+\[
+B=\langle\{\pmb{a}\},S,\{q\},\delta_B,\{f\}\rangle
+\]
+has those three properties and $L(B)=\{\lambda,\pmb{a}\}$.  Since $\lambda\in
+L(B)$, the unique start state must also be the unique final state:
+\[
+q=f.
+\]
+Since $\pmb{a}\in L(B)$ and there are no $\lambda$-transitions, there must be a
+transition on $\pmb{a}$ from $q$ to the only final state, namely to $q$
+itself.  Thus $q\in\delta_B(q,\pmb{a})$.
 
-The general obstruction arises when $L(A)$ requires the single final state to
-also be a non-trivial \emph{source} of transitions, while the single start state
-needs to be the same final state.  In machines where $\lambda\in L(A)$ but
-words of positive length follow different paths from the start state to
-the final state, merging start and final forces all transitions through a single
-state that must simultaneously act as the ``beginning'' and ``end'', which may
-require $\lambda$-transitions to route correctly.  Without $\lambda$-transitions,
-it may be impossible to separate the acceptance of $\lambda$ (at the start
-state) from the acceptance of longer words (which require reaching $q_f$ after
-processing letters).
+But then the same move can be used repeatedly, so every positive power of
+$\pmb{a}$ is accepted:
+\[
+\pmb{a}^n\in L(B)\qquad\text{for all }n\geq 1.
+\]
+In particular, $\pmb{aa}\in L(B)$, contradicting $L(B)=\{\lambda,\pmb{a}\}$.
+Therefore the three conditions may indeed be incompatible.
 
 %% 4.24
 \item \textbf{Prove Lemma~4.2.}
@@ -678,66 +1214,130 @@ for any $Q\in\wp(S)$.  Therefore:
 \item \textbf{Draw the connected part of $T^d$, the deterministic equivalent of
 the NDFA $T$ in Example~4.7.}
 
-The NDFA $T$ from Example~4.7 monitors a bit stream $\{\pmb{0},\pmb{1}\}^*$ and
-enters a final state when the substring $\pmb{010010}$ is detected.  $T$ has a
-``backbone'' chain of states tracking progress toward matching $\pmb{010010}$,
-plus loops back on mismatch.
-
-To compute $T^d$: starting from $S_0=\{s_0\}$ (the initial set), compute
-$\delta^d$ for $\pmb{0}$ and $\pmb{1}$.  The key observation is that the NDFA
-has the initial state $s_0$ loop on all inputs (to allow $\pmb{010010}$ to occur
-as a \emph{substring}), so $s_0$ is always in every reachable state-set of $T^d$.
-This means $T^d$ has relatively few distinct reachable state-sets.
-
-The connected portion of $T^d$ can be systematically computed: from each
-state-set $Q$, compute $\delta^d(Q,\pmb{0})$ and $\delta^d(Q,\pmb{1})$, where
-$\delta^d(Q,\pmb{b})=\bigcup_{q\in Q}\delta(q,\pmb{b})$.  Since $s_0$
-self-loops on both inputs and $T$'s non-start states progress or reset toward
-the pattern, the resulting DFA has at most $2^7$ states but in practice far fewer
-are reachable.
+Let
+\[
+Q_0=\{s_0\},\quad
+Q_1=\{s_0,s_1\},\quad
+Q_2=\{s_0,s_2\},\quad
+Q_3=\{s_0,s_1,s_3\},
+\]
+\[
+Q_4=\{s_0,s_1,s_4\},\quad
+Q_5=\{s_0,s_2,s_5\},\quad
+Q_6=\{s_0,s_1,s_3,s_6\},
+\]
+\[
+Q_7=\{s_0,s_1,s_4,s_6\},\quad
+Q_8=\{s_0,s_2,s_6\},\quad
+Q_9=\{s_0,s_1,s_6\},
+\]
+\[
+Q_{10}=\{s_0,s_2,s_5,s_6\},\qquad
+Q_{11}=\{s_0,s_6\}.
+\]
+These are exactly the reachable subsets from $\{s_0\}$ under Definition~4.5.
+The accepting states are those containing $s_6$, namely
+\[
+Q_6,Q_7,Q_8,Q_9,Q_{10},Q_{11}.
+\]
+Their transitions are:
+\[
+\begin{array}{c|cc}
+ & \pmb{0} & \pmb{1}\\\hline
+Q_0 & Q_1 & Q_0\\
+Q_1 & Q_1 & Q_2\\
+Q_2 & Q_3 & Q_0\\
+Q_3 & Q_4 & Q_2\\
+Q_4 & Q_1 & Q_5\\
+Q_5 & Q_6 & Q_0\\
+Q_6 & Q_7 & Q_8\\
+Q_7 & Q_9 & Q_{10}\\
+Q_8 & Q_6 & Q_{11}\\
+Q_9 & Q_9 & Q_8\\
+Q_{10} & Q_6 & Q_{11}\\
+Q_{11} & Q_9 & Q_{11}
+\end{array}
+\]
+This is the connected part of $T^d$.
 
 %% 4.30
 \item \textbf{Modify $T$ to revert to a nonfinal state when $\pmb{000111}$ (EOT) is detected.}
 
-Extend $T$ with additional states tracking progress toward matching $\pmb{000111}$
-from within a final (recording) state.  Once in a final state $f$:
-\begin{itemize}
-  \item If the incoming bits form $\pmb{000111}$, the machine returns to a
-  designated nonfinal ``idle'' state.
-  \item Otherwise, it remains in a final state.
-\end{itemize}
-Formally, add a chain of 6 states $f_1,f_2,f_3,f_4,f_5,f_6$ (all final, since
-recording is still active during $\pmb{000111}$), where $f_i$ represents having
-matched the first $i$ characters of $\pmb{000111}$ while recording.  If all 6
-are matched, transition to a nonfinal state.  On mismatch at any $f_i$, return
-to the recording state $f$ (or $f_1$ if the failed character is still the start
-of a potential new EOT signal).  The resulting NDFA now accepts the stream
-while it is ``recording'' and stops recording upon detecting $\pmb{000111}$.
+Keep the original start-of-transmission arm for $\pmb{010010}$, but replace the
+single final sink $s_6$ by six final ``recording'' states $r_0,\dots,r_5$ that
+track the longest suffix of the data seen so far that is also a prefix of the
+EOT string $\pmb{000111}$.  The only nonfinal states are the original
+$s_0,\dots,s_5$.
+
+\[
+\begin{array}{c|cc}
+ & \pmb{0} & \pmb{1}\\\hline
+s_0 & \{s_0,s_1\} & \{s_0\}\\
+s_1 & \emptyset & \{s_2\}\\
+s_2 & \{s_3\} & \emptyset\\
+s_3 & \{s_4\} & \emptyset\\
+s_4 & \emptyset & \{s_5\}\\
+s_5 & \{r_0\} & \emptyset\\
+r_0 & \{r_1\} & \{r_0\}\\
+r_1 & \{r_2\} & \{r_0\}\\
+r_2 & \{r_3\} & \{r_0\}\\
+r_3 & \{r_3\} & \{r_4\}\\
+r_4 & \{r_1\} & \{r_5\}\\
+r_5 & \{r_1\} & \{s_0\}
+\end{array}
+\]
+
+Here $r_i$ means that recording is on and the last $i$ scanned bits match the
+first $i$ bits of $\pmb{000111}$.  Thus $r_5\xrightarrow{\pmb{1}}s_0$ turns the
+recorder off exactly when the full EOT signal $\pmb{000111}$ has just been
+seen, while every other input keeps the machine in one of the final recording
+states.
 
 %% 4.31
 \item Consider the NDFA $A$ from Example~4.14.
 
 \begin{enumerate}[(a)]
   \item \textbf{Diagram of $A^{\sigma}_\lambda$.}
-  From the text, $A_\lambda$ (Example~4.14) has states $\{s_0,s_1,s_2,s_3\}$
-  with $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.  By Definition~4.9,
-  $A^{\sigma}_\lambda$ has the same state set plus an extra start state $q_0$
-  (disconnected unless $\lambda\in L$), and transitions
-  $\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$ for each
-  $s\in\{s_0,s_1,s_2,s_3\}$ and $\pmb{a}\in\Sigma$.
-
-  For example, if the original machine has $\delta_\lambda(s_2,\pmb{a})=\{s_3\}$
-  and $\delta_\lambda(s_0,\pmb{a})=\emptyset$, then:
+  For Example~4.14, $\lambda\in L(A_\lambda)$, so Definition~4.9 yields
   \[
-    \delta^{\sigma}_\lambda(s_0,\pmb{a})
-    =\Lambda\!\Bigl(\bigcup_{t\in\{s_0,s_1,s_2\}}\delta_\lambda(t,\pmb{a})\Bigr)
-    =\Lambda(\{s_3\})=\{s_3\}.
+    A^{\sigma}_\lambda=
+    \langle\{\pmb{a},\pmb{b},\pmb{c},\pmb{d}\},
+    \{q_0,s_0,s_1,s_2,s_3\},\{q_0,s_0\},\delta^{\sigma}_\lambda,\{q_0,s_2\}\rangle
   \]
+  with transition table
+  \[
+  \begin{array}{c|cccc}
+   & \pmb{a} & \pmb{b} & \pmb{c} & \pmb{d}\\\hline
+  q_0 & \emptyset & \emptyset & \emptyset & \emptyset\\
+  s_0 & \{s_1,s_2\} & \{s_3\} & \{s_2\} & \{s_2\}\\
+  s_1 & \emptyset & \{s_3\} & \{s_2\} & \{s_2\}\\
+  s_2 & \emptyset & \emptyset & \emptyset & \{s_2\}\\
+  s_3 & \emptyset & \{s_1,s_2\} & \emptyset & \emptyset
+  \end{array}
+  \]
+  This table is exactly the state-transition diagram of Figure~4.20.
 
   \item \textbf{Diagram of $A^{\sigma d}_\lambda$ (connected portion).}
-  Apply the subset construction to $A^{\sigma}_\lambda$, starting from
-  $\{q_0\}$ (or the appropriate initial state set), and draw only the reachable
-  state-sets.
+  Starting from the actual start set $\{q_0,s_0\}$, the reachable subsets are
+  \[
+    R_0=\{q_0,s_0\},\quad
+    R_1=\{s_1,s_2\},\quad
+    R_2=\{s_3\},\quad
+    R_3=\{s_2\},\quad
+    R_4=\emptyset.
+  \]
+  Their transitions are
+  \[
+  \begin{array}{c|cccc}
+   & \pmb{a} & \pmb{b} & \pmb{c} & \pmb{d}\\\hline
+  R_0 & R_1 & R_2 & R_3 & R_3\\
+  R_1 & R_4 & R_2 & R_3 & R_3\\
+  R_2 & R_4 & R_1 & R_4 & R_4\\
+  R_3 & R_4 & R_4 & R_4 & R_3\\
+  R_4 & R_4 & R_4 & R_4 & R_4
+  \end{array}
+  \]
+  The final states are $R_0$, $R_1$, and $R_3$.
 \end{enumerate}
 
 %% 4.32
@@ -777,13 +1377,28 @@ without justification.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS/EOS).}  $T$ has 8 states (one start
-  state that loops on all input plus 7 states tracking progress through
-  $\pmb{010010}$); encode with 3 bits.  The nondeterminism (the start state
-  $s_0$ loops while simultaneously ``starting'' to track the pattern)
-  is implemented by OR-ing the self-loop into the initial state's $D$ input.
+  state that loops on all input plus the six states that track the pattern
+  $\pmb{010010}$).  Using one activity bit per state, the next-state equations
+  are
+  \[
+    s'_0=s_0,\qquad
+    s'_1=s_0\wedge \pmb{0},\qquad
+    s'_2=s_1\wedge \pmb{1},
+  \]
+  \[
+    s'_3=s_2\wedge \pmb{0},\qquad
+    s'_4=s_3\wedge \pmb{0},\qquad
+    s'_5=s_4\wedge \pmb{1},
+  \]
+  \[
+    s'_6=(s_5\wedge \pmb{0})\vee(s_6\wedge \pmb{0})\vee(s_6\wedge \pmb{1}).
+  \]
+  Initially only $s_0$ is active, and the accept line is $s_6$.
 
   \item \emph{DFA $T^d$ (connected portion).}  See Exercise~4.29 for the
-  subset construction.  The resulting DFA recognizes the same language as $T$.
+  subset construction.  The connected DFA is exactly the 12-state machine
+  listed there, with states $Q_0,\dots,Q_{11}$ and the transition table given
+  in Exercise~4.29.
 \end{enumerate}
 
 %% 4.34
@@ -792,16 +1407,104 @@ $\pmb{10110}$, $\pmb{1010}$, or $\pmb{01101}$ as substrings.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS/EOS).}  The NDFA has a single initial
-  state $s_0$ that loops on $\Sigma^*$, and three parallel ``arms''---one for
-  each target substring.  Encode all states; the circuit feeds the output of the
-  initial state into each arm simultaneously.  Final state output is the OR of
-  the final states of all three arms (and the appended $\Sigma^*$-accepting tail
-  $S_{18}$).
+  state $s_0$ that loops on $\Sigma^*$, three pattern-matching arms, and the
+  final sink $s_{18}$ from Figure~4.12.  Since $s_1$, $s_7$, and $s_{12}$ are
+  only shown for clarity in the text, they can be omitted from the actual
+  circuit.  With one activity bit per remaining state, the nonzero next-state
+  equations are
+  \[
+    s'_0=s_0,
+  \]
+  \[
+    s'_2=s_0\wedge \pmb{1},\quad
+    s'_3=s_2\wedge \pmb{0},\quad
+    s'_4=s_3\wedge \pmb{1},\quad
+    s'_5=s_4\wedge \pmb{1},\quad
+    s'_6=s_5\wedge \pmb{0},
+  \]
+  \[
+    s'_8=s_0\wedge \pmb{1},\quad
+    s'_9=s_8\wedge \pmb{0},\quad
+    s'_{10}=s_9\wedge \pmb{1},\quad
+    s'_{11}=s_{10}\wedge \pmb{0},
+  \]
+  \[
+    s'_{13}=s_0\wedge \pmb{0},\quad
+    s'_{14}=s_{13}\wedge \pmb{1},\quad
+    s'_{15}=s_{14}\wedge \pmb{1},\quad
+    s'_{16}=s_{15}\wedge \pmb{0},\quad
+    s'_{17}=s_{16}\wedge \pmb{1},
+  \]
+  \[
+    s'_{18}=s_6\vee s_{11}\vee s_{17}\vee s_{18}.
+  \]
+  The accept line is $s_6\vee s_{11}\vee s_{17}\vee s_{18}$.
 
   \item \emph{DFA (connected portion only).}  Since all three patterns are
-  independent, the subset construction produces a DFA whose states track
-  progress through each arm simultaneously.  The reachable state-sets are
-  bounded and the connected portion is much smaller than $2^{|S|}$.
+  started from the looping state $s_0$, the subset construction yields the
+  following 23 reachable states:
+  \[
+  \begin{array}{lll}
+  Q_0=\{s_0\}, &
+  Q_1=\{s_0,s_{13}\}, &
+  Q_2=\{s_0,s_2,s_8\},\\
+  Q_3=\{s_0,s_{14},s_2,s_8\}, &
+  Q_4=\{s_0,s_{13},s_3,s_9\}, &
+  Q_5=\{s_0,s_{15},s_2,s_8\},\\
+  Q_6=\{s_0,s_{10},s_{14},s_2,s_4,s_8\}, &
+  Q_7=\{s_0,s_{13},s_{16},s_3,s_9\}, &
+  Q_8=\{s_0,s_{11},s_{13},s_3,s_9\},\\
+  Q_9=\{s_0,s_{15},s_2,s_5,s_8\}, &
+  Q_{10}=\{s_0,s_{10},s_{14},s_{17},s_2,s_4,s_8\}, &
+  Q_{11}=\{s_0,s_{13},s_{18}\},\\
+  Q_{12}=\{s_0,s_{10},s_{14},s_{18},s_2,s_4,s_8\}, &
+  Q_{13}=\{s_0,s_{13},s_{16},s_3,s_6,s_9\}, &
+  Q_{14}=\{s_0,s_{11},s_{13},s_{18},s_3,s_9\},\\
+  Q_{15}=\{s_0,s_{15},s_{18},s_2,s_5,s_8\}, &
+  Q_{16}=\{s_0,s_{14},s_{18},s_2,s_8\}, &
+  Q_{17}=\{s_0,s_{10},s_{14},s_{17},s_{18},s_2,s_4,s_8\},\\
+  Q_{18}=\{s_0,s_{13},s_{16},s_{18},s_3,s_6,s_9\}, &
+  Q_{19}=\{s_0,s_{18},s_2,s_8\}, &
+  Q_{20}=\{s_0,s_{13},s_{18},s_3,s_9\},\\
+  Q_{21}=\{s_0,s_{15},s_{18},s_2,s_8\}, &
+  Q_{22}=\{s_0,s_{13},s_{16},s_{18},s_3,s_9\}. &
+  \end{array}
+  \]
+  Their transition table is
+  \[
+  \begin{array}{c|cc}
+   & \pmb{0} & \pmb{1}\\\hline
+  Q_0 & Q_1 & Q_2\\
+  Q_1 & Q_1 & Q_3\\
+  Q_2 & Q_4 & Q_2\\
+  Q_3 & Q_4 & Q_5\\
+  Q_4 & Q_1 & Q_6\\
+  Q_5 & Q_7 & Q_2\\
+  Q_6 & Q_8 & Q_9\\
+  Q_7 & Q_1 & Q_{10}\\
+  Q_8 & Q_{11} & Q_{12}\\
+  Q_9 & Q_{13} & Q_2\\
+  Q_{10} & Q_{14} & Q_{15}\\
+  Q_{11} & Q_{11} & Q_{16}\\
+  Q_{12} & Q_{14} & Q_{15}\\
+  Q_{13} & Q_{11} & Q_{17}\\
+  Q_{14} & Q_{11} & Q_{12}\\
+  Q_{15} & Q_{18} & Q_{19}\\
+  Q_{16} & Q_{20} & Q_{21}\\
+  Q_{17} & Q_{14} & Q_{15}\\
+  Q_{18} & Q_{11} & Q_{17}\\
+  Q_{19} & Q_{20} & Q_{19}\\
+  Q_{20} & Q_{11} & Q_{12}\\
+  Q_{21} & Q_{22} & Q_{19}\\
+  Q_{22} & Q_{11} & Q_{17}
+  \end{array}
+  \]
+  The final states are exactly those containing one of $s_6$, $s_{11}$,
+  $s_{17}$, or $s_{18}$:
+  \[
+  Q_8,Q_{10},Q_{11},Q_{12},Q_{13},Q_{14},Q_{15},Q_{16},
+  Q_{17},Q_{18},Q_{19},Q_{20},Q_{21},Q_{22}.
+  \]
 \end{enumerate}
 
 %% 4.35
@@ -809,18 +1512,38 @@ $\pmb{10110}$, $\pmb{1010}$, or $\pmb{01101}$ as substrings.
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram for $B$ (no SOS/EOS).}  Encode the states of $B$
-  using $\lceil\log_2|S_B|\rceil$ bits.  The nondeterministic transitions become
-  OR gates feeding multiple $D$ flip-flop inputs simultaneously, as described in
-  Chapter~4.
+  using one activity bit for $r$ and one for $s$.  From Figure~4.7,
+  \[
+    r'=(r\wedge \pmb{a})\vee(s\wedge \pmb{a}),\qquad
+    s'=(r\wedge \pmb{a})\vee(r\wedge \pmb{b}),
+  \]
+  with initial state $r=1$, $s=0$.  Since $s$ is the only final state, the
+  accept output is $s$.
 
   \item \emph{Circuit diagram for $B^d$ (no SOS/EOS).}  The states of $B^d$ are
-  subsets of the states of $B$.  Encode them using as many bits as there are
-  states in $B$ (one bit per state of $B$, where each bit indicates membership
-  in the current subset).  This ``one-hot-like'' encoding makes the circuit for
-  $B^d$ structurally similar to that of $B$: the next-state logic for bit $j$
-  (corresponding to state $s_j$ of $B$) in $B^d$ is the OR of the $\delta$
-  contributions from all currently active states into $s_j$.  This is exactly
-  the same combinational logic as for $B$, confirming the structural similarity.
+  \[
+    \emptyset,\qquad \{r\},\qquad \{s\},\qquad \{r,s\}.
+  \]
+  Using the binary state assignment
+  \[
+    \emptyset=00,\qquad \{r\}=01,\qquad \{s\}=10,\qquad \{r,s\}=11,
+  \]
+  with present-state bits $x_1x_0$, the transition table is
+  \[
+  \begin{array}{c|cc}
+  x_1x_0 & \pmb{a} & \pmb{b}\\\hline
+  00 & 00 & 00\\
+  01 & 11 & 10\\
+  10 & 01 & 00\\
+  11 & 11 & 10
+  \end{array}
+  \]
+  so the DFA circuit is given by
+  \[
+    x'_1=x_0,\qquad x'_0=\pmb{a}\wedge(x_1\vee x_0).
+  \]
+  The start state is $01$ and the accept output is $x_1$, since the final
+  subset states are $\{s\}$ and $\{r,s\}$.
 \end{enumerate}
 
 %% 4.36
@@ -828,26 +1551,105 @@ $\pmb{10110}$, $\pmb{1010}$, or $\pmb{01101}$ as substrings.
 
 For each NDFA $A_i$ in Figure~4.25, with $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$:
 \begin{enumerate}[1.]
-  \item Assign a bit-vector encoding to each state.
-  \item For each state $s_j$ and each input letter $\pmb{\sigma}$, compute the
-    set of states $\delta(s_j,\pmb{\sigma})$.
-  \item The $D$ input of the flip-flop for state $s_k$ is the OR of the outputs
-    of all flip-flops $s_j$ for which $s_k\in\delta(s_j,\pmb{\sigma}_{current})$.
-  \item The output is the OR of all final-state flip-flops.
+  \item \textbf{(a)} With activity bit $t$ for the single state:
+  \[
+    t'=t\wedge(\pmb{a}\vee\pmb{c}),\qquad \text{accept}=t.
+  \]
+
+  \item \textbf{(b)} With activity bits $q_1,q_0$:
+  \[
+    q'_1=(q_1\wedge \pmb{b})\vee(q_0\wedge \pmb{b}),\qquad
+    q'_0=(q_1\wedge \pmb{a})\vee(q_0\wedge \pmb{c}),
+  \]
+  and the accept output is $q_1$.
+
+  \item \textbf{(c)} With activity bits $r_0,r_1$:
+  \[
+    r'_0=(r_0\wedge \pmb{a})\vee(r_1\wedge \pmb{b}),\qquad
+    r'_1=(r_0\wedge \pmb{a})\vee(r_0\wedge \pmb{c}),
+  \]
+  and the accept output is $r_0$.
+
+  \item \textbf{(d)} With activity bits $s_0,s_1,s_2,s_3$:
+  \[
+    s'_0=0,\qquad
+    s'_1=(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=s_1\wedge \pmb{a},\qquad
+    s'_3=s_1\wedge \pmb{b},
+  \]
+  and the accept output is $s_2$.
+
+  \item \textbf{(e)} With activity bits $s_1,s_2$:
+  \[
+    s'_1=(s_1\wedge \pmb{a})\vee(s_2\wedge \pmb{a})\vee(s_2\wedge \pmb{b}),
+    \qquad
+    s'_2=s_1\wedge \pmb{a},
+  \]
+  and the accept output is $s_2$.
+
+  \item \textbf{(f)} The $\lambda$-machine has states $s_0,s_1,s_2,s_3$ with
+  ordinary transitions $s_0\xrightarrow{\pmb{a}}s_1$,
+  $s_1\xrightarrow{\pmb{b}}s_2$, $s_2\xrightarrow{\pmb{c}}s_3$ and
+  $\lambda$-moves $s_1\to s_0$, $s_3\to s_1$.  The standard circuit therefore
+  uses
+  \[
+    D_0=s_1,\qquad
+    D_1=(s_0\wedge \pmb{a})\vee s_3,\qquad
+    D_2=s_1\wedge \pmb{b},\qquad
+    D_3=s_2\wedge \pmb{c},
+  \]
+  with accept output $s_3$.  Adding the transitive $\lambda$-connection
+  $s_3\to s_0$ as well is also consistent with the text's discussion.
+
+  \item \textbf{(g)} With activity bits $s_0,s_1,s_2,s_3$:
+  \[
+    s'_0=s_1\wedge \pmb{a},\qquad
+    s'_1=(s_0\wedge \pmb{a})\vee(s_2\wedge \pmb{c})\vee(s_3\wedge \pmb{b}),
+  \]
+  \[
+    s'_2=s_1\wedge \pmb{c},\qquad
+    s'_3=s_1\wedge \pmb{b},
+  \]
+  and the accept output is $s_0$.
 \end{enumerate}
-(Specific gate-level diagrams depend on the transitions shown in Figure~4.25.)
 
 %% 4.37
 \item \textbf{Circuit diagrams for each NDFA in Figure~4.25 (with SOS and EOS).}
 
-Extend each circuit from Exercise~4.36 with:
+Extend each circuit from Exercise~4.36 by forcing the start state(s) active on
+\<SOS\> and gating the final-state output with \<EOS\>:
 \begin{itemize}
-  \item \textbf{SOS input:} an asynchronous reset that forces all flip-flops to
-    the encoding of the start state(s) simultaneously.
-  \item \textbf{EOS input:} gates the final-state output signal, so the
-    ``accept'' output is only asserted during the EOS pulse, not continuously.
+  \item \textbf{(a)} $t'=\text{\<SOS\>}\vee(t\wedge(\pmb{a}\vee\pmb{c}))$ and
+    $\text{accept}=t\wedge\text{\<EOS\>}$.
+  \item \textbf{(b)} OR \<SOS\> into the input for $q_1$:
+    \[
+      q'_1=\text{\<SOS\>}\vee(q_1\wedge \pmb{b})\vee(q_0\wedge \pmb{b}),\qquad
+      q'_0=(q_1\wedge \pmb{a})\vee(q_0\wedge \pmb{c}),
+    \]
+    and $\text{accept}=q_1\wedge\text{\<EOS\>}$.
+  \item \textbf{(c)} OR \<SOS\> into the input for $r_0$ and gate the output:
+    \[
+      r'_0=\text{\<SOS\>}\vee(r_0\wedge \pmb{a})\vee(r_1\wedge \pmb{b}),\qquad
+      r'_1=(r_0\wedge \pmb{a})\vee(r_0\wedge \pmb{c}),
+    \]
+    with $\text{accept}=r_0\wedge\text{\<EOS\>}$.
+  \item \textbf{(d)} OR \<SOS\> into $s'_0$ and use
+    $\text{accept}=s_2\wedge\text{\<EOS\>}$.
+  \item \textbf{(e)} OR \<SOS\> into the corrected first equation:
+    \[
+      s'_1=\text{\<SOS\>}\vee(s_1\wedge \pmb{a})
+        \vee(s_2\wedge \pmb{a})\vee(s_2\wedge \pmb{b}),
+      \qquad
+      s'_2=s_1\wedge \pmb{a},
+    \]
+    and use $\text{accept}=s_2\wedge\text{\<EOS\>}$.
+  \item \textbf{(f)} OR \<SOS\> into $D_0$ and use
+    $\text{accept}=s_3\wedge\text{\<EOS\>}$.
+  \item \textbf{(g)} OR \<SOS\> into $s'_0$ and use
+    $\text{accept}=s_0\wedge\text{\<EOS\>}$.
 \end{itemize}
-See Example~4.13 for the solution corresponding to Figure~4.25e.
 
 %% 4.38
 \item \textbf{Adapting Definition~3.10 for NDFAs and proving that an algorithm
