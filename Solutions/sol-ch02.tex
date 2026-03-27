@@ -314,18 +314,69 @@ For any $n$, the strings $\mathbf{0},\mathbf{0}^2,\ldots,\mathbf{0}^n$ are in di
 %%------------------------------------------------------------
 \item \textbf{Show $\Phi=\{\mathbf{a}^j\mathbf{b}^k\mathbf{c}^m\mid j\geq 3,k=m\}$ is not FAD (second pumping lemma).}
 
-Use the Myhill-Nerode approach. For any $n$, consider $\mathbf{a}^3\mathbf{b}^i$ for $i=0,1,\ldots,n$. These are in distinct $R_\Phi$-classes: $\mathbf{a}^3\mathbf{b}^i\,R_\Phi\,\mathbf{a}^3\mathbf{b}^j$ requires $(\forall z)(\mathbf{a}^3\mathbf{b}^iz\in\Phi\Leftrightarrow\mathbf{a}^3\mathbf{b}^jz\in\Phi)$. Take $z=\mathbf{c}^i$: $\mathbf{a}^3\mathbf{b}^i\mathbf{c}^i\in\Phi$ (yes, $j=3\geq 3$, $k=m=i$). But $\mathbf{a}^3\mathbf{b}^j\mathbf{c}^i\in\Phi$ iff $j=i$. So for $i\neq j$, distinct classes. $\square$
+We use Theorem 2.5. Suppose, for contradiction, that $\Phi$ is FAD. Then there is a
+right congruence $R$ of finite rank such that $\Phi$ is a union of $R$-classes.
+
+For each $i\in\NN$, let
+\[
+x_i=\mathbf{a}^3\mathbf{b}^i.
+\]
+We claim that the $x_i$ lie in distinct $R$-classes. If $i\neq j$ and $x_i\,R\,x_j$, then
+by the right-congruence property,
+\[
+x_i\mathbf{c}^i\,R\,x_j\mathbf{c}^i.
+\]
+But
+\[
+x_i\mathbf{c}^i=\mathbf{a}^3\mathbf{b}^i\mathbf{c}^i\in\Phi,
+\]
+while
+\[
+x_j\mathbf{c}^i=\mathbf{a}^3\mathbf{b}^j\mathbf{c}^i\notin\Phi
+\]
+because $j\neq i$.
+Since $\Phi$ is a union of $R$-classes, two $R$-equivalent strings cannot disagree
+about membership in $\Phi$. Contradiction.
+
+So $x_0,x_1,x_2,\ldots$ belong to infinitely many distinct $R$-classes, contradicting
+the finite rank of $R$. Therefore $\Phi$ is not FAD. $\square$
 
 \textit{Why first pumping lemma is hard}: Any long word in $\Phi$ starts with $\geq 3$ $\mathbf{a}$s. Pumping within the $\mathbf{a}$-block may still satisfy $j\geq 3$; pumping within $\mathbf{b}$ or $\mathbf{c}$ block destroys $k=m$.
 
 %%------------------------------------------------------------
 \item \textbf{Show $C=\{\mathbf{d}^q\mid q\text{ non-prime}\}$ is not FAD.}
 
-Over $\{\mathbf d\}^*$, the complement of $C$ is exactly
+We use Theorem 2.6. Suppose $C$ were FAD, and let $n$ be the number supplied by
+that theorem.
+
+Choose a prime $p>n$ and let
 \[
-\sim C=\{\mathbf d^p\mid p\text{ prime}\}=P.
+x=\mathbf{d}^p.
 \]
-Exercise 2.25 already proved $P$ is not FAD. If $C$ were FAD, then $\sim C$ would be FAD (closure under complement), contradicting that result. Therefore $C$ is not FAD. $\square$
+Since $p$ is prime, $x\notin C$. By Theorem 2.6 there should be a decomposition
+\[
+x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
+\]
+such that
+\[
+uv^iw\notin C\qquad\text{for every }i\ge0.
+\]
+
+Because $x$ is unary, $v=\mathbf{d}^k$ for some $k\ge1$. Then
+\[
+uv^iw=\mathbf{d}^{\,p+(i-1)k}.
+\]
+Now choose $i=p+1$. Its length is
+\[
+p+pk=p(1+k),
+\]
+which is composite. Hence
+\[
+uv^{p+1}w\in C,
+\]
+contradicting Theorem 2.6.
+
+Therefore $C$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$R_L$ with 3 classes: $\{\lambda\}$, odd-length, even-length$\setminus\{\lambda\}$.}
@@ -369,50 +420,64 @@ So the minimal DFA has 4 states, start state $C_{e,\neg b}$, and unique final st
 %%------------------------------------------------------------
 \item \textbf{Show $\Xi=\{\lambda,\mathbf{a},\mathbf{a}^4,\mathbf{a}^9,\ldots\}$ (perfect square lengths) is not FAD.}
 
-For distinct $i<j$, we show $\mathbf{a}^i\not R_\Xi \mathbf{a}^j$.
-Let $d=j-i\ge1$. Choose $n$ with $2n+1>d$, and set
+We use Theorem 2.3. Suppose $\Xi$ were FAD, and let $n$ be a pumping length for $\Xi$.
+Take
 \[
-k=n^2-i.
+w=\mathbf{a}^{n^2}\in\Xi.
 \]
-Then
+For any decomposition
 \[
-i+k=n^2
+w=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
 \]
-is a perfect square, so $\mathbf{a}^{i+k}\in\Xi$.
-But
+the string $v$ must be of the form $\mathbf{a}^k$ with $1\le k\le n$.
+
+Pump once upward:
 \[
-j+k=n^2+d,
+uv^2w=\mathbf{a}^{n^2+k}.
 \]
-and since $0<d<2n+1$, we have
+Since $1\le k\le n$, we have
 \[
-n^2< n^2+d < (n+1)^2.
+n^2<n^2+k<n^2+(2n+1)=(n+1)^2.
 \]
-So $n^2+d$ is not a perfect square, hence $\mathbf{a}^{j+k}\notin\Xi$.
-Therefore $\mathbf{a}^i$ and $\mathbf{a}^j$ are distinguishable; infinitely many classes follow, so $\Xi$ is not FAD. $\square$
+So $n^2+k$ is strictly between two consecutive squares, hence is not itself a square.
+Therefore
+\[
+uv^2w\notin\Xi,
+\]
+contradicting Theorem 2.3.
+
+Thus $\Xi$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Phi=\{\mathbf{b},\mathbf{b}^2,\mathbf{b}^4,\mathbf{b}^8,\ldots\}$ (powers of 2) is not FAD.}
 
-For distinct $i<j$, let $d=j-i\ge1$. Choose $m$ with $2^m>d$, and set
+We use Theorem 2.3. Suppose $\Phi$ were FAD, and let $n$ be a pumping length for $\Phi$.
+Choose $m$ so that $2^m>n$, and let
 \[
-k=2^m-i.
+w=\mathbf{b}^{2^m}\in\Phi.
 \]
-Then
+For any decomposition
 \[
-i+k=2^m
+w=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
 \]
-is a power of $2$, so $\mathbf{b}^{i+k}\in\Phi$.
-But
+we have $v=\mathbf{b}^k$ for some $1\le k\le n<2^m$.
+
+Pump once upward:
 \[
-j+k=2^m+d
+uv^2w=\mathbf{b}^{2^m+k}.
 \]
-satisfies
+Because $0<k<2^m$,
 \[
-2^m<2^m+d<2^{m+1}
+2^m<2^m+k<2^{m+1}.
 \]
-because $0<d<2^m$.
-So $2^m+d$ is not a power of $2$, hence $\mathbf{b}^{j+k}\notin\Phi$.
-Thus $\mathbf{b}^i$ and $\mathbf{b}^j$ are distinguishable; therefore $R_\Phi$ has infinite rank and $\Phi$ is not FAD. $\square$
+So $2^m+k$ lies strictly between two consecutive powers of $2$, and therefore is not
+itself a power of $2$. Hence
+\[
+uv^2w\notin\Phi,
+\]
+contradicting Theorem 2.3.
+
+Therefore $\Phi$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Five-class $R_L$ over $\{\mathbf{a},\mathbf{b}\}$.}
@@ -464,25 +529,54 @@ The minimal DFA for $\Omega$ has 6 states. Final states are those in $\Omega$: $
 %%------------------------------------------------------------
 \item \textbf{Which of $L_1,L_2,L_1\cap L_2,\sim L_2,L_1\cup L_2$ are FAD?}
 
-$L_1=\{x\mid|x|_\mathbf{a}>|x|_\mathbf{b}\}$: Not FAD (Myhill-Nerode: strings $\mathbf{a}^n$ for each $n$ are in distinct classes).
+$L_1=\{x\mid|x|_\mathbf{a}>|x|_\mathbf{b}\}$: \textbf{not FAD}. If it were FAD, let $n$ be a pumping length from Theorem 2.3. Take
+\[
+w=\mathbf{a}^{n+1}\mathbf{b}^n\in L_1.
+\]
+Any split $w=uvw'$ with $|uv|\le n$ and $|v|\ge1$ has $v=\mathbf{a}^k$ for some $k\ge1$.
+Pumping down gives
+\[
+uw'=\mathbf{a}^{n+1-k}\mathbf{b}^n,
+\]
+and now $n+1-k\le n$, so this pumped string is not in $L_1$. Contradiction.
 
-$L_2=\{x\mid|x|_\mathbf{a}<3\}$: FAD (finite DFA with states tracking $\min(|x|_\mathbf{a},3)$).
+$L_2=\{x\mid|x|_\mathbf{a}<3\}$: \textbf{FAD}. A DFA only needs to remember whether it has seen $0$, $1$, $2$, or at least $3$ copies of $\mathbf a$.
 
-$L_1\cap L_2$: $\{x\mid|x|_\mathbf{a}\in\{0,1,2\}\text{ and }|x|_\mathbf{a}>|x|_\mathbf{b}\}$. FAD (intersection of FAD with non-FAD can be FAD if the FAD constraint dominates -- here $L_2$ restricts to finitely many $|x|_\mathbf{a}$ values). FAD.
+$L_1\cap L_2$: \textbf{FAD}. In fact this language is finite:
+\[
+L_1\cap L_2=\{\mathbf a,\mathbf{aa},\mathbf{aab},\mathbf{aba},\mathbf{baa}\}.
+\]
+Every finite language is FAD.
 
-$\sim L_2=\{x\mid|x|_\mathbf{a}\geq 3\}$: FAD (complement of FAD is FAD).
+$\sim L_2=\{x\mid|x|_\mathbf{a}\geq 3\}$: \textbf{FAD}. The same 4-state machine used for $L_2$ works here too; we simply make the ``at least 3 $\mathbf a$'s'' state final.
 
-$L_1\cup L_2$: Not FAD. If it were, then $L_1=(L_1\cup L_2)\cap\sim L_2$ would be FAD (intersection of two FAD), contradiction.
+$L_1\cup L_2$: \textbf{not FAD}. Suppose it were FAD, and let $n$ be a pumping length. Consider
+\[
+w=\mathbf{a}^{n+4}\mathbf{b}^{n+3}\in L_1\cup L_2
+\]
+because it has more $\mathbf a$'s than $\mathbf b$'s.
+Again any split $w=uvw'$ with $|uv|\le n$ and $|v|\ge1$ has $v=\mathbf{a}^k$ for some $k\ge1$.
+Pumping down gives
+\[
+uw'=\mathbf{a}^{n+4-k}\mathbf{b}^{n+3}.
+\]
+Here $n+4-k\ge4$, so the pumped string is not in $L_2$; and also $n+4-k\le n+3$, so it is not in $L_1$.
+Thus $uw'\notin L_1\cup L_2$, contradicting Theorem 2.3.
 
 %%------------------------------------------------------------
 \item \textbf{$R_m$ defined by $|x|-|y|$ is a multiple of $m$.}
 
 \begin{enumerate}
-\item \textit{Right congruence}: If $m\mid(|x|-|y|)$, then $m\mid(|xz|-|yz|)$ since $|xz|-|yz|=|x|-|y|$.
+\item \textit{Equivalence relation and right congruence}: Reflexive, symmetric, and transitive are immediate from divisibility by $m$. If $m\mid(|x|-|y|)$, then
+\[
+|xz|-|yz|=|x|-|y|,
+\]
+so $m\mid(|xz|-|yz|)$ as well. Thus $R_m$ is a right congruence.
 
 \item $R_2\cap R_3 = R_6$: $x\,R_2\cap R_3\,y\Leftrightarrow 2\mid|x|-|y|$ and $3\mid|x|-|y|\Leftrightarrow 6\mid|x|-|y|\Leftrightarrow x\,R_6\,y$.
+So every $R_6$-class is contained in an $R_2$-class (and also in an $R_3$-class); in particular, $R_6\subseteq R_2$.
 
-\item In general: if $x\,R\cap S\,y$, then $x\,R\,y$ and $x\,S\,y$. For any $z$: $x\,R\,y\Rightarrow xz\,R\,yz$, and $x\,S\,y\Rightarrow xz\,S\,yz$. So $xz\,R\cap S\,yz$.
+\item In general: since both $R$ and $S$ are equivalence relations, $R\cap S$ is also an equivalence relation. And if $x\,R\cap S\,y$, then $x\,R\,y$ and $x\,S\,y$. For any $z$, right congruence of $R$ and $S$ gives $xz\,R\,yz$ and $xz\,S\,yz$, hence $xz\,(R\cap S)\,yz$. So $R\cap S$ is a right congruence. Also $R\cap S\subseteq R$ and $R\cap S\subseteq S$, so its classes refine the classes of both $R$ and $S$.
 
 \item $R_2\cup R_3$: $\lambda\,R_2\,\mathbf{aa}$ and $\mathbf{a}\,R_3\,\mathbf{aaaa}$. But is $\lambda\,R_2\cup R_3\,\mathbf{a}$? $|\lambda|-|\mathbf{a}|=-1$, not divisible by 2 or 3. No. Is $\lambda\,R_2\cup R_3\,\mathbf{aaa}$? $0-3=-3$, divisible by 3. Yes. Now $\lambda\,R_2\cup R_3\,\mathbf{aaa}$ and $\mathbf{aaa}\,R_2\cup R_3\,\mathbf{aaaaa}$ (length diff=2). But is $\lambda\,R_2\cup R_3\,\mathbf{aaaaa}$? Length diff=5, not divisible by 2 or 3. No. So transitivity fails: not an equivalence relation.
 
@@ -963,30 +1057,88 @@ In each case $xa\,Q\,ya$. $\square$
 $q_\varepsilon$ (no input yet), and $(a,a),(a,b),(b,a),(b,b)$ where the first component is the first symbol seen and the second is the current last symbol. Final states are $(a,a)$ and $(b,b)$ (and include/exclude $q_\varepsilon$ depending on the convention for $\lambda$).
 
 \item $L_2$ = odd-length words whose first letter equals the center letter: Not FAD.
-Intersect with the regular language $R=\mathbf{a}\mathbf{b}^*\mathbf{a}\mathbf{b}^*$.
-Then
+Suppose $L_2$ were FAD, and let $p$ be a pumping length.
+Take
 \[
-L_2\cap R=\{\mathbf{a}\mathbf{b}^n\mathbf{a}\mathbf{b}^{n+1}\mid n\ge 0\}.
+w=\mathbf{a}^{p+1}\mathbf{b}^p.
 \]
-(In $\mathbf{a}\mathbf{b}^i\mathbf{a}\mathbf{b}^j$, being odd-length with center letter $\mathbf a$ forces $j=i+1$.)
-This language is not regular by pumping: for pumping length $p$, take
+This word has odd length $2p+1$, its first letter is $\mathbf a$, and its center letter
+is also $\mathbf a$, so $w\in L_2$.
+
+For any split $w=uvw'$ with $|uv|\le p$ and $|v|\ge1$, the substring $v$ lies entirely
+in the initial $\mathbf a$-block. So $v=\mathbf a^k$ for some $k\ge1$.
+Pumping down gives
 \[
-w=\mathbf{a}\mathbf{b}^p\mathbf{a}\mathbf{b}^{p+1}.
+uw'=\mathbf{a}^{p+1-k}\mathbf{b}^p.
 \]
-Any split $w=uvw'$ with $|uv|\le p+1$, $|v|\ge1$ has $v$ in the initial $\mathbf{a}\mathbf{b}^p$ segment.
-If $v$ includes the first $\mathbf a$, pumping down removes that initial form.
-If $v=\mathbf b^t$ in the first $\mathbf b$-block, pumping down gives
+If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\notin L_2$.
+If $k$ is even, then $|uw'|$ is odd, but its center position is
 \[
-\mathbf{a}\mathbf{b}^{p-t}\mathbf{a}\mathbf{b}^{p+1},
+\frac{|uw'|+1}{2}=p+1-\frac{k}{2},
 \]
-which no longer has second block length = first block length + 1.
-So $L_2\cap R$ is not regular, hence $L_2$ is not FAD.
+which is strictly larger than the length $p+1-k$ of the remaining $\mathbf a$-block.
+So the center letter lies in the $\mathbf b$-block, while the first letter is still $\mathbf a$.
+Hence again $uw'\notin L_2$.
+
+This contradicts Theorem 2.3. Therefore $L_2$ is not FAD.
 
 \item $L_3$ = last letter does not appear in any earlier position: \textbf{FAD}. The DFA tracks (i) the set of characters seen in positions $1,\ldots,n-1$ and (ii) the current last character. Since $\Sigma$ is fixed and finite, there are at most $2^{|\Sigma|}\times|\Sigma|$ states (plus a start state for $\lambda$). Accept when the last character is not in the set of characters seen before it. Both components update in one step: reading $a$ sets last-char $= a$ and adds the previous last-char to the "seen" set. This is a finite machine.
 
-\item $L_4$ = even-length, two center letters match: Not FAD. Similar to $L_2$.
+\item $L_4$ = even-length, two center letters match: Not FAD.
+Suppose $L_4$ were FAD, and let $p$ be a pumping length.
+Consider
+\[
+w=\mathbf{a}^{2p-1}\mathbf{b}(\mathbf{ba})^p.
+\]
+This word has length $4p$, so it is even. Its two center letters are the two consecutive
+$\mathbf b$'s, so $w\in L_4$.
 
-\item $L_5$ = odd-length, center letter matches none of the others: Not FAD. Similar.
+For any split $w=uvw'$ with $|uv|\le p$ and $|v|\ge1$, we have $v=\mathbf a^k$ for some
+$k\ge1$, because the first $p$ symbols are all $\mathbf a$'s.
+Pumping down gives
+\[
+uw'=\mathbf{a}^{2p-1-k}\mathbf{b}(\mathbf{ba})^p.
+\]
+If $k$ is odd, then $|uw'|=4p-k$ is odd, so $uw'\notin L_4$.
+If $k=2r$ is even, then the center positions of $uw'$ are
+\[
+2p-r\quad\text{and}\quad 2p-r+1.
+\]
+After the initial block $\mathbf a^{2p-1-2r}$, the remaining suffix is
+\[
+\mathbf{b}(\mathbf{ba})^p=\mathbf{b}\mathbf{b}\mathbf{a}\mathbf{b}\mathbf{a}\cdots.
+\]
+Those two center positions become positions $r+1$ and $r+2$ within this suffix, and
+these consecutive symbols are always different. So the two center letters of $uw'$ do
+not match, and $uw'\notin L_4$.
+
+This contradicts Theorem 2.3. Therefore $L_4$ is not FAD.
+
+\item $L_5$ = odd-length, center letter matches none of the others: Not FAD.
+Suppose $L_5$ were FAD, and let $p$ be a pumping length.
+Take
+\[
+w=\mathbf{a}^p\mathbf{b}\mathbf{a}^p.
+\]
+This word has odd length, its center letter is $\mathbf b$, and that $\mathbf b$ appears
+nowhere else, so $w\in L_5$.
+
+For any split $w=uvw'$ with $|uv|\le p$ and $|v|\ge1$, again $v=\mathbf a^k$ for some
+$k\ge1$.
+Pumping down gives
+\[
+uw'=\mathbf{a}^{p-k}\mathbf{b}\mathbf{a}^p.
+\]
+If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\notin L_5$.
+If $k=2r$ is even, then the center position of $uw'$ is
+\[
+\frac{|uw'|+1}{2}=p+1-r.
+\]
+But the unique $\mathbf b$ is at position $p-2r+1$, so the center lies strictly to the
+right of that $\mathbf b$, inside the final $\mathbf a$-block. Thus the center letter is
+$\mathbf a$, which certainly matches other letters of the word. Hence $uw'\notin L_5$.
+
+This contradicts Theorem 2.3. Therefore $L_5$ is not FAD.
 \end{enumerate}
 
 %%------------------------------------------------------------
