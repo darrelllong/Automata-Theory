@@ -68,7 +68,13 @@
   \item \textbf{Complementation: No.}  $\Sigma^*\setminus L$ may be finite.  E.g., $L=\Sigma^*\setminus\{\lambda\}$ is infinite; $\sim L=\{\lambda\}$ is finite.
   \item \textbf{Union: Yes.}  Union of two infinite sets is infinite.
   \item \textbf{Intersection: No.}  $L_1=\{\pmb{a}^{2n}\mid n\ge 0\}$ and $L_2=\{\pmb{a}^{2n+1}\mid n\ge 0\}$ are both infinite, but $L_1\cap L_2=\emptyset$, which is finite.
-  \item \textbf{Concatenation: Yes.}  If $L_1,L_2$ are infinite, then $L_1\cdot L_2$ is infinite: it contains $\{xy\mid x\in L_1, y\in L_2\}$, which is infinite since $L_1$ (and $L_2$) contribute infinitely many distinct words.
+  \item \textbf{Concatenation: Yes.}  If $L_1,L_2$ are infinite, pick any fixed
+  word $y\in L_2$.  Then
+  \[
+  \{xy\mid x\in L_1\}\subseteq L_1\cdot L_2.
+  \]
+  The map $x\mapsto xy$ is injective, so $\{xy\mid x\in L_1\}$ is infinite.
+  Therefore $L_1\cdot L_2$ is infinite.
   \item \textbf{Kleene closure: Yes.}  $L^*\supseteq L$ when $\lambda\in L^*$, and $L^*$ is always infinite if $L$ contains any nonempty word.
   \item \textbf{Relative complement: No.}  $L_1\setminus L_2$ could be finite even if $L_1,L_2$ are infinite (e.g., $L_1=L_2$).
 \end{enumerate}
@@ -129,7 +135,21 @@ Let $\mathcal{C}=F_\Sigma$ (all finite languages).  Closed under concatenation (
 %% 5.10
 \item \textbf{Closed under Kleene closure does not imply closed under concatenation.}
 
-Let $\mathcal{C}$ be the collection of all languages of the form $\{w\}^*$ for some word $w\in\Sigma^*$ (including $\Sigma^*=\Sigma^*$ and $\emptyset^*=\{\lambda\}$).  Each $\{w\}^*$ is closed under Kleene closure trivially ($(\{w\}^*)^*=\{w\}^*$).  But $\{w\}^*\cdot\{v\}^*$ is not generally of the form $\{u\}^*$ unless $w=v$ or one is $\lambda$.  Counterexample: $\{a\}^*\cdot\{b\}^*=\{a^mb^n\mid m,n\ge 0\}\neq\{u\}^*$ for any $u$.
+Let
+\[
+\mathcal{C}=\{\{w\}^*\mid w\in\Sigma^*\}.
+\]
+This includes $\{\lambda\}=\{\lambda\}^*$ (take $w=\lambda$).  Each language in
+$\mathcal{C}$ is closed under Kleene closure, because
+\[
+(\{w\}^*)^*=\{w\}^*.
+\]
+But $\mathcal{C}$ is not closed under concatenation: over
+$\Sigma=\{\pmb{a},\pmb{b}\}$,
+\[
+\{\pmb{a}\}^*\cdot\{\pmb{b}\}^*=\{\pmb{a}^m\pmb{b}^n\mid m,n\ge 0\},
+\]
+and this language is not of the form $\{u\}^*$ for any word $u$.
 
 %% 5.11
 \item \textbf{Closed under complement does not imply closed under relative complement.}
@@ -496,9 +516,25 @@ The $\lambda$-transition from each $f\in F_1$ to $s^2_0$ cleanly separates the t
 %% 5.42
 \item \textbf{Redesign Theorem~5.5 (Kleene closure) using $\lambda$-transitions, without extra $q_0$.}
 
-Given DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, make $s_0$ a final state (to accept $\lambda$) and add $\lambda$-transitions from each $f\in F$ back to $s_0$:
-$A_*=\langle\Sigma,S,s_0,\delta_*,F\cup\{s_0\}\rangle$ where $\delta_*(f,\lambda)\ni s_0$ for each $f\in F$ and $\delta_*(s,\pmb{a})=\delta(s,\pmb{a})$ otherwise.
-This avoids the extra $q_0$ because the $\lambda$-back-edges from $F$ to $s_0$ directly enable re-running from the start state after each accepted subword.
+In general this cannot be done correctly without changing the original start
+state's behavior, so the extra $q_0$ is still necessary.
+
+The tempting construction is to make $s_0$ final (so that $\lambda$ is
+accepted) and add $\lambda$-transitions from each $f\in F$ back to $s_0$.
+But this is wrong: making $s_0$ final can cause the new machine to accept words
+that merely return to $s_0$, even when they are not in $L^*$.
+
+For example, let $L=\{\pmb{aa}\}$ over $\Sigma=\{\pmb{a},\pmb{b}\}$, and let
+$A$ be a DFA for $L$ in which $s_0$ loops on $\pmb{b}$.  If we simply make
+$s_0$ final, then the redesigned machine accepts $\pmb{b}$, because
+\[
+\delta(s_0,\pmb{b})=s_0\in F'.
+\]
+But $\pmb{b}\notin L^*$, since every nonempty word of $L^*$ is a concatenation
+of copies of $\pmb{aa}$.
+
+So even with $\lambda$-transitions, the fresh start state $q_0$ is needed to
+accept $\lambda$ without altering the behavior of the original start state.
 
 %% 5.43
 \item \textbf{Redesign Theorem~5.4 for NDFAs $A_1$ and $A_2$.}
@@ -684,9 +720,37 @@ prefix to a word of $L$.
 $B(L)$ is the set of all words that have a prefix in $L$.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Construction.}  $B(L)=L\cdot\Sigma^*$ (the set of all extensions of words in $L$).  Given DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$ for $L$, set $F'=\{s\in S\mid \deltabar{}(s_0,x)\in F\text{ for some prefix }x\text{ of the input}\}$.  Equivalently, let $F'$ be the set of states reachable from any state in $F$ (including $F$ itself): $F'=\{s\mid\exists f\in F,\exists y\in\Sigma^*,\,\deltabar{}(f,y)=s\}\cup F$.  Then $A'=\langle\Sigma,S,s_0,\delta,F'\rangle$ accepts $B(L)$.
+  \item \textbf{Construction.}  Given
+  $A=\langle\Sigma,S,s_0,\delta,F\rangle$ for $L$, build
+  \[
+  A'=\langle\Sigma,S\times\{0,1\},\langle s_0,0\rangle,\delta',S\times\{1\}\rangle,
+  \]
+  where the second component records whether some prefix read so far belongs to
+  $L$.  Define
+  \[
+  \delta'(\langle s,b\rangle,a)=\langle t,b'\rangle,
+  \]
+  where $t=\delta(s,a)$ and
+  \[
+  b'=
+  \begin{cases}
+  1 & \text{if } b=1 \text{ or } t\in F,\\
+  0 & \text{otherwise.}
+  \end{cases}
+  \]
+  Thus once the flag becomes $1$, it stays $1$ forever.
 
-  \item \textbf{Proof:} $B(L)=L\cdot\Sigma^*\in\DSIG$ by closure under concatenation.
+  \item \textbf{Proof:}  By induction on the length of the input, after reading a
+  word $z$ the machine $A'$ is in state
+  \[
+  \langle \deltabar{}(s_0,z),\,1\rangle
+  \]
+  exactly when some prefix of $z$ is in $L$, and otherwise in
+  \[
+  \langle \deltabar{}(s_0,z),\,0\rangle.
+  \]
+  Therefore $A'$ accepts exactly those words having a prefix in $L$, that is,
+  exactly the words in $B(L)$.
 
   \item \qed
 \end{enumerate}
@@ -828,11 +892,32 @@ $Y(L)\in\DSIG$.
 \item \textbf{\DSIG\ is closed under $V(L)$ (delete odd-positioned letters).}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Construction.}  Build $A'$ from $A$ with a parity bit added to the state: $S'=S\times\{0,1\}$ where 0 = currently at an odd position, 1 = at an even position.  Transitions: on reading input letter $\pmb{a}$ at position parity $b$:
-  if $b=0$ (odd position): delete $\pmb{a}$ (take $\lambda$-transition, flip parity to 1);
-  if $b=1$ (even position): process $\pmb{a}$ normally, flip parity to 0.
+  \item \textbf{Construction.}  Let
+  $A=\langle\Sigma,S,s_0,\delta,F\rangle$.  Build the $\lambda$-NDFA
+  \[
+  A'=\langle\Sigma,S\times\{0,1\},\langle s_0,0\rangle,\delta',F\times\{0,1\}\rangle,
+  \]
+  where the second component records the parity of the next position in the
+  original word: $0$ means odd, $1$ means even.  For each $s\in S$ and
+  $a\in\Sigma$,
+  \[
+  \delta'(\langle s,1\rangle,a)=\{\langle\delta(s,a),0\rangle\},
+  \]
+  because even-positioned letters are kept, and
+  \[
+  \delta'(\langle s,0\rangle,\lambda)
+  =\{\langle\delta(s,c),1\rangle\mid c\in\Sigma\},
+  \]
+  because an odd-positioned letter is deleted and may be any symbol $c$.
 
-  \item \textbf{Proof.}  The machine $A'$ processes every even-positioned letter via $A$'s transitions and skips every odd-positioned letter.  An accepting path corresponds exactly to a word in $V(L)$.
+  \item \textbf{Proof.}  A computation of $A'$ alternates between deleting one
+  symbol of the original word at every odd position and reading one input symbol
+  at every even position.  Thus the visible input is exactly the word obtained
+  by deleting the odd-positioned letters of some word accepted by $A$.
+  Conversely, if a word $z$ arises from deleting the odd-positioned letters of
+  some $w\in L$, then $A'$ can guess those deleted odd-positioned letters by
+  $\lambda$-moves and read precisely the surviving even-positioned letters.  So
+  $L(A')=V(L)$.
 
   \item $L(A')\in\DSIG$. \qed
 \end{enumerate}
@@ -840,17 +925,59 @@ $Y(L)\in\DSIG$.
 %% 5.63
 \item \textbf{\DSIG\ is closed under $U(L)$ (delete even-positioned letters).}
 
-Same construction as~5.62 but swap the roles of odd and even positions: delete even-positioned letters, process odd-positioned letters.  The parity tracking is identical. \qed
+Let
+\[
+A=\langle\Sigma,S,s_0,\delta,F\rangle.
+\]
+Build the $\lambda$-NDFA
+\[
+A'=\langle\Sigma,S\times\{0,1\},\langle s_0,0\rangle,\delta',F\times\{0,1\}\rangle,
+\]
+where again $0$ means the next position in the original word is odd and $1$
+means even.  This time odd-positioned letters are kept and even-positioned
+letters are deleted:
+\[
+\delta'(\langle s,0\rangle,a)=\{\langle\delta(s,a),1\rangle\}
+\qquad (a\in\Sigma),
+\]
+\[
+\delta'(\langle s,1\rangle,\lambda)
+=\{\langle\delta(s,c),0\rangle\mid c\in\Sigma\}.
+\]
+Exactly the same reasoning as in 5.62 shows that $A'$ accepts precisely those
+words obtained from words of $L$ by deleting the even-positioned letters.
+Hence $U(L)\in\DSIG$. \qed
 
 %% 5.64
 \item \textbf{\DSIG\ is closed under $T(L)$ (delete every 3rd, 6th, ... letter).}
 
 \begin{enumerate}[(a)]
-  \item \textbf{Construction.}  Add a counter modulo 3 to the state: $S'=S\times\{0,1,2\}$.  Initial state: $\langle s_0,1\rangle$ (position 1 counted from 1).  Transition on reading $\pmb{a}$ at position $k$:
-  if $k\equiv 0\pmod{3}$: delete $\pmb{a}$ ($\lambda$-transition), increment counter mod 3;
-  else: process $\pmb{a}$ via $\delta$, increment counter mod 3.
+  \item \textbf{Construction.}  Let
+  $A=\langle\Sigma,S,s_0,\delta,F\rangle$.  Build the $\lambda$-NDFA
+  \[
+  A'=\langle\Sigma,S\times\{1,2,0\},\langle s_0,1\rangle,\delta',F\times\{1,2,0\}\rangle,
+  \]
+  where the second component records the next position modulo $3$.  For each
+  $s\in S$ and $a\in\Sigma$,
+  \[
+  \delta'(\langle s,1\rangle,a)=\{\langle\delta(s,a),2\rangle\},
+  \qquad
+  \delta'(\langle s,2\rangle,a)=\{\langle\delta(s,a),0\rangle\},
+  \]
+  because positions $1$ and $2$ modulo $3$ are kept, while
+  \[
+  \delta'(\langle s,0\rangle,\lambda)
+  =\{\langle\delta(s,c),1\rangle\mid c\in\Sigma\},
+  \]
+  because every third letter is deleted and may be any symbol $c$.
 
-  \item \textbf{Proof.}  The counter tracks position modulo 3; every multiple-of-3 position is skipped.
+  \item \textbf{Proof.}  The machine simulates $A$ on an original word while the
+  counter records which positions are first, second, and third in each block of
+  three.  At positions congruent to $1$ or $2$ modulo $3$, it reads the next
+  input symbol and processes it through $\delta$; at positions congruent to $0$
+  modulo $3$, it guesses and deletes one original symbol by a $\lambda$-move.
+  Thus the visible input is exactly the word obtained from the original one by
+  deleting every $3$rd, $6$th, $9$th, \dots letter.  Hence $L(A')=T(L)$.
 
   \item $L(A')\in\DSIG$. \qed
 \end{enumerate}
@@ -859,7 +986,25 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 \item \textbf{$I(L)=L\cap P$ where $P=\{x\mid|x|\text{ is prime}\}$.}
 
 \begin{enumerate}[(a)]
-  \item \textbf{\DSIG\ not closed under $I$.}  Let $\Sigma=\{\pmb{a}\}$ and $L=\Sigma^*$.  Then $I(L)=P=\{\pmb{a}^p\mid p\text{ prime}\}$.  By the pumping lemma (pump $\pmb{a}^p$ to get $\pmb{a}^{p+k}$ for any $k\ge 0$, most of which are not prime), $P\notin\DSIG$.
+  \item \textbf{\DSIG\ not closed under $I$.}  Let $\Sigma=\{\pmb{a}\}$ and
+  $L=\Sigma^*$.  Then
+  \[
+  I(L)=P=\{\pmb{a}^q\mid q\text{ prime}\}.
+  \]
+  We show $P\notin\DSIG$ by the pumping lemma.  Assume $P$ were regular, and
+  let $p$ be a pumping length.  Choose a prime $q>p$, and consider
+  $\pmb{a}^q\in P$.  Write
+  \[
+  \pmb{a}^q=uvw
+  \]
+  with $|uv|\le p$ and $|v|\ge 1$.  Since the word is unary, let $|v|=m\ge 1$.
+  Pump with $i=q+1$.  Then
+  \[
+  |uv^{q+1}w|=q+q\,m=q(1+m).
+  \]
+  This number is composite, because $q>1$ and $1+m>1$.  Hence
+  $uv^{q+1}w\notin P$, contradicting the pumping lemma.  Therefore
+  $P\notin\DSIG$.
 
   \item \textbf{$F_\Sigma$ closed under $I$.}  $I(L)=L\cap P\subseteq L$; if $L$ is finite, so is $I(L)$.
 
@@ -942,13 +1087,17 @@ Same construction as~5.62 but swap the roles of odd and even positions: delete e
 \noindent
 For $\psi_1$ and $\psi_2$, if $\overline{\psi_i}(L)$ were FAD then applying the
 inverse letter permutation would make $L$ FAD.  For $\psi_3$, the map is
-injective, so if $\overline{\psi_3}(L)$ were FAD then
-$L=\overline{\psi_3^{-1}}(\overline{\psi_3}(L))$ would be FAD by Theorem~5.10.
+injective, so
+\[
+L=\psi_3^{-1}(\overline{\psi_3}(L)).
+\]
+Thus, if $\overline{\psi_3}(L)$ were FAD, then Theorem~5.10 (closure under
+inverse homomorphism) would imply that $L$ is FAD as well.
 \end{enumerate}
 
 %% 5.69
 \item Over $\Sigma=\{\pmb{a}\}$ there is only one homomorphism under which
-\NSIG\ is obviously not closed, namely the erasing homomorphism
+\NSIG\ is not closed, namely the erasing homomorphism
 $\psi(\pmb{a})=\lambda$.  For any non-FAD unary language $L$,
 $\overline{\psi}(L)=\{\lambda\}\in\DSIG$.
 

@@ -35,9 +35,86 @@ Define $E_{i+1,A}$: $s\,E_{i+1,A}\,t\Leftrightarrow s\,E_{iA}\,t\wedge(\forall a
 
 $E_A$ (state equivalence): $s\,E_A\,t\Leftrightarrow L(A^s)=L(A^t)$ where $A^s$ is $A$ with start state $s$.
 
-($\supseteq$): $E_A\subseteq E_{iA}$ for all $i$ (by induction on $i$). $i=0$: $s\,E_A\,t\Rightarrow L(A^s)=L(A^t)\Rightarrow(\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t))\Rightarrow(s\in F\Leftrightarrow t\in F)$. Step: if $E_A\subseteq E_{iA}$ and $s\,E_A\,t$, then $\delta(s,a)\,E_A\,\delta(t,a)$ (since $E_A$ is a right congruence on states -- actually prove this: $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$). So $\delta(s,a)\,E_A\,\delta(t,a)$, and by IH $\delta(s,a)\,E_{iA}\,\delta(t,a)$; also $s\,E_{iA}\,t$ by IH. Hence $s\,E_{i+1,A}\,t$. So $E_A\subseteq\bigcap_j E_{jA}$.
+($\subseteq$): We show $E_A\subseteq E_{jA}$ for every $j$ by induction on $j$.
 
-($\subseteq$): Show $\bigcap_j E_{jA}\subseteq E_A$. Suppose $s\,E_{jA}\,t$ for all $j$. By induction on $|x|$: $\DBAR(s,x)\,E_{0A}\,\DBAR(t,x)$ for all $x$, which means $\DBAR(s,x)\in F\Leftrightarrow\DBAR(t,x)\in F$, i.e., $x\in L(A^s)\Leftrightarrow x\in L(A^t)$. Proof: $|x|=0$: $s\,E_{0A}\,t$ (given). $|x|=n+1$, $x=ay$: $\DBAR(s,ay)=\DBAR(\delta(s,a),y)$. Since $s\,E_{jA}\,t$ for all $j$ (given), in particular $s\,E_{n+1,A}\,t$, so $\delta(s,a)\,E_{nA}\,\delta(t,a)$ and $\delta(s,a)\,E_{jA}\,\delta(t,a)$ for all $j\geq 1$. By IH: $\DBAR(\delta(s,a),y)\,E_{0A}\,\DBAR(\delta(t,a),y)$. So $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$. $\square$
+\textit{Base} ($j=0$): if $s\,E_A\,t$, then $L(A^s)=L(A^t)$. In particular,
+\[
+\lambda\in L(A^s)\Leftrightarrow \lambda\in L(A^t),
+\]
+so
+\[
+s\in F \Leftrightarrow t\in F.
+\]
+Hence $s\,E_{0A}\,t$.
+
+\textit{Step}: assume $E_A\subseteq E_{jA}$ and let $s\,E_A\,t$. Then
+$L(A^s)=L(A^t)$. For every $a\in\Sigma$,
+\[
+L(A^{\delta(s,a)})=\{x\in\Sigma^*:ax\in L(A^s)\}
+=\{x\in\Sigma^*:ax\in L(A^t)\}
+=L(A^{\delta(t,a)}),
+\]
+so $\delta(s,a)\,E_A\,\delta(t,a)$. By the induction hypothesis,
+\[
+s\,E_{jA}\,t
+\qquad\text{and}\qquad
+\delta(s,a)\,E_{jA}\,\delta(t,a)\quad(\forall a\in\Sigma).
+\]
+Therefore $s\,E_{j+1,A}\,t$. Thus $E_A\subseteq E_{jA}$ for every $j$, and so
+\[
+E_A\subseteq \bigcap_{j=0}^\infty E_{jA}.
+\]
+
+($\supseteq$): Suppose $s\,E_{jA}\,t$ for every $j$. We claim that for every
+$n\geq 0$ and every string $x$ with $|x|\leq n$,
+\[
+\DBAR(s,x)\in F \Leftrightarrow \DBAR(t,x)\in F.
+\]
+We prove this by induction on $n$.
+
+\textit{Base} ($n=0$): the only string of length at most $0$ is $\lambda$. Since
+$s\,E_{0A}\,t$, we have
+\[
+s\in F \Leftrightarrow t\in F,
+\]
+that is,
+\[
+\DBAR(s,\lambda)\in F \Leftrightarrow \DBAR(t,\lambda)\in F.
+\]
+
+\textit{Step}: assume the claim holds for $n$. Let $|x|\leq n+1$.
+If $x=\lambda$, then $s\,E_{n+1,A}\,t$ implies $s\,E_{nA}\,t$, so the induction
+hypothesis already gives the result. If $x=ay$ with $a\in\Sigma$ and $|y|\leq n$,
+then $s\,E_{n+1,A}\,t$ implies
+\[
+\delta(s,a)\,E_{nA}\,\delta(t,a).
+\]
+Applying the induction hypothesis to the pair $\delta(s,a),\delta(t,a)$ and the
+string $y$, we get
+\[
+\DBAR(\delta(s,a),y)\in F \Leftrightarrow \DBAR(\delta(t,a),y)\in F.
+\]
+Since
+\[
+\DBAR(\delta(s,a),y)=\DBAR(s,ay)
+\qquad\text{and}\qquad
+\DBAR(\delta(t,a),y)=\DBAR(t,ay),
+\]
+the claim follows.
+
+Now let $x\in\Sigma^*$ be arbitrary and take $n=|x|$. Then
+\[
+\DBAR(s,x)\in F \Leftrightarrow \DBAR(t,x)\in F,
+\]
+which means
+\[
+x\in L(A^s)\Leftrightarrow x\in L(A^t).
+\]
+Therefore $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$. So
+\[
+\bigcap_{j=0}^\infty E_{jA}\subseteq E_A.
+\]
+Hence $E_A=\bigcap_{j=0}^\infty E_{jA}$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{E_A}$ in Definition 3.8 is well defined.}
@@ -137,9 +214,38 @@ Therefore $L(A)=L(B)$. $\square$
 \item \textbf{Examples with connectivity and $A/_{E_A}$.}
 
 \begin{enumerate}
-\item $A$ not connected, $A/_{E_A}$ not connected: Let $A$ have states $\{s_0,s_1,s_2\}$ where $s_2$ is unreachable, $s_0\,E_A\,s_1$ (both accepting) and $s_2$ is distinct. Then $A/_{E_A}$ has $\{[s_0],[s_2]\}$, and $[s_2]$ is unreachable (since $s_2$ was unreachable in $A$).
+\item $A$ not connected, $A/_{E_A}$ not connected: take
+\[
+A=\langle\{\pmb{a}\},\{s_0,s_1,s_2\},s_0,\delta,\{s_0,s_1\}\rangle,
+\]
+where
+\[
+\delta(s_0,\pmb{a})=s_1,\qquad \delta(s_1,\pmb{a})=s_1,\qquad
+\delta(s_2,\pmb{a})=s_2.
+\]
+The state $s_2$ is unreachable, so $A$ is not connected. Also $s_0\,E_A\,s_1$,
+because from either state every continuation is accepted, while $s_2$ is not
+equivalent to them because from $s_2$ every continuation is rejected. Thus
+$A/_{E_A}$ has exactly the two states $[s_0]=[s_1]$ and $[s_2]$, and $[s_2]$ is
+still unreachable. Hence $A/_{E_A}$ is not connected.
 
-\item $A$ not connected, $A/_{E_A}$ connected: Let $s_0,s_1$ be reachable, $s_2$ unreachable, and $s_0\,E_A\,s_2$ (equivalent). Then $[s_0]=[s_2]$ and $A/_{E_A}$ only has reachable classes, so it's connected.
+\item $A$ not connected, $A/_{E_A}$ connected: take
+\[
+A=\langle\{\pmb{a}\},\{t_0,t_1,t_2\},t_0,\delta,\{t_1,t_2\}\rangle,
+\]
+where
+\[
+\delta(t_0,\pmb{a})=t_1,\qquad \delta(t_1,\pmb{a})=t_1,\qquad
+\delta(t_2,\pmb{a})=t_2.
+\]
+Again $t_2$ is unreachable, so $A$ is not connected. But now $t_1\,E_A\,t_2$,
+because from either state every continuation is accepted. Therefore
+$A/_{E_A}$ has just the two states $[t_0]$ and $[t_1]=[t_2]$, and both are
+reachable from the start class: $[t_0]$ is the start state and
+\[
+\delta([t_0],\pmb{a})=[t_1].
+\]
+Hence $A/_{E_A}$ is connected.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -296,13 +402,66 @@ $A^c$ = connected part of $A$. States of $A^c$ are $S^c\subseteq S$. If $A$ is r
 \item \textbf{Define $\psi: M^c\to A_{R^M}$ and prove it is an isomorphism.}
 
 \begin{enumerate}
-\item $\psi(s)=[x_s]_{R^M}$ where $x_s$ is any string with $\DBAR(s_0,x_s)=s$.
+\item For each state $s\in S^c$, choose a string $x_s\in\Sigma^*$ with
+\[
+\DBAR(s_0,x_s)=s,
+\]
+and define
+\[
+\psi(s)=[x_s]_{R^M}.
+\]
 
-\item Well-defined: as in Exercise 3.14(b), since $R^M$ equates all $x$ reaching the same state.
+\item \textit{Well-defined}: if $x$ and $y$ both satisfy
+\[
+\DBAR(s_0,x)=\DBAR(s_0,y)=s,
+\]
+then by definition of $R^M$ we have $x\,R^M\,y$. Hence
+\[
+[x]_{R^M}=[y]_{R^M},
+\]
+so $\psi(s)$ does not depend on which string reaching $s$ was chosen.
 
-\item Homomorphism: $\psi(s_0)=[\lambda]_{R^M}$; $\psi(\delta(s,a))=[x_sa]_{R^M}=\delta_{R^M}(\psi(s),a)$; $s\in F\Leftrightarrow\psi(s)\in F_{R^M}$.
+\item \textit{Homomorphism}: first,
+\[
+\psi(s_0)=[\lambda]_{R^M},
+\]
+because $\lambda$ reaches $s_0$. Now let $s\in S^c$ and $a\in\Sigma$. Since
+\[
+\DBAR(s_0,x_sa)=\delta(\DBAR(s_0,x_s),a)=\delta(s,a),
+\]
+the string $x_sa$ reaches $\delta(s,a)$, so
+\[
+\psi(\delta(s,a))=[x_sa]_{R^M}
+=\delta_{R^M}([x_s]_{R^M},a)
+=\delta_{R^M}(\psi(s),a).
+\]
+Also,
+\[
+s\in F
+\Leftrightarrow \DBAR(s_0,x_s)\in F
+\Leftrightarrow x_s\in L(M)
+\Leftrightarrow [x_s]_{R^M}\in F_{R^M}
+\Leftrightarrow \psi(s)\in F_{R^M}.
+\]
+Thus $\psi$ preserves start state, transitions, and finality.
 
-\item Bijection: Injective: if $\psi(s)=\psi(t)$, then $[x_s]_{R^M}=[x_t]_{R^M}$, i.e., $x_s\,R^M\,x_t$, meaning $\DBAR(s_0,x_s)=\DBAR(s_0,x_t)$, i.e., $s=t$. Surjective: every $[x]_{R^M}$ is $\psi(\DBAR(s_0,x))$.
+\item \textit{Bijection}: to show injectivity, suppose $\psi(s)=\psi(t)$. Then
+\[
+[x_s]_{R^M}=[x_t]_{R^M},
+\]
+so $x_s\,R^M\,x_t$. By definition of $R^M$,
+\[
+\DBAR(s_0,x_s)=\DBAR(s_0,x_t),
+\]
+hence $s=t$. For surjectivity, let $[x]_{R^M}$ be any state of $A_{R^M}$.
+Then
+\[
+s=\DBAR(s_0,x)\in S^c,
+\]
+and by definition of $\psi$,
+\[
+\psi(s)=[x]_{R^M}.
+\]
 
 \item $M^c\cong A_{R^M}$. $\square$
 \end{enumerate}
@@ -700,9 +859,34 @@ forward around the cycle $A\to B\to C\to A$. $\square$
 \item \textbf{Examples where $A$ not reduced, $A^c$ not/is reduced.}
 
 \begin{enumerate}
-\item $A$ not reduced, $A^c$ not reduced: let $A$ have two equivalent reachable states $q_0,q_1$ (both reachable, both final). $A^c=A$ is not reduced.
+\item $A$ not reduced, $A^c$ not reduced: take
+\[
+A=\langle\{\pmb{a}\},\{q_0,q_1\},q_0,\delta,\{q_0,q_1\}\rangle,
+\]
+where
+\[
+\delta(q_0,\pmb{a})=q_1,\qquad \delta(q_1,\pmb{a})=q_1.
+\]
+Both states are reachable, so $A^c=A$. Also $q_0\,E_A\,q_1$, because from either
+state every continuation is accepted. Thus $A$ is not reduced, and neither is
+$A^c$.
 
-\item $A$ not reduced, $A^c$ is reduced: let $A$ have two equivalent states $q_0$ (reachable) and $q_2$ (unreachable). $A^c=\{q_0,q_1\}$ may be reduced if $q_0$ and $q_1$ are inequivalent.
+\item $A$ not reduced, $A^c$ is reduced: take
+\[
+A=\langle\{\pmb{a}\},\{q_0,q_1,q_2\},q_0,\delta,\{q_1,q_2\}\rangle,
+\]
+where
+\[
+\delta(q_0,\pmb{a})=q_1,\qquad \delta(q_1,\pmb{a})=q_1,\qquad
+\delta(q_2,\pmb{a})=q_2.
+\]
+The state $q_2$ is unreachable, and $q_1\,E_A\,q_2$ because from either state
+every continuation is accepted. So $A$ is not reduced. However,
+\[
+A^c=\langle\{\pmb{a}\},\{q_0,q_1\},q_0,\delta|_{S^c\times\Sigma},\{q_1\}\rangle,
+\]
+and $q_0$ and $q_1$ are not equivalent in $A^c$ because $\lambda$ is rejected
+from $q_0$ but accepted from $q_1$. Hence $A^c$ is reduced.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -816,8 +1000,39 @@ not.
 Because $R^A=R^B$, this is well defined: if $\DBAR_A(s_{0A},x)=\DBAR_A(s_{0A},y)$,
 then $xR^Ay$, hence $xR^By$, and therefore
 $\DBAR_B(s_{0B},x)=\DBAR_B(s_{0B},y)$. Since both machines are connected, the
-same argument as in Exercise 3.27 shows that $\psi$ is a bijection preserving
-transitions, and because $L(A)=L(B)$ it also preserves finality. Thus
+map $\psi$ is onto: given $u\in S_B$, choose $x$ with
+$\DBAR_B(s_{0B},x)=u$, and then
+\[
+\psi(\DBAR_A(s_{0A},x))=u.
+\]
+It is also one-to-one: if $\psi(s)=\psi(t)$, choose strings $x_s,x_t$ with
+\[
+\DBAR_A(s_{0A},x_s)=s,\qquad \DBAR_A(s_{0A},x_t)=t.
+\]
+Then
+\[
+\DBAR_B(s_{0B},x_s)=\psi(s)=\psi(t)=\DBAR_B(s_{0B},x_t),
+\]
+so $x_sR^Bx_t$. Since $R^A=R^B$, also $x_sR^Ax_t$, hence
+\[
+s=\DBAR_A(s_{0A},x_s)=\DBAR_A(s_{0A},x_t)=t.
+\]
+For transitions,
+\[
+\psi(\delta_A(\DBAR_A(s_{0A},x),a))
+=\psi(\DBAR_A(s_{0A},xa))
+=\DBAR_B(s_{0B},xa)
+=\delta_B(\DBAR_B(s_{0B},x),a)
+=\delta_B(\psi(\DBAR_A(s_{0A},x)),a).
+\]
+Finally, for any $x\in\Sigma^*$,
+\[
+\DBAR_A(s_{0A},x)\in F_A
+\Leftrightarrow x\in L(A)
+\Leftrightarrow x\in L(B)
+\Leftrightarrow \DBAR_B(s_{0B},x)\in F_B,
+\]
+so $\psi$ preserves finality. Thus $\psi$ is an isomorphism
 $A\cong B$, so in particular there is a homomorphism from $A$ to $B$. Such
 examples therefore cannot exist.
 
@@ -837,7 +1052,33 @@ Counterexample: $A$ = 2-state DFA for $\{a^{2k}\}$, $B$ = 1-state DFA for $\Sigm
 \item \textbf{Prove or give counterexamples (homomorphisms involving $A_{R^M}$).}
 
 \begin{enumerate}
-\item Homomorphism $\psi: A_{R^M}\to M$: Yes, such $\psi$ exists (Exercise 3.22(a)). $A_{R^M}\cong M^c$, and there's a natural inclusion $M^c\hookrightarrow M$... but $M$ might have disconnected states. Define $\psi([x]_{R^M})=\DBAR_M(s_0,x)$: well-defined and a homomorphism.
+\item Homomorphism $\psi: A_{R^M}\to M$: Yes. Define
+\[
+\psi([x]_{R^M})=\DBAR_M(s_0,x).
+\]
+This is well defined: if $[x]_{R^M}=[y]_{R^M}$, then $x\,R^M\,y$, so by
+definition of $R^M$,
+\[
+\DBAR_M(s_0,x)=\DBAR_M(s_0,y).
+\]
+It is a homomorphism because
+\[
+\psi([\lambda]_{R^M})=\DBAR_M(s_0,\lambda)=s_0,
+\]
+\[
+\psi(\delta_{R^M}([x]_{R^M},a))
+=\psi([xa]_{R^M})
+=\DBAR_M(s_0,xa)
+=\delta_M(\DBAR_M(s_0,x),a)
+=\delta_M(\psi([x]_{R^M}),a),
+\]
+and
+\[
+[x]_{R^M}\in F_{R^M}
+\Leftrightarrow x\in L(M)
+\Leftrightarrow \DBAR_M(s_0,x)\in F_M
+\Leftrightarrow \psi([x]_{R^M})\in F_M.
+\]
 
 \item Isomorphism $\psi: A_{R^M}\to M$: Not always. Only if $M$ is connected (since $A_{R^M}\cong M^c$, isomorphism only if $M=M^c$, i.e., $M$ connected).
 
@@ -861,12 +1102,63 @@ But $\delta'(q_0,\mathbf{a})=q_1\neq q_0$ and $\delta'(q_1,\mathbf{a})=q_1\neq q
 %%------------------------------------------------------------
 \item \textbf{Prove: if $A$ minimal then $R^A=R_{L(A)}$.}
 
-If $A$ is minimal, $A$ is both connected and reduced. Connected: $R^A$ is defined on reachable strings, and every class of $R^A$ corresponds to a state. Reduced: no two states are equivalent, so no two $R^A$-classes map to the same $R_{L(A)}$-class. Since $R^A$ refines $R_{L(A)}$ (Exercise 2.57c) and $|R^A|=|S|=|R_{L(A)}|$ (minimality means same number of states as minimal machine), they must be equal. $\square$
+Let
+\[
+A=\langle\Sigma,S,s_0,\delta,F\rangle
+\]
+be minimal.
+
+First, $A$ must be connected. If not, then its connected part $A^c$ accepts the
+same language as $A$ but has fewer states, contradicting minimality.
+
+Second, $A$ must be reduced. If not, then two distinct states are $E_A$-equivalent,
+so the quotient $A/_{E_A}$ accepts the same language as $A$ and has fewer states,
+again contradicting minimality.
+
+Because $A$ is connected, every state is reached by some string, so the
+$R^A$-classes are in one-to-one correspondence with the states of $A$. Hence
+\[
+rk(R^A)=|S|.
+\]
+Also, Exercise 2.57(c) says that $R^A$ refines $R_{L(A)}$, so
+\[
+rk(R^A)\geq rk(R_{L(A)}).
+\]
+On the other hand, Corollary 3.2 says that $A_{R_{L(A)}}$ is minimal for
+$L(A)$. Since $A$ is also minimal for $L(A)$, the two minimal DFAs have the same
+number of states:
+\[
+|S|=rk(R_{L(A)}).
+\]
+Therefore
+\[
+rk(R^A)=|S|=rk(R_{L(A)}).
+\]
+A refinement of finite rank cannot be proper if the two ranks are equal. Hence
+$R^A=R_{L(A)}$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Example where Exercise 3.40 fails if $A$ not minimal.}
 
-Any non-minimal DFA: $A$ = 3-state DFA for $\{a^{2k}\}$ with one extra state. $R^A$ has 3 classes but $R_{L(A)}$ has 2. They differ.
+Take $\Sigma=\{a\}$ and let
+\[
+A=\langle \{a\},\{q_0,q_1,q_2\},q_0,\delta,\{q_0\}\rangle,
+\]
+where
+\[
+\delta(q_0,a)=q_1,\qquad \delta(q_1,a)=q_0,\qquad \delta(q_2,a)=q_2.
+\]
+The state $q_2$ is unreachable, so $A$ is not minimal. From the initial state,
+the machine accepts exactly the even-length strings, so
+\[
+L(A)=\{a^{2k}\mid k\geq 0\}.
+\]
+Therefore $R_{L(A)}$ has exactly two classes, represented by $\lambda$ and $a$.
+But $R^A$ is the state congruence of the whole machine, so it has three classes,
+represented by the three states $q_0,q_1,q_2$. Hence
+\[
+R^A\neq R_{L(A)}.
+\]
 
 %%------------------------------------------------------------
 \item \textbf{Example where Exercise 3.40 holds even if $A$ not minimal.}
@@ -997,7 +1289,25 @@ The sequence $E_{0A}\supseteq E_{1A}\supseteq\cdots$ is decreasing (each refinem
 \item \textbf{Equivalence vs.\ isomorphism.}
 
 \begin{enumerate}
-\item False: $A$ and $B$ can be equivalent ($L(A)=L(B)$) without being isomorphic (different number of states, or same number but different structure). E.g., $A$ = 3-state non-minimal DFA, $B$ = 2-state minimal DFA for the same language.
+\item False. Let $B$ be the minimal DFA for the even-length strings over
+\[
+\Sigma=\{\pmb{a}\},
+\]
+with states $r_0,r_1$, start state $r_0$, final set $\{r_0\}$, and transitions
+\[
+\delta_B(r_0,\pmb{a})=r_1,\qquad \delta_B(r_1,\pmb{a})=r_0.
+\]
+Now let $A$ be the DFA obtained by adjoining an unreachable state $r_2$:
+\[
+A=\langle\{\pmb{a}\},\{r_0,r_1,r_2\},r_0,\delta_A,\{r_0\}\rangle,
+\]
+where
+\[
+\delta_A(r_0,\pmb{a})=r_1,\qquad \delta_A(r_1,\pmb{a})=r_0,\qquad
+\delta_A(r_2,\pmb{a})=r_2.
+\]
+Then $L(A)=L(B)$, so $A$ and $B$ are equivalent, but they are not isomorphic
+because one has three states and the other has two.
 
 \item True: if $A\cong B$ then in particular $L(A)=L(B)$ (by Exercise 3.11).
 \end{enumerate}
@@ -1046,7 +1356,30 @@ Correctness: by Exercise 3.48, $C_i$ is exactly the reachable states within dept
 %%------------------------------------------------------------
 \item \textbf{Give two DFAs with homomorphisms in both directions but no isomorphism.}
 
-Let $L = \{a^{2k} : k\geq 0\}$. Let $A$ be the minimal 2-state DFA for $L$: states $q_0, q_1$ cycling on $a$, $F_A = \{q_0\}$. Let $B$ be a non-minimal 3-state DFA for $L$: states $p_0, p_1, p_2$ with $p_0 \sim p_2$ (both accepting, both cycling with step 2), $F_B = \{p_0, p_2\}$.
+Let
+\[
+L = \{a^{2k} : k\geq 0\}.
+\]
+Let
+\[
+A=\langle\{a\},\{q_0,q_1\},q_0,\delta_A,\{q_0\}\rangle,
+\]
+where
+\[
+\delta_A(q_0,a)=q_1,\qquad \delta_A(q_1,a)=q_0.
+\]
+This is the minimal 2-state DFA for $L$.
+
+Let
+\[
+B=\langle\{a\},\{p_0,p_1,p_2\},p_0,\delta_B,\{p_0,p_2\}\rangle,
+\]
+where
+\[
+\delta_B(p_0,a)=p_1,\qquad \delta_B(p_1,a)=p_0,\qquad \delta_B(p_2,a)=p_1.
+\]
+Here $p_2$ is unreachable, and $p_0\,E_B\,p_2$, so $B$ is a non-minimal DFA for
+$L$.
 
 There is a homomorphism $\mu: B\to A$ collapsing $p_0,p_2\mapsto q_0$ and $p_1\mapsto q_1$: this satisfies $\delta_A(\mu(p),a)=\mu(\delta_B(p,a))$ and $p\in F_B\Leftrightarrow\mu(p)\in F_A$.
 
@@ -1062,8 +1395,7 @@ But $A\not\cong B$ since they have different numbers of states.
 
 \item Homomorphism $A_R\to A_Q$: Define $\mu([x]_R)=[x]_Q$ (well-defined since $R$ refines $Q$: $[x]_R=[y]_R\Rightarrow x\,R\,y\Rightarrow x\,Q\,y\Rightarrow[x]_Q=[y]_Q$). Check: $\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_Q=s_{0,Q}$. $\mu(\delta_R([x]_R,a))=\mu([xa]_R)=[xa]_Q=\delta_Q([x]_Q,a)=\delta_Q(\mu([x]_R),a)$. $[x]_R\in F_R\Leftrightarrow x\in L\Leftrightarrow[x]_Q\in F_Q\Leftrightarrow\mu([x]_R)\in F_Q$.
 
-\item Not in general. Use the same style of example as in the earlier exercise.
-Take $\Sigma=\{\pmb{a}\}$, let
+\item Not in general. Take $\Sigma=\{\pmb{a}\}$, let
 \[
 [\lambda]_Q=\{\lambda\}, \qquad [\pmb{a}]_Q=\{x\in\Sigma^*:|x|\geq 1\},
 \]
