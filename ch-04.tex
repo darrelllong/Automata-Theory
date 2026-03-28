@@ -186,7 +186,7 @@ We will see later that this machine accepts strings that begin with alternating
 $\pmb{a}$s and $\pmb{b}$s and end with one or more consecutive $\pmb{b}$s
 
 % Definition 4.2
-\begin{dfn}\label{dfn-4.2}\index{extended state transition function \DBAR\! for NDFA}
+\begin{dfn}\label{dfn-4.2}\index{extended state transition function \DBAR for NDFA}
 Given an NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$, the
 \emph{extended state transition function} for $A$ is the function $\DBAR:\ S
 \times \Sigma^* \rightarrow \wp(S)$ defined recursively as follows: \\
@@ -242,7 +242,7 @@ accepted by an NDFA.
 Consider the machine given in Example 4.4 and let $x = \pmb{b}$; the possible
 paths through the machine include (1) starting at $s$ and proceeding to $r$, and
 (2) starting at $s$ and proceeding to $t$. Note that it is not possible to start
-from $t$ (since $t \notin S_0$), and there is no way to proceed with $x =
+from $t$ (since $t \not in S_0$), and there is no way to proceed with $x =
 \pmb{b}$ by starting at $r$, the other start state.
 
 Now let $x = \pmb{ba}$ and consider the possibilities. The only path through the
@@ -424,7 +424,7 @@ and $\delta^d$ is the state transition function, $\delta^d$$:\ S^d \times \Sigma
 \rightarrow S^d$, defined by
 \[ (\forall Q \in S^d)(\forall\pmb{a}\in\Sigma)\delta^d(Q,\pmb{a}) =
 	\bigcup\limits_{q\,\in\, Q} \delta(q,\pmb{a}) \]
-$\delta^d$ extends to the function $\deltabar{d}\!\!:\ S^d \times \Sigma^* \rightarrow
+$\delta^d$ extends to the function $\deltabar{d}:\ S^d \times \Sigma^* \rightarrow
 S^d$ as suggested by Theorem \ref{thm-1.1}:
 \begin{center}\begin{tabular}{l}
 $(\forall Q \in S^d)\qquad\qquad\qquad\qquad\ \deltabar{d}(Q,\lambda) = Q$ \\
@@ -857,7 +857,7 @@ quintuple $A_{\lambda}=\langle\Sigma,S,S_0,\delta_{\lambda},F\rangle$, where
 \item $\Sigma$ is an alphabet.
 \item $S$ is a finite nonempty set of states.
 \item $S_0$ is a set of initial states,\index{start state} a nonempty subset of $S$.
-\item $\delta_{\!\lambda}:\ (S \times (\Sigma\cup\{\lambda\})) \rightarrow \wp(S)$
+\item $\delta_{\lambda}:\ (S \times (\Sigma\cup\{\lambda\})) \rightarrow \wp(S)$
 	is the state transition function.
 \item $F$ is the set of accepting states, a (possibly empty) subset of $S$.
 \end{enumerate}
@@ -911,34 +911,34 @@ $\Lambda(s_3) = \{s_3\}$
 \end{figure}
 
 % Definition 4.8
-\begin{dfn}\label{dfn-4.8}\index{extended state transition function \DBAR\! for NDFA $A_{\lambda}$}\index{state transition function!for NDFA $A_{\lambda}$}
+\begin{dfn}\label{dfn-4.8}\index{extended state transition function \DBAR for NDFA $A_{\lambda}$}\index{state transition function!for NDFA $A_{\lambda}$}
 Given a nondeterministic finite automaton
 \[ A_{\lambda} = \langle\Sigma,S,S_0,\delta_{\lambda},F\rangle \]
 with $\lambda$-transitions, the \emph{extended state transition function
-for $A_{\lambda}$} is a function $\DBAR_{\!\lambda}$$: S \times \Sigma^*
+for $A_{\lambda}$} is a function $\DBAR_{\lambda}$$: S \times \Sigma^*
 \rightarrow \wp(S)$ defined as follows:
 \begin{enumerate}[i.]
-\item $(\forall s \in S)\DBAR_{\!\lambda}(s,\lambda) = \Lambda(s)$
-\item $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\DBAR_{\!\lambda}(s,\pmb{a}) =
-	\Lambda( \bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\!\lambda}(q,\pmb{a}))$
+\item $(\forall s \in S)\DBAR_{\lambda}(s,\lambda) = \Lambda(s)$
+\item $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\DBAR_{\lambda}(s,\pmb{a}) =
+	\Lambda( \bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\lambda}(q,\pmb{a}))$
 \item $(\forall s \in S)(\forall x \in \Sigma^*)(\forall\pmb{a}\in\Sigma)
-	\DBAR_{\!\lambda}(s,x\pmb{a}) = \Lambda(\bigcup\limits_{q\,\in\,\DBAR_{
-	\!\lambda}(s,x)} \delta_{\!\lambda}(q,\pmb{a}))$
+	\DBAR_{\lambda}(s,x\pmb{a}) = \Lambda(\bigcup\limits_{q\,\in\,\DBAR_{
+	\lambda}(s,x)} \delta_{\lambda}(q,\pmb{a}))$
 \end{enumerate}
 \end{dfn}
 
-The $\DBAR_{\!\lambda}$ function is \emph{not} extended in the same way as for the
+The $\DBAR_{\lambda}$ function is \emph{not} extended in the same way as for the
 nondeterministic finite automata given in Definition \ref{dfn-4.2}. Most importantly, due
-to the effects of the $\lambda$-closure, $\DBAR_{\!\lambda}(s,\pmb{a}) \not=
-\delta_{\!\lambda}(s,\pmb{a})$. Thus, not only does the $\DBAR_{\!\lambda}$ function
+to the effects of the $\lambda$-closure, $\DBAR_{\lambda}(s,\pmb{a}) \not=
+\delta_{\lambda}(s,\pmb{a})$. Thus, not only does the $\DBAR_{\lambda}$ function
 map to a set of states based on a single letter, but it also includes the
 $\lambda$-closure of those states. This may seem strange for single letters
 (strings of length 1), but it is required for consistency when the
-$\DBAR_{\!\lambda}$ function is presented with strings of length greater than 1,
+$\DBAR_{\lambda}$ function is presented with strings of length greater than 1,
 since at each state along the path there can be $\lambda$-transitions. Each
 $\lambda$-transition maps to a new state (which may have $\lambda$-transitions
 of its own) that must be included in this path and processed by the
-$\delta_{\!\lambda}$ function.
+$\delta_{\lambda}$ function.
 
 The nondeterministic finite automaton \emph{without} $\lambda$-transitions that
 corresponds to a nondeterministic finite automaton \emph{with} $\lambda$-transitions is
@@ -961,13 +961,13 @@ $\lambda$-transitions}, $A^{\sigma}_{\lambda}=\langle\Sigma,S\cup\{q_0\},S_0\cup
 
 \begin{center}\begin{tabular}{l}
 $F^{\sigma} = \left\{ \begin{tabular}{ll}
-		$F$ & $\quad\text{iff}\quad\lambda\notin L(A_{\lambda})$ \\
+		$F$ & $\quad\text{iff}\quad\lambda\not in L(A_{\lambda})$ \\
  		$F \cup \{q_0\}$ & $\quad\text{iff}\quad \lambda\in
 			L(A_{\lambda})$
 		\end{tabular}\right. $ \\
 $(\forall\pmb{a}\in\Sigma)\delta^{\sigma}_{\lambda}(q_0,\pmb{a}) = \emptyset$ \\
 $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\quad \delta^{\sigma}_{\lambda}(s,
-	\pmb{a}) = \DBAR_{\!\lambda}(s,\pmb{a}) =
+	\pmb{a}) = \DBAR_{\lambda}(s,\pmb{a}) =
         \Lambda(\bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\lambda}
 	(q,\pmb{a}))$
 \end{tabular}\end{center}
@@ -1306,7 +1306,7 @@ they still valid when applied to NDFAs?
 NDFA?
 
 \item Given a nondeterministic finite automaton $A$ (without
-$\lambda$-transitions) for which $\lambda \notin L(A)$, show that it is possible
+$\lambda$-transitions) for which $\lambda \not in L(A)$, show that it is possible
 to construct a nondeterministic finite automaton (also without
 $\lambda$-transitions) $A''$ with the properties:
 \begin{enumerate}[1.]

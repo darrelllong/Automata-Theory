@@ -30,7 +30,7 @@ Lemma 12.1 (typically states): For a DFA $A = \langle\Sigma,S,s_0,\delta,F\rangl
 
 \textbf{Proof}: Let $A_{min}$ be the minimal DFA for $L$ with $n_{min}$ nonfinal states and $B$ any machine with $L(B)=L$ having $n_B$ nonfinal states.
 
-Each nonfinal state $q$ of $A_{min}$ corresponds to a unique right-congruence class $[x]_{R_L}$ (by Nerode's theorem) with $\DBAR_{min}(s_0,x)=q$ and $x\notin L$ (since $q$ is nonfinal). In any machine $B$ with $L(B)=L$, two strings in different $R_L$-classes must lead to different states (otherwise $B$ would accept/reject some string incorrectly). Therefore $B$ must have at least as many nonfinal states as $A_{min}$. More precisely, the number of nonfinal classes of $R_L$ equals the number of nonfinal states in $A_{min}$, and $B$ must have at least this many nonfinal states. \qed
+Each nonfinal state $q$ of $A_{min}$ corresponds to a unique right-congruence class $[x]_{R_L}$ (by Nerode's theorem) with $\DBAR_{min}(s_0,x)=q$ and $x\not in L$ (since $q$ is nonfinal). In any machine $B$ with $L(B)=L$, two strings in different $R_L$-classes must lead to different states (otherwise $B$ would accept/reject some string incorrectly). Therefore $B$ must have at least as many nonfinal states as $A_{min}$. More precisely, the number of nonfinal classes of $R_L$ equals the number of nonfinal states in $A_{min}$, and $B$ must have at least this many nonfinal states. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of $L(A_1)\subseteq L(A_2)$.}
@@ -412,7 +412,7 @@ By diagonalization: construct a TM $D$ that on input $\langle T\rangle$ (encodin
 - If $M_{\mathfrak{M}}$ accepts (i.e., $T\in X$): loop forever (don't halt).
 - If $M_{\mathfrak{M}}$ rejects: accept and halt.
 
-$D$ is a halting TM on inputs not in $X$, but loops on inputs in $X$. What about $D$ itself? If $\langle D\rangle\in X$, then $D$ is a halting TM, but by construction $D$ loops on $\langle D\rangle$ (contradiction). If $\langle D\rangle\notin X$, then $D$ halts on $\langle D\rangle$ (accepting), so $\langle D\rangle$ represents a halting TM, contradicting $\langle D\rangle\notin X$.
+$D$ is a halting TM on inputs not in $X$, but loops on inputs in $X$. What about $D$ itself? If $\langle D\rangle\in X$, then $D$ is a halting TM, but by construction $D$ loops on $\langle D\rangle$ (contradiction). If $\langle D\rangle\not in X$, then $D$ halts on $\langle D\rangle$ (accepting), so $\langle D\rangle$ represents a halting TM, contradicting $\langle D\rangle\not in X$.
 
 So $M_{\mathfrak{M}}$ cannot exist: there is a halting TM $D$ whose language is not in $\mathfrak{M}$. \qed
 
@@ -471,18 +471,18 @@ This encoding handles an unbounded number of nonterminals via unary encoding and
 \item \textbf{Set $E$ of encodings of TMs halting on $\lambda$.}
 
 \begin{enumerate}
-\item \textbf{$E\in\TSIG$}: Yes. The TM that recognizes $E$: on input $\langle T\rangle$, simulate $T$ on $\lambda$. If $T$ halts, accept (since that means $T$ halts on $\lambda$, so $\langle T\rangle\in E$). If $T$ doesn't halt, the TM doesn't halt either. So $E$ is Turing-acceptable (\TSIG). But $E\notin\OSIG$ (not decidable): if it were, we could decide the halting problem.
+\item \textbf{$E\in\TSIG$}: Yes. The TM that recognizes $E$: on input $\langle T\rangle$, simulate $T$ on $\lambda$. If $T$ halts, accept (since that means $T$ halts on $\lambda$, so $\langle T\rangle\in E$). If $T$ doesn't halt, the TM doesn't halt either. So $E$ is Turing-acceptable (\TSIG). But $E\not in\OSIG$ (not decidable): if it were, we could decide the halting problem.
 
-\item \textbf{$E\in\HSIG$}: No. $E$ is not recursive (decidable). If $E\in\HSIG$ (halting TM language = recursive language), then $E$ would be decidable. But the halting problem for $T$ on $\lambda$ is undecidable. So $E\notin\HSIG$.
+\item \textbf{$E\in\HSIG$}: No. $E$ is not recursive (decidable). If $E\in\HSIG$ (halting TM language = recursive language), then $E$ would be decidable. But the halting problem for $T$ on $\lambda$ is undecidable. So $E\not in\HSIG$.
 
-\item \textbf{$E\in\OSIG$}: No. $\OSIG = \HSIG$ (halting = recursive = decidable). As argued above, $E$ is not decidable. $E\notin\OSIG$.
+\item \textbf{$E\in\OSIG$}: No. $\OSIG = \HSIG$ (halting = recursive = decidable). As argued above, $E$ is not decidable. $E\not in\OSIG$.
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Set $N$ of encodings of TMs that do NOT halt on $\lambda$.}
 
 \begin{enumerate}
-\item \textbf{$N\in\TSIG$}: No. $N = \overline{E}$ (complement of $E$ from Exercise 12.41). Since $E\in\TSIG$ but $E\notin\OSIG$, the complement $N = \overline{E}\notin\TSIG$ (if $E\in\TSIG$ and $\overline{E}\in\TSIG$, then $E$ would be recursive, contradicting $E\notin\OSIG$). So $N\notin\TSIG$.
+\item \textbf{$N\in\TSIG$}: No. $N = \overline{E}$ (complement of $E$ from Exercise 12.41). Since $E\in\TSIG$ but $E\not in\OSIG$, the complement $N = \overline{E}\not in\TSIG$ (if $E\in\TSIG$ and $\overline{E}\in\TSIG$, then $E$ would be recursive, contradicting $E\not in\OSIG$). So $N\not in\TSIG$.
 
 \item \textbf{$N\in\HSIG$}: No. Same argument: $N$ would be recursive (decidable) if $N\in\HSIG$, contradicting undecidability of the non-halting problem.
 

@@ -208,7 +208,7 @@ strings $x$,
 \[ x \cdot \lambda = \lambda \cdot x = x \]
 Even though the empty word is represented by a single character,
 $\lambda$ is a string but is \emph{not} a member of any alphabet:
-$\lambda \notin \Sigma$.
+$\lambda \not in \Sigma$.
 (Symbols in an alphabet all have length one; $\lambda$ has length zero.)
 
 A particular string $x$ can be divided into \emph{substrings} in several ways.
@@ -275,7 +275,7 @@ be finite, just as every number in $\NN$ is finite.
 Since $\Sigma^*$ is the union of all $\Sigma^k$ for $k \in \NN,\ \Sigma^*$ must
 also contain $\Sigma^0$. In other words, besides containing all words that can
 be constructed from one or more letters of $\Sigma$, $\Sigma^*$ also contains
-the empty word $\lambda$. While $\lambda \notin \Sigma,\ \lambda \in \Sigma^*$.
+the empty word $\lambda$. While $\lambda \not in \Sigma,\ \lambda \in \Sigma^*$.
 $\lambda$ represents a \emph{string} and \emph{not} a symbol, and thus the empty
 string cannot be in the alphabet $\Sigma$. However, $\lambda$ is included in
 $\Sigma^*$, since $\Sigma^*$ is not just an alphabet, but a collection of words
@@ -511,7 +511,7 @@ somewhat awkward to formally define. To facilitate formal proofs concerning
 DFAs, we use the following recursive definition.
 
 % Definition 1.11
-\begin{dfn}\label{dfn-1.11}\index{extended state transition function \DBAR\! for DFA}
+\begin{dfn}\label{dfn-1.11}\index{extended state transition function \DBAR for DFA}
 \index{D@ $\overline \delta$|see{extended state transition function \DBAR}}
 Given a DFA $A=\langle\Sigma,S,s_0,\delta,F\rangle$, the \emph{extended
 state transition function for $A$}, denoted $\DBAR$, is a function $\DBAR$:
@@ -662,7 +662,7 @@ the word $w$ is presented to the machine. We will occasionally say that $A$
 % Definition 1.13
 \begin{dfn}\label{dfn-1.13}
 Given a DFA $A = \langle\Sigma,S,s_0,\delta,F\rangle$, $A$ \emph{rejects} a word $w \in
-\Sigma^*$ iff \ \  $\DBAR(s_0,w) \notin F$.
+\Sigma^*$ iff \ \  $\DBAR(s_0,w) \not in F$.
 \end{dfn}
 
 In other words, a word $w$ is rejected by a machine
@@ -718,7 +718,7 @@ Now let $y = \pmb{1100}$:
 &= \delta(q_0, \pmb{0}) \\
 &= q_0
 \end{align*}
-Therefore, $\DBAR(q_0,y) = q_0 \notin F$, which means that $y$ is
+Therefore, $\DBAR(q_0,y) = q_0 \not in F$, which means that $y$ is
 \emph{not accepted} by $A$.
 
 Following the Pascal conventions defined in the previous programming fragments,

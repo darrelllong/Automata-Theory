@@ -267,7 +267,7 @@ Formally, a relation is just a subset of a cross product of two sets.
 \begin{dfn}\label{dfn-0.5}
 Let $X$ and $Y$ be sets. A relation $R$ from $X$ to $Y$ is simply a
 subset of $X \times Y$. If $\langle a,b\rangle \in R$, we write $aRb$. If
-$\langle a,b\rangle\notin R$, we write $a$$\not\! R b$. If $X = Y$, we say $R$ is
+$\langle a,b\rangle\not in R$, we write $a$$\not R b$. If $X = Y$, we say $R$ is
 a relation \underline{\emph{in}} X.
 \end{dfn}
 
@@ -277,7 +277,7 @@ Let $X = \{1,2,3\}$. The familiar relation $<$ (less than) would then consist of
 the following ordered pairs:
 $<: \{\langle 1, 2\rangle , \langle 1, 3\rangle , \langle 2, 3\rangle \}$,
 by which we mean to indicate that $1 < 2, 1 < 3$, and $2 < 3$.
-$\langle 3,3\rangle \notin <$ since $3 \not< 3$.
+$\langle 3,3\rangle \not in <$ since $3 \not< 3$.
 
 Some relations have special properties. For example, the relation ``less than''
 is \emph{transitive}, by which we mean that for any numbers $x, y,$ and $z,$
@@ -363,8 +363,8 @@ $[1]_{R_3}$ & $\{1, 4,7,10,13, \ldots \}$ \\
 $[2]_{R_3}$ & $\{2, 5, 8,11,14, \ldots \}$
 \end{tabular}\end{center}
 
-$R_n$ is often called \emph{\Index{congruence modulo $n$}}, and $x R_n\!y$ is
-commonly denoted by $x \equiv y\!\pmod{ n}$ or $x \equiv _n$$y$.
+$R_n$ is often called \emph{\Index{congruence modulo $n$}}, and $x R_ny$ is
+commonly denoted by $x \equiv y\pmod{ n}$ or $x \equiv _n$$y$.
 
 If $R$ is an equivalence relation in $X$, then every element of $X$ belongs to
 exactly one equivalence class of $R$. $X$ is therefore comprised of the union of
@@ -403,7 +403,7 @@ $R(P)$ thus relates elements that belong to the same subset of $P$.
 Let $X = \{1, 2, 3, 4, 5\}$ and consider the relation $Q = R(S)$ induced by the
 partition $S = \{\{1, 2\},\{3, 5\},\{4\}\}$.
 Since 1 and 2 are in the same set, they should be related by $Q$, while
-$1$$\not\!\!\!Q 4$ because $1$ and $4$ belong to different sets of the partition.
+$1$$\not Q 4$ because $1$ and $4$ belong to different sets of the partition.
 Q can be described by
 $$ Q = \{\langle 1, 1\rangle, \langle 1,2\rangle, \langle 2, 1\rangle,
 \langle 2,2\rangle, \langle 3,3\rangle, \langle 3, 5\rangle,
@@ -523,7 +523,7 @@ belong to a given set, are special types of functions.
 Given a set $A$, the {\em characteristic function} $\chi_A$ associated with $A$
 is defined by
 $$\chi_{A}(x)=1\text{ if }x\in A\quad\text{and}\quad\chi_{A}(x)=0\text{ if }x
-	\notin A$$
+	\not in A$$
 \end{dfn}
 
 \subsection*{Example 0.12}
@@ -689,11 +689,11 @@ Then $g\circ f$ is one to one.
 
 % Definition 0.18
 \begin{dfn}\label{dfn-0.18}
-The \emph{\Index{converse}} of a relation $R$, written $\sim\! R$, is defined by
-$$\sim\! R = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in R\}$$
+The \emph{\Index{converse}} of a relation $R$, written $\sim R$, is defined by
+$$\sim R = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in R\}$$
 The converse of a function $f$ is likewise
-$$\sim\!\! f = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in f\}$$
-If $\sim\!\! f$ happens to be a function, it is called the \emph{inverse} of $f$ and
+$$\sim f = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in f\}$$
+If $\sim f$ happens to be a function, it is called the \emph{inverse} of $f$ and
 is denoted by $f^{-1}$.
 \end{dfn}
 
@@ -821,18 +821,18 @@ Assume $f$: $A\rightarrow \wp(A)$ is a function; we will demonstrate that there
 must exist a set in $\wp(A)$ that is not in the range of $f$, and hence $f$
 cannot be onto. Consider an element $z$ of $A$ and the set $f(z)$ to which it
 maps. $f(z)$ is a subset of $A$, and hence $z$ may or may not belong to $f(z)$.
-Define $B$ to be the set $\{y \in A \ |\  y \notin f(y)\}$. $B$ is then the set of
+Define $B$ to be the set $\{y \in A \ |\  y \not in f(y)\}$. $B$ is then the set of
 all elements of $A$ that do not appear in the set corresponding to their image
 under $f$. It is impossible for $B$ to be in the range of $f$, for if it were
 then there would be an element of $A$ that maps to this subset: assume $w \in A$
 and $f(w) = B$. Since $w$ is an element of $A$, it might belong to $B$, which is
 a subset of $A$. If $w \in B$, then $w \in f(w)$, since $f(w) = B$; but the
 elements for which $y \in f(y)$ were exactly the ones omitted from $B$, and thus
-we would have $w \notin B$, which is a contradiction. Our speculation that $w$
+we would have $w \not in B$, which is a contradiction. Our speculation that $w$
 might belong to $B$ is therefore incorrect. The only other option is that $w$
-does not belong to $B$. But if $w \notin B = f(w)$, then $w$ is one of the
+does not belong to $B$. But if $w \not in B = f(w)$, then $w$ is one of the
 elements that are supposed to be in $B$ and we are again faced with the
-impossibility that $w \notin B$ and $w \in B$. In all cases, we reach a
+impossibility that $w \not in B$ and $w \in B$. In all cases, we reach a
 contradiction if we assume that there exists an element $w$ for which $f(w) = B$.
 Thus, $B$ was a member of the codomain that is not in the range of $f$, and $f$ 
 is therefore not a bijection.
@@ -1153,7 +1153,7 @@ Let $R$ be an arbitrary equivalence relation in $X$. Prove that the equality
 relation on $X$ refines $R$.
 
 \item
-Consider the ``function'' $t\!: \RN \rightarrow \RN$ defined by pairing $x$ with
+Consider the ``function'' $t: \RN \rightarrow \RN$ defined by pairing $x$ with
 the real number whose cosine is $x$.
 \begin{enumerate}
 \item
@@ -1163,7 +1163,7 @@ Adjust the domain and range of $t$ to produce a valid function.
 \end{enumerate}
 
 \item
-Consider the function $s'\!\!: \RN \rightarrow \RN$ defined by $s'(x) = x^2$ Show
+Consider the function $s': \RN \rightarrow \RN$ defined by $s'(x) = x^2$ Show
 that the converse of $s'$ is not a function.
 
 \item

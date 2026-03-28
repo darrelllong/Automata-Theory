@@ -1167,7 +1167,7 @@ $\DBAR(s_0,x)$ is some state $s$.  Then $f(xy)=\OBAR(s_0,xy)=\OBAR(s_0,x)\cdot\O
     \delta(C_{1,P},x)=
     \begin{cases}
       O_{1,P^*\setminus\{1\}} & \text{if }1\in P^*,\\
-      U_{P^*} & \text{if }1\notin P^*\text{ and }2\in P^*,\\
+      U_{P^*} & \text{if }1\not in P^*\text{ and }2\in P^*,\\
       C_{1,P^*} & \text{if }P^*=\emptyset,
     \end{cases}
   \]
@@ -1175,7 +1175,7 @@ $\DBAR(s_0,x)$ is some state $s$.  Then $f(xy)=\OBAR(s_0,xy)=\OBAR(s_0,x)\cdot\O
     \delta(C_{2,P},x)=
     \begin{cases}
       O_{2,P^*\setminus\{2\}} & \text{if }2\in P^*,\\
-      D_{P^*} & \text{if }2\notin P^*\text{ and }1\in P^*,\\
+      D_{P^*} & \text{if }2\not in P^*\text{ and }1\in P^*,\\
       C_{2,P^*} & \text{if }P^*=\emptyset,
     \end{cases}
   \]
@@ -2429,10 +2429,10 @@ Hence $\mu$ is a Moore homomorphism from $M$ onto $M/_{E_M}$. \qed
   according to the set of sensor-driven lanes that are still owed service:
   \begin{enumerate}[(i)]
     \item from a yellow state that follows $B$-service, if $\alpha$ is active and
-    $A\notin H$, go next to the $A$-branch instead of returning to $s_0$;
+    $A\not in H$, go next to the $A$-branch instead of returning to $s_0$;
     otherwise return to $s_0$;
     \item from a yellow state that follows $A$-service, if $\beta$ is active and
-    $B\notin H$, go next to the $B$-branch instead of returning to $s_0$;
+    $B\not in H$, go next to the $B$-branch instead of returning to $s_0$;
     otherwise return to $s_0$.
   \end{enumerate}
   Thus no sensor-controlled lane can receive a second green before every other

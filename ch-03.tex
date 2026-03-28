@@ -697,7 +697,7 @@ redundant states identified by the state equivalence relation $E_A$.
 % Definition 3.8
 \begin{dfn}\label{dfn-3.8}\index{A @$ A/_{E_A}$ (A modulo $E_A$)!for DFA}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, define a new
-finite automaton $A/\!\!_{E_A}$, called \emph{$A$ modulo its state equivalence
+finite automaton $A/_{E_A}$, called \emph{$A$ modulo its state equivalence
 relation}, by
 $$ A/_{E_A} =\langle\Sigma,S_{E_A},s_{0_{E_A}},\delta_{E_A},F_{E_A}\rangle $$
 where
@@ -713,7 +713,7 @@ $$ (\forall \pmb{a} \in \Sigma)(\forall[s]_{E_A} \in S_{E_A})(\delta_{E_A}([s]_{
 	[\delta(s,\pmb{a})]_{E_A}) $$
 \end{dfn}
 
-Thus, there is one state in $A/\!\!_{E_A}$ for each equivalence class in $E_A$, the
+Thus, there is one state in $A/_{E_A}$ for each equivalence class in $E_A$, the
 new start state is the equivalence class containing $s_0$, and the final states
 are those equivalence classes that are made up of states from $F$. The
 transition function is also defined in a natural manner: Given an equivalence
@@ -738,10 +738,10 @@ Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, $A/_{E_A}$ is
 reduced.
 
 \emph{Proof.} Note that the state equivalence relation for $A/_{E_A}$ is
-$E_{(A/\!\!_{E_A}})$, \emph{not} $E_A$. We need to show that if two states of $A/_{E_A}$
-are related by the state equivalence relation for $A/\!\!_{E_A}$ then those two
+$E_{(A/_{E_A}})$, \emph{not} $E_A$. We need to show that if two states of $A/_{E_A}$
+are related by the state equivalence relation for $A/_{E_A}$ then those two
 states are identical; that is,
-$$ (\forall s,t \in S_{E_A})(s E_{(A/\!_{E_A})} t \Leftrightarrow s = t) $$
+$$ (\forall s,t \in S_{E_A})(s E_{(A/_{E_A})} t \Leftrightarrow s = t) $$
 Assume $s,t \in S_{E_A}$. Then $\exists s',t' \in S \ni s = [s']_{E_A}$ and
 $t = [t']_{E_A}$; furthermore,
 \begin{center}
@@ -833,20 +833,20 @@ the property that $L(A^c) = L(A) = L$.
 
 Furthermore, there exists an algorithm for computing $E_{A^c}$ the state equivalence
 relation on $A^c$; consequently, there is an algorithm for constructing
-$A^c\!/\!_{E_{A^c}}$, which is a reduced, connected automaton with the property that
-$L(A^c\!/\!_{E_{A^c}}) = L(A^c) = L(A) = L$
+$A^c/_{E_{A^c}}$, which is a reduced, connected automaton with the property that
+$L(A^c/_{E_{A^c}}) = L(A^c) = L(A) = L$
 
 From the main theorem on minimization (Theorem \ref{thm-3.1}), we know that
-$A^c\!/\!_{E_{A^c}} \cong A_{R_L}$, and $A_{R_L}$ is the unique (up to isomorphism)
+$A^c/_{E_{A^c}} \cong A_{R_L}$, and $A_{R_L}$ is the unique (up to isomorphism)
 minimum-state finite automaton accepting $L$. Consequently, the derived
-automaton $A^c/\!_{E_{A^c}}$ is likewise a minimum-state automaton.
+automaton $A^c/_{E_{A^c}}$ is likewise a minimum-state automaton.
 \end{thm}
 
 The remainder of the chapter is devoted to developing the methods for computing
 $S^c$ and $E_A$ and justifying that the resulting algorithms are indeed correct.
 
 Our formal definition of $E_A$ requires that an infinite number of strings be
-checked before we can find the equivalence classes upon which $A^c\!/\!_{E_{A^c}}$
+checked before we can find the equivalence classes upon which $A^c/_{E_{A^c}}$
 is based. If we could find an algorithm to generate $E_A$, we would then have an
 algorithm for building the minimal machine. This is the motivation for
 Definition \ref{dfn-3.9}.
@@ -877,11 +877,11 @@ two equivalence classes, $\{q_0\}$ and $\{q_1, q_2, q_3, q_4\}$.
 
 In $E_{1B}$, $\lambda$ still differentiates $q_0$ from the other states, but the
 string \pmb{1} can distinguish $q_3$ from $q_1,\ q_2$, and $q_4$ since
-$\DBAR(q_3,\pmb{1}) \notin F$, but $\DBAR(q_i,\pmb{1}) \in F$ for $i$ = 1, 2, and 4. We
+$\DBAR(q_3,\pmb{1}) \not in F$, but $\DBAR(q_i,\pmb{1}) \in F$ for $i$ = 1, 2, and 4. We
 still cannot distinguish between $q_1,\ q_2$, and $q_4$ with strings of length
 0 or 1, so these remain together and
 $E_{1B}=\{\{q_0\},\{q_3\},\{q_1,q_2,q_4\}\}$. Similarly, since
-$\DBAR(q_1,\pmb{11})\in F$ but $\DBAR(q_2,\pmb{11})\notin F$ and $\DBAR(q_4,\pmb{11})\notin F$,
+$\DBAR(q_1,\pmb{11})\in F$ but $\DBAR(q_2,\pmb{11})\not in F$ and $\DBAR(q_4,\pmb{11})\not in F$,
 $E_{2B}=\{\{q_0\},\{q_3\},\{q_1\},\{q_2,q_4\}\}$. Further investigation shows
 $E_{2B} = E_{3B} = E_{4B} = E_{5B} = \cdots$, and indeed $E_B = E_{2B}$.
 

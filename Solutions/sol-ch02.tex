@@ -7,7 +7,7 @@
 %%------------------------------------------------------------
 \item \textbf{Show $\Psi$ is not a right congruence.}
 
-$x\,\Psi\,y \Leftrightarrow |x|-|y|$ is odd. Take $x=\mathbf{a}$, $y=\mathbf{b}$ (so $|x|-|y|=0$, not odd, thus $x\not\!\Psi\,y$). Also check: is $\Psi$ even an equivalence relation? $|x|-|x|=0$ (even), so $x\not\!\Psi\,x$ (not reflexive). Hence $\Psi$ is not an equivalence relation and a fortiori not a right congruence.
+$x\,\Psi\,y \Leftrightarrow |x|-|y|$ is odd. Take $x=\mathbf{a}$, $y=\mathbf{b}$ (so $|x|-|y|=0$, not odd, thus $x\not\Psi\,y$). Also check: is $\Psi$ even an equivalence relation? $|x|-|x|=0$ (even), so $x\not\Psi\,x$ (not reflexive). Hence $\Psi$ is not an equivalence relation and a fortiori not a right congruence.
 
 %%------------------------------------------------------------
 \item \textbf{$Q$ defined by $|x|_\mathbf{a}-|y|_\mathbf{a}\equiv 0\pmod{3}$.}
@@ -24,7 +24,7 @@ $|xz|_\mathbf{a}=|x|_\mathbf{a}+|z|_\mathbf{a}$ and $|yz|_\mathbf{a}=|y|_\mathbf
 
 $\mathrm{rk}(R_L)=1$ means $R_L$ has exactly one equivalence class, namely all of $\Sigma^*$. This occurs iff $R_L = \Sigma^*\times\Sigma^*$, i.e., $x\,R_L\,y$ for all $x,y$. This happens iff $(\forall z)(xz\in L\Leftrightarrow yz\in L)$ for all $x,y,z$, which holds iff either $L=\emptyset$ or $L=\Sigma^*$.
 
-\textit{Justification}: If $L\neq\emptyset$ and $L\neq\Sigma^*$, pick $w\in L$ and $u\notin L$. Then $w\,R_L\,u$ fails (take $z=\lambda$), so $R_L$ has at least 2 classes.
+\textit{Justification}: If $L\neq\emptyset$ and $L\neq\Sigma^*$, pick $w\in L$ and $u\not in L$. Then $w\,R_L\,u$ fails (take $z=\lambda$), so $R_L$ has at least 2 classes.
 
 %%------------------------------------------------------------
 \item \textbf{Show $P$ (with 3 equivalence classes as given) is a right congruence.}
@@ -50,11 +50,11 @@ Two classes $A_i, A_j$ are merged (identified) by $R_L$ iff for every $z\in\Sigm
 
 Check each of the 6 nonempty proper unions:
 \begin{itemize}
-\item $L=A_0=\{\lambda\}$: For any $z\neq\lambda$, both $\mathbf{0}z\notin L$ (length$\geq 2$) and $\mathbf{00}z\notin L$; for $z=\lambda$, $\mathbf{0}\notin L$ and $\mathbf{00}\notin L$. So $A_1$ and $A_2$ are \emph{not} distinguished: $R_L\neq P$.
-\item $L=A_1=\Sigma^1$: $z=\lambda$: $\lambda\notin L$ but $\mathbf{0}\in L$ (distinguishes $A_0$ from $A_1$). $\mathbf{0}\in L$ but $\mathbf{00}\notin L$ (distinguishes $A_1$ from $A_2$). All three classes remain distinct: $R_L=P$. \checkmark
-\item $L=A_2=\Sigma^{\geq 2}$: $z=\mathbf{0}$: $\lambda\mathbf{0}=\mathbf{0}\notin L$ but $\mathbf{0}\cdot\mathbf{0}=\mathbf{00}\in L$ (distinguishes $A_0$ from $A_1$). $z=\lambda$: $\mathbf{0}\notin L$ but $\mathbf{00}\in L$ (distinguishes $A_1$ from $A_2$). So $R_L=P$. \checkmark
-\item $L=A_0\cup A_1=\Sigma^{\leq 1}$: $z=\mathbf{0}$: $\lambda\cdot\mathbf{0}=\mathbf{0}\in L$ but $\mathbf{0}\cdot\mathbf{0}=\mathbf{00}\notin L$ (distinguishes $A_0$ from $A_1$). $z=\lambda$: $\mathbf{0}\in L$ but $\mathbf{00}\notin L$ (distinguishes $A_1$ from $A_2$). So $R_L=P$. \checkmark
-\item $L=A_0\cup A_2$: $z=\lambda$: $\lambda\in L$ but $\mathbf{0}\notin L$ (distinguishes $A_0,A_1$). $z=\lambda$: $\mathbf{0}\notin L$ but $\mathbf{00}\in L$ (distinguishes $A_1,A_2$). So $R_L=P$. \checkmark
+\item $L=A_0=\{\lambda\}$: For any $z\neq\lambda$, both $\mathbf{0}z\not in L$ (length$\geq 2$) and $\mathbf{00}z\not in L$; for $z=\lambda$, $\mathbf{0}\not in L$ and $\mathbf{00}\not in L$. So $A_1$ and $A_2$ are \emph{not} distinguished: $R_L\neq P$.
+\item $L=A_1=\Sigma^1$: $z=\lambda$: $\lambda\not in L$ but $\mathbf{0}\in L$ (distinguishes $A_0$ from $A_1$). $\mathbf{0}\in L$ but $\mathbf{00}\not in L$ (distinguishes $A_1$ from $A_2$). All three classes remain distinct: $R_L=P$. \checkmark
+\item $L=A_2=\Sigma^{\geq 2}$: $z=\mathbf{0}$: $\lambda\mathbf{0}=\mathbf{0}\not in L$ but $\mathbf{0}\cdot\mathbf{0}=\mathbf{00}\in L$ (distinguishes $A_0$ from $A_1$). $z=\lambda$: $\mathbf{0}\not in L$ but $\mathbf{00}\in L$ (distinguishes $A_1$ from $A_2$). So $R_L=P$. \checkmark
+\item $L=A_0\cup A_1=\Sigma^{\leq 1}$: $z=\mathbf{0}$: $\lambda\cdot\mathbf{0}=\mathbf{0}\in L$ but $\mathbf{0}\cdot\mathbf{0}=\mathbf{00}\not in L$ (distinguishes $A_0$ from $A_1$). $z=\lambda$: $\mathbf{0}\in L$ but $\mathbf{00}\not in L$ (distinguishes $A_1$ from $A_2$). So $R_L=P$. \checkmark
+\item $L=A_0\cup A_2$: $z=\lambda$: $\lambda\in L$ but $\mathbf{0}\not in L$ (distinguishes $A_0,A_1$). $z=\lambda$: $\mathbf{0}\not in L$ but $\mathbf{00}\in L$ (distinguishes $A_1,A_2$). So $R_L=P$. \checkmark
 \item $L=A_1\cup A_2=\Sigma^+$: For any $z$, $\mathbf{0}z\in\Sigma^+$ and $\mathbf{00}z\in\Sigma^+$, both in $L$. So $A_1$ and $A_2$ are not distinguished: $R_L\neq P$.
 \end{itemize}
 
@@ -84,8 +84,8 @@ $Q$ has three equivalence classes: $[x]_Q$ depends on $|x|_\mathbf{a}\bmod 3$. S
 Checking all eight: $\emptyset$ and $\Sigma^*$ give $\mathrm{rk}(R_K)=1$; $\{\lambda\}$, all-even $(\{\lambda\}\cup C_e)$, $C_o$, and $\Sigma^+$ $(=C_e\cup C_o)$ give $\mathrm{rk}(R_K)=2$ (two of the three $Q$-classes merge in each case). Only two choices keep all three $Q$-classes distinct:
 
 \begin{itemize}
-\item $K = C_e$: $z=\lambda$ distinguishes $[\lambda]$ from $C_e$ (since $\lambda\notin K$ but $aa\in K$); $z=\lambda$ distinguishes $C_e$ from $C_o$ (since $aa\in K$ but $a\notin K$). So $R_K=Q$.
-\item $K = \{\lambda\}\cup C_o$: $z=aa$ distinguishes $[\lambda]$ from $C_o$ ($\lambda\cdot aa=aa\notin K$ but $a\cdot aa=aaa\in K$); $z=\lambda$ distinguishes $C_o$ from $C_e$ ($a\in K$ but $aa\notin K$). So $R_K=Q$.
+\item $K = C_e$: $z=\lambda$ distinguishes $[\lambda]$ from $C_e$ (since $\lambda\not in K$ but $aa\in K$); $z=\lambda$ distinguishes $C_e$ from $C_o$ (since $aa\in K$ but $a\not in K$). So $R_K=Q$.
+\item $K = \{\lambda\}\cup C_o$: $z=aa$ distinguishes $[\lambda]$ from $C_o$ ($\lambda\cdot aa=aa\not in K$ but $a\cdot aa=aaa\in K$); $z=\lambda$ distinguishes $C_o$ from $C_e$ ($a\in K$ but $aa\not in K$). So $R_K=Q$.
 \end{itemize}
 
 These are the only two of the eight languages satisfying part (e).
@@ -186,7 +186,7 @@ with
 \[
 2^m<2^m+d<2^{m+1},
 \]
-so $2^m+d$ is not a power of 2. Hence $\mathbf a^j z\notin L$.
+so $2^m+d$ is not a power of 2. Hence $\mathbf a^j z\not in L$.
 Thus $\mathbf a^i\not R_L\,\mathbf a^j$ for all $i\ne j$, so every class is a singleton and $R_L=I$.
 
 \item Such a language cannot be FAD: $R_L=I$ has infinite rank (one class per string in $\{\mathbf{a}\}^*$), so by Nerode's theorem $L$ is not FAD. $\square$
@@ -213,11 +213,11 @@ Theorem 2.5: $L$ is FAD $\Leftrightarrow$ there exists a right congruence $R$ of
 
 Theorem 2.6 states:
 \[
-(\exists n)(\forall x\notin L,\ |x|\ge n)(\exists u,v,w)\bigl[x=uvw,\ |uv|\le n,\ |v|\ge1,\ (\forall i\ge0)\ uv^iw\notin L\bigr].
+(\exists n)(\forall x\not in L,\ |x|\ge n)(\exists u,v,w)\bigl[x=uvw,\ |uv|\le n,\ |v|\ge1,\ (\forall i\ge0)\ uv^iw\not in L\bigr].
 \]
 
 Assume $L$ is FAD, accepted by DFA $M=\langle\Sigma,S,s_0,\delta,F\rangle$, with $|S|=n$.
-Take any $x\notin L$ with $|x|\ge n$.
+Take any $x\not in L$ with $|x|\ge n$.
 Look at the first $n+1$ states on the run of $x$:
 \[
 s_0,\ \DBAR(s_0,a_1),\ \DBAR(s_0,a_1a_2),\ \ldots,\ \DBAR(s_0,a_1\cdots a_n).
@@ -230,8 +230,8 @@ Hence $v$ is a loop at $q$, so for every $i\ge0$,
 \[
 \DBAR(s_0,uv^iw)=\DBAR(q,w)=\DBAR(s_0,uvw)=\DBAR(s_0,x).
 \]
-Since $x\notin L$, $\DBAR(s_0,x)\notin F$. Therefore $\DBAR(s_0,uv^iw)\notin F$, i.e.,
-$uv^iw\notin L$ for all $i\ge0$. This is exactly Theorem 2.6. $\square$
+Since $x\not in L$, $\DBAR(s_0,x)\not in F$. Therefore $\DBAR(s_0,uv^iw)\not in F$, i.e.,
+$uv^iw\not in L$ for all $i\ge0$. This is exactly Theorem 2.6. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove Theorem 2.7.}
@@ -263,7 +263,7 @@ This is exactly Theorem 2.7. $\square$
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x\mid|x|_\mathbf{a}<|x|_\mathbf{b}\}$ is not FAD.}
 
-For any $n$, take $w=\mathbf{a}^n\mathbf{b}^{n+1}\in L$, $|w|=2n+1\geq n$. Any decomposition $w=uvw'$ with $|uv|\leq n$ and $|v|\geq 1$ has $v=\mathbf{a}^k$ for some $k\geq 1$ (since $|uv|\leq n$). Then $uv^0w'=uw'=\mathbf{a}^{n-k}\mathbf{b}^{n+1}$ which has $n-k$ $\mathbf{a}$s and $n+1$ $\mathbf{b}$s. Since $n-k<n+1$, this is in $L$. And $uv^2w'=\mathbf{a}^{n+k}\mathbf{b}^{n+1}$: need $n+k < n+1$, i.e., $k<1$, impossible since $k\geq 1$. So $uv^2w'\notin L$. The pumping lemma fails, so $L$ is not FAD. $\square$
+For any $n$, take $w=\mathbf{a}^n\mathbf{b}^{n+1}\in L$, $|w|=2n+1\geq n$. Any decomposition $w=uvw'$ with $|uv|\leq n$ and $|v|\geq 1$ has $v=\mathbf{a}^k$ for some $k\geq 1$ (since $|uv|\leq n$). Then $uv^0w'=uw'=\mathbf{a}^{n-k}\mathbf{b}^{n+1}$ which has $n-k$ $\mathbf{a}$s and $n+1$ $\mathbf{b}$s. Since $n-k<n+1$, this is in $L$. And $uv^2w'=\mathbf{a}^{n+k}\mathbf{b}^{n+1}$: need $n+k < n+1$, i.e., $k<1$, impossible since $k\geq 1$. So $uv^2w'\not in L$. The pumping lemma fails, so $L$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $G=\{x\mid|x|_\mathbf{a}\geq|x|_\mathbf{b}\}$ is not FAD.}
@@ -295,7 +295,7 @@ x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
 \]
 such that
 \[
-uv^iw\notin\Gamma\qquad\text{for every }i\ge0.
+uv^iw\not in\Gamma\qquad\text{for every }i\ge0.
 \]
 
 Since the first $n$ symbols of $x$ are all $\mathbf{0}$'s, the substring $v$
@@ -340,7 +340,7 @@ The string has exactly two $\mathbf{1}$s, so each half must contain exactly one 
 Hence the position of the second $\mathbf{1}$ must be ``half-length'' after the first.
 Its first $\mathbf{1}$ is at position $j+1$, second at $j+i+2$, so the half-length must be $i+1$.
 But half-length is also $\frac{i+j+2}{2}$, giving $\frac{i+j+2}{2}=i+1$, hence $j=i$, contradiction.
-Therefore $x_j z_i\notin\Psi$.
+Therefore $x_j z_i\not in\Psi$.
 
 So $x_i\not R_\Psi x_j$ for $i\neq j$, giving infinitely many Nerode classes. Thus $\Psi$ is not FAD. $\square$
 
@@ -370,7 +370,7 @@ x_i\mathbf{c}^i=\mathbf{a}^3\mathbf{b}^i\mathbf{c}^i\in\Phi,
 \]
 while
 \[
-x_j\mathbf{c}^i=\mathbf{a}^3\mathbf{b}^j\mathbf{c}^i\notin\Phi
+x_j\mathbf{c}^i=\mathbf{a}^3\mathbf{b}^j\mathbf{c}^i\not in\Phi
 \]
 because $j\neq i$.
 Since $\Phi$ is a union of $R$-classes, two $R$-equivalent strings cannot disagree
@@ -391,13 +391,13 @@ Choose a prime $p>n$ and let
 \[
 x=\mathbf{d}^p.
 \]
-Since $p$ is prime, $x\notin C$. By Theorem 2.6 there should be a decomposition
+Since $p$ is prime, $x\not in C$. By Theorem 2.6 there should be a decomposition
 \[
 x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
 \]
 such that
 \[
-uv^iw\notin C\qquad\text{for every }i\ge0.
+uv^iw\not in C\qquad\text{for every }i\ge0.
 \]
 
 Because $x$ is unary, $v=\mathbf{d}^k$ for some $k\ge1$. Then
@@ -480,7 +480,7 @@ n^2<n^2+k<n^2+(2n+1)=(n+1)^2.
 So $n^2+k$ is strictly between two consecutive squares, hence is not itself a square.
 Therefore
 \[
-uv^2w\notin\Xi,
+uv^2w\not in\Xi,
 \]
 contradicting Theorem 2.3.
 
@@ -511,7 +511,7 @@ Because $0<k<2^m$,
 So $2^m+k$ lies strictly between two consecutive powers of $2$, and therefore is not
 itself a power of $2$. Hence
 \[
-uv^2w\notin\Phi,
+uv^2w\not in\Phi,
 \]
 contradicting Theorem 2.3.
 
@@ -599,7 +599,7 @@ Pumping down gives
 uw'=\mathbf{a}^{n+4-k}\mathbf{b}^{n+3}.
 \]
 Here $n+4-k\ge4$, so the pumped string is not in $L_2$; and also $n+4-k\le n+3$, so it is not in $L_1$.
-Thus $uw'\notin L_1\cup L_2$, contradicting Theorem 2.3.
+Thus $uw'\not in L_1\cup L_2$, contradicting Theorem 2.3.
 
 %%------------------------------------------------------------
 \item \textbf{$R_m$ defined by $|x|-|y|$ is a multiple of $m$.}
@@ -630,11 +630,11 @@ Let $R=R_2$ and $S=R_3$. As shown above, $R_2\cup R_3$ is not even an equivalenc
 \item \textbf{Analysis of $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$.}
 
 \begin{enumerate}
-\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
+\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\not in\Gamma$; likewise $\mathbf{ba}z\not in\Gamma$ (since $\mathbf{baa},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
 
 \item $\mathbf{ab}$ is not related to $\mathbf{bb}$: take $z=\mathbf{b}$. Then
 \[
-\mathbf{ab}z=\mathbf{abb}\notin\Gamma
+\mathbf{ab}z=\mathbf{abb}\not in\Gamma
 \]
 because among length-3 strings only $\mathbf{bbb}$ is in $\Gamma$.
 But
@@ -651,7 +651,7 @@ C_0=\{\lambda\},\ C_1=\{\mathbf a\},\ C_2=\{\mathbf b\},\ C_3=\{\mathbf{aa}\},\ 
 C_5=\{\mathbf{ab},\mathbf{ba}\},\ C_6=\{x:|x|=3,\ x\neq \mathbf{bbb}\},\ C_7=\{\mathbf{bbb}\}\cup\{x:|x|\ge4\}.
 \]
 These are pairwise distinct by suitable suffixes (for instance, $C_4$ vs $C_5$ by suffix $\mathbf b$:
-$\mathbf{bb}\mathbf b=\mathbf{bbb}\in\Gamma$ but $\mathbf{ab}\mathbf b=\mathbf{abb}\notin\Gamma$).
+$\mathbf{bb}\mathbf b=\mathbf{bbb}\in\Gamma$ but $\mathbf{ab}\mathbf b=\mathbf{abb}\not in\Gamma$).
 
 \item Minimal DFA has these 8 states, start $C_0$, final states
 \[
@@ -716,7 +716,7 @@ If $m\neq n$, then $x_mz_n$ is not a valid Pascal program. If $m<n$, there are t
 
 Therefore $x_n$ and $x_m$ have different futures with respect to the language Pascal, since
 \[
-x_nz_n\in\text{Pascal}\qquad\text{but}\qquad x_mz_n\notin\text{Pascal}\ \ (m\neq n).
+x_nz_n\in\text{Pascal}\qquad\text{but}\qquad x_mz_n\not in\text{Pascal}\ \ (m\neq n).
 \]
 So the strings $x_1,x_2,x_3,\ldots$ lie in distinct $R_{\text{Pascal}}$-classes. Hence $R_{\text{Pascal}}$ has infinitely many equivalence classes, and Pascal is not FAD.
 
@@ -741,7 +741,7 @@ x_rz=\mathbf a^3\mathbf b^r\mathbf c^r\in L,
 \]
 but
 \[
-x_sz=\mathbf a^3\mathbf b^s\mathbf c^r\notin L
+x_sz=\mathbf a^3\mathbf b^s\mathbf c^r\not in L
 \]
 because the $\mathbf b$- and $\mathbf c$-counts are unequal.
 So the strings $x_0,x_1,x_2,\ldots$ lie in distinct $R_L$-classes.
@@ -1042,7 +1042,7 @@ Similar: $\mathbf{(}^n$ is a prefix; each $n$ gives a distinct future (requiring
 %%------------------------------------------------------------
 \item \textbf{$R_L$ vs.\ $R_{\sim L}$.}
 
-$R_L = R_{\sim L}$. Proof: $x\,R_L\,y\Leftrightarrow(\forall z)(xz\in L\Leftrightarrow yz\in L)\Leftrightarrow(\forall z)(xz\notin L\Leftrightarrow yz\notin L)\Leftrightarrow(\forall z)(xz\in\sim L\Leftrightarrow yz\in\sim L)\Leftrightarrow x\,R_{\sim L}\,y$. $\square$
+$R_L = R_{\sim L}$. Proof: $x\,R_L\,y\Leftrightarrow(\forall z)(xz\in L\Leftrightarrow yz\in L)\Leftrightarrow(\forall z)(xz\not in L\Leftrightarrow yz\not in L)\Leftrightarrow(\forall z)(xz\in\sim L\Leftrightarrow yz\in\sim L)\Leftrightarrow x\,R_{\sim L}\,y$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show no $L$ has $R_L=Q$ where $Q$ has classes $\{\lambda\},\{\mathbf{a}\},\{\mathbf{b}\},\{x:|x|\geq 2\}$.}
@@ -1118,14 +1118,14 @@ Pumping down gives
 \[
 uw'=\mathbf{a}^{p+1-k}\mathbf{b}^p.
 \]
-If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\notin L_2$.
+If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\not in L_2$.
 If $k$ is even, then $|uw'|$ is odd, but its center position is
 \[
 \frac{|uw'|+1}{2}=p+1-\frac{k}{2},
 \]
 which is strictly larger than the length $p+1-k$ of the remaining $\mathbf a$-block.
 So the center letter lies in the $\mathbf b$-block, while the first letter is still $\mathbf a$.
-Hence again $uw'\notin L_2$.
+Hence again $uw'\not in L_2$.
 
 This contradicts Theorem 2.3. Therefore $L_2$ is not FAD.
 
@@ -1146,7 +1146,7 @@ Pumping down gives
 \[
 uw'=\mathbf{a}^{2p-1-k}\mathbf{b}(\mathbf{ba})^p.
 \]
-If $k$ is odd, then $|uw'|=4p-k$ is odd, so $uw'\notin L_4$.
+If $k$ is odd, then $|uw'|=4p-k$ is odd, so $uw'\not in L_4$.
 If $k=2r$ is even, then the center positions of $uw'$ are
 \[
 2p-r\quad\text{and}\quad 2p-r+1.
@@ -1157,7 +1157,7 @@ After the initial block $\mathbf a^{2p-1-2r}$, the remaining suffix is
 \]
 Those two center positions become positions $r+1$ and $r+2$ within this suffix, and
 these consecutive symbols are always different. So the two center letters of $uw'$ do
-not match, and $uw'\notin L_4$.
+not match, and $uw'\not in L_4$.
 
 This contradicts Theorem 2.3. Therefore $L_4$ is not FAD.
 
@@ -1176,14 +1176,14 @@ Pumping down gives
 \[
 uw'=\mathbf{a}^{p-k}\mathbf{b}\mathbf{a}^p.
 \]
-If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\notin L_5$.
+If $k$ is odd, then $|uw'|=2p+1-k$ is even, so $uw'\not in L_5$.
 If $k=2r$ is even, then the center position of $uw'$ is
 \[
 \frac{|uw'|+1}{2}=p+1-r.
 \]
 But the unique $\mathbf b$ is at position $p-2r+1$, so the center lies strictly to the
 right of that $\mathbf b$, inside the final $\mathbf a$-block. Thus the center letter is
-$\mathbf a$, which certainly matches other letters of the word. Hence $uw'\notin L_5$.
+$\mathbf a$, which certainly matches other letters of the word. Hence $uw'\not in L_5$.
 
 This contradicts Theorem 2.3. Therefore $L_5$ is not FAD.
 \end{enumerate}
@@ -1223,7 +1223,7 @@ The strings in $L$ are all prefixes of this infinite sequence. Consider prefix $
 %%------------------------------------------------------------
 \item \textbf{Show the ``simple'' BNF language is not FAD.}
 
-$\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\rangle\mathbf{)}$. The language is $L=\{\mathbf{(}^n\mathbf{a}\mathbf{)}^n\mid n\geq 0\}$. By Myhill-Nerode: the strings $\mathbf{(}^0,\mathbf{(}^1,\ldots,\mathbf{(}^n$ are pairwise in distinct $R_L$-classes. The distinguishing suffix for $\mathbf{(}^j$ vs.\ $\mathbf{(}^k$ (with $j\neq k$) is $z=\mathbf{a}\mathbf{)}^j$: $\mathbf{(}^j\mathbf{a}\mathbf{)}^j\in L$ but $\mathbf{(}^k\mathbf{a}\mathbf{)}^j\notin L$ (since $k\neq j$). Hence $R_L$ has infinite rank and $L$ is not FAD. $\square$
+$\langle\text{simple}\rangle ::= \mathbf{a}\mid\mathbf{(}\langle\text{simple}\rangle\mathbf{)}$. The language is $L=\{\mathbf{(}^n\mathbf{a}\mathbf{)}^n\mid n\geq 0\}$. By Myhill-Nerode: the strings $\mathbf{(}^0,\mathbf{(}^1,\ldots,\mathbf{(}^n$ are pairwise in distinct $R_L$-classes. The distinguishing suffix for $\mathbf{(}^j$ vs.\ $\mathbf{(}^k$ (with $j\neq k$) is $z=\mathbf{a}\mathbf{)}^j$: $\mathbf{(}^j\mathbf{a}\mathbf{)}^j\in L$ but $\mathbf{(}^k\mathbf{a}\mathbf{)}^j\not in L$ (since $k\neq j$). Hence $R_L$ has infinite rank and $L$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$L_2$ (binary powers of 2) is FAD; $L_{10}$ (decimal powers of 2) is not.}

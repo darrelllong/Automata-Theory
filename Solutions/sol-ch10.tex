@@ -58,7 +58,7 @@ So $\alpha\in\{SC^{i+1},C^{i+1}\}$. \qed
 \[
 L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}.
 \]
-For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack with no moves available, so the stack is never emptied and $\lambda\notin L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack with no moves available, so the stack is never emptied and $\lambda\not in L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -144,7 +144,7 @@ Each production preserves the invariant $|x|_{\pmb{a}}+|x|_{\pmb{b}}=|x|_{\pmb{c
 
 \textbf{Example}: $L = \{\pmb{ab}\}$.
 
-\textbf{Proof}: Every one-state PDA $P$ with state set $\{t\}$, start state $t$, and final states $\{t\}$ trivially accepts $\lambda$: the initial configuration has $P$ already in the (unique) final state with empty input, so $\lambda$ is accepted regardless of the stack content. Since $\lambda \notin L = \{\pmb{ab}\}$, no one-state PDA via final state can recognize $L$.
+\textbf{Proof}: Every one-state PDA $P$ with state set $\{t\}$, start state $t$, and final states $\{t\}$ trivially accepts $\lambda$: the initial configuration has $P$ already in the (unique) final state with empty input, so $\lambda$ is accepted regardless of the stack content. Since $\lambda \not in L = \{\pmb{ab}\}$, no one-state PDA via final state can recognize $L$.
 
 More generally, any finite language that does not contain $\lambda$ is not recognizable by any one-state PDA via final state, since such a machine always accepts $\lambda$. \qed
 
@@ -610,9 +610,9 @@ L_1=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\mid n,m\geq 0\}
 \qquad\text{and}\qquad
 K=\{\pmb{a}^m\pmb{b}^n\pmb{c}^n\mid m,n\geq 0\}.
 \]
-Both $L_1$ and $K$ are DCFLs. By Exercise 10.25, $\sim\!K$ is also a DCFL. Now
+Both $L_1$ and $K$ are DCFLs. By Exercise 10.25, $\sim K$ is also a DCFL. Now
 \[
-L_1-(\sim\!K)=L_1\cap K=\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\mid n\geq 0\},
+L_1-(\sim K)=L_1\cap K=\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\mid n\geq 0\},
 \]
 which is not even context free. So difference does not preserve \ASIG.
 \item $L_1^*$ need not be DCFL: Exercise 10.27.
@@ -732,12 +732,12 @@ $K$ is context free, but by Exercise 10.23 its complement over $\{\pmb{a},\pmb{b
 \[
 B=\{x\pmb{\$}\mid x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\}\cup\{x\pmb{\$\$}\mid x\in K\}.
 \]
-$B$ is context free. A word $x\pmb{\$}$ is in $F(B)$ exactly when $x\notin K$, because it fails to be maximal precisely when it can be extended to $x\pmb{\$\$}$. Therefore
+$B$ is context free. A word $x\pmb{\$}$ is in $F(B)$ exactly when $x\not in K$, because it fails to be maximal precisely when it can be extended to $x\pmb{\$\$}$. Therefore
 \[
 F(B)\cap\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}
-=\{x\pmb{\$}\mid x\notin K\}.
+=\{x\pmb{\$}\mid x\not in K\}.
 \]
-If $F(B)$ were context free, then intersecting with the regular language $\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}$ and deleting the final $\pmb{\$}$ would give $\sim\!K$ as a CFL, contradiction.
+If $F(B)$ were context free, then intersecting with the regular language $\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}$ and deleting the final $\pmb{\$}$ would give $\sim K$ as a CFL, contradiction.
 
 \item \textbf{\ASIG\ is closed under $F$}: Start with a DPDA normalized as in Exercise 10.24. For each input word $x$, let $C_x$ be the unique configuration reached after all of $x$ has been scanned. Then $x\in F(L)$ exactly when two conditions hold: $C_x$ is accepting, and $C_x$ is not \emph{prolific}, meaning that no nonempty continuation from $C_x$ can still lead to acceptance. This is the same configuration-liveness idea used in part (b) for the prefix operator, with ``live'' replaced by ``accepting but not prolific.'' A DPDA can therefore simulate the original machine and accept exactly the words in $F(L)$, so \ASIG\ is closed under $F$.
 \end{enumerate}

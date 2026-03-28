@@ -53,8 +53,8 @@
 \def\ZSIG{\ensuremath{\mathfrak{Z}_\Sigma}}
 \def\OSIG{\ensuremath{\mathfrak{O}_\Sigma}}
 \def\HSIG{\ensuremath{\mathfrak{H}_\Sigma}}
-\DeclareMathOperator{\DRightarrow}{^*\!\!\!\!\!\!\!\Rightarrow}
-\DeclareMathOperator{\Dvdash}{\vdash^{\!\!\!\!\!\!{*}}\ }
+\DeclareMathOperator{\DRightarrow}{^*\Rightarrow}
+\DeclareMathOperator{\Dvdash}{\vdash^{{*}}\ }
 
 \newtheorem{dfn}{Definition}[chapter]
 \newtheorem{thm}{Theorem}[chapter]
@@ -305,7 +305,7 @@ We need: $x = y \Rightarrow x\,R\,y$. If $x = y$, then by reflexivity of $R$, $x
 \begin{enumerate}
 \item $t$ is not well defined. A function must assign \emph{exactly one} output to each input in its domain. But if $x \in [-1,1]$, there are generally many real numbers whose cosine is $x$. For example,
 \[
-\cos\!\left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos\!\left(\frac{5\pi}{3}\right),
+\cos\left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos\left(\frac{5\pi}{3}\right),
 \]
 so the input $x=\frac{1}{2}$ would have more than one output. Also, if $x\notin[-1,1]$, there is no real number whose cosine is $x$, so the proposed rule is not even defined everywhere on $\RN$.
 

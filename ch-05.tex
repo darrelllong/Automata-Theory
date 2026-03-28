@@ -1,4 +1,4 @@
-% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf  
+% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf
 \chapter{Closure Properties}\label{ch-5}
 
 In this chapter we will look at ways to combine languages that are recognized
@@ -56,11 +56,11 @@ $\|Y \cup Z\| < n + m$?)
 
 To show a set $K$ is not closed under a binary operator $\THETA$, we must show
 $\neg[(\forall x,y \in K)(x\THETA y \in K)]$, which means
-$\exists x,y \in K \ni x\THETA y \notin K$.
+$\exists x,y \in K \ni x\THETA y \not in K$.
 
 \subsection*{Example 5.4}
 
-$\NN$ is not closed under $-$ (subtraction) since $3 - 5 = -2 \notin \NN$, even
+$\NN$ is not closed under $-$ (subtraction) since $3 - 5 = -2 \not in \NN$, even
 though both $3 \in \NN$ and $5 \in \NN$.
 
 Notice that the set as well as the operator is important when discussing closure
@@ -72,7 +72,7 @@ is sufficient to show that a given set is not closed under a unary operator.
 
 %jc Shenanigans to get an overbar without the symbol sinking far below the line.
 $\NN$ is not closed under $\sqrt{\huge \ ^{\ ^{\ }}}$ (square root) since $7 \in \NN$ but
-$\sqrt{7} \notin \NN$.
+$\sqrt{7} \not in \NN$.
 
 We will not be concerned so much with sets of numbers as with sets of languages.
 As in Example 5.3, the collection will be a set of sets. Of prime concern are
@@ -91,7 +91,7 @@ finite automata. In this chapter, it is this set whose closure properties with
 respect to various operations in $\Sigma^*$ we are most interested in
 investigating. For example, if there exists a machine that accepts a language
 $K$, then there is also a machine that accepts the complement of $K$. That is,
-if $K$ is FAD, then $\sim\!\! K$ is FAD: $\DSIG$ is closed under
+if $K$ is FAD, then $\sim K$ is FAD: $\DSIG$ is closed under
 $\sim$.
 
 % Theorem 5.1
@@ -99,16 +99,16 @@ $\sim$.
 For any alphabet $\Sigma$, $\DSIG$ is closed under $\sim$
 (complementation).
 
-\emph{Proof.} Let $K \in \DSIG$. We must show $\sim\!\! K \in
+\emph{Proof.} Let $K \in \DSIG$. We must show $\sim K \in
 \DSIG$ also; that is, there is a machine that recognizes
-$\sim\!\! K$. But $K \in \DSIG$, and thus there is a deterministic
+$\sim K$. But $K \in \DSIG$, and thus there is a deterministic
 finite automaton that recognizes $K$: Let
 $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and $L(A) = K$. Define a new machine
 $A^\sim$ as follows:
 $A^\sim =\langle\Sigma,S^\sim,s_0^\sim,\delta^\sim,F^\sim\rangle =
 \langle\Sigma,S,s_0,\delta,S$-$F\rangle$, which looks just like $A$ except that
 the final and nonfinal states have been interchanged. We claim that
-$L(A^\sim) =\ \sim\!\! K$. To show this, let $x$ be an arbitrary element of
+$L(A^\sim) =\ \sim K$. To show this, let $x$ be an arbitrary element of
 $\Sigma^*$. Then
 \begin{center}
 \begin{tabular}{rcl}
@@ -121,16 +121,16 @@ $\DBAR(s_0,x) \in F^\sim$ & $\Leftrightarrow$ &
 	(by definition of $F^\sim$) \\
 $\DBAR(s_0,x)\in S$-$F$ & $\Leftrightarrow$ &
 	(by definition of complement) \\
-$\DBAR(s_0,x) \notin F$ & $\Leftrightarrow$ &
+$\DBAR(s_0,x) \not in F$ & $\Leftrightarrow$ &
 	(by definition of $L$) \\
-$x \notin L(A)$ & $\Leftrightarrow$ &
+$x \not in L(A)$ & $\Leftrightarrow$ &
 	(by definition of $K$) \\
-$x \notin K$ & $\Leftrightarrow$ &
+$x \not in K$ & $\Leftrightarrow$ &
 	(by definition of complement) \\
-$x \in\ \sim\!\! K$ &&
+$x \in\ \sim K$ &&
 \end{tabular}
 \end{center}
-Thus $L(A^\sim) =\ \sim\!\! K$ as claimed, and therefore the complement of any FAD
+Thus $L(A^\sim) =\ \sim K$ as claimed, and therefore the complement of any FAD
 language can also be recognized by a machine and is consequently also FAD. Thus
 $\DSIG$ is closed under complementation.
 \end{thm}
@@ -220,7 +220,7 @@ $(\exists s \in S_0^\cup)[\overline{\delta^\cup}(s,x) \cap F^\cup \not= \emptyse
 $(\exists s \in S_{0_1} \cup S_{0_2})[\overline{\delta^\cup}(s,x) \cap F^\cup\not=\emptyset]$
 	& $\Leftrightarrow$ & (by definition of $\cup$) \\
 $(\exists s \in S_{0_1})[\overline{\delta^\cup}(s,x) \cap F^\cup \not= \emptyset] \vee
-	(\exists s \in S_{0_2})[\overline{\delta^\cup}(s,x) \cap F^\cup \not= \emptyset]$ & 
+	(\exists s \in S_{0_2})[\overline{\delta^\cup}(s,x) \cap F^\cup \not= \emptyset]$ &
 	$\Leftrightarrow$ & (by definition of $\delta^\cup$ and induction) \\
 $(\exists s \in S_{0_1})[\DBAR_1(s,x) \cap F^\cup \not= \emptyset] \vee
 	(\exists s \in S_{0_2})[\DBAR_2(s,x) \cap F^\cup \not= \emptyset]$ &
@@ -273,9 +273,9 @@ effectively closed).
 For any alphabet $\Sigma$, $\DSIG$ is closed under $\cap$.
 
 \emph{Proof.} Let $L_1$ and $L_2$ belong to $\DSIG$. Then by
-Theorem \ref{thm-5.1}, $\sim\!\! L_1$ and $\sim\!\! L_2$ are also FAD. By Theorem \ref{thm-5.2},
-$\sim\!\! L_1 \cup \sim\!\! L_2$ is also FAD. By Theorem \ref{thm-5.1} again,
-$\sim\!\!(\sim\!\! L_1 \cup \sim\!\! L_2)$ is also FAD. By De Morgan's law, this
+Theorem \ref{thm-5.1}, $\sim L_1$ and $\sim L_2$ are also FAD. By Theorem \ref{thm-5.2},
+$\sim L_1 \cup \sim L_2$ is also FAD. By Theorem \ref{thm-5.1} again,
+$\sim(\sim L_1 \cup \sim L_2)$ is also FAD. By De Morgan's law, this
 last expression is equivalent to $L_1 \cap L_2$, so $L_1 \cap L_2$ is FAD, and
 thus $L_1 \cap L_2 \in \DSIG$.
 \end{thm}
@@ -459,7 +459,7 @@ $F^\bullet = \left\{\begin{array}{l}
 			F_1 \cup F_2
 		  \end{array}\right.$
 	& $\begin{array}{l}
-		\text{if }\lambda \notin L_2 \\
+		\text{if }\lambda \not in L_2 \\
 		\text{if }\lambda \in L_2
 	  \end{array}$
 \end{tabular}
@@ -516,10 +516,10 @@ are still final states since $\lambda \in L(B_2)$.
 Consider the nondeterministic finite automata $B_1$ and $B_3$ shown in Figure
 \ref{fig-5.11}, where $B_1$ is the same as that given in Example 5.9, while $B_3$ differs
 just slightly from $B_2$ ($t_0$ is no longer a final state). Note that
-$L(B_3)=\{\pmb{aa},\pmb{baa}\}$, and $\lambda \notin L(B_3)$. Applying Theorem
+$L(B_3)=\{\pmb{aa},\pmb{baa}\}$, and $\lambda \not in L(B_3)$. Applying Theorem
 \ref{thm-5.4} in this case yields the automaton shown in Figure \ref{fig-5.12}. In this
 construction, $s_0$ and $s_1$ are no longer final states since the definition of
-$F$ must follow a different rule when $\lambda \notin L(B_3)$. By examining the
+$F$ must follow a different rule when $\lambda \not in L(B_3)$. By examining the
 resulting machine, the reader can verify that having $t_3$ as the only final
 state is indeed the correct strategy for this case.
 
@@ -602,16 +602,16 @@ $A_*=\langle\Sigma,S_{*},S_{0*},\delta_{*},F_{*}\rangle$,
 where
 \begin{center}
 \begin{tabular}{rll}
-$S_{*}=$ & \!\!\!\!$S \cup \{q_0\}\quad \text{(where $q_0$ is some new
-	state; $q_0 \notin S$)}$ \\
-$S_{0*}=$ &\!\!\!\!$S_0 \cup \{q_0\}$ \\
-$F_{*}=$ &\!\!\!\!$F \cup \{q_0\}$
+$S_{*}=$ & $S \cup \{q_0\}\quad \text{(where $q_0$ is some new
+	state; $q_0 \not in S$)}$ \\
+$S_{0*}=$ &$S_0 \cup \{q_0\}$ \\
+$F_{*}=$ &$F \cup \{q_0\}$
 \end{tabular}
 \end{center}
 and $\delta_{*}$$: (S \cup \{q_0\}) \times \Sigma \rightarrow
 	\wp(S \cup \{q_0\})$ is defined by
 \[ \delta_{*}(s,\pmb{a}) = \left\{\begin{array}{ll}
-		\delta(s,\pmb{a}) & \text{if }s \notin F \cup \{q_0\} \\
+		\delta(s,\pmb{a}) & \text{if }s \not in F \cup \{q_0\} \\
 		\delta(s,\pmb{a})\cup\left(\bigcup\limits_{t\in S_0}\delta(t,\pmb{a})\right)
 			& \text{if }s \in F \\
 		\emptyset & \text{if }s = q_0
@@ -621,7 +621,7 @@ We claim that $L(A_{*}) = L(A)^* = L^*$ (see the exercises).
 
 \subsection*{Example 5.16}
 
-Consider the \emph{non}deterministic finite automaton $B$ displayed in Figure 
+Consider the \emph{non}deterministic finite automaton $B$ displayed in Figure
 \ref{fig-5.13}, which accepts all words that contain exactly two (consecutive) $\pmb{b}$s.
 Using the modifications described above, the new NDFA $B_{*}$ would look
 like the automaton shown in Figure \ref{fig-5.14}. Notice that the new automaton does
@@ -797,13 +797,13 @@ Let $\Sigma$ be an alphabet. Then \NSIG\ is closed under $\sim$ (complementation
 there exists a language $K$ for which
 \begin{center}
 \begin{tabular}{rl}
-$K \in \NSIG\ \wedge \sim\!\! K \notin \NSIG$ & $\Rightarrow$ (by definition of
+$K \in \NSIG\ \wedge \sim K \not in \NSIG$ & $\Rightarrow$ (by definition of
 	\,\NSIG) \\
-$\sim\!\! K \in \DSIG$ & $\Rightarrow$ (by Theorem \ref{thm-5.1}) \\
-$\sim\!\!(\sim\!\! K) \in \DSIG$ & $\Rightarrow$ (since
-	$\sim\!\!(\sim\!\! K)=K$) \\
+$\sim K \in \DSIG$ & $\Rightarrow$ (by Theorem \ref{thm-5.1}) \\
+$\sim(\sim K) \in \DSIG$ & $\Rightarrow$ (since
+	$\sim(\sim K)=K$) \\
 $K \in \DSIG$ & $\Rightarrow$ (by definition of \,\NSIG) \\
-$K \notin \NSIG$ &
+$K \not in \NSIG$ &
 \end{tabular}
 \end{center}
 which contradicts the assumption. Thus the lemma must be true.
@@ -815,7 +815,7 @@ $\mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ is \emph{not} closed under $\cap$.
 
 \emph{Proof.} Let $L_1=\{\pmb{a}^p\ |\ p$ is prime$\}$ and let $L_2=\{\pmb{b}^p\ |\ p$ is prime$\}$.
 Then $L_1 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$, $L_2 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ but
-$L_1 \cap L_2 = \emptyset \notin \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ (why?).
+$L_1 \cap L_2 = \emptyset \not in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ (why?).
 \end{lmm}
 
 As another useful example of closure, we consider the transformation of one
@@ -832,7 +832,7 @@ common transformation that can be defined by a language homomorphism.
 % Definition 5.8
 \begin{dfn}\label{dfn-5.8}
 Let $\Sigma=\{\pmb{a_1},\pmb{a_2}, \ldots , \pmb{a_m}\}$ be an alphabet and let
-$\Gamma$ be a second alphabet. Given words $w_1,$ $w_2,\ldots ,w_m$ over $\Gamma^*$\!\!,
+$\Gamma$ be a second alphabet. Given words $w_1,$ $w_2,\ldots ,w_m$ over $\Gamma^*$,
 define a \emph{language homomorphism} $\psi$$: \Sigma \rightarrow \Gamma^*$ by
 $\psi(\pmb{a}_i) = w_i$ for each $i$, which can be extended to
 $\PBAR$$: \Sigma^* \rightarrow \Gamma^*$ by:
@@ -961,11 +961,11 @@ Consider $\overline{\xi}$ from Lemma \ref{lmm-5.4} in which $\xi$$: \Sigma \righ
 \Sigma^*$ was defined by $\xi(\pmb{a})=\pmb{a}$ and $\xi(\pmb{b})=\pmb{a}$. Let
 $z=\pmb{aa}$. Since $\overline{\xi}(\pmb{bb})=\overline{\xi}(\pmb{ba}) =
 \overline{\xi}(\pmb{ab})=\overline{\xi}(\pmb{aa})=\pmb{aa}$,
-\[ \overline{\xi^{-1}}\!(\pmb{aa})=\{\pmb{bb},\pmb{ba},\pmb{ab},\pmb{aa}\}
-\text{. Note that } \overline{\xi^{-1}}\!(\pmb{ba})=\emptyset. \]
+\[ \overline{\xi^{-1}}(\pmb{aa})=\{\pmb{bb},\pmb{ba},\pmb{ab},\pmb{aa}\}
+\text{. Note that } \overline{\xi^{-1}}(\pmb{ba})=\emptyset. \]
 
-For $L=\{x \in\{\pmb{a}\}^*|\ |x|\equiv 0\bmod{3}\},\ 
-\overline{\xi^{-1}}\!(L)=\{x\in\{\pmb{a},\pmb{b}\}^*|\ |x|\equiv 0\bmod{3}\}$.
+For $L=\{x \in\{\pmb{a}\}^*|\ |x|\equiv 0\bmod{3}\},\
+\overline{\xi^{-1}}(L)=\{x\in\{\pmb{a},\pmb{b}\}^*|\ |x|\equiv 0\bmod{3}\}$.
 Note that this second set is definitely larger, since it also contains words
 with $\pmb{b}$s in them.
 
@@ -992,11 +992,11 @@ $F^\psi = F$
 \end{tabular}
 \end{center}
 and $\delta^\psi$ is defined by
-\[ \delta^\psi(s,\pmb{a})=\DBAR\!(s,\psi(\pmb{a}))\ 
+\[ \delta^\psi(s,\pmb{a})=\DBAR(s,\psi(\pmb{a}))\
 		\forall s \in S, \forall \pmb{a} \in \Sigma \]
-Induction can be used to show $\overline{\delta^\psi}\!\!(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
-\forall x \in \Sigma^*$\!\!, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
-$\forall x \in \Sigma^*$\!\!. Hence $L(A^\psi)=\overline{\psi^{-1}}(L(A))$.
+Induction can be used to show $\overline{\delta^\psi}(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
+\forall x \in \Sigma^*$, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
+$\forall x \in \Sigma^*$. Hence $L(A^\psi)=\overline{\psi^{-1}}(L(A))$.
 \end{thm}
 
 This theorem makes it possible to extend the range of the pumping lemma (Theorem
@@ -1033,7 +1033,7 @@ Then \DSIG\ is closed under the operator $b$.
 
 \emph{Proof.} $L^b$ represents the first halves of all the words in $L$. For
 example, if $K=\{\pmb{ad},\pmb{abaa},\pmb{ccccc}\}$, then
-$K^b=\{\pmb{a},\pmb{ab}\}$. Assume that $L$ is FAD. Then there exists a DFA 
+$K^b=\{\pmb{a},\pmb{ab}\}$. Assume that $L$ is FAD. Then there exists a DFA
 $A=\langle\Sigma,S,s_0,\delta,F\rangle$ that accepts $L$. The proof consists of
 identifying those states $q$ that are ``midway'' between the start state and a
 final state; specifically, we need to identify the set of \emph{strings} for
@@ -1117,7 +1117,7 @@ Let $\Sigma = \{\pmb{a},\pmb{b}\}$.
 Then \NSIG\ is not closed under the operator $b$.
 
 \emph{Proof.} Let $L=\{\pmb{a}^n\pmb{b}^n$ $|$ $n \geq 0\}\in \NSIG$. Then $L^b=\{\pmb{a}^n$ $|$ $n\geq 0\}
-\notin \NSIG$.
+\not in \NSIG$.
 \end{lmm}
 
 Other examples that show \NSIG\ is not closed under the operator $b$ abound. If
@@ -1125,7 +1125,6 @@ $K=\{x\in\{\pmb{a},\pmb{b}\}^*$ $|$ $\ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$, then
 $K^b=\{\pmb{a},\pmb{b}\}^*$. The last operator we will cover in this chapter is
 useful for illustrating closures that may not be \emph{effective}, that is, for which
 there may not exist an algorithm for constructing the desired entity.
-}
 
 % Definition 5.10
 \begin{dfn}\label{dfn-5.10}
@@ -1399,7 +1398,7 @@ Exercise 5.19).
 
 \item Consider the following alternate ``proof'' of Theorem \ref{thm-5.1}: Let $A$ be an
 \underline NDFA and define $A^\sim$ as suggested in Theorem \ref{thm-5.1}. Give an example to show
-that $L(A^\sim)$ might not be equal to $\sim\!\!L(A)$.
+that $L(A^\sim)$ might not be equal to $\sim L(A)$.
 
 \item Complete the proof of Lemma \ref{lmm-5.7}.
 
@@ -1651,7 +1650,7 @@ which \NSIG\ is not closed? Justify your conclusions.
 
 \item Refer to the construction given in Theorem \ref{thm-5.10}.
 \begin{enumerate}
-\item Prove $\overline{\delta^{\psi}}\!(s,x)=\DBAR(s,\PBAR(x)) \forall s \in S,\forall x \in
+\item Prove $\overline{\delta^{\psi}}(s,x)=\DBAR(s,\PBAR(x)) \forall s \in S,\forall x \in
 	\Sigma^*$
 \item Complete the proof of Theorem \ref{thm-5.10}.
 \end{enumerate}

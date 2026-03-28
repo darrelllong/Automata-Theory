@@ -237,9 +237,9 @@ particular, we could have easily built a DFA that accepts all strings of length
 at least $n$, form the ``intersection'' machine, and apply Theorem \ref{thm-12.1} to the new machine.
 
 Specifically, if $A$ is an $n$-state deterministic finite automaton, consider
-the DFA $A_n=\langle\Sigma,\{r_0,r_1,r_2,\ldots,\\r_n\},r_0,\delta_{\!n},\{r_n\}
-\rangle$, where $\delta_{\!\!n}$ is defined by
-\[ (\forall i=0,1,\ldots,n)(\forall\pmb{a}\in\Sigma)(\delta_{\!\!n}(r_i,\pmb{a})=
+the DFA $A_n=\langle\Sigma,\{r_0,r_1,r_2,\ldots,\\r_n\},r_0,\delta_{n},\{r_n\}
+\rangle$, where $\delta_{n}$ is defined by
+\[ (\forall i=0,1,\ldots,n)(\forall\pmb{a}\in\Sigma)(\delta_{n}(r_i,\pmb{a})=
 	r_{\text{min}\{i+1,n\}}) \]
 It is easy to show that $L(A_n)=\{x\in\Sigma^*\,|\ \ |x|\geq n\}$, and building
 $A^{\cap}$ as specified in Lemma \ref{lmm-5.1} produces a DFA for which $L(A^{\cap})=\{x
@@ -960,7 +960,7 @@ simulated machine ever accepts.
 
 On the other hand, the complement of $D$ is not Turing acceptable. Let $U$ be
 the set of all valid encodings of Turing machines that do \emph{not} halt when
-fed their own encodings. Then $U=\ \sim\!\!D$, and there does not exist a
+fed their own encodings. Then $U=\ \sim D$, and there does not exist a
 machine $T$ for which $L(T)=U$. If such a machine existed, it would have an
 encoding, and this leads to the same problem encountered with the HALT function
 in Pascal. This encoding of $T$ is either a word in $U$ or is not a word in $U$;
@@ -1020,7 +1020,7 @@ as \emph{halting} Turing machines.
 \emph{Proof.} Let $L$ be a Turing-decidable language. Then there must exist a
 Turing machine $H$ for which $L(H)=L$ and that halts with $\pmb{Y}$ or $\pmb{N}$
 for all strings in $\Sigma^*$. The finite-state control of $H$ can be easily
-modified to produce a Turing machine $H'$ for which $L(H')=\ \sim\!\!L$. All
+modified to produce a Turing machine $H'$ for which $L(H')=\ \sim L$. All
 that is required is to replace every transition in $H$ that prints $\pmb{N}$
 with a similar transition that prints $\pmb{Y}$ and likewise make sure that
 $\pmb{N}$ will be printed by $H'$ whenever $H$ prints $\pmb{Y}$.
@@ -1042,7 +1042,7 @@ closure properties, and thus they cannot be equal. Therefore, $\HSIG\subset
 Actually, we have already seen a language that is Turing acceptable but not
 Turing decidable. $D$ was shown to be Turing acceptable, but if $D$ were Turing
 decidable, then its complement would be Turing decidable by Theorem
-\ref{thm-12.14}. However, $\sim\!\!D=U$, and $U$ is definitely not Turing
+\ref{thm-12.14}. However, $\sim D=U$, and $U$ is definitely not Turing
 decidable since it is not even Turing acceptable.
 
 \OSIG, the context-sensitive languages, is another subclass of \TSIG. It is
@@ -1118,7 +1118,7 @@ did not reject its own encoding ($x_L$). Thus, $T_L$ recognizes $x_L$, and
 therefore the corresponding grammar $G_L$ must generate $x_L$. But then $x_L\in
 L(G_L)=L$, contradicting the assumption that $x_L$ did not belong to $L$. If on
 the other hand $x_L$ belongs to $L$, then, by definition of $L$, $T_L$ must
-reject its own encoding ($x_L$), and thus $x_L\notin L(T_L)=L(G_L)=L$, which is
+reject its own encoding ($x_L$), and thus $x_L\not in L(T_L)=L(G_L)=L$, which is
 another contradiction. Thus, no such context-sensitive grammar $G_L$ can exist,
 and $L$ is not a context-sensitive language.
 \end{thm}

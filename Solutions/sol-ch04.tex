@@ -461,7 +461,7 @@ immediately followed by $\pmb{c}$.
     \Lambda(s_1)=\{s_1\},\qquad
     \Lambda(s_2)=\{s_0,s_2\}.
   \]
-  Since $\lambda\notin L(A_\lambda)$, Definition~4.9 adds $q_0$ as an extra
+  Since $\lambda\not in L(A_\lambda)$, Definition~4.9 adds $q_0$ as an extra
   disconnected start state but does not make it final.  Thus
   \[
     A^{\sigma}_\lambda=
@@ -544,7 +544,7 @@ For an NDFA, a word $w$ may follow \emph{multiple} paths, some ending in final
 states and some not.  Under Definition~4.4, $w\in L(A)$ iff \emph{at least one}
 path ends in a final state.  If we complement the final states, a word is
 accepted by the modified machine iff at least one path ends in a \emph{formerly
-nonfinal} state.  This is \emph{not} the same as $w\notin L(A)$, because a word
+nonfinal} state.  This is \emph{not} the same as $w\not in L(A)$, because a word
 can simultaneously have a path to a (formerly) final state and a path to a
 (formerly) nonfinal state; the complemented machine would accept it, but it was
 already in $L(A)$.
@@ -553,7 +553,7 @@ already in $L(A)$.
 $F=\{s_1\}$, $\delta(s_0,\pmb{a})=\{s_0,s_1\}$, $\delta(s_1,\pmb{a})=\emptyset$.
 Then $\pmb{a}\in L(A)$ because $s_1\in\delta(s_0,\pmb{a})$.  After complementing,
 $F'=\{s_0\}$, and $\pmb{a}$ is still accepted (via the path $s_0\to s_0\in F'$),
-yet $\pmb{a}\notin\Sigma^*\setminus L(A)$ since $\pmb{a}\in L(A)$.  Hence the
+yet $\pmb{a}\not in\Sigma^*\setminus L(A)$ since $\pmb{a}\in L(A)$.  Hence the
 complement-of-final-states trick fails for NDFAs.
 
 %% 4.9
@@ -778,7 +778,7 @@ final so that the empty word is still accepted.
   no-$\lambda$ NDFA with exactly one start state and exactly one final state.
   But Exercise~4.23 shows that this can fail when $\lambda$ is in the language.
   So the correct conclusion is: one start state and one final state can be
-  forced under the hypothesis $\lambda\notin L$, but not uniformly in general.
+  forced under the hypothesis $\lambda\not in L$, but not uniformly in general.
 \end{enumerate}
 
 %% 4.16
@@ -867,7 +867,7 @@ Example~4.14).
   Then $\Lambda(s_0)=\{s_0,s_1\}$.  So
   \[
     \DBAR_\lambda(s_0,\pmb{a})
-    =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s_0)}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda\Bigl(\bigcup_{t\in\Lambda(s_0)}\delta_\lambda(t,\pmb{a})\Bigr)
     =\Lambda(\emptyset\cup\emptyset)=\emptyset,
   \]
   but $\delta_\lambda(s_0,\pmb{a})=\emptyset$ also.  Let us try a different
@@ -875,7 +875,7 @@ Example~4.14).
   Then $\delta_\lambda(s_0,\pmb{a})=\emptyset$, yet
   \[
     \DBAR_\lambda(s_0,\pmb{a})
-    =\Lambda\!\Bigl(\bigcup_{t\in\{s_0,s_1\}}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda\Bigl(\bigcup_{t\in\{s_0,s_1\}}\delta_\lambda(t,\pmb{a})\Bigr)
     =\Lambda(\{s_1\})=\{s_1\}\neq\emptyset=\delta_\lambda(s_0,\pmb{a}).
   \]
   This demonstrates that $\DBAR_\lambda(s,\pmb{a})\neq\delta_\lambda(s,\pmb{a})$
@@ -1000,11 +1000,11 @@ finitely many classes iff the minimal DFA is finite.
 
 %% 4.22
 \item \textbf{Later no-$\lambda$ exercise: given an NDFA $A$ without $\lambda$-transitions
-with $\lambda\notin L(A)$, construct $A''$ with exactly one start state, one
+with $\lambda\not in L(A)$, construct $A''$ with exactly one start state, one
 final state, and $L(A'')=L(A)$.}
 
 \textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ with
-$\lambda\notin L(A)$, so $S_0\cap F=\emptyset$.  Define
+$\lambda\not in L(A)$, so $S_0\cap F=\emptyset$.  Define
 \[
 A''=\langle \Sigma,\, S\cup\{q_0,q_f\},\, \{q_0\},\, \delta'',\, \{q_f\}\rangle
 \]
@@ -1034,7 +1034,7 @@ where $q_0$ and $q_f$ are new states and:
 This machine has exactly one start state ($q_0$) and exactly one final state
 ($q_f$).
 
-\textbf{Why this preserves the language.}  Since $\lambda\notin L(A)$, every
+\textbf{Why this preserves the language.}  Since $\lambda\not in L(A)$, every
 accepted word has positive length.  Suppose
 $w=\pmb{a}_1\cdots \pmb{a}_n\in L(A)$.  Then there is a path in $A$ from some
 start state to some final state that reads all of $w$.  In $A''$, use the same
@@ -1100,7 +1100,7 @@ We proceed by induction on $|x|=k\ge 1$.
 $\delta^{\sigma}_\lambda$:
 \[
   \delta^{\sigma}_\lambda(s,\pmb{a})
-  =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a})\Bigr)
+  =\Lambda\Bigl(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a})\Bigr)
   =\DBAR_\lambda(s,\pmb{a}).
 \]
 So $\overline{\delta^{\sigma}_\lambda}(s,\pmb{a})=\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$.
@@ -1362,8 +1362,8 @@ on a set-argument must take the union over all states in the set.
 
 More specifically, the step
 \[
-  \delta^{\sigma}_\lambda\!\bigl(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a}\bigr)
-  = \overline{\delta^{\sigma}_\lambda}\!\bigl(\DBAR_\lambda(s,x),\pmb{a}\bigr)
+  \delta^{\sigma}_\lambda\bigl(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a}\bigr)
+  = \overline{\delta^{\sigma}_\lambda}\bigl(\DBAR_\lambda(s,x),\pmb{a}\bigr)
 \]
 conflates applying $\delta^{\sigma}_\lambda$ to a \emph{set} with applying the
 set-union version of $\overline{\delta^{\sigma}_\lambda}$ to a set argument.  These
