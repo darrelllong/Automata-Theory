@@ -198,7 +198,7 @@ A similar statement can be made about $\OBAR$ once it has been rigorously
 defined.
 
 % Definition 7.2
-\begin{dfn}\label{dfn-7.2}\index{extended state transition function \DBAR\! for FST}\index{extended output function \OBAR\! for FST}
+\begin{dfn}\label{dfn-7.2}\index{extended state transition function \DBAR for FST}\index{extended output function \OBAR  for FST}
 Given a FST $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the \emph{extended
 output function} for $A$, denoted by \OBAR, is a function $\OBAR$$: S \times
 \Sigma^* \rightarrow \Gamma^*$ defined recursively as follows:
@@ -537,12 +537,12 @@ Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define the
 transducer $M^c=\langle\Sigma,\Gamma,S^c,s^c_0,\delta^c,\omega^c\rangle$, called
 \emph{$M$ connected}, by
 \begin{center}\begin{tabular}{l}
-$S^c=\{s \in S$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
+$S^c=\{s \in S \mid \exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
 $s^c_0 = s_0$
 \end{tabular}\end{center}
-$\delta^c$ is essentially the restriction of $\delta$ to $S^c\!\times \Sigma$$:
+$\delta^c$ is essentially the restriction of $\delta$ to $S^c \times \Sigma$$:
 (\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a})=\delta(s,\pmb{a}))$,
-and $\omega^c$ is the restriction of $\omega$ to $S^c\!\times \Sigma$:
+and $\omega^c$ is the restriction of $\omega$ to $S^c \times \Sigma$$:
 (\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\omega^c(s,\pmb{a}) =
 \omega(s,\pmb{a}))$.
 \end{dfn}
@@ -582,7 +582,7 @@ $\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a)},x)$ & $=$ &
 $\OBAR(t,\pmb{a}x)$ & $=$ & (by definition of $z$) \\
 $\OBAR(t,z)$ &&
 \end{tabular}\end{center}
-Since $z$ was an arbitrary element of $\Sigma^{m+1}$\!, and $t$ was an arbitrary
+Since $z$ was an arbitrary element of $\Sigma^{m+1}$ , and $t$ was an arbitrary
 state in $S^c$,
 \[ (\forall z \in \Sigma^{m+1})(\forall t \in S^c)(\overline{\omega^c}(t,z)=\OBAR(t,z)), \]
 which proves $P(m+1)$. Hence, $P(m) \Rightarrow P(m+1)$, and, since $m$ was
@@ -657,11 +657,11 @@ form a machine that is reduced.
 % Definition 7.14
 \begin{dfn}\label{dfn-7.14}\index{A @$ A/_{E_A}$ (A modulo $E_A$)!for FST}
 Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define
-\emph{$M$ modulo its state equivalence relation}, \Index{M$/\!\!_{E_M}$}, by
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+\emph{$M$ modulo its state equivalence relation}, \Index{M$/  _{E_M}$}, by
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$, where
 \begin{center}\begin{tabular}{rcl}
-$S_{E_M}$ & $=$ & $\{[s]_{E_M}$ $|$ $s \in S\}$ \\
+$S_{E_M}$ & $=$ & $\{[s]_{E_M} \mid s \in S\}$ \\
 $s_{0_{E_M}}$ & $=$ & $[s_0]_{E_M}$
 \end{tabular}\end{center}
 $\delta_{E_M}$ is defined by
@@ -676,19 +676,19 @@ The proof that $\delta_{E_M}$ is well defined is similar to that found in
 Chapter \ref{ch-3}. In an analogous fashion, $\omega_{E_M}$ must be shown to be well
 defined (see the exercises).
 
-All the properties that one would expect of $M/\!\!_{E_M}$ are present, as outlined
+All the properties that one would expect of $M/  _{E_M}$ are present, as outlined
 in the following theorem.
 
 % Theorem 7.4
 \begin{thm}\label{thm-7.4}
 Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$,
-\[ M/\!\!_{E_M}= \langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\
+\[ M/  _{E_M}= \langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\
 	\omega_{E_M}\rangle \]
 is equivalent to $M$ and is reduced. Furthermore, if $M$ is connected, so is
-$M/\!\!_{E_M}$
+$M/  _{E_M}$
 
 \emph{Proof.} The proof that connectedness is preserved is identical to that
-given for Theorem \ref{thm-3.5}; showing that $M/\!\!_{E_M}$ is reduced is very similar to the
+given for Theorem \ref{thm-3.5}; showing that $M/  _{E_M}$ is reduced is very similar to the
 proof of Theorem \ref{thm-3.4}. The proof of the fact that the two machines are equivalent
 requires the inductive argument that $(\forall y \in \Sigma^*)(\forall t \in S)
 (\OBAR(t,y) = \OBAR_{E_M}([t]_{E_M},y))$ and is indeed very similar to the proofs
@@ -753,18 +753,18 @@ that $M$ is both reduced and connected.
 
 % Corollary 7.5
 \begin{cor}\label{cor-7.5}
-Given a FST $M$, $M^c\!/\!\!_{E_{M^c}}$ is minimal.
+Given a FST $M$, $M^c /  _{E_{M^c}}$ is minimal.
 
 \emph{Proof.} Let $M$ be a FST and let $A$ be a minimal machine that is
 equivalent to $M$. By Corollaries 7.2 and 7.3, A must be both reduced and
-connected. By Theorems \ref{thm-7.3} and \ref{thm-7.4}, $M^c\!/\!\!_{E_{M^c}}$ is also reduced, connected,
+connected. By Theorems \ref{thm-7.3} and \ref{thm-7.4}, $M^c /  _{E_{M^c}}$ is also reduced, connected,
 and equivalent to $M$ (and hence to $A$). Theorem \ref{thm-7.5} would then guarantee that
-$A$ and $M^c\!/\!\!_{E_{M^c}}$ are isomorphic, and therefore they have the same number
+$A$ and $M^c /  _{E_{M^c}}$ are isomorphic, and therefore they have the same number
 of states. Since $A$ was assumed to have the minimum possible number of states,
-$M^c\!/\!\!_{E_{M^c}}$ also has that property and is thus minimal.
+$M^c /  _{E_{M^c}}$ also has that property and is thus minimal.
 \end{cor}
 
-The minimal machine can therefore be found as long as $M^c\!/\!\!_{E_{M^c}}$ can be
+The minimal machine can therefore be found as long as $M^c /  _{E_{M^c}}$ can be
 computed. Finding $S^c$ (and from that $M^c$) is accomplished in exactly the
 same manner as described in Chapter \ref{ch-3}. The strategy for generating $E_M$ is
 likewise quite similar, and again uses the \emph{$i$th state equivalence
@@ -919,7 +919,7 @@ Results that were targeted toward a FST in the previous sections were specific
 to Mealy machines. When the descriptor ``transducer'' appears in the theorems
 and definitions presented earlier, the concept or result applies unchanged to
 both FSTs and MSMs. Most of these results are alluded to but not restated in
-this section. For example, \DBAR\ \index{extended state transition function \DBAR\! for MSM}
+this section. For example, \DBAR\ \index{extended state transition function \DBAR for MSM}
 is defined like and behaves like the extended
 state transition functions for DFAs and FSTs. On the other hand, because of the
 drastic change in the domain of $\omega$, \OBAR\ must be modified as outlined
@@ -927,7 +927,7 @@ below in order for $\OBAR(s,x)$ to represent the output string produced when
 starting at $s$ and processing $x$.
 
 % Definition 7.17
-\begin{dfn}\label{dfn-7.17}\index{extended output function \OBAR\! for MSM}
+\begin{dfn}\label{dfn-7.17}\index{extended output function \OBAR  for MSM}
 Given a MSM $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the
 \emph{\Index{extended output function}} for $A$, denoted again by \OBAR, is a
 function $\OBAR$$: S \times \Sigma^* \rightarrow \Gamma^*$ defined recursively by:
@@ -1062,7 +1062,7 @@ This construct is implemented in the following definition.
 Given a Mealy machine $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, the
 corresponding Moore machine $A$ is given by $A=\langle\Sigma,\Gamma,S \times
 \Gamma,\langle s_0,\alpha\rangle,\delta',\omega'\rangle$, where $\alpha$ is
-an (arbitrary) member of\, $\Gamma$,
+an (arbitrary) member of  $\Gamma$,
 \[ \delta'\text{ is defined by }(\forall s \in S)(\forall\pmb{b}\in\Gamma)
 	(\forall\pmb{a}\in\Sigma)(\delta'(\langle s,\pmb{b}\rangle, \pmb{a})
         =\langle\delta(s,\pmb{a}),\omega(s,\pmb{a})\rangle) \]
@@ -1310,7 +1310,7 @@ Given a MSM $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define the
 transducer $M^c =\langle\Sigma,\Gamma,S^c,s^c_0,\delta^c,\omega^c\rangle$,
 called \emph{M connected}, by
 \begin{center}\begin{tabular}{l}
-$S^c=\{s \in S$ $|$ $\exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
+$S^c=\{s \in S \mid \exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
 $s^c_0 = s_0$
 \end{tabular}\end{center}
 $\delta^c$ is essentially the restriction of $\delta$ to $S^c \times \Sigma:\ 
@@ -1332,11 +1332,11 @@ the output function can be shown to be well defined (see the exercises).
 % Definition 7.25
 \begin{dfn}\label{dfn-7.25}\index{A @$ A/_{E_A}$ (A modulo $E_A$)!for MSM}
 Given a MSM $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$, define
-\Index{M$/\!\!_{E_M}$}, \emph{$M$ modulo its state equivalence relation}, by
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+\Index{M$/  _{E_M}$}, \emph{$M$ modulo its state equivalence relation}, by
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$, where
 \begin{center}\begin{tabular}{l}
-$S_{E_M}=\{[s]_{E_M}$ $|$ $ s \in S\}$ \\
+$S_{E_M}=\{[s]_{E_M} \mid  s \in S\}$ \\
 $s_{0_{E_M}} = [s_0]_{E_M}$
 \end{tabular}\end{center}
 $\delta_{E_M}$ is defined by
@@ -1346,7 +1346,7 @@ and $\omega_{E_M}$ is defined by
 \[ (\forall [s] \in S_{E_M})(\omega_{E_M}([s]_{E_M}) = \omega(s)) \]
 \end{dfn}
 
-The Moore machine $M/\!\!_{E_M}$ has all the properties attributed to the Mealy
+The Moore machine $M/  _{E_M}$ has all the properties attributed to the Mealy
 version. Without changing the nature of the translation, it is guaranteed to
 produce a MSM which is reduced.
 
@@ -1354,10 +1354,10 @@ produce a MSM which is reduced.
 \begin{thm}\label{thm-7.9}
 Given a MSM $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 \begin{enumerate}[a.]
-\item $M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},
+\item $M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},
 	\omega_{E_M}\rangle$ is equivalent to $M$.
-\item $M/\!\!_{E_M}$ is reduced.
-\item If $M$ is connected, so is $M/\!\!_{E_M}$.
+\item $M/  _{E_M}$ is reduced.
+\item If $M$ is connected, so is $M/  _{E_M}$.
 \item Given a FTD function $f$, the minimal Moore machine corresponding to $f$
 must be reduced.
 \end{enumerate}
@@ -1376,7 +1376,7 @@ Given a MSM $M$:
 \item
 A necessary and sufficient condition for $M$ to be
 	minimal is that $M$ is both reduced and connected.
-\item $M^c\!/\!\!_{E_{M^c}}$ is minimal.
+\item $M^c /  _{E_{M^c}}$ is minimal.
 \end{enumerate}
 
 \emph{Proof.} See the exercises.
@@ -1428,7 +1428,7 @@ nonempty). The rule for computing $E_{i+1M}$ from $E_{iM}$ is identical to that
 given for Mealy machines (and DFAs); only the starting point, $E_{0M}$, had to
 be redefined for Moore machines (compare with Lemma \ref{lmm-7.4}). Lemmas \ref{lmm-7.3} and \ref{lmm-7.6}
 imply that there is an algorithm for finding $E_M$ for any Moore machine $M$;
-this was the final computation needed to produce $M^c\!/\!\!_{E_{M^c}}$, which will be
+this was the final computation needed to produce $M^c /  _{E_{M^c}}$, which will be
 the minimal Moore machine equivalent to the MSM $M$.
 
 % Corollary 7.11
@@ -1809,11 +1809,11 @@ activating the coin return, and let $\pmb{a}$ represent a new output correspondi
 to the vending machine releasing all the coins in its temporary holding area.
 
 \item Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$ and
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$, show that $\delta_{E_M}$ is well defined.
 
 \item Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$ and
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$, show that $\omega_{E_M}$ is well defined.
 
 \item Give an example that shows that requiring a FST $M$ to be reduced is not a
@@ -1944,9 +1944,9 @@ is not reduced.
 \begin{enumerate}
 \item $(\forall y \in \Sigma^*)(\forall t \in S)(\OBAR(t,y) =
 	\OBAR_{E_M}([t]_{E_M},y))$.
-\item $M/\!\!_{E_M}$ is equivalent to $M$.
-\item $M/\!\!_{E_M}$ is reduced.
-\item If $M$ is connected, then $M/\!\!_{E_M}$ is connected.
+\item $M/  _{E_M}$ is equivalent to $M$.
+\item $M/  _{E_M}$ is reduced.
+\item If $M$ is connected, then $M/  _{E_M}$ is connected.
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{0},\pmb{1}\}$ and $\Gamma=\{\pmb{y},\pmb{n}\}$.
@@ -2064,9 +2064,9 @@ left as in Example 7.15). Argue that $f_4$ is not FTD.
 
 \item Given a MSM $M$, prove the following statements from Theorem \ref{thm-7.9}:
 \begin{enumerate}
-\item $M/\!\!_{E_M}$ is equivalent to $M$.
-\item $M/\!\!_{E_M}$ is reduced.
-\item If $M$ is connected, so is $M/\!\!_{E_M}$.
+\item $M/  _{E_M}$ is equivalent to $M$.
+\item $M/  _{E_M}$ is reduced.
+\item If $M$ is connected, so is $M/  _{E_M}$.
 \end{enumerate}
 
 \item Given a FTD function $f$, prove that the minimal Moore machine
@@ -2076,7 +2076,7 @@ corresponding to $f$ must be reduced.
 \begin{enumerate}
 \item A necessary and sufficient condition for $M$ to be minimal is that $M$ is
 both reduced and connected.
-\item $M^c/\!\!_{E_{M^c}}$ is minimal.
+\item $M^c/  _{E_{M^c}}$ is minimal.
 \end{enumerate}
 
 \item Given MSMs $A=\langle\Sigma,\Gamma,S_A,s_{0_A},\delta_A,\omega_A\rangle$
@@ -2096,10 +2096,10 @@ Lemma \ref{lmm-7.5} and Corollary \ref{cor-7.9}:
 \item Prove Corollary \ref{cor-7.11}.
 
 \item Given a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$ and
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$ defined by
 \begin{center}\begin{tabular}{ll}
-$S_{E_M} =\{[s]_{E_M}$ $|$ $s \in S\}$ \\
+$S_{E_M} =\{[s]_{E_M} \mid s \in S\}$ \\
 $s_{0_{E_M}} = [s_0]_{E_M}$
 \end{tabular}\end{center}
 $\delta_{E_M}$ is defined by
@@ -2114,10 +2114,10 @@ and $\omega_{E_M}$ is defined by
 \end{enumerate}
 
 \item Given a MSM $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$ and
-$M/\!\!_{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
+$M/  _{E_M}=\langle\Sigma,\Gamma,S_{E_M},s_{0_{E_M}},\delta_{E_M},\omega_{E_M}
 \rangle$ defined by
 \begin{center}\begin{tabular}{ll}
-$S_{E_M} =\{[s]_{E_M}$ $|$ $s \in S\}$ \\
+$S_{E_M} =\{[s]_{E_M} \mid s \in S\}$ \\
 $s_{0_{E_M}} = [s_0]_{E_M}$
 \end{tabular}\end{center}
 $\delta_{E_M}$ is defined by
@@ -2172,16 +2172,16 @@ such a machine? Explain.
 
 \item \begin{enumerate}
 \item Give an example of a Mealy machine for which $M$ is \emph{not} connected
-and $M/\!\!_{E_M}$ is not connected.
+and $M/  _{E_M}$ is not connected.
 \item Give an example of a Mealy machine for which $M$ is \emph{not} connected
-but $M/\!\!_{E_M}$ is connected.
+but $M/  _{E_M}$ is connected.
 \end{enumerate}
 
 \item \begin{enumerate}
 \item Give an example of a Moore machine for which $M$ is \emph{not} connected
-and $M/\!\!_{E_M}$ is not connected.
+and $M/  _{E_M}$ is not connected.
 \item Give an example of a Moore machine for which $M$ is \emph{not} connected
-but $M/\!\!_{E_M}$ is connected.
+but $M/  _{E_M}$ is connected.
 \end{enumerate}
 
 \item For a homomorphism $\mu$$:\ S_A \rightarrow S_B$ between two Mealy machines
@@ -2230,10 +2230,10 @@ Moore machines.
 \end{enumerate}
 
 \item Given a Mealy machine $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$,
-prove that there exists a homomorphism $\mu$ from $M$ to $M/\!\!_{E_M}$.
+prove that there exists a homomorphism $\mu$ from $M$ to $M/  _{E_M}$.
 
 \item Given a Moore machine $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$,
-prove that there exists a homomorphism $\mu$ from $M$ to $M/\!\!_{E_M}$.
+prove that there exists a homomorphism $\mu$ from $M$ to $M/  _{E_M}$.
 
 \item Consider the intersection presented in Example 7.16 and note that the
 construction presented in Figure \ref{fig-7.15} prevents the transducer from leaving $s_2$

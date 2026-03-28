@@ -243,9 +243,9 @@ special case where $Q = R_L$.
 Let $Q \subseteq \{\pmb{a}\}^* \times \{\pmb{a}\}^*$ be the equivalence relation
 with the following equivalence classes:
 \begin{center}\begin{tabular}{rcl}
-$[\lambda]_Q$\!\!\!\!\! & $=$ &\!\!\!\!\! $\{\lambda\}=\{\lambda\}^0$ \\
-$[\pmb{a}]_Q$\!\!\!\!\! & $=$ &\!\!\!\!\! $\{\pmb{a}\}=\{\pmb{a}\}^1$ \\
-$[\pmb{aa}]_Q$\!\!\!\!\! & $=$ &\!\!\!\!\! $\{\pmb{a}\}^2 \cup \{\pmb{a}\}^3 \cup \{\pmb{a}\}^4 \cup
+$[\lambda]_Q$      & $=$ &      $\{\lambda\}=\{\lambda\}^0$ \\
+$[\pmb{a}]_Q$      & $=$ &      $\{\pmb{a}\}=\{\pmb{a}\}^1$ \\
+$[\pmb{aa}]_Q$      & $=$ &      $\{\pmb{a}\}^2 \cup \{\pmb{a}\}^3 \cup \{\pmb{a}\}^4 \cup
 	\{\pmb{a}\}^5 \cup \ldots$
 \end{tabular}\end{center}
 It is easy to show that $Q$ is a right congruence (see the exercises). If $L_1$
@@ -601,7 +601,7 @@ loop twice}\label{fig-2.7}
 \end{figure}
 
 In general, it can be proved by induction that $(\forall i \in \NN)(\DBAR(s,
-uv^i\!w)=\text{f}=\DBAR(s,uvw))$. Notice that we do reach $q$ two \emph{distinct} times,
+uv^i w)=\text{f}=\DBAR(s,uvw))$. Notice that we do reach $q$ two \emph{distinct} times,
 which implies that the string $v$ contains at least one letter; that is,
 $|v| \geq 1$. Also, after the first $n$ letters of $x$, we must have already
 repeated a state, and thus some state $q$ can be found such that $|uv| \leq n$.
@@ -618,8 +618,8 @@ $x$ & $=$ & $uvw$ \\
 $|uv|$ & $\leq$ & $n$ \\
 $|v|$ & $\geq$ & $1$
 \end{tabular}\end{center}
-and $(\forall i \in \NN)(\DBAR(s_0,uv^i\!w)=$f$)$, that is, $(\forall i \in \NN)
-(uv^i\!w \in L(A))$. In other words, given any ``long'' string in $L(A)$, there is
+and $(\forall i \in \NN)(\DBAR(s_0,uv^i w)=$f$)$, that is, $(\forall i \in \NN)
+(uv^i w \in L(A))$. In other words, given any ``long'' string in $L(A)$, there is
 a part of the string that can be ``pumped'' to produce even longer strings in
 $L(A)$.
 
@@ -639,7 +639,7 @@ $|uv|$ & $\leq$ & $n$ \\
 $|v|$ & $\geq$ & $1$
 \end{tabular}\end{center}
 and
-\[ (\forall i \in \NN)(uv^i\!w \in L). \]
+\[ (\forall i \in \NN)(uv^i w \in L). \]
 
 \emph{Proof.} Given above.
 \end{thm}
@@ -664,7 +664,7 @@ Note that the contrapositive of Theorem \ref{thm-2.3} is:
 \begin{thm}\label{thm-2.4}
 Let $L$ be a language over $\Sigma^*$. {\bf If} \\
 $(\forall n \in \NN)(\exists x \in L \ni |x| \geq n)(\forall u,v,w \in
-\Sigma^* \ni x = uvw,|uv| \leq n, |v| \geq 1)(\exists i \in \NN \ni uv^i\!w
+\Sigma^* \ni x = uvw,|uv| \leq n, |v| \geq 1)(\exists i \in \NN \ni uv^i w
 \notin L)$, \\
 {\bf then} $L$ is not FAD.
 
@@ -885,12 +885,12 @@ R_L = Q$.
 % NOTE: Having trouble getting the spacing on the \not portion of the !Q
 % operator
 \item Let $\Sigma=\{\pmb{a},\pmb{b}\}$. Define the relation $Q$ by $\lambda Q
-\lambda$, and $(\forall x \not= \lambda)(\lambda \not\!\! Q x)$, and
+\lambda$, and $(\forall x \not= \lambda)(\lambda \not   Q x)$, and
 \[ (\forall x \not= \lambda)(\forall y \not= \lambda )[x\ Q\ y \Leftrightarrow
 	(|x|\text{ is even }\wedge |y|\text{ is even})\vee(|x|\text{ is odd }
 	\wedge |y|\text{ is odd})], \]
 which implies that
-\[ (\forall x \not= \lambda)(\forall y \not= \lambda)[x \not\!\! Q\ y
+\[ (\forall x \not= \lambda)(\forall y \not= \lambda)[x \not   Q\ y
 	\Leftrightarrow (|x|\text{ is even }\wedge |y|\text{ is odd})\vee(|x|
 	\text{ is odd} \wedge |y|\text{ is even})]. \]
 \begin{enumerate}
@@ -1033,7 +1033,7 @@ $\pmb{0}) \vee (y$ contains an even number of $\pmb{1}$s$)\}$. Find $R_\Omega$.
 > |x|_{\pmb{b}}\}$ and $L_2=\{x \in \Sigma^*|\ |x|_{\pmb{a}} < 3\}$. Which of
 the following are FAD? Support your answers. \\
 $\text{(a) }L_1\hfill\text{(b) }L_2\hfill\text{(c) }L_1 \cap L_2\hfill
-\text{(d) }\sim\!\! L_2\hfill\text{(e) }L_1 \cup L_2$
+\text{(d) }\sim   L_2\hfill\text{(e) }L_1 \cup L_2$
 
 \item Let $m \in \NN$ and let $R_m$ be defined by $x\ R_m\ y \Leftrightarrow
 |x|-|y|$ is a multiple of $m$.
@@ -1109,7 +1109,7 @@ R^{(A_{R_L})}$.
 \item Show that the converse of Theorem \ref{thm-2.3} is false (\emph{Hint:} See Exercise
 2.29 and let $L = \Phi$).
 
-\item Let $L=\{x \in \{\pmb{a},\pmb{b}\}^*\,|\ \ |x|_{\pmb{a}} = 2|x|_{\pmb{b}}\}$.
+\item Let $L=\{x \in \{\pmb{a},\pmb{b}\}^* |\ \ |x|_{\pmb{a}} = 2|x|_{\pmb{b}}\}$.
 Prove that $L$ is not FAD.
 
 \item Consider the language $K$ defined in Exercise 2.28.
@@ -1151,21 +1151,21 @@ possible choices for the language $L$.
 
 \item Is $A_{R_{L(A)}}$ always equivalent to $A$? Explain.
 
-\item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^*\,|\ \ |y|_{\pmb{0}} =
+\item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^* |\ \ |y|_{\pmb{0}} =
 |y|_{\pmb{1}}\}$ as given in Example 2.11. Let $n$ be given and consider
 $x$$=$$(\pmb{01})^n = \pmb{010101} \ldots \pmb{0101}$. Then $|x| = 2n > n$; but if
 $u = \pmb{0101}$, $v = \pmb{01}$, and $w = (\pmb{01})^{n-3},\ (\forall i \in
 \NN)uv^iw \in L_4$. Does this mean $L_4$ is FAD? Explain.
 
 %%jc we should probably have unique subscripts for the different languages...
-\item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^*\,|\ \ |y|_{\pmb{0}} =
+\item Consider $L_4=\{y \in \{\pmb{0},\pmb{1}\}^* |\ \ |y|_{\pmb{0}} =
 |y|_{\pmb{1}}\}$ as given in Example 2.11. Find $R_{L_4}$.
 
 \item Show that the set of all postfix expressions over the alphabet
 $\{\pmb{A},\pmb{B},\pmb{+},\pmb{-}\}$ is not FAD.
 
 \item Show that the set of all parenthesized infix expressions over the alphabet
-$\{\pmb{A},\pmb{B},\pmb{+},\pmb{-},$\,\pmb{(},\,\pmb{)}$\}$ is not FAD.
+$\{\pmb{A},\pmb{B},\pmb{+},\pmb{-},$ \pmb{(}, \pmb{)}$\}$ is not FAD.
 
 \item For a given language $L$, how does $R_L$ compare to $R_{-L}$; that is, how
 does the right congruence generated by a language compare to the right
@@ -1186,7 +1186,7 @@ in part (b).
 \end{enumerate}
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$. Show that $\{\pmb{a}^i\pmb{b}^j
-\pmb{c}^k\,|\ i,j,k \in \NN$ and $i + j = k\}$ is not FAD.
+\pmb{c}^k |\ i,j,k \in \NN$ and $i + j = k\}$ is not FAD.
 
 \item Let $Q \subseteq \{\pmb{a}\}^* \times \{\pmb{a}\}^*$ be the equivalence
 relation with the following equivalence classes:

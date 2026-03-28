@@ -186,14 +186,14 @@ We will see later that this machine accepts strings that begin with alternating
 $\pmb{a}$s and $\pmb{b}$s and end with one or more consecutive $\pmb{b}$s
 
 % Definition 4.2
-\begin{dfn}\label{dfn-4.2}\index{extended state transition function \DBAR\! for NDFA}
+\begin{dfn}\label{dfn-4.2}\index{extended state transition function \DBAR for NDFA}
 Given an NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$, the
 \emph{extended state transition function} for $A$ is the function $\DBAR:\ S
 \times \Sigma^* \rightarrow \wp(S)$ defined recursively as follows: \\
 \begin{center}\begin{tabular}{c}
 $(\forall s \in S)\ \ \DBAR(s,\lambda) = \{s\}$ \\
 $(\forall s \in S)(\forall\pmb{a}\in\Sigma)(\forall x \in \Sigma^*)\ \ 
-	\DBAR(s,x\pmb{a}) = \bigcup\limits_{q\,\in\,\DBAR(s,x)}\delta(q,
+	\DBAR(s,x\pmb{a}) = \bigcup\limits_{q\in \DBAR(s,x)}\delta(q,
 	\pmb{a})$
 \end{tabular}\end{center}
 \end{dfn}
@@ -212,8 +212,8 @@ $\DBAR(s,\pmb{b}) = \{r, t\}$. From these states, we would then determine what
 could be reached by the second $\pmb{b}$ (from $r$, no progress is possible, but
 from $t$, we can again reach $t$). These calculations are reflected in the
 recursive definition of $\DBAR$:
-\[ \DBAR(s,\pmb{bb}) = \bigcup\limits_{q\,\in\,\DBAR(s,\pmb{b})}\delta
-	(q,\pmb{b}) = \bigcup\limits_{q\,\in\,\{r,t\}}\delta(q,\pmb{b}) =
+\[ \DBAR(s,\pmb{bb}) = \bigcup\limits_{q\in \DBAR(s,\pmb{b})}\delta
+	(q,\pmb{b}) = \bigcup\limits_{q\in \{r,t\}}\delta(q,\pmb{b}) =
 	\delta(r,\pmb{b}) \cup \delta(t,\pmb{b}) = \{\ \} \cup \{t\} = \{t\} \]
 
 Because of the multiplicity of initial states and because the $\delta$ function
@@ -291,7 +291,7 @@ accepted.
 \begin{dfn}\label{dfn-4.3}
 Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ be a nondeterministic finite
 automaton and $w$ be a word in $\Sigma^*$. A accepts $w$ iff 
-$(\bigcup\limits_{q\,\in S_0}\DBAR(q,w)) \cap F \not= \emptyset$.
+$(\bigcup\limits_{q\in S_0}\DBAR(q,w)) \cap F \not= \emptyset$.
 \end{dfn}
 
 Again conforming with our previous usage, a word that is not accepted is
@@ -306,7 +306,7 @@ necessarily different (contrast Definitions \ref{dfn-4.3} and \ref{dfn-1.12}).
 \begin{dfn}\label{dfn-4.4}
 Given an NDFA $A=\langle\Sigma,S,S_0,\delta,F\rangle$, the language accepted
 by $A$, denoted $L(A)$, is given by
-\[L(A) = \{x \in \Sigma^*\,\,|\,\,(\bigcup\limits_{q\,\in S_0}
+\[L(A) = \{x \in \Sigma^* \mid (\bigcup\limits_{q\in S_0}
 \DBAR(q,x)) \cap F \not= \emptyset\}\]
 \end{dfn}
 
@@ -423,8 +423,8 @@ $F^d = \{Q \in S^d|Q \cap F \not= \emptyset\}$
 and $\delta^d$ is the state transition function, $\delta^d$$:\ S^d \times \Sigma
 \rightarrow S^d$, defined by
 \[ (\forall Q \in S^d)(\forall\pmb{a}\in\Sigma)\delta^d(Q,\pmb{a}) =
-	\bigcup\limits_{q\,\in\, Q} \delta(q,\pmb{a}) \]
-$\delta^d$ extends to the function $\deltabar{d}\!\!:\ S^d \times \Sigma^* \rightarrow
+	\bigcup\limits_{q\in Q} \delta(q,\pmb{a}) \]
+$\delta^d$ extends to the function $\deltabar{d}:\ S^d \times \Sigma^* \rightarrow
 S^d$ as suggested by Theorem \ref{thm-1.1}:
 \begin{center}\begin{tabular}{l}
 $(\forall Q \in S^d)\qquad\qquad\qquad\qquad\ \deltabar{d}(Q,\lambda) = Q$ \\
@@ -485,14 +485,14 @@ Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ be a nondeterministic finite
 automaton, and let $A^d=\langle\Sigma,S^d,s^d_0,\delta^d,F^d\rangle$ represent
 the corresponding deterministic finite automaton. Then
 \[ (\forall Q \in S^d)(\forall x \in \Sigma^*)(\deltabar{d}(Q,x) =
-	\bigcup\limits_{q\,\in\, Q} \DBAR(q,x)) \]
+	\bigcup\limits_{q\in Q} \DBAR(q,x)) \]
 
 \emph{Proof.} By induction on $|x|$: Let $P(k)$ be defined by
 \[ P(k):\ (\forall Q \in S^d)(\forall x \in \Sigma^k)(\deltabar{d}(Q,x) =
-	\bigcup\limits_{q\,\in\, Q} \DBAR(q,x)) \]
+	\bigcup\limits_{q\in Q} \DBAR(q,x)) \]
 \emph{Basis step:} $|x| = 0 \Rightarrow x = \lambda$ and therefore
-\[ \deltabar{d}(Q,\lambda) = Q = \bigcup\limits_{q\,\in\, Q}\{q\} = 
-	\bigcup\limits_{q\,\in\, Q}\DBAR(q,\lambda) \]
+\[ \deltabar{d}(Q,\lambda) = Q = \bigcup\limits_{q\in Q}\{q\} = 
+	\bigcup\limits_{q\in Q}\DBAR(q,\lambda) \]
 \emph{Inductive step:} Suppose that the result holds for all $x \ni |x| = k$;
 that is, $P(k)$ is true. Let $y \in \Sigma^{k+1}$. Then $\exists x \in \Sigma^k$
 and $\exists \pmb{a} \in \Sigma \ni y = x\pmb{a}$. Then
@@ -500,15 +500,15 @@ and $\exists \pmb{a} \in \Sigma \ni y = x\pmb{a}$. Then
 $\deltabar{d}(Q,y)$ & $=$ & (by definition of $y$) \\
 $\deltabar{d}(Q,x\pmb{a})$ & $=$ & (by Theorem \ref{thm-1.1}) \\
 $\delta^d(\deltabar{d}(Q,x),\pmb{a})$ & $=$ & (by the induction hypothesis) \\
-$\delta^d(\bigcup\limits_{q\,\in\, Q}\DBAR(q,x),\pmb{a})$ & $=$ & $(\forall A,B
+$\delta^d(\bigcup\limits_{q\in Q}\DBAR(q,x),\pmb{a})$ & $=$ & $(\forall A,B
 	\in \wp(S))(\forall\pmb{a}\in\Sigma)(\delta^d(A \cup B,\pmb{a}) =
 	\delta^d(A,\pmb{a}) \cup \delta^d(B,\pmb{a}))$ \\
-$\bigcup\limits_{q\,\in\, Q}\delta^d(\DBAR(q,x),\pmb{a})$ & $=$ &
+$\bigcup\limits_{q\in Q}\delta^d(\DBAR(q,x),\pmb{a})$ & $=$ &
 	(by Definition \ref{dfn-4.5}) \\
-$\bigcup\limits_{q\,\in\, Q}(\bigcup\limits_{p\,\in\,\DBAR(q,x)}\delta
+$\bigcup\limits_{q\in Q}(\bigcup\limits_{p\in \DBAR(q,x)}\delta
 	(p,\pmb{a}))$ & $=$ & (by Definition \ref{dfn-4.2}) \\
-$\bigcup\limits_{q\,\in\, Q}\DBAR(q,x\pmb{a})$ & $=$ & (by definition of $y$) \\
-$\bigcup\limits_{q\,\in\, Q} \DBAR(q,y)$ &&
+$\bigcup\limits_{q\in Q}\DBAR(q,x\pmb{a})$ & $=$ & (by definition of $y$) \\
+$\bigcup\limits_{q\in Q} \DBAR(q,y)$ &&
 \end{tabular}\end{center}
 Therefore, $P(k) \Rightarrow P(k+1)$ for all $k \geq 0$, and thus by the
 principle of mathematical induction we can say that the result holds for all
@@ -532,7 +532,7 @@ equivalent; that is, $L(A) = L(A^d)$.
 $x \in L(A)$ & $\Leftrightarrow$ & (by Definition \ref{dfn-4.4}) \\
 $(\bigcup\limits_{s \in S_0}\DBAR(s,x)) \cap F \not= \emptyset$ &
 	$\Leftrightarrow$ & (by Definition \ref{dfn-4.5}) \\
-$(\bigcup\limits_{s\,\in\, S_0}\DBAR(s,x)) \in F^d$ & $\Leftrightarrow$ &
+$(\bigcup\limits_{s\in S_0}\DBAR(s,x)) \in F^d$ & $\Leftrightarrow$ &
 	(by Lemma \ref{lmm-4.1}) \\
 $\DBAR^d(S_0,x) \in F^d$ & $\Leftrightarrow$ & (by Definition \ref{dfn-4.5}) \\
 $\DBAR^d(s^d_0,x) \in F^d$ & $\Leftrightarrow$ & (by Definition \ref{dfn-1.15}) \\
@@ -562,7 +562,7 @@ scientific notation according to the following BNF:\index{BNF}\index{natural num
 \<integer\> & ::= & \<natural\>$|$\<sign\>\<natural\> \\
 \<real constant\> & ::= & \<integer\> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
  & &\ \ \<integer\>\pmb{.}  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $|$ \\
- & &\ \ \<integer\>\pmb{.}\<natural\> \ \,$|$ \\
+ & &\ \ \<integer\>\pmb{.}\<natural\> \ $|$ \\
  & &\ \ \<integer\>\pmb{.}\<natural\>\pmb{E}\<integer\> \\
 \hline
 \end{tabular}\end{center}
@@ -857,7 +857,7 @@ quintuple $A_{\lambda}=\langle\Sigma,S,S_0,\delta_{\lambda},F\rangle$, where
 \item $\Sigma$ is an alphabet.
 \item $S$ is a finite nonempty set of states.
 \item $S_0$ is a set of initial states,\index{start state} a nonempty subset of $S$.
-\item $\delta_{\!\lambda}:\ (S \times (\Sigma\cup\{\lambda\})) \rightarrow \wp(S)$
+\item $\delta_\lambda:\ (S \times (\Sigma\cup\{\lambda\})) \rightarrow \wp(S)$
 	is the state transition function.
 \item $F$ is the set of accepting states, a (possibly empty) subset of $S$.
 \end{enumerate}
@@ -884,7 +884,7 @@ Given a nondeterministic finite automaton
 with $\lambda$-transitions, the \emph{$\lambda$-closure of a state} $t \in S$,
 denoted $\Lambda(t)$, is the set of all states that are reachable from $t$
 without processing any input symbols. The \emph{$\lambda$-closure of a
-set of states $T$} is then $\Lambda(T) = \bigcup\limits_{t\,\in\, T} \Lambda(t)$.
+set of states $T$} is then $\Lambda(T) = \bigcup\limits_{t\in T} \Lambda(t)$.
 \end{dfn}
 
 The $\lambda$-closure of a state is the set of all the states that can be
@@ -911,34 +911,34 @@ $\Lambda(s_3) = \{s_3\}$
 \end{figure}
 
 % Definition 4.8
-\begin{dfn}\label{dfn-4.8}\index{extended state transition function \DBAR\! for NDFA $A_{\lambda}$}\index{state transition function!for NDFA $A_{\lambda}$}
+\begin{dfn}\label{dfn-4.8}\index{extended state transition function \DBAR for NDFA $A_{\lambda}$}\index{state transition function!for NDFA $A_{\lambda}$}
 Given a nondeterministic finite automaton
 \[ A_{\lambda} = \langle\Sigma,S,S_0,\delta_{\lambda},F\rangle \]
 with $\lambda$-transitions, the \emph{extended state transition function
-for $A_{\lambda}$} is a function $\DBAR_{\!\lambda}$$: S \times \Sigma^*
+for $A_{\lambda}$} is a function $\DBAR_\lambda$$: S \times \Sigma^*
 \rightarrow \wp(S)$ defined as follows:
 \begin{enumerate}[i.]
-\item $(\forall s \in S)\DBAR_{\!\lambda}(s,\lambda) = \Lambda(s)$
-\item $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\DBAR_{\!\lambda}(s,\pmb{a}) =
-	\Lambda( \bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\!\lambda}(q,\pmb{a}))$
+\item $(\forall s \in S)\DBAR_\lambda(s,\lambda) = \Lambda(s)$
+\item $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\DBAR_\lambda(s,\pmb{a}) =
+	\Lambda( \bigcup\limits_{q\in \Lambda(s)}\delta_\lambda(q,\pmb{a}))$
 \item $(\forall s \in S)(\forall x \in \Sigma^*)(\forall\pmb{a}\in\Sigma)
-	\DBAR_{\!\lambda}(s,x\pmb{a}) = \Lambda(\bigcup\limits_{q\,\in\,\DBAR_{
-	\!\lambda}(s,x)} \delta_{\!\lambda}(q,\pmb{a}))$
+	\DBAR_\lambda(s,x\pmb{a}) = \Lambda(\bigcup\limits_{q\in \DBAR_{
+	\lambda}(s,x)} \delta_\lambda(q,\pmb{a}))$
 \end{enumerate}
 \end{dfn}
 
-The $\DBAR_{\!\lambda}$ function is \emph{not} extended in the same way as for the
+The $\DBAR_\lambda$ function is \emph{not} extended in the same way as for the
 nondeterministic finite automata given in Definition \ref{dfn-4.2}. Most importantly, due
-to the effects of the $\lambda$-closure, $\DBAR_{\!\lambda}(s,\pmb{a}) \not=
-\delta_{\!\lambda}(s,\pmb{a})$. Thus, not only does the $\DBAR_{\!\lambda}$ function
+to the effects of the $\lambda$-closure, $\DBAR_\lambda(s,\pmb{a}) \not=
+\delta_\lambda(s,\pmb{a})$. Thus, not only does the $\DBAR_\lambda$ function
 map to a set of states based on a single letter, but it also includes the
 $\lambda$-closure of those states. This may seem strange for single letters
 (strings of length 1), but it is required for consistency when the
-$\DBAR_{\!\lambda}$ function is presented with strings of length greater than 1,
+$\DBAR_\lambda$ function is presented with strings of length greater than 1,
 since at each state along the path there can be $\lambda$-transitions. Each
 $\lambda$-transition maps to a new state (which may have $\lambda$-transitions
 of its own) that must be included in this path and processed by the
-$\delta_{\!\lambda}$ function.
+$\delta_\lambda$ function.
 
 The nondeterministic finite automaton \emph{without} $\lambda$-transitions that
 corresponds to a nondeterministic finite automaton \emph{with} $\lambda$-transitions is
@@ -967,8 +967,8 @@ $F^{\sigma} = \left\{ \begin{tabular}{ll}
 		\end{tabular}\right. $ \\
 $(\forall\pmb{a}\in\Sigma)\delta^{\sigma}_{\lambda}(q_0,\pmb{a}) = \emptyset$ \\
 $(\forall s \in S)(\forall\pmb{a}\in\Sigma)\quad \delta^{\sigma}_{\lambda}(s,
-	\pmb{a}) = \DBAR_{\!\lambda}(s,\pmb{a}) =
-        \Lambda(\bigcup\limits_{q\,\in\,\Lambda(s)}\delta_{\lambda}
+	\pmb{a}) = \DBAR_\lambda(s,\pmb{a}) =
+        \Lambda(\bigcup\limits_{q\in \Lambda(s)}\delta_{\lambda}
 	(q,\pmb{a}))$
 \end{tabular}\end{center}
 and which is extended in the ``usual'' way for nondeterministic finite automata
@@ -1041,24 +1041,24 @@ and so
 $q_0$, it may be disregarded as one of the start states of $A^{\sigma}_{\lambda}$. Then
 \begin{center}\begin{tabular}{rcl}
 $x \in L(A^{\sigma}_{\lambda})$ & $\Rightarrow$ & (by definition of $L$) \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F^{\sigma}
+$(\bigcup\limits_{s_0\in S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F^{\sigma}
 	\not=\emptyset$ & $\Rightarrow$ & (by Lemma \ref{lmm-4.2}) \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\DBAR_{\lambda}(s_0,x)) \cap F^{\sigma} \not=
+$(\bigcup\limits_{s_0\in S_0}\DBAR_{\lambda}(s_0,x)) \cap F^{\sigma} \not=
 	\emptyset$ & $\Rightarrow$ & \begin{tabular}{l}(since if $q_0$ were the
 	common element, then $x$ \\ would have to be $\lambda$, which violates
 	the assumption) \end{tabular} \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\DBAR_{\lambda}(s_0,x)) \cap F \not= \emptyset$
+$(\bigcup\limits_{s_0\in S_0}\DBAR_{\lambda}(s_0,x)) \cap F \not= \emptyset$
 	& $\Rightarrow$ & (by definition of $L$)
 \\$x \in L(A_{\lambda})$
 \end{tabular}\end{center}
 Conversely, and for many of the same reasons, we have
 \begin{center}\begin{tabular}{rcl}
 $x \in L(A_{\lambda})$ & $\Rightarrow$ & (by definition of $L$) \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\DBAR_{\lambda}(s_0,x)) \cap F \not= \emptyset$
+$(\bigcup\limits_{s_0\in S_0}\DBAR_{\lambda}(s_0,x)) \cap F \not= \emptyset$
 	& $\Rightarrow$ & (by Lemma \ref{lmm-4.2}) \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F
+$(\bigcup\limits_{s_0\in S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F
 	\not=\emptyset$ & $\Rightarrow$ & (since $F \subseteq F^{\sigma}$) \\
-$(\bigcup\limits_{s_0\,\in\, S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F^{\sigma}
+$(\bigcup\limits_{s_0\in S_0}\overline{\delta^{\sigma}_{\lambda}}(s_0,x)) \cap F^{\sigma}
 	\not=\emptyset$ & $\Rightarrow$ & (by definition of $L$) \\
 $x \in L(A^{\sigma}_{\lambda})$ &&
 \end{tabular}\end{center}

@@ -80,7 +80,7 @@ those languages that are related to automata.
 
 % Definition 5.3
 \begin{dfn}\label{dfn-5.3}\index{D@\DSIG \ (D-sigma )}
-Let $\Sigma$ be an alphabet. The symbol \DSIG\, is used to denote the
+Let $\Sigma$ be an alphabet. The symbol \DSIG  is used to denote the
 set of all FAD languages over $\Sigma$; that is,
 $$ \DSIG =\{L \subseteq \Sigma^*\ |\ \exists
 \text{ deterministic finite automaton } M \ni L(M) = L\} $$
@@ -91,7 +91,7 @@ finite automata. In this chapter, it is this set whose closure properties with
 respect to various operations in $\Sigma^*$ we are most interested in
 investigating. For example, if there exists a machine that accepts a language
 $K$, then there is also a machine that accepts the complement of $K$. That is,
-if $K$ is FAD, then $\sim\!\! K$ is FAD: $\DSIG$ is closed under
+if $K$ is FAD, then $\sim   K$ is FAD: $\DSIG$ is closed under
 $\sim$.
 
 % Theorem 5.1
@@ -99,16 +99,16 @@ $\sim$.
 For any alphabet $\Sigma$, $\DSIG$ is closed under $\sim$
 (complementation).
 
-\emph{Proof.} Let $K \in \DSIG$. We must show $\sim\!\! K \in
+\emph{Proof.} Let $K \in \DSIG$. We must show $\sim   K \in
 \DSIG$ also; that is, there is a machine that recognizes
-$\sim\!\! K$. But $K \in \DSIG$, and thus there is a deterministic
+$\sim   K$. But $K \in \DSIG$, and thus there is a deterministic
 finite automaton that recognizes $K$: Let
 $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and $L(A) = K$. Define a new machine
 $A^\sim$ as follows:
 $A^\sim =\langle\Sigma,S^\sim,s_0^\sim,\delta^\sim,F^\sim\rangle =
 \langle\Sigma,S,s_0,\delta,S$-$F\rangle$, which looks just like $A$ except that
 the final and nonfinal states have been interchanged. We claim that
-$L(A^\sim) =\ \sim\!\! K$. To show this, let $x$ be an arbitrary element of
+$L(A^\sim) =\ \sim   K$. To show this, let $x$ be an arbitrary element of
 $\Sigma^*$. Then
 \begin{center}
 \begin{tabular}{rcl}
@@ -127,10 +127,10 @@ $x \notin L(A)$ & $\Leftrightarrow$ &
 	(by definition of $K$) \\
 $x \notin K$ & $\Leftrightarrow$ &
 	(by definition of complement) \\
-$x \in\ \sim\!\! K$ &&
+$x \in\ \sim   K$ &&
 \end{tabular}
 \end{center}
-Thus $L(A^\sim) =\ \sim\!\! K$ as claimed, and therefore the complement of any FAD
+Thus $L(A^\sim) =\ \sim   K$ as claimed, and therefore the complement of any FAD
 language can also be recognized by a machine and is consequently also FAD. Thus
 $\DSIG$ is closed under complementation.
 \end{thm}
@@ -273,9 +273,9 @@ effectively closed).
 For any alphabet $\Sigma$, $\DSIG$ is closed under $\cap$.
 
 \emph{Proof.} Let $L_1$ and $L_2$ belong to $\DSIG$. Then by
-Theorem \ref{thm-5.1}, $\sim\!\! L_1$ and $\sim\!\! L_2$ are also FAD. By Theorem \ref{thm-5.2},
-$\sim\!\! L_1 \cup \sim\!\! L_2$ is also FAD. By Theorem \ref{thm-5.1} again,
-$\sim\!\!(\sim\!\! L_1 \cup \sim\!\! L_2)$ is also FAD. By De Morgan's law, this
+Theorem \ref{thm-5.1}, $\sim   L_1$ and $\sim   L_2$ are also FAD. By Theorem \ref{thm-5.2},
+$\sim   L_1 \cup \sim   L_2$ is also FAD. By Theorem \ref{thm-5.1} again,
+$\sim  (\sim   L_1 \cup \sim   L_2)$ is also FAD. By De Morgan's law, this
 last expression is equivalent to $L_1 \cap L_2$, so $L_1 \cap L_2$ is FAD, and
 thus $L_1 \cap L_2 \in \DSIG$.
 \end{thm}
@@ -602,10 +602,10 @@ $A_*=\langle\Sigma,S_{*},S_{0*},\delta_{*},F_{*}\rangle$,
 where
 \begin{center}
 \begin{tabular}{rll}
-$S_{*}=$ & \!\!\!\!$S \cup \{q_0\}\quad \text{(where $q_0$ is some new
+$S_{*}=$ &     $S \cup \{q_0\}\quad \text{(where $q_0$ is some new
 	state; $q_0 \notin S$)}$ \\
-$S_{0*}=$ &\!\!\!\!$S_0 \cup \{q_0\}$ \\
-$F_{*}=$ &\!\!\!\!$F \cup \{q_0\}$
+$S_{0*}=$ &    $S_0 \cup \{q_0\}$ \\
+$F_{*}=$ &    $F \cup \{q_0\}$
 \end{tabular}
 \end{center}
 and $\delta_{*}$$: (S \cup \{q_0\}) \times \Sigma \rightarrow
@@ -797,12 +797,12 @@ Let $\Sigma$ be an alphabet. Then \NSIG\ is closed under $\sim$ (complementation
 there exists a language $K$ for which
 \begin{center}
 \begin{tabular}{rl}
-$K \in \NSIG\ \wedge \sim\!\! K \notin \NSIG$ & $\Rightarrow$ (by definition of
-	\,\NSIG) \\
-$\sim\!\! K \in \DSIG$ & $\Rightarrow$ (by Theorem \ref{thm-5.1}) \\
-$\sim\!\!(\sim\!\! K) \in \DSIG$ & $\Rightarrow$ (since
-	$\sim\!\!(\sim\!\! K)=K$) \\
-$K \in \DSIG$ & $\Rightarrow$ (by definition of \,\NSIG) \\
+$K \in \NSIG\ \wedge \sim   K \notin \NSIG$ & $\Rightarrow$ (by definition of
+	 \NSIG) \\
+$\sim   K \in \DSIG$ & $\Rightarrow$ (by Theorem \ref{thm-5.1}) \\
+$\sim  (\sim   K) \in \DSIG$ & $\Rightarrow$ (since
+	$\sim  (\sim   K)=K$) \\
+$K \in \DSIG$ & $\Rightarrow$ (by definition of  \NSIG) \\
 $K \notin \NSIG$ &
 \end{tabular}
 \end{center}
@@ -832,7 +832,7 @@ common transformation that can be defined by a language homomorphism.
 % Definition 5.8
 \begin{dfn}\label{dfn-5.8}
 Let $\Sigma=\{\pmb{a_1},\pmb{a_2}, \ldots , \pmb{a_m}\}$ be an alphabet and let
-$\Gamma$ be a second alphabet. Given words $w_1,$ $w_2,\ldots ,w_m$ over $\Gamma^*$\!\!,
+$\Gamma$ be a second alphabet. Given words $w_1,$ $w_2,\ldots ,w_m$ over $\Gamma^*$,
 define a \emph{language homomorphism} $\psi$$: \Sigma \rightarrow \Gamma^*$ by
 $\psi(\pmb{a}_i) = w_i$ for each $i$, which can be extended to
 $\PBAR$$: \Sigma^* \rightarrow \Gamma^*$ by:
@@ -961,11 +961,11 @@ Consider $\overline{\xi}$ from Lemma \ref{lmm-5.4} in which $\xi$$: \Sigma \righ
 \Sigma^*$ was defined by $\xi(\pmb{a})=\pmb{a}$ and $\xi(\pmb{b})=\pmb{a}$. Let
 $z=\pmb{aa}$. Since $\overline{\xi}(\pmb{bb})=\overline{\xi}(\pmb{ba}) =
 \overline{\xi}(\pmb{ab})=\overline{\xi}(\pmb{aa})=\pmb{aa}$,
-\[ \overline{\xi^{-1}}\!(\pmb{aa})=\{\pmb{bb},\pmb{ba},\pmb{ab},\pmb{aa}\}
-\text{. Note that } \overline{\xi^{-1}}\!(\pmb{ba})=\emptyset. \]
+\[ \overline{\xi^{-1}} (\pmb{aa})=\{\pmb{bb},\pmb{ba},\pmb{ab},\pmb{aa}\}
+\text{. Note that } \overline{\xi^{-1}} (\pmb{ba})=\emptyset. \]
 
 For $L=\{x \in\{\pmb{a}\}^*|\ |x|\equiv 0\bmod{3}\},\ 
-\overline{\xi^{-1}}\!(L)=\{x\in\{\pmb{a},\pmb{b}\}^*|\ |x|\equiv 0\bmod{3}\}$.
+\overline{\xi^{-1}} (L)=\{x\in\{\pmb{a},\pmb{b}\}^*|\ |x|\equiv 0\bmod{3}\}$.
 Note that this second set is definitely larger, since it also contains words
 with $\pmb{b}$s in them.
 
@@ -992,11 +992,11 @@ $F^\psi = F$
 \end{tabular}
 \end{center}
 and $\delta^\psi$ is defined by
-\[ \delta^\psi(s,\pmb{a})=\DBAR\!(s,\psi(\pmb{a}))\ 
+\[ \delta^\psi(s,\pmb{a})=\DBAR(s,\psi(\pmb{a}))\ 
 		\forall s \in S, \forall \pmb{a} \in \Sigma \]
-Induction can be used to show $\overline{\delta^\psi}\!\!(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
-\forall x \in \Sigma^*$\!\!, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
-$\forall x \in \Sigma^*$\!\!. Hence $L(A^\psi)=\overline{\psi^{-1}}(L(A))$.
+Induction can be used to show $\overline{\delta^\psi}(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
+\forall x \in \Sigma^*$, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
+$\forall x \in \Sigma^*$. Hence $L(A^\psi)=\overline{\psi^{-1}}(L(A))$.
 \end{thm}
 
 This theorem makes it possible to extend the range of the pumping lemma (Theorem
@@ -1116,21 +1116,20 @@ Once again, \NSIG\ does not enjoy the same closure properties that \DSIG\ does.
 Let $\Sigma = \{\pmb{a},\pmb{b}\}$.
 Then \NSIG\ is not closed under the operator $b$.
 
-\emph{Proof.} Let $L=\{\pmb{a}^n\pmb{b}^n$ $|$ $n \geq 0\}\in \NSIG$. Then $L^b=\{\pmb{a}^n$ $|$ $n\geq 0\}
+\emph{Proof.} Let $L=\{\pmb{a}^n\pmb{b}^n \mid n \geq 0\}\in \NSIG$. Then $L^b=\{\pmb{a}^n \mid n\geq 0\}
 \notin \NSIG$.
 \end{lmm}
 
 Other examples that show \NSIG\ is not closed under the operator $b$ abound. If
-$K=\{x\in\{\pmb{a},\pmb{b}\}^*$ $|$ $\ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$, then
+$K=\{x\in\{\pmb{a},\pmb{b}\}^* \mid \ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$, then
 $K^b=\{\pmb{a},\pmb{b}\}^*$. The last operator we will cover in this chapter is
 useful for illustrating closures that may not be \emph{effective}, that is, for which
 there may not exist an algorithm for constructing the desired entity.
-}
 
 % Definition 5.10
 \begin{dfn}\label{dfn-5.10}
 Let $L_1$ and $L_2$ be languages. The \emph{\Index{quotient}} of $L_1$ with
-$L_2$, written $L_1/L_2$, is defined by $L_1/L_2 =\{x$ $|$ $\exists y \in \Sigma^* \ni
+$L_2$, written $L_1/L_2$, is defined by $L_1/L_2 =\{x \mid \exists y \in \Sigma^* \ni
 y \in L_2 \wedge xy \in L_1\}$
 \end{dfn}
 
@@ -1155,7 +1154,7 @@ $A_1=\langle\Sigma,S_1,s_{0_1},\delta_1,F\rangle$ such that $L(A_1)=L_1$. An
 automaton that accepts $L_1/L_2$ can be defined by
 $A^/=\langle\Sigma,S_1,s_{0_1},\delta_1,F^/\rangle$, where $F^/$ is defined to
 be the set of all states $t$ for which there is a word in $L_2$ that reaches a
-final state from $t$. That is, $F^/=\{t$ $|$ $\exists y \in \Sigma^*\ni (y \in L_2
+final state from $t$. That is, $F^/=\{t \mid \exists y \in \Sigma^*\ni (y \in L_2
 \wedge \DBAR_1(t,y) \in F)\}$. It can be shown that $A^/$ does indeed accept
 $L_1/L_2$, and hence \DSIG\ is closed under quotient (see the exercises).
 \end{thm}
@@ -1357,7 +1356,7 @@ $F$.
 
 \item Let $\Sigma$ be an alphabet, and $x=a_1a_2 \ldots a_{n-1}a_n \in \Sigma^*$;
 define $x^r =a_na_{n-1} \ldots a_2a_1$. For a language $L$ over $\Sigma$, define
-$L^r=\{x^r$ $|$ $x \in L\}$. Note that the (unary) reversal operator $r$ is thus defined
+$L^r=\{x^r \mid x \in L\}$. Note that the (unary) reversal operator $r$ is thus defined
 by $L^r=\{a_na_{n-1} \ldots a_3a_2a_1\ |\ a_1a_2a_3 \ldots a_{n-1}a_n \in L\}$, and
 $L^r$ therefore represents all the words in $L$ written backward. For example, if
 $K=\{\pmb{\lambda},\pmb{ad},\pmb{bbc},\pmb{bbad}\}$, then
@@ -1399,7 +1398,7 @@ Exercise 5.19).
 
 \item Consider the following alternate ``proof'' of Theorem \ref{thm-5.1}: Let $A$ be an
 \underline NDFA and define $A^\sim$ as suggested in Theorem \ref{thm-5.1}. Give an example to show
-that $L(A^\sim)$ might not be equal to $\sim\!\!L(A)$.
+that $L(A^\sim)$ might not be equal to $\sim  L(A)$.
 
 \item Complete the proof of Lemma \ref{lmm-5.7}.
 
@@ -1524,7 +1523,7 @@ automaton accepting $E(L)$.
 \end{enumerate}
 
 \item Let $\Sigma$ be an alphabet. Define
-$B(L)=\{z\ $ $|$ $(\exists x\in L)(\exists y \in \Sigma^*)(z = xy)\}$.
+$B(L)=\{z\  \mid (\exists x\in L)(\exists y \in \Sigma^*)(z = xy)\}$.
 \begin{enumerate}
 \item Given an automaton accepting $L$, describe how to modify it to produce an
 automaton accepting $B(L)$.
@@ -1533,7 +1532,7 @@ automaton accepting $B(L)$.
 \end{enumerate}
 
 \item Let $\Sigma$ be an alphabet. Define
-$M(L)=\{z\ $ $|$ $(\exists x \in L)(\exists y \in \Sigma^+)(z = xy)\}$.
+$M(L)=\{z\  \mid (\exists x \in L)(\exists y \in \Sigma^+)(z = xy)\}$.
 \begin{enumerate}
 \item Given an automaton accepting $L$. describe how to modify it to produce an
 automaton accepting $M(L)$.
@@ -1561,7 +1560,7 @@ still likely to be nondeterministic, however).
 \item Prove that your modified machine behaves as advertised.
 \end{enumerate}
 
-\item Let $W(L)=\{x\ $ $|$ $x$ is formed by deleting one or more letters from a word
+\item Let $W(L)=\{x\  \mid x$ is formed by deleting one or more letters from a word
 in L$\}$.
 \begin{enumerate}
 \item Given an automaton accepting $L$, describe how to modify it to produce an
@@ -1570,7 +1569,7 @@ automaton accepting $W(L)$.
 \item Argue that \DSIG\ is closed under the operator $W$.
 \end{enumerate}
 
-\item Let $V(L)=\{x $ $|$ $x$ is formed by deleting the odd-positioned letters from a
+\item Let $V(L)=\{x  \mid x$ is formed by deleting the odd-positioned letters from a
 word in $L\}$. [\emph{Note:} This refers to the first, third, fifth, and so on,
 letters in a word. For example, if $\pmb{abcdefg}\in L$, then $\pmb{bdf}\in
 V(L)$.]
@@ -1581,7 +1580,7 @@ automaton accepting $V(L)$.
 \item Argue that \DSIG\ is closed under the operator $V$.
 \end{enumerate}
 
-\item Let $U(L)=\{x\ $ $|$ $x$ is formed by deleting the even-positioned letters from
+\item Let $U(L)=\{x\  \mid x$ is formed by deleting the even-positioned letters from
 a word in $L\}$. [\emph{Note:} This refers to the second, fourth, sixth, and so
 on, letters in a word. For example, if $\pmb{abcdefg} \in L$, then
 $\pmb{aceg} \in U(L)$.]
@@ -1592,7 +1591,7 @@ automaton accepting $U(L)$.
 \item Argue that \DSIG\ is closed under the operator U.
 \end{enumerate}
 
-\item Let $T(L)=\{x\ $ $|$ $x$ is formed by deleting every third, sixth, ninth, and so
+\item Let $T(L)=\{x\  \mid x$ is formed by deleting every third, sixth, ninth, and so
 on, letters from a word in $L\}$. [\emph{Note:} This refers to those letters in
 a word whose index position is congruent to $0 \bmod{3}$. For example, if
 $\pmb{abcdefg} \in L$, then $\pmb{abdeg} \in T(L)$.]
@@ -1604,7 +1603,7 @@ automaton accepting $T(L)$.
 \end{enumerate}
 
 \item For any alphabet $\Sigma$,
-let $P=\{x\in\Sigma^*$ $|$ $|x|$ is prime$\}$ and let $I(L)$ be defined by
+let $P=\{x\in\Sigma^* \mid |x|$ is prime$\}$ and let $I(L)$ be defined by
 $I(L) = L \cap P$.
 \begin{enumerate}
 \item Show that \DSIG\ is not closed under $I$.
@@ -1651,7 +1650,7 @@ which \NSIG\ is not closed? Justify your conclusions.
 
 \item Refer to the construction given in Theorem \ref{thm-5.10}.
 \begin{enumerate}
-\item Prove $\overline{\delta^{\psi}}\!(s,x)=\DBAR(s,\PBAR(x)) \forall s \in S,\forall x \in
+\item Prove $\overline{\delta^{\psi}} (s,x)=\DBAR(s,\PBAR(x)) \forall s \in S,\forall x \in
 	\Sigma^*$
 \item Complete the proof of Theorem \ref{thm-5.10}.
 \end{enumerate}
@@ -1702,7 +1701,7 @@ $ F^{^/} =\{t\ | \ \exists y \in \Sigma^* \ni (y \in L_2 \wedge \DBAR_1(t,y) \in
 \item Given deterministic finite automata
 $A_1=\langle\Sigma,S_1,s_{0_1},\delta_1,F\rangle$ such that $L(A_1) = L_1$,
 and $A_2=\langle\Sigma,S_2,s_{0_2},\delta_2,F_2\rangle$ for which $L(A_2) = L_2$,
-give an algorithm for computing $F^{^/}=\{t$ $|$ $\exists y \in \Sigma^* \ni (y \in L_2
+give an algorithm for computing $F^{^/}=\{t \mid \exists y \in \Sigma^* \ni (y \in L_2
 \wedge \DBAR_1(t,y) \in F)\}$.
 \end{enumerate}
 

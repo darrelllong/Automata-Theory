@@ -428,7 +428,7 @@ $\{s_0,s_1,s_2,s_3\}$ and $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.
 
 %% 4.7
 \item Consider the second NDFA of Example~4.16, which accepts the language
-$L^+=\{x_1 x_2\cdots x_k\mid k\ge 1,\, x_i\in L\}$ where $L$ is the language
+$L^+=\{x_1 x_2\cdots x_k\mid k\ge 1,  x_i\in L\}$ where $L$ is the language
 of strings over $\{\pmb{a},\pmb{b},\pmb{c}\}$ containing exactly one $\pmb{b}$
 immediately followed by $\pmb{c}$.
 
@@ -594,16 +594,16 @@ $L(A')=L(A)$ in all cases.
 Definition~4.8 defines $\DBAR$ for NDFAs:
 \begin{enumerate}[(i)]
   \item $\DBAR(s,\lambda)=\{s\}$,
-  \item $(\forall\pmb{a}\in\Sigma)\,\DBAR(s,\pmb{a})=\delta(s,\pmb{a})$,
-  \item $(\forall x\in\Sigma^*)(\forall\pmb{a}\in\Sigma)\,\DBAR(s,x\pmb{a})
+  \item $(\forall\pmb{a}\in\Sigma) \DBAR(s,\pmb{a})=\delta(s,\pmb{a})$,
+  \item $(\forall x\in\Sigma^*)(\forall\pmb{a}\in\Sigma) \DBAR(s,x\pmb{a})
         =\bigcup_{t\in\DBAR(s,x)}\delta(t,\pmb{a})$.
 \end{enumerate}
 Part (ii) concerns single-letter strings.  Setting $x=\lambda$ in part (iii):
 \[
   \DBAR(s,\lambda\pmb{a})
   =\bigcup_{t\in\DBAR(s,\lambda)}\delta(t,\pmb{a})
-  \;=\;\bigcup_{t\in\{s\}}\delta(t,\pmb{a})
-  \;=\;\delta(s,\pmb{a}),
+  =\bigcup_{t\in\{s\}}\delta(t,\pmb{a})
+  =\delta(s,\pmb{a}),
 \]
 where we used part (i) to obtain $\DBAR(s,\lambda)=\{s\}$ and the fact that
 $\lambda\pmb{a}=\pmb{a}$.  Since $\lambda\pmb{a}=\pmb{a}$, this gives
@@ -867,7 +867,7 @@ Example~4.14).
   Then $\Lambda(s_0)=\{s_0,s_1\}$.  So
   \[
     \DBAR_\lambda(s_0,\pmb{a})
-    =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s_0)}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda \Bigl(\bigcup_{t\in\Lambda(s_0)}\delta_\lambda(t,\pmb{a})\Bigr)
     =\Lambda(\emptyset\cup\emptyset)=\emptyset,
   \]
   but $\delta_\lambda(s_0,\pmb{a})=\emptyset$ also.  Let us try a different
@@ -875,7 +875,7 @@ Example~4.14).
   Then $\delta_\lambda(s_0,\pmb{a})=\emptyset$, yet
   \[
     \DBAR_\lambda(s_0,\pmb{a})
-    =\Lambda\!\Bigl(\bigcup_{t\in\{s_0,s_1\}}\delta_\lambda(t,\pmb{a})\Bigr)
+    =\Lambda \Bigl(\bigcup_{t\in\{s_0,s_1\}}\delta_\lambda(t,\pmb{a})\Bigr)
     =\Lambda(\{s_1\})=\{s_1\}\neq\emptyset=\delta_\lambda(s_0,\pmb{a}).
   \]
   This demonstrates that $\DBAR_\lambda(s,\pmb{a})\neq\delta_\lambda(s,\pmb{a})$
@@ -1006,7 +1006,7 @@ final state, and $L(A'')=L(A)$.}
 \textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ with
 $\lambda\notin L(A)$, so $S_0\cap F=\emptyset$.  Define
 \[
-A''=\langle \Sigma,\, S\cup\{q_0,q_f\},\, \{q_0\},\, \delta'',\, \{q_f\}\rangle
+A''=\langle \Sigma,  S\cup\{q_0,q_f\},  \{q_0\},  \delta'',  \{q_f\}\rangle
 \]
 where $q_0$ and $q_f$ are new states and:
 \begin{enumerate}[1.]
@@ -1100,7 +1100,7 @@ We proceed by induction on $|x|=k\ge 1$.
 $\delta^{\sigma}_\lambda$:
 \[
   \delta^{\sigma}_\lambda(s,\pmb{a})
-  =\Lambda\!\Bigl(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a})\Bigr)
+  =\Lambda \Bigl(\bigcup_{t\in\Lambda(s)}\delta_\lambda(t,\pmb{a})\Bigr)
   =\DBAR_\lambda(s,\pmb{a}).
 \]
 So $\overline{\delta^{\sigma}_\lambda}(s,\pmb{a})=\delta^{\sigma}_\lambda(s,\pmb{a})=\DBAR_\lambda(s,\pmb{a})$.
@@ -1172,7 +1172,7 @@ This is why Lemma~4.2 is stated only for $x\in\Sigma^+$ (words of length
 $\ge 1$) and cannot be extended to $\lambda$.
 
 %% 4.27
-\item \textbf{Prove: $(\forall A,B\in\wp(S))(\forall\pmb{a}\in\Sigma)\,
+\item \textbf{Prove: $(\forall A,B\in\wp(S))(\forall\pmb{a}\in\Sigma) 
 \delta^d(A\cup B,\pmb{a})=\delta^d(A,\pmb{a})\cup\delta^d(B,\pmb{a})$.}
 
 \begin{proof}
@@ -1362,8 +1362,8 @@ on a set-argument must take the union over all states in the set.
 
 More specifically, the step
 \[
-  \delta^{\sigma}_\lambda\!\bigl(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a}\bigr)
-  = \overline{\delta^{\sigma}_\lambda}\!\bigl(\DBAR_\lambda(s,x),\pmb{a}\bigr)
+  \delta^{\sigma}_\lambda \bigl(\overline{\delta^{\sigma}_\lambda}(s,x),\pmb{a}\bigr)
+  = \overline{\delta^{\sigma}_\lambda} \bigl(\DBAR_\lambda(s,x),\pmb{a}\bigr)
 \]
 conflates applying $\delta^{\sigma}_\lambda$ to a \emph{set} with applying the
 set-union version of $\overline{\delta^{\sigma}_\lambda}$ to a set argument.  These

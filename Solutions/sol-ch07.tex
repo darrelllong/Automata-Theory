@@ -209,7 +209,7 @@ For a Moore machine $A=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle$:
 \begin{proof}
 We prove that
 \[
-  (\forall x\in\Sigma^*)(\forall y\in\Sigma^*)(\forall t\in S)\,
+  (\forall x\in\Sigma^*)(\forall y\in\Sigma^*)(\forall t\in S) 
   \OBAR(t,yx)=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)
 \]
 by induction on $|y|$.
@@ -259,7 +259,7 @@ $\omega'(s,\pmb{a})=\omega(\delta(s,\pmb{a}))$.
 
 We prove by induction on $|x|$ that
 \[
-  (\forall s\in S)(\forall x\in\Sigma^*)\,
+  (\forall s\in S)(\forall x\in\Sigma^*) 
   \OBAR_M(s,x)=\OBAR_A(s,x).
 \]
 
@@ -298,7 +298,7 @@ be the corresponding Moore machine from Definition~7.20.
 
 We prove the stronger statement
 \[
-  (\forall s\in S)(\forall \pmb{b}\in\Gamma)(\forall x\in\Sigma^*)\,
+  (\forall s\in S)(\forall \pmb{b}\in\Gamma)(\forall x\in\Sigma^*) 
   \OBAR_A(\langle s,\pmb{b}\rangle,x)=\OBAR_M(s,x).
 \]
 
@@ -1111,8 +1111,8 @@ $\DBAR(s_0,x)$ is some state $s$.  Then $f(xy)=\OBAR(s_0,xy)=\OBAR(s_0,x)\cdot\O
   Here $f$ is the current floor, $m$ is the door status, and $P$ is the set of
   pending requests.  For an input $x=\langle u,d,c_1,c_2\rangle$, define
   \[
-    R(x)=\{\,1\mid u=1\text{ or }c_1=1\,\}\cup
-         \{\,2\mid d=1\text{ or }c_2=1\,\},
+    R(x)=\{ 1\mid u=1\text{ or }c_1=1 \}\cup
+         \{ 2\mid d=1\text{ or }c_2=1 \},
   \]
   and let $P^*=P\cup R(x)$.  Then:
   \begin{enumerate}[(i)]
@@ -1981,7 +1981,7 @@ so $E_{0A}$ has exactly one equivalence class.
 However, in this situation it is \emph{not} possible for $E_{0A}$ to differ from
 $E_{1A}$.  By Lemma~7.6(b),
 \[
-  s E_{1A} t\iff s E_{0A} t\ \wedge\ (\forall \pmb{a}\in\Sigma)\,
+  s E_{1A} t\iff s E_{0A} t\ \wedge\ (\forall \pmb{a}\in\Sigma) 
   (\delta(s,\pmb{a})E_{0A}\delta(t,\pmb{a})).
 \]
 If $E_{0A}$ has only one equivalence class, then every pair of successor states

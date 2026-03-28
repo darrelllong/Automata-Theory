@@ -743,11 +743,11 @@ $B(L)$ is the set of all words that have a prefix in $L$.
   \item \textbf{Proof:}  By induction on the length of the input, after reading a
   word $z$ the machine $A'$ is in state
   \[
-  \langle \deltabar{}(s_0,z),\,1\rangle
+  \langle \deltabar{}(s_0,z), 1\rangle
   \]
   exactly when some prefix of $z$ is in $L$, and otherwise in
   \[
-  \langle \deltabar{}(s_0,z),\,0\rangle.
+  \langle \deltabar{}(s_0,z), 0\rangle.
   \]
   Therefore $A'$ accepts exactly those words having a prefix in $L$, that is,
   exactly the words in $B(L)$.
@@ -1000,7 +1000,7 @@ Hence $U(L)\in\DSIG$. \qed
   with $|uv|\le p$ and $|v|\ge 1$.  Since the word is unary, let $|v|=m\ge 1$.
   Pump with $i=q+1$.  Then
   \[
-  |uv^{q+1}w|=q+q\,m=q(1+m).
+  |uv^{q+1}w|=q+q m=q(1+m).
   \]
   This number is composite, because $q>1$ and $1+m>1$.  Hence
   $uv^{q+1}w\notin P$, contradicting the pumping lemma.  Therefore

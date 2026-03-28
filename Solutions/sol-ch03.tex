@@ -29,15 +29,15 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 %%------------------------------------------------------------
 \item \textbf{Prove $E_A=\bigcap_{j=0}^\infty E_{jA}$.}
 
-Define $E_{0A}$: $s\,E_{0A}\,t\Leftrightarrow(s\in F\Leftrightarrow t\in F)$.
+Define $E_{0A}$: $s E_{0A} t\Leftrightarrow(s\in F\Leftrightarrow t\in F)$.
 
-Define $E_{i+1,A}$: $s\,E_{i+1,A}\,t\Leftrightarrow s\,E_{iA}\,t\wedge(\forall a\in\Sigma)(\delta(s,a)\,E_{iA}\,\delta(t,a))$.
+Define $E_{i+1,A}$: $s E_{i+1,A} t\Leftrightarrow s E_{iA} t\wedge(\forall a\in\Sigma)(\delta(s,a) E_{iA} \delta(t,a))$.
 
-$E_A$ (state equivalence): $s\,E_A\,t\Leftrightarrow L(A^s)=L(A^t)$ where $A^s$ is $A$ with start state $s$.
+$E_A$ (state equivalence): $s E_A t\Leftrightarrow L(A^s)=L(A^t)$ where $A^s$ is $A$ with start state $s$.
 
 ($\subseteq$): We show $E_A\subseteq E_{jA}$ for every $j$ by induction on $j$.
 
-\textit{Base} ($j=0$): if $s\,E_A\,t$, then $L(A^s)=L(A^t)$. In particular,
+\textit{Base} ($j=0$): if $s E_A t$, then $L(A^s)=L(A^t)$. In particular,
 \[
 \lambda\in L(A^s)\Leftrightarrow \lambda\in L(A^t),
 \]
@@ -45,27 +45,27 @@ so
 \[
 s\in F \Leftrightarrow t\in F.
 \]
-Hence $s\,E_{0A}\,t$.
+Hence $s E_{0A} t$.
 
-\textit{Step}: assume $E_A\subseteq E_{jA}$ and let $s\,E_A\,t$. Then
+\textit{Step}: assume $E_A\subseteq E_{jA}$ and let $s E_A t$. Then
 $L(A^s)=L(A^t)$. For every $a\in\Sigma$,
 \[
 L(A^{\delta(s,a)})=\{x\in\Sigma^*:ax\in L(A^s)\}
 =\{x\in\Sigma^*:ax\in L(A^t)\}
 =L(A^{\delta(t,a)}),
 \]
-so $\delta(s,a)\,E_A\,\delta(t,a)$. By the induction hypothesis,
+so $\delta(s,a) E_A \delta(t,a)$. By the induction hypothesis,
 \[
-s\,E_{jA}\,t
+s E_{jA} t
 \qquad\text{and}\qquad
-\delta(s,a)\,E_{jA}\,\delta(t,a)\quad(\forall a\in\Sigma).
+\delta(s,a) E_{jA} \delta(t,a)\quad(\forall a\in\Sigma).
 \]
-Therefore $s\,E_{j+1,A}\,t$. Thus $E_A\subseteq E_{jA}$ for every $j$, and so
+Therefore $s E_{j+1,A} t$. Thus $E_A\subseteq E_{jA}$ for every $j$, and so
 \[
 E_A\subseteq \bigcap_{j=0}^\infty E_{jA}.
 \]
 
-($\supseteq$): Suppose $s\,E_{jA}\,t$ for every $j$. We claim that for every
+($\supseteq$): Suppose $s E_{jA} t$ for every $j$. We claim that for every
 $n\geq 0$ and every string $x$ with $|x|\leq n$,
 \[
 \DBAR(s,x)\in F \Leftrightarrow \DBAR(t,x)\in F.
@@ -73,7 +73,7 @@ $n\geq 0$ and every string $x$ with $|x|\leq n$,
 We prove this by induction on $n$.
 
 \textit{Base} ($n=0$): the only string of length at most $0$ is $\lambda$. Since
-$s\,E_{0A}\,t$, we have
+$s E_{0A} t$, we have
 \[
 s\in F \Leftrightarrow t\in F,
 \]
@@ -83,11 +83,11 @@ that is,
 \]
 
 \textit{Step}: assume the claim holds for $n$. Let $|x|\leq n+1$.
-If $x=\lambda$, then $s\,E_{n+1,A}\,t$ implies $s\,E_{nA}\,t$, so the induction
+If $x=\lambda$, then $s E_{n+1,A} t$ implies $s E_{nA} t$, so the induction
 hypothesis already gives the result. If $x=ay$ with $a\in\Sigma$ and $|y|\leq n$,
-then $s\,E_{n+1,A}\,t$ implies
+then $s E_{n+1,A} t$ implies
 \[
-\delta(s,a)\,E_{nA}\,\delta(t,a).
+\delta(s,a) E_{nA} \delta(t,a).
 \]
 Applying the induction hypothesis to the pair $\delta(s,a),\delta(t,a)$ and the
 string $y$, we get
@@ -110,7 +110,7 @@ which means
 \[
 x\in L(A^s)\Leftrightarrow x\in L(A^t).
 \]
-Therefore $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$. So
+Therefore $L(A^s)=L(A^t)$, i.e., $s E_A t$. So
 \[
 \bigcap_{j=0}^\infty E_{jA}\subseteq E_A.
 \]
@@ -119,12 +119,12 @@ Hence $E_A=\bigcap_{j=0}^\infty E_{jA}$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{E_A}$ in Definition 3.8 is well defined.}
 
-$\delta_{E_A}([s]_{E_A},a)=[\delta(s,a)]_{E_A}$. If $[s]_{E_A}=[t]_{E_A}$, i.e., $s\,E_A\,t$, then $\delta(s,a)\,E_A\,\delta(t,a)$ (proved in Exercise 3.3, $\supseteq$ direction): $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$. So $[\delta(s,a)]_{E_A}=[\delta(t,a)]_{E_A}$. $\square$
+$\delta_{E_A}([s]_{E_A},a)=[\delta(s,a)]_{E_A}$. If $[s]_{E_A}=[t]_{E_A}$, i.e., $s E_A t$, then $\delta(s,a) E_A \delta(t,a)$ (proved in Exercise 3.3, $\supseteq$ direction): $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$. So $[\delta(s,a)]_{E_A}=[\delta(t,a)]_{E_A}$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $F_{E_A}$ is well defined.}
 
-$F_{E_A}=\{[s]_{E_A}\mid s\in F\}$. If $[s]_{E_A}=[t]_{E_A}$ and $s\in F$: $s\,E_A\,t\Rightarrow L(A^s)=L(A^t)\Rightarrow\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t)\Rightarrow s\in F\Leftrightarrow t\in F$. So $t\in F$. $\square$
+$F_{E_A}=\{[s]_{E_A}\mid s\in F\}$. If $[s]_{E_A}=[t]_{E_A}$ and $s\in F$: $s E_A t\Rightarrow L(A^s)=L(A^t)\Rightarrow\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t)\Rightarrow s\in F\Leftrightarrow t\in F$. So $t\in F$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta^c$ maps into $S^c$.}
@@ -223,7 +223,7 @@ where
 \delta(s_0,\pmb{a})=s_1,\qquad \delta(s_1,\pmb{a})=s_1,\qquad
 \delta(s_2,\pmb{a})=s_2.
 \]
-The state $s_2$ is unreachable, so $A$ is not connected. Also $s_0\,E_A\,s_1$,
+The state $s_2$ is unreachable, so $A$ is not connected. Also $s_0 E_A s_1$,
 because from either state every continuation is accepted, while $s_2$ is not
 equivalent to them because from $s_2$ every continuation is rejected. Thus
 $A/_{E_A}$ has exactly the two states $[s_0]=[s_1]$ and $[s_2]$, and $[s_2]$ is
@@ -238,7 +238,7 @@ where
 \delta(t_0,\pmb{a})=t_1,\qquad \delta(t_1,\pmb{a})=t_1,\qquad
 \delta(t_2,\pmb{a})=t_2.
 \]
-Again $t_2$ is unreachable, so $A$ is not connected. But now $t_1\,E_A\,t_2$,
+Again $t_2$ is unreachable, so $A$ is not connected. But now $t_1 E_A t_2$,
 because from either state every continuation is accepted. Therefore
 $A/_{E_A}$ has just the two states $[t_0]$ and $[t_1]=[t_2]$, and both are
 reachable from the start class: $[t_0]$ is the start state and
@@ -267,7 +267,7 @@ So $\mu$ is a homomorphism. $\square$
 
 More precisely: since $A$ is connected, for each $s\in S$ there exists $x_s\in\Sigma^*$ with $\DBAR(s_{0A},x_s)=s$. Define $\psi(s)=[x_s]_{R_{L(A)}}$.
 
-\item Well-definedness: if $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then $x\,R^A\,y$ (same state), and $R^A$ refines $R_{L(A)}$, so $x\,R_{L(A)}\,y$, giving $[x]_{R_{L(A)}}=[y]_{R_{L(A)}}$. $\square$
+\item Well-definedness: if $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then $x R^A y$ (same state), and $R^A$ refines $R_{L(A)}$, so $x R_{L(A)} y$, giving $[x]_{R_{L(A)}}=[y]_{R_{L(A)}}$. $\square$
 
 \item Homomorphism:
 \begin{itemize}
@@ -384,7 +384,7 @@ $\cong$ is a relation on DFAs, not on $\Sigma^*$. Right congruences are relation
 %%------------------------------------------------------------
 \item \textbf{Is $E_A$ a right congruence?}
 
-$E_A$ is a relation on states $S$, not on $\Sigma^*$. So strictly speaking, $E_A$ is not a right congruence (which is a relation on $\Sigma^*$). However, $R^A$ (induced on strings) is a right congruence, and $E_A$ induces $R^A$ via $x\,R^A\,y\Leftrightarrow\DBAR(s_0,x)\,E_A\,\DBAR(s_0,y)$.
+$E_A$ is a relation on states $S$, not on $\Sigma^*$. So strictly speaking, $E_A$ is not a right congruence (which is a relation on $\Sigma^*$). However, $R^A$ (induced on strings) is a right congruence, and $E_A$ induces $R^A$ via $x R^A y\Leftrightarrow\DBAR(s_0,x) E_A \DBAR(s_0,y)$.
 
 %%------------------------------------------------------------
 \item \textbf{If $A$ is reduced then $A^c$ is reduced.}
@@ -392,11 +392,11 @@ $E_A$ is a relation on states $S$, not on $\Sigma^*$. So strictly speaking, $E_A
 $A^c$ = connected part of $A$. States of $A^c$ are $S^c\subseteq S$. If $A$ is reduced, no two distinct states in $S$ are equivalent; in particular, no two distinct states in $S^c\subseteq S$ are equivalent. So $A^c$ is reduced. $\square$
 
 %%------------------------------------------------------------
-\item \textbf{For a homomorphism $\mu: S_A\to S_B$, prove $\mu(s)\,E_B\,\mu(t)\Leftrightarrow s\,E_A\,t$.}
+\item \textbf{For a homomorphism $\mu: S_A\to S_B$, prove $\mu(s) E_B \mu(t)\Leftrightarrow s E_A t$.}
 
-($\Rightarrow$) Suppose $\mu(s)\,E_B\,\mu(t)$, i.e., $L(B^{\mu(s)})=L(B^{\mu(t)})$. By Exercise 3.10: $L(A^s)=L(B^{\mu(s)})$ and $L(A^t)=L(B^{\mu(t)})$ (since $\mu$ is a homomorphism from $A^s$ to $B^{\mu(s)}$). So $L(A^s)=L(A^t)$, i.e., $s\,E_A\,t$.
+($\Rightarrow$) Suppose $\mu(s) E_B \mu(t)$, i.e., $L(B^{\mu(s)})=L(B^{\mu(t)})$. By Exercise 3.10: $L(A^s)=L(B^{\mu(s)})$ and $L(A^t)=L(B^{\mu(t)})$ (since $\mu$ is a homomorphism from $A^s$ to $B^{\mu(s)}$). So $L(A^s)=L(A^t)$, i.e., $s E_A t$.
 
-($\Leftarrow$) Suppose $s\,E_A\,t$. Then $L(A^s)=L(A^t)$. By the homomorphism property: $L(B^{\mu(s)})=L(A^s)=L(A^t)=L(B^{\mu(t)})$, so $\mu(s)\,E_B\,\mu(t)$. $\square$
+($\Leftarrow$) Suppose $s E_A t$. Then $L(A^s)=L(A^t)$. By the homomorphism property: $L(B^{\mu(s)})=L(A^s)=L(A^t)=L(B^{\mu(t)})$, so $\mu(s) E_B \mu(t)$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Define $\psi: M^c\to A_{R^M}$ and prove it is an isomorphism.}
@@ -415,7 +415,7 @@ and define
 \[
 \DBAR(s_0,x)=\DBAR(s_0,y)=s,
 \]
-then by definition of $R^M$ we have $x\,R^M\,y$. Hence
+then by definition of $R^M$ we have $x R^M y$. Hence
 \[
 [x]_{R^M}=[y]_{R^M},
 \]
@@ -449,7 +449,7 @@ Thus $\psi$ preserves start state, transitions, and finality.
 \[
 [x_s]_{R^M}=[x_t]_{R^M},
 \]
-so $x_s\,R^M\,x_t$. By definition of $R^M$,
+so $x_s R^M x_t$. By definition of $R^M$,
 \[
 \DBAR(s_0,x_s)=\DBAR(s_0,x_t),
 \]
@@ -867,7 +867,7 @@ where
 \[
 \delta(q_0,\pmb{a})=q_1,\qquad \delta(q_1,\pmb{a})=q_1.
 \]
-Both states are reachable, so $A^c=A$. Also $q_0\,E_A\,q_1$, because from either
+Both states are reachable, so $A^c=A$. Also $q_0 E_A q_1$, because from either
 state every continuation is accepted. Thus $A$ is not reduced, and neither is
 $A^c$.
 
@@ -880,7 +880,7 @@ where
 \delta(q_0,\pmb{a})=q_1,\qquad \delta(q_1,\pmb{a})=q_1,\qquad
 \delta(q_2,\pmb{a})=q_2.
 \]
-The state $q_2$ is unreachable, and $q_1\,E_A\,q_2$ because from either state
+The state $q_2$ is unreachable, and $q_1 E_A q_2$ because from either state
 every continuation is accepted. So $A$ is not reduced. However,
 \[
 A^c=\langle\{\pmb{a}\},\{q_0,q_1\},q_0,\delta|_{S^c\times\Sigma},\{q_1\}\rangle,
@@ -936,10 +936,10 @@ Now
 Also, for any $a\in\Sigma$,
 \[
 \mu(\delta_R([x]_R,a))
-\;=\;\mu([xa]_R)
-\;=\;[xa]_{R_L}
-\;=\;\delta_{R_L}([x]_{R_L},a)
-\;=\;\delta_{R_L}(\mu([x]_R),a).
+=\mu([xa]_R)
+=[xa]_{R_L}
+=\delta_{R_L}([x]_{R_L},a)
+=\delta_{R_L}(\mu([x]_R),a).
 \]
 Finally,
 \[
@@ -953,7 +953,7 @@ Therefore $\mu$ is a homomorphism from $A_R$ to $A_{R_L}$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Prove: if there is a homomorphism $A\to B$ then $R^A$ refines $R^B$.}
 
-$\mu: A\to B$ homomorphism. If $x\,R^A\,y$: $\DBAR_A(s_0,x)=\DBAR_A(s_0,y)$. Then $\DBAR_B(s_0,x)=\mu(\DBAR_A(s_0,x))=\mu(\DBAR_A(s_0,y))=\DBAR_B(s_0,y)$, so $x\,R^B\,y$. $\square$
+$\mu: A\to B$ homomorphism. If $x R^A y$: $\DBAR_A(s_0,x)=\DBAR_A(s_0,y)$. Then $\DBAR_B(s_0,x)=\mu(\DBAR_A(s_0,x))=\mu(\DBAR_A(s_0,y))=\DBAR_B(s_0,y)$, so $x R^B y$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove: if $A\cong B$ then $R^A=R^B$.}
@@ -961,7 +961,7 @@ $\mu: A\to B$ homomorphism. If $x\,R^A\,y$: $\DBAR_A(s_0,x)=\DBAR_A(s_0,y)$. The
 \begin{enumerate}
 \item Via Exercise 3.35: an isomorphism $\mu: A\to B$ is in particular a homomorphism, so $R^A$ refines $R^B$ (Exercise 3.35). By symmetry ($\mu^{-1}: B\to A$ is also a homomorphism), $R^B$ refines $R^A$. So $R^A=R^B$.
 
-\item Directly: $x\,R^A\,y\Leftrightarrow\DBAR_A(s_0,x)=\DBAR_A(s_0,y)\Leftrightarrow\mu(\DBAR_A(s_0,x))=\mu(\DBAR_A(s_0,y))$ ($\mu$ injective) $\Leftrightarrow\DBAR_B(s_0,x)=\DBAR_B(s_0,y)$ (Exercise 3.10) $\Leftrightarrow x\,R^B\,y$.
+\item Directly: $x R^A y\Leftrightarrow\DBAR_A(s_0,x)=\DBAR_A(s_0,y)\Leftrightarrow\mu(\DBAR_A(s_0,x))=\mu(\DBAR_A(s_0,y))$ ($\mu$ injective) $\Leftrightarrow\DBAR_B(s_0,x)=\DBAR_B(s_0,y)$ (Exercise 3.10) $\Leftrightarrow x R^B y$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1056,7 +1056,7 @@ Counterexample: $A$ = 2-state DFA for $\{a^{2k}\}$, $B$ = 1-state DFA for $\Sigm
 \[
 \psi([x]_{R^M})=\DBAR_M(s_0,x).
 \]
-This is well defined: if $[x]_{R^M}=[y]_{R^M}$, then $x\,R^M\,y$, so by
+This is well defined: if $[x]_{R^M}=[y]_{R^M}$, then $x R^M y$, so by
 definition of $R^M$,
 \[
 \DBAR_M(s_0,x)=\DBAR_M(s_0,y).
@@ -1082,7 +1082,7 @@ and
 
 \item Isomorphism $\psi: A_{R^M}\to M$: Not always. Only if $M$ is connected (since $A_{R^M}\cong M^c$, isomorphism only if $M=M^c$, i.e., $M$ connected).
 
-\item Homomorphism $\psi: M\to A_{R^M}$: Not always. The reachable part of $M$ maps naturally to $A_{R^M}$ (send each reachable state $s$ to $[\,x_s\,]_{R^M}$ where $x_s$ is any string reaching $s$), but unreachable states may obstruct extension.
+\item Homomorphism $\psi: M\to A_{R^M}$: Not always. The reachable part of $M$ maps naturally to $A_{R^M}$ (send each reachable state $s$ to $[ x_s ]_{R^M}$ where $x_s$ is any string reaching $s$), but unreachable states may obstruct extension.
 
 \textbf{Counterexample.} Let $\Sigma=\{\mathbf{a}\}$, $S=\{s_0,s_1,s_{d}\}$, $s_0$ initial, $F=\{s_1\}$, with
 \[
@@ -1378,7 +1378,7 @@ where
 \[
 \delta_B(p_0,a)=p_1,\qquad \delta_B(p_1,a)=p_0,\qquad \delta_B(p_2,a)=p_1.
 \]
-Here $p_2$ is unreachable, and $p_0\,E_B\,p_2$, so $B$ is a non-minimal DFA for
+Here $p_2$ is unreachable, and $p_0 E_B p_2$, so $B$ is a non-minimal DFA for
 $L$.
 
 There is a homomorphism $\mu: B\to A$ collapsing $p_0,p_2\mapsto q_0$ and $p_1\mapsto q_1$: this satisfies $\delta_A(\mu(p),a)=\mu(\delta_B(p,a))$ and $p\in F_B\Leftrightarrow\mu(p)\in F_A$.
@@ -1393,7 +1393,7 @@ But $A\not\cong B$ since they have different numbers of states.
 \begin{enumerate}
 \item $L$ is a union of $R$-classes: since $R$ refines $Q$, each $Q$-class is a union of $R$-classes. So $L=\bigcup(\text{some }Q\text{-classes})=\bigcup(\text{corresponding }R\text{-classes})$.
 
-\item Homomorphism $A_R\to A_Q$: Define $\mu([x]_R)=[x]_Q$ (well-defined since $R$ refines $Q$: $[x]_R=[y]_R\Rightarrow x\,R\,y\Rightarrow x\,Q\,y\Rightarrow[x]_Q=[y]_Q$). Check: $\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_Q=s_{0,Q}$. $\mu(\delta_R([x]_R,a))=\mu([xa]_R)=[xa]_Q=\delta_Q([x]_Q,a)=\delta_Q(\mu([x]_R),a)$. $[x]_R\in F_R\Leftrightarrow x\in L\Leftrightarrow[x]_Q\in F_Q\Leftrightarrow\mu([x]_R)\in F_Q$.
+\item Homomorphism $A_R\to A_Q$: Define $\mu([x]_R)=[x]_Q$ (well-defined since $R$ refines $Q$: $[x]_R=[y]_R\Rightarrow x R y\Rightarrow x Q y\Rightarrow[x]_Q=[y]_Q$). Check: $\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_Q=s_{0,Q}$. $\mu(\delta_R([x]_R,a))=\mu([xa]_R)=[xa]_Q=\delta_Q([x]_Q,a)=\delta_Q(\mu([x]_R),a)$. $[x]_R\in F_R\Leftrightarrow x\in L\Leftrightarrow[x]_Q\in F_Q\Leftrightarrow\mu([x]_R)\in F_Q$.
 
 \item Not in general. Take $\Sigma=\{\pmb{a}\}$, let
 \[
@@ -1551,7 +1551,7 @@ since, for example, $\mu^{-1}(q_1)=q_2$ while $\psi(q_1)=q_1$.
 %%------------------------------------------------------------
 \item \textbf{Three-state DFA with $E_{0A}$ having one class. Can $E_{0A}\neq E_{1A}$?}
 
-$E_{0A}$ has one class iff all states are equivalent under $E_{0A}$, i.e., all are final or all are nonfinal. Example: $F=S=\{q_0,q_1,q_2\}$ (all final). Then $E_{0A}=S\times S$ (one class). Can $E_{1A}\neq E_{0A}$? $E_{1A}$: $q\,E_{1A}\,r\Leftrightarrow q\,E_{0A}\,r\wedge(\forall a)\delta(q,a)\,E_{0A}\,\delta(r,a)$. Since $E_{0A}=S\times S$, all $\delta$-targets are in the same class, so $E_{1A}=E_{0A}$. So no, if $E_{0A}$ has one class then $E_{1A}=E_{0A}$.
+$E_{0A}$ has one class iff all states are equivalent under $E_{0A}$, i.e., all are final or all are nonfinal. Example: $F=S=\{q_0,q_1,q_2\}$ (all final). Then $E_{0A}=S\times S$ (one class). Can $E_{1A}\neq E_{0A}$? $E_{1A}$: $q E_{1A} r\Leftrightarrow q E_{0A} r\wedge(\forall a)\delta(q,a) E_{0A} \delta(r,a)$. Since $E_{0A}=S\times S$, all $\delta$-targets are in the same class, so $E_{1A}=E_{0A}$. So no, if $E_{0A}$ has one class then $E_{1A}=E_{0A}$.
 
 %%------------------------------------------------------------
 \item \textbf{If $A,B$ reduced and connected and $\psi: A\to B$ is a homomorphism, must $\psi$ be an isomorphism?}
@@ -1561,11 +1561,11 @@ final-state, and transition conditions from Definition 3.5. We only need to show
 that $\psi$ is one-to-one and onto.
 
 To prove injectivity, assume $\psi(s)=\psi(t)$. Then certainly
-$\psi(s)\,E_B\,\psi(t)$, and Exercise 3.20 gives
+$\psi(s) E_B \psi(t)$, and Exercise 3.20 gives
 \[
-\psi(s)\,E_B\,\psi(t)\Leftrightarrow s\,E_A\,t.
+\psi(s) E_B \psi(t)\Leftrightarrow s E_A t.
 \]
-Since $A$ is reduced, $s\,E_A\,t$ implies $s=t$. Thus $\psi$ is one-to-one.
+Since $A$ is reduced, $s E_A t$ implies $s=t$. Thus $\psi$ is one-to-one.
 
 To prove surjectivity, let $u\in S_B$. Because $B$ is connected, there exists
 $x\in\Sigma^*$ such that $\DBAR_B(s_{0B},x)=u$. Let
@@ -1598,9 +1598,9 @@ $A_{R_L}$ is a minimal DFA for $L$. $\square$
 By Exercise 3.52: $\exists i\leq|S|$ with $C_i=S^c$. So $S^c=C_i=\{\DBAR(s_0,x):|x|\leq i\}\subseteq\{\DBAR(s_0,x):|x|\leq|S|\}$. The other inclusion is trivial (all strings of length $\leq|S|$ reach states in $S^c$). $\square$
 
 %%------------------------------------------------------------
-\item \textbf{Prove $s\,E_A\,t\Leftrightarrow L(A^s)=L(A^t)$.}
+\item \textbf{Prove $s E_A t\Leftrightarrow L(A^s)=L(A^t)$.}
 
-This is the definition of $E_A$. Formally: $s\,E_A\,t$ is defined as $L(A^s)=L(A^t)$ where $A^s=\langle\Sigma,S,s,\delta,F\rangle$. The equivalence is by definition. (The substantive content is showing $E_A$ satisfies the right congruence property and the iterative characterization from Exercises 3.3--3.4.) $\square$
+This is the definition of $E_A$. Formally: $s E_A t$ is defined as $L(A^s)=L(A^t)$ where $A^s=\langle\Sigma,S,s,\delta,F\rangle$. The equivalence is by definition. (The substantive content is showing $E_A$ satisfies the right congruence property and the iterative characterization from Exercises 3.3--3.4.) $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Properties of initial and terminal sets.}

@@ -1085,7 +1085,7 @@ $\pmb{C}$. Thus, if the string $\pmb{BAbCca}$ were on a two-track tape employing
 check marks, it would look like
 % Get better check symbol than sqrt
 \begin{center}\begin{tabular}{ll}
-$\!\surd\!\!\surd\ \ \surd$ \\
+$ \surd  \surd\ \ \surd$ \\
 $\pmb{babcca}$
 \end{tabular}\end{center}
 The additional states $s_7$ and $s_8$ essentially erase the check marks just
@@ -1147,7 +1147,7 @@ which must then be added to the sentential form. The special characters `$[$' an
 `$]$' will bracket the sentential form throughout this stage of the derivation and
 will indicate the current left and right limits of the tape head travel,
 respectively. Attempting to move left past the conceptual position of `$[$' (or
-right past the position of `$]$'\,) will result in the addition of a blank symbol to
+right past the position of `$]$' ) will result in the addition of a blank symbol to
 the sentential form.
 
 To generate the words accepted by a Turing machine, our grammar will randomly
@@ -1484,7 +1484,7 @@ productions, which will be transformed into $\overline{\pmb{b}}\pmb{abcca_{Y}}$
 by the class 2 productions, and finally into $\pmb{babcca}$ via the class 3
 productions. In the following definition, note that by the conditions placed on
 a strict linear bounded automaton $\Gamma$ already contains symbols of the form
-$\overline{\pmb{A}}$ and $\underline{\pmb{A}}$, and hence so will $\Gamma_{\!\!B}$.
+$\overline{\pmb{A}}$ and $\underline{\pmb{A}}$, and hence so will $\Gamma_{  B}$.
 For simplicity, the state set is required to be of the form $\{s_0,s_1,\ldots,
 s_n\}$, but clearly the state names of any automaton could be renumbered
 sequentially to fit the given definition.
@@ -1500,9 +1500,9 @@ sequentially to fit the given definition.
 Given a strict linear bounded automaton
 \[ B=\langle\Sigma,\Gamma,\{s_0,s_1,\ldots,s_n\},s_0,\delta\rangle, \]
 the context-sensitive grammar corresponding to $B$, $G_B$, is given by
-\[ G_B=\langle\Sigma,\Gamma_{\!\!B},Z,P_B\rangle, \]
-where $\Gamma_{\!\!B}$ is given by
-\[ \Gamma_{\!\!B}=\Gamma\cup\{\pmb{d}_i|\ \pmb{d}\in\Sigma\cup\Gamma,i=1,2,\ldots,n,
+\[ G_B=\langle\Sigma,\Gamma_{  B},Z,P_B\rangle, \]
+where $\Gamma_{  B}$ is given by
+\[ \Gamma_{  B}=\Gamma\cup\{\pmb{d}_i|\ \pmb{d}\in\Sigma\cup\Gamma,i=1,2,\ldots,n,
 	\text{ or }i=\pmb{Y}\}\cup\{Z,S,W\} \]
 
 $P_B$ contains the following classes of productions:

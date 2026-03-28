@@ -7,7 +7,7 @@
 %%------------------------------------------------------------
 \item \textbf{Show $\Psi$ is not a right congruence.}
 
-$x\,\Psi\,y \Leftrightarrow |x|-|y|$ is odd. Take $x=\mathbf{a}$, $y=\mathbf{b}$ (so $|x|-|y|=0$, not odd, thus $x\not\!\Psi\,y$). Also check: is $\Psi$ even an equivalence relation? $|x|-|x|=0$ (even), so $x\not\!\Psi\,x$ (not reflexive). Hence $\Psi$ is not an equivalence relation and a fortiori not a right congruence.
+$x \Psi y \Leftrightarrow |x|-|y|$ is odd. Take $x=\mathbf{a}$, $y=\mathbf{b}$ (so $|x|-|y|=0$, not odd, thus $x\not \Psi y$). Also check: is $\Psi$ even an equivalence relation? $|x|-|x|=0$ (even), so $x\not \Psi x$ (not reflexive). Hence $\Psi$ is not an equivalence relation and a fortiori not a right congruence.
 
 %%------------------------------------------------------------
 \item \textbf{$Q$ defined by $|x|_\mathbf{a}-|y|_\mathbf{a}\equiv 0\pmod{3}$.}
@@ -15,23 +15,23 @@ $x\,\Psi\,y \Leftrightarrow |x|-|y|$ is odd. Take $x=\mathbf{a}$, $y=\mathbf{b}$
 \begin{enumerate}
 \item \textit{Equivalence}: Reflexive: $|x|_\mathbf{a}-|x|_\mathbf{a}=0\equiv 0$. Symmetric: if $3\mid(|x|_\mathbf{a}-|y|_\mathbf{a})$ then $3\mid(|y|_\mathbf{a}-|x|_\mathbf{a})$. Transitive: if $3\mid(a-b)$ and $3\mid(b-c)$ then $3\mid(a-c)$.
 
-\item \textit{Right congruence}: Suppose $x\,Q\,y$, i.e., $|x|_\mathbf{a}\equiv|y|_\mathbf{a}\pmod{3}$. For any $z\in\Sigma^*$:
-$|xz|_\mathbf{a}=|x|_\mathbf{a}+|z|_\mathbf{a}$ and $|yz|_\mathbf{a}=|y|_\mathbf{a}+|z|_\mathbf{a}$. So $|xz|_\mathbf{a}-|yz|_\mathbf{a}=|x|_\mathbf{a}-|y|_\mathbf{a}\equiv 0\pmod{3}$, i.e., $xz\,Q\,yz$.
+\item \textit{Right congruence}: Suppose $x Q y$, i.e., $|x|_\mathbf{a}\equiv|y|_\mathbf{a}\pmod{3}$. For any $z\in\Sigma^*$:
+$|xz|_\mathbf{a}=|x|_\mathbf{a}+|z|_\mathbf{a}$ and $|yz|_\mathbf{a}=|y|_\mathbf{a}+|z|_\mathbf{a}$. So $|xz|_\mathbf{a}-|yz|_\mathbf{a}=|x|_\mathbf{a}-|y|_\mathbf{a}\equiv 0\pmod{3}$, i.e., $xz Q yz$.
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{All languages $L$ over $\{\mathbf{a},\mathbf{b},\mathbf{c}\}$ with $\mathrm{rk}(R_L)=1$.}
 
-$\mathrm{rk}(R_L)=1$ means $R_L$ has exactly one equivalence class, namely all of $\Sigma^*$. This occurs iff $R_L = \Sigma^*\times\Sigma^*$, i.e., $x\,R_L\,y$ for all $x,y$. This happens iff $(\forall z)(xz\in L\Leftrightarrow yz\in L)$ for all $x,y,z$, which holds iff either $L=\emptyset$ or $L=\Sigma^*$.
+$\mathrm{rk}(R_L)=1$ means $R_L$ has exactly one equivalence class, namely all of $\Sigma^*$. This occurs iff $R_L = \Sigma^*\times\Sigma^*$, i.e., $x R_L y$ for all $x,y$. This happens iff $(\forall z)(xz\in L\Leftrightarrow yz\in L)$ for all $x,y,z$, which holds iff either $L=\emptyset$ or $L=\Sigma^*$.
 
-\textit{Justification}: If $L\neq\emptyset$ and $L\neq\Sigma^*$, pick $w\in L$ and $u\notin L$. Then $w\,R_L\,u$ fails (take $z=\lambda$), so $R_L$ has at least 2 classes.
+\textit{Justification}: If $L\neq\emptyset$ and $L\neq\Sigma^*$, pick $w\in L$ and $u\notin L$. Then $w R_L u$ fails (take $z=\lambda$), so $R_L$ has at least 2 classes.
 
 %%------------------------------------------------------------
 \item \textbf{Show $P$ (with 3 equivalence classes as given) is a right congruence.}
 
 The classes are $[\lambda]_P=\{\mathbf{0},\mathbf{1}\}^0$, $[\mathbf{1}]_P=\{\mathbf{0},\mathbf{1}\}^1$, $[\mathbf{00}]_P=\bigcup_{n\geq 2}\{\mathbf{0},\mathbf{1}\}^n$.
 
-We must check: if $x\,P\,y$ then $xa\,P\,ya$ for all $a\in\{0,1\}$.
+We must check: if $x P y$ then $xa P ya$ for all $a\in\{0,1\}$.
 
 \textit{Case $x,y\in[\lambda]_P$}: $|x|=|y|=0$, so $|xa|=|ya|=1$, thus $xa,ya\in[\mathbf{1}]_P$.
 
@@ -39,7 +39,7 @@ We must check: if $x\,P\,y$ then $xa\,P\,ya$ for all $a\in\{0,1\}$.
 
 \textit{Case $x,y\in[\mathbf{00}]_P$}: $|x|,|y|\geq 2$, so $|xa|,|ya|\geq 3\geq 2$, thus $xa,ya\in[\mathbf{00}]_P$.
 
-In every case $xa\,P\,ya$, so $P$ is a right congruence. $\square$
+In every case $xa P ya$, so $P$ is a right congruence. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{All languages $L$ with $R_L=P$ (from Exercise 2.4).}
@@ -69,7 +69,7 @@ $Q$ has three equivalence classes: $[x]_Q$ depends on $|x|_\mathbf{a}\bmod 3$. S
 \item \textbf{Analysis of $Q$ on $\{\mathbf{a},\mathbf{b}\}^*$.}
 
 \begin{enumerate}
-\item \textit{Right congruence, classes}: $\lambda Q \lambda$ by definition; for non-empty strings, $x\,Q\,y$ iff $(|x|,|y|$ have the same parity. Classes: $[\lambda]_Q$ (just $\lambda$) and $C_e=\{x\neq\lambda:|x|\text{ even}\}$ and $C_o=\{x:|x|\text{ odd}\}$. This is a right congruence because appending any $a$ flips parity of length for non-empty strings, consistently within each class.
+\item \textit{Right congruence, classes}: $\lambda Q \lambda$ by definition; for non-empty strings, $x Q y$ iff $(|x|,|y|$ have the same parity. Classes: $[\lambda]_Q$ (just $\lambda$) and $C_e=\{x\neq\lambda:|x|\text{ even}\}$ and $C_o=\{x:|x|\text{ odd}\}$. This is a right congruence because appending any $a$ flips parity of length for non-empty strings, consistently within each class.
 
 \item $L=[\lambda]_Q\cup[\mathbf{aa}]_Q=\{\lambda\}\cup C_e$. Simple description: $L=\{x:|x|\text{ is even}\}$. $R_L$ has two classes: even-length strings and odd-length strings.
 
@@ -95,7 +95,7 @@ These are the only two of the eight languages satisfying part (e).
 \item \textbf{$I$ = identity on $\{\mathbf{a}\}^*$.}
 
 \begin{enumerate}
-\item $x\,I\,y\Leftrightarrow x=y$. Right congruence: if $x=y$, then $xa=ya$ for any $a$. Yes.
+\item $x I y\Leftrightarrow x=y$. Right congruence: if $x=y$, then $xa=ya$ for any $a$. Yes.
 \item Each equivalence class is a singleton: $[\mathbf{a}^n]_I=\{\mathbf{a}^n\}$.
 \end{enumerate}
 
@@ -112,12 +112,12 @@ Let $M$ be the two-state DFA: $\Sigma=\{\mathbf{a}\}$, $S=\{q_0,q_1\}$, $s_0=q_0
 %%------------------------------------------------------------
 \item \textbf{Show $F_{R_L}$ is well defined.}
 
-$F_{R_L}=\{[x]_{R_L}\mid x\in L\}$. We must show: if $[x]_{R_L}=[y]_{R_L}$, then $x\in L\Leftrightarrow y\in L$ (so each $R_L$-class is either entirely inside $L$ or entirely outside $L$, making the assignment of classes to $F_{R_L}$ unambiguous). Since $[x]_{R_L}=[y]_{R_L}$, we have $x\,R_L\,y$, meaning $(\forall z\in\Sigma^*)(xz\in L\Leftrightarrow yz\in L)$. Taking $z=\lambda$: $x\in L\Leftrightarrow y\in L$. $\square$
+$F_{R_L}=\{[x]_{R_L}\mid x\in L\}$. We must show: if $[x]_{R_L}=[y]_{R_L}$, then $x\in L\Leftrightarrow y\in L$ (so each $R_L$-class is either entirely inside $L$ or entirely outside $L$, making the assignment of classes to $F_{R_L}$ unambiguous). Since $[x]_{R_L}=[y]_{R_L}$, we have $x R_L y$, meaning $(\forall z\in\Sigma^*)(xz\in L\Leftrightarrow yz\in L)$. Taking $z=\lambda$: $x\in L\Leftrightarrow y\in L$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{R_L}$ is well defined.}
 
-$\delta_{R_L}([x]_{R_L}, a) = [xa]_{R_L}$. We must show: if $[x]_{R_L}=[y]_{R_L}$, then $[xa]_{R_L}=[ya]_{R_L}$. Since $x\,R_L\,y$, for any $z$: $xaz\in L\Leftrightarrow x(az)\in L\Leftrightarrow y(az)\in L\Leftrightarrow yaz\in L$. Thus $xa\,R_L\,ya$. $\square$
+$\delta_{R_L}([x]_{R_L}, a) = [xa]_{R_L}$. We must show: if $[x]_{R_L}=[y]_{R_L}$, then $[xa]_{R_L}=[ya]_{R_L}$. Since $x R_L y$, for any $z$: $xaz\in L\Leftrightarrow x(az)\in L\Leftrightarrow y(az)\in L\Leftrightarrow yaz\in L$. Thus $xa R_L ya$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $\DBAR_{R_L}([x]_{R_L},y)=[xy]_{R_L}$ by induction on $|y|$.}
@@ -129,12 +129,12 @@ $\delta_{R_L}([x]_{R_L}, a) = [xa]_{R_L}$. We must show: if $[x]_{R_L}=[y]_{R_L}
 %%------------------------------------------------------------
 \item \textbf{Find $R^P$ for automaton $P$ in Example 2.6, check $R^P=R_L$.}
 
-$R^P$ is defined by $x\,R^P\,y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$. Since the machine $P$ in Example 2.6 is the minimal machine for $L$, each state is reachable and distinguishable. The relation $R^P$ has the same classes as $R_L$ (each state corresponds to one $R_L$-class). Hence $R^P=R_L$.
+$R^P$ is defined by $x R^P y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$. Since the machine $P$ in Example 2.6 is the minimal machine for $L$, each state is reachable and distinguishable. The relation $R^P$ has the same classes as $R_L$ (each state corresponds to one $R_L$-class). Hence $R^P=R_L$.
 
 %%------------------------------------------------------------
 \item \textbf{Find $R^A$ for machines from Chapter 1 exercises.}
 
-For each DFA $A$ built in Chapter 1: $R^A$ is defined by $x\,R^A\,y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$ (same state reached). Compare to $R_{L(A)}$: by definition of $R^A$, it always refines $R_{L(A)}$ (since if same state, same future acceptance). For minimal machines they coincide; for non-minimal ones $R^A$ may be strictly finer.
+For each DFA $A$ built in Chapter 1: $R^A$ is defined by $x R^A y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$ (same state reached). Compare to $R_{L(A)}$: by definition of $R^A$, it always refines $R_{L(A)}$ (since if same state, same future acceptance). For minimal machines they coincide; for non-minimal ones $R^A$ may be strictly finer.
 
 %%------------------------------------------------------------
 \item \textbf{Prove the pumping lemma statement by induction.}
@@ -159,7 +159,7 @@ So $\DBAR(s_0,uv^iw')=\DBAR(s,w')=f$ for all $i$. $\square$
 
 Theorem 2.1 states: $L$ is FAD iff $R_L$ has finite rank.
 
-($\Rightarrow$) If $L=L(M)$ for a DFA $M$ with $n$ states, define $\mu: \Sigma^*\to S$ by $\mu(x)=\DBAR(s_0,x)$. Then $x\,R^M\,y\Leftrightarrow\mu(x)=\mu(y)$, so $R^M$ has at most $n$ classes. Since $R^M$ refines $R_L$ and $R_L$ is coarser, $\mathrm{rk}(R_L)\leq\mathrm{rk}(R^M)\leq n<\infty$.
+($\Rightarrow$) If $L=L(M)$ for a DFA $M$ with $n$ states, define $\mu: \Sigma^*\to S$ by $\mu(x)=\DBAR(s_0,x)$. Then $x R^M y\Leftrightarrow\mu(x)=\mu(y)$, so $R^M$ has at most $n$ classes. Since $R^M$ refines $R_L$ and $R_L$ is coarser, $\mathrm{rk}(R_L)\leq\mathrm{rk}(R^M)\leq n<\infty$.
 
 ($\Leftarrow$) If $R_L$ has finite rank $k$, construct the minimal machine $A_{R_L}=\langle\Sigma,[{\cdot}]_{R_L},[\lambda]_{R_L},\delta_{R_L},F_{R_L}\rangle$ with $k$ states (shown well-defined in Exercises 2.11--2.12). Show $L(A_{R_L})=L$: $x\in L(A_{R_L})\Leftrightarrow\DBAR_{R_L}([\lambda],x)\in F_{R_L}\Leftrightarrow[x]\in F_{R_L}\Leftrightarrow x\in L$.
 
@@ -187,7 +187,7 @@ with
 2^m<2^m+d<2^{m+1},
 \]
 so $2^m+d$ is not a power of 2. Hence $\mathbf a^j z\notin L$.
-Thus $\mathbf a^i\not R_L\,\mathbf a^j$ for all $i\ne j$, so every class is a singleton and $R_L=I$.
+Thus $\mathbf a^i\not R_L \mathbf a^j$ for all $i\ne j$, so every class is a singleton and $R_L=I$.
 
 \item Such a language cannot be FAD: $R_L=I$ has infinite rank (one class per string in $\{\mathbf{a}\}^*$), so by Nerode's theorem $L$ is not FAD. $\square$
 \end{enumerate}
@@ -283,7 +283,7 @@ supplied by that theorem.
 
 Take
 \[
-x=\mathbf{0}^{\,n!}\mathbf{2}\mathbf{0}^{\,2n!}.
+x=\mathbf{0}^{ n!}\mathbf{2}\mathbf{0}^{ 2n!}.
 \]
 This string is \emph{not} in $\Gamma$, because the block to the left of
 $\mathbf{2}$ has length $n!$ while the block to the right has length $2n!$, so
@@ -312,7 +312,7 @@ n!+(i-1)k=n!+\frac{n!}{k}k=2n!.
 \]
 Therefore
 \[
-uv^iw=\mathbf{0}^{\,2n!}\mathbf{2}\mathbf{0}^{\,2n!}\in\Gamma.
+uv^iw=\mathbf{0}^{ 2n!}\mathbf{2}\mathbf{0}^{ 2n!}\in\Gamma.
 \]
 This contradicts Theorem 2.6.
 
@@ -347,7 +347,7 @@ So $x_i\not R_\Psi x_j$ for $i\neq j$, giving infinitely many Nerode classes. Th
 %%------------------------------------------------------------
 \item \textbf{Show $K=\{w\mid w=w^r\}$ (palindromes) is not FAD.}
 
-For any $n$, the strings $\mathbf{0},\mathbf{0}^2,\ldots,\mathbf{0}^n$ are in distinct $R_K$-classes: $\mathbf{0}^i\,R_K\,\mathbf{0}^j$ requires $(\forall z)(\mathbf{0}^iz\in K\Leftrightarrow\mathbf{0}^jz\in K)$. Take $z=\mathbf{0}^i$: $\mathbf{0}^{2i}$ is a palindrome (yes). $\mathbf{0}^{j+i}$: palindrome (yes, any string of one letter is a palindrome). So we need a subtler argument. Take $z=\mathbf{1}\mathbf{0}^i$: $\mathbf{0}^i\mathbf{1}\mathbf{0}^i\in K$ (palindrome), but $\mathbf{0}^j\mathbf{1}\mathbf{0}^i\in K$ iff $\mathbf{0}^j\mathbf{1}\mathbf{0}^i=\mathbf{0}^i\mathbf{1}\mathbf{0}^j$, i.e., $i=j$. So distinct $i\neq j$ give distinct classes. Infinite rank. Not FAD. $\square$
+For any $n$, the strings $\mathbf{0},\mathbf{0}^2,\ldots,\mathbf{0}^n$ are in distinct $R_K$-classes: $\mathbf{0}^i R_K \mathbf{0}^j$ requires $(\forall z)(\mathbf{0}^iz\in K\Leftrightarrow\mathbf{0}^jz\in K)$. Take $z=\mathbf{0}^i$: $\mathbf{0}^{2i}$ is a palindrome (yes). $\mathbf{0}^{j+i}$: palindrome (yes, any string of one letter is a palindrome). So we need a subtler argument. Take $z=\mathbf{1}\mathbf{0}^i$: $\mathbf{0}^i\mathbf{1}\mathbf{0}^i\in K$ (palindrome), but $\mathbf{0}^j\mathbf{1}\mathbf{0}^i\in K$ iff $\mathbf{0}^j\mathbf{1}\mathbf{0}^i=\mathbf{0}^i\mathbf{1}\mathbf{0}^j$, i.e., $i=j$. So distinct $i\neq j$ give distinct classes. Infinite rank. Not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Phi=\{\mathbf{a}^j\mathbf{b}^k\mathbf{c}^m\mid j\geq 3,k=m\}$ is not FAD (second pumping lemma).}
@@ -359,10 +359,10 @@ For each $i\in\NN$, let
 \[
 x_i=\mathbf{a}^3\mathbf{b}^i.
 \]
-We claim that the $x_i$ lie in distinct $R$-classes. If $i\neq j$ and $x_i\,R\,x_j$, then
+We claim that the $x_i$ lie in distinct $R$-classes. If $i\neq j$ and $x_i R x_j$, then
 by the right-congruence property,
 \[
-x_i\mathbf{c}^i\,R\,x_j\mathbf{c}^i.
+x_i\mathbf{c}^i R x_j\mathbf{c}^i.
 \]
 But
 \[
@@ -402,7 +402,7 @@ uv^iw\notin C\qquad\text{for every }i\ge0.
 
 Because $x$ is unary, $v=\mathbf{d}^k$ for some $k\ge1$. Then
 \[
-uv^iw=\mathbf{d}^{\,p+(i-1)k}.
+uv^iw=\mathbf{d}^{ p+(i-1)k}.
 \]
 Now choose $i=p+1$. Its length is
 \[
@@ -420,7 +420,7 @@ Therefore $C$ is not FAD. $\square$
 \item \textbf{$R_L$ with 3 classes: $\{\lambda\}$, odd-length, even-length$\setminus\{\lambda\}$.}
 
 \begin{enumerate}
-\item Why $L=\{x\mid|x|\text{ odd}\}$ can't give this $R_L$: Compute $R_{\{x:|x|\text{ odd}\}}$. We need $x\,R_L\,y\Leftrightarrow(\forall z)(|xz|\text{ odd}\Leftrightarrow|yz|\text{ odd})$, i.e., $|x|\equiv|y|\pmod 2$. So $R_L$ has only 2 classes (even-length, odd-length), not 3. $\lambda$ is not distinguished from other even-length strings.
+\item Why $L=\{x\mid|x|\text{ odd}\}$ can't give this $R_L$: Compute $R_{\{x:|x|\text{ odd}\}}$. We need $x R_L y\Leftrightarrow(\forall z)(|xz|\text{ odd}\Leftrightarrow|yz|\text{ odd})$, i.e., $|x|\equiv|y|\pmod 2$. So $R_L$ has only 2 classes (even-length, odd-length), not 3. $\lambda$ is not distinguished from other even-length strings.
 
 \item Let
 \[
@@ -523,7 +523,7 @@ Therefore $\Phi$ is not FAD. $\square$
 \begin{enumerate}
 \item Let
 \[
-C_0=\{\lambda\},\; C_1=\{\mathbf a\},\; C_2=\{\mathbf{aa}\},\; C_3=\{\mathbf a^k:k\ge 3\},\; C_4=\{x:x\text{ contains a }\mathbf b\}.
+C_0=\{\lambda\},  C_1=\{\mathbf a\},  C_2=\{\mathbf{aa}\},  C_3=\{\mathbf a^k:k\ge 3\},  C_4=\{x:x\text{ contains a }\mathbf b\}.
 \]
 If $L$ is exactly one class and still has $R_L$ equal to this 5-class partition, the only possibility is
 \[
@@ -611,14 +611,14 @@ Thus $uw'\notin L_1\cup L_2$, contradicting Theorem 2.3.
 \]
 so $m\mid(|xz|-|yz|)$ as well. Thus $R_m$ is a right congruence.
 
-\item $R_2\cap R_3 = R_6$: $x\,R_2\cap R_3\,y\Leftrightarrow 2\mid|x|-|y|$ and $3\mid|x|-|y|\Leftrightarrow 6\mid|x|-|y|\Leftrightarrow x\,R_6\,y$.
+\item $R_2\cap R_3 = R_6$: $x R_2\cap R_3 y\Leftrightarrow 2\mid|x|-|y|$ and $3\mid|x|-|y|\Leftrightarrow 6\mid|x|-|y|\Leftrightarrow x R_6 y$.
 So every $R_6$-class is contained in an $R_2$-class (and also in an $R_3$-class); in particular, $R_6\subseteq R_2$.
 
-\item In general: since both $R$ and $S$ are equivalence relations, $R\cap S$ is also an equivalence relation. And if $x\,R\cap S\,y$, then $x\,R\,y$ and $x\,S\,y$. For any $z$, right congruence of $R$ and $S$ gives $xz\,R\,yz$ and $xz\,S\,yz$, hence $xz\,(R\cap S)\,yz$. So $R\cap S$ is a right congruence. Also $R\cap S\subseteq R$ and $R\cap S\subseteq S$, so its classes refine the classes of both $R$ and $S$.
+\item In general: since both $R$ and $S$ are equivalence relations, $R\cap S$ is also an equivalence relation. And if $x R\cap S y$, then $x R y$ and $x S y$. For any $z$, right congruence of $R$ and $S$ gives $xz R yz$ and $xz S yz$, hence $xz (R\cap S) yz$. So $R\cap S$ is a right congruence. Also $R\cap S\subseteq R$ and $R\cap S\subseteq S$, so its classes refine the classes of both $R$ and $S$.
 
-\item $R_2\cup R_3$: $\lambda\,R_2\,\mathbf{aa}$ and $\mathbf{a}\,R_3\,\mathbf{aaaa}$. But is $\lambda\,R_2\cup R_3\,\mathbf{a}$? $|\lambda|-|\mathbf{a}|=-1$, not divisible by 2 or 3. No. Is $\lambda\,R_2\cup R_3\,\mathbf{aaa}$? $0-3=-3$, divisible by 3. Yes. Now $\lambda\,R_2\cup R_3\,\mathbf{aaa}$ and $\mathbf{aaa}\,R_2\cup R_3\,\mathbf{aaaaa}$ (length diff=2). But is $\lambda\,R_2\cup R_3\,\mathbf{aaaaa}$? Length diff=5, not divisible by 2 or 3. No. So transitivity fails: not an equivalence relation.
+\item $R_2\cup R_3$: $\lambda R_2 \mathbf{aa}$ and $\mathbf{a} R_3 \mathbf{aaaa}$. But is $\lambda R_2\cup R_3 \mathbf{a}$? $|\lambda|-|\mathbf{a}|=-1$, not divisible by 2 or 3. No. Is $\lambda R_2\cup R_3 \mathbf{aaa}$? $0-3=-3$, divisible by 3. Yes. Now $\lambda R_2\cup R_3 \mathbf{aaa}$ and $\mathbf{aaa} R_2\cup R_3 \mathbf{aaaaa}$ (length diff=2). But is $\lambda R_2\cup R_3 \mathbf{aaaaa}$? Length diff=5, not divisible by 2 or 3. No. So transitivity fails: not an equivalence relation.
 
-\item If $R\cup S$ is an equivalence relation: for any $x,y$ with $x\,R\cup S\,y$, we have $x\,R\,y$ or $x\,S\,y$. Either way, for any $z$: $xz\,R\,yz$ or $xz\,S\,yz$ (by right congruence of $R$ or $S$), hence $xz\,R\cup S\,yz$.
+\item If $R\cup S$ is an equivalence relation: for any $x,y$ with $x R\cup S y$, we have $x R y$ or $x S y$. Either way, for any $z$: $xz R yz$ or $xz S yz$ (by right congruence of $R$ or $S$), hence $xz R\cup S yz$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -630,7 +630,7 @@ Let $R=R_2$ and $S=R_3$. As shown above, $R_2\cup R_3$ is not even an equivalenc
 \item \textbf{Analysis of $\Gamma=\{\lambda,\mathbf{a},\mathbf{ab},\mathbf{ba},\mathbf{bb},\mathbf{bbb}\}\cup\{x:|x|\geq 4\}$.}
 
 \begin{enumerate}
-\item $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab}\,R_\Gamma\,\mathbf{ba}$.
+\item $\mathbf{ab} R_\Gamma \mathbf{ba}$: For all $z$: $\mathbf{ab}z\in\Gamma\Leftrightarrow\mathbf{ba}z\in\Gamma$. If $|z|=0$: $\mathbf{ab},\mathbf{ba}\in\Gamma$ (both listed). \checkmark If $|z|=1$: $|\mathbf{ab}z|=3$. Since $\Gamma$ contains only $\mathbf{bbb}$ at length 3, and $\mathbf{ab}$ cannot be extended to $\mathbf{bbb}$ by appending one letter, $\mathbf{ab}z\notin\Gamma$; likewise $\mathbf{ba}z\notin\Gamma$ (since $\mathbf{baa},\mathbf{bab}\neq\mathbf{bbb}$). Both outside $\Gamma$. \checkmark If $|z|\geq 2$: $|\mathbf{ab}z|,|\mathbf{ba}z|\geq 4$, so both in $\Gamma$. \checkmark Hence $\mathbf{ab} R_\Gamma \mathbf{ba}$.
 
 \item $\mathbf{ab}$ is not related to $\mathbf{bb}$: take $z=\mathbf{b}$. Then
 \[
@@ -641,7 +641,7 @@ But
 \[
 \mathbf{bb}z=\mathbf{bbb}\in\Gamma.
 \]
-So $\mathbf{ab}\not R_\Gamma\,\mathbf{bb}$. $\square$
+So $\mathbf{ab}\not R_\Gamma \mathbf{bb}$. $\square$
 
 \item The 8 classes are exactly:
 \[
@@ -684,15 +684,15 @@ Transition function:
 %%------------------------------------------------------------
 \item \textbf{Prove $R^M$ is a right congruence.}
 
-$R^M$: $x\,R^M\,y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$.
+$R^M$: $x R^M y\Leftrightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$.
 
 Since this relation is defined by equality of destination state, it is immediately an equivalence relation: reflexive, symmetric, and transitive all follow from equality.
 
-To check the right-congruence property, assume $x\,R^M\,y$, so $\DBAR(s_0,x)=\DBAR(s_0,y)=s$. Then for any $z\in\Sigma^*$,
+To check the right-congruence property, assume $x R^M y$, so $\DBAR(s_0,x)=\DBAR(s_0,y)=s$. Then for any $z\in\Sigma^*$,
 \[
 \DBAR(s_0,xz)=\DBAR(s,z)=\DBAR(s_0,yz),
 \]
-so $xz\,R^M\,yz$. Therefore $R^M$ is a right congruence. $\square$
+so $xz R^M yz$. Therefore $R^M$ is a right congruence. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Is Pascal (set of all valid Pascal programs) FAD?}
@@ -792,7 +792,7 @@ $\delta_Q([x]_Q,a)=[xa]_Q$.
 
 First, it is defined for every state and input letter: if $[x]_Q\in S_Q$ and $a\in\Sigma$, then $xa\in\Sigma^*$, so $[xa]_Q\in S_Q$.
 
-Second, it is independent of the chosen representative of the class. If $[x]_Q=[y]_Q$, then $x\,Q\,y$. Since $Q$ is a right congruence, $xa\,Q\,ya$, and therefore
+Second, it is independent of the chosen representative of the class. If $[x]_Q=[y]_Q$, then $x Q y$. Since $Q$ is a right congruence, $xa Q ya$, and therefore
 \[
 [xa]_Q=[ya]_Q.
 \]
@@ -814,7 +814,7 @@ $x\in L(A_Q)\Leftrightarrow\DBAR_Q([\lambda]_Q,x)\in F_Q\Leftrightarrow[x]_Q\in 
 %%------------------------------------------------------------
 \item \textbf{Prove or disprove $Q=R^{A_Q}$.}
 
-$R^{A_Q}$: $x\,R^{A_Q}\,y\Leftrightarrow\DBAR_Q([\lambda],x)=\DBAR_Q([\lambda],y)\Leftrightarrow[x]_Q=[y]_Q\Leftrightarrow x\,Q\,y$. So $R^{A_Q}=Q$. $\square$
+$R^{A_Q}$: $x R^{A_Q} y\Leftrightarrow\DBAR_Q([\lambda],x)=\DBAR_Q([\lambda],y)\Leftrightarrow[x]_Q=[y]_Q\Leftrightarrow x Q y$. So $R^{A_Q}=Q$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $R_L=R^{A_{R_L}}$.}
@@ -835,19 +835,19 @@ So a language can satisfy the pumping conclusion without being FAD. Therefore th
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x:|x|_\mathbf{a}=2|x|_\mathbf{b}\}$ is not FAD.}
 
-For any $n$: strings $\mathbf{a}^0,\mathbf{a}^2,\mathbf{a}^4,\ldots,\mathbf{a}^{2n}$ are in distinct $R_L$-classes. Indeed: $\mathbf{a}^{2i}\,R_L\,\mathbf{a}^{2j}$ requires for all $z$: $\mathbf{a}^{2i}z\in L\Leftrightarrow\mathbf{a}^{2j}z\in L$. Take $z=\mathbf{b}^i$: $\mathbf{a}^{2i}\mathbf{b}^i\in L$ (yes). $\mathbf{a}^{2j}\mathbf{b}^i\in L$ iff $2j=2i$, i.e., $j=i$. So distinct $i\neq j$ give distinct classes. $\square$
+For any $n$: strings $\mathbf{a}^0,\mathbf{a}^2,\mathbf{a}^4,\ldots,\mathbf{a}^{2n}$ are in distinct $R_L$-classes. Indeed: $\mathbf{a}^{2i} R_L \mathbf{a}^{2j}$ requires for all $z$: $\mathbf{a}^{2i}z\in L\Leftrightarrow\mathbf{a}^{2j}z\in L$. Take $z=\mathbf{b}^i$: $\mathbf{a}^{2i}\mathbf{b}^i\in L$ (yes). $\mathbf{a}^{2j}\mathbf{b}^i\in L$ iff $2j=2i$, i.e., $j=i$. So distinct $i\neq j$ give distinct classes. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$K$ palindromes: $[\mathbf{110}]_{R_K}$ and description of $R_K$.}
 
 Let $K=\{w\mid w=w^r\}$.
 
-To describe $R_K$, suppose $x\,R_K\,y$.
+To describe $R_K$, suppose $x R_K y$.
 Take suffixes
 \[
 z_0=\mathbf{0}x^r,\qquad z_1=\mathbf{1}x^r.
 \]
-Both $xz_0=x\mathbf{0}x^r$ and $xz_1=x\mathbf{1}x^r$ are palindromes, so by $x\,R_K\,y$, both $yz_0$ and $yz_1$ must be palindromes.
+Both $xz_0=x\mathbf{0}x^r$ and $xz_1=x\mathbf{1}x^r$ are palindromes, so by $x R_K y$, both $yz_0$ and $yz_1$ must be palindromes.
 
 Now:
 \begin{itemize}
@@ -858,7 +858,7 @@ Hence if $|y|\ge |x|+1$, the first $|x|+1$ symbols of $y$ would have to be both 
 By symmetry (since equivalence relations are symmetric), also $|x|\le |y|$. Therefore $|x|=|y|$.
 With equal lengths, from $yz_0$ palindrome we get that the first $|x|$ symbols of $yz_0$ equal $x$; those first $|x|$ symbols are exactly $y$. So $y=x$.
 
-Thus $x\,R_K\,y\Rightarrow x=y$, and the converse is trivial. Therefore $R_K$ is the identity relation on $\{\mathbf{0},\mathbf{1}\}^*$.
+Thus $x R_K y\Rightarrow x=y$, and the converse is trivial. Therefore $R_K$ is the identity relation on $\{\mathbf{0},\mathbf{1}\}^*$.
 
 So
 \[
@@ -870,14 +870,14 @@ So
 
 This is false in general.
 
-However, $R_{L_1}\cap R_{L_2}$ always refines $R_{L_1\cap L_2}$. Indeed, if $x\,R_{L_1}\,y$ and $x\,R_{L_2}\,y$, then for every $z$,
+However, $R_{L_1}\cap R_{L_2}$ always refines $R_{L_1\cap L_2}$. Indeed, if $x R_{L_1} y$ and $x R_{L_2} y$, then for every $z$,
 \[
 xz\in L_1\cap L_2
 \Leftrightarrow (xz\in L_1\text{ and }xz\in L_2)
 \Leftrightarrow (yz\in L_1\text{ and }yz\in L_2)
 \Leftrightarrow yz\in L_1\cap L_2,
 \]
-so $x\,R_{L_1\cap L_2}\,y$.
+so $x R_{L_1\cap L_2} y$.
 
 Sometimes equality does happen. For example, over $\{\mathbf{a},\mathbf{b}\}$ let
 \[
@@ -928,20 +928,20 @@ parity information must be remembered.
 \begin{enumerate}
 \item $L_1=\{x:(|x|_\mathbf a\text{ odd})\wedge(|x|_\mathbf b\text{ even})\}$.
 \[
-x\,R_{L_1}\,y \Longleftrightarrow p(x)=p(y).
+x R_{L_1} y \Longleftrightarrow p(x)=p(y).
 \]
 So there are 4 classes (one per parity pair).
 
 \item $L_2=\{x:(|x|_\mathbf a\text{ even})\vee(|x|_\mathbf b\text{ odd})\}$.
 Again all 4 parity pairs are distinguishable, so
 \[
-x\,R_{L_2}\,y \Longleftrightarrow p(x)=p(y).
+x R_{L_2} y \Longleftrightarrow p(x)=p(y).
 \]
 
 \item $L_3=\{x:(|x|_\mathbf a\text{ even})\overline{\vee}(|x|_\mathbf b\text{ even})\}$.
 This depends only on whether the two parities are equal or different:
 \[
-x\,R_{L_3}\,y \Longleftrightarrow
+x R_{L_3} y \Longleftrightarrow
 \bigl(|x|_\mathbf a+|x|_\mathbf b\bmod2\bigr)=
 \bigl(|y|_\mathbf a+|y|_\mathbf b\bmod2\bigr).
 \]
@@ -950,23 +950,23 @@ So there are 2 classes: ``same parity'' and ``different parity''.
 \item $L_4=\{x:|x|_\mathbf a\text{ even}\}$.
 Only parity of $\mathbf a$ matters:
 \[
-x\,R_{L_4}\,y \Longleftrightarrow |x|_\mathbf a\equiv |y|_\mathbf a\pmod2.
+x R_{L_4} y \Longleftrightarrow |x|_\mathbf a\equiv |y|_\mathbf a\pmod2.
 \]
 So there are 2 classes.
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{$L\subseteq\{\mathbf{a}\}^*$, $\lambda\,R_L\,\mathbf{a}$.}
+\item \textbf{$L\subseteq\{\mathbf{a}\}^*$, $\lambda R_L \mathbf{a}$.}
 
-$\lambda\,R_L\,\mathbf{a}$ means: for all $z\in\{\mathbf{a}\}^*$, $z\in L\Leftrightarrow\mathbf{a}z\in L$. This means $L$ is closed under left-prepending $\mathbf{a}$ and left-removing $\mathbf{a}$ (when applicable). Combined, $\mathbf{a}^n\in L\Leftrightarrow\mathbf{a}^{n+1}\in L$ for all $n$. So either $L=\emptyset$ or $L=\{\mathbf{a}\}^*$.
-
-%%------------------------------------------------------------
-\item \textbf{$\mathbf{a}\,R_L\,\mathbf{aa}$ over $\{\mathbf{a}\}^*$.}
-
-$\mathbf{a}\,R_L\,\mathbf{aa}$: $(\forall z)(\mathbf{a}z\in L\Leftrightarrow\mathbf{aa}z\in L)$. So $\mathbf{a}^{n+1}\in L\Leftrightarrow\mathbf{a}^{n+2}\in L$. This means membership in $L$ is the same at all lengths $\geq 1$ except possibly at length 0 (where $\lambda$ may or may not be in $L$). Also $\mathbf{a}\,R_L\,\mathbf{aa}$ means $[\mathbf{a}]=[\mathbf{aa}]$, so $L\cap\{\mathbf{a}^n:n\geq 1\}$ is either $\emptyset$ or $\{\mathbf{a}^n:n\geq 1\}$. With the possible inclusion of $\lambda$: 4 possibilities: $\emptyset$, $\{\lambda\}$, $\{\mathbf{a}^n:n\geq 1\}$, $\{\mathbf{a}\}^*$.
+$\lambda R_L \mathbf{a}$ means: for all $z\in\{\mathbf{a}\}^*$, $z\in L\Leftrightarrow\mathbf{a}z\in L$. This means $L$ is closed under left-prepending $\mathbf{a}$ and left-removing $\mathbf{a}$ (when applicable). Combined, $\mathbf{a}^n\in L\Leftrightarrow\mathbf{a}^{n+1}\in L$ for all $n$. So either $L=\emptyset$ or $L=\{\mathbf{a}\}^*$.
 
 %%------------------------------------------------------------
-\item \textbf{$\lambda\,R_L\,\mathbf{aa}$ over $\{\mathbf{a}\}^*$.}
+\item \textbf{$\mathbf{a} R_L \mathbf{aa}$ over $\{\mathbf{a}\}^*$.}
+
+$\mathbf{a} R_L \mathbf{aa}$: $(\forall z)(\mathbf{a}z\in L\Leftrightarrow\mathbf{aa}z\in L)$. So $\mathbf{a}^{n+1}\in L\Leftrightarrow\mathbf{a}^{n+2}\in L$. This means membership in $L$ is the same at all lengths $\geq 1$ except possibly at length 0 (where $\lambda$ may or may not be in $L$). Also $\mathbf{a} R_L \mathbf{aa}$ means $[\mathbf{a}]=[\mathbf{aa}]$, so $L\cap\{\mathbf{a}^n:n\geq 1\}$ is either $\emptyset$ or $\{\mathbf{a}^n:n\geq 1\}$. With the possible inclusion of $\lambda$: 4 possibilities: $\emptyset$, $\{\lambda\}$, $\{\mathbf{a}^n:n\geq 1\}$, $\{\mathbf{a}\}^*$.
+
+%%------------------------------------------------------------
+\item \textbf{$\lambda R_L \mathbf{aa}$ over $\{\mathbf{a}\}^*$.}
 
 $(\forall z)(z\in L\Leftrightarrow\mathbf{aa}z\in L)$. So $\mathbf{a}^n\in L\Leftrightarrow\mathbf{a}^{n+2}\in L$: membership depends on parity of length. Possibilities: $\emptyset$, $\{\mathbf{a}^{2k}:k\geq 0\}$ (even lengths), $\{\mathbf{a}^{2k+1}:k\geq 0\}$ (odd lengths), $\{\mathbf{a}\}^*$.
 
@@ -992,7 +992,7 @@ T=\{0,5,10,15,20,25,30,35,40,45,50\}
 
 \textbf{$R^M$.}
 \[
-x\,R^M\,y \Longleftrightarrow \DBAR(s_0,x)=\DBAR(s_0,y).
+x R^M y \Longleftrightarrow \DBAR(s_0,x)=\DBAR(s_0,y).
 \]
 So $R^M$ has one class for each amount in $T$ (11 classes).
 
@@ -1027,7 +1027,7 @@ To prove non-regularity, we choose one long word and show that \emph{every} allo
 %%------------------------------------------------------------
 \item \textbf{Find $R_{L_4}$.}
 
-$L_4=\{y:|y|_\mathbf{0}=|y|_\mathbf{1}\}$. $R_{L_4}$ is determined by: $x\,R_{L_4}\,y\Leftrightarrow|x|_\mathbf{0}-|x|_\mathbf{1}=|y|_\mathbf{0}-|y|_\mathbf{1}$ (the ``balance'' of 0s over 1s must be equal). This gives infinitely many classes (one per integer balance $\in\ZN$), confirming $L_4$ is not FAD.
+$L_4=\{y:|y|_\mathbf{0}=|y|_\mathbf{1}\}$. $R_{L_4}$ is determined by: $x R_{L_4} y\Leftrightarrow|x|_\mathbf{0}-|x|_\mathbf{1}=|y|_\mathbf{0}-|y|_\mathbf{1}$ (the ``balance'' of 0s over 1s must be equal). This gives infinitely many classes (one per integer balance $\in\ZN$), confirming $L_4$ is not FAD.
 
 %%------------------------------------------------------------
 \item \textbf{Show postfix expressions over $\{\mathbf{A},\mathbf{B},\mathbf{+},\mathbf{-}\}$ are not FAD.}
@@ -1042,20 +1042,20 @@ Similar: $\mathbf{(}^n$ is a prefix; each $n$ gives a distinct future (requiring
 %%------------------------------------------------------------
 \item \textbf{$R_L$ vs.\ $R_{\sim L}$.}
 
-$R_L = R_{\sim L}$. Proof: $x\,R_L\,y\Leftrightarrow(\forall z)(xz\in L\Leftrightarrow yz\in L)\Leftrightarrow(\forall z)(xz\notin L\Leftrightarrow yz\notin L)\Leftrightarrow(\forall z)(xz\in\sim L\Leftrightarrow yz\in\sim L)\Leftrightarrow x\,R_{\sim L}\,y$. $\square$
+$R_L = R_{\sim L}$. Proof: $x R_L y\Leftrightarrow(\forall z)(xz\in L\Leftrightarrow yz\in L)\Leftrightarrow(\forall z)(xz\notin L\Leftrightarrow yz\notin L)\Leftrightarrow(\forall z)(xz\in\sim L\Leftrightarrow yz\in\sim L)\Leftrightarrow x R_{\sim L} y$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show no $L$ has $R_L=Q$ where $Q$ has classes $\{\lambda\},\{\mathbf{a}\},\{\mathbf{b}\},\{x:|x|\geq 2\}$.}
 
 $Q$ is a right congruence: every class maps consistently under each letter (e.g.\ $\{\mathbf{a}\}\cdot\sigma$ and $\{\mathbf{b}\}\cdot\sigma$ both land in $\{|x|\geq 2\}$ for any $\sigma$). Nevertheless, no language $L$ satisfies $R_L=Q$.
 
-\textbf{Proof.} If $R_L=Q$, then $\mathbf{a}$ and $\mathbf{b}$ must lie in different $R_L$-classes. For $R_L=Q$ to hold, any candidate $L$ must be a union of $Q$-classes. Consider $L=\{x:|x|\geq 2\}$. Then $\mathbf{a}\,R_L\,\mathbf{b}$: for all $z$, $\mathbf{a}z\in L\Leftrightarrow|\mathbf{a}z|\geq 2\Leftrightarrow|z|\geq 1$, and $\mathbf{b}z\in L\Leftrightarrow|z|\geq 1$; the futures are identical. So $R_L$ merges $\{\mathbf{a}\}$ and $\{\mathbf{b}\}$ into one class — contradicting $Q$. A case analysis over all unions of $Q$-classes shows the same merging occurs in every case. Hence $R_L\neq Q$ for any $L$. $\square$
+\textbf{Proof.} If $R_L=Q$, then $\mathbf{a}$ and $\mathbf{b}$ must lie in different $R_L$-classes. For $R_L=Q$ to hold, any candidate $L$ must be a union of $Q$-classes. Consider $L=\{x:|x|\geq 2\}$. Then $\mathbf{a} R_L \mathbf{b}$: for all $z$, $\mathbf{a}z\in L\Leftrightarrow|\mathbf{a}z|\geq 2\Leftrightarrow|z|\geq 1$, and $\mathbf{b}z\in L\Leftrightarrow|z|\geq 1$; the futures are identical. So $R_L$ merges $\{\mathbf{a}\}$ and $\{\mathbf{b}\}$ into one class — contradicting $Q$. A case analysis over all unions of $Q$-classes shows the same merging occurs in every case. Hence $R_L\neq Q$ for any $L$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$Q$ with classes $\{\lambda,\mathbf{a},\mathbf{aa}\}$ and $\{\mathbf{a}^3,\mathbf{a}^4,\ldots\}$ is not a right congruence.}
 
 \begin{enumerate}
-\item $\mathbf{aa}\,Q\,\lambda$ (same class). Append $\mathbf{a}$: $\mathbf{aaa}\in$ second class, but $\lambda\cdot\mathbf{a}=\mathbf{a}\in$ first class. So $\mathbf{aaa}\not Q\,\mathbf{a}$, violating right congruence.
+\item $\mathbf{aa} Q \lambda$ (same class). Append $\mathbf{a}$: $\mathbf{aaa}\in$ second class, but $\lambda\cdot\mathbf{a}=\mathbf{a}\in$ first class. So $\mathbf{aaa}\not Q \mathbf{a}$, violating right congruence.
 
 \item Building $A_Q$: states are the two $Q$-classes. $\delta([\lambda]_Q,\mathbf{a})=[?]$. For $\lambda$: $\lambda\cdot\mathbf{a}=\mathbf{a}\in[\lambda]_Q$. For $\mathbf{a}$: $\mathbf{a}\cdot\mathbf{a}=\mathbf{aa}\in[\lambda]_Q$. For $\mathbf{aa}$: $\mathbf{aa}\cdot\mathbf{a}=\mathbf{aaa}\in[\mathbf{a}^3]_Q$. So from the same class $[\lambda]_Q$, different elements lead to different successor classes. $\delta$ is not well-defined. This is the failure.
 
@@ -1065,7 +1065,7 @@ $Q$ is a right congruence: every class maps consistently under each letter (e.g.
 %%------------------------------------------------------------
 \item \textbf{Show $\{\mathbf{a}^i\mathbf{b}^j\mathbf{c}^k\mid i,j,k\in\NN, i+j=k\}$ is not FAD.}
 
-For any $n$: consider $\mathbf{a}^m$ for $m=0,1,\ldots,n$. $\mathbf{a}^m\,R_L\,\mathbf{a}^{m'}$: need $(\forall z)\mathbf{a}^mz\in L\Leftrightarrow\mathbf{a}^{m'}z\in L$. Take $z=\mathbf{b}^0\mathbf{c}^m=\mathbf{c}^m$: $\mathbf{a}^m\mathbf{c}^m\in L\Leftrightarrow m+0=m$ (yes). $\mathbf{a}^{m'}\mathbf{c}^m\in L\Leftrightarrow m'+0=m\Leftrightarrow m'=m$. So for $m\neq m'$, $\mathbf{a}^m\not R_L\mathbf{a}^{m'}$. Infinite rank. Not FAD. $\square$
+For any $n$: consider $\mathbf{a}^m$ for $m=0,1,\ldots,n$. $\mathbf{a}^m R_L \mathbf{a}^{m'}$: need $(\forall z)\mathbf{a}^mz\in L\Leftrightarrow\mathbf{a}^{m'}z\in L$. Take $z=\mathbf{b}^0\mathbf{c}^m=\mathbf{c}^m$: $\mathbf{a}^m\mathbf{c}^m\in L\Leftrightarrow m+0=m$ (yes). $\mathbf{a}^{m'}\mathbf{c}^m\in L\Leftrightarrow m'+0=m\Leftrightarrow m'=m$. So for $m\neq m'$, $\mathbf{a}^m\not R_L\mathbf{a}^{m'}$. Infinite rank. Not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $Q$ with classes $[\lambda]=\{\lambda\}$, $[\mathbf{a}]=\{\mathbf{a}\}$, $[\mathbf{aa}]=\{\mathbf{a}\}^{\geq 2}$ is a right congruence on $\{\mathbf{a}\}^*$.}
@@ -1076,15 +1076,15 @@ Case $x,y\in[\mathbf{a}]$: $x=y=\mathbf{a}$, $xa=ya=\mathbf{aa}\in[\mathbf{aa}]$
 
 Case $x,y\in[\mathbf{aa}]$: $|x|,|y|\geq 2$, so $|xa|,|ya|\geq 3\geq 2$, thus $xa,ya\in[\mathbf{aa}]$.
 
-In each case $xa\,Q\,ya$. $\square$
+In each case $xa Q ya$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{$R_2$ on $\{\mathbf{a},\mathbf{b},\mathbf{c}\}^*$: same last letter.}
 
 \begin{enumerate}
-\item Equivalence: Reflexive ($x$ ends with same letter as $x$). Symmetric (same). Transitive (same). But for $\lambda$: $\lambda$ has no last letter. By convention, $\lambda$ is in its own class (or we restrict to $\Sigma^+$). Assuming $\lambda$ is its own class: $\lambda\,R_2\,\lambda$, and for $x,y\in\Sigma^+$, $x\,R_2\,y\Leftrightarrow$ last$(x)=$last$(y)$.
+\item Equivalence: Reflexive ($x$ ends with same letter as $x$). Symmetric (same). Transitive (same). But for $\lambda$: $\lambda$ has no last letter. By convention, $\lambda$ is in its own class (or we restrict to $\Sigma^+$). Assuming $\lambda$ is its own class: $\lambda R_2 \lambda$, and for $x,y\in\Sigma^+$, $x R_2 y\Leftrightarrow$ last$(x)=$last$(y)$.
 
-\item Right congruence: If $x\,R_2\,y$ (same last letter, say $c$), then for any $z\in\Sigma^+$: last$(xz)=$last$(z)=$last$(yz)$, so $xz\,R_2\,yz$. For $z=\lambda$: $x\,R_2\,y$. $\square$
+\item Right congruence: If $x R_2 y$ (same last letter, say $c$), then for any $z\in\Sigma^+$: last$(xz)=$last$(z)=$last$(yz)$, so $xz R_2 yz$. For $z=\lambda$: $x R_2 y$. $\square$
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1093,7 +1093,7 @@ In each case $xa\,Q\,ya$. $\square$
 \begin{enumerate}
 \item Equivalence: reflexive, symmetric, transitive by same argument ($\lambda$ its own class).
 
-\item Right congruence: Suppose $x\,R_3\,y$, i.e., $x$ and $y$ have the same first letter (or both are $\lambda$). For any $z\in\Sigma^*$: if $z=\lambda$ then $xz=x$ and $yz=y$, so $xz\,R_3\,yz$ trivially. If $z\neq\lambda$ then $\text{first}(xz)=\text{first}(x)=\text{first}(y)=\text{first}(yz)$, so $xz\,R_3\,yz$. Hence $R_3$ is a right congruence. $\square$
+\item Right congruence: Suppose $x R_3 y$, i.e., $x$ and $y$ have the same first letter (or both are $\lambda$). For any $z\in\Sigma^*$: if $z=\lambda$ then $xz=x$ and $yz=y$, so $xz R_3 yz$ trivially. If $z\neq\lambda$ then $\text{first}(xz)=\text{first}(x)=\text{first}(y)=\text{first}(yz)$, so $xz R_3 yz$. Hence $R_3$ is a right congruence. $\square$
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1192,7 +1192,7 @@ This contradicts Theorem 2.3. Therefore $L_5$ is not FAD.
 \item \textbf{Complete proof of case 1 in (2)$\Rightarrow$(3) of Nerode's theorem.}
 
 \begin{enumerate}
-\item Case 1: $x=\lambda$. We need $\lambda\,R_L\,y$ (for some $y$ with $\DBAR(s_0,y)=\DBAR(s_0,\lambda)=s_0$). Since $\DBAR(s_0,\lambda)=s_0=\DBAR(s_0,y)$, for all $z$: $\DBAR(s_0,\lambda z)=\DBAR(s_0,z)=\DBAR(s_0,yz)$ (using $\DBAR(s_0,y)=s_0$ and the homomorphism property of $\DBAR$). So $\lambda z\in L\Leftrightarrow yz\in L$, i.e., $\lambda\,R_L\,y$.
+\item Case 1: $x=\lambda$. We need $\lambda R_L y$ (for some $y$ with $\DBAR(s_0,y)=\DBAR(s_0,\lambda)=s_0$). Since $\DBAR(s_0,\lambda)=s_0=\DBAR(s_0,y)$, for all $z$: $\DBAR(s_0,\lambda z)=\DBAR(s_0,z)=\DBAR(s_0,yz)$ (using $\DBAR(s_0,y)=s_0$ and the homomorphism property of $\DBAR$). So $\lambda z\in L\Leftrightarrow yz\in L$, i.e., $\lambda R_L y$.
 
 \item Case 1 \emph{can} be included under case 2 if we allow $x$ to be a prefix of $y$ with $|x|=0$: the proof of case 2 (induction on $|x|$) can start at $|x|=0$ (the $\lambda$ case), so yes.
 \end{enumerate}
@@ -1204,7 +1204,7 @@ The original right congruence (RC): $xRy\Rightarrow xuRyu$.
 
 Claim: $xRy\Leftrightarrow xuRyu$ (for all $u$).
 
-The $\Rightarrow$ direction is given. For $\Leftarrow$: assume $xuRyu$ for all $u$; take $u=\lambda$: $x\lambda\,R\,y\lambda$, i.e., $xRy$ (since $x\lambda=x$ and $y\lambda=y$). $\square$
+The $\Rightarrow$ direction is given. For $\Leftarrow$: assume $xuRyu$ for all $u$; take $u=\lambda$: $x\lambda R y\lambda$, i.e., $xRy$ (since $x\lambda=x$ and $y\lambda=y$). $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\DBAR(s,uv^i)=q$ by induction.}
@@ -1240,7 +1240,7 @@ Choose $n$ so large that if $w$ is the decimal representation of $2^n$, then
 \]
 and
 \[
-4\cdot 5^{\,d-p-1}>(p+1)\log_2 10.
+4\cdot 5^{ d-p-1}>(p+1)\log_2 10.
 \]
 Write $w=xyz$ with $|xy|\le p$, $|y|=t\ge1$, and let $|z|=r$.
 Then $r=d-|xy|\ge d-p$.

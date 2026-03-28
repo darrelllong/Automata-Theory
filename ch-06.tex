@@ -363,9 +363,9 @@ unique solution given by $x=b \div a$.''
 % Theorem 6.1
 \begin{thm}\label{thm-6.1}
 Let $\Sigma$ be an alphabet. Let $E$ and $A$ be any subsets of $\Sigma^*$. Then
-the language equation $X = E \cup A \cdot X$ admits the solution $X=A^*\!\!\cdot E$.
-Any other solution $Y$ must contain $A^*\!\!\cdot E$.
-Furthermore, if  $\lambda \notin A$, $X = A^*\!\!\cdot E$ is the unique solution.
+the language equation $X = E \cup A \cdot X$ admits the solution $X=A^*  \cdot E$.
+Any other solution $Y$ must contain $A^*  \cdot E$.
+Furthermore, if  $\lambda \notin A$, $X = A^*  \cdot E$ is the unique solution.
 
 \emph{Proof.} First note that the set $A^*E$ is indeed a solution to this
 equation, since $A^*E = E \cup A \cdot (A^*E)$ (see the exercises). Now assume
@@ -380,7 +380,7 @@ $A \cdot A \cdot E \subseteq A \cdot A \cdot Y \subseteq A \cdot Y \subseteq Y$
 	& $\Rightarrow$ & (by induction) \\
 $(\forall n \in \NN)(A^n \cdot E \subseteq Y)$ & $\Rightarrow$ & (by definition
 	of $A^*$) \\
-$A^*\!\!\cdot E \subseteq Y$ &&
+$A^*  \cdot E \subseteq Y$ &&
 \end{tabular}\end{center}
 
 Thus, every solution must contain all of $A^*E$, and $A^*E$ is in this sense the
@@ -418,14 +418,14 @@ know that the only solution is \emph{exactly} $A^*E$.
 \subsection*{Example 6.7}
 
 $X=\{\pmb{b},\pmb{c}\} \cup \{\pmb{a}\} \cdot X$ does indeed have a solution;
-$X$ can equal $\{\pmb{a}\}^*\!\!\cdot \{\pmb{b},\pmb{c}\}$. Note also that this is
-the only solution (verify, for example, that $X=\{\pmb{a}\}^*\!\!\cdot\{\pmb{c}\}$
+$X$ can equal $\{\pmb{a}\}^*  \cdot \{\pmb{b},\pmb{c}\}$. Note also that this is
+the only solution (verify, for example, that $X=\{\pmb{a}\}^*  \cdot\{\pmb{c}\}$
 is \emph{not} a solution). The equation $Z=\{\pmb{b},\pmb{c}\}\cup\{\pmb{a},\lambda\}
-\cdot Z$ has several solutions; among them are $Z=\{\pmb{a}\}^*\!\!\cdot\{\pmb{b},
+\cdot Z$ has several solutions; among them are $Z=\{\pmb{a}\}^*  \cdot\{\pmb{b},
 \pmb{c}\}$ and $Z=\{\pmb{a},\pmb{b},\pmb{c}\}^*$.
 
 It is instructive to explicitly list the first few elements of $\{\pmb{a}\}^*
-\!\!\cdot\{\pmb{b},\pmb{c}\}$ and begin to check the validity of the solution to the
+  \cdot\{\pmb{b},\pmb{c}\}$ and begin to check the validity of the solution to the
 first equation. If $Y$ is a solution, then the two sides of the equation
 $Y=\{\pmb{b},\pmb{c}\}\cup\{\pmb{a}\}\cdot Y$ must be equal. Since both $\pmb{b}$
 and $\pmb{c}$ appear on the right-hand side they must also be on the left-hand
@@ -456,7 +456,7 @@ an $\pmb{a}$. This contradiction shows why $\pmb{aa}$ cannot be part of any solu
 $X$.
 
 This example illustrates the basic nature of these types of equations: for words
-that are not in $\{\pmb{a}\}^*\!\!\cdot\{\pmb{b},\pmb{c}\}$, the inclusion of that
+that are not in $\{\pmb{a}\}^*  \cdot\{\pmb{b},\pmb{c}\}$, the inclusion of that
 word in the solution leads to the inclusion of shorter and shorter strings,
 which eventually leads to a contradiction. This property was exploited in the
 second half of the proof of Theorem \ref{thm-6.1}. Rather than finding shorter and shorter
@@ -655,19 +655,19 @@ $X_2$ & $\emptyset \cup \pmb{b} \cdot X_1 \cup \emptyset \cdot X_2$
 The proof of Theorem \ref{thm-6.2} implies the solution for $X_1$ will agree with the
 solution to the one-variable equation $X_1 = \hat{E}_1 \cup \hat{A}_{11}X_1$,
 where
-\[ \hat{E}_1 = E_1 \cup (A_{12}\cdot A^*_{22}\cdot E_2) = \epsilon \cup (\pmb{b} \cdot \emptyset^*\!\!
+\[ \hat{E}_1 = E_1 \cup (A_{12}\cdot A^*_{22}\cdot E_2) = \epsilon \cup (\pmb{b} \cdot \emptyset^*  
 	\cdot \emptyset) = \epsilon \cup (\pmb{b}\cdot\epsilon\cdot\emptyset) =
 	\epsilon \cup \emptyset = \epsilon \]
 and
 \[ \hat{A}_{11} = A_{11} \cup (A_{12} \cdot A^*_{22} \cdot A_{21}) = \pmb{a}
-	\cup (\pmb{b}\cdot\emptyset^*\!\!\cdot\pmb{b}) = \pmb{a} \cup (\pmb{b} \cdot
+	\cup (\pmb{b}\cdot\emptyset^*  \cdot\pmb{b}) = \pmb{a} \cup (\pmb{b} \cdot
 	\epsilon \cdot \pmb{b}) = \pmb{a} \cup \pmb{bb}. \]
 Thus we have $X_1 = \epsilon \cup (\pmb{a} \cup \pmb{bb})\cdot X_1$, which by
 Theorem \ref{thm-6.1} has the (unique) solution $X_1 = \hat{A}^*_{11}\hat{E}_1 = (\pmb{a}
-\cup \pmb{bb})^*\!\! \cdot \epsilon$. Substituting this into the second equation
+\cup \pmb{bb})^*   \cdot \epsilon$. Substituting this into the second equation
 yields $X_2 = \emptyset \cup \pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*\cup\emptyset
-\cdot X_2$, which by Theorem \ref{thm-6.1} has the (unique) solution $X_2=\emptyset^*\!\!\cdot
-(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$\!.
+\cdot X_2$, which by Theorem \ref{thm-6.1} has the (unique) solution $X_2=\emptyset^*  \cdot
+(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$ .
 Note that this expression for $X_2$ could also be found by applying the
 back-substitution formula given in the proof of Theorem \ref{thm-6.2}.
 
@@ -695,7 +695,7 @@ E_i = & \left\{ \begin{tabular}{ll}
 		 \end{tabular}\right. &
 		 \text{for }i = 1,2,\ldots,n \\
 \intertext{and}
-A_{ij} = & \bigcup\limits_{\pmb{a}\,\in\,\Sigma\,\wedge\,\delta(s_i,\pmb{a})\,=\,
+A_{ij} = & \bigcup\limits_{\pmb{a}\in \Sigma \wedge \delta(s_i,\pmb{a}) = 
 	s_j} \pmb{a} & \text{for }i,j=1,2, \ldots ,n
 \end{align*}
 That is, $A_{ij}$ represents the set of all letters that cause a transition from
@@ -752,7 +752,7 @@ depending on whether or not $s_i$ is a final state, and $A_{ij}$ again
 represents exactly the set of all letters that cause a transition from state
 $s_i$ to state $s_j$. This definition requires a minor cosmetic change for
 NDFAs, since the state transition function is slightly different:
-\[ A_{ij} = \bigcup\limits_{\pmb{a}\,\in\,\Sigma\,\wedge\,s_j\,\in\,\delta(s_i,
+\[ A_{ij} = \bigcup\limits_{\pmb{a}\in \Sigma \wedge s_j\in \delta(s_i,
 	\pmb{a})}\pmb{a}\qquad\text{for }i,j=1,2, \ldots ,n \]
 
 An $n$-state NDFA therefore gives rise to $n$ equations in $n$ unknowns, which
@@ -916,7 +916,7 @@ $\hat{\hat{A}}_{11}$ can be expanded to yield the following form:
 $\hat{\hat{A}}_{11} =$ & $\pmb{b}\cup\pmb{ca}\cup\pmb{cb}\cup\pmb{a}(\pmb{ac})^*
 	\pmb{b}\cup\pmb{a}(\pmb{ac})^*\pmb{c}\cup\pmb{a}(\pmb{ac})^*\pmb{ab}\cup
 	\pmb{a}(\pmb{ac})^*\pmb{aa}$ \\
-& $\cup\,\pmb{cc}(\pmb{ac})^*\pmb{b}\cup\pmb{cc}(\pmb{ac})^*\pmb{c}\cup\pmb{cc}
+& $\cup \pmb{cc}(\pmb{ac})^*\pmb{b}\cup\pmb{cc}(\pmb{ac})^*\pmb{c}\cup\pmb{cc}
 	(\pmb{ac})^*\pmb{ab}\cup\pmb{cc}(\pmb{ac})^*\pmb{aa}$
 \end{tabular}\end{center}
 Observe that each of the 11 subexpressions consists of strings that (1) end
@@ -940,7 +940,7 @@ return you to $s_1$ again for the first time; it will agree with
 ${\hat{\hat{A}}}_{11}$ in Example 6.11. The final constant term associated
 with $X_1$ (that is, $\hat{\hat{\hat{E}}}_1$), will represent all those strings
 that deposit you in a final state from $s_1$ without ever returning to $s_1$. In
-this automaton, this will be given by $\hat{\hat{\hat{E}}}_1 = \pmb{de}^*$\!\!. \ 
+this automaton, this will be given by $\hat{\hat{\hat{E}}}_1 = \pmb{de}^*$. \
 $\hat{\hat{\hat{A}}}^*_{11}\hat{\hat{\hat{E}}}_1$ therefore represents strings
 that go from $s_1$ back to $s_1$ any number of times, followed by a string that
 leaves $s_1$ (for the last time) for a final state.
@@ -1015,7 +1015,7 @@ solution can be used to find the remaining unknown:
 \begin{center}\begin{tabular}{r@{ }l}
 $X_m =$ & $A^*_{mm} \cdot (E_m \cup A_{m1}X_1 \cup A_{m2}X_2 \cup\ldots\cup
 	A_{m(m-1)}X_{m-1}$ \\
-& $\cup\, A_{m(m+1)}X_{m+1}\cup\ldots\cup A_{mn}X_n)$
+& $\cup  A_{m(m+1)}X_{m+1}\cup\ldots\cup A_{mn}X_n)$
 \end{tabular}\end{center}
 
 \emph{Proof.} The proof follows from a renumbering of the equations given in
@@ -1088,7 +1088,7 @@ and
 can be used to find the remaining unknown:
 \begin{center}\begin{tabular}{r@{ }l}
 $Y_m =$ & $(I_m \cup Y_1B_{m1} \cup Y_2B_{m2} \cup\cdots\cup Y_{m-1}B_{m(m-1)}$ \\
-& $\cup\, Y_{m+1}B_{m(m+1)} \cup\cdots\cup Y_nB_{mn})\cdot B^*_{mm}$
+& $\cup  Y_{m+1}B_{m(m+1)} \cup\cdots\cup Y_nB_{mn})\cdot B^*_{mm}$
 \end{tabular}\end{center}
 
 \item A single equation $Y_1=I_1 \cup Y_1B_{11}$ has the unique solution
@@ -1116,7 +1116,7 @@ I_i = & \left\{ \begin{tabular}{ll}
 		 \end{tabular}\right. &
 		 \text{for }i = 1,2,\ldots,n \\
 \intertext{and}
-B_{ij} = & \bigcup\limits_{\pmb{a}\,\in\,\Sigma\,\wedge\,s_i\,\in\,\delta(s_j,
+B_{ij} = & \bigcup\limits_{\pmb{a}\in \Sigma \wedge s_i\in \delta(s_j,
 	\pmb{a})} \pmb{a} & \text{for }i,j=1,2, \ldots ,n
 \end{align*}
 
@@ -1192,7 +1192,7 @@ and
 	= s(\pmb{a})\cdot \overline{s}(x)) \]
 $\overline{s}$ can be further extended to operate on a language $L \subseteq
 \Sigma^*$ by defining
-\[ \overline{s}(L) = \bigcup\limits_{z\,\in\, L} \overline{s}(z) \]
+\[ \overline{s}(L) = \bigcup\limits_{z\in L} \overline{s}(z) \]
 In this last context, $\overline{s}:\ \wp(\Sigma^*) \rightarrow \wp(\Gamma^*)$.
 \end{dfn}
 
@@ -1422,8 +1422,8 @@ under some conditions:
 
 \item \begin{enumerate}
 \item Consider Theorem \ref{thm-6.1}. Find examples of sets $A$ and $E$ that will show
-that $A^*\!\!\cdot E$ is not a unique solution if $\lambda \in A$.
-\item Find examples of sets $A$ and $E$ that will show that $A^*\!\!\cdot E$ can be
+that $A^*  \cdot E$ is not a unique solution if $\lambda \in A$.
+\item Find examples of sets $A$ and $E$ that will show that $A^*  \cdot E$ can be
 the unique solution even if $\lambda \in A$.
 \end{enumerate}
 

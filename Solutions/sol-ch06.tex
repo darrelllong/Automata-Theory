@@ -90,7 +90,7 @@ Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is foll
   \item $L_2=\{y\mid|y|_{\pmb{c}}\text{ even}\vee|y|_{\pmb{b}}\text{ odd}\}$:
   \[
     \bigl((\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\pmb{b})^*\pmb{c}\bigr)^*(\pmb{a}\cup\pmb{b})^*
-    \;\cup\;
+    \cup
     \bigl((\pmb{a}\cup\pmb{c})^*\pmb{b}(\pmb{a}\cup\pmb{c})^*\pmb{b}\bigr)^*(\pmb{a}\cup\pmb{c})^*\pmb{b}(\pmb{a}\cup\pmb{c})^*
   \]
   The first expression gives all words with an even number of $\pmb{c}$s; the
@@ -123,7 +123,7 @@ Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is foll
 \item $\Psi=\{x\mid x\text{ begins with }\pmb{d}\vee x\text{ contains }\pmb{bb}\}$ over $\{\pmb{a},\pmb{b},\pmb{d}\}$:
 \[
   \pmb{d}(\pmb{a}\cup\pmb{b}\cup\pmb{d})^*
-  \;\cup\;
+  \cup
   (\pmb{a}\cup\pmb{b}\cup\pmb{d})^*\pmb{bb}(\pmb{a}\cup\pmb{b}\cup\pmb{d})^*
 \]
 
@@ -526,11 +526,11 @@ Back-substitution then gives
 
   Build the DFA with states $q_0$ (start), $q_a$ (last letter $\pmb{a}$), $q_b$ (last letter $\pmb{b}$), $q_c$ (last letter $\pmb{c}$, accepting), and dead state $q_d$; transitions $q_x\xrightarrow{x}q_d$ and $q_x\xrightarrow{y}q_y$ for $y\neq x$.  Write state equations for strings reaching $q_c$:
   \begin{align*}
-    X_a &= \pmb{b}\,X_b \cup \pmb{c}\,X_c \\
-    X_b &= \pmb{a}\,X_a \cup \pmb{c}\,X_c \\
-    X_c &= \epsilon \cup \pmb{a}\,X_a \cup \pmb{b}\,X_b
+    X_a &= \pmb{b} X_b \cup \pmb{c} X_c \\
+    X_b &= \pmb{a} X_a \cup \pmb{c} X_c \\
+    X_c &= \epsilon \cup \pmb{a} X_a \cup \pmb{b} X_b
   \end{align*}
-  Eliminate $X_a$: substituting $X_b = \pmb{a}X_a\cup\pmb{c}X_c$ into $X_a$ gives $X_a = \pmb{ba}X_a\cup(\pmb{bc}\cup\pmb{c})X_c$, so $X_a=(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\,X_c$.  Then $X_b = \pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\,X_c\cup\pmb{c}\,X_c$.  Substituting into $X_c$:
+  Eliminate $X_a$: substituting $X_b = \pmb{a}X_a\cup\pmb{c}X_c$ into $X_a$ gives $X_a = \pmb{ba}X_a\cup(\pmb{bc}\cup\pmb{c})X_c$, so $X_a=(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c} X_c$.  Then $X_b = \pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c} X_c\cup\pmb{c} X_c$.  Substituting into $X_c$:
   \[
     X_c = \epsilon \cup \bigl((\pmb{a}\cup\pmb{ba})(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{bc}\bigr)X_c
   \]
@@ -538,7 +538,7 @@ Back-substitution then gives
   \[
     A = (\pmb{a}\cup\pmb{ba})(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{bc}.
   \]
-  The language is $L = \pmb{a}\,X_a\cup\pmb{b}\,X_b\cup\pmb{c}\,X_c = (\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c} \cup \pmb{b}(\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{c})\cup\pmb{c})\,A^*$.
+  The language is $L = \pmb{a} X_a\cup\pmb{b} X_b\cup\pmb{c} X_c = (\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c} \cup \pmb{b}(\pmb{a}(\pmb{ba})^*(\pmb{b}\cup\epsilon)\pmb{c}\cup\pmb{c})\cup\pmb{c}) A^*$.
 
   \item Words beginning with $\pmb{c}$ with no $\pmb{aa}$, $\pmb{bb}$, $\pmb{cc}$ substrings:
   Let $X_c$ be the set of suffixes that may follow an initial $\pmb{c}$ while
@@ -944,7 +944,7 @@ substring gives:
   last $\pmb{c}$, or it has no $\pmb{c}$ and then must contain only $\pmb{a}$s.
   Thus the suffix after the last $\pmb{c}$ must lie in $\pmb{a}^*$:
   \[
-    \pmb{a}^* \;\cup\; (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{c}\pmb{a}^*
+    \pmb{a}^* \cup (\pmb{a}\cup\pmb{b}\cup\pmb{c})^*\pmb{c}\pmb{a}^*
   \]
   Any $\pmb{b}$ before the last $\pmb{c}$ is discharged by that final
   $\pmb{c}$, and after the last $\pmb{c}$ only $\pmb{a}$s may remain.
@@ -1079,7 +1079,7 @@ I_i=
 \]
 and
 \[
-B_{ij}=\bigcup_{\pmb{a}\in\Sigma\,\wedge\, s_i\in\delta(s_j,\pmb{a})}\pmb{a}.
+B_{ij}=\bigcup_{\pmb{a}\in\Sigma \wedge  s_i\in\delta(s_j,\pmb{a})}\pmb{a}.
 \]
 We show that
 \[

@@ -53,8 +53,8 @@
 \def\ZSIG{\ensuremath{\mathfrak{Z}_\Sigma}}
 \def\OSIG{\ensuremath{\mathfrak{O}_\Sigma}}
 \def\HSIG{\ensuremath{\mathfrak{H}_\Sigma}}
-\DeclareMathOperator{\DRightarrow}{^*\!\!\!\!\!\!\!\Rightarrow}
-\DeclareMathOperator{\Dvdash}{\vdash^{\!\!\!\!\!\!{*}}\ }
+\DeclareMathOperator{\DRightarrow}{\Rightarrow^*}
+\DeclareMathOperator{\Dvdash}{\vdash^*\ }
 
 \newtheorem{dfn}{Definition}[chapter]
 \newtheorem{thm}{Theorem}[chapter]
@@ -204,13 +204,13 @@ Since $\langle 1,a\rangle \in \{1,2\}\times\{a,b\}$ but $\langle 1,a\rangle \not
 \item \textbf{Let $X=\{1,2,3,4\}$.}
 
 \begin{enumerate}
-\item $< \;=\{\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+\item $<  =\{\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
 
-\item $= \;= \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle\}$
+\item $=  = \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle\}$
 
-\item $=\;\cup\;<\;= \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle,\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+\item $=\cup< = \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle,\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
 
-\item $\leq \;= =\;\cup\;<\;$, which is the set computed in part (c).
+\item $\leq  = =\cup< $, which is the set computed in part (c).
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -248,11 +248,11 @@ There are uncountably many such classes, one for each $r \in [0,1)$.
 %%------------------------------------------------------------
 \item \textbf{Prove the distinct equivalence classes of $R$ form a partition of $X$.}
 
-Let $[x]_R = \{y \in X \mid y\,R\,x\}$.
+Let $[x]_R = \{y \in X \mid y R x\}$.
 
 \textit{Coverage}: For any $x \in X$, reflexivity gives $x \in [x]_R$, so every element of $X$ belongs to at least one class.
 
-\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z\,R\,x$ and $z\,R\,y$. By symmetry $x\,R\,z$, and by transitivity $x\,R\,y$. For any $w \in [x]_R$ we have $w\,R\,x\,R\,y$, so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
+\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z R x$ and $z R y$. By symmetry $x R z$, and by transitivity $x R y$. For any $w \in [x]_R$ we have $w R x R y$, so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
 
 Hence the distinct classes are disjoint and cover $X$, forming a partition.
 
@@ -270,7 +270,7 @@ Therefore $X = \bigcup_{i=1}^n A_i$.
 %%------------------------------------------------------------
 \item \textbf{Prove $R(P)$ is an equivalence relation.}
 
-Define $x\,R(P)\,y$ iff $x$ and $y$ belong to the same block of $P$.
+Define $x R(P) y$ iff $x$ and $y$ belong to the same block of $P$.
 
 \textit{Reflexivity}: $x$ is in the same block as itself.
 
@@ -290,14 +290,14 @@ Define $x\,R(P)\,y$ iff $x$ and $y$ belong to the same block of $P$.
 %%------------------------------------------------------------
 \item \textbf{Find the flaw in the ``proof'' that symmetric and transitive implies reflexive.}
 
-The flaw is in the first step. Symmetry says: if $x\,R\,y$ then $y\,R\,x$. This requires the hypothesis that $x\,R\,y$. If $x$ is not related to any $y$ at all, we cannot conclude $x\,R\,x$.
+The flaw is in the first step. Symmetry says: if $x R y$ then $y R x$. This requires the hypothesis that $x R y$. If $x$ is not related to any $y$ at all, we cannot conclude $x R x$.
 
 \textit{Counterexample}: Let $X = \{1,2,3\}$ and $R = \{\langle 1,1\rangle, \langle 2,2\rangle, \langle 1,2\rangle, \langle 2,1\rangle\}$. Then $R$ is symmetric and transitive but $3 \not\mathrel{R} 3$, so $R$ is not reflexive.
 
 %%------------------------------------------------------------
 \item \textbf{Prove equality refines $R$.}
 
-We need: $x = y \Rightarrow x\,R\,y$. If $x = y$, then by reflexivity of $R$, $x\,R\,x = x\,R\,y$. $\square$
+We need: $x = y \Rightarrow x R y$. If $x = y$, then by reflexivity of $R$, $x R x = x R y$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{The ``function'' $t: \RN \to \RN$, $x \mapsto \arccos(x)$.}
@@ -305,7 +305,7 @@ We need: $x = y \Rightarrow x\,R\,y$. If $x = y$, then by reflexivity of $R$, $x
 \begin{enumerate}
 \item $t$ is not well defined. A function must assign \emph{exactly one} output to each input in its domain. But if $x \in [-1,1]$, there are generally many real numbers whose cosine is $x$. For example,
 \[
-\cos\!\left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos\!\left(\frac{5\pi}{3}\right),
+\cos \left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos \left(\frac{5\pi}{3}\right),
 \]
 so the input $x=\frac{1}{2}$ would have more than one output. Also, if $x\notin[-1,1]$, there is no real number whose cosine is $x$, so the proposed rule is not even defined everywhere on $\RN$.
 
@@ -1335,7 +1335,7 @@ The DFA tracks two conditions simultaneously: whether $\mathbf{aa}$ has ever app
   \item $q_{bb,a}$: seen $\mathbf{bb}$, no $\mathbf{aa}$, last char $= \mathbf{a}$.
   \item $q_{dead}$: seen $\mathbf{aa}$ (trap).
 \end{itemize}
-$F = \{q_{bb},\, q_{bb,a}\}.$
+$F = \{q_{bb},  q_{bb,a}\}.$
 
 \medskip
 \noindent\textbf{Transitions}:
@@ -1600,7 +1600,7 @@ q_2 \equiv 0,\qquad q_4 \equiv 1,\qquad q_3 \equiv 2 \pmod 3.
 \]
 Since $q_2$ and $q_3$ are final and $q_4$ is not, the language is
 \[
-\{\,\pmb{b}^i\pmb{a}\pmb{b}^j\pmb{a}x \mid i,j\geq 0,\ x\in\{\pmb{a},\pmb{b}\}^*,\ |x|_{\pmb{b}}\equiv 0 \text{ or }2 \pmod 3\,\}.
+\{ \pmb{b}^i\pmb{a}\pmb{b}^j\pmb{a}x \mid i,j\geq 0,\ x\in\{\pmb{a},\pmb{b}\}^*,\ |x|_{\pmb{b}}\equiv 0 \text{ or }2 \pmod 3 \}.
 \]
 Equivalently: the string must contain at least two $\pmb{a}$s, and after the second $\pmb{a}$ the number of $\pmb{b}$s must not be congruent to $1 \pmod 3$.
 \end{enumerate}
@@ -2284,7 +2284,7 @@ plus a dead state. On operands the machine increments $d$; on operators it check
 \[
 \pmb{A},\ \pmb{AA},\ \pmb{AAA},\ \ldots,\ \pmb{A}^n,\ \ldots
 \]
-have pairwise different futures: from $\pmb{A}^n$, the continuation $\pmb{+}^{\,n-1}$ completes a legal postfix expression, but the same continuation does not complete a legal expression from $\pmb{A}^m$ when $m\neq n$. Therefore infinitely many distinct states would be required.
+have pairwise different futures: from $\pmb{A}^n$, the continuation $\pmb{+}^{ n-1}$ completes a legal postfix expression, but the same continuation does not complete a legal expression from $\pmb{A}^m$ when $m\neq n$. Therefore infinitely many distinct states would be required.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -2767,25 +2767,25 @@ Equivalently, $\pmb{b}$ resets the machine to state $s_0$, while $\pmb{a}$ adds 
 \begin{enumerate}
 \item For $L_7$, use seven states $q_0,\ldots,q_6$, where $q_i$ means that the sum of the digits seen so far is congruent to $i \pmod 7$. The start state is $q_0$, the only final state is $q_0$, and
 \[
-\delta(q_i,\pmb{d})=q_{\,i+d \bmod 7}.
+\delta(q_i,\pmb{d})=q_{ i+d \bmod 7}.
 \]
 
 \item The corresponding quintuple is
 \[
 \langle\{\pmb{0},\pmb{1},\ldots,\pmb{9}\},\{q_0,\ldots,q_6\},q_0,\delta,\{q_0\}\rangle,
 \]
-with $\delta(q_i,\pmb{d})=q_{\,i+d \bmod 7}$.
+with $\delta(q_i,\pmb{d})=q_{ i+d \bmod 7}$.
 
 \item For $L_3$, use three states $r_0,r_1,r_2$, where $r_i$ records the digit sum modulo $3$. Again $r_0$ is both the start state and the only final state, and
 \[
-\delta(r_i,\pmb{d})=r_{\,i+d \bmod 3}.
+\delta(r_i,\pmb{d})=r_{ i+d \bmod 3}.
 \]
 
 \item The corresponding quintuple is
 \[
 \langle\{\pmb{0},\pmb{1},\ldots,\pmb{9}\},\{r_0,r_1,r_2\},r_0,\delta,\{r_0\}\rangle,
 \]
-with $\delta(r_i,\pmb{d})=r_{\,i+d \bmod 3}$.
+with $\delta(r_i,\pmb{d})=r_{ i+d \bmod 3}$.
 
 \item In general,
 \[
@@ -2793,7 +2793,7 @@ with $\delta(r_i,\pmb{d})=r_{\,i+d \bmod 3}$.
 \]
 recognizes $L_n$ if
 \[
-\delta(s_i,\pmb{d})=s_{\,i+d \bmod n}
+\delta(s_i,\pmb{d})=s_{ i+d \bmod n}
 \]
 for every residue class $i$ and every digit $\pmb{d}$. The state always records the current digit sum modulo $n$.
 \end{enumerate}

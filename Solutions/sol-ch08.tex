@@ -692,9 +692,9 @@ and $A'$ has exactly one start state and exactly one final state.
 \item Inductive statement: for every $n\ge 0$, every pair of nonterminals
 $A,B$, and every $x\in\Sigma^*$,
 \[
-A\DRightarrow_G^{\,n}Bx
+A\DRightarrow_G^{ n}Bx
 \qquad\Longleftrightarrow\qquad
-A\DRightarrow_{G^r}^{\,n}x^rB.
+A\DRightarrow_{G^r}^{ n}x^rB.
 \]
 
 \item Proof by induction on $n$.
@@ -707,7 +707,7 @@ A\DRightarrow_{G^r}^0\lambda^rA=A.
 
 \textbf{Step}: Assume the statement true for $n$ productions.  Suppose
 \[
-A\DRightarrow_G^{\,n+1}By.
+A\DRightarrow_G^{ n+1}By.
 \]
 Then the first production used in $G$ has the form
 \[
@@ -715,11 +715,11 @@ A\to Cz
 \]
 for some $C\in\Omega\cup\{\lambda\}$ and some $z\in\Sigma^*$, and after that
 \[
-C\DRightarrow_G^{\,n}Bx
+C\DRightarrow_G^{ n}Bx
 \]
 with $y=zx$.  By the induction hypothesis,
 \[
-C\DRightarrow_{G^r}^{\,n}x^rB.
+C\DRightarrow_{G^r}^{ n}x^rB.
 \]
 Since $G^r$ contains the reversed production
 \[
@@ -727,7 +727,7 @@ A\to z^rC,
 \]
 we obtain
 \[
-A\Rightarrow_{G^r} z^rC \DRightarrow_{G^r}^{\,n} z^r x^r B = (xz)^r B = y^r B.
+A\Rightarrow_{G^r} z^rC \DRightarrow_{G^r}^{ n} z^r x^r B = (xz)^r B = y^r B.
 \]
 The converse implication is identical with the roles of $G$ and $G^r$
 reversed.  Therefore the statement holds for all $n$.  In particular,

@@ -800,21 +800,20 @@ turn out to be useless.
 $P_{P_1}$ contains the $Z$-rules $Z\rightarrow B^{qq}$ and $Z\rightarrow B^{qr}$
 from the first criteria for productions. The transition $\delta(q,\pmb{a},B) =
 \{\langle q,A\rangle\}$ accounts for the productions $B^{qr}\rightarrow\pmb{a}
-A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$\!. $\delta(q,\pmb{a},A)=\{\langle q,
-AA\rangle\}$ gives rise to the $A^{qq}$\!-rules $A^{qq}\rightarrow\pmb{a}A^{qq}\!\!
-A^{qq}$ and $A^{qq}\rightarrow\pmb{a}A^{qr}\!\!\!A^{rq}$, as well as $A^{qr}$\!-rules
-$A^{qr}\rightarrow\pmb{a}A^{qq}\!\!A^{qr}$ and $A^{qr}\rightarrow\pmb{a}A^{qr}\!\!A^{rr}$\!\!.
+A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$ . $\delta(q,\pmb{a},A)=\{\langle q,
+AA\rangle\}$ gives rise to the $A^{qq}$ -rules $A^{qq}\rightarrow\pmb{a}A^{qq}A^{qq}$ and $A^{qq}\rightarrow\pmb{a}A^{qr}A^{rq}$, as well as $A^{qr}$ -rules
+$A^{qr}\rightarrow\pmb{a}A^{qq}A^{qr}$ and $A^{qr}\rightarrow\pmb{a}A^{qr}A^{rr}$.
 $\delta(q,\pmb{b},A)=\{\langle r,\lambda\rangle\}$ accounts for another
 $A^{qr}$-rule, $A^{qr}\rightarrow\pmb{b}$. Finally, the transition $\delta(r,
-\pmb{b},A)=\{\langle r,\lambda\rangle\}$ generates the only $A^{rr}$\!-rule,
+\pmb{b},A)=\{\langle r,\lambda\rangle\}$ generates the only $A^{rr}$ -rule,
 $A^{rr}\rightarrow\pmb{b}$.
 
-Note that some of the potential nonterminals ($B^{qr}\!,B^{rq}\!,B^{rr}$) are never
-generated, and others ($A^{qq}\!,B^{qq}$) cannot produce terminal strings. The
+Note that some of the potential nonterminals ($B^{qr} ,B^{rq} ,B^{rr}$) are never
+generated, and others ($A^{qq} ,B^{qq}$) cannot produce terminal strings. The
 resulting grammar, with useless items deleted, is given by
-\[ G_{P_1}=\langle\{Z,B^{qr}\!\!,A^{qr}\!\!,A^{rr}\},\{\pmb{a},\pmb{b}\},Z,\{Z
-	\rightarrow B^{qr}\!\!,B^{qr}\rightarrow\pmb{a}A^{qr}\!\!,A^{qr}\rightarrow
-	\pmb{a}A^{qr}\!\!A^{rr}\!\!,A^{qr}\rightarrow\pmb{b},A^{rr}\rightarrow\pmb{b}\}
+\[ G_{P_1}=\langle\{Z,B^{qr},A^{qr},A^{rr}\},\{\pmb{a},\pmb{b}\},Z,\{Z
+	\rightarrow B^{qr},B^{qr}\rightarrow\pmb{a}A^{qr},A^{qr}\rightarrow
+	\pmb{a}A^{qr}A^{rr},A^{qr}\rightarrow\pmb{b},A^{rr}\rightarrow\pmb{b}\}
 	\rangle \]
 and $G_{P_1}$ generates the language $P_1$ recognizes: $\{\pmb{a}^n\pmb{b}^n|\ n
 \geq 1\}$.
@@ -831,9 +830,9 @@ $\langle q,\pmb{aaabbb},B\rangle$ & $\langle q,\pmb{aabbb},A\rangle$ \\
 corresponds to the leftmost derivation
 \begin{center}\begin{tabular}{r@{ $\Rightarrow$ }l}
 $Z\Rightarrow B^{qr}$ & $\pmb{a}A^{qr}$ \\
-& $\pmb{aa}A^{qr}\!\!A^{rr}$ \\
-& $\pmb{aaa}A^{qr}\!\!A^{rr}\!\!A^{rr}$ \\
-& $\pmb{aaab}A^{rr}\!\!A^{rr}$ \\
+& $\pmb{aa}A^{qr}  A^{rr}$ \\
+& $\pmb{aaa}A^{qr}  A^{rr}  A^{rr}$ \\
+& $\pmb{aaab}A^{rr}  A^{rr}$ \\
 & $\pmb{aaabb}A^{rr}$ \\
 & $\pmb{aaabbb}$
 \end{tabular}\end{center}
@@ -842,12 +841,12 @@ Note the relationship between the sequence of stack configurations and the
 nonterminals in the corresponding sentential form. For example, when $\pmb{aaa}$
 has been processed by $P_1$, $AAA$ is on the stack, and when the leftmost
 derivation has produced $\pmb{aaa}$, the remaining nonterminals are also three
-$A$-based symbols ($A^{qr}\!\!A^{rr}\!\!A^{rr}$). $A^{qr}$ denotes a nonterminal (which
+$A$-based symbols ($A^{qr}  A^{rr}  A^{rr}$). $A^{qr}$ denotes a nonterminal (which
 corresponds to the stack symbol $A$) that will eventually produce a terminal
 string as the stack shrinks below the current size during a sequence of
 transitions that lead from state $q$ to state $r$. This finally happens in the
-last of the following steps, where $\pmb{aaa}A^{qr}\!\!A^{rr}\!\!A^{rr}\ \DRightarrow
-\pmb{aaabbb}$. $A^{rr}$\!, by contrast, denotes a nonterminal (again corresponding
+last of the following steps, where $\pmb{aaa}A^{qr}  A^{rr}  A^{rr}\ \DRightarrow
+\pmb{aaabbb}$. $A^{rr}$ , by contrast, denotes a nonterminal (again corresponding
 to the stack symbol $A$) that will produce a terminal string as the stack
 shrinks in size during transitions from state $r$ back to state $r$. In this
 example, this occurs in the next to the last two steps. The initial stack symbol
@@ -944,25 +943,25 @@ final state.
 % Theorem 10.4
 \begin{thm}\label{thm-10.4}\index{equivalent!PDAs}
 Every pushdown automaton $P$ that accepts via empty stack has an equivalent
-two-state pushdown automaton $P_{\!\!f}$ that accepts via final state.
+two-state pushdown automaton $P_{  f}$ that accepts via final state.
 
 \emph{Proof.} Corollary \ref{cor-10.1} guaranteed that every pushdown automaton that
 accepts via empty stack has an equivalent one-state pushdown automaton that also
 accepts via empty stack. Without loss of generality, we may therefore assume
-that $P=\langle\Sigma,\Gamma,\{s\},s,\delta,B,\emptyset\rangle$. Define $P_{\!\!f}$ by
+that $P=\langle\Sigma,\Gamma,\{s\},s,\delta,B,\emptyset\rangle$. Define $P_{  f}$ by
 choosing a new state $f$ and two new stack symbols $Y$ and $Z$ such that $Y,Z
-\notin \Gamma$, and let $P_{\!\!f} = \langle\Sigma,\Gamma\cup\{Y,Z\},\{s,f\},s,
-\delta_{\!\!f},Z,\{f\}\rangle$, where $\delta_{\!\!f}$ is defined by:
+\notin \Gamma$, and let $P_{  f} = \langle\Sigma,\Gamma\cup\{Y,Z\},\{s,f\},s,
+\delta_{  f},Z,\{f\}\rangle$, where $\delta_{  f}$ is defined by:
 \begin{enumerate}
-\item $\delta_{\!\!f}(s,\lambda,Z) = \{\langle s,BY\rangle\}$
-\item $(\forall\pmb{a}\in\Sigma)(\forall A\in\Gamma)(\delta_{\!\!f}(s,\pmb{a},A) =
+\item $\delta_{  f}(s,\lambda,Z) = \{\langle s,BY\rangle\}$
+\item $(\forall\pmb{a}\in\Sigma)(\forall A\in\Gamma)(\delta_{  f}(s,\pmb{a},A) =
 	\delta(s,\pmb{a},A))$
-\item $(\forall A\in\Gamma)(\delta_{\!\!f}(s,\lambda,A)=\delta(s,\lambda,A))$
-\item $\delta_{\!\!f}(s,\lambda,Y)=\{\langle f,Y\rangle\}$
-\item $(\forall\pmb{a}\in\Sigma)(\delta_{\!\!f}(s,\pmb{a},Z) = \{\ \ \} \wedge
-	\delta_{\!\!f}(s,\pmb{a},Y) = \{\ \ \})$
+\item $(\forall A\in\Gamma)(\delta_{  f}(s,\lambda,A)=\delta(s,\lambda,A))$
+\item $\delta_{  f}(s,\lambda,Y)=\{\langle f,Y\rangle\}$
+\item $(\forall\pmb{a}\in\Sigma)(\delta_{  f}(s,\pmb{a},Z) = \{\ \ \} \wedge
+	\delta_{  f}(s,\pmb{a},Y) = \{\ \ \})$
 \item $(\forall\pmb{a}\in\Sigma\cup\{\lambda\})(\forall A\in\Gamma\cup\{Y,Z\})
-	(\delta_{\!\!f}(f,\pmb{a},A) = \{\ \ \})$
+	(\delta_{  f}(f,\pmb{a},A) = \{\ \ \})$
 \end{enumerate}
 
 Notice that rules 2 and 3 imply that, while the original stack symbols appear on
@@ -972,26 +971,26 @@ moves are possible once the final state $f$ is reached. Since the bottom of the
 stack symbol is now the new letter $Z$, rule 1 is the only rule that initially
 applies. Its application results in a configuration very much like that of the
 old PDA, with the symbol $Y$ underneath the old bottom of the stack symbol $B$.
-$P_{\!\!f}$ now simulates $P$ until the $Y$ is uncovered (that is, until a point is
+$P_{  f}$ now simulates $P$ until the $Y$ is uncovered (that is, until a point is
 reached in which the old PDA would have emptied its stack). In such cases (and
 only in such cases), rule 4 applies, and control can be transferred to the final
-state $f$, and $P_{\!\!f}$ must then halt.
+state $f$, and $P_{  f}$ must then halt.
 
 By inducting on the number of moves in a sequence, it can be shown for any
 $\alpha$, $\beta\in\Gamma^*$ that
 \[ (\forall x,y\in\Sigma^*)(\langle s,xy,\alpha\rangle\Dvdash \langle s,y,\beta\rangle
 	\text{ in }P \Leftrightarrow \langle s,xy,\alpha Y\rangle \Dvdash \langle s,y,\beta Y\rangle
-	\text{ in }P_{\!\!f}) \]
+	\text{ in }P_{  f}) \]
 From this, with $y = \beta = \lambda$ and $\alpha = B$, it follows that
 
 \[ (\forall x\in\Sigma^*)(\langle s,x,B\rangle\Dvdash\langle s,\lambda,\lambda\rangle
-	\text{ in }P\Leftrightarrow\langle s,x,BY\rangle\Dvdash\langle s,\lambda,Y\rangle\text{ in }P_{\!\!f})\]
-Consequently, since $\delta_{\!\!f}(s,\lambda,Z)=\{\langle s,BY\rangle\}$ and
-$\delta_{\!\!f}(s,\lambda,Y)=\{\langle f,Y\rangle\}$,
+	\text{ in }P\Leftrightarrow\langle s,x,BY\rangle\Dvdash\langle s,\lambda,Y\rangle\text{ in }P_{  f})\]
+Consequently, since $\delta_{  f}(s,\lambda,Z)=\{\langle s,BY\rangle\}$ and
+$\delta_{  f}(s,\lambda,Y)=\{\langle f,Y\rangle\}$,
 \[ (\forall x\in\Sigma^*)(\langle s,x,B\rangle\Dvdash \langle s,\lambda,\lambda\rangle\text{ in }P
-	\Leftrightarrow\langle s,x,Z\rangle\Dvdash\langle f,\lambda,Y\rangle\text{ in }P_{\!\!f})\]
+	\Leftrightarrow\langle s,x,Z\rangle\Dvdash\langle f,\lambda,Y\rangle\text{ in }P_{  f})\]
 which implies that $(\forall x\in\Sigma^*)(x\in\Lambda(P)\Leftrightarrow x\in
-L(P_{\!\!f}))$, as was to be proved.
+L(P_{  f}))$, as was to be proved.
 \end{thm}
 
 Thus, every language which is $\Lambda(P)$ for some PDA can be recognized by a
@@ -1381,7 +1380,7 @@ which strings that are hopelessly stuck would transfer.
 % Theorem 10.7
 \begin{thm}\label{thm-10.7}
 If $L$ is a language recognized by a deterministic pushdown automaton, then
-$\sim\!\!L$ can also be recognized by a DPDA.
+$\sim  L$ can also be recognized by a DPDA.
 
 \emph{Proof.} See the exercises.
 \end{thm}
@@ -1410,7 +1409,7 @@ shows that every finite automaton has an equivalent deterministic pushdown
 automaton, and thus it is always true that $\DSIG\subseteq\ASIG$. Definition
 \ref{dfn-10.7} implies that $\ASIG\subseteq\PSIG$. If $|\Sigma|=1$, then Theorem \ref{thm-9.15}
 showed that $\DSIG = \CSIG\  ( = \PSIG)$, from which it follows that $\DSIG =
-\ASIG = \PSIG$. If\, $|\Sigma|>1$, an example such as $\{\pmb{a}^n\pmb{b}^n|\,n\geq
+\ASIG = \PSIG$. If  $|\Sigma|>1$, an example such as $\{\pmb{a}^n\pmb{b}^n| n\geq
 1\}$ shows that \DSIG\ is properly contained in \ASIG\ (see the exercises).
 Since $\mathfrak{P}_{\{\pmb{a},\pmb{b}\}}$ and $\cal{A}_{\{\pmb{a},
 \pmb{b}\}}$ have different closure properties, they cannot represent the same
@@ -1455,7 +1454,7 @@ closed under union, intersection, and difference \emph{with a regular set}. That
 is, if $L_1$ is a DCFL and $R_2$ is a FAD language, then the following are
 deterministic, context-free languages:
 \begin{center}\begin{tabular}{c}
-$\sim\!\!L_1$ \\
+$\sim  L_1$ \\
 $L_1 \cap R_2$ \\
 $L_1 \cup R_2$ \\
 $L_1 - R_2$ \\
@@ -1494,9 +1493,9 @@ not DCFLs. For example, the language
 \[ L = \{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}\cup
 	\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{b}} = |x|_{\pmb{c}}\} \]
 can be recognized by a PDA but not by a DPDA. If $L$ were a DCFL, then
-$\sim\!\!L = \{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{a}} \not= |x|_{
+$\sim  L = \{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{a}} \not= |x|_{
 \pmb{b}}\}\cap\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \ |x|_{\pmb{b}} \not= |x|_{
-\pmb{c}}\}$ would also be a DCFL. However, $\sim\!\!L\cap\pmb{a}^*\pmb{b}^*
+\pmb{c}}\}$ would also be a DCFL. However, $\sim  L\cap\pmb{a}^*\pmb{b}^*
 \pmb{c}^* = \{\pmb{a}^k\pmb{b}^n\pmb{c}^m|\ (k \not= n)\wedge(n \not= m)\}$, which
 should also be a DCFL. Ogden's lemma shows that this is not even a CFL (see the
 exercises), and hence the original hypothesis that $L$ was a DCFL must be false.
@@ -1621,7 +1620,7 @@ $G_{P_3}$.
 
 \item Refer to Theorem \ref{thm-10.3} and use induction to show
 \[ (\forall x\in\Sigma^*)(\forall A\in\Gamma)(\forall s\in S)(\forall t\in S)
-	(A^{st}\,\DRightarrow x\ \ \  \Leftrightarrow\ \ \  \langle s,x,A\rangle\Dvdash\langle
+	(A^{st} \DRightarrow x\ \ \  \Leftrightarrow\ \ \  \langle s,x,A\rangle\Dvdash\langle
 	t,\lambda,\lambda\rangle) \]
 
 \item Let $L=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m|\ n,m\in\NN\}\cup\{\pmb{a}^i
@@ -1642,7 +1641,7 @@ $G_{P_G}$.
 \item Refer to Theorem \ref{thm-10.4} and use induction to show
 \[ (\forall\alpha,\beta\in\Gamma^*)(\forall x,y\in\Sigma^*)(\langle s,xy,\alpha\rangle
 	\Dvdash\langle s,y,\beta\rangle\text{ in }P \ \ \  \Leftrightarrow\ \ \ \langle s,xy,
-	\alpha Y\rangle\Dvdash\langle s,y,\beta Y\rangle\text{ in }P_{\!\!f}) \]
+	\alpha Y\rangle\Dvdash\langle s,y,\beta Y\rangle\text{ in }P_{  f}) \]
 
 \item Refer to Theorem \ref{thm-10.5} and use induction to show
 \[ (\forall \alpha,\beta\in\Gamma^*)(\forall x,y\in\Sigma^*)(\forall s,t\in S)
