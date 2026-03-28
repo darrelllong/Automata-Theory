@@ -84,19 +84,12 @@ Strategy: Count occurrences by marking symbols.
 \item \textbf{Machine $M$ with $L(M)=L_1(M)=L_2(M)=L_3(M)=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\mid |x|_a=|x|_b=|x|_c\}$.}
 
 \begin{enumerate}
-\item \textbf{Construction}: Design $M$ to:
+\item \textbf{Construction}: First let $M$ deterministically test whether the input has equally many $\pmb{a}$'s, $\pmb{b}$'s, and $\pmb{c}$'s by the usual crossing-off routine. Then:
 \begin{enumerate}[1.]
-\item Verify $|x|_a = |x|_b = |x|_c$ by crossing-off pairing.
-\item If yes: \textbf{halt} with the tape containing $\pmb{Y}$ in cell 1 (accept state is also the halt state for $L_1$, $L_2$, $L_3$).
-\item If no: \textbf{halt} with $\pmb{N}$ on the tape (reject for all acceptance modes).
+\item If the test succeeds, erase the whole tape, write a single $\pmb{Y}$, position the head on that $\pmb{Y}$, and halt in a final state.
+\item If the test fails, do \emph{not} halt: enter a simple two-state loop that moves right and left forever on blanks.
 \end{enumerate}
-Specifically:
-- $L(M)$: accept = halting in designated final state.
-- $L_1(M)$: accept = halting.
-- $L_2(M)$: accept = halting with $\pmb{Y}$ on tape.
-- $L_3(M)$: accept = halting on a blank tape (we can arrange $M$ to clear tape for yes-instances).
-
-By designing $M$ to halt on all inputs and write $\pmb{Y}$/$\pmb{N}$ appropriately, all four acceptance modes agree.
+For a yes-instance, the machine halts in a final state, with $\pmb{Y}$ somewhere on the tape and in fact as the rightmost nonblank symbol. Thus the input belongs to all four sets $L(M),L_1(M),L_2(M),L_3(M)$. For a no-instance, the machine never halts, so it belongs to none of them. Therefore all four acceptance notions define exactly the required language.
 
 \item \textbf{Is this always possible?}: Yes, for any Turing-acceptable language $L$. Proof: Given any TM $A$ accepting $L$, by the $L_1$/$L_2$/$L_3$ equivalence theorems (Exercise 11.19), there is a halting TM $A'$ accepting $L$ in any of the four modes. If we require all four modes to agree, we need $A$ to halt on \emph{all} inputs (not just those in $L$). This is possible iff $L$ is \emph{recursive} (decidable). For Turing-acceptable but not recursive languages, $L(M)=L$ but $M$ may not halt on all inputs, preventing $L_1(M)=L$. So the answer is: \textbf{yes if and only if $L$ is recursive}. For every recursive language, we can build $M$ with all four modes agreeing.
 \end{enumerate}
