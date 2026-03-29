@@ -1,5 +1,4 @@
-% Chapter, Section, Theorem, Corollary, Lemma, Definition, Table, Figure, {\bf
-\chapter{Turing Machines}\label{ch-11}
+% Chapter, Section, Theorem, Corollary, Lemma, Definition, Table, Figure, \textbf{\chapter{Turing Machines}\label{ch-11}
 
 In the preceding chapters, we have seen that DFAs and NDFAs represented
 the type 3 languages and pushdown automata represented the type 2
@@ -86,7 +85,7 @@ that this goal is impossible to achieve.
 
 % Figure 11.1
 \begin{figure}[tbh]
-\centerline{\epsfig{figure=ToFAfigures/fig11-1.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-1.eps}}
 \caption{A model of a Turing machine.}\label{fig-11.1}
 \end{figure}
 
@@ -174,7 +173,7 @@ always moving right as it scans each symbol of the word on the input tape.
 
 % Figure 11.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-2.eps,width=2.4in}}
+\centerline{\includegraphics[width=2.4in]{ToFAfigures/fig11-2.eps}}
 \caption{The state transition diagram of the Turing machine discussed in Example
 11.1}\label{fig-11.2}
 \end{figure}
@@ -198,7 +197,7 @@ Example 11.4 illustrates a Turing machine that employs submachines.
 
 % Figure 11.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-3.eps,width=2.4in}}
+\centerline{\includegraphics[width=2.4in]{ToFAfigures/fig11-3.eps}}
 \caption{An alternate depiction of the Turing machine discussed in Example 11.1}\label{fig-11.3}
 \end{figure}
 
@@ -262,7 +261,7 @@ repeats from $s_0$.
 
 % Figure 11.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-4.eps,height=3.4in}}
+\centerline{\includegraphics[height=3.4in]{ToFAfigures/fig11-4.eps}}
 \caption{The Turing machine $M$ discussed in Example 11.2}\label{fig-11.4}
 \end{figure}
 
@@ -439,19 +438,19 @@ $s_7$.
 \renewcommand{\thefigure}{\arabic{chapter}.5\alph{figure}}
 % Figure 11.5a
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-5a.eps,height=4.0in}}
+\centerline{\includegraphics[height=4.0in]{ToFAfigures/fig11-5a.eps}}
 \caption{The Turing machine discussed in Example 11.4}\label{fig-11.5a}
 \end{figure}
 
 % Figure 11.5b
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-5b.eps,height=1.2in}}
+\centerline{\includegraphics[height=1.2in]{ToFAfigures/fig11-5b.eps}}
 \caption{Submachine $S_1$ in Example 11.4}\label{fig-11.5b}
 \end{figure}
 
 % Figure 11.5c
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-5c.eps,height=1.2in}}
+\centerline{\includegraphics[height=1.2in]{ToFAfigures/fig11-5c.eps}}
 \caption{Submachine $S_2$ in Example 11.4}\label{fig-11.5c}
 \end{figure}
 \setcounter{figure}{5}                        %nasty kluge
@@ -551,7 +550,7 @@ illustrated in Example 11.1 (see Figure \ref{fig-11.2}).
 
 % Figure 11.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-6.eps,width=2.4in}}
+\centerline{\includegraphics[width=2.4in]{ToFAfigures/fig11-6.eps}}
 \caption{The DFA $T$ discussed in Example 11.5}\label{fig-11.6}
 \end{figure}
 
@@ -605,7 +604,7 @@ erased, leaving the original string to the left of the $\pmb{Y}$ (see Example
 
 % Figure 11.7
 \begin{figure}\index{multi-track Turing machine}\index{Turing machine!multi-track}
-\centerline{\epsfig{figure=ToFAfigures/fig11-7.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-7.eps}}
 \caption{A Turing machine with a two-track tape}\label{fig-11.7}
 \end{figure}
  
@@ -647,7 +646,7 @@ which the standard Turing machine cannot.
 
 % Figure 11.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-8.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-8.eps}}
 \caption{Emulating a two-headed Turing machine with a three-track tape}\label{fig-11.8}
 \end{figure}
 
@@ -703,13 +702,13 @@ multitape machines are no more powerful than the machines considered earlier.
 
 % Figure 11.9
 \begin{figure}\index{multi-head Turing machine}\index{Turing machine!multi-head}
-\centerline{\epsfig{figure=ToFAfigures/fig11-9.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-9.eps}}
 \caption{A three-tape Turing machine}\label{fig-11.9}
 \end{figure}
 
 % Figure 11.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-10.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-10.eps}}
 \caption{Emulating a three-tape Turing machine with a single three-track tape}\label{fig-11.10}
 \end{figure}
 
@@ -881,31 +880,19 @@ to $G$.
 
 Consider the context-sensitive grammar $G=\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{
 S,A,B,C\},S,P\rangle$, where $P$ contains the productions
-\begin{enumerate}
+\begin{enumerate}[nosep]
 \item $Z\rightarrow\lambda$
-\vspace{-0.1in}
 \item $Z\rightarrow S$
-\vspace{-0.1in}
 \item $S\rightarrow SABC$
-\vspace{-0.1in}
 \item $S\rightarrow ABC$
-\vspace{-0.1in}
 \item $AB\rightarrow BA$
-\vspace{-0.1in}
 \item $BA\rightarrow AB$
-\vspace{-0.1in}
 \item $CB\rightarrow BC$
-\vspace{-0.1in}
 \item $BC\rightarrow CB$
-\vspace{-0.1in}
 \item $CA\rightarrow AC$
-\vspace{-0.1in}
 \item $AC\rightarrow CA$
-\vspace{-0.1in}
 \item $A\rightarrow\pmb{a}$
-\vspace{-0.1in}
 \item $B\rightarrow\pmb{b}$
-\vspace{-0.1in}
 \item $C\rightarrow\pmb{c}$
 \end{enumerate}
 It is quite easy to show that $L(G)=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*|\ \
@@ -1018,7 +1005,7 @@ $\<\pmb{XXXXXX}s_0\>$ && $\vdash \<\pmb{XXXXXXhY}$
 
 % Figure 11.11
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-11.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-11.eps}}
 \caption{The Turing machine discussed in Example 11.10}\label{fig-11.11}
 \end{figure}
 
@@ -1061,7 +1048,7 @@ remarkable resemblance to the derivations in a grammar.
 
 % Figure 11.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-12.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-12.eps}}
 \caption{The Turing machine discussed in Example 11.11}\label{fig-11.12}
 \end{figure}
 
@@ -1094,7 +1081,7 @@ and $\pmb{C}$ with $\pmb{c}$.
 
 % Figure 11.13
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-13.eps,height=3.8in}}
+\centerline{\includegraphics[height=3.8in]{ToFAfigures/fig11-13.eps}}
 \caption{The state transition diagram discussed in Example 11.11}\label{fig-11.13}
 \end{figure}
 
@@ -1386,13 +1373,13 @@ short words and not rely on the above formalism.
 \renewcommand{\thefigure}{\arabic{chapter}.14\alph{figure}}
 % Figure 11.14a
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-14a.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-14a.eps}}
 \caption{A three-track Turing machine employing delimiters}\label{fig-11.14a}
 \end{figure}
 
 % Figure 11.14b
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-14b.eps,width=3.4in}}
+\centerline{\includegraphics[width=3.4in]{ToFAfigures/fig11-14b.eps}}
 \caption{An accepting configuration}\label{fig-11.14b}
 \end{figure}
 \setcounter{figure}{14}                       %nasty kluge
@@ -1491,7 +1478,7 @@ sequentially to fit the given definition.
 
 % Figure 11.15
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig11-15.eps,height=3.8in}}
+\centerline{\includegraphics[height=3.8in]{ToFAfigures/fig11-15.eps}}
 \caption{The Turing machine discussed in Example 11.13}\label{fig-11.15}
 \end{figure}
 

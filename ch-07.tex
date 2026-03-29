@@ -1,5 +1,4 @@
-% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf
-\chapter{Finite-State Transducers}\label{ch-7}
+% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, \textbf{\chapter{Finite-State Transducers}\label{ch-7}
 
 We have seen that finite-state acceptors are by no means robust enough to accept
 standard computer languages like Pascal. Furthermore, even if a DFA could
@@ -37,7 +36,7 @@ our \emph{input alphabet} $\Sigma$.
 
 % Figure 7.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-1.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig7-1.eps}}
 \caption{The difference between an acceptor and a transducer}\label{fig-7.1}
 \end{figure}
 
@@ -97,7 +96,7 @@ been inserted (see the exercises).\index{vending machine!FST}
 
 % Figure 7.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-2.eps,width=5.2in}}
+\centerline{\includegraphics[width=5.2in]{ToFAfigures/fig7-2.eps}}
 \caption{A finite-state transducer model of the vending machine discussed in
 Example 7.1}\label{fig-7.2}
 \end{figure}
@@ -168,7 +167,7 @@ resulting output string, $\pmb{00100110}$.
 
 % Figure 7.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-3.eps,width=2in}}
+\centerline{\includegraphics[width=2in]{ToFAfigures/fig7-3.eps}}
 \caption{The state transition diagram for the transducer discussed in Example
 7.2}\label{fig-7.3}
 \end{figure}
@@ -313,7 +312,7 @@ occurrences of the string $\pmb{aab}$ by printing a $\pmb{1}$ on the output tape
 
 % Figure 7.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-4.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-4.eps}}
 \caption{The state transition diagram for the Mealy machine $C$ in
 Example 7.6}\label{fig-7.4}
 \end{figure}
@@ -404,7 +403,7 @@ three states.\index{equivalent!transducers}
 
 % Figure 7.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-5.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-5.eps}}
 \caption{The state transition diagram for the Mealy machine $D$ in Example 7.8}\label{fig-7.5}
 \end{figure}
 
@@ -910,7 +909,7 @@ Mealy machine $B$ in Example 7.2.
 
 % Figure 7.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-6.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-6.eps}}
 \caption{The state transition diagram for the transducer discussed in Example
 7.10}\label{fig-7.6}
 \end{figure}
@@ -1039,7 +1038,7 @@ which the arrow pointed $(r_0/\pmb{0})$ originally output a $\pmb{0}$.
 
 % Figure 7.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-7.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-7.eps}}
 \caption{The state transition diagram for the Mealy machine $M$ in Example 7.11}\label{fig-7.7}
 \end{figure}
 
@@ -1127,7 +1126,7 @@ $\langle s_1,\pmb{1}\rangle$ & $\langle s_0,\pmb{1}\rangle$ & $\langle s_1,
 
 % Figure 7.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-8.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-8.eps}}
 \caption{The state transition diagram for the Moore machine A in Example
 7.12}\label{fig-7.8}
 \end{figure}
@@ -1151,7 +1150,7 @@ functions. The formal definition is given below.
 
 % Figure 7.9
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-9.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-9.eps}}
 \caption{The state transition diagram for the Moore machine $A'$ in Example
 7.12}\label{fig-7.9}
 \end{figure}
@@ -1502,7 +1501,7 @@ addition in any base system.
 
 % Figure 7.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-10.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-10.eps}}
 \caption{The state transition diagram for the receive portion of Kermit, as
 discussed in Example 7.14}\label{fig-7.10}
 \end{figure}
@@ -1528,14 +1527,14 @@ appropriate translation of the addition problem given ($6+3$).
 
 % Figure 7.11
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-11.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig7-11.eps}}
 \caption{(a) The addition problem discussed in Example 7.15 (b) Conceptual model
 of the binary adder discussed in Example 7.15}\label{fig-7.11}
 \end{figure}
 
 % Figure 7.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-12.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig7-12.eps}}
 \caption{The binary adder discussed in Example 7.15}\label{fig-7.12}
 \end{figure}
 
@@ -1555,7 +1554,7 @@ $\pmb{y}$ or $\pmb{n}$ to indicate whether or not there was overflow.
 
 % Figure 7.13
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-13.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-13.eps}}
 \caption{The state transition diagram for a binary adder modeled as a Mealy
 machine, as discussed in Example 7.15}\label{fig-7.13}
 \end{figure}
@@ -1592,7 +1591,7 @@ not expected to appear in the model.
 
 % Figure 7.14
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-14.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig7-14.eps}}
 \caption{The intersection discussed in Example 7.16}\label{fig-7.14}
 \end{figure}
 
@@ -1619,7 +1618,7 @@ deactivated. This and the other transitions are illustrated in Figure \ref{fig-7
 
 % Figure 7.15
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-15.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig7-15.eps}}
 \caption{The state transition diagram for a stoplight modeled as a
 Moore machine, as discussed in Example 7.16}\label{fig-7.15}
 \end{figure}
@@ -1635,7 +1634,7 @@ in this manner can be avoided by varying the clock cycle length.
 
 % Figure 7.16
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-16.eps,width=3.0in}}
+\centerline{\includegraphics[width=3.0in]{ToFAfigures/fig7-16.eps}}
 \caption{The modified controller discussed in Example 7.16}\label{fig-7.16}
 \end{figure}
 
@@ -1677,7 +1676,7 @@ $t'_1$ in terms of $t_1$ and $a_1$. The complete table is given in Table 7.5a.
 
 % Figure 7.17
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-17.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig7-17.eps}}
 \caption{The state transition diagram for the Mealy machine in Example 7.17}\label{fig-7.17}
 \end{figure}
 
@@ -1708,7 +1707,7 @@ $\pmb{0}$ & $\pmb{0}$ & $\pmb{1}$
 
 % Figure 7.18
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-18.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig7-18.eps}}
 \caption{Circuit diagram for Example 7.17}\label{fig-7.18}
 \end{figure}
 
@@ -2008,7 +2007,7 @@ lights change from $\pmb{D}$ to $\pmb{W}$. Further assume that the walk lights
 revert to $\pmb{D}$ and $\pmb{W}$ before the side street light turns to yellow.
 % Figure 7.19
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-19.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig7-19.eps}}
 \caption{The intersection discussed in Exercise 7.39}\label{fig-7.19}
 \end{figure}
 \begin{enumerate}
@@ -2031,7 +2030,7 @@ allowed to precede the opposing traffic.
 \end{enumerate}
 % Figure 7.20
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig7-20.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig7-20.eps}}
 \caption{The intersection discussed in Exercise 7.40}\label{fig-7.20}
 \end{figure}
 
@@ -2218,14 +2217,14 @@ to $A$.
 isomorphism (whenever $f \circ g$ is defined).
 \item From the results of parts (a), (b), and (c) given above, prove that
 $\cong$ is an equivalence relation over the set of all Mealy machines.
-\item Show that homomorphism is {\em not} an equivalence relation over the set of all
+\item Show that homomorphism is \emph{not} an equivalence relation over the set of all
 Mealy machines.
 \end{enumerate}
 
 \item \begin{enumerate}
 \item Prove that $\cong$ is an equivalence relation in the set of all Moore
 machines.
-\item Show that homomorphism is {\em not} an equivalence relation over the set of all
+\item Show that homomorphism is \emph{not} an equivalence relation over the set of all
 Moore machines.
 \end{enumerate}
 

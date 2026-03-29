@@ -1,5 +1,4 @@
-% Chapter, Section, Theorem, Corollary, Lemma, Definition, Table, Figure, {\bf 
-\chapter{Context-Free Grammars}\label{ch-9}
+% Chapter, Section, Theorem, Corollary, Lemma, Definition, Table, Figure, \textbf{\chapter{Context-Free Grammars}\label{ch-9}
 
 The preceding chapter explored the properties of the type 3 grammars. The next
 class of grammars in the language hierarchy, the \emph{type 2} or
@@ -80,7 +79,7 @@ the mail.''
 
 % Figure 9.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-1.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig9-1.eps}}
 \caption{A parse tree for the English grammar}\label{fig-9.1}
 \end{figure}
 
@@ -108,7 +107,7 @@ desired result would be a representation of the tree shown in Figure \ref{fig-9.
 
 % Figure 9.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-2.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig9-2.eps}}
 \caption{The parse tree discussed in Example 9.2}\label{fig-9.2}
 \end{figure}
 
@@ -138,11 +137,11 @@ order in which the operators $\pmb{\cup}$, $\pmb{\cdot}$, and $\pmb{^*}$ should 
 expressions to which they should be applied.
 
 Given a particular complete parse tree for a string $x$, there may be some
-freedom in the {\em order} in which the associated productions are applied.
+freedom in the \emph{order} in which the associated productions are applied.
 
 % Figure 9.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-3.eps,width=6.0in}}
+\centerline{\includegraphics[width=6.0in]{ToFAfigures/fig9-3.eps}}
 \caption{The parse tree discussed in Example 9.3}\label{fig-9.3}
 \end{figure}
 
@@ -229,7 +228,7 @@ in the preorder traversal.
 
 % Figure 9.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-4.eps,width=6.0in}}
+\centerline{\includegraphics[width=6.0in]{ToFAfigures/fig9-4.eps}}
 \caption{The preorder traversal of the parse tree}\label{fig-9.4}
 \end{figure}
 
@@ -296,7 +295,7 @@ grammar happens to be right linear and is definitely not ambiguous.
 
 % Figure 9.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-5.eps,height=5.5in}}
+\centerline{\includegraphics[height=5.5in]{ToFAfigures/fig9-5.eps}}
 \caption{(a) A parse tree for $\bf{aaaaa}$ in Example 9.5 (b) An alternate parse tree
 for $\pmb{aaaaa}$}\label{fig-9.5}
 \end{figure}
@@ -352,7 +351,7 @@ describing a programming language.
 
 % Figure 9.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-6.eps,height=6.5in}}
+\centerline{\includegraphics[height=6.5in]{ToFAfigures/fig9-6.eps}}
 \caption{(a) A parse tree for $\pmb{a-b-d}$ in Example 9.6 (b) An alternate
 parse tree for $\pmb{a-b-d}$}\label{fig-9.6}
 \end{figure}
@@ -474,7 +473,7 @@ tedious to formalize; the interested reader is referred to [HOPC].
 
 % Figure 9.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-7.eps,height=3.5in}}
+\centerline{\includegraphics[height=3.5in]{ToFAfigures/fig9-7.eps}}
 \caption{The parse tree discussed in Example 9.7}\label{fig-9.7}
 \end{figure}
 
@@ -513,7 +512,7 @@ inductive statement of this property is left as an exercise.
 
 % Figure 9.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-8.eps,width=5.0in}}
+\centerline{\includegraphics[width=5.0in]{ToFAfigures/fig9-8.eps}}
 \caption{The parse trees discussed in Example 9.8}\label{fig-9.8}
 \end{figure}
 
@@ -549,7 +548,7 @@ $G' =$ & $\langle\{S_0,S_1,S_2,S_3,S_4\},\{\pmb{a},\pmb{b},\pmb{c}\},S_0,\{S_0
 
 % Figure 9.9
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-9.eps,height=7.5in}}
+\centerline{\includegraphics[height=7.5in]{ToFAfigures/fig9-9.eps}}
 \caption{(a) The automaton discussed in Example 9.9 (b) The simplified
 automaton discussed in Example 9.9 (c) The deterministic automaton discussed
 in Example 9.9 (d) The final automaton discussed in Example 9.9}\label{fig-9.9}
@@ -557,8 +556,7 @@ in Example 9.9 (d) The final automaton discussed in Example 9.9}\label{fig-9.9}
 
 The orderly nature of this resulting type of grammar easily admits the
 specification of an algorithm that scans a proposed terminal string and builds
-the corresponding parse tree. The partial parse tree for a string such as {\bf
-abb} would be as pictured in Figure \ref{fig-9.10}a. This would clearly be an invalid
+the corresponding parse tree. The partial parse tree for a string such as \textbf{abb} would be as pictured in Figure \ref{fig-9.10}a. This would clearly be an invalid
 string since $S_4$ cannot be replaced by $\lambda$. By contrast, the tree for
 the word $\pmb{abc}$ would produce a complete parse tree, and it is instructive to
 step through the process by which it is built. The root of the tree must be
@@ -574,7 +572,7 @@ a valid terminal string, and corresponds to the parse tree shown in Figure \ref{
 
 % Figure 9.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-10.eps,height=3.7in}}
+\centerline{\includegraphics[height=3.7in]{ToFAfigures/fig9-10.eps}}
 \caption{(a) The partial parse tree for the string $\pmb{abb}$ (b) The parse tree
 for the string $\pmb{abc}$}\label{fig-9.10}
 \end{figure}
@@ -789,7 +787,7 @@ to adhere to the ``toolbox approach'' and adapt existing tools to new situations
 % Figure 9.11
 \begin{figure}
 % perhaps scale this one by height?  Get too big, it overwrites the page number.
-\centerline{\epsfig{figure=ToFAfigures/fig9-11.eps,width=4.7in}}
+\centerline{\includegraphics[width=4.7in]{ToFAfigures/fig9-11.eps}}
 \caption{(a) The automaton discussed in Example 9.12 (b) The simplified
 automaton discussed in Example 9.12 (c) The final automaton discussed in
 Example 9.12}\label{fig-9.11}
@@ -1361,7 +1359,7 @@ infinite sequence of strings that must belong to $L$.
 
 % Figure 9.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig9-12.eps,height=3.7in}}
+\centerline{\includegraphics[height=3.7in]{ToFAfigures/fig9-12.eps}}
 \caption{The parse tree discussed in the proof of Theorem \ref{thm-9.7}}\label{fig-9.12}
 \end{figure}
 
@@ -1390,10 +1388,10 @@ employ the contrapositive of Theorem \ref{thm-9.7}, which is stated next.
 % Theorem 9.8
 \begin{thm}\label{thm-9.8}
 Let $L$ be a language over $\Sigma^*$. \\
-{\bf if} $(\forall n\in\NN)(\exists z\in L \ni |z| \geq n)(\forall u,v,w,x,y \in
+\textbf{if} $(\forall n\in\NN)(\exists z\in L \ni |z| \geq n)(\forall u,v,w,x,y \in
 \Sigma^* \ni z = uvwxy, |vwx| \leq n, |vx|\geq 1)(\exists i\in\NN \ni uv^iwx^iy
 \not in L)$ \\
-{\bf then} $L$ is {\bf not} context free.
+\textbf{then} $L$ is \textbf{not} context free.
 
 \emph{Proof.} See the exercises.
 \end{thm}

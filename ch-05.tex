@@ -1,5 +1,4 @@
-% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf
-\chapter{Closure Properties}\label{ch-5}
+% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, \textbf{\chapter{Closure Properties}\label{ch-5}
 
 In this chapter we will look at ways to combine languages that are recognized
 by finite automata (that is, FAD languages) and consider whether the
@@ -70,9 +69,8 @@ is sufficient to show that a given set is not closed under a unary operator.
 
 \subsection*{Example 5.5}
 
-%jc Shenanigans to get an overbar without the symbol sinking far below the line.
-$\NN$ is not closed under $\sqrt{\huge \ ^{\ ^{\ }}}$ (square root) since $7 \in \NN$ but
-$\sqrt{7} \not in \NN$.
+$\NN$ is not closed under $\sqrt{\phantom{x}}$ (square root) since $7 \in \NN$ but
+$\sqrt{7} \notin \NN$.
 
 We will not be concerned so much with sets of numbers as with sets of languages.
 As in Example 5.3, the collection will be a set of sets. Of prime concern are
@@ -82,8 +80,8 @@ those languages that are related to automata.
 \begin{dfn}\label{dfn-5.3}\index{D@\DSIG \ (D-sigma )}
 Let $\Sigma$ be an alphabet. The symbol \DSIG  is used to denote the
 set of all FAD languages over $\Sigma$; that is,
-$$ \DSIG =\{L \subseteq \Sigma^*\ |\ \exists
-\text{ deterministic finite automaton } M \ni L(M) = L\} $$
+\[ \DSIG =\{L \subseteq \Sigma^*\ |\ \exists
+\text{ deterministic finite automaton } M \ni L(M) = L\} \]
 \end{dfn}
 
 \DSIG\ is the set of all languages that can be recognized by
@@ -173,13 +171,13 @@ involving only DFAs would be both longer and less obvious (see the exercises).
 
 % Figure 5.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-1.eps,width=3in}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig5-1.eps}}
 \caption{The two automata discussed in Example 5.6}\label{fig-5.1}
 \end{figure}
 
 % Figure 5.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-2.eps,width=3in}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig5-2.eps}}
 \caption{The resulting automaton in Example 5.6}\label{fig-5.2}
 \end{figure}
 
@@ -318,7 +316,7 @@ reader (see the exercises).
 
 % Figure 5.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-3.eps,height=3.6in}}
+\centerline{\includegraphics[height=3.6in]{ToFAfigures/fig5-3.eps}}
 \caption{The automata discussed in Example 5.7}\label{fig-5.3}
 \end{figure}
 
@@ -355,7 +353,7 @@ $\pmb{b}$s and the letter count is $0 \pmod{ 3}$.
 
 % Figure 5.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-4.eps,height=3.6in}}
+\centerline{\includegraphics[height=3.6in]{ToFAfigures/fig5-4.eps}}
 \caption{The resulting DFA for Example 5.7}\label{fig-5.4}
 \end{figure}
 
@@ -401,13 +399,13 @@ in Figure \ref{fig-5.6}.
 
 % Figure 5.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-5.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-5.eps}}
 \caption{Two candidates for concatenation}\label{fig-5.5}
 \end{figure}
 
 % Figure 5.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-6.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-6.eps}}
 \caption{An NDFA which accepts the concatenation of the machines discussed in
 Example 5.9}\label{fig-5.6}
 \end{figure}
@@ -421,13 +419,13 @@ Figure \ref{fig-5.8}.
 
 % Figure 5.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-7.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-7.eps}}
 \caption{A pair of candidates for concatenation}\label{fig-5.7}
 \end{figure}
 
 % Figure 5.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-8.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-8.eps}}
 \caption{Concatenation of the machines in Example 5.10 via lambda-moves}\label{fig-5.8}
 \end{figure}
 
@@ -498,7 +496,7 @@ under concatenation.
 
 % Figure 5.9
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-9.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-9.eps}}
 \caption{Concatenation of the machines in Example 5.10 without lambda-moves
 (Example 5.11)}\label{fig-5.9}
 \end{figure}
@@ -525,14 +523,14 @@ state is indeed the correct strategy for this case.
 
 % Figure 5.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-10.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-10.eps}}
 \caption{An NDFA without lambda-moves which accepts the concatenation of the
 languages discussed in Example 5.8}\label{fig-5.10}
 \end{figure}
 
 % Figure 5.11
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-11.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-11.eps}}
 \caption{Candidates for concatenation in which the second machine does not
 accept $\lambda$ (Example 5.13)}\label{fig-5.11}
 \end{figure}
@@ -542,12 +540,11 @@ The operators $^*$ and $^+$, which have at this point only been defined for
 alphabets, likewise have natural extensions to languages. Loosely, we would
 expect $L^*$ to consist of all words that can be formed by the concatenation of
 several words from L.
-\vspace{1in} % with current spacing, one line of Def5.5 is on page 152,
-% followed by two figures at the top of 153, then the rest of Def5.5.  Ugh...
+
 
 % Figure 5.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-12.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-12.eps}}
 \caption{The concatenation of the NDFAs in Example 5.13}\label{fig-5.12}
 \end{figure}
 
@@ -631,13 +628,13 @@ extra start (and final) state $q_0$ (see the exercises).
 
 % Figure 5.13
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-13.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig5-13.eps}}
 \caption{The NDFA $B$ in Example 5.16.}\label{fig-5.13}
 \end{figure}
 
 % Figure 5.14
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-14.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig5-14.eps}}
 \caption{The resulting NDFA for Example 5.16}\label{fig-5.14}
 \end{figure}
 
@@ -694,19 +691,19 @@ as shown in Figure \ref{fig-5.16}.
 
 % Figure 5.15
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-15.eps,width=5in}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig5-15.eps}}
 \caption{The automaton $C$ discussed in Example 5.17}\label{fig-5.15}
 \end{figure}
 
 % Figure 5.16
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-16.eps,width=5in}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig5-16.eps}}
 \caption{An automaton accepting $Z(C)$ in Example 5.17}\label{fig-5.16}
 \end{figure}
 
 % Figure 5.17
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-17.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig5-17.eps}}
 \caption{The automaton $D$ discussed in Example 5.18}\label{fig-5.17}
 \end{figure}
 
@@ -743,7 +740,7 @@ result (see the exercises).
 
 % Figure 5.18
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-18.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig5-18.eps}}
 \caption{The modified machine in Example 5.18}\label{fig-5.18}
 \end{figure}
 
@@ -859,9 +856,9 @@ $\{\pmb{c},\pmb{d}\}$ in which every $\pmb{c}$ is immediately followed by $\pmb{
 \subsection*{Example 5.20}
 
 As a second example, let $\Sigma=\{),(\}$ and let $\Gamma$ be the ASCII
-alphabet. If $\mu$ is defined by $\mu(() =$ {\bf begin} and $\mu())=$ {\bf end},
+alphabet. If $\mu$ is defined by $\mu(() =$ \textbf{begin} and $\mu())=$ \textbf{end},
 then the set $M$ of all strings of matched parentheses maps to $K$, the set of
-all matched {\bf begin}-{\bf end} pairs.
+all matched \textbf{begin}-\textbf{end} pairs.
 
 A general homomorphism $\psi$ maps a language over $\Sigma$ to a language over
 $\Gamma$. However, to consider the closure of \DSIG, we will restrict our
@@ -898,7 +895,7 @@ like this one the resulting automaton can be nondeterministic.
 
 % Figure 5.19
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-19.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig5-19.eps}}
 \caption{(a) The automaton discussed in Example 5.21; (b) The resulting automaton
 for Example 5.21}\label{fig-5.19}
 \end{figure}
@@ -912,7 +909,7 @@ requires an extra state to accommodate the $\pmb{cc}$ transition.
 
 % Figure 5.20
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-20.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig5-20.eps}}
 \caption{(a) The automaton discussed in Example 5.22; (b) The resulting automaton
 for Example 5.22}\label{fig-5.20}
 \end{figure}
@@ -1104,7 +1101,7 @@ $I(A,q)\cap\overline{\psi^{-1}}(\PBAR(I(A,q))\cap\PBAR(T(A,q)))$ & $=$ & $\{\pmb
 
 % Figure 5.21
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig5-21.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig5-21.eps}}
 \caption{The automaton discussed in Example 5.25}\label{fig-5.21}
 \end{figure}
 

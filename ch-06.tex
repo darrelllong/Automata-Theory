@@ -1,5 +1,4 @@
-% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf  
-\chapter{Regular Expressions}\label{ch-6}
+% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, \textbf{\chapter{Regular Expressions}\label{ch-6}
 
 In this chapter we will develop a standard notation for denoting FAD languages
 and thus explore yet another characterization of these languages. The
@@ -105,7 +104,7 @@ represents $\{\pmb{ab},\pmb{ac}\}$, while the second represents $\{\pmb{ab},
 \pmb{c}\}$, which are obviously different languages. To ease the burden of all
 these parentheses, we will adopt the following simplifying conventions.
 
-{\bf Notational Convention}: The precedence of the operators, from highest to
+\textbf{Notational Convention}: The precedence of the operators, from highest to
 lowest, shall be $^*$, $\cdot$, $\cup$. When writing a regular expression,
 parentheses that conform to this hierarchy may be omitted. In particular, the
 outermost set of parentheses can always be omitted. Juxtaposition may be used in
@@ -253,13 +252,13 @@ constructions in Figure \ref{fig-6.1}.
 
 % Figure 6.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-1.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig6-1.eps}}
 \caption{NDFAs which recognize regular expressions with zero operators}\label{fig-6.1}
 \end{figure}
 
 % Figure 6.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-2.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-2.eps}}
 \caption{The NDFA discussed in Example 6.4}\label{fig-6.2}
 \end{figure}
 
@@ -273,7 +272,7 @@ ensure that $\lambda$ is accepted by the new machine.
 
 % Figure 6.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-3.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-3.eps}}
 \caption{The NDFA discussed in Example 6.5}\label{fig-6.3}
 \end{figure}
 
@@ -284,7 +283,7 @@ proof of Theorem \ref{thm-5.4}) is shown in Figure \ref{fig-6.4}.
 
 % Figure 6.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-4.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig6-4.eps}}
 \caption{The NDFA discussed in Example 6.6}\label{fig-6.4}
 \end{figure}
 
@@ -734,7 +733,7 @@ and
 	(\pmb{b}\cdot\pmb{a}^*\cdot\pmb{b}) \]
 % Figure 6.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-5.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-5.eps}}
 \caption{The DFA discussed in Example 6.9}\label{fig-6.5}
 \end{figure}
 Theorem \ref{thm-6.1} predicts the solution for $X_1$ to be $(\pmb{a}\cup(\pmb{b}\cdot
@@ -785,7 +784,7 @@ by $D$?
 
 % Figure 6.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-6.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-6.eps}}
 \caption{(a) The NDFA $B$ discussed in Example 6.10 (b) The NDFA $C$
 discussed in Example 6.10 (c) The NDFA $D$ discussed in Example 6.10}\label{fig-6.6}
 \end{figure}
@@ -794,7 +793,7 @@ discussed in Example 6.10 (c) The NDFA $D$ discussed in Example 6.10}\label{fig-
 
 % Figure 6.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-7.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-7.eps}}
 \caption{The DFA discussed in Example 6.11}\label{fig-6.7}
 \end{figure}
 
@@ -947,7 +946,7 @@ leaves $s_1$ (for the last time) for a final state.
 
 % Figure 6.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-8.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-8.eps}}
 \caption{The DFA discussed in Example 6.12}\label{fig-6.8}
 \end{figure}
 
@@ -960,7 +959,7 @@ this was reflected by the fact that $\hat{\hat{E}}_1 = \epsilon$.
 
 % Figure 6.9
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-9.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-9.eps}}
 \caption{The DFA discussed in Example 6.13}\label{fig-6.9}
 \end{figure}
 
@@ -1024,7 +1023,7 @@ Theorem \ref{thm-6.2}.
 
 % Figure 6.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-10.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-10.eps}}
 \caption{The DFA discussed in Exercise 6.19}\label{fig-6.10}
 \end{figure}
 
@@ -1147,7 +1146,7 @@ Let $\Sigma$ be an alphabet. Then $\DSIG \subseteq \RSIG$.
 
 % Theorem 6.5
 \begin{thm}\label{thm-6.5}\index{equivalent!regular expressions}
-{\bf \Index{Kleene's Theorem}}. Let $\Sigma$ be an alphabet. Then $\RSIG = \DSIG$.
+\textbf{\Index{Kleene's Theorem}}. Let $\Sigma$ be an alphabet. Then $\RSIG = \DSIG$.
 
 \emph{Proof.} The proof follows immediately from Corollaries 6.1 and 6.2.
 \end{thm}
@@ -1578,7 +1577,7 @@ preceded by $\pmb{c}$.
 corresponding to the NDFA given in Figure \ref{fig-6.11}.
 % Figure 6.11
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-11.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig6-11.eps}}
 \caption{The NDFA for Exercise 6.40}\label{fig-6.11}
 \end{figure}
 \item Solve these equations for both unknowns.
@@ -1592,7 +1591,7 @@ this NDFA.
 corresponding to the NDFA given in Figure \ref{fig-6.12}.
 % Figure 6.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-12.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig6-12.eps}}
 \caption{The automaton for Exercise 6.41}\label{fig-6.12}
 \end{figure}
 \item Solve these equations for all four unknowns.
@@ -1606,7 +1605,7 @@ this NDFA.
 unknowns corresponding to the NDFA given in Figure \ref{fig-6.13}.
 % Figure 6.13
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-13.eps,width=6.5in}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig6-13.eps}}
 \caption{The NDFA for Exercise 6.42}\label{fig-6.13}
 \end{figure}
 \item Solve these equations for all seven unknowns. \emph{Hint:} Make use of the
@@ -1677,7 +1676,7 @@ of the NDFAs listed in Figure \ref{fig-6.14}.
 
 % Figure 6.14
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig6-14.eps,width=6.2in}}
+\centerline{\includegraphics[width=6.2in]{ToFAfigures/fig6-14.eps}}
 \caption{The automata for Exercise 6.50}\label{fig-6.14}
 \end{figure}
 

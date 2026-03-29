@@ -12,9 +12,9 @@ work the exercises in similar detail. A knowledge of logic circuits would be
 necessary to construct the machines discussed in this text. Important
 terminology and techniques are reviewed here.
 
-Unambiguous \emph{statements} that can take on the values {\bf True} or {\bf False} 
+Unambiguous \emph{statements} that can take on the values \textbf{True} or \textbf{False} 
 (denoted by $1$ and $0$, respectively) can be combined with \emph{connectives} such as
-{\em and} ($\wedge$), {\em or} ($\vee$), and {\em not} ($\neg$)
+\emph{and} ($\wedge$), \emph{or} ($\vee$), and \emph{not} ($\neg$)
 to form more complex statements.
 The truth tables for several useful connectives are given in Figure \ref{fig-0.1},
 along with the symbols representing the physical devices that implement these
@@ -23,7 +23,7 @@ connectives.
 As an example of a complex statement, consider the assertion that two statements
 $p$ and $q$ take on the same value. This can be rephrased as:
 Either ($p$ is true and $q$ is true) or ($p$ is false and $q$ is false).  As the
-truth table for {\em not} shows, a statement r is false exactly when $\neg$r is
+truth table for \emph{not} shows, a statement r is false exactly when $\neg$r is
 true; the above assertion could be further refined to:
 Either ($p$ is true and $q$ is true) or ($\neg p$ is true and $\neg q$ is true).
 
@@ -31,7 +31,7 @@ Either ($p$ is true and $q$ is true) or ($\neg p$ is true and $\neg q$ is true).
 \begin{figure}
 \begin{center} 
 % top of fig0.1 same as fig1.14:
-\centerline{\epsfig{figure=ToFAfigures/fig1-14.eps,width=5.7in}}
+\centerline{\includegraphics[width=5.7in]{ToFAfigures/fig1-14.eps}}
 \begin{tabular}{ccccc} 
 %\fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} \\ 
 NOT gate & AND gate & OR gate & NAND gate & NOR gate \\ 
@@ -86,14 +86,14 @@ $p$ & $q$ & $p \downarrow q$ \\
 
 
 In symbols, this can be abbreviated as:
-$$(p \wedge q) \vee (\neg p \wedge \neg q)$$
+\[(p \wedge q) \vee (\neg p \wedge \neg q)\]
 The truth table covering the four combinations of truth values of $p$ and $q$
 can be built from the truth tables defining $\wedge$, $\vee$, and $\neg$, as
 shown in Figure~\ref{fig-0.2}. The truth table shows that the assertion is indeed
 true in the two cases where $p$ and $q$ reflect the same values, and false in
 the two cases where the values assigned to $p$ and $q$ differ. When the statement
 that $r$ and $s$ always take on the same value is indeed true, we often write
-$r$\ {\em iff}\ $s$ (``$r$ if and only if $s$''). The \Index{biconditional} can also be denoted by
+$r$\ \emph{iff}\ $s$ (``$r$ if and only if $s$''). The \Index{biconditional} can also be denoted by
 $r \Leftrightarrow s$ (``$r$ is \emph{equivalent} to $s$'').\index{equivalent!logical expressions}
 
 % Figure 0.2
@@ -145,15 +145,15 @@ $\neg p$ (rather than feeding the input for $p$ into a NOT gate).
 
 % Figure 0.3
 \begin{figure}[tb]
-%\centerline{\epsfig{figure=Figures/fig-0-3.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig0-3.eps,width=6.5in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-0-3.eps}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig0-3.eps}}
 \caption{Functionally equivalent circuits}\label{fig-0.3}
 \end{figure}
 
 % Figure 0.4
 \begin{figure}[tb]
-%\centerline{\epsfig{figure=Figures/fig-0-4.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig0-4.eps,width=3.5in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-0-4.eps}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig0-4.eps}}
 \caption{A circuit equivalent to a single NAND gate}\label{fig-0.4}
 \end{figure}
 
@@ -178,7 +178,7 @@ $p \vee q$ & $q \vee p$ & $p \wedge q$ & $q \wedge p$ & (commutative laws) \\
 $\neg (p \vee q)$ & $\neg p \wedge \neg q$ & $\neg (p \wedge q)$ & $\neg p \vee
 	\neg q$ & (De Morgan's laws) \\
 $(p \vee q) \wedge p$ & $p$ & $(p \wedge q) \vee p$ & $p$ & (absorption laws) \\
-$p \vee \neg p$ & {\bf True} & $p \wedge \neg p$ & {\bf False} & (mutual
+$p \vee \neg p$ & \textbf{True} & $p \wedge \neg p$ & \textbf{False} & (mutual
 	exclusion)
 \end{tabular}
 \caption{Some useful equivalences and their duals}\label{fig-0.5}
@@ -207,9 +207,9 @@ statement $(\exists y \in\{7, 8, 9\})Q(y)$ is false.
 Note that asserting that it is not the case that all objects have the property
 $P$ is equivalent to saying that there is at least one object that does not have
 the property $P$. In symbols, we have
-$$\neg(\forall x\in\ZN)P(x)\Leftrightarrow(\exists x\in\ZN)(\neg P(x))$$
+\[\neg(\forall x\in\ZN)P(x)\Leftrightarrow(\exists x\in\ZN)(\neg P(x))\]
 Similarly,
-$$\neg(\exists x\in\ZN)P(x)\Leftrightarrow(\forall x\in\ZN)(\neg P(x))$$
+\[\neg(\exists x\in\ZN)P(x)\Leftrightarrow(\forall x\in\ZN)(\neg P(x))\]
 Given two statements $A$ and $B$, if $B$ is true whenever $A$ is true, we will
 say that $A$ \emph{implies} $B$, and write $A \Rightarrow B$. For example, the
 truth tables show that $p\wedge q\Rightarrow p\vee q$, since for the case where
@@ -221,14 +221,14 @@ be repeatedly used to designate common sets.
 
 % Definition 0.1
 \begin{dfn}\label{dfn-0.1}
-The set of {\em natural numbers\/} is given by $\NN = \{0,1,2,3,4, \ldots \}$.\index{natural numbers}\index{N @$\NN$|see{natural numbers}}
+The set of \emph{natural numbers\/} is given by $\NN = \{0,1,2,3,4, \ldots \}$.\index{natural numbers}\index{N @$\NN$|see{natural numbers}}
 
-The set of {\em integers\/} is given by $\ZN =\{\ldots,-2,-1,0,1,2,\ldots\}$.\index{Z @$\ZN$ (integers)}
+The set of \emph{integers\/} is given by $\ZN =\{\ldots,-2,-1,0,1,2,\ldots\}$.\index{Z @$\ZN$ (integers)}
 
-The set of {\em rational numbers\/} is given by $Q=\{\tfrac{a}{b}\ |\ a\in\ZN\wedge
+The set of \emph{rational numbers\/} is given by $Q=\{\tfrac{a}{b}\ |\ a\in\ZN\wedge
 b\in\ZN\wedge b\neq 0 \}$.\index{Q @$\QN$ (rationals)}
 
-The set of {\em real numbers\/} (points on the number line) will be denoted by
+The set of \emph{real numbers\/} (points on the number line) will be denoted by
 $\RN$.\index{R @$\RN$ (reals)}
 \end{dfn}
 
@@ -307,8 +307,8 @@ since $3 \not< 3$. (It is also not symmetric, since $2 < 3$, but $3 \not< 2$.)
 
 Let $X = \NN$. The familiar relation $=$ (equality) \emph{is} an equivalence
 relation.
-$$= :\{\langle 0, 0\rangle , \langle 1,1\rangle , \langle 2,2\rangle ,
-	\langle 3,3\rangle , \langle 4,4\rangle , \ldots \},$$
+\[= :\{\langle 0, 0\rangle , \langle 1,1\rangle , \langle 2,2\rangle ,
+	\langle 3,3\rangle , \langle 4,4\rangle , \ldots \},\]
 and it is clear that $(\forall x)(\forall y)(x = y \Rightarrow y = x)$.
 The equality relation is therefore symmetric, and it is likewise obvious that
 $=$ is also reflexive and transitive.
@@ -329,7 +329,7 @@ and so on.
 
 Let $X = \ZN$, and define the relation $R$ in $\ZN\times\ZN$ by
 
-$$\langle u, v\rangle R\langle w,x\rangle\ \text{{\em iff}}\ ux = vw$$
+\[\langle u, v\rangle R\langle w,x\rangle\ \text{\emph{iff}}\ ux = vw\]
 
 If $\langle x, y\rangle$ is viewed as the fraction $\frac{x}{y}$, then $R$ is
 the relation that identifies equivalent fractions: $\frac{2}{3}R\frac{14}{21}$,
@@ -339,17 +339,17 @@ operator on the set of rational numbers~$\QN$.\index{equality!of rationals}
 Note that in this context the equivalence class $[\frac{2}{8}]_R$ represents the
 set of all ``names'' for the point one-fourth of the way between $0$ and $1$;
 that is,
-$$\left[\frac{2}{8}\right]_R = \{\ldots ,\frac{-3}{-12}, \frac{-2}{-8},
+\[\left[\frac{2}{8}\right]_R = \{\ldots ,\frac{-3}{-12}, \frac{-2}{-8},
 \frac{-1}{-4}, \frac{1}{4},\frac{2}{8},\frac{3}{12},\frac{4}{16},\frac{5}{20},
-\ldots \}$$
+\ldots \}\]
 There are therefore many other ways of designating this same set; for example,
-$$\left[\frac{1}{4}\right]_R = \{ \ldots , \frac{-3}{-12}, \frac{-2}{-8}, \frac{-1}{-4},
-    \frac{1}{4},\frac{2}{8},\frac{3}{12},\frac{4}{16},\frac{5}{20}, \ldots \}$$
+\[\left[\frac{1}{4}\right]_R = \{ \ldots , \frac{-3}{-12}, \frac{-2}{-8}, \frac{-1}{-4},
+    \frac{1}{4},\frac{2}{8},\frac{3}{12},\frac{4}{16},\frac{5}{20}, \ldots \}\]
 
 \subsection*{Example 0.7}
 
 Let $X = \NN$ and choose an $n \in \NN$. Define $R_n$ by
-$$x R_n y \text{\em { iff }}    (\exists i \in \ZN)(x - y = i\cdot n)$$
+\[x R_n y \text{\emph{ iff }}    (\exists i \in \ZN)(x - y = i\cdot n)\]
 That is, two numbers are related if their difference is a multiple of $n$.
 Equivalently, $x$ and $y$ must have the same remainder upon dividing each of
 them by $n$ if we are to have $x R_n y$
@@ -392,8 +392,8 @@ $(\forall i,j$ & $\{1, 2, \ldots ,n\})(i \not= j \Rightarrow A_i \cap A_j = \emp
 \begin{dfn}\label{dfn-0.9}
 Given a set $X$ and a partition $P = \{A_1,A_2, \ldots ,A_n \}$ of $X$,
 the relation $R(P)$ in $X$ induced by $P$ is given by
-$$(\forall x \in X)(\forall y \in X)(x   R(P)   y \Leftrightarrow
-  (\exists i \in \{1,2, \ldots ,n\} \ni x \in A_i \wedge y\in A_i))$$
+\[(\forall x \in X)(\forall y \in X)(x   R(P)   y \Leftrightarrow
+  (\exists i \in \{1,2, \ldots ,n\} \ni x \in A_i \wedge y\in A_i))\]
 \end{dfn}
 
 $R(P)$ thus relates elements that belong to the same subset of $P$.
@@ -405,9 +405,9 @@ partition $S = \{\{1, 2\},\{3, 5\},\{4\}\}$.
 Since 1 and 2 are in the same set, they should be related by $Q$, while
 $1$$\not   Q 4$ because $1$ and $4$ belong to different sets of the partition.
 Q can be described by
-$$ Q = \{\langle 1, 1\rangle, \langle 1,2\rangle, \langle 2, 1\rangle,
+\[ Q = \{\langle 1, 1\rangle, \langle 1,2\rangle, \langle 2, 1\rangle,
 \langle 2,2\rangle, \langle 3,3\rangle, \langle 3, 5\rangle,
-\langle 4, 4\rangle, \langle 5, 3\rangle, \langle 5, 5\rangle\} $$
+\langle 4, 4\rangle, \langle 5, 3\rangle, \langle 5, 5\rangle\} \]
 
 It is straightforward to check that $Q$ satisfies the three properties needed to
 qualify as an equivalence relation, and the equivalence classes of $Q$ are
@@ -485,7 +485,7 @@ $f_3: \{\langle 0, 0\rangle, \langle 1, 1\rangle, \langle 2, 2\rangle,
 $f_3 (0) = 0$, $f_3 (1) = 1$, $f_3 (2) = 2$, $f_3 (3) = 0$, and so on.
 
 Note that $f_3$ is a subset of the relation $R_3$ given in Example 0.7. If $R_3$
-were presented as a function, it would not be {\em well defined}; that is, $R_3$
+were presented as a function, it would not be \emph{well defined}; that is, $R_3$
 does not satisfy Definition \ref{dfn-0.11}. For example, $2 R_3 5$ and $2 R_3 8$, but
 $5 \not= 8$, and so $R_3 (2)$ is not a meaningful expression, since there is no
 unique object that $R_3$ associates with 2. In this case, $R_3$ violated 
@@ -507,23 +507,23 @@ g(y)$.
 
 The problem with this seemingly innocent definition
 is that the domain element 0.25 is actually
-an {\em equivalence class} of fractions (recall Example 0.6), and the definition
+an \emph{equivalence class} of fractions (recall Example 0.6), and the definition
 of $g$ was based on just one \emph{representative} of that class. We observed
 that two representatives ($\frac{2}{8}$ and $\frac{5}{20}$) of the \emph{same}
 class gave conflicting answers (2 and 5) for the value that $g$ associated with
 their class (0.25). While it is possible to define functions on a set of
 equivalence classes in a consistent manner, it will always be important to
-verify that such functions are {\em single valued}.
+verify that such functions are \emph{single valued}.
 
 Selection criteria, which determine whether a candidate does or does not
 belong to a given set, are special types of functions.
 
 % Definition 0.12
 \begin{dfn}\label{dfn-0.12}
-Given a set $A$, the {\em characteristic function} $\chi_A$ associated with $A$
+Given a set $A$, the \emph{characteristic function} $\chi_A$ associated with $A$
 is defined by
-$$\chi_{A}(x)=1\text{ if }x\in A\quad\text{and}\quad\chi_{A}(x)=0\text{ if }x
-	\not in A$$
+\[\chi_{A}(x)=1\text{ if }x\in A\quad\text{and}\quad\chi_{A}(x)=0\text{ if }x
+	\not in A\]
 \end{dfn}
 
 \subsection*{Example 0.12}
@@ -540,9 +540,9 @@ representatives of those equivalence classes.
 
 Consider the ``set'' of fractions that have odd numerators, whose characteristic
 ``function'' is defined by:
-$$\chi_{B}\left(\frac{m}{n}\right) = 1\text{ if $m$ is odd}$$
+\[\chi_{B}\left(\frac{m}{n}\right) = 1\text{ if $m$ is odd}\]
 and
-$$\chi_{B}\left(\frac{m}{n}\right) = 0\text{ if $m$ is even}$$
+\[\chi_{B}\left(\frac{m}{n}\right) = 0\text{ if $m$ is even}\]
 
 This characteristic function suffers from flaws similar to those found in the
 function $g$ in Example 0.11. $\frac{1}{4} = \frac{2}{8}$ and yet
@@ -561,7 +561,7 @@ elements that occur as second coordinates need not include all the codomain
 % Definition 0.13
 \begin{dfn}\label{dfn-0.13}
 The \emph{\Index{range}} of a function $f: X \rightarrow Y$ is given by
-$$\{y \in Y\ |\  \exists x \in X \ni f(x) = y\}$$
+\[\{y \in Y\ |\  \exists x \in X \ni f(x) = y\}\]
 \end{dfn}
 
 Conditions similar to those imposed on the behavior of first coordinates of a
@@ -573,7 +573,7 @@ example, are called \emph{surjective}
 \begin{dfn}\label{dfn-0.14}
 A function $f$: $X \rightarrow Y$ is \emph{\Index{onto}} or
 \emph{\Index{surjective}} iff
-$$(\forall y \in Y)(\exists x \in X \ni  f(x) = y)\text{; that is,}$$
+\[(\forall y \in Y)(\exists x \in X \ni  f(x) = y)\text{; that is,}\]
 a set of ordered pairs representing an \emph{onto} function must have at least
 one first coordinate associated with any given second coordinate .
 \end{dfn}
@@ -593,8 +593,8 @@ The function $f$: $\NN \rightarrow \NN$ defined by $f(i)=i+1$ $(\forall i=0,1,2,
 \begin{dfn}\label{dfn-0.15}
 A function $f$: $X \rightarrow Y$ is \emph{\Index{one to one}} or
 \emph{\Index{injective}} iff
-$$(\forall x_1 \in X)(\forall x_2 \in X)(f(x_1) = f(x_2)
-	\Rightarrow x_1 = x_2)\text{; that is,}$$
+\[(\forall x_1 \in X)(\forall x_2 \in X)(f(x_1) = f(x_2)
+	\Rightarrow x_1 = x_2)\text{; that is,}\]
 an \emph{injective} function must not have more than one first coordinate
 associated with any given second coordinate .
 \end{dfn}
@@ -645,8 +645,8 @@ height in centimeters. This new list is referred to as the
 \begin{dfn}\label{dfn-0.17}
 The \emph{\Index{composition}} of two functions $f$: $X\rightarrow Y$ and
 $g$: $Y\rightarrow Z$ is given by
-$$g \circ f = \{\langle x,z\rangle \ |\  \exists y \in Y \ni
-	\langle x,y\rangle \in f\text{ and }\langle y,z\rangle \in g\}$$
+\[g \circ f = \{\langle x,z\rangle \ |\  \exists y \in Y \ni
+	\langle x,y\rangle \in f\text{ and }\langle y,z\rangle \in g\}\]
 \end{dfn}
 
 Note that the composition is not defined unless the codomain of the first
@@ -663,7 +663,7 @@ $i$ for which $j \equiv i \bmod{3}$, and the function $f$: $\NN\rightarrow\NN$ i
 defined by $f(i) = i + 1$. $f \circ f_3$ consists of the ordered pairs
 $\{\langle 0,1\rangle,\langle 1,2\rangle,\langle 2,3\rangle,\langle 3,1\rangle,
 \langle 4,2\rangle,\langle 5,3\rangle, \ldots \}$ and is represented by the rule
-$f\circ f_3(j) = f_3(j) + 1$, which happens to be the smallest {\em positive}
+$f\circ f_3(j) = f_3(j) + 1$, which happens to be the smallest \emph{positive}
 number that is congruent to $j + 1 \bmod{3}$. Note that
 $f_3 \circ f(j) = f_3 (j + 1)$, which happens to be the smallest \emph{natural}
 number that is congruent to $j + 1 \bmod{3}$. This represents a different set
@@ -690,16 +690,16 @@ Then $g\circ f$ is one to one.
 % Definition 0.18
 \begin{dfn}\label{dfn-0.18}
 The \emph{\Index{converse}} of a relation $R$, written $\sim  R$, is defined by
-$$\sim  R = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in R\}$$
+\[\sim  R = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in R\}\]
 The converse of a function $f$ is likewise
-$$\sim   f = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in f\}$$
+\[\sim   f = \{\langle y,x\rangle \ |\  \langle x,y\rangle \in f\}\]
 If $\sim   f$ happens to be a function, it is called the \emph{inverse} of $f$ and
 is denoted by $f^{-1}$.
 \end{dfn}
 
 When the inverse exists, it is appropriate to use functional notation $f^{-1}$
 also, and we therefore have, for any elements $a$ and $b$, $f^{-1}(b) = a$
-{\em iff} $f(a) = b$. Note that if $f: X \rightarrow Y$ then
+\emph{iff} $f(a) = b$. Note that if $f: X \rightarrow Y$ then
 $f^{-1}: Y \rightarrow X$.
 
 \subsection*{Example 0.18}
@@ -752,10 +752,10 @@ $2^A$, is $$\wp(A) = \{X\ |\ X \subseteq A\}$$
 
 \subsection*{Example 0.19}
 
-$$\wp(\{a,b,c\}) =
-	\{\emptyset,\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}$$
+\[\wp(\{a,b,c\}) =
+	\{\emptyset,\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}\]
 and
-$$\wp(\{\ \ \})=\{\emptyset\}.$$
+\[\wp(\{\ \ \})=\{\emptyset\}.\]
 Note that $\{\emptyset\} \not= \emptyset$.
 
 % Definition 0.20
@@ -779,9 +779,9 @@ generally associated with the \emph{cardinal number} 3. Thus, $\|\{a,b,c\}\| =
 \not= 0$.
 
 The subset relation allows the sizes of sets to be \emph{ordered}:
-$\|A\| \leq \|B\|$ {\em iff} $(\exists C)(C \subseteq B \wedge \|A\| = \|C\|)$.
+$\|A\| \leq \|B\|$ \emph{iff} $(\exists C)(C \subseteq B \wedge \|A\| = \|C\|)$.
 We will write 
-$\|A\| < \|B\|$ {\em iff} $(\|A\| \leq \|B\|\text{ and }\|A\| \not= \|B\|)$.
+$\|A\| < \|B\|$ \emph{iff} $(\|A\| \leq \|B\|\text{ and }\|A\| \not= \|B\|)$.
 The observations about $\{a,b,c\}$ and $\{\ \}$ imply that $0 < 3$.
 
 For $\NN =\{0,1,2,3,4,5,6, \ldots \}$ and $\EN =\{0,2,4,6, \ldots \}$, the
@@ -790,7 +790,7 @@ set of natural numbers $\NN$ is \emph{countably infinite}, and its size is often
 denoted by $\aleph_0= \|\NN\|$. The doubling function $f$ shows that
 $\|\NN\| = \|\EN\|$. Similarly, it can be shown that $\ZN$ and $\NN \times \NN$
 are also countably infinite (see the exercises). A set that is equipotent to one
-of its {\em proper} subsets is called an infinite set. Since $\|\NN\| = \|\EN\|$ and
+of its \emph{proper} subsets is called an infinite set. Since $\|\NN\| = \|\EN\|$ and
 yet $\EN \subset \NN$, we know that $\NN$ must be infinite. No such
 correspondence between $\{a,b,c\}$ and any of its proper subsets is possible, so
 $\{a,b,c\}$ is a finite set. 3 is therefore a finite cardinal number, while
@@ -855,9 +855,9 @@ $n = 1,2,3, \ldots$, but we clearly could never check the arithmetic
 individually for an infinite number of cases. The assertion, which varies
 according to the particular number $n$ we choose, can be represented by the
 statement
-$$P(n)\text{:}\ 1+2+3+\cdots+(n-2)+(n-1)+n\text{ adds up to }\frac{(n+1)n}{2}.$$
+\[P(n)\text{:}\ 1+2+3+\cdots+(n-2)+(n-1)+n\text{ adds up to }\frac{(n+1)n}{2}.\]
 Note that $P(n)$ is \emph{not} a number; it is the assertion that two numbers are the
-same and therefore will only take on the values {\bf True} and {\bf False}. We
+same and therefore will only take on the values \textbf{True} and \textbf{False}. We
 would like to show that $P(n)$ is true for each positive integer $n$; that is,
 $(\forall n)P(n)$. Notice that if you were to attempt to check out whether
 $P(101)$ was true your work would be considerably simplified if you already knew
@@ -938,7 +938,7 @@ equivalent expression that contains less than $n \cdot 2^n$ operators.
 \end{quote}
 
 \emph{Basis step:} A statement formula in one variable must either be
-$p$, $\neg p$, {\bf T}, or {\bf F}, each of which requires at most one
+$p$, $\neg p$, \textbf{T}, or \textbf{F}, each of which requires at most one
 operator, and since $1<1\cdot 2^1$, $P(1)$ is true.
 
 \emph{Inductive step:} Assume $P(m)$ is true; we need to prove that $P(m + 1)$
@@ -1009,16 +1009,16 @@ $f(3)=3\cdot f(2) = 3\cdot 2\cdot f(1) = 3\cdot 2\cdot 1\cdot f(0) =
 % 0.6 BACKUS-NAUR FORM
 \section{Backus-Naur Form}\label{sec-0.6}
 The syntax of programming languages is often illustrated with
-{\em \Index{syntax diagrams}} or described in {\em Backus-Naur Form (\Index{BNF}})\index{Backus-Naur Form|see{BNF}} notation.
+\emph{\Index{syntax diagrams}} or described in \emph{Backus-Naur Form (\Index{BNF}})\index{Backus-Naur Form|see{BNF}} notation.
 
 \begin{figure}[tb]
 % Figure 0.6
-\centerline{\epsfig{figure=ToFAfigures/fig0-6.eps,width=5.5in}}
-%\centerline{\epsfig{figure=Figures/fig-0-6.eps,width=\textwidth}}
-%\centerline{\epsfig{figure=Figures/fig-0-6-a.eps,width=0.25\textwidth}}
-%\centerline{\epsfig{figure=Figures/fig-0-6-b.eps,width=0.25\textwidth}}
-%\centerline{\epsfig{figure=Figures/fig-0-6-c.eps,width=0.25\textwidth}}
-%\centerline{\epsfig{figure=Figures/fig-0-6-d.eps,width=0.25\textwidth}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig0-6.eps}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-0-6.eps}}
+%\centerline{\includegraphics[width=0.25\textwidth]{Figures/fig-0-6-a.eps}}
+%\centerline{\includegraphics[width=0.25\textwidth]{Figures/fig-0-6-b.eps}}
+%\centerline{\includegraphics[width=0.25\textwidth]{Figures/fig-0-6-c.eps}}
+%\centerline{\includegraphics[width=0.25\textwidth]{Figures/fig-0-6-d.eps}}
 \caption{Syntax diagrams for the components of integer constants}\label{fig-0.6}
 \end{figure}
 
@@ -1056,8 +1056,8 @@ tokens \<sign\>, \<digit\>, and \<natural\> (see Figure \ref{fig-0.7}).
 
 \begin{figure}[tb]
 % Figure 0.7
-%\centerline{\epsfig{figure=Figures/fig-0-7.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig0-7.eps,width=2.5in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-0-7.eps}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig0-7.eps}}
 \caption{A syntax diagram for integer constants}\label{fig-0.7}
 \end{figure}
 
@@ -1172,7 +1172,7 @@ $s$: $\NNN \rightarrow \NNN$ defined by $s(x)=x^2$. Show that $s^{-1}$ exists.
 
 \item
 Let $f$: $X\times Y$ be an arbitrary function. Prove that the converse of $f$ is
-a function {\em iff} $f$ is a bijection.
+a function \emph{iff} $f$ is a bijection.
 
 \item
 \begin{enumerate}
@@ -1259,7 +1259,7 @@ induction is equivalent to the statement of induction given in the text.
 \<real constant\> ::$=$ & \<integer\> \\
 & \<integer\>. \\
 & \<integer\>.\<natural\> \\
-& \<integer\>.\<natural\>{\bf E}\<integer\>
+& \<integer\>.\<natural\>\textbf{E}\<integer\>
 \end{tabular}\end{center}
 
 \item A set $X$ is \emph{\Index{cofinite}} if the complement of $X$ (with respect to some generally

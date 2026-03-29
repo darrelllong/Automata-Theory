@@ -258,7 +258,7 @@ not be concerned with efficiency.
 
 % Figure 12.1
 \begin{figure}[tbh]
-\centerline{\epsfig{figure=ToFAfigures/fig12-1.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig12-1.eps}}
 \caption{The automaton $A_n$}\label{fig-12.1}
 \end{figure}
 
@@ -315,7 +315,7 @@ would indeed be related by $E_A$.
 
 % Figure 12.2
 \begin{figure}[tbh]
-\centerline{\epsfig{figure=ToFAfigures/fig12-2.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig12-2.eps}}
 %The field \ref{ex-12.2} resolves to '12.1" for some reason...
 %\caption{The DFAs discussion in Example \ref{ex-12.2}}\label{fig-12.2}
 \caption{The automata discussed in Example 12.2}\label{fig-12.2}
@@ -323,7 +323,7 @@ would indeed be related by $E_A$.
 
 % Figure 12.3
 \begin{figure}[tbh]
-\centerline{\epsfig{figure=ToFAfigures/fig12-3.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig12-3.eps}}
 %The field \ref{ex-12.2} resolves to '12.1" for some reason...
 %\caption{The composite DFA discussed in \ref{ex-12.2}}\label{fig-12.3}
 \caption{The composite machine discussed in Example 12.2}\label{fig-12.3}
@@ -492,7 +492,7 @@ series of distinct strings.
 
 % Figure 12.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig12-4.eps,height=7in}}
+\centerline{\includegraphics[height=7in]{ToFAfigures/fig12-4.eps}}
 \caption{The automaton discussed in Example 12.3}\label{fig-12.4}
 \end{figure}
 
@@ -521,7 +521,7 @@ pushdown automata guarantees that similar questions about PDAs are decidable.
 % Corollary 12.1
 \begin{cor}\label{cor-12.1}
 Given any pushdown automaton $P$, it is decidable whether:
-\begin{enumerate}[{\bf a.}]
+\begin{enumerate}[\textbf{a.}]
 \item $L(P)$ is empty.
 \item $L(P)$ is finite.
 \item $L(P)$ is infinite.
@@ -725,7 +725,7 @@ end \{ CHECK \}.
 \caption{A possible usage of HALT}\label{fig-12.5}
 \end{figure}
 
-{\bf Case 1}: HALT returns a value of TRUE to the calling program TEST. This has
+\textbf{Case 1}: HALT returns a value of TRUE to the calling program TEST. This has
 two consequences, the first of which is implied by the asserted behavior of HALT.
 \begin{enumerate}[i.]
 \item If halt does what it is supposed to do, this means that the program in
@@ -742,7 +742,7 @@ to be entered, and TEST runs forever, doing nothing particularly useful.
 Our two consequences are that TEST halts and TEST does not halt. This is a
 clear contradiction, and so case 1 never occurs.
 
-{\bf Case 2}: HALT returns a value of FALSE to the calling program TEST. This
+\textbf{Case 2}: HALT returns a value of FALSE to the calling program TEST. This
 likewise has two consequences. Considering the advertised behavior of HALT, this
 must mean that the program in data.p, TEST, must not halt. However, the code for
 TEST shows that if HALT returns FALSE we execute the {\tt else} statement, write one

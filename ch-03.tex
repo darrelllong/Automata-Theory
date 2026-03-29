@@ -77,7 +77,7 @@ A state $s$ in a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ is ca
 \emph{accessible} iff
 \[ \exists x_s \in \Sigma^* \ni \DBAR(s_0,x_s) = s \]
 The automaton $A$ is called \emph{connected} iff
-$$ (\forall s \in S)(\exists x_s \in \Sigma^*)(\DBAR(s_0,x_s)=s) $$
+\[ (\forall s \in S)(\exists x_s \in \Sigma^*)(\DBAR(s_0,x_s)=s) \]
 \end{dfn}
 
 That is, a connected machine requires all states to be accessible; every state
@@ -104,7 +104,7 @@ between strings in ways that are unnecessary.
 
 % Figure 3.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-1.eps,width=3in}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig3-1.eps}}
 \caption{The automaton discussed in Example 3.1}\label{fig-3.1}
 \end{figure}
 
@@ -140,13 +140,13 @@ seem. This sets the stage for the appropriate definition of equivalence.
 
 % Figure 3.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-2.eps,width=2.8in}}
+\centerline{\includegraphics[width=2.8in]{ToFAfigures/fig3-2.eps}}
 \caption{The first automaton discussed in Example 3.2}\label{fig-3.2}
 \end{figure}
 
 % Figure 3.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-3.eps,width=5in}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig3-3.eps}}
 \caption{The second automaton discussed in Example 3.2}\label{fig-3.3}
 \end{figure}
 
@@ -216,7 +216,7 @@ $E_N = \{\{s_0\},\{s_1,s_2,s_3\}\}$.
 
 % Figure 3.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-4.eps,width=2.8in}}
+\centerline{\includegraphics[width=2.8in]{ToFAfigures/fig3-4.eps}}
 \caption{The automaton N discussed in Example 3.3}\label{fig-3.4}
 \end{figure}
 
@@ -269,7 +269,7 @@ shown next in Example 3.7.
 
 % Figure 3.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-5.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig3-5.eps}}
 \caption{(a) The automaton A; (b) The automaton B; (c) The automaton C; (d) The
 automaton D; (e) The automaton E}\label{fig-3.5}
 \end{figure}
@@ -326,7 +326,7 @@ satisfies the 3 conditions the machines might not be the same.
 
 % Figure 3.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-6.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig3-6.eps}}
 \caption{(a) The DFA $M$ discussed in Example 3.10 (b) The DFA $N$
 discussed in Example 3.10}\label{fig-3.6}
 \end{figure}
@@ -339,7 +339,7 @@ $\psi(s_1)=q_1$, and $\psi(s_2)=q_0$. Note that the start state maps to the
 start state, final states map to final states (and nonfinal states map to
 nonfinal states), and, furthermore, the transitions agree. Here is the statement
 that the $\pmb{0}$ transition out of state $s_0$ is consistent:
-$$ \psi(\delta_M(s_0,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{0})=\delta_N(\psi(s_0),\pmb{0}) $$
+\[ \psi(\delta_M(s_0,\pmb{0}))=\psi(s_1)=q_1=\delta_N(q_0,\pmb{0})=\delta_N(\psi(s_0),\pmb{0}) \]
 Note that this really \emph{does} say that the transition labeled $\pmb{0}$
 leaving the start state conforms; $s_0$ has a $\pmb{0}$-transition pointing to
 $s_1$, and so the $\pmb{0}$-transition from $\psi(s_0)$ should point to $\psi(s_1)$
@@ -436,7 +436,7 @@ work!) is: For each $s \in S$, find a string $x_s \in \Sigma^* \ni
 $x_s$. In fact, there may be many strings that take us from $s_0$ to $s$; choose
 any one of them, and call it $x_s$.) We need to map $s$ to some equivalence
 class of $R_L$; the logical choice is the class containing $x_s$. Thus we define
-$$ \mu(s)=[x_s]_{R_L} $$
+\[ \mu(s)=[x_s]_{R_L} \]
 An immediate question comes to mind: There may be several strings that we could
 use for $x_s$; does it matter which one we choose to find the equivalence class?
 It would not do if, say, $R_L$ consisted of two equivalence classes, the
@@ -483,7 +483,7 @@ state in $S$, since $(\forall [x]_{R_L}\in S_{R_L})([x]_{R_L}=\mu(\DBAR(s_0,x)))
 and so $\DBAR(s_0,x)$ maps to $[x]_{R_L}$.
 
 \item $\mu(s_0) = s_{0_{R_L}}$
-$$ s_{0_{R_L}} = [\lambda]_{R_L} = \mu(\DBAR(s_0,\lambda)) = \mu(s_0) $$
+\[ s_{0_{R_L}} = [\lambda]_{R_L} = \mu(\DBAR(s_0,\lambda)) = \mu(s_0) \]
 
 \item Final states map to final states; that is,
 $(\forall s \in S)(\mu(s) \in F_{R_L} \Leftrightarrow s \in F)$. Choose an
@@ -600,7 +600,7 @@ $F^c = F \cap S^c =\{f \in F \mid \exists x \in \Sigma^* \ni \DBAR(s_0,x) = f\}$
 \end{tabular}
 \end{center}
 and $\delta^c$ is derived from the restriction of $\delta$ to $S^c\times\Sigma$:
-$$(\forall \pmb{a} \in \Sigma)(\forall s \in S^c)(\delta^c(s, \pmb{a}) = \delta(s,\pmb{a})) $$
+\[(\forall \pmb{a} \in \Sigma)(\forall s \in S^c)(\delta^c(s, \pmb{a}) = \delta(s,\pmb{a})) \]
 \end{dfn}
 
 $A^c$ is thus simply the machine $A$ with the unreachable states ``thrown
@@ -627,7 +627,7 @@ will be presented later.
 
 % Figure 3.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-7.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig3-7.eps}}
 \caption{(a) The DFA $M$ discussed in Example 3.13; (b) The DFA $M^c$ discussed
 in Example 3.13}\label{fig-3.7}
 \end{figure}
@@ -678,8 +678,8 @@ process because there are an infinite number of strings in $\Sigma^*$ to check.
 However, the indicated proof for Theorem \ref{thm-2.7} shows that, if a state can be
 reached by a ``long'' string, then it can be reached by a ``short'' string.
 Thus, we will only need to check the ``short'' strings. In particular,
-$$ S^c \equiv \bigcup\limits_{x \in \Sigma^*} \DBAR(s_0,x) =
-	\bigcup\limits_{x \in Q} \DBAR(s_0,x) $$
+\[ S^c \equiv \bigcup\limits_{x \in \Sigma^*} \DBAR(s_0,x) =
+	\bigcup\limits_{x \in Q} \DBAR(s_0,x) \]
 where $Q$ consists of the ``short'' strings:
 $Q =\{x \in \Sigma^*|\ |x| < \|S\|\}$. Thus, $Q$ is the set of all strings of
 length less than the number of states in the DFA. $Q$ is a finite set, and
@@ -699,7 +699,7 @@ redundant states identified by the state equivalence relation $E_A$.
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, define a new
 finite automaton $A/  _{E_A}$, called \emph{$A$ modulo its state equivalence
 relation}, by
-$$ A/_{E_A} =\langle\Sigma,S_{E_A},s_{0_{E_A}},\delta_{E_A},F_{E_A}\rangle $$
+\[ A/_{E_A} =\langle\Sigma,S_{E_A},s_{0_{E_A}},\delta_{E_A},F_{E_A}\rangle \]
 where
 \begin{center}
 \begin{tabular}{rcl}
@@ -709,8 +709,8 @@ $F_{E_A}$ & $=$ & $\{[s]_{E_A} \mid s \in F\}$
 \end{tabular}
 \end{center}
 and $\delta_{E_A}$ is defined by
-$$ (\forall \pmb{a} \in \Sigma)(\forall[s]_{E_A} \in S_{E_A})(\delta_{E_A}([s]_{E_A},\pmb{a}) =
-	[\delta(s,\pmb{a})]_{E_A}) $$
+\[ (\forall \pmb{a} \in \Sigma)(\forall[s]_{E_A} \in S_{E_A})(\delta_{E_A}([s]_{E_A},\pmb{a}) =
+	[\delta(s,\pmb{a})]_{E_A}) \]
 \end{dfn}
 
 Thus, there is one state in $A/  _{E_A}$ for each equivalence class in $E_A$, the
@@ -741,7 +741,7 @@ reduced.
 $E_{(A/  _{E_A}})$, \emph{not} $E_A$. We need to show that if two states of $A/_{E_A}$
 are related by the state equivalence relation for $A/  _{E_A}$ then those two
 states are identical; that is,
-$$ (\forall s,t \in S_{E_A})(s E_{(A/ _{E_A})} t \Leftrightarrow s = t) $$
+\[ (\forall s,t \in S_{E_A})(s E_{(A/ _{E_A})} t \Leftrightarrow s = t) \]
 Assume $s,t \in S_{E_A}$. Then $\exists s',t' \in S \ni s = [s']_{E_A}$ and
 $t = [t']_{E_A}$; furthermore,
 \begin{center}
@@ -852,13 +852,13 @@ algorithm for building the minimal machine. This is the motivation for
 Definition \ref{dfn-3.9}.
 
 % Definition 3.9
-%\begin{dfn}\label{dfn-3.9}\index{i\raisebox{0.6ex}{\em\scriptsize th} partial state equivalence relation (DFA)}
+%\begin{dfn}\label{dfn-3.9}\index{i\raisebox{0.6ex}\emph{\scriptsize th} partial state equivalence relation (DFA)}
 \begin{dfn}\label{dfn-3.9}\index{i\textsuperscript{th} partial state equivalence relation (DFA)}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and an integer
 $i$, define the \emph{i\textsuperscript{th} partial state equivalence relation on A}, a
 relation between the states of $A$ denoted by $E_{iA}$, by
-$$ (\forall s,t \in S)(sE_{iA}t \ \ \ \emph{iff}\ \ \  (\forall x \in \Sigma^* \ni |x|
-	\leq  i)(\DBAR(s,x) \in F \Leftrightarrow \DBAR(t,x) \in F)) $$
+\[ (\forall s,t \in S)(sE_{iA}t \ \ \ \emph{iff}\ \ \  (\forall x \in \Sigma^* \ni |x|
+	\leq  i)(\DBAR(s,x) \in F \Leftrightarrow \DBAR(t,x) \in F)) \]
 \end{dfn}
 
 Thus $E_{iA}$ relates states that cannot be distinguished by strings of length
@@ -887,7 +887,7 @@ $E_{2B} = E_{3B} = E_{4B} = E_{5B} = \cdots$, and indeed $E_B = E_{2B}$.
 
 % Figure 3.8
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-8.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig3-8.eps}}
 \caption{The DFA B discussed in Example 3.14}\label{fig-3.8}
 \end{figure}
 
@@ -901,10 +901,10 @@ Given an integer $i$ and a finite alphabet $\Sigma$, there is clearly an
 \emph{algorithm} for finding $E_{iA}$ since there are only a finite number of
 strings in $\Sigma^0 \cup \Sigma^1 \cup \Sigma^2 \cup \cdots \cup \Sigma^i$.
 Furthermore, given every $E_{iA}$, there is an expression for $E_A$:
-$$ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
-	\cdots = \bigcap\limits^\infty_{j=0} E_{jA} $$
+\[ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
+	\cdots = \bigcap\limits^\infty_{j=0} E_{jA} \]
 The proof is relegated to the exercises and is related to the fact that
-$$ \Sigma^*=\Sigma^0\cup\Sigma^1\cup\Sigma^2\cup\cdots\cup\Sigma^n\cup\cdots $$
+\[ \Sigma^*=\Sigma^0\cup\Sigma^1\cup\Sigma^2\cup\cdots\cup\Sigma^n\cup\cdots \]
 Finally, it should be clear that if two states cannot be distinguished by
 strings of length 7 or less, they cannot be distinguished by strings of length 6
 or less, which means $E_{7A}$ is a refinement of $E_{6A}$. This principle
@@ -914,9 +914,9 @@ generalizes, as formalized below.
 \begin{lmm}\label{lmm-3.1}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and an integer
 $m$, $E_{m+1A}$ is a refinement of $E_{mA}$, which means
-$$ (\forall s,t \in S)(s E_{m+1A}t \Rightarrow s E_{mA}t) $$
+\[ (\forall s,t \in S)(s E_{m+1A}t \Rightarrow s E_{mA}t) \]
 or
-$$ E_{m+1A} \subseteq E_{mA} $$
+\[ E_{m+1A} \subseteq E_{mA} \]
 \emph{Proof.} See the exercises.
 \end{lmm}
 
@@ -928,9 +928,9 @@ $E_A$.
 \begin{lmm}\label{lmm-3.2}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$ and an integer
 $m$, $E_A$ is a refinement of $E_{mA}$, and so
-$$ (\forall s,t \in S)(s E_A t \Rightarrow s E_{mA} t) $$
+\[ (\forall s,t \in S)(s E_A t \Rightarrow s E_{mA} t) \]
 That is,
-$$ E_A \subseteq E_{mA} $$
+\[ E_A \subseteq E_{mA} \]
 
 \emph{Proof.} Let $s,t \in S$. Then
 \begin{center}
@@ -969,8 +969,8 @@ can be efficiently calculated.
 % Theorem 3.8
 \begin{thm}\label{thm-3.8}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
-$$(\forall s\in S)(\forall t\in S)(\forall i \in\NN)(s E_{i+1A} t\Leftrightarrow
-s E_{iA} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,\pmb{a})E_{iA}\delta(t,\pmb{a}))) $$
+\[(\forall s\in S)(\forall t\in S)(\forall i \in\NN)(s E_{i+1A} t\Leftrightarrow
+s E_{iA} t \wedge (\forall \pmb{a} \in \Sigma)(\delta(s,\pmb{a})E_{iA}\delta(t,\pmb{a}))) \]
 
 \emph{Proof.} Let $s \in S,\ t \in S$. Then
 \begin{center}
@@ -1013,8 +1013,8 @@ computed.
 % Theorem 3.9
 \begin{thm}\label{thm-3.9}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
-$$ (\exists m \in \NN \ni E_{mA} = E_{m+1A}) \Rightarrow
-	(\forall k \in \NN)(E_{m+kA} = E_{mA}) $$
+\[ (\exists m \in \NN \ni E_{mA} = E_{m+1A}) \Rightarrow
+	(\forall k \in \NN)(E_{m+kA} = E_{mA}) \]
 
 \emph{Proof.} By induction on $k$; see the exercises.
 \end{thm}
@@ -1026,7 +1026,7 @@ identical to $E_A$.
 % Theorem 3.10
 \begin{thm}\label{thm-3.10}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
-$$ (\exists m \in \NN \ni E_{mA}=E_{m+1A}) \Rightarrow E_{mA}=E_A $$
+\[ (\exists m \in \NN \ni E_{mA}=E_{m+1A}) \Rightarrow E_{mA}=E_A \]
 
 \emph{Proof.} Assume $\exists m \in \NN \ni E_{mA}=E_{m+1A}$ and let
 $q,r \in S$:
@@ -1055,14 +1055,14 @@ will yield an expression representing the relation $E_A$).
 % Theorem 3.11
 \begin{thm}\label{thm-3.11}
 Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
-$$(\exists m \in \NN \ni m \leq \|S\| \wedge E_{mA}=E_{m+1A}).$$
+\[(\exists m \in \NN \ni m \leq \|S\| \wedge E_{mA}=E_{m+1A}).\]
 
 \emph{Proof.} Assume the conclusion is false; that is, that
 $E_{0A},E_{1A}, \ldots ,E_{\|S\|A}$ are all distinct. Since
 $E_{\|S\|A} \subseteq \cdots \subseteq E_{1A} \subseteq E_{0A}$, the only way
 for two successive relations to be different is for the number of equivalence
 classes to increase. Thus,
-$$ 0 < rk(E_{0A}) < rk(E_{1A}) < rk(E_{2A}) < \cdots < rk(E_{\|S\|A}), $$
+\[ 0 < rk(E_{0A}) < rk(E_{1A}) < rk(E_{2A}) < \cdots < rk(E_{\|S\|A}), \]
 which means that $rk(E_{\|S\|A}) > \|S\|$, which is a contradiction (why?).
 Therefore, not all these relations can be distinct, and so there is some index
 $m$ for which $E_{mA} = E_{m+1A}$.
@@ -1114,7 +1114,7 @@ Definition \ref{dfn-3.10}.
 Given a finite automaton $A=\langle\Sigma,S,s_0,\delta,F\rangle$, the 
 \emph{i\textsuperscript{th} partial state set $C_i$} is defined by the following rules:
 Let $C_0=\{s_0\}$ and recursively define
-$$C_{i+1} = C_i \ \ \cup \bigcup\limits_{q\in C_i, \pmb{a}\in\Sigma} \delta(q,\pmb{a}).$$
+\[C_{i+1} = C_i \ \ \cup \bigcup\limits_{q\in C_i, \pmb{a}\in\Sigma} \delta(q,\pmb{a}).\]
 \end{dfn}
 
 $C_{\|S\|}$ must equal $S^c$ (why?), and we will often arrive at the final answer
@@ -1132,13 +1132,13 @@ $C_i$, since only paths from the newly added states need be explored anew.
 \subsection*{Example 3.15}
 
 Consider the DFA $D$ given in Figure \ref{fig-3.9}.
-$$ C_0= \{s_0\} $$
+\[ C_0= \{s_0\} \]
 and since $\delta(s_0,\pmb{a}) = s_1$, and $\delta(s_0,\pmb{b}) = s_3$,
-$$ C_1 =\{s_0,s_1,s_3\} $$
+\[ C_1 =\{s_0,s_1,s_3\} \]
 Note that there is no need to check $s_0$ again, but $s_1$ and $s_3$ generate
-$$ C_2 = \{s_0,s_1,s_3,s_2,s_4\} $$
+\[ C_2 = \{s_0,s_1,s_3,s_2,s_4\} \]
 Checking these two new states generates one more state, so
-$$ C_3=\{s_0,s_1,s_3,s_2,s_4,s_5\} $$
+\[ C_3=\{s_0,s_1,s_3,s_2,s_4,s_5\} \]
 and since $s_5$ leads to no new states, we have $C_4=C_3$; as with $E_{iA}$, we
 will now find $C_3=C_4=C_5=C_6=\cdots=S^c$. The exercises will develop the
 parallels between the generation of the partial state sets $C_i$ and the
@@ -1146,7 +1146,7 @@ generation of the partial state equivalence relations $E_{iA}$.
 
 % Figure 3.9
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-9.eps,width=4.5in}}
+\centerline{\includegraphics[width=4.5in]{ToFAfigures/fig3-9.eps}}
 \caption{The DFA D discussed in Example 3.15}\label{fig-3.9}
 \end{figure}
 
@@ -1227,12 +1227,12 @@ Theorem \ref{thm-3.1}. %Do not appeal to the results of (5) in the proof of Theo
 
 \item Consider the state transition function given in Definition \ref{dfn-3.8} and use
 induction to show
-$$ (\forall x \in \Sigma^*)(\forall[s]_{E_A} \in S_{E_A})
-	(\DBAR_{E_A}([s]_{E_A},x) = [\DBAR(s,x)]_{E_A}) $$
+\[ (\forall x \in \Sigma^*)(\forall[s]_{E_A} \in S_{E_A})
+	(\DBAR_{E_A}([s]_{E_A},x) = [\DBAR(s,x)]_{E_A}) \]
 
 \item Prove that
-$$ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
-	\cdots = \bigcap\limits^\infty_{j=0} E_{jA} $$
+\[ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
+	\cdots = \bigcap\limits^\infty_{j=0} E_{jA} \]
 
 \item Given a finite automaton $A =\langle\Sigma,S,s_0,\delta,F\rangle$, show
 that the function $\delta_{E_A}$ given in Definition \ref{dfn-3.8} is well defined.
@@ -1252,8 +1252,8 @@ contained in $S^c$.
 \item Given a homomorphism $\mu$ from the finite automaton 
 $A=\langle\Sigma,S_A,s_{0A},\delta_A,F_A\rangle$ to the DFA 
 $B=\langle\Sigma,S_B,s_{0B},\delta_B,F_B\rangle$, prove by induction that
-$$ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) =
-	\DBAR_B(\mu(s),x)) $$
+\[ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) =
+	\DBAR_B(\mu(s),x)) \]
 	
 \item Given a homomorphism $\mu$ from the finite automaton
 $A=\langle\Sigma,S_A,s_{0A},\delta_A,F_A\rangle$ to the DFA 
@@ -1355,7 +1355,7 @@ Note that your answer to part (e) might contain some disconnected states.
 
 % Figure 3.10
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig3-10.eps,height=7.8in}}
+\centerline{\includegraphics[height=7.8in]{ToFAfigures/fig3-10.eps}}
 \caption{(a) The DFA $A$ discussed in Exercise 3.23 (b) The DFA $B$ discussed in
 Exercise 3.24 (c) The DFA $C$ discussed in Exercise 3.25 (d) The DFA $D$
 discussed in Exercise 3.26}\label{fig-3.10}
@@ -1485,8 +1485,8 @@ states that can be reached from $s_0$ by strings of length $i$ or less.
 
 \item Prove that, given a finite automaton
 $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
-$$ (\exists i \in \NN \ni C_i=C_{i+1}) \Rightarrow
-	(\forall k \in \NN)(C_i = C_{i+k}). $$
+\[ (\exists i \in \NN \ni C_i=C_{i+1}) \Rightarrow
+	(\forall k \in \NN)(C_i = C_{i+k}). \]
 
 \item Prove that, given a DFA $A =\langle\Sigma,S,s_0,\delta,F\rangle$,
 $(\exists i \in \NN \ni C_i = C_{i+1}) \Rightarrow (C_i = S^c)$.

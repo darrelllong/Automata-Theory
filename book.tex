@@ -11,10 +11,10 @@
 
 % \usepackage{euler}
 \usepackage[leqno]{amsmath}
-\usepackage{epsfig}	% deprecated, use \includegraphics
 \usepackage{graphicx}
 \usepackage{makeidx}
 \usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
 \usepackage{mathcomp,textcomp}
 \usepackage{fullpage}
 \usepackage{quoting}
@@ -80,9 +80,7 @@ with an Introduction to Formal Languages}
 \def\XSIG{\ensuremath{\mathfrak{X}_\Sigma}}
 \def\PSIG{\ensuremath{\mathfrak{P}_\Sigma}}
 \def\FSIG{\ensuremath{\mathfrak{F}_\Sigma}}
-% the 'A' is totally unreadable and unintuitive; consider \cal???
-\def\ASIG{\ensuremath{\cal{A}_\Sigma}}
-%\def\ASIG{\ensuremath{\mathfrak{A}_\Sigma}}
+\def\ASIG{\ensuremath{\mathcal{A}_\Sigma}}
 \def\TSIG{\ensuremath{\mathfrak{T}_\Sigma}}
 \def\LSIG{\ensuremath{\mathfrak{L}_\Sigma}}
 % several of the LSIGs should be ZSIGs
@@ -106,5 +104,5 @@ with an Introduction to Formal Languages}
 \include{ch-12}
 
 \printindex
-\newpage\centerline{\epsfig{figure=Figures/mfake.eps,height=4in}}
+\newpage\centerline{\includegraphics[height=4in]{Figures/mfake.eps}}
 \end{document}

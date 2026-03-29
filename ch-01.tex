@@ -57,7 +57,7 @@ take care to explicitly mention the \emph{alphabet} under consideration.
 
 % Definition 1.1
 \begin{dfn}\label{dfn-1.1}
-$\Sigma$ is an \emph{\Index{alphabet}} \ \ {\bf \emph{iff}} \ \ $\Sigma$ is a finite nonempty set of symbols.
+$\Sigma$ is an \emph{\Index{alphabet}} \ \ \textbf{\emph{iff}} \ \ $\Sigma$ is a finite nonempty set of symbols.
 \end{dfn}
 
 An element of an alphabet is often called a letter, although there is no reason
@@ -88,7 +88,7 @@ alphabet.
 % Definition 1.2
 \begin{dfn}\label{dfn-1.2}
 For a given alphabet $\Sigma$ and a natural number $n$, a sequence of symbols
-$\pmb{a}_1\pmb{a}_2\ldots\pmb{a}_n$ is a \emph{word} (or \emph{string}) {\em over
+$\pmb{a}_1\pmb{a}_2\ldots\pmb{a}_n$ is a \emph{word} (or \emph{string}) \emph{over
 the alphabet $\Sigma$ of length $n$} iff for each $i=1,2,\ldots,n,\ \pmb{a}_i\in
 \Sigma$.
 \end{dfn}
@@ -145,7 +145,7 @@ Note in Definition \ref{dfn-1.4} that $|x \cdot y| = n + m = |x| + |y|$. Some
 examples of string concatenation are
 \begin{enumerate}[i.]
 \item $\pmb{aaa}\cdot\pmb{bbb}=\pmb{aaabbb}$ 
-\item {\bf home}$\cdot${\bf run} = {\bf homerun}
+\item \textbf{home}$\cdot$\textbf{run} = \textbf{homerun}
 \item $\pmb{a}^2\cdot\pmb{b}^3=\pmb{aabbb}$
 \end{enumerate}
 
@@ -184,7 +184,7 @@ especially useful shorthand in many contexts.
 
 % Definition 1.6
 \begin{dfn}\label{dfn-1.6}
-Given an alphabet $\Sigma$, and some $\pmb{b} \in \Sigma$, the {\em length of a word
+Given an alphabet $\Sigma$, and some $\pmb{b} \in \Sigma$, the \emph{length of a word
 $w$ with respect to $\pmb{b}$}, denoted $|w|_{\pmb{b}}$, is the number of
 occurrences of the letter $\pmb{b}$ within that word.
 \end{dfn}
@@ -227,7 +227,7 @@ $\Sigma$.
 % Definition 1.8
 \begin{dfn}\label{dfn-1.8}
 Given an alphabet $\Sigma$ and a nonnegative integer $k \in \NN$, we define 
-$$\Sigma^k = \{x \ | \ x\mbox{ is a word over $\Sigma$ and } |x| = k\}$$
+\[\Sigma^k = \{x \ | \ x\text{ is a word over $\Sigma$ and } |x| = k\}\]
 \end{dfn}
 
 \subsection*{Example 1.4} 
@@ -314,8 +314,8 @@ assume a reasonable number of states.
 
 % Figure 1.1
 \begin{figure}
-%\centerline{\epsfig{figure=Figures/fig-1-1.eps,height=2in}}
-\centerline{\epsfig{figure=ToFAfigures/fig1-1.eps,height=2in}}
+%\centerline{\includegraphics[height=2in]{Figures/fig-1-1.eps}}
+\centerline{\includegraphics[height=2in]{ToFAfigures/fig1-1.eps}}
 \caption{A model of a finite-state acceptor (DFA)}\label{fig-1.1}
 \end{figure}
 
@@ -353,8 +353,8 @@ indicating that a candy bar may be selected.\index{vending machine!DFA}
 
 % Figure 1.2
 \begin{figure}
-%\centerline{\epsfig{figure=Figures/fig-1-2.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig1-2.eps,width=5in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-1-2.eps}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig1-2.eps}}
 \caption{An implementation of a vending machine}\label{fig-1.2}
 \end{figure}
 
@@ -437,8 +437,8 @@ $\Sigma$.
 
 % Figure 1.3
 \begin{figure}
-%\centerline{\epsfig{figure=Figures/fig-1-3.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig1-3.eps,width=3in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-1-3.eps}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig1-3.eps}}
 \caption{The DFA described in Example 1.6}\label{fig-1.3}
 \end{figure}
 
@@ -728,8 +728,8 @@ TransitionTable.
 
 % Figure 1.6
 \begin{figure}
-%\centerline{\epsfig{figure=Figures/fig-1-6.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig1-6.eps,width=3in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-1-6.eps}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig1-6.eps}}
 \caption{The DFA discussed in Example 1.7}\label{fig-1.6}
 \end{figure}
 
@@ -842,8 +842,8 @@ end. { DFA }
 
 % Figure 1.9
 \begin{figure}\index{finite automaton!Pascal implementation}
-%\centerline{\epsfig{figure=Figures/fig-1-9.eps,width=\textwidth}}
-\centerline{\epsfig{figure=ToFAfigures/fig1-9.eps,width=3in}}
+%\centerline{\includegraphics[width=\textwidth]{Figures/fig-1-9.eps}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig1-9.eps}}
 \caption{The DFA emulated by the programs in Figures \ref{fig-1.8} and
 \ref{fig-1.10}}\label{fig-1.9}
 \end{figure}
@@ -855,7 +855,7 @@ Some other examples of valid languages are
 \item $\emptyset$
 \item $\{w \in\{\pmb{0},\pmb{1}\}^*\ | \ \ \ |w| > 5\}$
 \item $\{\lambda\}$
-\item \{$\lambda$, {\bf bilbo}, {\bf frodo}, {\bf samwise}\}
+\item \{$\lambda$, \textbf{bilbo}, \textbf{frodo}, \textbf{samwise}\}
 \item $\{x \in \{\pmb{a},\pmb{b}\}^*\ | \ \ \ |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$
 \end{enumerate}
 
@@ -914,7 +914,7 @@ words that do. In this sense, each automaton defines a language.
 \begin{dfn}\label{dfn-1.15}
 Given a DFA $A = \langle\Sigma,S,s_0,\delta,F\rangle$, the \emph{language accepted by}
 $A$, denoted $L(A)$, is defined to be 
-$$L(A) = \{w \in \Sigma^*\ | \ \DBAR(s_0, w) \in F\}$$
+\[L(A) = \{w \in \Sigma^*\ | \ \DBAR(s_0, w) \in F\}\]
 \end{dfn}
 
 $L(A)$, the language accepted by a finite automaton $A$, is the set of all words
@@ -990,7 +990,7 @@ $s_6$ & $s_7$ & $s_7$ & $s_7\ldots s_7$ & $s_7$ & $s_7$ & $s_7\ldots s_7$
 $s_7$ & $s_7$ & $s_7$ & $s_7\ldots s_7$ & $s_7$ & $s_7$ & $s_7\ldots s_7$
 	& $s_7$ & $s_7$ & $s_7$
 \end{tabular}
-$$F = \{s_1,s_2,s_3,s_4,s_5,s_6\}$$
+\[F = \{s_1,s_2,s_3,s_4,s_5,s_6\}\]
 \end{center}
 
 The entries under the column labeled $\Gamma$ show the transitions taken for
@@ -1003,13 +1003,13 @@ alphabet follows the same path.
 
 % Figure 1.11
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-11.eps,width=6.5in}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig1-11.eps}}
 \caption{A DFA that recognizes valid FORTRAN identifiers}\label{fig-1.11}
 \end{figure}
 
 % Figure 1.12
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-12.eps,width=2.7in}}
+\centerline{\includegraphics[width=2.7in]{ToFAfigures/fig1-12.eps}}
 \caption{The DFA $M$ discussed in Example 1.10}\label{fig-1.12}
 \end{figure}
 
@@ -1017,8 +1017,8 @@ alphabet follows the same path.
 
 The DFA $M$ shown in Figure \ref{fig-1.12} accepts only those strings that have an even
 number of $\pmb{b}$s and an even number of $\pmb{a}$s. Thus
-$$L(M) = \{x \in \{\pmb{a},\pmb{b}\}^* \ | \ \ \ |x|_{\pmb{a}} \equiv 0 \bmod 2 \wedge
-	|x|_{\pmb{b}} \equiv 0\bmod 2\}$$
+\[L(M) = \{x \in \{\pmb{a},\pmb{b}\}^* \ | \ \ \ |x|_{\pmb{a}} \equiv 0 \bmod 2 \wedge
+	|x|_{\pmb{b}} \equiv 0\bmod 2\}\]
 The corresponding quintuple for $M = \langle\Sigma,S,s_0,\delta,F\rangle$ has the
 following components:
 \begin{align*}
@@ -1036,12 +1036,12 @@ $\langle 0,1\rangle$ & $\langle 1,1\rangle$ & $\langle 0,0\rangle$ \\
 $\langle 1,0\rangle$ & $\langle 0,0\rangle$ & $\langle 1,1\rangle$ \\
 $\langle 1,1\rangle$ & $\langle 0,1\rangle$ & $\langle 1,0\rangle$
 \end{tabular}
-$$F=\{\langle 0,0\rangle\}$$
+\[F=\{\langle 0,0\rangle\}\]
 \end{center}
 Note that the transition function can be succinctly specified by
-$$\delta(\langle i,j\rangle,\pmb{a}) = \langle 1-i,j\rangle\text{ and }\delta(
+\[\delta(\langle i,j\rangle,\pmb{a}) = \langle 1-i,j\rangle\text{ and }\delta(
 	\langle i,j\rangle,\pmb{b}) = \langle i,1-j\rangle\text{ for all } i,j
-	\in \{0,1\}$$
+	\in \{0,1\}\]
 See the exercises for some other problems involving congruence modulo 2.
 
 \subsection*{Example 1.11}
@@ -1136,7 +1136,7 @@ $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$ & $s_7$
 $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$ & $s_8$
 	& $s_8$ & $s_7$ & $s_7$ & $s_4$ & $s_7$
 \end{tabular}
-$$F = \{s_2,s_3,s_5,s_8\}$$
+\[F = \{s_2,s_3,s_5,s_8\}\]
 \end{center}
 
 The language accepted by $R$, that is $L(R)$, is exactly the set of all real
@@ -1145,7 +1145,7 @@ Table \ref{tbl-1.1}.
 
 % Figure 1.13
 \begin{figure}%]tbh]
-\centerline{\epsfig{figure=ToFAfigures/fig1-13.eps,width=6.5in}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig1-13.eps}}
 \caption{A DFA that recognizes real number constants}\label{fig-1.13}
 \end{figure}
 
@@ -1179,8 +1179,8 @@ Now that we have described the mathematical nature of deterministic finite
 automata, let us turn to the physical implementation of such devices. We will
 investigate the sort of physical components that actually go into the ``brain''
 of, say, a vending machine. Recall that the basic building blocks of digital
-logic circuits are \emph{\Index{logic gates}}; using $\pmb{0}$ or {\bf False}
-to represent a low voltage (ground) and $\pmb{1}$ or {\bf True} to represent a
+logic circuits are \emph{\Index{logic gates}}; using $\pmb{0}$ or \textbf{False}
+to represent a low voltage (ground) and $\pmb{1}$ or \textbf{True} to represent a
 higher voltage (often +5 volts), the basic gates have the truth tables shown in
 Figure \ref{fig-1.14}.
 
@@ -1196,7 +1196,7 @@ a coin) was detected.
 
 % Figure 1.14
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-14.eps,width=5.7in}}
+\centerline{\includegraphics[width=5.7in]{ToFAfigures/fig1-14.eps}}
 \begin{center}
 \begin{tabular}{ccccc}
 %\fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} & \fbox{IMAGE} \\
@@ -1252,7 +1252,7 @@ $\pmb{0}$ & $\pmb{0}$ & $\pmb{1}$
 
 % Figure 1.15
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-1.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig1-1.eps}}
 \caption{A typical clock pulse pattern for latched circuits}\label{fig-1.15}
 \end{figure}
 
@@ -1294,7 +1294,7 @@ $\pmb{00001010}$ (a line feed) or $\pmb{00100000}$ (a space).
 
 % Figure 1.16
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-16.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig1-16.eps}}
 \caption{(a) A data flip-flop or latch (b) The circuitry for a D flip-flop}\label{fig-1.16}
 \end{figure}
 
@@ -1334,7 +1334,7 @@ $\pmb{10} = c$, and $\pmb{11}$ is unused.
 
 % Figure 1.17
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-17.eps,width=5in}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig1-17.eps}}
 \caption{(a) The DFA discussed in Example 1.12 (b) The expanded state transition
 diagram for the DFA implemented in Figure \ref{fig-1.18}}\label{fig-1.17}
 \end{figure}
@@ -1412,7 +1412,7 @@ representing the DFA, as shown in Figure \ref{fig-1.18}.
 
 % Figure 1.18
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-18.eps,width=6in}}
+\centerline{\includegraphics[width=6in]{ToFAfigures/fig1-18.eps}}
 \caption{The circuitry implementing the DFA discussed in Example 1.12}\label{fig-1.18}
 \end{figure}
 
@@ -1473,7 +1473,7 @@ represent the three states, most naturally encoded as $s_0 = \pmb{00}$, $s_1 =
 
 % Figure 1.19
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-19.eps,width=3in}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig1-19.eps}}
 \caption{The DFA discussed in Example 1.13}\label{fig-1.19}
 \end{figure}
 
@@ -1489,7 +1489,7 @@ acceptance is given in Table \ref{tbl-1.3}.
 In the first row, $t_1=\pmb{0}$ and $t_2=\pmb{0}$ indicate state $s_0$, while
 $\pmb{a}_1=\pmb{0}$ and $\pmb{a}_2=\pmb{0}$ denote the \<EOS\> symbol. Since $\delta(
 s_0,\<EOS\>) = s_0$, $t_1'=\pmb{0}$ and $t_2'=\pmb{0}$. We do not want to accept
-a string that ends in $s_0$, so {\bf accept}$ = 0$ also. The remaining rows are
+a string that ends in $s_0$, so \textbf{accept}$ = 0$ also. The remaining rows are
 determined similarly. The (nonminimized) circuitry for this DFA is shown in
 Figure \ref{fig-1.21}.
 
@@ -1497,7 +1497,7 @@ Figure \ref{fig-1.21}.
 \begin{table}\caption{}\label{tbl-1.3}
 \begin{center}
 \begin{tabular}{cccc|ccc}
-$t_1$ & $t_2$ & $\pmb{a}_1$ & $\pmb{a}_2$ & $t_1'$ & $t_2'$ & {\bf accept} \\
+$t_1$ & $t_2$ & $\pmb{a}_1$ & $\pmb{a}_2$ & $t_1'$ & $t_2'$ & \textbf{accept} \\
 \hline
 $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ \\
 $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{1}$ & $\pmb{0}$ & $\pmb{1}$ & $\pmb{0}$ \\
@@ -1522,14 +1522,14 @@ $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & $\pmb{0}$ & $\pmb{0}$ & $\pmb{0}
 
 % Figure 1.20
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-20.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig1-20.eps}}
 \caption{The expanded state transition diagram for the DFA implemented in Figure
 \ref{fig-1.21}}\label{fig-1.20}
 \end{figure}
 
 % Figure 1.21
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-21.eps,height=3.8in}}
+\centerline{\includegraphics[height=3.8in]{ToFAfigures/fig1-21.eps}}
 \caption{The circuitry implementing the DFA discussed in Example 1.13}\label{fig-1.21}
 \end{figure}
 
@@ -1586,7 +1586,7 @@ the target string.
 
 % Figure 1.22
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-22.eps,width=5.5in}}
+\centerline{\includegraphics[width=5.5in]{ToFAfigures/fig1-22.eps}}
 \caption{The automaton discussed in Example 1.14}\label{fig-1.22}
 \end{figure}
 
@@ -1615,7 +1615,7 @@ $s_5$ & $s_5$ & $s_5$
 
 % Figure 1.23
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-23.eps,width=6.5in}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig1-23.eps}}
 \caption{A DFA that accepts strings containing $\pmb{ababb}$}\label{fig-1.23}
 \end{figure}
 
@@ -1641,7 +1641,7 @@ $s_5$ & $s_5$ & $s_5$
 
 % Figure 1.24
 \begin{figure}[h]
-\centerline{\epsfig{figure=ToFAfigures/fig1-24.eps,width=6.5in}}
+\centerline{\includegraphics[width=6.5in]{ToFAfigures/fig1-24.eps}}
 \caption{A DFA that accepts strings that contain either $\pmb{ababb}$ or
 $\pmb{abbbb}$}\label{fig-1.24}
 \end{figure}
@@ -1752,7 +1752,7 @@ state RD) cause a transition to the abort state A.
 
 % Figure 1.25
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-25.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig1-25.eps}}
 \caption{The state transition diagram for the receive portion of Kermit, as
 discussed in Example 1.16}\label{fig-1.25}
 \end{figure}
@@ -1806,7 +1806,7 @@ coins.
 
 % Figure 1.26
 \begin{figure}[h]
-\centerline{\epsfig{figure=ToFAfigures/fig1-26.eps,width=3.5in}}
+\centerline{\includegraphics[width=3.5in]{ToFAfigures/fig1-26.eps}}
 \caption{The automaton discussed in Exercise 1.\ref{exer1.3}}\label{fig-1.26}
 \end{figure}
 
@@ -1935,13 +1935,13 @@ constants described by the following BNF.
 \<natural\> & $::=$ & \<digit\>$|$\<digit\>\<natural\> & \\
 \<integer\> & $::=$ & \<natural\>$|$\<sign\>\<natural\> & \\
 \<real constant\> & $::=$& \<integer\> & $|$ \\
-&& \<integer\>{\bf .} & $|$ \\
-&& {\bf .}\<natural\> & $|$ \\
-&& \<sign\>{\bf .}\<natural\> & $|$ \\
-&& {\bf .}\<natural\>{\bf E}\<integer\> & $|$ \\
-&& \<sign\>{\bf .}\<natural\>{\bf E}\<integer\> & $|$ \\
-&& \<integer\>{\bf .}\<natural\> & $|$ \\
-&& \<integer\>{\bf .}\<natural\>{\bf E}\<integer> & \\
+&& \<integer\>\textbf{.} & $|$ \\
+&& \textbf{.}\<natural\> & $|$ \\
+&& \<sign\>\textbf{.}\<natural\> & $|$ \\
+&& \textbf{.}\<natural\>\textbf{E}\<integer\> & $|$ \\
+&& \<sign\>\textbf{.}\<natural\>\textbf{E}\<integer\> & $|$ \\
+&& \<integer\>\textbf{.}\<natural\> & $|$ \\
+&& \<integer\>\textbf{.}\<natural\>\textbf{E}\<integer> & \\
 \end{tabular}
 \end{center}
 \item Write a program in your favorite programming language to implement the
@@ -1970,7 +1970,7 @@ Example 1.9 (compare with the description in Example 1.10).
 
 % Figure 1.27
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-27.eps,width=5in}}
+\centerline{\includegraphics[width=5in]{ToFAfigures/fig1-27.eps}}
 \caption{The DFA discussed in Exercise 1.\ref{q-states}}\label{fig-1.27}
 \end{figure}
 
@@ -2020,7 +2020,7 @@ prove the inductive statement
 
 % Figure 1.28
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig1-28.eps,width=3in}}
+\centerline{\includegraphics[width=3in]{ToFAfigures/fig1-28.eps}}
 \caption{The DFA discussed in Exercise 1.\ref{t-states}}\label{fig-1.28}
 \end{figure}
 

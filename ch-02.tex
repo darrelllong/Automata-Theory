@@ -263,7 +263,7 @@ $[\pmb{aa}]_Q$ can belong to $L$.
 
 % Figure 2.1
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-1.eps,width=4in}}
+\centerline{\includegraphics[width=4in]{ToFAfigures/fig2-1.eps}}
 \caption{(a) The automaton for $L_1$ in Example 2.4 (b) The automaton for $L_2$
 in Example 2.4}\label{fig-2.1}
 \end{figure}
@@ -290,13 +290,13 @@ equivalence classes, as outlined in the proof of the following theorem.
 
 % Figure 2.2
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-2.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig2-2.eps}}
 \caption{The DFA discussed in Example 2.5}\label{fig-2.2}
 \end{figure}
 
 % Theorem 2.2
 \begin{thm}\label{thm-2.2}
-{\bf Nerode's Theorem}. Let $L$ be a language over an alphabet $\Sigma$; the
+\textbf{Nerode's Theorem}. Let $L$ be a language over an alphabet $\Sigma$; the
 following statements are all equivalent:
 \begin{enumerate}
 \item $L$ is FAD.
@@ -339,12 +339,12 @@ classes of the right congruence $R$, and $rk(R) < \infty$. Note that we no
 longer have (1) as an assumption; there is no machine (as yet) associated with
 $L$.
 
-{\bf Case 1}: It could be that $L$ is the empty union; that is, that
+\textbf{Case 1}: It could be that $L$ is the empty union; that is, that
 $L=\emptyset$. In this case, it is easy to show that $R_L$ has only one
 equivalence class ($\Sigma^*$), and thus $rk(R_L) = 1 < \infty$ and (3) will be
 satisfied.
 
-{\bf Case 2}: In the nontrivial case, $L$ is the union of one or more of the
+\textbf{Case 2}: In the nontrivial case, $L$ is the union of one or more of the
 equivalence classes of the given right congruence $R$, and it is possible to
 show that this $R$ must then be closely related to the $R_L$ induced by the
 original language $L$. In particular, for any strings $x$ and $y$,
@@ -425,7 +425,7 @@ an example.
 
 % Figure 2.3
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-3.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig2-3.eps}}
 \caption{The DFA $N$ discussed in Example 2.6}\label{fig-2.3}
 \end{figure}
 
@@ -480,7 +480,7 @@ that is, $L(A_{R_L}) = L$.
 
 % Figure 2.4
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-4.eps,width=3.0in}}
+\centerline{\includegraphics[width=3.0in]{ToFAfigures/fig2-4.eps}}
 \caption{The DFA $P$ discussed in Example 2.6}\label{fig-2.4}
 \end{figure}
 
@@ -491,7 +491,7 @@ given in Figure \ref{fig-2.5}.
 
 % Figure 2.5
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-5.eps,width=2.5in}}
+\centerline{\includegraphics[width=2.5in]{ToFAfigures/fig2-5.eps}}
 \caption{The automaton discussed in Example 2.7}\label{fig-2.5}
 \end{figure}
 
@@ -556,7 +556,7 @@ and $|x| = 12$ we cannot go to 13 \emph{different} states while processing $x$;
 
 % Figure 2.6
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-6.eps,width=4.0in}}
+\centerline{\includegraphics[width=4.0in]{ToFAfigures/fig2-6.eps}}
 \caption{A path with a loop}\label{fig-2.6}
 \end{figure}
 
@@ -595,7 +595,7 @@ This behavior is illustrated in Figure \ref{fig-2.7}b.
 
 % Figure 2.7
 \begin{figure}
-\centerline{\epsfig{figure=ToFAfigures/fig2-7.eps,width=4.0in}}
+\centerline{\includegraphics[width=4.0in]{ToFAfigures/fig2-7.eps}}
 \caption{(a) The path that bypasses the loop (b) The path that traverses the
 loop twice}\label{fig-2.7}
 \end{figure}
@@ -630,7 +630,7 @@ state formally.
 
 % Theorem 2.3: The Pumping Lemma
 \begin{thm}\label{thm-2.3}
-{\bf The Pumping Lemma.} Let $L$ be an FAD language over $\Sigma^*$. Then
+\textbf{The Pumping Lemma.} Let $L$ be an FAD language over $\Sigma^*$. Then
 $(\exists n \in \NN)(\forall x \in L \ni |x| \geq n)(\exists u,v,w \in
 \Sigma^*) \ni$
 \begin{center}\begin{tabular}{rcl}
@@ -662,11 +662,11 @@ Note that the contrapositive of Theorem \ref{thm-2.3} is:
 
 % Theorem 2.4
 \begin{thm}\label{thm-2.4}
-Let $L$ be a language over $\Sigma^*$. {\bf If} \\
+Let $L$ be a language over $\Sigma^*$. \textbf{If} \\
 $(\forall n \in \NN)(\exists x \in L \ni |x| \geq n)(\forall u,v,w \in
 \Sigma^* \ni x = uvw,|uv| \leq n, |v| \geq 1)(\exists i \in \NN \ni uv^i w
 \notin L)$, \\
-{\bf then} $L$ is not FAD.
+\textbf{then} $L$ is not FAD.
 
 \emph{Proof.} See the exercises.
 \end{thm}
@@ -787,7 +787,7 @@ and
 \end{thm}
 
 Notice that Theorem \ref{thm-2.6} guarantees that if one ``long'' string is
-{\em not} in the
+\emph{not} in the
 language then there is an entire sequence of strings that cannot be in the
 language. There are some examples of languages in the exercises where Theorem
 \ref{thm-2.4} is hard to apply, but where Theorem \ref{thm-2.5} (or Theorem \ref{thm-2.6}) is appropriate.
@@ -837,7 +837,7 @@ resulting languages must have a certain repetitious nature. Allowing automata to
 instead have an infinite number of states is uninteresting for several reasons.
 On the practical side, it would be inconvenient (to say the least) to physically
 construct such a machine. Infinite automata are also of little theoretical
-interest as they do not distinguish between simple and complex languages: {\em any}
+interest as they do not distinguish between simple and complex languages: \emph{any}
 language can be accepted by the infinite analog of a DFA. With an infinite
 number of states available, the state transition diagrams can look like trees,
 with a unique state corresponding to each word in $\Sigma^*$. The states
