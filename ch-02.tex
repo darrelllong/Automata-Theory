@@ -117,10 +117,10 @@ Let $K$ be the set of all words over $\{\pmb{a},\pmb{b}\}$ that are of odd
 length. Those strings that are in $K$ are used to define exactly which pairs of
 strings are in $R_K$. For example, we can determine that $\pmb{ab}\ R_K\ 
 \pmb{bbaa}$, since it is true that, for any $u \in \Sigma^*$, either
-$\pmb{ab}u \notin K$ and $\pmb{bbaa}u \notin K$ (when $|u|$ is even) or
+$\pmb{ab}u \not in K$ and $\pmb{bbaa}u \not in K$ (when $|u|$ is even) or
 $\pmb{ab}u \in K$ and $\pmb{bbaa}u \in K$ (when $|u|$ is odd). Note that
 $\pmb{ab}$ and $\pmb{a}$ are not related by $R_K$, since there are choices for $u$
-that would violate the definition of $R_K:\ \pmb{ab}\lambda \notin K$ and yet
+that would violate the definition of $R_K:\ \pmb{ab}\lambda \not in K$ and yet
 $\pmb{a}\lambda \in K$. In this case, $R_K$ turns out to be the same as the
 relation $R$ defined in Example 2.1.
 
@@ -684,13 +684,13 @@ combinations of $u$, $v$, and $w$ must be given).
 Note that this choice of $x$ is ``long enough'' in that $|x| = 2n \geq n$, as
 required by Theorem \ref{thm-2.4}. For \emph{any} combination of $u,\ v,\ w \in \Sigma^*$ such
 that $x = uvw,\ |uv| \leq n,\ |v| \geq 1$, we hope to find a value for $i$ such
-that $uv^iw \notin L_4$. Since $|uv| \leq n$ and the first $n$ letters of $x$ are
+that $uv^iw \not in L_4$. Since $|uv| \leq n$ and the first $n$ letters of $x$ are
 all zeros, this narrows down the choices for $u,\ v$, and $w$. They must be of
 the form $u = \pmb{0}^j$ and $v = \pmb{0}^k$ (since $|uv| \leq n$ and $x$ starts
 with $n$ zeros), and $w$ must be the ``rest of the string'' and look something
 like $w=\pmb{0}^m \pmb{1}^n$. The constraints on $u,\ v$, and $w$ imply that
 $j + k \leq n,\ k \geq 1$, and $j + k + m = n$. If $i = 2$, we have that
-$uv^2w = \pmb{0}^{n+k} \pmb{1}^n \notin L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
+$uv^2w = \pmb{0}^{n+k} \pmb{1}^n \not in L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
 [or, alternately, because the conclusion of the pumping lemma (Theorem \ref{thm-2.3}) does
 \emph{not} hold, $L_4$ cannot be FAD].
 
@@ -740,7 +740,7 @@ and $w$ must be the ``rest of the string''; that is, $w=\pmb{a}^m
 $k \geq 1$, and $j + k + m = p$. If $i = 0$, we have that $uv^{0} w =
 \pmb{a}^{p-k}\pmb{b}^{(p-1)!}$. But $p-k$ is a number between $p-1$ and $p-n$
 and hence must match one of the nontrivial factors in $(p-1)!$, which means that
-$uv^{0} w \notin L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
+$uv^{0} w \not in L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
 could not have been FAD.
 
 The details of the basic argument used to prove the pumping lemma can be varied
@@ -773,7 +773,7 @@ we obtain yet another variation.
 % Theorem 2.6
 \begin{thm}\label{thm-2.6}
 Let $L$ be a FAD language over $\Sigma^*$. Then
-\[ (\exists n \in \NN)(\forall x \notin L \ni |x| \geq n)(\exists u,v,w \in
+\[ (\exists n \in \NN)(\forall x \not in L \ni |x| \geq n)(\exists u,v,w \in
 	\Sigma^*) \ni \]
 \begin{center}\begin{tabular}{rcl}
 $x$ & $=$ & $uvw$ \\
@@ -781,7 +781,7 @@ $|uv|$ & $\leq$ & $n$ \\
 $|v|$ & $\geq$ & $1$ \\
 \end{tabular}\end{center}
 and
-\[ (\forall i \in \NN)(uv^iw \notin L) \]
+\[ (\forall i \in \NN)(uv^iw \not in L) \]
 
 \emph{Proof.} See the exercises.
 \end{thm}

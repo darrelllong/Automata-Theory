@@ -308,7 +308,7 @@ alphabet $\Sigma$ is either a pure context-sensitive grammar or a quadruple
 \[ G'=\langle\Omega\cup\{Z\},\Sigma,Z,P\cup\{Z\rightarrow\lambda,Z\rightarrow
 	S\}\rangle, \]
 where $G=\langle\Omega,\Sigma,S,P\rangle$ is a pure context-sensitive grammar
-and $Z \notin \Omega\cup\Sigma$.
+and $Z \not in \Omega\cup\Sigma$.
 \end{dfn}
 
 The only production $\alpha\rightarrow\beta$ that violates the condition
@@ -317,7 +317,7 @@ play a part in any derivation other than $Z\Rightarrow\lambda$. From the start
 symbol $Z$, the application $Z\rightarrow\lambda$ immediately ends the
 derivation (producing $\lambda$), while the application of $Z \rightarrow S$
 will provide no further opportunity to use $Z\rightarrow\lambda$, since the
-requirement that $Z\notin\Omega\cup\Sigma$ means that the other productions will
+requirement that $Z\not in\Omega\cup\Sigma$ means that the other productions will
 never allow $Z$ to reappear in the derivation. Thus, $G'$ enhances the generating
 power of $G$ only to the extent that $G'$ can produce $\lambda$. Every string in
 $L(G)$ can be derived from the productions of $G'$, and $G'$ generates no new
@@ -409,7 +409,7 @@ is either a pure context-free grammar or a quadruple
 \[ G' = \langle\Omega\cup\{Z\},\Sigma,Z,P\cup\{Z\rightarrow\lambda,Z\rightarrow
 	S\}\rangle, \]
 where $G=\langle\Omega,\Sigma,S,P\rangle$ is a pure context-free grammar and
-$Z \notin \Omega\cup\Sigma$.
+$Z \not in \Omega\cup\Sigma$.
 \end{dfn}
 
 Productions of the form $C\rightarrow\beta$ are called \emph{\Index{C-rules}}.
@@ -537,7 +537,7 @@ production $S\rightarrow\pmb{a}S$ is used in the derivation. Furthermore, no
 other words \emph{in} $\Sigma^*$ can be derived from $G_1$; beginning from $S$,
 the production $S\rightarrow\pmb{a}S$ may be used several times, but if no other
 production is used, a string of the form $\pmb{a}^nS$ will be produced, and
-since $S\notin\Sigma$, this is not a valid string of terminals. The only way to
+since $S\not in\Sigma$, this is not a valid string of terminals. The only way to
 remove the $S$ is to apply the production $S\rightarrow\pmb{b}T$, which will
 leave a string of the form $\pmb{a}^n\pmb{b}T$, which is also not in $\Sigma^*$.
 The only production that can be applied at this point is $T\rightarrow\pmb{aa}$,
@@ -561,7 +561,7 @@ the same language. The following definition formalizes this notion.
 \begin{dfn}\label{dfn-8.9}
 Two grammars $G_1=\langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2=\langle\Omega_2,
 \Sigma,S_2,P_2\rangle$ are called \emph{equivalent} iff $L(G_1)=L(G_2)$, and we will
-write $G_2 \simeq G_1$.
+write $G_2 \sim eq G_1$.
 \end{dfn}
 
 \subsection*{Example 8.9}
@@ -569,7 +569,7 @@ write $G_2 \simeq G_1$.
 Consider $G_1$ from Examples 8.6 and 8.7, and define the right-linear grammar
 $G_8=\langle\{Z\},\{\pmb{a},\pmb{b}\},Z,\linebreak\{Z\rightarrow\pmb{a}Z,Z\rightarrow
 \pmb{baa}\}\rangle$. Then $L(G_8)=\pmb{a}^*\pmb{baa}=L(G_1)$, and therefore
-$G_8 \simeq G_1$. The concept of equivalence applies to all types of grammars,
+$G_8 \sim eq G_1$. The concept of equivalence applies to all types of grammars,
 whether or not they are right linear, and hence the grammars $G''$ and $G'$ from
 Examples 8.3 and 8.5 are likewise equivalent.
 
@@ -668,7 +668,7 @@ has been processed so far, followed by the current state of $B$. Conversely, in
 trying to duplicate the action of $B$ as it processes the string $\pmb{ab}$, we
 have $S\Rightarrow\pmb{a}T\Rightarrow\pmb{ab}S$, which cannot be transformed
 into a string of only $\pmb{a}$s and $\pmb{b}$s without processing at least one more
-letter, and hence $\pmb{ab}\notin L(G_B)$. Since $S$ is not a final state, it
+letter, and hence $\pmb{ab}\not in L(G_B)$. Since $S$ is not a final state, it
 cannot be removed from the derivation, corresponding to the rejection of any
 string that brings us to a nonfinal state. Those strings that are accepted by
 $B$ are exactly those that end in the state $T$, and for which we will have the
@@ -794,7 +794,7 @@ Let $G_2=\langle\{A,S\},\{\pmb{a},\pmb{b}\},S,\{S\rightarrow A\pmb{baa},A
 \rightarrow A\pmb{a},A\rightarrow \lambda\}\rangle$. Then
 \[ L(G_2)=\pmb{a}^*\pmb{baa}=\{\pmb{baa},\pmb{abaa},\pmb{aabaa},\ldots\} =
 	L(G_1), \]
-and so $G_2 \simeq G_1$ (compare with Example 8.7). Note that there does not
+and so $G_2 \sim eq G_1$ (compare with Example 8.7). Note that there does not
 seem to be an obvious way to transform the right-linear grammar $G_1$ discussed
 in Example 8.7 into an equivalent left-linear grammar such as $G_2$ (see the
 exercises).
@@ -1150,7 +1150,7 @@ Let $\Sigma$ be an alphabet. Then \GSIG\ is effectively closed under union.
 \emph{Proof.} Let $G_1=\langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2=\langle
 \Omega_2,\Sigma,S_2,P_2\rangle$ be two right-linear grammars, and without loss
 of generality assume that $\Omega_1\cap\Omega_2=\emptyset$. Choose a new
-nonterminal $Z$ such that $Z \notin \Omega_1\cup\Omega_2$, and consider the new
+nonterminal $Z$ such that $Z \not in \Omega_1\cup\Omega_2$, and consider the new
 grammar $G^{\cup}$ defined by $G^{\cup}=\langle\Omega_1\cup\Omega_2\cup\{Z\},
 \Sigma,Z,P_1\cup P_2\cup\{Z\rightarrow S_1,Z\rightarrow S_2\}\rangle$. It is
 straightforward to show that $L(G^{\cup})=L(G_1)\cup L(G_2)$ (see the exercises).
@@ -1172,7 +1172,7 @@ Let $\Sigma$ be an alphabet. Then \GSIG\ is effectively closed under
 \Index{Kleene closure}.
 
 \emph{Proof.} Let $G=\langle\Omega,\Sigma,S,P\rangle$ be a right-linear grammar.
-Choose a new nonterminal $Z$ such that $Z \notin \Omega$, and consider the new
+Choose a new nonterminal $Z$ such that $Z \not in \Omega$, and consider the new
 grammar $G_*$ defined by
 \[ G_* = \langle\Omega\cup\{Z\},\Sigma,Z,P_*\rangle, \]
 where
@@ -1329,7 +1329,7 @@ Theorem \ref{thm-8.8} below.
 
 As with context-free and context-sensitive languages, the contracting
 productions can be limited to $Z\rightarrow\lambda$, where $Z$ is the start
-symbol. This is only necessary if $\lambda\in L$; if $\lambda\notin L$, there
+symbol. This is only necessary if $\lambda\in L$; if $\lambda\not in L$, there
 need be no contracting productions at all. We wish to show how to produce a
 right-linear grammar with no more than one contracting production. By relying on the
 existence of the normal form described in Theorem \ref{thm-8.7}, this can be done without
@@ -1347,7 +1347,7 @@ Furthermore, all other productions are of the form $A\rightarrow\pmb{a}B$ or $A
 grammar. Without loss of generality, assume that $G$ is of the form specified by
 Theorem \ref{thm-8.7}. (If $G$ were not of the proper form, Theorem \ref{thm-8.7} guarantees that an
 equivalent grammar that is in the proper form could be found and used in place
-of $G$.) Choose a new nonterminal $Z$ such that $Z\notin\Omega$, and consider
+of $G$.) Choose a new nonterminal $Z$ such that $Z\not in\Omega$, and consider
 the new grammar $G^0$ defined by $G^0 = \langle\Omega\cup\{Z\},\Sigma,Z,P^0
 \rangle$, where $P^0$ contains $Z\rightarrow S$, and all productions from $P$
 of the form $A\rightarrow xB$, where $x\in\Sigma^*$ and $A,B \in\Omega$. $P^0$
@@ -1514,7 +1514,7 @@ Determine $L(H)$.
 using the following construction? Let $G_1 = \langle\Omega_I,\Sigma,S_1,P_1
 \rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ be two right-linear
 grammars, and, without loss of generality, assume that $\Omega_1\cap\Omega_2 =
-\emptyset$. Choose a new nonterminal $Z$ such that $Z\notin\Omega_1\cup\Omega_2$,
+\emptyset$. Choose a new nonterminal $Z$ such that $Z\not in\Omega_1\cup\Omega_2$,
 and define a new grammar $G^\bullet = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,
 P_1\cup P_2\cup\{Z\rightarrow S_1\cdot S_2\}\rangle$. \emph{Note:} It \emph{is}
 straightforward to show that $L(G^\bullet)=L(G_1)\cdot L(G_2)$ (see Chapter \ref{ch-9}).

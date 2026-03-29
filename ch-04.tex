@@ -242,7 +242,7 @@ accepted by an NDFA.
 Consider the machine given in Example 4.4 and let $x = \pmb{b}$; the possible
 paths through the machine include (1) starting at $s$ and proceeding to $r$, and
 (2) starting at $s$ and proceeding to $t$. Note that it is not possible to start
-from $t$ (since $t \notin S_0$), and there is no way to proceed with $x =
+from $t$ (since $t \not in S_0$), and there is no way to proceed with $x =
 \pmb{b}$ by starting at $r$, the other start state.
 
 Now let $x = \pmb{ba}$ and consider the possibilities. The only path through the
@@ -961,7 +961,7 @@ $\lambda$-transitions}, $A^{\sigma}_{\lambda}=\langle\Sigma,S\cup\{q_0\},S_0\cup
 
 \begin{center}\begin{tabular}{l}
 $F^{\sigma} = \left\{ \begin{tabular}{ll}
-		$F$ & $\quad\text{iff}\quad\lambda\notin L(A_{\lambda})$ \\
+		$F$ & $\quad\text{iff}\quad\lambda\not in L(A_{\lambda})$ \\
  		$F \cup \{q_0\}$ & $\quad\text{iff}\quad \lambda\in
 			L(A_{\lambda})$
 		\end{tabular}\right. $ \\
@@ -1306,7 +1306,7 @@ they still valid when applied to NDFAs?
 NDFA?
 
 \item Given a nondeterministic finite automaton $A$ (without
-$\lambda$-transitions) for which $\lambda \notin L(A)$, show that it is possible
+$\lambda$-transitions) for which $\lambda \not in L(A)$, show that it is possible
 to construct a nondeterministic finite automaton (also without
 $\lambda$-transitions) $A''$ with the properties:
 \begin{enumerate}[1.]

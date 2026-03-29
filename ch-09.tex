@@ -1114,7 +1114,7 @@ nonterminal $X\in\Omega$. Denote the set of all left-recursive $X$-rules by $X^r
 \{X\rightarrow X\alpha_1,X\rightarrow X\alpha_2,\ldots,X\rightarrow X\alpha_m\}$
 and the set of all non[left]recursive X-rules by $X^n=\{X\rightarrow\gamma_1,X
 \rightarrow\gamma_2,\ldots,X\rightarrow\gamma_n\}$. Choose a new nonterminal $Y
-\notin\Omega$ and let $G'' = \langle\Omega\cup\{Y\},\Sigma,S,P''\rangle$, where
+\not in\Omega$ and let $G'' = \langle\Omega\cup\{Y\},\Sigma,S,P''\rangle$, where
 $P'' = P\cup\{X\rightarrow\gamma_1Y,X\rightarrow\gamma_2Y,\ldots,X\rightarrow
 \gamma_nY\}\cup\{Y\rightarrow\alpha_1,Y\rightarrow\alpha_2,\ldots,Y\rightarrow
 \alpha_m\}\cup\{Y\rightarrow\alpha_1Y,Y\rightarrow\alpha_2Y,\ldots,Y\rightarrow
@@ -1392,7 +1392,7 @@ employ the contrapositive of Theorem \ref{thm-9.7}, which is stated next.
 Let $L$ be a language over $\Sigma^*$. \\
 {\bf if} $(\forall n\in\NN)(\exists z\in L \ni |z| \geq n)(\forall u,v,w,x,y \in
 \Sigma^* \ni z = uvwxy, |vwx| \leq n, |vx|\geq 1)(\exists i\in\NN \ni uv^iwx^iy
-\notin L)$ \\
+\not in L)$ \\
 {\bf then} $L$ is {\bf not} context free.
 
 \emph{Proof.} See the exercises.
@@ -1412,12 +1412,12 @@ cases is outlined below.
 
 If the strings $v$ and $x$ contain only one type of letter (for example, ${\pmb
 c}$), then $uv^2wx^2y$ will contain more $\pmb{c}$s than $\pmb{a}$s or $\pmb{b}$s, and
-thus $uv^2wx^2y \notin L$. If $v$ were, say, all $\pmb{b}$s and $x$ were all ${\pmb
+thus $uv^2wx^2y \not in L$. If $v$ were, say, all $\pmb{b}$s and $x$ were all ${\pmb
 c}$s, then $uv^2wx^2y$ would contain too few $\pmb{a}$s and would again not be a
 member of $L$. If $v$ were to contain two types of letters such as $v =
 \pmb{aabb}$, then $uv^2wx^2y = uvvwxxy = u\pmb{aabbaabb}wxxy$ and would
 represent a string that had some $\pmb{b}$s preceding some $\pmb{a}$s, and again
-$uv^2wx^2y \notin L$. All other cases are similar to these, and they
+$uv^2wx^2y \not in L$. All other cases are similar to these, and they
 collectively imply that $L$ is not a context-free language.
 [The shortest choice for $vwx$ that can successfully be pumped is
 $\pmb{ab}^n\pmb{c}$, but this violates the condition that $|vwx| \leq n$.]
@@ -1634,7 +1634,7 @@ closure.
 \emph{Proof.} If $L_1$ is a context-free language, then there is a pure
 context-free grammar $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ that
 generates $L_1 - \{\lambda\}$. Choose nonterminals $Z'$ and $S'$ such that $Z'
-\notin\Omega_1$ and $S'\notin\Omega_1$, and define a new grammar
+\not in\Omega_1$ and $S'\not in\Omega_1$, and define a new grammar
 \[ G_* = \langle\Omega_1\cup\{S',Z'\},\Sigma,Z',P_1\cup\{Z'\rightarrow\lambda,Z'
 	\rightarrow S',S'\rightarrow S'S_1,S'\rightarrow S_1\}\rangle \]
 A straightforward induction shows that $L(G_*) = L(G_1)^*$.
@@ -1767,7 +1767,7 @@ $B^u = \{C\ |\ B\ \DRightarrow C\}$ for each nonterminal $B$ found in $P^u$.
 using the following construction? Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1
 \rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ be two context-free
 grammars, and without loss of generality assume that $\Omega_1\cap\Omega_2 =
-\emptyset$. Choose a new nonterminal $Z$ such that $Z\notin\Omega_1\cup\Omega_2$,
+\emptyset$. Choose a new nonterminal $Z$ such that $Z\not in\Omega_1\cup\Omega_2$,
 and define a new grammar $G^* = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,
 P_1\cup P_2\cup\{Z\rightarrow S_1\cdot S_2\}\rangle$. \emph{Note:} It \emph{is}
 straightforward to show that $L(G^*) = L(G_1)\cdot L(G_2)$.

@@ -1,4 +1,4 @@
-% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf       
+% Chapter, Section, Figure, Table, Theorem, Corollary, Lemma, Definition, {\bf
 \chapter{Finite-State Transducers}\label{ch-7}
 
 We have seen that finite-state acceptors are by no means robust enough to accept
@@ -340,7 +340,7 @@ Assume $f$ is FTD. Then
 
 %\begin{tabular}{l}
 $(\forall n \in \NN)(\forall x \in \Sigma^n)(\forall y \in \Sigma^*)
-	(\forall z \in \Sigma^*)(\text{the first }n\text{ letters of }f(xy)$ 
+	(\forall z \in \Sigma^*)(\text{the first }n\text{ letters of }f(xy)$
 	must agree with the first $n$ letters of $f(xz))$
 %\end{tabular}
 
@@ -470,8 +470,8 @@ Consider the two FSTs
 $C=\langle\{\pmb{a},\pmb{b}\},\{\pmb{0},\pmb{1}\},\{t_0,t_1,t_2,t_3\},t_0,
 \delta_C,\omega_C\rangle$, given in Figure \ref{fig-7.4}, and
 $D=$\linebreak$\langle\{\pmb{a},\pmb{b}\},\{\pmb{0},\pmb{1}\},\{q_0,q_1,q_2\},q_0,\delta_D,
-\omega_D\rangle$, displayed in Figure \ref{fig-7.5}. The function $\mu$$:\{t_0,t_1,t_2,t_3\} 
-\rightarrow\{q_0,q_1,q_2\}$, defined by $\mu(t_0)=q_0,\ \mu(t_1)=q_1,\ 
+\omega_D\rangle$, displayed in Figure \ref{fig-7.5}. The function $\mu$$:\{t_0,t_1,t_2,t_3\}
+\rightarrow\{q_0,q_1,q_2\}$, defined by $\mu(t_0)=q_0,\ \mu(t_1)=q_1,\
 \mu(t_2)=q_2$, and $\mu(t_3)=q_0$ is a homomorphism between C and D. Conditions
 (i) and (ii) are exactly the same criteria used for finite automata
 homomorphisms and have exactly the same interpretation: the start states must
@@ -490,7 +490,7 @@ If $\mu$$: S_A \rightarrow S_B$ is a homomorphism between two FSTs
 \[ A=\langle\Sigma,\Gamma,S_A,s_{0_A},\delta_A,\omega_A\rangle\text{ and }
 	B=\langle\Sigma,\Gamma,S_B,s_{0_B},\delta_B,\omega_B\rangle, \]
 then
-\[ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) = 
+\[ (\forall s \in S_A)(\forall x \in \Sigma^*)(\mu(\DBAR_A(s,x)) =
 	\DBAR_B(\mu(s),x)) \]
 and
 \[ (\forall s \in S_A)(\forall x \in \Sigma^*)(\OBAR_A(s,x) =
@@ -549,7 +549,7 @@ and $\omega^c$ is the restriction of $\omega$ to $S^c \times \Sigma$$:
 
 $M^c$ is, as in Chapter \ref{ch-3}, the machine $M$ with the unreachable states ``thrown
 away.'' As with DFAs, trimming a machine in this fashion has no effect on the
-operation of the transducer. To formally prove this, the following lemma is 
+operation of the transducer. To formally prove this, the following lemma is
 needed.
 
 % Lemma 7.2
@@ -566,7 +566,7 @@ $|y|$. Let $P(n)$ be defined by
 The basis step is trivial, since\ \ $\overline{\omega^c}(t,\lambda)=\lambda=\OBAR(t,\lambda)$.
 For the inductive step, assume
 $(\forall y \in \Sigma^m)(\forall t \in S^c)(\overline{\omega^c}(t,y)=\OBAR(t,y))$, and let
-$t \in S^c$ and $z \in \Sigma^{m+1}$ be given. Then $\exists x \in \Sigma^m,\ 
+$t \in S^c$ and $z \in \Sigma^{m+1}$ be given. Then $\exists x \in \Sigma^m,\
 \exists\pmb{a} \in \Sigma$ for which $z = \pmb{a}x$, and therefore
 \begin{center}\begin{tabular}{rcl}
 $\overline{\omega^c}(t,z)$ & $=$ & (by definition of $z$) \\
@@ -1313,8 +1313,8 @@ called \emph{M connected}, by
 $S^c=\{s \in S \mid \exists x \in \Sigma^* \ni \DBAR(s_0,x) = s\}$ \\
 $s^c_0 = s_0$
 \end{tabular}\end{center}
-$\delta^c$ is essentially the restriction of $\delta$ to $S^c \times \Sigma:\ 
-(\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a}) = 
+$\delta^c$ is essentially the restriction of $\delta$ to $S^c \times \Sigma:\
+(\forall\pmb{a}\in\Sigma)(\forall s \in S^c)(\delta^c(s,\pmb{a}) =
 \delta(s,\pmb{a}))$, and $\omega^c$ is the restriction of $\omega$ to
 $S^c \times \Sigma:\ (\forall s \in S^c)(\omega^c(s) = \omega(s))$.
 \end{dfn}
@@ -1800,7 +1800,7 @@ following statements from Lemma \ref{lmm-7.4}:
 \item Show that there is a homomorphism from the machine $M$ in Example 7.11 to
 the machine $B$ in Example 7.2.
 
-\item Prove that, in a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle,\ 
+\item Prove that, in a FST $M=\langle\Sigma,\Gamma,S,s_0,\delta,\omega\rangle,\
 (\forall t \in S)(\forall\pmb{a}\in\Sigma)(\OBAR(t,\pmb{a})=\omega(t,\pmb{a}))$.
 
 \item Modify the vending machine in Example 7.1 so that it can return all the

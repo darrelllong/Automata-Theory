@@ -83,14 +83,14 @@
 \item $J_\Sigma=\wp(\Sigma^*)\setminus C_\Sigma$, languages with infinite complements.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite, i.e., $\sim L\in I_\Sigma$.  Then $\sim(\sim L)=L$; is $\sim L\in J_\Sigma$?  $\sim(\sim L)=L$ is infinite (since $L\in J_\Sigma$ is not cofinite, its complement is infinite, so $L$ itself need not be infinite).  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\notin J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
+  \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite, i.e., $\sim L\in I_\Sigma$.  Then $\sim(\sim L)=L$; is $\sim L\in J_\Sigma$?  $\sim(\sim L)=L$ is infinite (since $L\in J_\Sigma$ is not cofinite, its complement is infinite, so $L$ itself need not be infinite).  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\not in J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
   \item \textbf{Union: No.}  Over $\Sigma=\{\pmb{a}\}$, let
   $L_1=\{\pmb{a}^{2n}\mid n\ge 0\}$ and $L_2=\{\pmb{a}^{2n+1}\mid n\ge 0\}$.
   Both have infinite complements, so both belong to $J_\Sigma$.  But
-  $L_1\cup L_2=\Sigma^*$, whose complement is finite, so $L_1\cup L_2\notin J_\Sigma$.
+  $L_1\cup L_2=\Sigma^*$, whose complement is finite, so $L_1\cup L_2\not in J_\Sigma$.
   \item \textbf{Intersection: Yes.}  If $\sim L_1$ and $\sim L_2$ are both infinite, then $\sim(L_1\cap L_2)=\sim L_1\cup\sim L_2\supseteq\sim L_1$, which is infinite.
-  \item \textbf{Concatenation: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L_1=\{\pmb{a}^n\mid n\text{ odd or }n=2\}$ and $L_2=\{\pmb{a}^{2k}\mid k\ge 1\}$.  Then $\sim L_1=\{\lambda,\pmb{a}^4,\pmb{a}^6,\ldots\}$ and $\sim L_2=\{\lambda,\pmb{a},\pmb{a}^3,\pmb{a}^5,\ldots\}$ are both infinite, so $L_1,L_2\in J_\Sigma$.  But $L_1\cdot L_2=\{\pmb{a}^n\mid n\ge 3\}$ (any $n\ge 3$ is expressible as odd$+$even or $2+$even), whose complement $\{\lambda,\pmb{a},\pmb{a}^2\}$ is finite---so $L_1\cdot L_2\notin J_\Sigma$.
-  \item \textbf{Kleene closure: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L=\{\pmb{a}^n\mid n\text{ odd}\}$.  Then $\sim L=\{\lambda,\pmb{a}^2,\pmb{a}^4,\ldots\}$ is infinite, so $L\in J_\Sigma$.  But odd$+$odd$=$even, even$+$odd$=$odd, so $L^k$ contains all $\pmb{a}$-strings of the right parity at length $\ge k$; inductively $L^*=\{\pmb{a}\}^*=\Sigma^*$.  Then $\sim L^*=\emptyset$ is finite, so $L^*\notin J_\Sigma$.
+  \item \textbf{Concatenation: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L_1=\{\pmb{a}^n\mid n\text{ odd or }n=2\}$ and $L_2=\{\pmb{a}^{2k}\mid k\ge 1\}$.  Then $\sim L_1=\{\lambda,\pmb{a}^4,\pmb{a}^6,\ldots\}$ and $\sim L_2=\{\lambda,\pmb{a},\pmb{a}^3,\pmb{a}^5,\ldots\}$ are both infinite, so $L_1,L_2\in J_\Sigma$.  But $L_1\cdot L_2=\{\pmb{a}^n\mid n\ge 3\}$ (any $n\ge 3$ is expressible as odd$+$even or $2+$even), whose complement $\{\lambda,\pmb{a},\pmb{a}^2\}$ is finite---so $L_1\cdot L_2\not in J_\Sigma$.
+  \item \textbf{Kleene closure: No.}  Over $\Sigma=\{\pmb{a}\}$, let $L=\{\pmb{a}^n\mid n\text{ odd}\}$.  Then $\sim L=\{\lambda,\pmb{a}^2,\pmb{a}^4,\ldots\}$ is infinite, so $L\in J_\Sigma$.  But odd$+$odd$=$even, even$+$odd$=$odd, so $L^k$ contains all $\pmb{a}$-strings of the right parity at length $\ge k$; inductively $L^*=\{\pmb{a}\}^*=\Sigma^*$.  Then $\sim L^*=\emptyset$ is finite, so $L^*\not in J_\Sigma$.
   \item \textbf{Relative complement: Yes.}  $\sim(L_1\setminus L_2)=\sim(L_1\cap\sim L_2)=\sim L_1\cup L_2\supseteq\sim L_1$.  Since $L_1\in J_\Sigma$, $\sim L_1$ is infinite, so $\sim(L_1\setminus L_2)$ is infinite, hence $L_1\setminus L_2\in J_\Sigma$. \qed
 \end{enumerate}
 
@@ -98,7 +98,7 @@
 \item $\pmb{E}$: all languages over $\{\pmb{a},\pmb{b}\}$ that contain $\pmb{abba}$.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Complementation: No.}  $\sim L$ contains all words \emph{not} in $L$; since $L$ contains $\pmb{abba}$, $\sim L$ does not contain $\pmb{abba}$, so $\sim L\notin\pmb{E}$.
+  \item \textbf{Complementation: No.}  $\sim L$ contains all words \emph{not} in $L$; since $L$ contains $\pmb{abba}$, $\sim L$ does not contain $\pmb{abba}$, so $\sim L\not in\pmb{E}$.
   \item \textbf{Union: Yes.}  If $\pmb{abba}\in L_1$, then $\pmb{abba}\in L_1\cup L_2$.
   \item \textbf{Intersection: Yes.}  If $L_1,L_2\in\pmb{E}$ then both contain $\pmb{abba}$, so $L_1\cap L_2$ also contains $\pmb{abba}$.  \textbf{Closed.}
   \item \textbf{Concatenation: No.}  Here $\pmb{E}$ means languages that have
@@ -107,7 +107,7 @@
   $L_1\cdot L_2=\{\pmb{abbaabba}\}$, which does not contain $\pmb{abba}$ as a
   member.  So $\pmb{E}$ is not closed under concatenation.
   \item \textbf{Kleene closure: Yes.}  $L^*$ contains $L^1=L$, so $\pmb{abba}\in L\subseteq L^*$.
-  \item \textbf{Relative complement: No.}  $L_1\setminus L_2$ might not contain $\pmb{abba}$ if $\pmb{abba}\in L_2$.  E.g., $L_1=L_2=\{\pmb{abba}\}$: $L_1\setminus L_2=\emptyset\notin\pmb{E}$.
+  \item \textbf{Relative complement: No.}  $L_1\setminus L_2$ might not contain $\pmb{abba}$ if $\pmb{abba}\in L_2$.  E.g., $L_1=L_2=\{\pmb{abba}\}$: $L_1\setminus L_2=\emptyset\not in\pmb{E}$.
 \end{enumerate}
 
 %% 5.7
@@ -162,7 +162,7 @@ K=\{\emptyset,\Sigma^*\}\cup\{\{w\}\mid w\in\Sigma^*\}\cup
 This collection is closed under complement by construction.  But it is not
 closed under relative complement: if $u\neq v$, then
 \[
-(\Sigma^*\setminus\{u\})\setminus\{v\}=\Sigma^*\setminus\{u,v\}\notin K.
+(\Sigma^*\setminus\{u\})\setminus\{v\}=\Sigma^*\setminus\{u,v\}\not in K.
 \]
 So closure under complement does not imply closure under relative complement.
 
@@ -270,7 +270,7 @@ Since $F'$ is computable (for each state $s$, check if any state in $F$ is reach
 Let $A=\langle\Sigma,S,s_0,\delta,F\rangle$ be a minimal DFA for $L$.
 $F(L)=\{x\in L\mid \text{no nonempty word }y\text{ satisfies }xy\in L\}$.
 Define $A'=\langle\Sigma,S,s_0,\delta,F''\rangle$ where
-$F''=\{s\in F\mid(\forall y\in\Sigma^+)(\deltabar{}(s,y)\notin F)\}$.
+$F''=\{s\in F\mid(\forall y\in\Sigma^+)(\deltabar{}(s,y)\not in F)\}$.
 Then $x\in L(A')$ iff $\deltabar{}(s_0,x)\in F''$ iff $x\in L$ and there is no
 nonempty $y$ with $\deltabar{}(s_0,xy)\in F$, iff $x\in F(L)$.
 So $F(L)=L(A')\in\DSIG$. \qed
@@ -310,7 +310,7 @@ So $F(L)=L(A')\in\DSIG$. \qed
 %% 5.22
 \item \textbf{\NSIG\ is closed under reversal.}
 
-Assume $L\in\NSIG$ but $L^r\notin\NSIG$.  Then $L^r\in\DSIG$.  By
+Assume $L\in\NSIG$ but $L^r\not in\NSIG$.  Then $L^r\in\DSIG$.  By
 Exercise~5.20, \DSIG\ is closed under reversal, so
 $L=(L^r)^r\in\DSIG$, a contradiction.  Hence $L^r\in\NSIG$ whenever
 $L\in\NSIG$.
@@ -357,7 +357,7 @@ $\delta(s_0,\pmb{a})=\{s_0,s_1\}$, $\delta(s_1,\pmb{a})=\{s_1\}$.
 Then $L(A)=\{\pmb{a}\}^+=\{\pmb{a},\pmb{aa},\ldots\}$.
 After complementing: $F^\sim=\{s_0\}$.
 $\pmb{a}$: from $s_0$, reach $\{s_0,s_1\}$; $s_0\in F^\sim$, so $\pmb{a}\in L(A^\sim)$.
-But $\pmb{a}\in L(A)$, so $\pmb{a}\notin\sim L(A)$.  Thus $\pmb{a}\in L(A^\sim)$ but $\pmb{a}\notin\sim L(A)$, so $L(A^\sim)\neq\sim L(A)$.
+But $\pmb{a}\in L(A)$, so $\pmb{a}\not in\sim L(A)$.  Thus $\pmb{a}\in L(A^\sim)$ but $\pmb{a}\not in\sim L(A)$, so $L(A^\sim)\neq\sim L(A)$.
 
 %% 5.28
 \item \textbf{Complete the proof of Lemma~5.7.}
@@ -530,7 +530,7 @@ $s_0$ final, then the redesigned machine accepts $\pmb{b}$, because
 \[
 \delta(s_0,\pmb{b})=s_0\in F'.
 \]
-But $\pmb{b}\notin L^*$, since every nonempty word of $L^*$ is a concatenation
+But $\pmb{b}\not in L^*$, since every nonempty word of $L^*$ is a concatenation
 of copies of $\pmb{aa}$.
 
 So even with $\lambda$-transitions, the fresh start state $q_0$ is needed to
@@ -549,7 +549,7 @@ where
 F^\bullet=
 \left\{
 \begin{array}{ll}
-F_2, & \lambda\notin L_2,\\
+F_2, & \lambda\not in L_2,\\
 F_1\cup F_2, & \lambda\in L_2,
 \end{array}
 \right.
@@ -595,7 +595,7 @@ because the old transition function $\delta$ is deterministic.
 %% 5.45
 \item \textbf{Comparing $R_L$ and $R_{\sim L}$.}
 
-The right congruence $\equiv_L$ on $\Sigma^*$ is defined by $x\equiv_L y$ iff $\forall z\in\Sigma^*,xz\in L\Leftrightarrow yz\in L$.  The right congruence $\equiv_{\sim L}$ satisfies $x\equiv_{\sim L}y$ iff $\forall z,xz\in\sim L\Leftrightarrow yz\in\sim L$, i.e., $xz\notin L\Leftrightarrow yz\notin L$, i.e., $xz\in L\Leftrightarrow yz\in L$.  So $\equiv_L=\equiv_{\sim L}$: the two right congruences are identical.
+The right congruence $\equiv_L$ on $\Sigma^*$ is defined by $x\equiv_L y$ iff $\forall z\in\Sigma^*,xz\in L\Leftrightarrow yz\in L$.  The right congruence $\equiv_{\sim L}$ satisfies $x\equiv_{\sim L}y$ iff $\forall z,xz\in\sim L\Leftrightarrow yz\in\sim L$, i.e., $xz\not in L\Leftrightarrow yz\not in L$, i.e., $xz\in L\Leftrightarrow yz\in L$.  So $\equiv_L=\equiv_{\sim L}$: the two right congruences are identical.
 
 This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemented final states) is a minimal DFA for $\sim L$, and both have the same state set and transition function.  Thus $R_L=R_{\sim L}$.
 
@@ -622,7 +622,7 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
 
   \item \textbf{Machine definition.}  Define $A^-$ as the product of $A_1$ and $A_2^\sim$ (complement of $A_2$), using the intersection machine from Lemma~5.1 with $F^-=F_1\times(S_2\setminus F_2)$.
 
-  \item \textbf{Proof.}  By induction (as in Exercise~5.56/5.57), $\overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x)=\langle\deltabar{1}(s^1_0,x),\deltabar{2}(s^2_0,x)\rangle$.  Then $x\in L(A^-)$ iff $\deltabar{1}(s^1_0,x)\in F_1$ and $\deltabar{2}(s^2_0,x)\notin F_2$ iff $x\in L_1\setminus L_2$. \qed
+  \item \textbf{Proof.}  By induction (as in Exercise~5.56/5.57), $\overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x)=\langle\deltabar{1}(s^1_0,x),\deltabar{2}(s^2_0,x)\rangle$.  Then $x\in L(A^-)$ iff $\deltabar{1}(s^1_0,x)\in F_1$ and $\deltabar{2}(s^2_0,x)\not in F_2$ iff $x\in L_1\setminus L_2$. \qed
 \end{enumerate}
 
 %% 5.48
@@ -675,7 +675,7 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
   \item \textbf{\NSIG\ is not closed under concatenation.}  Let
   $E=\{\pmb{a}^n\pmb{b}^n\mid n\ge 1\}$ and define
   $L=\{\pmb{a},\pmb{b}\}^*-E$.  Since $E\in\NSIG$, Theorem~5.8 gives
-  $L\in\NSIG$.  Also $\lambda\in L$, and if $x\notin L$ then
+  $L\in\NSIG$.  Also $\lambda\in L$, and if $x\not in L$ then
   $x=\pmb{a}^n\pmb{b}^n=\pmb{a}\cdot \pmb{a}^{n-1}\pmb{b}^n$ with both factors in
   $L$.  Hence $L\cdot L=\{\pmb{a},\pmb{b}\}^*\in\DSIG$.
 
@@ -991,7 +991,7 @@ Hence $U(L)\in\DSIG$. \qed
   \[
   I(L)=P=\{\pmb{a}^q\mid q\text{ prime}\}.
   \]
-  We show $P\notin\DSIG$ by the pumping lemma.  Assume $P$ were regular, and
+  We show $P\not in\DSIG$ by the pumping lemma.  Assume $P$ were regular, and
   let $p$ be a pumping length.  Choose a prime $q>p$, and consider
   $\pmb{a}^q\in P$.  Write
   \[
@@ -1003,29 +1003,29 @@ Hence $U(L)\in\DSIG$. \qed
   |uv^{q+1}w|=q+q m=q(1+m).
   \]
   This number is composite, because $q>1$ and $1+m>1$.  Hence
-  $uv^{q+1}w\notin P$, contradicting the pumping lemma.  Therefore
-  $P\notin\DSIG$.
+  $uv^{q+1}w\not in P$, contradicting the pumping lemma.  Therefore
+  $P\not in\DSIG$.
 
   \item \textbf{$F_\Sigma$ closed under $I$.}  $I(L)=L\cap P\subseteq L$; if $L$ is finite, so is $I(L)$.
 
   \item \textbf{$C_\Sigma$ closed under $I$? No.}  $L=\Sigma^*\setminus F$ for finite $F$.  $I(L)=P\setminus F'$ for some finite $F'$.  If $P$ is cofinite: $P$ is not cofinite (infinitely many non-primes), so $P\setminus F'$ is not cofinite.  \textbf{Not closed.}
 
-  \item \textbf{$B_\Sigma$ closed under $I$? No.}  $I(\Sigma^*)=P\notin B_\Sigma$ (not finite, not cofinite).
+  \item \textbf{$B_\Sigma$ closed under $I$? No.}  $I(\Sigma^*)=P\not in B_\Sigma$ (not finite, not cofinite).
 
   \item \textbf{$I_\Sigma$ closed under $I$? No.}  Let $\Sigma=\{\pmb{a}\}$ and
   $L=\{\pmb{a}^{2n}\mid n\ge 1\}$.  Then $L\in I_\Sigma$, but
   \[
   I(L)=L\cap P=\{\pmb{aa}\},
   \]
-  since $2$ is the only even prime.  Thus $I(L)\notin I_\Sigma$.
+  since $2$ is the only even prime.  Thus $I(L)\not in I_\Sigma$.
 
   \item \textbf{$J_\Sigma$ closed under $I$?}  $I(L)=L\cap P$.  If $\sim L$ is infinite, $\sim(L\cap P)\supseteq\sim P$ which is infinite (non-primes).  \textbf{Yes, closed.}
 
-  \item \textbf{$\pmb{E}$ closed under $I$?}  If $\pmb{abba}\in L$ and $|\pmb{abba}|=4$ is not prime, then $\pmb{abba}\notin I(L)$.  So $I(L)$ might not contain $\pmb{abba}$.  \textbf{Not closed.}
+  \item \textbf{$\pmb{E}$ closed under $I$?}  If $\pmb{abba}\in L$ and $|\pmb{abba}|=4$ is not prime, then $\pmb{abba}\not in I(L)$.  So $I(L)$ might not contain $\pmb{abba}$.  \textbf{Not closed.}
 
   \item \textbf{\NSIG\ closed under $I$? No.}  Over $\Sigma=\{\pmb{a}\}$, let
   $P=\{\pmb{a}^p\mid p\text{ prime}\}$ and
-  $L=\{\pmb{a}\}^*-P$.  Since $P\notin\DSIG$, Theorem~5.8 implies
+  $L=\{\pmb{a}\}^*-P$.  Since $P\not in\DSIG$, Theorem~5.8 implies
   $L\in\NSIG$.  But
   \[
   I(L)=L\cap P=\emptyset\in\DSIG.
@@ -1037,19 +1037,19 @@ Hence $U(L)\in\DSIG$. \qed
 \item $C$: all languages over $\{\pmb{a},\pmb{b}\}$ not containing $\lambda$.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Complementation: No.}  $\sim L$ contains $\lambda$ (since $\lambda\notin L$ but $\lambda\in\Sigma^*$), so $\sim L\notin C$.
+  \item \textbf{Complementation: No.}  $\sim L$ contains $\lambda$ (since $\lambda\not in L$ but $\lambda\in\Sigma^*$), so $\sim L\not in C$.
 
-  \item \textbf{Union: Yes.}  If $\lambda\notin L_1$ and $\lambda\notin L_2$, then $\lambda\notin L_1\cup L_2$.
+  \item \textbf{Union: Yes.}  If $\lambda\not in L_1$ and $\lambda\not in L_2$, then $\lambda\not in L_1\cup L_2$.
 
-  \item \textbf{Intersection: Yes.}  $\lambda\notin L_1\cap L_2\subseteq L_1$.
+  \item \textbf{Intersection: Yes.}  $\lambda\not in L_1\cap L_2\subseteq L_1$.
 
-  \item \textbf{Concatenation: Yes.}  If $\lambda\notin L_1$ and $\lambda\notin L_2$: every word in $L_1\cdot L_2$ is of the form $xy$ with $x\in L_1,y\in L_2$, and $x\neq\lambda,y\neq\lambda$, so $xy\neq\lambda$.
+  \item \textbf{Concatenation: Yes.}  If $\lambda\not in L_1$ and $\lambda\not in L_2$: every word in $L_1\cdot L_2$ is of the form $xy$ with $x\in L_1,y\in L_2$, and $x\neq\lambda,y\neq\lambda$, so $xy\neq\lambda$.
 
   \item \textbf{Kleene closure: No.}  $\lambda\in L^*$ always.
 
-  \item \textbf{Relative complement: Yes.}  $\lambda\notin L_1\setminus L_2\subseteq L_1$.
+  \item \textbf{Relative complement: Yes.}  $\lambda\not in L_1\setminus L_2\subseteq L_1$.
 
-  \item \textbf{$L^+$: Yes.}  $L^+=\bigcup_{k\ge 1}L^k$.  Each $L^k$ contains words of positive length (since $\lambda\notin L$), so $\lambda\notin L^+$.
+  \item \textbf{$L^+$: Yes.}  $L^+=\bigcup_{k\ge 1}L^k$.  Each $L^k$ contains words of positive length (since $\lambda\not in L$), so $\lambda\not in L^+$.
 \end{enumerate}
 
 %% 5.67
@@ -1059,7 +1059,7 @@ Hence $U(L)\in\DSIG$. \qed
     \item \emph{By theorems and induction:}  Base: $\{L\}\subseteq\DSIG$ trivially.  Step: if $L_1\cup L_2\cup\cdots\cup L_k\in\DSIG$ and $L_{k+1}\in\DSIG$, then $(L_1\cup\cdots\cup L_k)\cup L_{k+1}\in\DSIG$ by Theorem~5.2.
     \item \emph{By construction:}  Build $A^{(k)}$ iteratively by the union construction of Exercise~5.14; each step is deterministic.
   \end{enumerate}
-  \item \textbf{\DSIG\ is NOT closed under infinite union.}  Each singleton $\{a^nb^n\}\in\DSIG$ (finite languages are regular), but $\bigcup_{n\ge 0}\{a^nb^n\}=\{a^nb^n\mid n\ge 0\}\notin\DSIG$ (not regular, by pumping).
+  \item \textbf{\DSIG\ is NOT closed under infinite union.}  Each singleton $\{a^nb^n\}\in\DSIG$ (finite languages are regular), but $\bigcup_{n\ge 0}\{a^nb^n\}=\{a^nb^n\mid n\ge 0\}\not in\DSIG$ (not regular, by pumping).
 \end{enumerate}
 
 %% 5.68
@@ -1192,7 +1192,7 @@ Theorem~5.9 states that \DSIG\ is closed under homomorphism: if $L$ is FAD and
 $\psi$ is a homomorphism, then $\psi(L)$ is FAD.  This does \emph{not} mean that
 if $L$ is not FAD, then $\psi(L)$ is not FAD.  A homomorphism can collapse the
 structure that made $M$ non-FAD, yielding a simpler FAD image $K=\psi(M)$.
-Hence the fact that $M\notin\DSIG$ says nothing by itself about whether
+Hence the fact that $M\not in\DSIG$ says nothing by itself about whether
 $K=\psi(M)$ is FAD.
 
 %% 5.75

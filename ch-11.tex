@@ -123,7 +123,7 @@ The auxiliary alphabet always includes the \emph{\Index{blank symbol}} (denoted 
 and neither $\Sigma$ nor $\Gamma$ include the special symbols $\pmb{L}$ and
 $\pmb{R}$, which denote moving the tape head left and right, respectively. The
 state $h$ is a special \emph{\Index{halt state}}\index{Turing machine!halt state}, from which no further transitions are
-possible; $h\notin S$.
+possible; $h\not in S$.
 \end{dfn}
 
 The alphabet $\Sigma$ is intended to denote the nonblank symbols that can be
@@ -949,7 +949,7 @@ quintuple $M=\langle\Sigma,\Gamma,S,s_0,\delta\rangle$, where
 $\Sigma$ is the \emph{input alphabet} \\
 $\Gamma$ is the \emph{auxiliary alphabet} containing the special markers $\<$ and\index{end markers for LBA}
 	$\>$ and $\Sigma$, $\Gamma$, and $\{\pmb{L},\pmb{R}\}$ are pairwise
-	disjoint sets (and thus $\<,\> \notin\Sigma$). \\
+	disjoint sets (and thus $\<,\> \not in\Sigma$). \\
 $S$ is a finite nonempty set of \emph{states} (and $S\cap(\Sigma\cup\Gamma) =
 	\emptyset$). \\
 $s_0$ is the \emph{\Index{start state}} ($s_0\in S$). \\
@@ -1209,7 +1209,7 @@ derivations arising from the application of these rules directly reflect the
 changes in the configuration of the Turing machine (see Theorem \ref{thm-11.4}).
 
 None of the class 3 productions can be used until the point at which the halt
-state would be reached in the corresponding computation. Since $h\notin S$, none
+state would be reached in the corresponding computation. Since $h\not in S$, none
 of the class 2 productions can then be used. Only if $\pmb{Y}$ was written to tape as
 the Turing machine halted will the production $h\pmb{Y}\rightarrow U$ be
 applicable. $U$ will then delete the trailing blanks and $]$ from the sentential
@@ -1704,7 +1704,7 @@ Let $\Sigma$ be an alphabet. Then $\TSIG$ is closed under union.
 Theorem \ref{thm-11.4} there are type 0 grammars $G_1=\langle\Omega_1,\Sigma,S_1,P_1
 \rangle$ and $G_2=\langle\Omega_2,\Sigma,S_2,P_2\rangle$ that recognize $L_1$
 and $L_2$. Without loss of generality, assume that $\Omega_1\cap\Omega_2=
-\emptyset$. Choose a new nonterminal $Z$ such that $Z\notin\Omega_1\cup\Omega_2$,
+\emptyset$. Choose a new nonterminal $Z$ such that $Z\not in\Omega_1\cup\Omega_2$,
 and consider the new type 0 grammar $G^{\cup}$ defined by $G^{\cup}=\langle
 \Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\rightarrow S_1,Z
 \rightarrow S_2\}\rangle$. Clearly, $L(G^{\cup})=L(G_1)\cup L(G_2)$. By Theorem

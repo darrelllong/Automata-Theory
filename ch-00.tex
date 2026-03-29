@@ -277,7 +277,7 @@ Let $X = \{1,2,3\}$. The familiar relation $<$ (less than) would then consist of
 the following ordered pairs:
 $<: \{\langle 1, 2\rangle , \langle 1, 3\rangle , \langle 2, 3\rangle \}$,
 by which we mean to indicate that $1 < 2, 1 < 3$, and $2 < 3$.
-$\langle 3,3\rangle \notin <$ since $3 \not< 3$.
+$\langle 3,3\rangle \not in <$ since $3 \not< 3$.
 
 Some relations have special properties. For example, the relation ``less than''
 is \emph{transitive}, by which we mean that for any numbers $x, y,$ and $z,$
@@ -523,7 +523,7 @@ belong to a given set, are special types of functions.
 Given a set $A$, the {\em characteristic function} $\chi_A$ associated with $A$
 is defined by
 $$\chi_{A}(x)=1\text{ if }x\in A\quad\text{and}\quad\chi_{A}(x)=0\text{ if }x
-	\notin A$$
+	\not in A$$
 \end{dfn}
 
 \subsection*{Example 0.12}
@@ -821,18 +821,18 @@ Assume $f$: $A\rightarrow \wp(A)$ is a function; we will demonstrate that there
 must exist a set in $\wp(A)$ that is not in the range of $f$, and hence $f$
 cannot be onto. Consider an element $z$ of $A$ and the set $f(z)$ to which it
 maps. $f(z)$ is a subset of $A$, and hence $z$ may or may not belong to $f(z)$.
-Define $B$ to be the set $\{y \in A \ |\  y \notin f(y)\}$. $B$ is then the set of
+Define $B$ to be the set $\{y \in A \ |\  y \not in f(y)\}$. $B$ is then the set of
 all elements of $A$ that do not appear in the set corresponding to their image
 under $f$. It is impossible for $B$ to be in the range of $f$, for if it were
 then there would be an element of $A$ that maps to this subset: assume $w \in A$
 and $f(w) = B$. Since $w$ is an element of $A$, it might belong to $B$, which is
 a subset of $A$. If $w \in B$, then $w \in f(w)$, since $f(w) = B$; but the
 elements for which $y \in f(y)$ were exactly the ones omitted from $B$, and thus
-we would have $w \notin B$, which is a contradiction. Our speculation that $w$
+we would have $w \not in B$, which is a contradiction. Our speculation that $w$
 might belong to $B$ is therefore incorrect. The only other option is that $w$
-does not belong to $B$. But if $w \notin B = f(w)$, then $w$ is one of the
+does not belong to $B$. But if $w \not in B = f(w)$, then $w$ is one of the
 elements that are supposed to be in $B$ and we are again faced with the
-impossibility that $w \notin B$ and $w \in B$. In all cases, we reach a
+impossibility that $w \not in B$ and $w \in B$. In all cases, we reach a
 contradiction if we assume that there exists an element $w$ for which $f(w) = B$.
 Thus, $B$ was a member of the codomain that is not in the range of $f$, and $f$ 
 is therefore not a bijection.
