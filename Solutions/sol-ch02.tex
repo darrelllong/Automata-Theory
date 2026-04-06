@@ -263,12 +263,72 @@ This is exactly Theorem 2.7. $\square$
 %%------------------------------------------------------------
 \item \textbf{Show $L=\{x\mid|x|_\mathbf{a}<|x|_\mathbf{b}\}$ is not FAD.}
 
-For any $n$, take $w=\mathbf{a}^n\mathbf{b}^{n+1}\in L$, $|w|=2n+1\geq n$. Any decomposition $w=uvw'$ with $|uv|\leq n$ and $|v|\geq 1$ has $v=\mathbf{a}^k$ for some $k\geq 1$ (since $|uv|\leq n$). Then $uv^0w'=uw'=\mathbf{a}^{n-k}\mathbf{b}^{n+1}$ which has $n-k$ $\mathbf{a}$s and $n+1$ $\mathbf{b}$s. Since $n-k<n+1$, this is in $L$. And $uv^2w'=\mathbf{a}^{n+k}\mathbf{b}^{n+1}$: need $n+k < n+1$, i.e., $k<1$, impossible since $k\geq 1$. So $uv^2w'\not in L$. The pumping lemma fails, so $L$ is not FAD. $\square$
+We use Theorem 2.5. Suppose, for contradiction, that $L$ is FAD, and let $n$
+be the number supplied by that theorem.
+
+Take
+\[
+x=\mathbf{a}^n\mathbf{b}^{n+1}.
+\]
+Then $x\in L$, because $|x|_\mathbf{a}=n<n+1=|x|_\mathbf{b}$.
+
+By Theorem 2.5 there should be a decomposition
+\[
+x=uvw,\qquad |vw|\le n,\qquad |v|\ge1,
+\]
+such that
+\[
+uv^iw\in L\qquad\text{for every }i\ge0.
+\]
+
+Since the last $n$ symbols of $x$ are all $\mathbf{b}$'s, the substring $v$
+must be of the form $\mathbf{b}^k$ for some $k\ge1$.
+Now take $i=0$. Then
+\[
+uw=\mathbf{a}^n\mathbf{b}^{n+1-k}.
+\]
+Because $k\ge1$, we have $n+1-k\le n$, so
+\[
+|uw|_\mathbf{b}\le |uw|_\mathbf{a}.
+\]
+Hence $uw\not in L$, contradicting Theorem 2.5.
+
+Therefore $L$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $G=\{x\mid|x|_\mathbf{a}\geq|x|_\mathbf{b}\}$ is not FAD.}
 
-For any $n$, take $w=\mathbf{a}^n\mathbf{b}^n\in G$. Any $v=\mathbf{a}^k$ ($k\geq 1$, since $|uv|\leq n$). Then $uv^0w'=\mathbf{a}^{n-k}\mathbf{b}^n$: need $n-k\geq n$, i.e., $k\leq 0$. Contradiction. So pumping down takes us out of $G$. Not FAD. $\square$
+We use Theorem 2.6. Suppose, for contradiction, that $G$ is FAD, and let $n$
+be the number supplied by that theorem.
+
+Take
+\[
+x=\mathbf{a}^n\mathbf{b}^{n+1}.
+\]
+Then $x\not in G$, because $|x|_\mathbf{a}=n$ and $|x|_\mathbf{b}=n+1$.
+
+By Theorem 2.6 there should be a decomposition
+\[
+x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
+\]
+such that
+\[
+uv^iw\not in G\qquad\text{for every }i\ge0.
+\]
+
+Since the first $n$ symbols of $x$ are all $\mathbf{a}$'s, the substring $v$
+must be of the form $\mathbf{a}^k$ for some $k\ge1$.
+Now pump once more than usual, taking $i=2$. Then
+\[
+uv^2w=\mathbf{a}^{n+k}\mathbf{b}^{n+1}.
+\]
+Because $k\ge1$, we have $n+k\ge n+1$, so
+\[
+|uv^2w|_\mathbf{a}\ge |uv^2w|_\mathbf{b}.
+\]
+Hence $uv^2w\in G$, contradicting Theorem 2.6.
+
+Therefore $G$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $P=\{\mathbf{d}^p\mid p\text{ prime}\}$ is not FAD.}
@@ -347,7 +407,36 @@ So $x_i\not R_\Psi x_j$ for $i\neq j$, giving infinitely many Nerode classes. Th
 %%------------------------------------------------------------
 \item \textbf{Show $K=\{w\mid w=w^r\}$ (palindromes) is not FAD.}
 
-For any $n$, the strings $\mathbf{0},\mathbf{0}^2,\ldots,\mathbf{0}^n$ are in distinct $R_K$-classes: $\mathbf{0}^i R_K \mathbf{0}^j$ requires $(\forall z)(\mathbf{0}^iz\in K\Leftrightarrow\mathbf{0}^jz\in K)$. Take $z=\mathbf{0}^i$: $\mathbf{0}^{2i}$ is a palindrome (yes). $\mathbf{0}^{j+i}$: palindrome (yes, any string of one letter is a palindrome). So we need a subtler argument. Take $z=\mathbf{1}\mathbf{0}^i$: $\mathbf{0}^i\mathbf{1}\mathbf{0}^i\in K$ (palindrome), but $\mathbf{0}^j\mathbf{1}\mathbf{0}^i\in K$ iff $\mathbf{0}^j\mathbf{1}\mathbf{0}^i=\mathbf{0}^i\mathbf{1}\mathbf{0}^j$, i.e., $i=j$. So distinct $i\neq j$ give distinct classes. Infinite rank. Not FAD. $\square$
+We use Theorem 2.3. Suppose, for contradiction, that $K$ is FAD, and let $n$
+be the number supplied by that theorem.
+
+Take
+\[
+x=\mathbf{0}^n\mathbf{1}\mathbf{0}^n.
+\]
+This word is in $K$, since it is the same read from left to right and right to
+left.
+
+By Theorem 2.3 there should be a decomposition
+\[
+x=uvw,\qquad |uv|\le n,\qquad |v|\ge1,
+\]
+such that
+\[
+uv^iw\in K\qquad\text{for every }i\ge0.
+\]
+
+Since the first $n$ symbols of $x$ are all $\mathbf{0}$'s, the substring $v$
+must be of the form $\mathbf{0}^k$ for some $k\ge1$.
+Now take $i=0$. Then
+\[
+uw=\mathbf{0}^{n-k}\mathbf{1}\mathbf{0}^n.
+\]
+The block of $\mathbf{0}$'s to the left of $\mathbf{1}$ has length $n-k$,
+while the block to the right has length $n$. These are unequal, so $uw$ is not
+a palindrome. Thus $uw\not in K$, contradicting Theorem 2.3.
+
+Therefore $K$ is not FAD. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\Phi=\{\mathbf{a}^j\mathbf{b}^k\mathbf{c}^m\mid j\geq 3,k=m\}$ is not FAD (second pumping lemma).}
