@@ -84,9 +84,16 @@ Every derivation cycles: $Z \Rightarrow \pmb{b}T \Rightarrow \pmb{ba}Z \Rightarr
 \item From $B$: $B = \pmb{ab}B \cup \lambda$, so $L(B) = (\pmb{ab})^*$.
 \item From $C$: $C = \pmb{c}C \cup \pmb{ca}$, so $L(C) = \pmb{c}^*\pmb{ca} = \pmb{c}^+\pmb{a}$.
 \item From $S$: $S = \pmb{a}S \cup \pmb{ab}B \cup \pmb{c}C = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}^+\pmb{a}$.
-  $S = \pmb{a}S \cup \pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$, so $L(S) = \pmb{a}^*(\pmb{a}(\pmb{ab})^+ \cup \pmb{c}^+\pmb{a})$.
+  Thus
+  \[
+    S = \pmb{a}S \cup (\pmb{ab})^+ \cup \pmb{c}^+\pmb{a},
+  \]
+  so
+  \[
+    L(S) = \pmb{a}^*((\pmb{ab})^+ \cup \pmb{c}^+\pmb{a}).
+  \]
 \end{itemize}
-The regular expression is $\pmb{a}^+(\pmb{ab})^+ \cup \pmb{a}^*\pmb{c}^+\pmb{a}$.
+The regular expression is $\pmb{a}^*(\pmb{ab})^+ \cup \pmb{a}^*\pmb{c}^+\pmb{a}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -260,18 +267,40 @@ A left-linear grammar has productions of the form $A \to w$ or $A \to Bw$.
 \begin{enumerate}
 \item No two consecutive $\pmb{b}$s:
 \[
-G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to S\pmb{a}|S\pmb{c}|A\pmb{b}|\lambda,
-A\to S\pmb{a}|S\pmb{c}|A\pmb{b}\cdot\text{(blocked)}\}\rangle
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
+\{S\to S\pmb{a}\mid S\pmb{c}\mid A\pmb{b}\mid \lambda,\;
+  A\to S\pmb{a}\mid S\pmb{c}\mid \lambda\}\rangle
 \]
-More carefully: $S$ = words not ending in $\pmb{b}$; $A$ = words ending in exactly one $\pmb{b}$ (last char is $\pmb{b}$, but second-to-last is not $\pmb{b}$). Productions: $S \to S\pmb{a}|S\pmb{c}|A\pmb{a}|A\pmb{c}|\lambda$, $A \to S\pmb{b}$.
+Here $S$ generates the strings with no consecutive $\pmb{b}$s, while $A$
+generates those whose leftmost symbol is a single $\pmb{b}$.
 
-\item Containing two consecutive $\pmb{b}$s: $S \to S\pmb{a}|S\pmb{b}|S\pmb{c}|A\pmb{b}$, $A \to B\pmb{b}$, $B \to B\pmb{a}|B\pmb{b}|B\pmb{c}|\lambda$.
+\item Containing two consecutive $\pmb{b}$s:
+\[
+G = \langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
+\{S\to S\pmb{a}\mid S\pmb{c}\mid A\pmb{b},\;
+  A\to S\pmb{a}\mid S\pmb{c}\mid B\pmb{b},\;
+  B\to B\pmb{a}\mid B\pmb{b}\mid B\pmb{c}\mid \lambda\}\rangle
+\]
 
-\item Even number of $\pmb{a}$s: $S \to S\pmb{b}|S\pmb{c}|A\pmb{a}|\lambda$, $A \to S\pmb{a}|A\pmb{b}|A\pmb{c}$.
+\item Even number of $\pmb{a}$s:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
+\{S\to S\pmb{b}\mid S\pmb{c}\mid A\pmb{a}\mid \lambda,\;
+  A\to S\pmb{a}\mid A\pmb{b}\mid A\pmb{c}\}\rangle
+\]
 
-\item Not ending in $\pmb{b}$: $S \to S\pmb{a}|S\pmb{c}|A\pmb{a}|A\pmb{c}|\lambda$, $A \to S\pmb{b}|A\pmb{b}$.
+\item Not ending in $\pmb{b}$:
+\[
+G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
+\{S\to A\pmb{a}\mid A\pmb{c}\mid \lambda,\;
+  A\to A\pmb{a}\mid A\pmb{b}\mid A\pmb{c}\mid \lambda\}\rangle
+\]
 
-\item No $\pmb{c}$s: $S \to S\pmb{a}|S\pmb{b}|\lambda$.
+\item No $\pmb{c}$s:
+\[
+G = \langle\{S\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
+\{S\to S\pmb{a}\mid S\pmb{b}\mid \lambda\}\rangle
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -392,30 +421,67 @@ Simplified: $(\pmb{0}\cup\pmb{10}^*\pmb{1})^*$.
 \item[$G_7$:] Equations: $S = \pmb{a}S \cup \pmb{ab}B \cup \pmb{c}C$, $B = \pmb{ab}B \cup \lambda$, $C = \pmb{c}C \cup \pmb{ca}$.
 Solve $B = (\pmb{ab})^*$.
 Solve $C = \pmb{c}^*\pmb{ca}$.
-Substitute: $S = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}\cdot\pmb{c}^*\pmb{ca} = \pmb{a}S \cup \pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$.
-By Arden's: $L(G_7) = \pmb{a}^*(\pmb{a}(\pmb{ab})^+\cup\pmb{c}^+\pmb{a}) = \pmb{a}^+(\pmb{ab})^+\cup\pmb{a}^*\pmb{c}^+\pmb{a}$.
+Substitute: $S = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}\cdot\pmb{c}^*\pmb{ca} = \pmb{a}S \cup (\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$.
+By Arden's:
+\[
+L(G_7) = \pmb{a}^*((\pmb{ab})^+\cup\pmb{c}^+\pmb{a})
+       = \pmb{a}^*(\pmb{ab})^+\cup\pmb{a}^*\pmb{c}^+\pmb{a}.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Left-linear version of Theorem 8.3 and Lemmas 8.4--8.5.}
 
 \begin{enumerate}
-\item For left-linear grammars, the language equations take the form $A = BA \cup w$ (variables appear on the right of concatenations). The restatement: if a language equation system for a left-linear grammar is $\{X_i = \bigcup_j X_j \alpha_{ji} \cup \beta_i\}$, then solve by right-side substitution.
+\item Let
+\[
+G=\langle\{S_1,S_2,\ldots,S_n\},\Sigma,S_1,P\rangle
+\]
+be a left-linear grammar, and for each nonterminal $S_i$ let $X_{S_i}$ be the
+set of terminal strings derivable from $S_i$.  Then
+\[
+X_{S_k}=E_k\cup X_{S_1}A_{1k}\cup X_{S_2}A_{2k}\cup\cdots\cup X_{S_n}A_{nk},
+\qquad k=1,2,\ldots,n,
+\]
+where $E_k$ is the union of all terminal strings $x$ that appear in
+productions of the form $S_k\to x$, and $A_{jk}$ is the union of all terminal
+strings $x$ that appear in productions of the form $S_k\to S_jx$.
 
-\item Lemma 8.4 restated for left-linear: If $X = XA \cup B$ (where $A,B$ do not contain $X$), then $X = BA^*$.
-Lemma 8.5 restated: If $X = XA \cup Y$ and $X$ does not appear in $A$ or $Y$, then $X = YA^*$.
+\item The left-linear analogue of Lemma~8.4 is: if
+\[
+X=E\cup XA,
+\]
+then $EA^*$ is always a solution, and any other solution $Y$ must satisfy
+$EA^*\subseteq Y$.
+
+The left-linear analogue of Lemma~8.5 is obtained by eliminating the last
+unknown on the right.  If
+\[
+X_n=E_n\cup X_1A_{1n}\cup\cdots\cup X_{n-1}A_{(n-1)n}\cup X_nA_{nn},
+\]
+then the compatible minimal choice for $X_n$ is
+\[
+X_n=(E_n\cup X_1A_{1n}\cup\cdots\cup X_{n-1}A_{(n-1)n})A_{nn}^*.
+\]
+Substituting this into the first $n-1$ equations yields
+\[
+\hat{E}_i=E_i\cup E_nA_{nn}^*A_{ni},
+\qquad
+\hat{A}_{ji}=A_{ji}\cup A_{jn}A_{nn}^*A_{ni},
+\]
+for $i,j=1,2,\ldots,n-1$.
 
 \item For $G_2$ in Example~8.12, the language equations are
 \[
-S=A\pmb{baa},\qquad A=A\pmb{a}\cup\lambda.
+X_S=X_A\pmb{baa},\qquad X_A=\lambda\cup X_A\pmb{a}.
 \]
 By the left-linear version of Arden's lemma,
 \[
-A=\pmb{a}^*.
+X_A=\lambda\pmb{a}^*=\pmb{a}^*.
 \]
 Therefore
 \[
-L(G_2)=\pmb{a}^*\pmb{baa}.
+L(G_2)=X_S=X_A\pmb{baa}=\pmb{a}^*\pmb{baa}.
 \]
 \end{enumerate}
 
@@ -977,8 +1043,9 @@ S_3&\to \pmb{b}S_1.
 \begin{enumerate}
 \item $L_1$ = words where last letter matches first letter:
 \[
-G_1: S \to \pmb{a}X\pmb{a} \mid \pmb{b}X\pmb{b} \mid \pmb{a} \mid \pmb{b} \mid \lambda, \quad X \to \pmb{a}X \mid \pmb{b}X \mid \lambda
+G_1: S \to \pmb{a}X\pmb{a} \mid \pmb{b}X\pmb{b} \mid \pmb{a} \mid \pmb{b}, \quad X \to \pmb{a}X \mid \pmb{b}X \mid \lambda
 \]
+The empty word is excluded here, since it has no first or last letter.
 
 \item $L_2$ = odd-length words where first letter matches center letter: Let $n=2k+1$.
 \[
@@ -1007,7 +1074,7 @@ G_4: S \to \pmb{a}S\pmb{a} \mid \pmb{a}S\pmb{b} \mid \pmb{b}S\pmb{a} \mid \pmb{b
 
 \item $L_5$ = odd-length words where center letter matches none of the others: Similar to $L_3$; since $|\Sigma|=2$, if center is $\pmb{a}$ all others are $\pmb{b}$, and vice versa. So $L_5 = \{\pmb{b}^k\pmb{a}\pmb{b}^k\} \cup \{\pmb{a}^k\pmb{b}\pmb{a}^k\}$, which is context-free but not regular:
 \[
-G_5: S \to \pmb{b}S\pmb{b} \mid \pmb{a}T\pmb{a} \mid \pmb{a} \mid \pmb{b},\quad T \to \pmb{a}T\pmb{a} \mid \pmb{b}
+G_5: S \to A \mid B,\qquad A \to \pmb{b}A\pmb{b} \mid \pmb{a},\qquad B \to \pmb{a}B\pmb{a} \mid \pmb{b}
 \]
 
 \item Regular languages: $L_1$ is regular; $L_2$ is not regular; $L_3$ is regular ($\pmb{b}^*\pmb{a}\cup\pmb{a}^*\pmb{b}$); $L_4$ is not regular; $L_5$ is not regular.
@@ -1051,7 +1118,15 @@ $S \to \pmb{aaa}AT$, $A \to \pmb{a}A \mid \lambda$, $T \to \pmb{b}T\pmb{c} \mid 
 
 \begin{enumerate}
 \item $L_1 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} = 2|x|_{\pmb{b}}\}$:
-$S \to \pmb{a}\pmb{a}S\pmb{b} \mid \pmb{a}S\pmb{a}\pmb{b} \mid S\pmb{a}\pmb{a}\pmb{b} \mid \lambda$ (or use $S \to SS \mid \pmb{aab} \mid \pmb{aba} \mid \pmb{baa} \mid \lambda$).
+\[
+S \to \lambda
+ \mid S\pmb{a}S\pmb{a}S\pmb{b}S
+ \mid S\pmb{a}S\pmb{b}S\pmb{a}S
+ \mid S\pmb{b}S\pmb{a}S\pmb{a}S
+\]
+Each nonempty production inserts exactly two $\pmb{a}$s and one $\pmb{b}$, with
+recursive pieces before, between, and after them, so all generated strings
+satisfy $|x|_{\pmb{a}} = 2|x|_{\pmb{b}}$.
 
 \item $L_2 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} \neq |x|_{\pmb{b}}\}$:
 \[
@@ -1262,11 +1337,32 @@ Theorem~8.8.
 Given left-linear grammars $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ with $\Omega_1 \cap \Omega_2 = \emptyset$:
 
 \begin{enumerate}
-\item \textbf{Union}: $G^\cup = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1\mid S_2\}\rangle$. The production $Z \to S_1$ is left-linear (since $Z \to S_1$ has a nonterminal on the right with no symbols; this is a unit production, which is allowed). $L(G^\cup) = L(G_1) \cup L(G_2)$.
+\item \textbf{Union}: Let $H_1=G_1^r$ and $H_2=G_2^r$.  By Lemma~8.3 these are
+right-linear grammars with
+\[
+L(H_1)=L(G_1)^r,\qquad L(H_2)=L(G_2)^r.
+\]
+Apply the right-linear union construction of Theorem~8.4 to obtain a
+right-linear grammar $H^\cup$ for
+\[
+L(H_1)\cup L(H_2)=(L(G_1)\cup L(G_2))^r.
+\]
+Then $(H^\cup)^r$ is a left-linear grammar for $L(G_1)\cup L(G_2)$.
 
-\item \textbf{Concatenation}: For left-linear grammars, to concatenate $L(G_1)\cdot L(G_2)$: replace each ``initial'' production $A \to w$ in $G_1$ (where $A$ generates a terminal string) with $A \to S_2 w$ (prepend $S_2$ which generates $L(G_2)$ on the left). More precisely, for each production $S_1 \to w$ in $G_1$, replace with $S_1 \to S_2 w$ (left-linear). The resulting grammar generates $L(G_1) \cdot L(G_2)$.
+\item \textbf{Concatenation}: Again let $H_i=G_i^r$.  Apply the right-linear
+concatenation construction to $H_2$ and $H_1$ (in that order) to obtain a
+right-linear grammar $H^\bullet$ such that
+\[
+L(H^\bullet)=L(H_2)\cdot L(H_1)=L(G_2)^rL(G_1)^r=(L(G_1)\cdot L(G_2))^r.
+\]
+Then $(H^\bullet)^r$ is a left-linear grammar for $L(G_1)\cdot L(G_2)$.
 
-\item \textbf{Kleene closure}: Add new start $Z$ with $Z \to ZS_1 \mid \lambda$. This is left-linear. $L(G_*) = L(G_1)^*$.
+\item \textbf{Kleene closure}: Let $H_1=G_1^r$, and apply the right-linear
+Kleene-star construction of Theorem~8.5 to get a right-linear grammar $H_*$ for
+\[
+L(H_*)=L(H_1)^*=(L(G_1)^*)^r.
+\]
+Then $(H_*)^r$ is a left-linear grammar for $L(G_1)^*$.
 \end{enumerate}
 
 \end{enumerate}
