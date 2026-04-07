@@ -658,10 +658,13 @@ E_{2D}=\{\{S_1,S_4\},\{S_7\},\{S_0,S_3\},\{S_2,S_5\},\{S_6\},\{S_8\},\{S_9\}\}.
 \]
 This is already stable, so $E_D=E_{2D}$.
 
-\item From the initial state $S_0$, the reachable classes are
-$[S_0]=[S_3]$, $[S_1]=[S_4]$, and $[S_2]=[S_5]$. Therefore $L(D)$ consists of
-exactly those strings over $\{a,b\}$ that contain at least one $a$ and do not
-end with two or more consecutive $a$'s.
+\item From the initial state $S_0$, only the classes
+$[S_0]=[S_3]$, $[S_1]=[S_4]$, and $[S_2]=[S_5]$ are reachable. Therefore
+$L(D)$ consists exactly of those strings over $\{a,b\}$ that contain at least
+one $a$ and either end in $b$ or are of the form $b^*a$. Equivalently,
+\[
+L(D)=b^*a(\{a,b\}^*b\cup\{\lambda\}).
+\]
 
 \item $A_{R_{L(D)}}$ has three states represented by $[\lambda]$, $[a]$, and
 $[aa]$, with transition table
@@ -684,7 +687,7 @@ and only $[a]$ final.
 \]
 and
 \[
-[aa]=\{x\in\{a,b\}^*: x\text{ ends with at least two consecutive }a\text{'s}\}.
+[aa]=\{x\in\{a,b\}^*: x\text{ ends with }a\text{ and contains at least two }a\text{'s}\}.
 \]
 
 \item $D/_{E_D}$ has the seven states
@@ -1142,20 +1145,21 @@ $R^A=R_{L(A)}$. $\square$
 
 Take $\Sigma=\{a\}$ and let
 \[
-A=\langle \{a\},\{q_0,q_1,q_2\},q_0,\delta,\{q_0\}\rangle,
+A=\langle \{a\},\{q_0,q_1,q_2\},q_0,\delta,\{q_1,q_2\}\rangle,
 \]
 where
 \[
-\delta(q_0,a)=q_1,\qquad \delta(q_1,a)=q_0,\qquad \delta(q_2,a)=q_2.
+\delta(q_0,a)=q_1,\qquad \delta(q_1,a)=q_2,\qquad \delta(q_2,a)=q_2.
 \]
-The state $q_2$ is unreachable, so $A$ is not minimal. From the initial state,
-the machine accepts exactly the even-length strings, so
+This DFA is connected, but it is not reduced, because $q_1 E_A q_2$: from
+either state, every continuation is accepted. Hence $A$ is not minimal. From
+the initial state, the machine accepts exactly
 \[
-L(A)=\{a^{2k}\mid k\geq 0\}.
+L(A)=a^+.
 \]
 Therefore $R_{L(A)}$ has exactly two classes, represented by $\lambda$ and $a$.
-But $R^A$ is the state congruence of the whole machine, so it has three classes,
-represented by the three states $q_0,q_1,q_2$. Hence
+On the other hand, $\lambda$, $a$, and $aa$ reach the three distinct states
+$q_0$, $q_1$, and $q_2$, so $R^A$ has three classes. Hence
 \[
 R^A\neq R_{L(A)}.
 \]
