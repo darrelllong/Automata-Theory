@@ -1,0 +1,770 @@
+\chapter{Preliminaries --- Solutions}
+%% ============================================================
+
+\begin{enumerate}[{0.}1. ]
+
+%%------------------------------------------------------------
+\item \textbf{Construct truth tables for:}
+
+\begin{enumerate}
+\item $\neg r \vee (\neg p \downarrow \neg q)$
+
+Recall that $p \downarrow q$ (NOR) is $\neg(p \vee q)$.
+
+\[
+\begin{array}{ccc|cc|cc|c}
+p & q & r & \neg p & \neg q & \neg p \downarrow \neg q & \neg r & \neg r \vee (\neg p \downarrow \neg q)\\
+\hline
+0 & 0 & 0 & 1 & 1 & 0 & 1 & 1\\
+0 & 0 & 1 & 1 & 1 & 0 & 0 & 0\\
+0 & 1 & 0 & 1 & 0 & 0 & 1 & 1\\
+0 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1 & 0 & 1 & 1\\
+1 & 0 & 1 & 0 & 1 & 0 & 0 & 0\\
+1 & 1 & 0 & 0 & 0 & 1 & 1 & 1\\
+1 & 1 & 1 & 0 & 0 & 1 & 0 & 1\\
+\end{array}
+\]
+
+\item $(p \wedge \neg q) \vee \neg(p \uparrow q)$
+
+Recall that $p \uparrow q$ (NAND) is $\neg(p \wedge q)$.
+
+\[
+\begin{array}{cc|c|c|c|c}
+p & q & p \wedge \neg q & p \uparrow q & \neg(p \uparrow q) & (p \wedge \neg q)\vee\neg(p\uparrow q)\\
+\hline
+0 & 0 & 0 & 1 & 0 & 0\\
+0 & 1 & 0 & 1 & 0 & 0\\
+1 & 0 & 1 & 1 & 0 & 1\\
+1 & 1 & 0 & 0 & 1 & 1\\
+\end{array}
+\]
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Draw circuit diagrams for:}
+
+\begin{enumerate}
+\item $\neg(r \vee (\neg p \downarrow \neg q)) \uparrow (s \wedge p)$
+
+One corresponding circuit is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[io] (p) at (0,4.2) {$p$};
+\node[io] (q) at (0,3.2) {$q$};
+\node[io] (r) at (0,2.2) {$r$};
+\node[io] (s) at (0,1.0) {$s$};
+
+\coordinate (psplit) at (1.0,4.2);
+\coordinate (qsplit) at (1.0,3.2);
+\coordinate (ssplit) at (1.0,1.0);
+
+\node[logicblock] (notp) at (2.6,4.6) {NOT};
+\node[logicblock] (notq) at (2.6,3.2) {NOT};
+\node[logicblock] (nor1) at (5.0,3.9) {NOR};
+\node[logicblock] (or1)  at (7.4,2.9) {OR};
+\node[logicblock] (not1) at (9.6,2.9) {NOT};
+\node[logicblock] (and1) at (5.0,1.0) {AND};
+\node[logicblock] (nand1) at (12.0,2.0) {NAND};
+\node[io] (outa) at (13.6,2.0) {output};
+
+\draw[wire] (p.east) -- (psplit);
+\draw[wire] (psplit) |- (notp.west);
+\draw[wire] (psplit) |- (and1.west);
+\fill (psplit) circle (1.5pt);
+
+\draw[wire] (q.east) -- (qsplit);
+\draw[wire] (qsplit) -- (notq.west);
+
+\draw[wire] (r.east) -- (or1.west |- r.east);
+
+\draw[wire] (s.east) -- (ssplit);
+\draw[wire] (ssplit) -- (and1.west |- ssplit);
+
+\draw[wire] (notp.east) -- (nor1.west |- notp.east);
+\draw[wire] (notq.east) -- (nor1.west |- notq.east);
+\draw[wire] (nor1.east) -- (or1.west |- nor1.east);
+\draw[wire] (or1.east) -- (not1.west);
+\draw[wire] (not1.east) -- (nand1.west |- not1.east);
+\draw[wire] (and1.east) -- (nand1.west |- and1.east);
+\draw[wire] (nand1.east) -- (outa.west);
+\end{tikzpicture}
+\end{center}
+
+\item $(p \wedge \neg q) \vee \neg(p \uparrow q)$
+
+One corresponding circuit is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[io] (pb2) at (0,2.4) {$p$};
+\node[io] (qb2) at (0,1.2) {$q$};
+
+\coordinate (psplit2) at (1.0,2.4);
+\coordinate (qsplit2) at (1.0,1.2);
+
+\node[logicblock] (notq2) at (2.6,1.2) {NOT};
+\node[logicblock] (and2)  at (5.0,2.6) {AND};
+\node[logicblock] (nand2) at (5.0,1.0) {NAND};
+\node[logicblock] (not2)  at (7.4,1.0) {NOT};
+\node[logicblock] (or2)   at (9.8,1.8) {OR};
+\node[io] (outb) at (11.4,1.8) {output};
+
+\draw[wire] (pb2.east) -- (psplit2);
+\draw[wire] (psplit2) |- (and2.west);
+\draw[wire] (psplit2) |- (nand2.west);
+\fill (psplit2) circle (1.5pt);
+
+\draw[wire] (qb2.east) -- (qsplit2);
+\draw[wire] (qsplit2) -- (notq2.west);
+\draw[wire] (qsplit2) |- (nand2.west);
+\fill (qsplit2) circle (1.5pt);
+
+\draw[wire] (notq2.east) |- (and2.west);
+\draw[wire] (and2.east) -- (or2.west |- and2.east);
+\draw[wire] (nand2.east) -- (not2.west);
+\draw[wire] (not2.east) -- (or2.west |- not2.east);
+\draw[wire] (or2.east) -- (outb.west);
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show that $\{1,2\}\times\{a,b\}$ and $\{a,b\}\times\{1,2\}$ are not equal.}
+
+\[
+\{1,2\}\times\{a,b\} = \{\langle 1,a\rangle,\langle 1,b\rangle,\langle 2,a\rangle,\langle 2,b\rangle\}
+\]
+\[
+\{a,b\}\times\{1,2\} = \{\langle a,1\rangle,\langle a,2\rangle,\langle b,1\rangle,\langle b,2\rangle\}
+\]
+Since $\langle 1,a\rangle \in \{1,2\}\times\{a,b\}$ but $\langle 1,a\rangle \notin \{a,b\}\times\{1,2\}$ (the first component of any element of $\{a,b\}\times\{1,2\}$ is a letter, not a number), the two sets are not equal.
+
+%%------------------------------------------------------------
+\item \textbf{Let $X=\{1,2,3,4\}$.}
+
+\begin{enumerate}
+\item $<$ is $\{\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+
+\item $=$ is $\{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle\}$
+
+\item $=\cup<$ is $\{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 4,4\rangle,\langle 1,2\rangle,\langle 1,3\rangle,\langle 1,4\rangle,\langle 2,3\rangle,\langle 2,4\rangle,\langle 3,4\rangle\}$
+
+\item $\leq$ is $=\cup<$, which is the set computed in part (c).
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show that $\equiv_n$ is an equivalence relation.}
+
+We must show reflexivity, symmetry, and transitivity.
+
+\textit{Reflexivity}: $a - a = 0 = 0 \cdot n$, so $a \equiv_n a$.
+
+\textit{Symmetry}: If $a \equiv_n b$, then $n \mid (a-b)$, so $a - b = kn$ for some $k \in \ZN$. Then $b - a = (-k)n$, so $n \mid (b-a)$, giving $b \equiv_n a$.
+
+\textit{Transitivity}: If $a \equiv_n b$ and $b \equiv_n c$, then $a - b = kn$ and $b - c = mn$ for integers $k,m$. Then $a - c = (a-b)+(b-c) = (k+m)n$, so $a \equiv_n c$.
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_0$ on $\NN$.}
+
+$a \equiv_0 b$ means $0 \mid (a-b)$, i.e., $a - b = 0$, i.e., $a = b$. So the equivalence classes are all singletons: $\{0\}, \{1\}, \{2\}, \ldots$
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_1$ on $\NN$.}
+
+$a \equiv_1 b$ means $1 \mid (a - b)$, which is always true. So there is exactly one equivalence class: $\NN$ itself.
+
+%%------------------------------------------------------------
+\item \textbf{Equivalence classes of $\equiv_1$ on $\RN$.}
+
+Here $x \equiv_1 y$ means $1 \mid (x-y)$, i.e., $x - y \in \mathbb{Z}$ (the difference is an integer).
+Two reals are equivalent iff they have the same fractional part $\{x\} = x - \lfloor x\rfloor$.
+The equivalence classes are the cosets of $\mathbb{Z}$ in $(\mathbb{R},+)$:
+\[
+  [r]_{\equiv_1} = \{r + n \mid n \in \mathbb{Z}\}, \qquad r \in [0,1).
+\]
+There are uncountably many such classes, one for each $r \in [0,1)$.
+
+%%------------------------------------------------------------
+\item \textbf{Prove the distinct equivalence classes of $R$ form a partition of $X$.}
+
+Let $[x]_R = \{y \in X \mid y R x\}$.
+
+\textit{Coverage}: For any $x \in X$, reflexivity gives $x \in [x]_R$, so every element of $X$ belongs to at least one class.
+
+\textit{Disjointness}: Suppose $[x]_R \cap [y]_R \neq \emptyset$; pick $z$ with $z R x$ and $z R y$. By symmetry $x R z$, and by transitivity $x R y$. For any $w \in [x]_R$ we have $w R x R y$, so $w \in [y]_R$; thus $[x]_R \subseteq [y]_R$. By symmetry $[y]_R \subseteq [x]_R$, so $[x]_R = [y]_R$.
+
+Hence the distinct classes are disjoint and cover $X$, forming a partition.
+
+%%------------------------------------------------------------
+\item \textbf{Prove $X$ equals the union of the sets in $P$.}
+
+Let $P = \{A_1,\ldots,A_n\}$ be a partition of $X$.
+
+By definition of partition, each $A_i \subseteq X$, so $\bigcup_i A_i \subseteq X$.
+
+Also by definition, every $x \in X$ belongs to some $A_i$, so $X \subseteq \bigcup_i A_i$.
+
+Therefore $X = \bigcup_{i=1}^n A_i$.
+
+%%------------------------------------------------------------
+\item \textbf{Prove $R(P)$ is an equivalence relation.}
+
+Define $x R(P) y$ iff $x$ and $y$ belong to the same block of $P$.
+
+\textit{Reflexivity}: $x$ is in the same block as itself.
+
+\textit{Symmetry}: If $x$ and $y$ are in the same block, so are $y$ and $x$.
+
+\textit{Transitivity}: If $x,y$ are in block $A_i$ and $y,z$ are in block $A_j$, then since $y \in A_i \cap A_j$ and blocks are disjoint, $A_i = A_j$. So $x$ and $z$ are in the same block.
+
+%%------------------------------------------------------------
+\item \textbf{Let $X = \{1,2,3,4\}$.}
+
+\begin{enumerate}
+\item Example where $R(P)$ is a function: $P = \{\{1\},\{2\},\{3\},\{4\}\}$. Then $R(P) = \{\langle x,x\rangle \mid x \in X\}$, which is the identity function.
+
+\item Example where $R(P)$ is not a function: $P = \{\{1,2\},\{3,4\}\}$. Then $\langle 1,1\rangle,\langle 1,2\rangle \in R(P)$, so 1 maps to two elements; it is not a function.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Find the flaw in the ``proof'' that symmetric and transitive implies reflexive.}
+
+The flaw is in the first step. Symmetry says: if $x R y$ then $y R x$. This requires the hypothesis that $x R y$. If $x$ is not related to any $y$ at all, we cannot conclude $x R x$.
+
+\textit{Counterexample}: Let $X = \{1,2,3\}$ and $R = \{\langle 1,1\rangle, \langle 2,2\rangle, \langle 1,2\rangle, \langle 2,1\rangle\}$. Then $R$ is symmetric and transitive but $3 \not\mathrel{R} 3$, so $R$ is not reflexive.
+
+%%------------------------------------------------------------
+\item \textbf{Prove equality refines $R$.}
+
+We need: $x = y \Rightarrow x R y$. If $x = y$, then by reflexivity of $R$ we
+have $x R x$; since $x$ and $y$ are the same element, this gives $x R y$.
+$\square$
+
+%%------------------------------------------------------------
+\item \textbf{The ``function'' $t: \RN \to \RN$, $x \mapsto \arccos(x)$.}
+
+\begin{enumerate}
+\item $t$ is not well defined. A function must assign \emph{exactly one} output to each input in its domain. But if $x \in [-1,1]$, there are generally many real numbers whose cosine is $x$. For example,
+\[
+\cos \left(\frac{\pi}{3}\right)=\frac{1}{2}=\cos \left(\frac{5\pi}{3}\right),
+\]
+so the input $x=\frac{1}{2}$ would have more than one output. Also, if $x\notin[-1,1]$, there is no real number whose cosine is $x$, so the proposed rule is not even defined everywhere on $\RN$.
+
+\item Restrict domain to $[-1,1]$ and range to $[0,\pi]$: $t: [-1,1] \to [0,\pi]$, $t(x) = \arccos(x)$, is a valid function.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Show the converse of $s': \RN \to \RN$, $s'(x)=x^2$, is not a function.}
+
+$s'^{-1}$ (converse) is $\{\langle y, x\rangle \mid x^2 = y\}$. For $y = 1$, both $x=1$ and $x=-1$ satisfy $x^2=1$, so $\langle 1,1\rangle$ and $\langle 1,-1\rangle$ are both in the converse, which is therefore not a function (1 maps to two values).
+
+%%------------------------------------------------------------
+\item \textbf{Show $s^{-1}$ exists for $s: \NNN \to \NNN$, $s(x)=x^2$, where $\NNN$ is nonneg.\ reals.}
+
+$s$ is injective: if $x^2 = y^2$ and $x,y \geq 0$ then $x = y$. $s$ is surjective onto $\NNN$: for any $y \geq 0$, $x = \sqrt{y} \geq 0$ satisfies $s(x)=y$. Since $s$ is a bijection, $s^{-1}(y) = \sqrt{y}$ exists.
+
+%%------------------------------------------------------------
+\item \textbf{Prove: converse of $f: X \to Y$ is a function iff $f$ is a bijection.}
+
+($\Rightarrow$) Suppose $\tilde{f} = \{\langle y,x\rangle \mid \langle x,y\rangle \in f\}$ is a function (from $Y$ to $X$). Then every $y \in Y$ has a unique pre-image under $f$. \textit{Injectivity}: if $f(x_1)=f(x_2)=y$, then $\tilde{f}(y)$ must equal both $x_1$ and $x_2$; since $\tilde{f}$ is a function, $x_1=x_2$. \textit{Surjectivity}: since $\tilde{f}$ is a function \emph{with domain $Y$}, every $y \in Y$ is in the domain of $\tilde{f}$, meaning there exists $x$ with $f(x)=y$. Hence $f$ is surjective. (Note: totality of $f$ does not by itself imply surjectivity; surjectivity follows here from $\tilde{f}$ being defined on \emph{all} of $Y$.)
+
+($\Leftarrow$) If $f$ is injective, each $y$ has at most one pre-image, so $\tilde{f}$ assigns at most one value. If $f$ is surjective, each $y \in Y$ has at least one pre-image, so $\tilde{f}$ is defined everywhere on $Y$. Together, $\tilde{f}$ is a function.
+
+%%------------------------------------------------------------
+\item
+\begin{enumerate}
+\item $\sim(\sim A)= A$: By definition, $\sim A = \{x \mid x \notin A\}$. Then $\sim(\sim A) = \{x \mid x \notin \sim A\} = \{x \mid x \in A\} = A$.
+
+\item $\sim(\sim R)= R$ for a relation $R$ (where $\sim R$ is the converse): $\sim R = \{\langle y,x\rangle \mid \langle x,y\rangle \in R\}$. Then $\sim(\sim R) = \{\langle x,y\rangle \mid \langle y,x\rangle \in \sim R\} = \{\langle x,y\rangle \mid \langle x,y\rangle \in R\} = R$.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{If $f: X\to Y$ and $g: Y\to Z$ are one-to-one, prove $g\circ f$ is one-to-one.}
+
+Suppose $(g\circ f)(x_1) = (g\circ f)(x_2)$. Then $g(f(x_1))=g(f(x_2))$. Since $g$ is injective, $f(x_1)=f(x_2)$. Since $f$ is injective, $x_1=x_2$.
+
+%%------------------------------------------------------------
+\item \textbf{If $f: X\to Y$ and $g: Y\to Z$ are onto, prove $g\circ f$ is onto.}
+
+Let $z \in Z$. Since $g$ is surjective, $\exists y \in Y$ with $g(y)=z$. Since $f$ is surjective, $\exists x \in X$ with $f(x)=y$. Then $(g\circ f)(x)=g(f(x))=g(y)=z$.
+
+%%------------------------------------------------------------
+\item \textbf{Define two functions for which $f\circ g = g\circ f$.}
+
+Let $f,g: \RN \to \RN$, $f(x) = x+1$, $g(x) = x+2$. Then $(f\circ g)(x) = f(x+2)=x+3 = g(x+1) = (g\circ f)(x)$.
+
+%%------------------------------------------------------------
+\item \textbf{Define bijections.}
+
+\begin{enumerate}
+\item $\NN$ and $\ZN$: $f: \NN \to \ZN$ defined by
+\[ f(n) = \begin{cases} n/2 & \text{if } n \text{ is even}\\ -(n+1)/2 & \text{if } n \text{ is odd}\end{cases} \]
+maps $0\mapsto 0, 1\mapsto -1, 2\mapsto 1, 3\mapsto -2, 4\mapsto 2,\ldots$
+
+\item $\NN$ and $\NN\times\NN$: Use the Cantor pairing function $f(m,n) = \frac{(m+n)(m+n+1)}{2}+n$. Its inverse gives a bijection $\NN \to \NN\times\NN$.
+
+\item $\NN$ and $\QN$: The positive rationals can be arranged in a grid and enumerated by diagonals (Cantor's enumeration). Combined with the bijection $\NN \to \ZN$ from part (a), one obtains a bijection $\NN \to \QN$.
+
+\item $\NN$ and $\{a,b,c\}$: No bijection exists, since $\NN$ is infinite and $\{a,b,c\}$ has only 3 elements.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Use induction to prove $\sum_{k=1}^n k^3 = \frac{n^2(n+1)^2}{4}$.}
+
+\textit{Base case} ($n=1$): $1^3 = 1 = \frac{1\cdot 4}{4}$. \checkmark
+
+\textit{Inductive step}: Assume $\sum_{k=1}^n k^3 = \frac{n^2(n+1)^2}{4}$. Then
+\begin{align*}
+\sum_{k=1}^{n+1} k^3 &= \frac{n^2(n+1)^2}{4} + (n+1)^3\\
+&= \frac{n^2(n+1)^2 + 4(n+1)^3}{4}\\
+&= \frac{(n+1)^2(n^2 + 4(n+1))}{4}\\
+&= \frac{(n+1)^2(n^2+4n+4)}{4}\\
+&= \frac{(n+1)^2(n+2)^2}{4}.
+\end{align*}
+This is the formula with $n$ replaced by $n+1$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $\sum_{k=1}^n k < n^2$ for $n > 1$.}
+
+\textit{Base case} ($n=2$): $1+2=3 < 4=2^2$. \checkmark
+
+\textit{Inductive step}: Assume $\sum_{k=1}^n k < n^2$. Then
+\[
+\sum_{k=1}^{n+1} k = \sum_{k=1}^n k + (n+1) < n^2 + n + 1.
+\]
+We need $n^2 + n + 1 \leq (n+1)^2 = n^2+2n+1$, which holds since $n \geq 1$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $n! > n^2$ for $n > 3$.}
+
+\textit{Base case} ($n=4$): $4! = 24 > 16 = 4^2$. \checkmark
+
+\textit{Inductive step}: Assume $n! > n^2$ for some $n \geq 4$. Then
+\[
+(n+1)! = (n+1)\cdot n! > (n+1)\cdot n^2.
+\]
+We need $(n+1)n^2 \geq (n+1)^2$, i.e., $n^2 \geq n+1$. This holds for
+$n \geq 4$ because
+\[
+n^2-n-1 \geq 4^2-4-1 = 11 > 0.
+\]
+Hence $n^2 \geq n+1$, as required. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove $n! > 2^n$ for $n > 3$.}
+
+\textit{Base case} ($n=4$): $24 > 16$. \checkmark
+
+\textit{Inductive step}: Assume $n! > 2^n$ for $n \geq 4$. Then
+\[
+(n+1)! = (n+1)\cdot n! > (n+1)\cdot 2^n \geq 5\cdot 2^n > 2 \cdot 2^n = 2^{n+1}. \quad\square
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Prove $1^2+2^2+\cdots+n^2 = \frac{n(n+1)(2n+1)}{6}$.}
+
+\textit{Base case} ($n=1$): $1 = \frac{1\cdot 2\cdot 3}{6}=1$. \checkmark
+
+\textit{Inductive step}: Assume the formula holds for $n$. Then
+\begin{align*}
+\sum_{k=1}^{n+1}k^2 &= \frac{n(n+1)(2n+1)}{6} + (n+1)^2\\
+&= \frac{n(n+1)(2n+1)+6(n+1)^2}{6}\\
+&= \frac{(n+1)[n(2n+1)+6(n+1)]}{6}\\
+&= \frac{(n+1)(2n^2+7n+6)}{6}\\
+&= \frac{(n+1)(n+2)(2n+3)}{6}. \quad\square
+\end{align*}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $X\cap(X_1\cup\cdots\cup X_n) = (X\cap X_1)\cup\cdots\cup(X\cap X_n)$ by induction.}
+
+\textit{Base case} ($n=1$): $X\cap X_1 = X\cap X_1$. \checkmark
+
+\textit{Inductive step}: Assume the result for $n$. Then
+\begin{align*}
+X\cap\Bigl(\bigcup_{i=1}^{n+1}X_i\Bigr)
+&= X\cap\Bigl(\Bigl(\bigcup_{i=1}^n X_i\Bigr)\cup X_{n+1}\Bigr)\\
+&= \Bigl(X\cap\bigcup_{i=1}^n X_i\Bigr)\cup(X\cap X_{n+1}) \quad\text{(distributivity for }n=2\text{)}\\
+&= \Bigl(\bigcup_{i=1}^n(X\cap X_i)\Bigr)\cup(X\cap X_{n+1}) \quad\text{(inductive hypothesis)}\\
+&= \bigcup_{i=1}^{n+1}(X\cap X_i). \quad\square
+\end{align*}
+
+%%------------------------------------------------------------
+\item \textbf{Prove $\sim(X_1\cup\cdots\cup X_n) = (\sim X_1)\cap\cdots\cap(\sim X_n)$ by induction.}
+
+\textit{Base case} ($n=2$): De Morgan's law: $\sim(X_1\cup X_2)=(\sim X_1)\cap(\sim X_2)$. \checkmark
+
+\textit{Inductive step}: Assume for $n$. Then
+\[
+\sim\Bigl(\bigcup_{i=1}^{n+1}X_i\Bigr) = \sim\Bigl(\bigcup_{i=1}^n X_i \cup X_{n+1}\Bigr) = \sim\Bigl(\bigcup_{i=1}^n X_i\Bigr)\cap(\sim X_{n+1}) = \Bigl(\bigcap_{i=1}^n\sim X_i\Bigr)\cap(\sim X_{n+1}) = \bigcap_{i=1}^{n+1}\sim X_i. \quad\square
+\]
+
+%%------------------------------------------------------------
+\item \textbf{Prove $|\wp(A)| = 2^{|A|}$ by induction.}
+
+\textit{Base case} ($|A|=0$): $\wp(\emptyset)=\{\emptyset\}$, so $|\wp(\emptyset)|=1=2^0$. \checkmark
+
+\textit{Inductive step}: Assume $|\wp(A)|=2^n$ for all sets with $|A|=n$. Let $|B|=n+1$ and pick any $b\in B$. Set $A=B\setminus\{b\}$. Every subset of $B$ either contains $b$ or not. Those not containing $b$ are exactly $\wp(A)$ ($2^n$ of them). Those containing $b$ are in bijection with $\wp(A)$ via $S\mapsto S\setminus\{b\}$ ($2^n$ more). Total: $2^n+2^n=2^{n+1}$. $\square$
+
+%%------------------------------------------------------------
+\item \textbf{Prove strong induction is equivalent to ordinary induction.}
+
+Let $P(n)$ be a statement and $Q(n) = (\forall i \leq n) P(i)$.
+
+($\Rightarrow$) Assume ordinary induction. The strong induction hypotheses are $P(0)$ and $(\forall m)((\forall i\leq m)P(i)\Rightarrow P(m+1))$. Define $Q(n) = (\forall i\leq n)P(i)$. Clearly $Q(0)\Leftrightarrow P(0)$. The strong hypothesis says $Q(m)\Rightarrow P(m+1)$, which means $Q(m)\Rightarrow Q(m+1)$ (since $Q(m+1) = Q(m)\wedge P(m+1)$). By ordinary induction on $Q$, $(\forall n)Q(n)$, hence $(\forall n)P(n)$.
+
+($\Leftarrow$) Ordinary induction is the special case of strong induction where the hypothesis uses only $P(m)$ instead of $(\forall i\leq m)P(i)$.
+
+%%------------------------------------------------------------
+\item \textbf{Determine what strings the BNF defines.}
+
+The grammar defines exactly the strings of the following four forms:
+\[
+\langle\text{integer}\rangle,\qquad
+\langle\text{integer}\rangle.,\qquad
+\langle\text{integer}\rangle.\langle\text{natural}\rangle,\qquad
+\langle\text{integer}\rangle.\langle\text{natural}\rangle E \langle\text{integer}\rangle.
+\]
+Here $\langle\text{natural}\rangle$ is any nonempty string of decimal digits, and
+$\langle\text{integer}\rangle$ is either a natural number or a sign followed by a
+natural number. Thus the BNF defines signed or unsigned decimal numerals, with
+an optional fractional part and an optional exponent part.
+
+%%------------------------------------------------------------
+\item \textbf{Cofinite sets with universal set $\ZN$.}
+
+\begin{enumerate}
+\item A finite set: $\{-5,0,3,7\}$.
+\item A cofinite set: $\ZN\setminus\{0\} = \{n\in\ZN \mid n\neq 0\}$ (complement is $\{0\}$, which is finite).
+\item Neither: $2\ZN = \{\ldots,-4,-2,0,2,4,\ldots\}$, the even integers. Its complement is the set of odd integers, which is infinite; so it is not cofinite. It is infinite, so not finite.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Prove the equipotent relation is an equivalence relation.}
+
+Recall: $A \sim B$ iff there exists a bijection $f: A\to B$.
+
+\begin{enumerate}
+\item \textit{Reflexive}: $\mathrm{id}_A: A\to A$ is a bijection, so $A\sim A$.
+\item \textit{Symmetric}: If $f: A\to B$ is a bijection, then $f^{-1}: B\to A$ is also a bijection.
+\item \textit{Transitive}: If $f: A\to B$ and $g: B\to C$ are bijections, then $g\circ f: A\to C$ is a bijection.
+\end{enumerate}
+
+%%------------------------------------------------------------
+\item \textbf{Define a function showing $|\NN|=|\NN\times\NN|$.}
+
+Let $T_k=\frac{k(k+1)}{2}$ be the $k$th triangular number. For each $n\in\NN$
+there are unique integers $k,m$ with
+\[
+n=T_k+m,\qquad 0\le m\le k.
+\]
+Define $f:\NN\to\NN\times\NN$ by
+\[
+f(n)=\langle k-m,m\rangle.
+\]
+Thus
+\[
+f(0)=\langle 0,0\rangle,\quad
+f(1)=\langle 1,0\rangle,\quad
+f(2)=\langle 0,1\rangle,\quad
+f(3)=\langle 2,0\rangle,\quad
+f(4)=\langle 1,1\rangle,\quad
+f(5)=\langle 0,2\rangle,\ \ldots
+\]
+so $f$ lists the pairs by diagonals. Every pair $\langle a,b\rangle$ occurs exactly
+once, namely when $k=a+b$ and $m=b$, so $f$ is a bijection.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\NN$ is equipotent to $\ZN$.}
+
+One bijection $f:\NN\to\ZN$ is
+\[
+f(n)=
+\begin{cases}
+n/2, & \text{if $n$ is even},\\
+-(n+1)/2, & \text{if $n$ is odd}.
+\end{cases}
+\]
+Thus
+\[
+0\mapsto 0,\quad 1\mapsto -1,\quad 2\mapsto 1,\quad 3\mapsto -2,\quad
+4\mapsto 2,\quad 5\mapsto -3,\ \ldots
+\]
+so every integer appears exactly once. Hence $\NN$ and $\ZN$ are equipotent.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\NN$ is equipotent to $\QN$.}
+
+Let
+\[
+S=\{\langle a,b\rangle \mid a,b\in\{1,2,3,\ldots\}\text{ and }\gcd(a,b)=1\}.
+\]
+Order the pairs in $S$ first by increasing $a+b$, and among pairs with the same
+sum, by increasing $a$. This gives a list
+\[
+\langle a_1,b_1\rangle,\ \langle a_2,b_2\rangle,\ \langle a_3,b_3\rangle,\ \ldots
+\]
+Define $h:\{1,2,3,\ldots\}\to\QN^+$ by
+\[
+h(n)=\frac{a_n}{b_n}.
+\]
+Every positive rational number has a unique reduced form $a/b$ with
+$\gcd(a,b)=1$, so $h$ is a bijection from the positive integers onto $\QN^+$.
+
+Now define $f:\NN\to\QN$ by
+\[
+f(0)=0,\qquad
+f(2n-1)=h(n),\qquad
+f(2n)=-h(n)\quad(n\ge 1).
+\]
+Then $f$ lists $0$, followed by the pairs $h(n),-h(n)$ of positive and
+negative rationals:
+\[
+0,\ h(1),\ -h(1),\ h(2),\ -h(2),\ldots
+\]
+Hence $f$ is a bijection from $\NN$ onto $\QN$, so $\NN$ and $\QN$ are equipotent.
+
+%%------------------------------------------------------------
+\item \textbf{Show $\wp(\NN)$ is equipotent to $\{f:\NN\to\{\text{Yes,No}\}\}$.}
+
+Define $\phi: \wp(\NN)\to\{f:\NN\to\{\text{Yes,No}\}\}$ by $\phi(A) = \chi_A$, where $\chi_A(n)=\text{Yes}$ if $n\in A$ and $\text{No}$ otherwise. This is clearly a bijection (its inverse maps $f$ to $\{n\mid f(n)=\text{Yes}\}$).
+
+%%------------------------------------------------------------
+\item \textbf{Show $\wp(\NN)$ is equipotent to $\RN$.}
+
+One explicit bijection is as follows.
+
+By Exercise 0.39, $\wp(\NN)$ is equipotent to the set
+\[
+B=\{(a_0,a_1,a_2,\ldots)\mid a_i\in\{0,1\}\}
+\]
+of infinite binary sequences. It therefore suffices to show that $B$ is equipotent
+to $\RN$.
+
+Let $E\subseteq B$ be the set of sequences that are eventually all 1s. This set is
+countable, because such a sequence is determined by a finite initial segment and
+the position after which only 1s occur. Let
+\[
+D=\left\{\frac{k}{2^n}\ \middle|\ n\in\NN,\ 0\le k\le 2^n\right\}
+\]
+be the set of dyadic rationals in $[0,1]$; $D$ is also countable. Choose a
+bijection $\eta:E\to D$.
+
+Now define $\Phi:B\to[0,1]$ by
+\[
+\Phi(a_0,a_1,a_2,\ldots)=
+\begin{cases}
+\displaystyle \sum_{i=0}^{\infty}\frac{a_i}{2^{i+1}}, & \text{if }(a_0,a_1,a_2,\ldots)\notin E,\\[1.2ex]
+\eta(a_0,a_1,a_2,\ldots), & \text{if }(a_0,a_1,a_2,\ldots)\in E.
+\end{cases}
+\]
+If a sequence is not eventually all 1s, its binary expansion is the unique binary
+expansion of a nondyadic real in $[0,1]$. Thus the first clause is a bijection
+from $B\setminus E$ onto $[0,1]\setminus D$. The second clause is a bijection from
+$E$ onto $D$. Therefore $\Phi$ is a bijection from $B$ onto $[0,1]$.
+
+It remains to show that $[0,1]$ is equipotent to $\RN$. First define a bijection
+$j:[0,1]\to(0,1)$ by
+\[
+j(x)=
+\begin{cases}
+\frac{1}{2}, & x=0,\\
+\frac{1}{4}, & x=1,\\
+\frac{1}{2^{n+2}}, & x=\frac{1}{2^n}\text{ for }n\ge 1,\\
+x, & \text{otherwise.}
+\end{cases}
+\]
+This simply shifts the countable set $\{1,1/2,1/4,1/8,\ldots\}$ inward and fixes
+all other points. Next define
+\[
+g:(0,1)\to\RN,\qquad
+g(x)=
+\begin{cases}
+2-\frac{1}{x}, & 0<x<\frac12,\\[1ex]
+0, & x=\frac12,\\[1ex]
+\frac{1}{1-x}-2, & \frac12<x<1.
+\end{cases}
+\]
+The first branch maps $(0,\frac12)$ onto $(-\infty,0)$, the middle point maps to
+$0$, and the third branch maps $(\frac12,1)$ onto $(0,\infty)$. Hence $g$ is a
+bijection from $(0,1)$ onto $\RN$, and $g\circ j$ is a bijection from
+$[0,1]$ onto $\RN$.
+
+Since $\wp(\NN)\sim B$, $B\sim[0,1]$, and $[0,1]\sim\RN$, the equipotent relation
+is transitive, so $\wp(\NN)\sim\RN$.
+
+%%------------------------------------------------------------
+\item \textbf{Draw a circuit for $q$ (Figure 0.8).}
+
+The truth table shows $q=1$ when $(p_1,p_2,p_3)\in\{(0,1,0),(1,0,0),(1,1,1)\}$.
+
+Using the rows with $q=1$, the PDNF is
+\[
+q = (\bar p_1 p_2\bar p_3)\vee(p_1\bar p_2\bar p_3)\vee(p_1 p_2 p_3).
+\]
+A clear AND-OR block diagram is:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[termblock, minimum width=46mm] (bankq) at (2.6,2.2)
+  {$p_1,\bar p_1,p_2,\bar p_2,p_3,\bar p_3$};
+\node[termblock, minimum width=33mm] (tq1) at (7.2,3.4) {$\bar p_1 p_2 \bar p_3$};
+\node[termblock, minimum width=33mm] (tq2) at (7.2,2.2) {$p_1 \bar p_2 \bar p_3$};
+\node[termblock, minimum width=33mm] (tq3) at (7.2,1.0) {$p_1 p_2 p_3$};
+\node[logicblock] (orq) at (10.5,2.2) {OR};
+\node[io] (outq) at (12.0,2.2) {$q$};
+
+\draw[wire] (bankq.east) -- (4.8,2.2) coordinate (busq);
+\draw[wire] (busq) |- (tq1.west);
+\draw[wire] (busq) -- (tq2.west);
+\draw[wire] (busq) |- (tq3.west);
+\draw[wire] (tq1.east) -- (orq.west |- tq1.east);
+\draw[wire] (tq2.east) -- (orq.west);
+\draw[wire] (tq3.east) -- (orq.west |- tq3.east);
+\draw[wire] (orq.east) -- (outq.west);
+\end{tikzpicture}
+\end{center}
+
+%%------------------------------------------------------------
+\item \textbf{Draw circuits for $q_1, q_2, q_3$ (Figure 0.9).}
+
+Reading the truth table row by row (rows indexed $0$--$15$, with $p_1p_2p_3p_4$
+in binary), we have
+\[
+\begin{aligned}
+q_1=1 \text{ at rows }&0,2,3,5,6,8,9,12,\\
+\text{namely }&(0000),(0010),(0011),(0101),\\
+&(0110),(1000),(1001),(1100).\\[4pt]
+q_2=1 \text{ at rows }&0,1,3,4,6,10,12,13,14,\\
+\text{namely }&(0000),(0001),(0011),(0100),(0110),\\
+&(1010),(1100),(1101),(1110).\\[4pt]
+q_3=1 \text{ at rows }&0,4,8,12,14,\\
+\text{namely }&(0000),(0100),(1000),(1100),(1110).
+\end{aligned}
+\]
+
+Using the truth table and grouping equivalent terms, we can use the following
+clearer formulas:
+
+\[
+\begin{aligned}
+q_1 ={}&
+\bar p_1 p_2 \bar p_3 p_4
+\vee p_1 \bar p_3 \bar p_4
+\vee \bar p_1 \bar p_2 p_3\\
+&{}\vee \bar p_1 \bar p_2 \bar p_4
+\vee \bar p_1 p_3 \bar p_4
+\vee p_1 \bar p_2 \bar p_3
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+q_2 ={}&
+\bar p_1 \bar p_2 \bar p_3
+\vee p_1 p_2 \bar p_3
+\vee p_2 \bar p_4
+\vee \bar p_1 \bar p_2 p_4
+\vee p_1 p_3 \bar p_4
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+q_3 ={}&
+\bar p_3 \bar p_4
+\vee p_1 p_2 \bar p_4
+\end{aligned}
+\]
+
+Each block diagram below uses one product-term block for each AND subcircuit,
+fed from the literal bank on the left, and a final OR gate on the right.
+
+\begin{enumerate}
+\item For $q_1$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=0.9cm]
+\node[termblock, minimum width=50mm] (bank1) at (2.8,3.5)
+  {$p_1,\bar p_1,p_2,\bar p_2,p_3,\bar p_3,p_4,\bar p_4$};
+\node[termblock, minimum width=34mm] (q1a) at (7.6,6.0) {$\bar p_1 p_2 \bar p_3 p_4$};
+\node[termblock, minimum width=34mm] (q1b) at (7.6,5.0) {$p_1 \bar p_3 \bar p_4$};
+\node[termblock, minimum width=34mm] (q1c) at (7.6,4.0) {$\bar p_1 \bar p_2 p_3$};
+\node[termblock, minimum width=34mm] (q1d) at (7.6,3.0) {$\bar p_1 \bar p_2 \bar p_4$};
+\node[termblock, minimum width=34mm] (q1e) at (7.6,2.0) {$\bar p_1 p_3 \bar p_4$};
+\node[termblock, minimum width=34mm] (q1f) at (7.6,1.0) {$p_1 \bar p_2 \bar p_3$};
+\node[logicblock] (orq1) at (10.9,3.5) {OR};
+\node[io] (outq1) at (12.4,3.5) {$q_1$};
+
+\draw[wire] (bank1.east) -- (5.2,3.5) coordinate (bus1);
+\draw[wire] (bus1) |- (q1a.west);
+\draw[wire] (bus1) |- (q1b.west);
+\draw[wire] (bus1) |- (q1c.west);
+\draw[wire] (bus1) -- (q1d.west);
+\draw[wire] (bus1) |- (q1e.west);
+\draw[wire] (bus1) |- (q1f.west);
+\draw[wire] (q1a.east) -- (orq1.west |- q1a.east);
+\draw[wire] (q1b.east) -- (orq1.west |- q1b.east);
+\draw[wire] (q1c.east) -- (orq1.west |- q1c.east);
+\draw[wire] (q1d.east) -- (orq1.west);
+\draw[wire] (q1e.east) -- (orq1.west |- q1e.east);
+\draw[wire] (q1f.east) -- (orq1.west |- q1f.east);
+\draw[wire] (orq1.east) -- (outq1.west);
+\end{tikzpicture}
+\end{center}
+
+\item For $q_2$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=0.95cm]
+\node[termblock, minimum width=50mm] (bank2) at (2.8,3.0)
+  {$p_1,\bar p_1,p_2,\bar p_2,p_3,\bar p_3,p_4,\bar p_4$};
+\node[termblock, minimum width=34mm] (q2a) at (7.6,5.0) {$\bar p_1 \bar p_2 \bar p_3$};
+\node[termblock, minimum width=34mm] (q2b) at (7.6,4.0) {$p_1 p_2 \bar p_3$};
+\node[termblock, minimum width=34mm] (q2c) at (7.6,3.0) {$p_2 \bar p_4$};
+\node[termblock, minimum width=34mm] (q2d) at (7.6,2.0) {$\bar p_1 \bar p_2 p_4$};
+\node[termblock, minimum width=34mm] (q2e) at (7.6,1.0) {$p_1 p_3 \bar p_4$};
+\node[logicblock] (orq2) at (10.9,3.0) {OR};
+\node[io] (outq2) at (12.4,3.0) {$q_2$};
+
+\draw[wire] (bank2.east) -- (5.2,3.0) coordinate (bus2);
+\draw[wire] (bus2) |- (q2a.west);
+\draw[wire] (bus2) |- (q2b.west);
+\draw[wire] (bus2) -- (q2c.west);
+\draw[wire] (bus2) |- (q2d.west);
+\draw[wire] (bus2) |- (q2e.west);
+\draw[wire] (q2a.east) -- (orq2.west |- q2a.east);
+\draw[wire] (q2b.east) -- (orq2.west |- q2b.east);
+\draw[wire] (q2c.east) -- (orq2.west);
+\draw[wire] (q2d.east) -- (orq2.west |- q2d.east);
+\draw[wire] (q2e.east) -- (orq2.west |- q2e.east);
+\draw[wire] (orq2.east) -- (outq2.west);
+\end{tikzpicture}
+\end{center}
+
+\item For $q_3$:
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[termblock, minimum width=50mm] (bank3) at (2.8,1.8)
+  {$p_1,\bar p_1,p_2,\bar p_2,p_3,\bar p_3,p_4,\bar p_4$};
+\node[termblock, minimum width=34mm] (q3a) at (7.6,2.6) {$\bar p_3 \bar p_4$};
+\node[termblock, minimum width=34mm] (q3b) at (7.6,1.0) {$p_1 p_2 \bar p_4$};
+\node[logicblock] (orq3) at (10.9,1.8) {OR};
+\node[io] (outq3) at (12.4,1.8) {$q_3$};
+
+\draw[wire] (bank3.east) -- (5.2,1.8) coordinate (bus3);
+\draw[wire] (bus3) |- (q3a.west);
+\draw[wire] (bus3) |- (q3b.west);
+\draw[wire] (q3a.east) -- (orq3.west |- q3a.east);
+\draw[wire] (q3b.east) -- (orq3.west |- q3b.east);
+\draw[wire] (orq3.east) -- (outq3.west);
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+
+\end{enumerate}
+
+%% ============================================================
