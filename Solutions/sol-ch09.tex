@@ -7,13 +7,22 @@
 %%------------------------------------------------------------
 \item \textbf{Characterize the parse trees of left-linear grammars.}
 
-In a left-linear grammar, every production has the form $A \to w$ (terminal string) or $A \to Bw$ (nonterminal followed by a terminal string). Consequently, in any parse tree for a derivation in a left-linear grammar:
+In a left-linear grammar, every production has the form $A \to w$ or
+$A \to Bw$, where $B$ is a nonterminal and $w \in \Sigma^*$.  Thus the parse
+trees are the mirror image of the right-linear trees discussed in Example~9.2.
+More precisely:
 \begin{itemize}
-\item The tree has a ``left-spine'': the leftmost child of any internal node is always a nonterminal, and the remaining children are terminal symbols.
-\item All nonterminals appear in the leftmost branch of the parse tree.
-\item The tree is maximally left-branching; at every level, the left subtree contains all nonterminal structure while the right siblings are terminals.
+\item Whenever a node is expanded by a production of the form $A \to Bw$, its
+leftmost child is the only child labeled by a nonterminal; all remaining
+children are terminals.
+\item Following these leftmost nonterminal children produces a single
+``left spine'' of the tree.  Every nonterminal in the parse tree lies on this
+spine.
+\item The last nonterminal on the spine is expanded by a rule $A \to w$, so the
+bottom of the tree consists entirely of terminal leaves.
 \end{itemize}
-This is the mirror image of right-linear parse trees (which are maximally right-branching). The depth of the parse tree equals the number of nonterminals in the derivation.
+So left-linear parse trees are maximally left-branching, just as right-linear
+parse trees are maximally right-branching.
 
 %%------------------------------------------------------------
 \item \textbf{Context-free grammars for the following languages.}
@@ -123,7 +132,7 @@ Consider the unit-production graph: nodes are nonterminals, directed edge $B \to
 \textbf{Algorithm}: For each nonterminal $B$, compute $B^u$ by BFS or DFS from $B$ in the unit-production graph:
 \begin{enumerate}
 \item Initialize $B^u = \{B\}$.
-\item While there exists $C \in B^u$ with a unit production $C \to D \in P^u$ and $D \not in B^u$: add $D$ to $B^u$.
+\item While there exists $C \in B^u$ with a unit production $C \to D \in P^u$ and $D \notin B^u$: add $D$ to $B^u$.
 \item Repeat until no new nonterminals are added.
 \end{enumerate}
 This is a standard graph reachability computation and terminates since $|\Omega|$ is finite.
@@ -132,15 +141,29 @@ This is a standard graph reachability computation and terminates since $|\Omega|
 \item \textbf{Closure of \CSIG\ under concatenation.}
 
 \begin{enumerate}
-\item \textbf{Problem with naive construction}: The production $Z \to S_1 \cdot S_2$ is fine as a context-free production, but the issue is with lambda productions. If $\lambda \in L(G_1)$ (i.e., $S_1 \DRightarrow \lambda$), then $Z \to S_1 S_2 \DRightarrow S_2$, so $L(G^*) \supseteq L(G_2)$, not just $L(G_1)\cdot L(G_2)$ minus $\lambda$-contributions. Similarly, if $\lambda \in L(G_2)$, then $Z \DRightarrow S_1$, giving $L(G^*) \supseteq L(G_1)$. The issue: when both $G_1$ and $G_2$ derive $\lambda$, the simple construction may include unintended strings or exclude others due to improper lambda-production treatment.
+\item \textbf{What is wrong}: The symbol $\cdot$ in $Z \to S_1 \cdot S_2$ is
+meta-notation for concatenation, not a symbol of the grammar.  A context-free
+production must have a right side in $(\Omega \cup \Sigma)^*$, so the proposed
+rule is not literally a valid production.
 
-\item \textbf{Fix}: First transform $G_1$ and $G_2$ so that $\lambda$ is not derivable from their respective start symbols (or handle it explicitly). If $\lambda \in L(G_i)$, add explicit productions:
+\item \textbf{Fix}: Replace it by the genuine production
 \[
-Z \to S_1 S_2 \mid S_1 \mid S_2 \mid \lambda \quad \text{(appropriate subset based on whether } \lambda \in L(G_i)\text{)}
+Z \to S_1 S_2.
 \]
-Specifically: add $Z \to S_2$ if $\lambda \in L(G_1)$; add $Z \to S_1$ if $\lambda \in L(G_2)$; add $Z \to \lambda$ if $\lambda \in L(G_1) \cap L(G_2)$.
+If $\Omega_1$ and $\Omega_2$ are not disjoint, first rename nonterminals so
+that they are.  Then
+\[
+G^*=\langle \Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1S_2\}\rangle
+\]
+is a valid context-free grammar.
 
-\item \textbf{Proof}: $w \in L(G^*_{\text{corrected}})$ iff $Z \DRightarrow w$ iff $w = uv$ with $u \in L(G_1)$ and $v \in L(G_2)$ (considering the $\lambda$ cases via the added productions) iff $w \in L(G_1)\cdot L(G_2)$. \qed
+\item \textbf{Proof}: If $w\in L(G^*)$, then the first step must be
+$Z\Rightarrow S_1S_2$.  The symbols from $S_1$ can then derive some
+$u\in L(G_1)$, and the symbols from $S_2$ can derive some $v\in L(G_2)$, so
+$w=uv\in L(G_1)\cdot L(G_2)$.  Conversely, if $w=uv$ with
+$u\in L(G_1)$ and $v\in L(G_2)$, then
+$Z\Rightarrow S_1S_2 \DRightarrow uv = w$.  Hence
+$L(G^*)=L(G_1)\cdot L(G_2)$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -186,14 +209,25 @@ precisely $L(G)$.
 \begin{enumerate}
 \item Grammar that strips outermost parentheses:
 \[
-R \to \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid\pmb{\emptyset}\mid E\pmb{\cdot}E\mid E\pmb{\cup}E\mid R^{\pmb{*}}
+S \to R \mid R\pmb{\cdot}R \mid R\pmb{\cup}R
 \]
-where $E \to \pmb{(}R\pmb{)}$ or $E$ is any atomic expression.
+where $R$ is the original grammar from Example~9.3:
+\[
+R \to \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid\pmb{\emptyset}\mid
+\pmb{(}R\pmb{\cdot}R\pmb{)}\mid\pmb{(}R\pmb{\cup}R\pmb{)}\mid R^{\pmb{*}}.
+\]
+The new start symbol $S$ therefore generates all old words, and in addition it
+allows the outermost parentheses of a binary expression to be omitted.
 
 \item Grammar allowing extraneous parentheses:
 \[
-R \to \pmb{(}R\pmb{)} \mid \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid\pmb{\emptyset}\mid\pmb{(}R\pmb{\cdot}R\pmb{)}\mid\pmb{(}R\pmb{\cup}R\pmb{)}\mid R^{\pmb{*}}
+A \to \pmb{(}A\pmb{)} \mid \pmb{a}\mid\pmb{b}\mid\pmb{c}\mid\pmb{\epsilon}\mid
+\pmb{\emptyset}\mid \pmb{(}A\pmb{\cdot}A\pmb{)}\mid
+\pmb{(}A\pmb{\cup}A\pmb{)}\mid A^{\pmb{*}}.
 \]
+The rule $A \to \pmb{(}A\pmb{)}$ allows any expression to be wrapped in an
+extra pair of parentheses, and repeated use of that rule gives arbitrarily many
+extraneous pairs.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -287,11 +321,28 @@ where the initial $1$ is the production $Z\to S$. \qed
 \item \textbf{Bounds on parse tree depth for CNF grammars.}
 
 \begin{enumerate}
-\item \textbf{Lower bound}: For $x \in L(G)$ with $|x| = n > 0$, the parse tree has $n$ leaf nodes (one per terminal). Since each internal node has exactly 2 children (CNF), a complete binary tree with $n$ leaves has depth at least $\lceil \log_2 n \rceil$. Thus the depth of the parse tree is at least $\lceil \log_2 n \rceil$.
+\item \textbf{Lower bound}: Let $|x|=n>0$.  Ignoring the optional initial
+rule $Z\to S$, the parse tree below $S$ is a binary tree with exactly $n$
+terminal leaves, because every nonterminal production in CNF has the form
+$A\to BC$ or $A\to \pmb{d}$.  A binary tree of depth $h$ has at most $2^h$
+leaves, so $2^h\geq n$ and therefore
+\[
+h\geq \lceil \log_2 n\rceil.
+\]
+If one also counts the initial edge $Z\to S$, this lower bound increases by~1.
 
-\item \textbf{Upper bound}: The parse tree can be maximally skewed (a path): at each level, one child is a leaf (terminal) and the other is the next internal node. This gives depth $n-1$ from the root to the last nonterminal, plus 1 for the final terminal, giving depth $n$. (Or $2n-1$ if we count from a different convention.) Thus the depth is at most $n = |x|$.
+\item \textbf{Upper bound}: The deepest possible binary parse tree with $n$
+terminal leaves is the maximally skewed one, where each internal node has one
+terminal child and one child that continues the derivation.  Such a tree has
+depth $n-1$ below $S$.  Including the optional initial rule $Z\to S$, the full
+CNF parse tree has depth at most $n$.
 
-\textbf{Summary}: $\lceil \log_2 |x| \rceil \leq \text{depth} \leq |x|$.
+\textbf{Summary}: With the full CNF tree rooted at $Z$,
+\[
+\lceil \log_2 |x| \rceil + 1 \leq \text{depth} \leq |x|.
+\]
+If the initial $Z\to S$ edge is ignored, the bounds become
+$\lceil \log_2 |x| \rceil \leq \text{depth} \leq |x|-1$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -368,19 +419,30 @@ T \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{d}\mid TD_-\mid TD_+,\quad D_- \to T_-T,\quad
 \begin{enumerate}
 \item $\langle\{S_1,S_2\},\{\pmb{a},\pmb{b},\pmb{c},\pmb{d},\pmb{e}\},S_1,\{S_1\to S_2S_1\pmb{e},S_1\to S_2\pmb{b},S_2\to S_1S_2,S_2\to\pmb{c}\}\rangle$:
 
-One equivalent GNF grammar is:
+Applying the substitutions from Theorem~9.6 gives the following equivalent GNF
+grammar (with one new nonterminal $S_3$):
 \[
 \begin{aligned}
-S_1&\to \pmb{c}S_1\pmb{e}\mid \pmb{c}\pmb{b}\mid \pmb{c}S_1\pmb{e}R\mid \pmb{c}\pmb{b}R,\\
-S_2&\to \pmb{c}\mid \pmb{c}S_1\pmb{e}S_2\mid \pmb{c}\pmb{b}S_2\mid \pmb{c}S_1\pmb{e}RS_2\mid \pmb{c}\pmb{b}RS_2,\\
-R&\to \pmb{c}S_1\pmb{e}\mid \pmb{c}\pmb{b}\mid \pmb{c}S_1\pmb{e}R\mid \pmb{c}\pmb{b}R\\
-&\qquad\mid \pmb{c}S_1\pmb{e}S_2S_1\pmb{e}\mid \pmb{c}\pmb{b}S_2S_1\pmb{e}
-\mid \pmb{c}S_1\pmb{e}RS_2S_1\pmb{e}\mid \pmb{c}\pmb{b}RS_2S_1\pmb{e}\\
-&\qquad\mid \pmb{c}S_1\pmb{e}S_2\pmb{b}\mid \pmb{c}\pmb{b}S_2\pmb{b}
-\mid \pmb{c}S_1\pmb{e}RS_2\pmb{b}\mid \pmb{c}\pmb{b}RS_2\pmb{b}.
+S_1&\to \pmb{c}S_1\pmb{e}\mid \pmb{c}\pmb{b}\mid \pmb{c}S_1\pmb{e}S_3\mid \pmb{c}\pmb{b}S_3,\\
+S_2&\to \pmb{c}\mid \pmb{c}S_1\pmb{e}S_2\mid \pmb{c}\pmb{b}S_2\mid
+\pmb{c}S_1\pmb{e}S_3S_2\mid \pmb{c}\pmb{b}S_3S_2,\\
+S_3&\to \pmb{c}S_1\pmb{e}\mid \pmb{c}\pmb{b}\mid \pmb{c}S_1\pmb{e}S_3\mid
+\pmb{c}\pmb{b}S_3\\
+&\qquad\mid \pmb{c}S_1\pmb{e}S_2S_1\pmb{e}\mid \pmb{c}\pmb{b}S_2S_1\pmb{e}\mid
+\pmb{c}S_1\pmb{e}S_3S_2S_1\pmb{e}\mid \pmb{c}\pmb{b}S_3S_2S_1\pmb{e}\\
+&\qquad\mid \pmb{c}S_1\pmb{e}S_2\pmb{b}\mid \pmb{c}\pmb{b}S_2\pmb{b}\mid
+\pmb{c}S_1\pmb{e}S_3S_2\pmb{b}\mid \pmb{c}\pmb{b}S_3S_2\pmb{b}\\
+&\qquad\mid \pmb{c}S_1\pmb{e}S_2S_1\pmb{e}S_3\mid
+\pmb{c}\pmb{b}S_2S_1\pmb{e}S_3\mid
+\pmb{c}S_1\pmb{e}S_3S_2S_1\pmb{e}S_3\mid
+\pmb{c}\pmb{b}S_3S_2S_1\pmb{e}S_3\\
+&\qquad\mid \pmb{c}S_1\pmb{e}S_2\pmb{b}S_3\mid
+\pmb{c}\pmb{b}S_2\pmb{b}S_3\mid
+\pmb{c}S_1\pmb{e}S_3S_2\pmb{b}S_3\mid
+\pmb{c}\pmb{b}S_3S_2\pmb{b}S_3.
 \end{aligned}
 \]
-Every production now begins with the terminal $\pmb{c}$, so this grammar is in
+Every production now begins with the terminal $\pmb{c}$, so the grammar is in
 GNF.
 
 \item $\langle\{S_1,S_2,S_3\},\ldots,\{S_1\to S_3S_1, S_1\to S_2\pmb{a},S_2\to\pmb{be},S_3\to S_2\pmb{c}\}\rangle$:
@@ -437,13 +499,29 @@ Therefore an equivalent grammar $G''$ always exists. \qed
 %%------------------------------------------------------------
 \item \textbf{Generalization of Lemma 9.1.}
 
-\textbf{Lemma}: If $G = \langle\Omega,\Sigma,S,P\rangle$, $X \to \gamma B\alpha \in P$, all $B$-rules are $\{B \to \beta_i\}$, and $G'$ replaces $X \to \gamma B\alpha$ with $\{X_B \to \gamma\beta_i\alpha\}$, then $L(G) = L(G')$.
+\textbf{Remark}: As written, the displayed productions $X_B\to\gamma\beta_i\alpha$
+cannot be the intended replacement if $X_B$ is a new nonterminal, because
+nothing in the grammar would force those rules to be used.  The natural
+generalization of Lemma~9.1 is to replace
+\[
+X\to\gamma B\alpha
+\]
+by the family
+\[
+X\to\gamma\beta_1\alpha,\ \ldots,\ X\to\gamma\beta_m\alpha.
+\]
+With that interpretation, the proof is exactly the same substitution argument
+used in Lemma~9.1.
 
-\textbf{Proof}: By induction on derivation length.
+\textbf{Proof}: Any derivation in $G$ that uses
+$X\to\gamma B\alpha$ and then expands $B$ by some rule $B\to\beta_i$ can be
+replaced by the single step
+$X\to\gamma\beta_i\alpha$.  All other productions are unchanged, so every word
+of $L(G)$ still belongs to $L(G')$.
 
-($L(G) \subseteq L(G')$): Any derivation in $G$ that uses $X \to \gamma B\alpha$ followed later by $B \to \beta_i$ can be replaced in $G'$ by the single production $X_B \to \gamma\beta_i\alpha$. All other derivations are unchanged.
-
-($L(G') \subseteq L(G)$): Any production $X_B \to \gamma\beta_i\alpha$ in $G'$ can be simulated in $G$ by $X \to \gamma B\alpha$ followed by $B \to \beta_i$. \qed
+Conversely, each new production $X\to\gamma\beta_i\alpha$ in $G'$ can be
+simulated in $G$ by first using $X\to\gamma B\alpha$ and then
+$B\to\beta_i$.  Hence the two grammars generate the same language. \qed
 
 %%------------------------------------------------------------
 \item \textbf{$P = \{d^p \mid p \text{ prime}\}$ is not context free.}
@@ -603,17 +681,46 @@ $\Phi'$ is not context free.
 \item \textbf{Formal recursive definition of the path in Theorem 9.9 (pumping lemma).}
 
 \begin{enumerate}
-\item Let the parse tree have root $r$ corresponding to start symbol $S$. Define a \emph{leftmost longest path} recursively:
-  - \textbf{Boundary}: If $r$ is a leaf, the path is $\{r\}$.
-  - \textbf{Rule}: From a node $v$ with children $c_1, c_2, \ldots, c_k$, choose $c_i$ to be the child whose subtree has the greatest number of leaves. (Break ties by choosing the leftmost.) Append $c_i$ to the path, and recurse from $c_i$.
+\item Let $d(v)$ denote the number of distinguished positions in the subtree
+rooted at a node $v$.  Define the path recursively as follows.
+\begin{itemize}
+\item \textbf{Boundary}: If $v$ is a leaf, stop.
+\item \textbf{Rule}: If $v$ has two children $v_\ell$ and $v_r$, choose the
+child with the larger value of $d$.  If $d(v_\ell)=d(v_r)$, choose either one.
+\end{itemize}
+Starting at the root and repeating this rule yields a path ending at a
+distinguished leaf.
 
-\item The depth of this path is at least $\log_2$ (number of leaves) $= \log_2 |x|$ (by the binary branching property of CNF). If $|x| \geq b^{h+1}$ where $b$ is the maximum branching factor and $h = |\Omega|$, then the path has length $> h$, so some nonterminal repeats on the path. Let $A$ be the repeated nonterminal at positions $i < j$ on the path. Then the subtree at position $j$ generates $w$, and the subtree at position $i$ generates $vwx$ (with $v,x$ possibly empty but $|vx|\geq 1$ by the choice that $vwx \neq w$). Pumping follows from substituting the subtree at $j$ for the subtree at $i$. \qed
+\item Because the chosen child always contains at least half of the
+distinguished positions of its parent, a node that is $k$ levels above the end
+of the path still has at least $2^k$ distinguished positions in its subtree.
+Now choose the \emph{highest} node $N$ on the path whose subtree contains no
+more than $n$ distinguished positions.  Such a node exists because the final
+leaf contains exactly one distinguished position.  Its parent (if any) contains
+more than $n$ distinguished positions, so $N$ must still contain more than
+$n/2 = 2^{|\Omega|}$ distinguished positions.  Hence the portion of the path
+inside the subtree rooted at $N$ still has more than $|\Omega|$ interior nodes,
+and some nonterminal label must repeat there.  Let the higher and lower
+occurrences of that repeated label be $R$.
+
+If the higher $R$ derives $vRx$, and the lower $R$ derives $w$, then
+\[
+S\DRightarrow uRy \DRightarrow uvRxy \DRightarrow uvwxy.
+\]
+The subtree rooted at the lower $R$ contains a distinguished position, so $w$
+contains one.  The higher $R$ lies inside the subtree rooted at $N$, so $vwx$
+contains no more than $n$ distinguished positions.  And since the two
+occurrences of $R$ are distinct, at least one distinguished position lies in
+the part of the higher subtree outside the lower one, so $vx$ contains a
+distinguished position.  Replacing the lower $R$-subtree
+by repeated copies of the higher one now gives the pumped strings
+$uv^iwx^iy$, exactly as required in Theorem~9.9. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{$\CSIG$ is closed under $\cup$ via direct grammar construction.}
 
-Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ with $\Omega_1\cap\Omega_2=\emptyset$. Choose $Z \not in \Omega_1\cup\Omega_2$ and define:
+Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1\rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ with $\Omega_1\cap\Omega_2=\emptyset$. Choose $Z \notin \Omega_1\cup\Omega_2$ and define:
 \[
 G^\cup = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1,Z\to S_2\}\rangle.
 \]
@@ -825,19 +932,56 @@ under complement either. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{Automaton-based method for Theorem 9.3 (epsilon elimination).}
+\item \textbf{Automaton-based method for Theorem 9.3.}
 
-Consider a pushdown automaton (PDA) with states labeled by subsets $T \subseteq \Omega$ (the power set of nonterminals). Start state: $\{S\}$. Transitions: from state $T$, for each nonterminal $A \in T$ and production $A \to \gamma$, compute the set of nonterminals derivable in one step from $\gamma$, and union these into the new state.
+In Theorem~9.3, each nonterminal $B$ gives an NDFA $A^B$, and all of these
+machines share the same transition relation; only the start state changes.
+Instead of examining them one at a time, we can combine them into one automaton
+whose states are subsets of $\Omega\cup\{\omega\}$.
 
-This is similar to the subset construction for NFAs, adapted for CFGs. The set $T$ represents all nonterminals reachable in derivations. The nullable nonterminals ($N_\lambda$) are those states from which $\lambda$ is reachable.
+Define the DFA
+\[
+D=\langle \{\pmb{1}\},\wp(\Omega\cup\{\omega\}),\{S\},\Delta,F\rangle,
+\]
+where
+\[
+\Delta(T,\pmb{1})=\bigcup_{A\in T}\delta(A,\pmb{1}),
+\]
+and $F$ is the collection of subset states that contain $\omega$.
+
+The meaning of a subset state $T$ is: after some number of grammar-expansion
+steps, the nonterminals in $T$ are exactly the ones that can occur in the
+corresponding automaton search.  Then:
+\begin{itemize}
+\item Reachability from the start state $\{S\}$ identifies the nonterminals
+that are accessible from $S$.
+\item A nonterminal $B$ can derive a terminal string exactly when some state in
+$D$ reachable from $\{B\}$ lies in $F$, that is, contains $\omega$.
+\item After removing nonterminals that fail one of those tests, the same
+reachability check detects the remaining disconnected items.
+\end{itemize}
+So the subset-labeled automaton provides the same information as the family of
+machines $A^B$, but packages the computation into one finite automaton over
+$\wp(\Omega\cup\{\omega\})$.
 
 %%------------------------------------------------------------
 \item \textbf{Grammars in GNF with at most two symbols on the right.}
 
 \begin{enumerate}
-\item This is not a normal form for all CFLs: The language $\{\pmb{a}^n \mid n \geq 1\}$ can be generated (e.g., $S \to \pmb{a}S \mid \pmb{a}$), but more complex CFLs like $\{ww^r\}$ require productions of the form $S \to \pmb{a}S\pmb{a}$ in GNF which has 3 symbols on the right (more than 2). Converting to this restricted GNF may require more nonterminals and fail to represent the language if we strictly limit to 2 symbols. In fact $\pmb{a}Xa$ (where $a$ is terminal and $X$ is nonterminal) has 3 symbols; with at most 2 on the right in GNF (first terminal, at most one nonterminal), we can only write $\pmb{a}X$ (dropping the trailing $\pmb{a}$). So $\{ww^r \mid w \in \{\pmb{a},\pmb{b}\}^*\}$ cannot be generated.
+\item Such grammars are \emph{not} a normal form for all context-free
+languages.  If a grammar is in GNF and no right side has more than two symbols,
+then every production has the form
+\[
+A\to \pmb{a}\qquad\text{or}\qquad A\to \pmb{a}B.
+\]
+That is exactly the form of a right-linear grammar.  Therefore every language
+generated by such a grammar is regular.  But
+$\{\pmb{a}^n\pmb{b}^n\mid n\in\NN\}$ is context free and not regular, so it
+cannot be generated by any grammar of this restricted type.
 
-\item Languages generated by this restricted form: GNF with at most two RHS symbols means productions are $A \to \pmb{a}$ or $A \to \pmb{a}B$. These are exactly the \emph{right-linear grammars}, which generate precisely the \emph{regular languages} (\DSIG\ = \GSIG\ = \RSIG). \qed
+\item By the same observation, the grammars that do satisfy this restriction are
+precisely the right-linear grammars.  Hence they generate exactly the regular
+languages. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
