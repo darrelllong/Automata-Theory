@@ -72,10 +72,16 @@ A practical approach:
 
 \item $\{x \mid |x|_a \neq |x|_b \wedge |x|_b \neq |x|_c\}$ (arbitrary mixing):
 
-Strategy: Count occurrences by marking symbols.
+Strategy: use two separate matching rounds, with fresh marks in each round, so
+that the $\pmb{b}$'s are still available for the second comparison.
 \begin{enumerate}[1.]
-\item In pass 1: pair $\pmb{a}$s with $\pmb{b}$s by crossing out one of each per scan. If the pairing runs out on one side before the other, $|x|_a \neq |x|_b$ confirmed. If they balance, $|x|_a = |x|_b$; reject.
-\item In pass 2: pair $\pmb{b}$s with $\pmb{c}$s. Similarly check $|x|_b \neq |x|_c$.
+\item In round 1, repeatedly mark one unmarked $\pmb{a}$ as $A$ and one unmarked
+$\pmb{b}$ as $B$. If one kind runs out before the other, then
+$|x|_{\pmb{a}}\neq |x|_{\pmb{b}}$ is confirmed. If they run out together, reject.
+\item Restore all $B$'s to ordinary $\pmb{b}$'s.
+\item In round 2, repeatedly mark one unmarked $\pmb{b}$ as $B$ and one
+unmarked $\pmb{c}$ as $C$. If one kind runs out before the other, then
+$|x|_{\pmb{b}}\neq |x|_{\pmb{c}}$ is confirmed. If they run out together, reject.
 \item Accept iff both checks confirm inequality.
 \end{enumerate}
 \end{enumerate}
@@ -91,7 +97,21 @@ Strategy: Count occurrences by marking symbols.
 \end{enumerate}
 For a yes-instance, the machine halts in a final state, with $\pmb{Y}$ somewhere on the tape and in fact as the rightmost nonblank symbol. Thus the input belongs to all four sets $L(M),L_1(M),L_2(M),L_3(M)$. For a no-instance, the machine never halts, so it belongs to none of them. Therefore all four acceptance notions define exactly the required language.
 
-\item \textbf{Is this always possible?}: Yes, for any Turing-acceptable language $L$. Proof: Given any TM $A$ accepting $L$, by the $L_1$/$L_2$/$L_3$ equivalence theorems (Exercise 11.19), there is a halting TM $A'$ accepting $L$ in any of the four modes. If we require all four modes to agree, we need $A$ to halt on \emph{all} inputs (not just those in $L$). This is possible iff $L$ is \emph{recursive} (decidable). For Turing-acceptable but not recursive languages, $L(M)=L$ but $M$ may not halt on all inputs, preventing $L_1(M)=L$. So the answer is: \textbf{yes if and only if $L$ is recursive}. For every recursive language, we can build $M$ with all four modes agreeing.
+\item \textbf{Is this always possible?}: Yes, for \emph{every} Turing-acceptable
+language $L$. Let $A$ be any Turing machine with $L(A)=L$. Build a new machine
+$M$ that simulates $A$, but modifies only the accepting behavior:
+\begin{enumerate}[1.]
+\item If $A$ reaches an accepting halt, then $M$ erases the tape, writes a single
+$\pmb{Y}$, positions the head on that $\pmb{Y}$, enters a final state, and halts.
+\item If $A$ would reject, or if $A$ never accepts, then $M$ simply never halts
+(for example, it can enter the same two-state blank-tape loop used in part~(a)).
+\end{enumerate}
+Then $x\in L$ exactly when $M$ halts, exactly when it halts with $\pmb{Y}$ on the
+tape, exactly when it halts with $\pmb{Y}$ at the right end of the tape, and
+exactly when it halts in a final state. Hence
+\[
+L(M)=L_1(M)=L_2(M)=L_3(M)=L.
+\]
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -101,10 +121,15 @@ For a yes-instance, the machine halts in a final state, with $\pmb{Y}$ somewhere
 \item \textbf{One-tape TM}:
 Strategy:
 \begin{enumerate}[1.]
-\item If input has odd length, reject (since $|ww|=2|w|$ is even).
-\item Mark the midpoint by counting: move right counting $n$ symbols, then left counting $n$ symbols to find the center (binary search or two-pass count).
-\item From the start, match symbol $i$ with symbol $n+i$ (for each $i$ from $1$ to $n$), crossing off matched pairs.
-\item Accept if all pairs match; reject on any mismatch.
+\item Sweep right across the input and write its length $n$ in binary in a scratch
+region of the same tape to the right of the word. If $n$ is odd, reject.
+\item Replace that counter by $m=n/2$.
+\item For each $i=1,2,\ldots,m$, use a second binary counter on the scratch region
+to locate the $i$th symbol of the word and remember whether it is $\pmb{a}$,
+$\pmb{b}$, or $\pmb{c}$.
+\item Using the counters again, locate the $(m+i)$th symbol and compare it with
+the remembered symbol. If they differ, reject.
+\item If all $m$ comparisons succeed, accept.
 \end{enumerate}
 
 \item \textbf{LBA}: Since the computation uses only the $2n$ cells of the input, the machine is already an LBA.
@@ -118,13 +143,30 @@ Strategy:
 Given $\Sigma=\{\pmb{a}_1,\ldots,\pmb{a}_n\}$ with lexicographic order based on base-$n$ numbering.
 
 \begin{enumerate}
-\item \textbf{Successor TM}: Machine $M_{succ}$ maps $x$ to its lexicographic successor.
+\item \textbf{Successor TM}: Machine $M_{succ}$ maps each word to the next word in
+the bijective base-$n$ ordering described in the exercise.
 
-Algorithm: Process $x$ from right to left. Find the rightmost symbol $\pmb{a}_i$ with $i < n$; replace it with $\pmb{a}_{i+1}$ and replace all symbols to its right with $\pmb{a}_1$. If all symbols are $\pmb{a}_n$ (e.g., $x = \pmb{a}_n^k$), the successor is $\pmb{a}_1^{k+1}$: write $k+1$ copies of $\pmb{a}_1$ (extending the tape by one cell).
+Algorithm: If the tape is blank (that is, the word is $\lambda$), write
+$\pmb{a}_1$. Otherwise process the word from right to left. Find the rightmost
+symbol $\pmb{a}_i$ with $i<n$; replace it with $\pmb{a}_{i+1}$ and replace every
+symbol to its right with $\pmb{a}_1$. If every symbol is $\pmb{a}_n$, so the word
+is $\pmb{a}_n^k$, replace it by $\pmb{a}_1^{k+1}$. This is exactly the next word in
+the stated order.
 
-\item \textbf{Generator TM}: Start with blank tape. Write $\pmb{a}_1$ (the first word). Apply $M_{succ}$ to get the next word; erase the current word, write the successor. Repeat indefinitely. This generates words of $\Sigma^*$ in lexicographic order, one at a time.
+\item \textbf{Generator TM}: The initial blank tape already represents the first
+word $\lambda$. Apply $M_{succ}$ to obtain $\pmb{a}_1$, then repeatedly erase the
+current word and replace it by its successor. Thus the visible word sequence is
+\[
+\lambda,\ \pmb{a}_1,\ \pmb{a}_2,\ \ldots,\ \pmb{a}_n,\ \pmb{a}_1\pmb{a}_1,\ldots
+\]
+in lexicographic order.
 
-\item \textbf{Enumerator TM}: Start with blank tape. Apply $M_{succ}$ repeatedly, but instead of erasing the previous word, write the next word to the right (separated by a blank). This enumerates $\Sigma^*$ by writing all words in sequence on the tape.
+\item \textbf{Enumerator TM}: Again the blank tape represents the first word
+$\lambda$. Keep the current word in the rightmost block of nonblank cells. To
+append the next word, copy that rightmost block to a fresh work area, run
+$M_{succ}$ on the copy, and leave the result to the right of one blank separator.
+Repeating this appends each successive word while leaving the earlier ones
+untouched.
 
 \item \textbf{Deterministic simulation of NDTM}: Given a nondeterministic TM $N$, simulate it deterministically using the lexicographic ordering of computation paths. At step $k$, enumerate all possible $k$-step computation paths (sequences of transitions) using the lexicographic order, and simulate each one. If any path reaches an accepting state, accept. This gives a deterministic simulation (though potentially much slower). $M_{succ}$ generates the next computation path to try.
 \end{enumerate}
@@ -135,17 +177,27 @@ Algorithm: Process $x$ from right to left. Find the rightmost symbol $\pmb{a}_i$
 A \emph{semi-infinite tape} has a left boundary (leftmost cell = cell 1) and extends indefinitely to the right.
 
 \begin{enumerate}
-\item \textbf{Two-track simulation}: Given a TM $M$ with a bi-infinite tape, simulate it on a two-track semi-infinite tape:
-- Track 1 (top): cells $0, 1, 2, 3, \ldots$ of the original tape.
-- Track 2 (bottom): cells $-1, -2, -3, \ldots$ of the original tape (stored in reverse).
-- Cell $k$ of the two-track tape contains $(c_k, c_{-k})$ for $k \geq 0$ (where $c_i$ is the content of cell $i$ on the original tape), with a special marker at cell 0 to indicate the boundary.
+\item \textbf{Two-track simulation}: Store the nonnegative cells
+$0,1,2,\ldots$ of the old tape on the upper track and the negative cells
+$-1,-2,-3,\ldots$ on the lower track in reverse order. Thus column $0$ contains
+the old cell $0$ on the upper track and a special boundary marker on the lower
+track, while column $k\geq 1$ contains old cell $k$ on the upper track and old
+cell $-k$ on the lower track.
 
-The head of the two-track TM simulates both directions: moving right on Track 1 corresponds to moving right; moving left (if at cell 0) switches to Track 2 and moves right.
+The finite control remembers whether the simulated head is on the upper or lower
+track. Moving right on the old nonnegative side means moving one column right on
+the upper track; moving left from old cell $0$ switches to the lower track in
+column $1$; moving right from old cell $-1$ switches back to the upper track in
+column $0$; and all other moves on the negative side are simulated by moving one
+column left or right on the lower track as appropriate.
 
-\item \textbf{Equivalence proof}: By induction on the number of TM steps:
-- Each step of $M$ corresponds to a step (or at most two steps) of the two-track machine.
-- The content of the two tracks correctly represents the bi-infinite tape of $M$.
-- Acceptance/rejection conditions are preserved. \qed
+\item \textbf{Equivalence proof}: Induct on the number of simulated steps. The
+induction invariant is that the two tracks encode exactly the same tape contents
+as the original bi-infinite tape, and that the simulated head position and state
+are correctly represented by the current column together with the remembered
+track. Each move of the old machine changes only one scanned cell and shifts the
+head by one position, and the semi-infinite simulation reproduces exactly that
+effect. Therefore the two machines accept and reject the same words. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -193,68 +245,175 @@ Thus $L = L(P) = L(M) \in \TSIG$. \qed
 %%------------------------------------------------------------
 \item \textbf{Every type 1 language is a LBL.}
 
-\textbf{Proof} (Theorem 11.3): Let $G=\langle\Sigma,\Omega,Z,P\rangle$ be a context-sensitive grammar (type 1: every production $\alpha\to\beta$ has $|\beta|\geq|\alpha|$, except possibly $Z\to\lambda$).
+\textbf{Proof} (Theorem 11.3): Let $G=\langle\Sigma,\Omega,Z,P\rangle$ be a
+context-sensitive grammar. We follow the construction discussed just before
+Theorem~11.3, namely the two-tape machine used in the proof of
+Theorem~11.2.
 
-Construct a nondeterministic LBA $M$ that accepts $L(G)$:
-- Tape: input $x$ of length $n$.
-- $M$ nondeterministically simulates derivations of $G$ in \emph{reverse}: it starts with the candidate string $x$ and applies productions in reverse ($\beta \to \alpha$, which decreases string length since $|\alpha|\leq|\beta|$), trying to reduce back to $Z$.
-- Since productions only decrease (or maintain) length in reverse, the tape never needs to grow beyond the original input length $n$.
-- If $M$ successfully reduces to $Z$, accept; otherwise reject.
+On input $x$ of length $n$, tape 1 holds $x$ and is never altered. Tape 2 starts
+with just the start symbol $Z$. The finite control nondeterministically chooses
+a production from $P$ and a position in the current sentential form on tape 2,
+and applies that production exactly as in Theorem~11.2.
 
-Since all computations stay within the original $n$ cells, $M$ is a linear bounded automaton. \qed
+The only extra observation needed for a type~1 grammar is that, once the machine
+has begun deriving a nonempty word, the length of the sentential form can never
+decrease. Therefore any branch on which tape 2 ever becomes longer than $n$ can
+be abandoned immediately, because it can never later shrink back to the target
+word $x$. Thus every surviving computation keeps tape 2 within $n$ cells.
+
+If $x=\lambda$, the only successful derivation is the special initial production
+$Z\to\lambda$. If $x\neq\lambda$, the machine accepts exactly when some sequence
+of guessed productions makes tape 2 agree with tape 1. So the same construction
+is now bounded by a linear amount of tape, and hence is a nondeterministic LBA.
+Therefore every type~1 language is a LBL. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Convert LBA $M$ to three-track strict LBA.}
 
 \begin{enumerate}
 \item \textbf{New alphabets}:
-- The three-track tape has symbols $(a, b, c) \in (\Sigma\cup\{\pmb{B}\}) \times \{L,R,\pmb{B}\} \times \{L,R,\pmb{B}\}$, where:
-  - Track 1: original tape content.
-  - Track 2: left-boundary marker ($L$ in the leftmost cell, $\pmb{B}$ elsewhere).
-  - Track 3: right-boundary marker ($R$ in the rightmost cell of input, $\pmb{B}$ elsewhere).
+- Track 1 carries the old tape alphabet $\Gamma$, not merely the input alphabet
+$\Sigma$.
+- Track 2 marks the left end of the original word.
+- Track 3 marks the right end of the original word.
+
+It is convenient to compress these three tracks into a single alphabet
+\[
+\Gamma'=\Gamma\cup\{\overline{d},\underline{d}\mid d\in\Gamma\},
+\]
+where $\overline{d}$ means that $d$ is currently in the leftmost cell of the
+word and $\underline{d}$ means that $d$ is currently in the rightmost cell. For
+words of length at least $2$, these two markers occur in different cells.
 
 \item \textbf{New transitions}: For any old transition $\delta(s,a) = (s',a',d)$ in $M$:
-  - The new TM reads the three-track symbol at the current head position.
-  - It writes the new three-track symbol (updating track 1, preserving tracks 2 and 3).
-  - If the head would move left from the leftmost cell (track 2 = $L$) or right from the rightmost (track 3 = $R$), the new TM instead enters a unique ``boundary error'' state and rejects.
-  - This ensures the head never leaves the input region.
+  - If the old move stays inside the word, copy it directly, preserving any
+  overbar or underline markers on the end cells.
+  - If the old machine would move left off the word to scan the left delimiter,
+  replace that excursion by a short detour through a new state that records
+  ``the left delimiter is being scanned.'' Because the delimiter can only return
+  to the word in one way, this detour is unique.
+  - Do the symmetric construction on the right end of the word for moves that
+  would have scanned the right delimiter.
+
+In other words, the strict machine does \emph{not} reject when the old machine
+would have stepped onto a delimiter; instead, it simulates the unique
+delimiter-scan-and-return behavior without ever leaving the marked end cells.
 
 \item \textbf{Proof of equivalence} (for $|x|\geq 2$): By induction on the number of steps:
-  - The strict LBA $M'$ exactly simulates $M$ as long as the head stays within boundaries.
-  - Since $M$ is a linear bounded automaton, it never leaves the input region (this is the definition of LBA).
-  - Therefore the boundary checks never trigger, and $M'$ accepts exactly when $M$ does. \qed
+- Every ordinary move of $M$ is copied verbatim by $M'$.
+- Every two-step excursion of $M$ from an end cell onto a delimiter and back is
+replaced by the corresponding unique boundary detour in $M'$.
+- Hence the two machines visit corresponding configurations inside the word and
+accept exactly the same words.
+
+So for every input of length at least $2$, the strict three-track machine
+accepts exactly when the original LBA does. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Handle strings of length 1; strict LBA for type 1 languages.}
 
 \begin{enumerate}
-\item \textbf{Strings of length 1}: Add a special symbol $\overline{\underline{\pmb{b}}}$ that represents ``left boundary AND right boundary'' (single-cell input). The modified machine enters a special mode when it sees $\overline{\underline{\pmb{b}}}$ and handles single-character inputs by appropriate transitions that do not require movement.
+\item \textbf{Strings of length 1}: For each tape symbol $d$, add a special symbol
+$\overline{\underline{d}}$ meaning ``this cell is both the leftmost and the
+rightmost cell.'' The modified strict LBA treats these symbols as the obvious
+single-cell analogues of $\overline{d}$ and $\underline{d}$.
 
-\item \textbf{Strict LBA accepting $\lambda$}: The empty string requires the initial scan of a blank cell (since the tape head must look at something). Define: if the initial tape cell is blank, the strict LBA interprets this as $\lambda$ and immediately decides acceptance based on whether $\lambda\in L$. For type 1 grammars that allow $Z\to\lambda$ (the only way $\lambda\in L$), the strict LBA accepts the blank tape. All other computations proceed as before. \qed
+\item \textbf{Strict LBA accepting $\lambda$}: If the initial scan is of a blank
+cell, interpret that as the empty input and have the machine decide immediately
+whether $\lambda$ should be accepted. After that special start-up case, the
+strict machine proceeds exactly as in Exercise~11.13 and never actively moves to
+a cell outside the input. Thus every type~1 language can be recognized by a
+strict LBA in this slightly relaxed sense. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Prove (Theorem 11.4) by induction: TM computation iff LBA grammar derivation.}
 
-\textbf{Statement}: $\alpha s \beta \Dvdash \gamma t\omega$ in $M$ (Turing machine) iff $[\#^i\alpha s\beta\#^j] \DRightarrow [\#^m\gamma t\omega\#^n]$ (in the grammar constructed for Theorem 11.4), for some $i,j,m,n\in\NN$.
+\textbf{Induction statement}: For every $k\geq 0$,
+\[
+\alpha s\beta \Dvdash^k \gamma t\omega
+\]
+if and only if there exist $i,j,m,n\in\NN$ such that
+\[
+[\#^i\alpha s\beta\#^j] \DRightarrow^k [\#^m\gamma t\omega\#^n],
+\]
+where the derivation uses only class~2 productions.
 
-\textbf{Base} (0 transitions): $\alpha s\beta \Dvdash \alpha s\beta$, and $[\#^i\alpha s\beta\#^j]\DRightarrow[\#^i\alpha s\beta\#^j]$ (no derivation steps). \checkmark
+\textbf{Base case} ($k=0$): $\alpha s\beta \Dvdash^0 \alpha s\beta$, and likewise
+\[
+[\#^i\alpha s\beta\#^j] \DRightarrow^0 [\#^i\alpha s\beta\#^j].
+\]
 
-\textbf{Step}: If $\alpha s\beta \vdash \gamma t\omega$ by one TM transition, the grammar applies the corresponding production (which is a context-sensitive rule encoding the TM transition). The $\#$ boundary markers are adjusted as needed (if the head moves to a new blank cell, a $\#$ is converted). By induction, chaining $k$ steps: $k$ TM transitions correspond to $k$ grammar derivation steps. \qed
+\textbf{Induction step}: Assume the statement holds for $k$. Suppose
+\[
+\alpha s\beta \Dvdash^{k+1} \mu u\nu.
+\]
+Then there is an intermediate configuration $\gamma t\omega$ with
+\[
+\alpha s\beta \Dvdash^k \gamma t\omega \Dvdash \mu u\nu.
+\]
+By the induction hypothesis,
+\[
+[\#^i\alpha s\beta\#^j] \DRightarrow^k [\#^m\gamma t\omega\#^n]
+\]
+for suitable $i,j,m,n$. The final Turing-machine move is produced by one
+transition of $M$, and Definition~11.8 includes exactly one corresponding class~2
+production. Applying that production yields
+\[
+[\#^m\gamma t\omega\#^n] \DRightarrow [\#^p\mu u\nu\#^q]
+\]
+for some $p,q\in\NN$, depending only on whether the head has just moved onto a
+new blank cell. Hence
+\[
+[\#^i\alpha s\beta\#^j] \DRightarrow^{k+1} [\#^p\mu u\nu\#^q].
+\]
+
+The converse is identical: every class~2 production encodes one legal move of
+$M$, so a derivation of length $k+1$ factors into a derivation of length $k$
+followed by one TM move. Therefore the claim holds for all $k$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{General induction statement for Theorem 11.5.}
 
-\textbf{Theorem 11.5} establishes that every LBL is a type 1 (context-sensitive) language.
+\textbf{Theorem 11.5} establishes that every LBL is a type~1 language.
 
-\textbf{Inductive statement}: For all $k \geq 0$, for all LBA configurations $C = (s, \alpha, i)$ (state $s$, tape $\alpha$, head at position $i$) reachable from the initial configuration on input $x$ in at most $k$ steps:
+\textbf{General induction statement}: Fix a strict LBA $B$ and a nonempty input
+word of length at least $2$, written $\pmb{a}x\pmb{b}$. For each configuration
+$C$ of $B$, let $\phi(C)$ be the corresponding sentential form in which the
+scanned tape symbol carries the current state as a subscript, while the first
+and last tape symbols retain their overbar and underline markers. Then for every
+$k\geq 0$ and every configuration $C$,
+\[
+s_0\pmb{a}x\pmb{b} \Dvdash^k C
+\quad\text{iff}\quad
+\overline{\pmb{a}}_0x\underline{\pmb{b}} \DRightarrow^k \phi(C),
+\]
+where only class~2 productions are used.
 
-$C$ is reachable in $k$ LBA steps from the initial configuration iff the sentential form $\phi_C$ (encoding $C$ as a string of nonterminals in the grammar for $L(M)$) is derivable in $k$ grammar steps from the start symbol.
+\textbf{Base case} ($k=0$): The initial configuration is exactly
+$s_0\pmb{a}x\pmb{b}$, and its encoding is
+$\overline{\pmb{a}}_0x\underline{\pmb{b}}$.
 
-\textbf{Proof by induction on $k$}:
-- Base ($k=0$): The initial configuration corresponds to the start of the grammar derivation. \checkmark
-- Step: Each LBA transition corresponds to a grammar production. By the IH, all $k$-step reachable configurations correspond to $k$-step derivations; adding one more LBA step extends to $k+1$ on both sides. \qed
+\textbf{Induction step}: Assume the claim for $k$. If
+\[
+s_0\pmb{a}x\pmb{b} \Dvdash^{k+1} C',
+\]
+choose $C$ with
+\[
+s_0\pmb{a}x\pmb{b} \Dvdash^k C \Dvdash C'.
+\]
+By the induction hypothesis,
+\[
+\overline{\pmb{a}}_0x\underline{\pmb{b}} \DRightarrow^k \phi(C).
+\]
+Definition~11.9 gives one class~2 production for each possible move of the
+strict LBA, including the boundary cases where the scanned symbol is marked with
+an overbar or underline. Hence the last move $C\Dvdash C'$ is mirrored by one
+derivation step $\phi(C)\DRightarrow\phi(C')$. The converse direction is the
+same, since every class~2 production encodes a legal move of $B$ and nothing
+else. This is the induction statement needed in the proof of
+Theorem~11.5. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Type 0 language Kleene closure.}
@@ -262,60 +421,151 @@ $C$ is reachable in $k$ LBA steps from the initial configuration iff the sentent
 \begin{enumerate}
 \item \textbf{Flaw in $G_* = \langle\Sigma,\Omega\cup\{W\},W,P\cup\{W\to\lambda,W\to WW,W\to Z\}\rangle$}:
 
-The production $W \to WW$ in combination with $W \to Z \to \ldots$ may generate strings with nonterminals from different ``copies'' of the grammar interfering with each other. Specifically, type 0 grammars can have productions $\alpha\beta \to \gamma$ (context-sensitive or unrestricted) where $\alpha$ and $\beta$ come from different parts of the derivation. With two independent copies of $G$ (from $W\to WW$) sharing nonterminals, the productions of one copy may interact with nonterminals of the other copy in unintended ways.
+The difficulty is that the two occurrences of $Z$ generated by $W\to WW$ are
+placed \emph{adjacent} to one another. Since the productions of a type~0 grammar
+may inspect several neighboring symbols at once, a production from $P$ can then
+act across the boundary between the two intended copies. So the construction can
+generate strings that are not concatenations of words from $L(G)$.
 
-\item \textbf{Example}: Let $G = \langle\{A,B,C\},\{a,b\},Z,\{Z\to AB, AB\to BA, A\to a, B\to b\}\rangle$. Then $L(G) = \{ab, ba\}$. With $G_*$: $W\to WW\to ZZ\to ABAB$. The productions of $G$ might apply to the combined string $ABAB$ in unintended ways: $AB\to BA$ could apply to either the first $AB$ or the second $AB$ or the internal pair $BA$ ($B$ from copy 1 and $A$ from copy 2), producing incorrect strings.
+\item \textbf{Example}: Let
+\[
+G=\langle\{a,b\},\{Z,A,B\},Z,\{Z\to AB,\ A\to\lambda,\ B\to b,\ BA\to a\}\rangle.
+\]
+For a single copy of $Z$, the rule $BA\to a$ is unusable, so $L(G)=\{b\}$. But in
+the naive construction,
+\[
+W\Rightarrow WW\Rightarrow ZZ\Rightarrow ABAB,
+\]
+and now the middle substring $BA$ straddles the boundary between the two copies.
+Applying $BA\to a$ there gives
+\[
+ABAB\Rightarrow AaB\Rightarrow ab.
+\]
+Since $ab\notin\{b\}^*$, the naive construction is wrong.
 
-\item \textbf{Correct $G_*$}: To avoid cross-copy interference, rename nonterminals: for each copy of $G$ used in the derivation, use a fresh copy of all nonterminals (with indices). Alternatively, use the Turing machine characterization: since \TSIG\ is closed under concatenation and Kleene closure can be simulated by nondeterministically splitting the input and recognizing each piece.
+\item \textbf{Correct $G_*$}: Insert a separator that does not occur in any
+left-hand side of a rule from $P$. Choose a new nonterminal $\#$ with
+$\#\notin\Gamma\cup\Sigma$, and define
+\[
+G_*=\langle\Sigma,\Gamma\cup\{W,\#\},W,P_*\rangle,
+\]
+where
+\[
+P_* = P\cup\{W\to\lambda,\ W\to Z,\ W\to Z\#W,\ \#\to\lambda\}.
+\]
+The symbol $\#$ separates one copy of $G$ from the next, so productions from $P$
+cannot straddle two copies.
 
-Formally: Let $G_* = \langle\Sigma,\Omega\cup\{W,W'\},W,P'\rangle$ where $P'$ contains a \emph{fresh} copy $P_i$ of $P$ for each ``level'' of recursion, with nonterminals marked to prevent interaction. The construction ensures each derivation of a word from $L(G)$ uses an isolated copy of $G$.
+\item \textbf{Proof}: If
+\[
+w=w_1w_2\cdots w_k\qquad\text{with each }w_i\in L(G),
+\]
+then
+\[
+W\Rightarrow Z\#W\Rightarrow Z\#Z\#W\Rightarrow\cdots\Rightarrow
+Z\#Z\#\cdots\#Z
+\]
+with $k$ copies of $Z$, each copy derives its own $w_i$ by the productions in
+$P$, and finally all separators disappear by repeated use of $\#\to\lambda$.
+Hence $w\in L(G_*)$.
 
-\item \textbf{Proof}: $w \in L(G_*)$ iff $w$ can be written as $w = w_1 w_2\cdots w_k$ with each $w_i \in L(G)$ iff $W \DRightarrow w$ in $G_*$ (by the isolated copy construction). \qed
+Conversely, any derivation in $G_*$ first creates a string
+$Z\#Z\#\cdots\#Z$, and the only productions that can affect symbols between two
+occurrences of $\#$ are the productions from $P$ applied within that block, or
+the final erasures of $\#$. Since no left-hand side from $P$ contains $\#$, the
+copies do not interact. Therefore every terminal word derived from $W$ is a
+concatenation of finitely many words from $L(G)$. So
+\[
+L(G_*)=L(G)^*.
+\]
+\qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{\TSIG\ is closed under various operations.}
 
 \begin{enumerate}
-\item \textbf{Homomorphism}: Given $L\in\TSIG$ (TM $M$ accepting $L$) and homomorphism $h$, construct TM $M'$ that accepts $h(L)$: $M'$ nondeterministically guesses a string $w$ and verifies $h(w) = x$ (the input) and $w\in L(M)$. Alternatively, directly: for $h(L)$, the TM $M'$ on input $y$ nondeterministically guesses an $x$ with $h(x)=y$ and simulates $M$ on $x$.
+\item \textbf{Homomorphism}: Let $M$ accept $L$, and let $h:\Sigma\to\Gamma^*$ be
+a homomorphism. On input $y\in\Gamma^*$, enumerate the words of $\Sigma^*$ in
+lexicographic order (Exercise~11.7), and dovetail the simulations of $M$ on
+those words. Whenever one simulation accepts some $x$, compute $h(x)$ and
+compare it with $y$; if $h(x)=y$, accept. If $y\in h(L)$, some $x\in L$ with
+$h(x)=y$ will eventually be found, so $h(L)\in\TSIG$.
 
-\item \textbf{Inverse homomorphism}: $M'$ on input $x$ computes $h(x)$ and simulates $M$ on $h(x)$. Since $h$ is a computable function (homomorphisms are computable), this works. So $h^{-1}(L)\in\TSIG$.
+\item \textbf{Inverse homomorphism}: On input $x$, compute $h(x)$ and simulate
+$M$ on $h(x)$. Then the new machine accepts exactly the words in
+$h^{-1}(L)$.
 
-\item \textbf{Concatenation}: Given TMs $M_1$ and $M_2$ for $L_1$ and $L_2$, a nondeterministic TM $M$ for $L_1\cdot L_2$ guesses a split point $x=uv$, simulates $M_1$ on $u$ and $M_2$ on $v$, accepts if both accept.
+\item \textbf{Concatenation}: Let $M_1$ and $M_2$ accept $L_1$ and $L_2$. On
+input $y$, list all splits $y=uv$. There are only finitely many. Dovetail the
+simulations of $M_1$ on each $u$ and $M_2$ on the corresponding $v$, and accept
+as soon as one pair both accepts. This semidecides $L_1L_2$.
 
-\item \textbf{Substitution}: For each symbol $a\in\Sigma$, let $L_a\in\TSIG$. The substitution $L[a\mapsto L_a]$ replaces each $a$ in words of $L$ with words from $L_a$. A nondeterministic TM handles this by guessing the substitution. \qed
+\item \textbf{Substitution}: Let $s$ be a substitution with $s(\pmb{a})\in\TSIG$
+for each $\pmb{a}\in\Sigma$, and let $M$ accept $L$. On input $y$, enumerate all
+pairs consisting of a word $x=\pmb{a}_1\cdots\pmb{a}_k\in\Sigma^*$ and a
+factorization $y=y_1\cdots y_k$ (allowing some $y_i=\lambda$). For each such
+pair, dovetail the computation of $M$ on $x$ together with the computations of
+machines for $s(\pmb{a}_i)$ on $y_i$. Accept when one pair makes all these
+machines accept. That happens exactly when $y\in s(L)$. Hence \TSIG\ is closed
+under substitution. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{Equivalence of acceptance modes $L_1$ and $L_2$.}
+\item \textbf{Equivalence of the acceptance modes $L_1$, $L_2$, and $L_3$.}
 
 \begin{enumerate}
-\item \textbf{$L(M)=L_1(M) \Rightarrow L(M)=L_2(M)$}: Given TM $A_1$ with $L = L_1(A_1)$ (accept = halt), construct $A_2$ with $L = L_2(A_2)$ (accept = halt with $\pmb{Y}$ on tape).
+\item \textbf{$L_1(A_1)$ to $L_2(A_2)$}: Let
+$A_1=\langle\Sigma,\Gamma,S,s_0,\delta\rangle$ and suppose $L=L_1(A_1)$. Form
+$A_2$ by adjoining a short clean-up routine with new states $q_L,q_R,h'$. Every
+old transition that formerly entered the halt state $h$ is redirected to $q_L$.
+In $q_L$, the machine sweeps to the left end of the nonblank portion of the
+tape; in $q_R$, it erases everything while moving right until the first blank;
+then it writes a single $\pmb{Y}$ and enters $h'$. Thus $A_2$ halts with
+$\pmb{Y}$ on the tape exactly on the inputs for which $A_1$ halts at all. Hence
+$L_2(A_2)=L_1(A_1)=L$.
 
-Modification: When $A_1$ enters the halt state:
-- If $A_1$ was in a final/accepting configuration: $A_2$ erases the tape and writes $\pmb{Y}$.
-- If $A_1$ was in a rejecting halt: $A_2$ writes $\pmb{N}$.
-
-For non-halting $A_1$ computations: same behavior. Since $A_1$ halts on inputs in $L$ (by $L_1$), $A_2$ also halts on those inputs and writes $\pmb{Y}$. For inputs not in $L$: $A_1$ may not halt; $A_2$ has the same non-halting behavior, so $L_2(A_2) = L_1(A_1) = L$. \qed
-
-\item \textbf{$L(M)=L_2(M) \Rightarrow L(M)=L_3(M)$}: Given TM $A_2$ with $L = L_2(A_2)$ (accept = halt with $\pmb{Y}$), construct $A_3$ with $L = L_3(A_3)$ (accept = halt with blank tape).
-
-Modification: When $A_2$ halts with $\pmb{Y}$: $A_3$ erases the entire tape.
-When $A_2$ halts with $\pmb{N}$: $A_3$ writes some non-blank symbol.
-Then $L_3(A_3)$ = strings for which $A_3$ halts on blank tape = strings for which $A_2$ wrote $\pmb{Y}$ = $L_2(A_2) = L$. \qed
+\item \textbf{$L_2(A_2)$ to $L_3(A_3)$}: Let $A_2$ be a machine with
+$L=L_2(A_2)$. Again redirect each old transition to the halt state into a new
+inspection state. That routine scans the tape once to determine whether any
+$\pmb{Y}$ occurs. If one is found, it erases the tape, writes a single
+$\pmb{Y}$, and halts. If no $\pmb{Y}$ is found, it halts with some other final
+tape contents, for example a single $\pmb{N}$. Therefore $A_3$ halts with
+$\pmb{Y}$ at the right end of the tape exactly when $A_2$ would have halted with
+$\pmb{Y}$ somewhere on the tape. So $L_3(A_3)=L_2(A_2)=L$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{\OSIG\ (halting TM languages) is closed under the same operations.}
+\item \textbf{\OSIG\ (context-sensitive languages) is closed under the same operations.}
+
+For a fixed input, an LBA has only finitely many configurations, so any LBA can
+be modified to halt by rejecting as soon as a configuration repeats. Also, for
+context-sensitive languages the standard closure statements for homomorphism and
+substitution are understood in the \emph{nonerasing} case. That is the
+interpretation used in parts (a) and (d).
 
 \begin{enumerate}
-\item \textbf{Homomorphism}: Given a halting TM $M$ for $L\in\OSIG$, construct a halting TM for $h(L)$: on input $y$, nondeterministically enumerate all $x$ with $h(x)=y$ in lexicographic order. For each $x$, simulate $M$ on $x$ (which halts since $M$ is a halting TM). If $M$ accepts some $x$, accept $y$; if all $x$ are rejected, reject $y$. Since $h$ is a homomorphism, the set of $x$ with $h(x)=y$ is finite and computable. The TM halts on all inputs.
+\item \textbf{Homomorphism}: Let $h:\Sigma\to\Gamma^+$ be nonerasing and let
+$L\in\OSIG$. By Corollary~11.2 there is a halting LBA $B$ for $L$. On input
+$y\in\Gamma^*$, enumerate all $x\in\Sigma^*$ with $h(x)=y$. Because $h$ is
+nonerasing, every such $x$ has length at most $|y|$, so only finitely many words
+need be checked. Run $B$ on each of them and accept iff one is accepted. This
+halts on every input, so $h(L)\in\OSIG$.
 
-\item \textbf{Inverse homomorphism}: On input $x$, compute $h(x)$ (finite computation), simulate halting TM $M$ on $h(x)$; since $M$ halts on all inputs, the whole machine halts.
+\item \textbf{Inverse homomorphism}: On input $x$, compute $h(x)$ and run the
+halting machine for $L$ on that word. Therefore $h^{-1}(L)\in\OSIG$.
 
-\item \textbf{Concatenation}: Nondeterministically split input $x=uv$ (finite choices), simulate halting TMs $M_1$ on $u$ and $M_2$ on $v$ (both halt). Accept if both accept. The constructed TM halts on all inputs.
+\item \textbf{Concatenation}: Given halting machines for $L_1$ and $L_2$, list all
+splits $y=uv$ of the input and test each one. Since the list of splits is finite
+and both machines halt on every input, this decides $L_1L_2$.
 
-\item \textbf{Substitution}: For each $a$, the substituted language $L_a\in\OSIG$ has a halting TM. The substitution machine nondeterministically applies substitutions and simulates all relevant halting TMs, which all halt. Hence the combined machine halts. \qed
+\item \textbf{Substitution}: Let $s$ be a nonerasing substitution with
+$s(\pmb{a})\in\OSIG$ for each $\pmb{a}\in\Sigma$. On input $y$, enumerate all
+factorizations $y=y_1\cdots y_k$ into nonempty pieces and all words
+$x=\pmb{a}_1\cdots\pmb{a}_k\in\Sigma^k$ of the same length $k$. Because the pieces are
+nonempty, only finitely many such choices exist. Test whether $x\in L$ and
+$y_i\in s(\pmb{a}_i)$ for every $i$; accept iff one choice works. Hence
+\OSIG\ is closed under nonerasing substitution. \qed
 \end{enumerate}
 
 \end{enumerate}
