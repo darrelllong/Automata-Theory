@@ -495,11 +495,49 @@ $\OBAR(x_1x_2\cdots x_m)=\pmb{x}\cdot x_1\cdots x_{m-1}$ (output is $\pmb{x}$ fo
 
   \item \textbf{Mealy machine diagram:} Three states; $s_0$ outputs $\pmb{x}$ on both inputs; $s_a$ outputs $\pmb{a}$ on both inputs; $s_b$ outputs $\pmb{b}$ on both inputs.
 
-  \item \textbf{Moore sextuple:}  Same states but output is determined by state:
-  $\omega(s_0)=\pmb{x},\ \omega(s_a)=\pmb{a},\ \omega(s_b)=\pmb{b}$.
-  (The Moore machine outputs at the current state, not the transition.)
+  \item \textbf{Moore sextuple:}  A Moore machine cannot use the same three
+  states, because under Definition~7.17 the symbol printed after reading the
+  first input is the output attached to the \emph{destination} state.  A
+  correct Moore machine is
+  \[
+    A=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},Q,q_0,\delta',\eta\rangle,
+  \]
+  where
+  \[
+    Q=\{q_0,q_{x,a},q_{x,b},q_{a,a},q_{a,b},q_{b,a},q_{b,b}\}.
+  \]
+  Here the first component records the symbol to be printed \emph{now}, and the
+  second component records the most recent input symbol for the next step.  The
+  output function is
+  \[
+    \eta(q_0)=\pmb{x},\qquad
+    \eta(q_{x,a})=\eta(q_{x,b})=\pmb{x},
+  \]
+  \[
+    \eta(q_{a,a})=\eta(q_{a,b})=\pmb{a},\qquad
+    \eta(q_{b,a})=\eta(q_{b,b})=\pmb{b}.
+  \]
+  The transition function is
+  \[
+    \delta'(q_0,\pmb{a})=q_{x,a},\qquad
+    \delta'(q_0,\pmb{b})=q_{x,b},
+  \]
+  and, for $u\in\{\pmb{x},\pmb{a},\pmb{b}\}$ and
+  $v,\sigma\in\{\pmb{a},\pmb{b}\}$,
+  \[
+    \delta'(q_{u,v},\sigma)=q_{v,\sigma}.
+  \]
+  Thus the first output is $\pmb{x}$, and each later output is the previous
+  input symbol.
 
-  \item \textbf{Moore machine diagram:} Three states with state-output labels; same transition structure.
+  \item \textbf{Moore machine diagram:}  The diagram is the graph of the
+  sextuple in part~(c): the start state is $q_0/\pmb{x}$; it goes to
+  $q_{x,a}/\pmb{x}$ on input $\pmb{a}$ and to $q_{x,b}/\pmb{x}$ on input
+  $\pmb{b}$; and every state $q_{u,v}$ has arrows
+  \[
+    q_{u,v}\xrightarrow{\pmb{a}}q_{v,\pmb{a}},\qquad
+    q_{u,v}\xrightarrow{\pmb{b}}q_{v,\pmb{b}}.
+  \]
 \end{enumerate}
 
 %% 7.21
@@ -896,27 +934,62 @@ $\OBAR(x_1\cdots x_m)=\pmb{xx}x_1\cdots x_{m-2}$.
 
   \item \textbf{Moore sextuple:}
 
-  Let
+  A correct Moore machine must distinguish the ``first input seen'' stage from
+  the ``two most recent inputs known'' stage.  One convenient choice is
   \[
-    A=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},S,s_{xx},\delta,\eta\rangle,
+    A=\langle\{\pmb{a},\pmb{b}\},\{\pmb{a},\pmb{b},\pmb{x}\},Q,q_0,\delta',\eta\rangle,
   \]
-  where $S$ and $\delta$ are exactly as above, and the Moore output function is
+  where
   \[
-    \eta(s_{uv})=u.
+    Q=\{q_0\}\cup\{q_{x,u}\mid u\in\{\pmb{a},\pmb{b}\}\}
+      \cup\{q_{c,uv}\mid c\in\{\pmb{x},\pmb{a},\pmb{b}\},\
+      u,v\in\{\pmb{a},\pmb{b}\}\}.
   \]
-  Since the destination state records the two most recent input symbols, its
-  first component is precisely the letter seen two steps earlier.
+  The intended meanings are:
+  $q_{x,u}$ means ``print $\pmb{x}$ and remember the one symbol $u$,'' while
+  $q_{c,uv}$ means ``print $c$ and remember the last two input symbols $uv$.'' 
+  The output function is
+  \[
+    \eta(q_0)=\pmb{x},\qquad
+    \eta(q_{x,u})=\pmb{x},
+  \]
+  \[
+    \eta(q_{c,uv})=c.
+  \]
+  The transition function is
+  \[
+    \delta'(q_0,\sigma)=q_{x,\sigma}
+    \qquad(\sigma\in\{\pmb{a},\pmb{b}\}),
+  \]
+  \[
+    \delta'(q_{x,u},\sigma)=q_{x,u\sigma}
+    \qquad(u,\sigma\in\{\pmb{a},\pmb{b}\}),
+  \]
+  and, for $c\in\{\pmb{x},\pmb{a},\pmb{b}\}$ and
+  $u,v,\sigma\in\{\pmb{a},\pmb{b}\}$,
+  \[
+    \delta'(q_{c,uv},\sigma)=q_{u,v\sigma}.
+  \]
+  This prints $\pmb{x}$ on the first two inputs and thereafter prints the symbol
+  seen two steps earlier.
 
   \item \textbf{Moore machine diagram:}
 
-  Use the same transition graph as in part~(b), but label each state by its
-  Moore output:
+  The diagram is the graph of the sextuple above.  The start state is
+  $q_0/\pmb{x}$; from it,
   \[
-    s_{xx}/\pmb{x},\qquad s_{xa}/\pmb{x},\qquad s_{xb}/\pmb{x},
+    q_0\xrightarrow{\pmb{a}}q_{x,\pmb{a}},\qquad
+    q_0\xrightarrow{\pmb{b}}q_{x,\pmb{b}}.
   \]
+  Next,
   \[
-    s_{aa}/\pmb{a},\qquad s_{ab}/\pmb{a},\qquad
-    s_{ba}/\pmb{b},\qquad s_{bb}/\pmb{b}.
+    q_{x,u}\xrightarrow{\sigma}q_{x,u\sigma}
+    \qquad(u,\sigma\in\{\pmb{a},\pmb{b}\}),
+  \]
+  and every state $q_{c,uv}$ has arrows
+  \[
+    q_{c,uv}\xrightarrow{\pmb{a}}q_{u,v\pmb{a}},\qquad
+    q_{c,uv}\xrightarrow{\pmb{b}}q_{u,v\pmb{b}}.
   \]
 \end{enumerate}
 
@@ -1059,19 +1132,92 @@ $\OBAR(x_1\cdots x_m)=\pmb{xx}x_1\cdots x_{m-2}$.
 
 %% 7.34
 \item \begin{enumerate}[(a)]
-  \item \textbf{$f_1$ is FTD:}  Define Mealy machine $M$ with states $\{\text{read1},\text{read0}\}$, initial state $\text{start}$ (extra state for first letter):
-  From $\text{start}$: on $\pmb{1}$, go to $\text{read1}$ with output $\pmb{y}$; on $\pmb{0}$, go to $\text{read0}$ with output $\pmb{n}$.
-  From $\text{read1}$: on any input, stay in $\text{read1}$, output $\pmb{y}$.
-  From $\text{read0}$: on any input, stay in $\text{read0}$, output $\pmb{n}$.
-  Then $\OBAR(s_{\text{start}},\pmb{a}_1\cdots\pmb{a}_m)=\pmb{y}^m$ if $\pmb{a}_1=\pmb{1}$, $\pmb{n}^m$ otherwise.  Hence $f_1$ is FTD.
+  \item \textbf{$f_1$ is FTD:}  Use the Mealy machine
+  \[
+    M=\langle\{\pmb{0},\pmb{1}\},\{\pmb{y},\pmb{n}\},
+    \{\text{start},\text{read1},\text{read0}\},
+    \text{start},\delta,\omega\rangle,
+  \]
+  where
+  \[
+    \delta(\text{start},\pmb{1})=\text{read1},\qquad
+    \delta(\text{start},\pmb{0})=\text{read0},
+  \]
+  \[
+    \delta(\text{read1},\pmb{0})=\delta(\text{read1},\pmb{1})=\text{read1},
+  \]
+  \[
+    \delta(\text{read0},\pmb{0})=\delta(\text{read0},\pmb{1})=\text{read0},
+  \]
+  and
+  \[
+    \omega(\text{start},\pmb{1})=\pmb{y},\qquad
+    \omega(\text{start},\pmb{0})=\pmb{n},
+  \]
+  \[
+    \omega(\text{read1},\pmb{0})=\omega(\text{read1},\pmb{1})=\pmb{y},
+  \]
+  \[
+    \omega(\text{read0},\pmb{0})=\omega(\text{read0},\pmb{1})=\pmb{n}.
+  \]
+  After the first input, the machine enters a state that remembers whether that
+  first symbol was $\pmb{1}$ or $\pmb{0}$ and keeps printing $\pmb{y}$ or
+  $\pmb{n}$ forever.  Hence it computes $f_1$.
 
-  \item \textbf{$f_2$ is not FTD:}  By the pumping lemma for FTD functions (Exercise~7.5): for any $n$ and $x=\pmb{0}^n\pmb{1}$ (length $n+1>n$), if $f_2$ were FTD with $n$ states, we pump the $\pmb{0}$ block.  $f_2(\pmb{0}^n\pmb{1})=\pmb{nn}\cdots\pmb{ny}$ ($n$ $\pmb{n}$s and one $\pmb{y}$); but $f_2(\pmb{0}^{n+k}\pmb{1})=\pmb{n}^{n+k}\pmb{y}$ for any $k$.  The last letter of the output changes from $\pmb{n}$ to $\pmb{y}$ depending on the last input letter, which requires the machine to ``remember'' the entire input---impossible with finite memory.  Formally: any two words differing only in the last letter (one ending in $\pmb{0}$, one in $\pmb{1}$) must have different output strings, but for any $n$-state machine, words of length $>n$ that agree on a prefix must produce the same output on that prefix; however, $f_2(\pmb{0}^m\pmb{1})$ and $f_2(\pmb{0}^m\pmb{0})$ disagree on the last output character.  This means the machine must distinguish $m+1$ different lengths of leading zeros, requiring unbounded state space. \qed
+  \item \textbf{$f_2$ is not FTD:}  Assume $f_2$ were FTD.  Then Exercise~7.36
+  would apply: for every $n$ and every $x\in\Sigma^n$, the first $n$ letters of
+  $f_2(xy)$ and $f_2(xz)$ must agree for all suffixes $y,z$.
+
+  Take $x=\pmb{0}^n$.  Then
+  \[
+    f_2(\pmb{0}^n\pmb{0})=\pmb{n}^{n+1},
+    \qquad
+    f_2(\pmb{0}^n\pmb{1})=\pmb{y}^{n+1}.
+  \]
+  These two input strings agree on their first $n$ letters, but the first $n$
+  letters of the outputs are completely different.  This contradicts
+  Exercise~7.36.  Therefore $f_2$ is not FTD. \qed
 \end{enumerate}
 
 %% 7.35
 \item \textbf{$f_3$ is not FTD.}
 
-$f_3$ maps each input to the first $|x|$ characters of the fixed infinite sequence $\pmb{010010001\ldots}$.  The number of $\pmb{0}$s between successive $\pmb{1}$s grows without bound.  For any $n$-state Mealy machine, the output sequence must eventually be periodic with period at most $n$.  But the gaps between $\pmb{1}$s in the infinite sequence grow arbitrarily, so $f_3$ is not periodic---hence not implementable by a finite machine.  More precisely: if $f_3$ were FTD, by the pumping lemma, processing a word of length $>n$ would pump a cycle; but cycling would repeat a finite gap between $\pmb{1}$s, preventing the ever-growing gaps.  Contradiction. \qed
+Assume $f_3$ were FTD, and let $M$ be a Mealy machine with $n$ states that
+computes it.  Since $f_3$ depends only on the input length, we may feed $M$ the
+unary inputs
+\[
+  \pmb{a},\pmb{a}^2,\pmb{a}^3,\ldots
+\]
+and examine the resulting infinite output sequence
+\[
+  \pmb{010010001000010^5 10^6 10^7\cdots}.
+\]
+Among the states reached after reading
+\[
+  \lambda,\pmb{a},\pmb{a}^2,\ldots,\pmb{a}^n,
+\]
+some state must repeat.  So there exist integers $0\le i<j\le n$ such that
+\[
+  \DBAR(s_0,\pmb{a}^i)=\DBAR(s_0,\pmb{a}^j).
+\]
+Let
+\[
+  u=\pmb{a}^i,\qquad v=\pmb{a}^{j-i}.
+\]
+Then Exercise~7.5 implies that the outputs on the strings
+\[
+  u,\ uv,\ uv^2,\ uv^3,\ldots
+\]
+are obtained by repeating one fixed output block corresponding to $v$.  Hence
+the infinite output stream produced while repeatedly reading $\pmb{a}$ would be
+ultimately periodic.
+
+But the target sequence is not ultimately periodic, because the number of
+consecutive $\pmb{0}$s between successive $\pmb{1}$s is
+\[
+  1,2,3,4,5,\ldots,
+\]
+which grows without bound.  Therefore $f_3$ cannot be FTD. \qed
 
 %% 7.36
 \item \textbf{Prove: for FTD $f$, the first $n$ letters of $f(xy)$ equal those of $f(xz)$.}
@@ -1895,14 +2041,25 @@ minimal machine equivalent to $M$. \qed
 %% 7.53
 \item \textbf{Isomorphism from $A$ to $B$ and $B$ connected $\Rightarrow$ $A$ connected.}
 
-\begin{proof}
-If $\psi:A\to B$ is an isomorphism, then by Exercise~7.65(a) its inverse
-\[
-  \psi^{-1}:B\to A
-\]
-is also an isomorphism.  Since $B$ is connected, Exercise~7.52 applied to
-$\psi^{-1}$ shows that $A$ is connected. \qed
-\end{proof}
+\begin{enumerate}[(a)]
+  \item \textbf{Mealy machines:}  Let $\psi:A\to B$ be an isomorphism, and let
+  $s\in S_A$.  Put $t=\psi(s)\in S_B$.  Since $B$ is connected, there exists
+  $x\in\Sigma^*$ with
+  \[
+    t=\DBAR_B(s_{0_B},x).
+  \]
+  Because $\psi$ is bijective, $\psi^{-1}$ exists, and because $\psi$ preserves
+  transitions, $\psi^{-1}$ does as well.  Hence
+  \[
+    s=\psi^{-1}(t)=\psi^{-1}(\DBAR_B(s_{0_B},x))
+    =\DBAR_A(\psi^{-1}(s_{0_B}),x)=\DBAR_A(s_{0_A},x).
+  \]
+  So every state of $A$ is reachable, and $A$ is connected.
+
+  \item \textbf{Moore machines:}  The same argument works verbatim for Moore
+  isomorphisms, since the inverse of a bijection that preserves start state and
+  transitions also preserves them in the Moore setting.  Thus $A$ is connected.
+\end{enumerate}
 
 %% 7.54
 \item \textbf{Homomorphism from $A$ to $B$ and $A$ connected does NOT imply $B$ connected.}
@@ -2450,11 +2607,51 @@ If $\mu:A\to B$ is a homomorphism, by Exercise~7.47(c), $f_A=f_B$.  Hence $A\equ
 \item \textbf{Prove \DSIG\ is closed under any FTD function $f:\Sigma^*\to\Sigma^*$.}
 
 \begin{proof}
-Let $L\in\DSIG$ and $f$ be FTD, implemented by Mealy machine $M$.  We want to show $f^{-1}(L)\in\DSIG$ (inverse image) and $f(L)\in\DSIG$ (image).
+Let $L\in\DSIG$, and choose a DFA
+\[
+  A=\langle\Sigma,Q,q_0,\delta_A,F\rangle
+\]
+with $L(A)=L$.  Let
+\[
+  M=\langle\Sigma,\Sigma,S,s_0,\delta_M,\omega_M\rangle
+\]
+be a Mealy machine computing the FTD function $f$.
 
-\emph{Closure under inverse:}  Given DFA $A$ for $L$ and Mealy machine $M$ for $f$, build a product machine $P$ whose states are $S_A\times S_M$.  On input $\pmb{a}$: $P$ advances $M$ to compute the output $f(\pmb{a})$, then advances $A$ on that output.  If the output of $M$ is a single letter per input (Mealy), then $P$ directly simulates $A$ on the translation.  The result is a DFA for $f^{-1}(L)=\{x\mid f(x)\in L\}\in\DSIG$.
+We build an NDFA
+\[
+  N=\langle\Sigma,Q\times S,\{\langle q_0,s_0\rangle\},\Delta,F\times S\rangle
+\]
+that accepts exactly $f(L)$.  Intuitively, while $N$ reads an output word $y$,
+it guesses an input word $x$ letter by letter; the $S$-component simulates the
+transducer on the guessed input, and the $Q$-component simulates the DFA $A$ on
+that same guessed input.
 
-\emph{Closure under image:}  $f(L)=\{f(x)\mid x\in L\}$.  Build an NDFA that reads the output of $M$ while $M$'s input was accepted by $A$: nondeterministically guess the input $x\in L$ and simulate $M$ on $x$ to generate output.  Since $L\in\DSIG$ and $M$ is a finite transducer, $f(L)\in\DSIG$.  (More precisely: the composition of a DFA with an FST yields an NDFA, and by Theorem~4.1, this is equivalent to a DFA.) \qed
+For $\langle q,s\rangle\in Q\times S$ and $\pmb{b}\in\Sigma$, define
+\[
+  \Delta(\langle q,s\rangle,\pmb{b})
+  =\{\langle \delta_A(q,\pmb{a}),\delta_M(s,\pmb{a})\rangle
+    \mid \pmb{a}\in\Sigma,\ \omega_M(s,\pmb{a})=\pmb{b}\}.
+\]
+So on reading an output symbol $\pmb{b}$, the NDFA chooses any input symbol
+$\pmb{a}$ that would cause the transducer, in state $s$, to print $\pmb{b}$.
+
+By induction on the input length, after reading a word $y$, the machine $N$ can
+be in exactly those states
+\[
+  \langle \DBAR_A(q_0,x),\DBAR_M(s_0,x)\rangle
+\]
+for which $f(x)=y$.  Therefore
+\[
+  y\in L(N)
+  \iff (\exists x\in\Sigma^*)(f(x)=y\ \wedge\ \DBAR_A(q_0,x)\in F)
+  \iff (\exists x\in L)(f(x)=y).
+\]
+Hence
+\[
+  L(N)=f(L).
+\]
+Because $N$ is an NDFA, Theorem~4.1 implies that $L(N)\in\DSIG$.  Thus
+$f(L)\in\DSIG$, so \DSIG\ is closed under every FTD function $f$. \qed
 \end{proof}
 
 \end{enumerate}
