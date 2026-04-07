@@ -18,17 +18,33 @@
 ($\Leftarrow$): If $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$, then the computation passes through some state $q$ after reading $y$: $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By IH, $\DBAR(s_0,y)=q$. The last step reads $a$ from state $q$ to reach $t$, so $\delta(q,a)=t$, hence $\DBAR(s_0,ya)=t$. \qed
 
 %%------------------------------------------------------------
-\item \textbf{Define a one-state DPDA $P'_1$ accepting $\{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$ via final state.}
+\item \textbf{Define a one-state DPDA $P'_1$ with $\Lambda(P'_1)=\{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.}
 
-A one-state DPDA accepting via final state always accepts $\lambda$: the unique state must be both the initial state and the only final state, so the machine is in a final state at the very start with empty input. Hence the best a one-state final-state DPDA can achieve is $\{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$ (which includes $\lambda$).
-
-Let $P'_1 = \langle\{\pmb{a},\pmb{b}\},\{Z,A\},\{t\},t,\delta,Z,\{t\}\rangle$ where:
+Because the acceptance condition is $\Lambda(P'_1)$, the machine must accept via
+\emph{empty stack}, not via final state. A one-state DPDA with the required
+language is
+\[
+P'_1=\langle\{\pmb{a},\pmb{b}\},\{Z,S,A\},\{t\},t,\delta,Z,\emptyset\rangle,
+\]
+where the only nonempty transitions are
 \begin{align*}
-\delta(t,\pmb{a},Z) &= \langle t, AZ\rangle \quad\text{(push $A$ on reading first \pmb{a})} \\
-\delta(t,\pmb{a},A) &= \langle t, AA\rangle \quad\text{(push another $A$ for each subsequent \pmb{a})} \\
-\delta(t,\pmb{b},A) &= \langle t, \lambda\rangle \quad\text{(pop $A$ on reading \pmb{b})}
+\delta(t,\pmb{a},Z)&=\langle t,S\rangle, \\
+\delta(t,\pmb{a},S)&=\langle t,SA\rangle, \\
+\delta(t,\pmb{b},S)&=\langle t,\lambda\rangle, \\
+\delta(t,\pmb{b},A)&=\langle t,\lambda\rangle.
 \end{align*}
-The machine pushes one $A$ for each $\pmb{a}$ read, then pops one $A$ for each $\pmb{b}$ read. It accepts when the input is exhausted in state $t$: this occurs precisely when the $\pmb{a}$s and $\pmb{b}$s are balanced (stack returned to $Z$) or when the input is empty. Note: $\delta(t,\pmb{b},Z)$ is undefined, so a string with more $\pmb{b}$s than $\pmb{a}$s causes the machine to get stuck (reject). Hence $\Lambda(P'_1) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 0\}$.
+After reading $\pmb{a}^n$ ($n\geq 1$), the stack is $SA^{n-1}$: the symbol $S$
+marks the transition from the $\pmb{a}$-phase to the $\pmb{b}$-phase, and the
+$A$'s remember the remaining $n-1$ copies. The first $\pmb{b}$ removes $S$, and
+the remaining $\pmb{b}$'s remove the $A$'s one by one. Thus
+\[
+\langle t,\pmb{a}^n\pmb{b}^n,Z\rangle\Dvdash\langle t,\lambda,\lambda\rangle
+\qquad(n\geq 1).
+\]
+No other words can empty the stack: $\lambda$ leaves the initial symbol $Z$ in
+place, a word beginning with $\pmb{b}$ has no move, and once the machine has
+started reading $\pmb{b}$'s it can no longer read an $\pmb{a}$. Hence
+$\Lambda(P'_1)=\{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
 
 %%------------------------------------------------------------
 \item \textbf{PDA $P'_2$: proofs and language.}
@@ -248,19 +264,44 @@ There are no other moves involving $U$ or $V$, and no moves out of $f$. By Theor
 \item \textbf{$L=\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i \mid i,j\in\NN\}$.}
 
 \begin{enumerate}
-\item \textbf{PDA via final state}: Push $A$ on $\pmb{a}$; push $B$ on $\pmb{b}$; pop $B$ on $\pmb{c}$; pop $A$ on $\pmb{d}$; accept when stack returns to $Z$.
-States $\{q_0,q_1,q_2,q_3,q_f\}$, alphabet $\{Z,A,B\}$:
-$\delta(q_0,\pmb{a},Z)=\langle q_0,AZ\rangle$, $\delta(q_0,\pmb{a},A)=\langle q_0,AA\rangle$,
-$\delta(q_0,\pmb{b},A)=\langle q_1,BA\rangle$, $\delta(q_0,\pmb{b},Z)=\langle q_1,BZ\rangle$ (for $i=0$),
-$\delta(q_1,\pmb{b},B)=\langle q_1,BB\rangle$, $\delta(q_1,\pmb{c},B)=\langle q_2,\lambda\rangle$,
-$\delta(q_2,\pmb{c},B)=\langle q_2,\lambda\rangle$, $\delta(q_2,\pmb{d},A)=\langle q_3,\lambda\rangle$,
-$\delta(q_3,\pmb{d},A)=\langle q_3,\lambda\rangle$, $\delta(q_2,\lambda,Z)=\langle q_f,Z\rangle$, $\delta(q_3,\lambda,Z)=\langle q_f,Z\rangle$.
+\item \textbf{PDA via final state}: Use $A$'s to remember the outer count $i$ and
+$B$'s to remember the middle count $j$. A deterministic choice of states is
+\[
+P=\langle\{\pmb{a},\pmb{b},\pmb{c},\pmb{d}\},\{Z,A,B\},
+\{q_0,q_1,q_2,q_3\},q_0,\delta,Z,\{q_0,q_2,q_3\}\rangle,
+\]
+with the following nonempty transitions:
+\begin{align*}
+\delta(q_0,\pmb{a},Z)&=\langle q_0,AZ\rangle, &
+\delta(q_0,\pmb{a},A)&=\langle q_0,AA\rangle, \\
+\delta(q_0,\pmb{b},Z)&=\langle q_1,BZ\rangle, &
+\delta(q_0,\pmb{b},A)&=\langle q_1,BA\rangle, \\
+\delta(q_0,\pmb{d},A)&=\langle q_3,\lambda\rangle, &
+\delta(q_1,\pmb{b},B)&=\langle q_1,BB\rangle, \\
+\delta(q_1,\pmb{c},B)&=\langle q_2,\lambda\rangle, &
+\delta(q_2,\pmb{c},B)&=\langle q_2,\lambda\rangle, \\
+\delta(q_2,\pmb{d},A)&=\langle q_3,\lambda\rangle, &
+\delta(q_3,\pmb{d},A)&=\langle q_3,\lambda\rangle.
+\end{align*}
+State $q_0$ is final, so $\lambda$ is accepted. State $q_2$ is final so that the
+case $i=0$ gives $\pmb{b}^j\pmb{c}^j$, and state $q_3$ is final so that the case
+$j=0$ gives $\pmb{a}^i\pmb{d}^i$. In the general case, the machine pushes $A$'s
+for the initial $\pmb{a}$'s, then stacks $B$'s above them for the
+$\pmb{b}$-block, removes the $B$'s on the $\pmb{c}$-block, and finally removes
+the $A$'s on the $\pmb{d}$-block.
 
-\item \textbf{PDA via empty stack}: Pop $Z$ as well; add $\delta(\cdot,\lambda,Z)=\langle q_f,\lambda\rangle$ with appropriate state.
+\item \textbf{PDA via empty stack}: Apply Theorem~10.5 to the PDA from part~(a).
+This produces an equivalent PDA that accepts via empty stack.
 
 \item \textbf{DPDA}: Yes. The language has a fixed block structure: $\pmb{a}^i,\pmb{b}^j,\pmb{c}^j,\pmb{d}^i$, so the DPDA deterministically processes each block. The stack remembers $i$ (via $A$s) and $j$ (via $B$s overlaid on top). This is deterministic.
 
-\item \textbf{Counting automaton}: No; both $i$ and $j$ are unbounded.
+\item \textbf{Counting automaton}: No. A counting automaton has only one stack
+symbol. After reading $\pmb{a}^i\pmb{b}^j$, its stack is just an undifferentiated
+pile of identical markers. To accept this language it would need to know where
+the $j$ markers for the middle comparison end and where the $i$ markers for the
+outer comparison begin, so that the $\pmb{c}$'s can be matched against the
+$\pmb{b}$'s first and the $\pmb{d}$'s against the $\pmb{a}$'s afterward. With only
+one kind of stack symbol, that boundary cannot be marked.
 
 \item \textbf{Grammar from PDA} (Definition 10.7): Applying Definition 10.7 to part (b) and simplifying yields the equivalent grammar
 \[
@@ -301,14 +342,29 @@ $P$: from initial state, nondeterministically branch to handle either $\pmb{a}^n
 
 \item \textbf{PDA via empty stack}: Start with a new initial state and make a $\lambda$-choice to the empty-stack PDA from Exercise 10.8 or the one from Exercise 10.11. This is the standard PDA construction for union.
 
-\item \textbf{DPDA}: No. This is the classic ambiguous union
+\item \textbf{DPDA}: No. The nondeterministic choice in part~(a) is doing real
+work. To accept words from
 \[
 \{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m\mid n,m\geq 0\}\cup
 \{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i\mid i,j\geq 0\}.
 \]
-Every word $\pmb{a}^n\pmb{b}^n\pmb{c}^n\pmb{d}^n$ belongs to both halves, so the language has two incompatible structural readings on an infinite family of words. Since deterministic context-free languages are unambiguous, this language cannot be a DCFL.
+the machine would need two incompatible stack disciplines during the middle of
+the input. For the first sublanguage it should effectively discharge the
+$\pmb{a}/\pmb{b}$ comparison and then reuse the stack to compare the
+$\pmb{c}$-block with the $\pmb{d}$-block. For the second sublanguage it must
+preserve the outer $\pmb{a}$-count all the way through the middle of the word
+while simultaneously comparing the $\pmb{b}$-block with the $\pmb{c}$-block.
+That is exactly the kind of branch choice that an NPDA can make by a
+$\lambda$-move and a DPDA cannot. Hence no DPDA exists.
 
-\item \textbf{Counting automaton}: No; the string lengths are unbounded.
+\item \textbf{Counting automaton}: No. The union still contains the sublanguage
+\[
+\{\pmb{a}^{n+1}\pmb{b}^n\pmb{c}^n\pmb{d}^{n+1}\mid n\geq 0\},
+\]
+which lies only in the second half. Accepting that family already requires the
+machine to preserve the outer $\pmb{a}$-count while separately matching the
+middle $\pmb{b}/\pmb{c}$ count. As in Exercise~10.11(d), a one-symbol stack
+cannot mark the boundary between those two pieces of information.
 
 \item \textbf{Grammar from PDA}: An equivalent grammar is
 \[
@@ -376,24 +432,43 @@ So $K$ is not a CFL. \qed
 \item \textbf{Two-tape automaton.}
 
 \begin{enumerate}
-\item \textbf{Transition function}: For a two-tape automaton with tapes over $\Sigma$, the state transition function $\delta$ has domain $S \times (\Sigma\cup\{\pmb{B}\}) \times (\Sigma\cup\{\pmb{B}\})$ (current state, symbol read from tape 1, symbol read from tape 2) and range $S \times (\Sigma\cup\{\pmb{B}\}) \times \{L,R,S\} \times (\Sigma\cup\{\pmb{B}\}) \times \{L,R,S\}$ (new state, write to tape 1, move head 1, write to tape 2, move head 2).
-
-\item \textbf{Two-tape automaton for $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq 1\}$}: Let
+\item \textbf{Transition function}: Figure~10.6 is a PDA-like device with one
+input tape and \emph{two stack tapes}. A suitable transition function is
 \[
-M=\langle\{\pmb{a},\pmb{b},\pmb{c}\},\Gamma,\{q_0,q_1,q_2,q_3,q_4,q_f,q_r\},q_0,\delta,q_f\rangle,
+\delta:S\times(\Sigma\cup\{\lambda\})\times\Gamma_1\times\Gamma_2
+\longrightarrow
+\text{finite subsets of }S\times\Gamma_1^*\times\Gamma_2^*.
 \]
-where tape 1 initially holds the input and tape 2 is blank, and $\Gamma=\{\pmb{a},\pmb{b},\pmb{c},X,\pmb{B}\}$. The intended behavior is:
-\begin{enumerate}[1.]
-\item In $q_0$, scan the $\pmb{a}$-block on tape 1. For each $\pmb{a}$ read on tape 1, write an $X$ on tape 2 and move both heads right. If no $\pmb{a}$ is seen, reject. On the first $\pmb{b}$, leave tape 1 where it is, move tape 2 left into state $q_1$, and rewind tape 2 to its leftmost $X$.
-\item In $q_2$, compare the $\pmb{b}$-block with the stored $X$'s: on $(\pmb{b},X)$ move right on both tapes. If the tape-1 symbol changes to $\pmb{c}$ exactly when tape 2 reaches blank, go to $q_3$; otherwise reject.
-\item In $q_3$, hold tape 1 on the first $\pmb{c}$ and rewind tape 2 left to its leftmost $X$ again.
-\item In $q_4$, compare the $\pmb{c}$-block with the same $X$'s: on $(\pmb{c},X)$ move right on both tapes. Accept exactly when both heads simultaneously reach blank; any other mismatch or extra symbol causes rejection.
-\end{enumerate}
-Thus tape 2 stores the number $n$ once, and the machine checks both the $\pmb{b}$-block and the $\pmb{c}$-block against that same count.
+Thus a move depends on the current state, the next input symbol (or $\lambda$),
+and the two current top-of-stack symbols, and it chooses a new state together
+with the strings that replace those two top symbols.
+
+\item \textbf{Two-tape automaton for $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq 1\}$}:
+Use the exact strategy described just before Figure~10.6: store the
+initial $\pmb{a}$'s on tape~1, match them against the $\pmb{b}$'s while
+storing the $\pmb{b}$'s on tape~2, and then match the $\pmb{c}$'s against
+tape~2.
+
+Let tape~1 use symbols $Z_1,A$ and tape~2 use symbols $Z_2,B$. Take states
+$q_0,q_1,q_2,q_f$, with $q_f$ final, and define the nonempty transitions by
+\begin{align*}
+\delta(q_0,\pmb{a},Z_1,Z_2)&=\{\langle q_0,AZ_1,Z_2\rangle\}, \\
+\delta(q_0,\pmb{a},A,Z_2)&=\{\langle q_0,AA,Z_2\rangle\}, \\
+\delta(q_0,\pmb{b},A,Z_2)&=\{\langle q_1,\lambda,BZ_2\rangle\}, \\
+\delta(q_1,\pmb{b},A,B)&=\{\langle q_1,\lambda,BB\rangle\}, \\
+\delta(q_1,\pmb{c},Z_1,B)&=\{\langle q_2,Z_1,\lambda\rangle\}, \\
+\delta(q_2,\pmb{c},Z_1,B)&=\{\langle q_2,Z_1,\lambda\rangle\}, \\
+\delta(q_2,\lambda,Z_1,Z_2)&=\{\langle q_f,Z_1,Z_2\rangle\}.
+\end{align*}
+All other transitions are empty. The first tape counts the $\pmb{a}$'s, the
+$\pmb{b}$-phase simultaneously removes one $A$ from tape~1 and places one $B$ on
+tape~2, and the $\pmb{c}$-phase removes the $B$'s. The machine reaches $q_f$
+exactly when both stacks are back to their bottom symbols after all input has
+been consumed, so it accepts precisely $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq 1\}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; $\{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}$ is not context free.}
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; part~(b) as printed is false.}
 
 \begin{enumerate}
 \item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not CFL}: Assume it is, with pumping constant $N$. Take $s=\pmb{a}^N\pmb{b}^N\pmb{c}^N$. By the pumping lemma, $s=uvwxy$ with $|vwx|\leq N$ and $|vx|\geq 1$.
