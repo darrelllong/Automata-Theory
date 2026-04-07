@@ -629,10 +629,52 @@ First, for every $s\in S$ and every nonempty word $x\in\Sigma^+$,
 \[
 \overline{\delta'}(s,x)=\DBAR_{\lambda}(s,x).
 \]
-This is proved by the same induction as Lemma~4.2: for a single letter
-$\pmb{a}$, it is just the definition
-$\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a})$, and the inductive step extends
-in the usual nondeterministic manner.
+We prove this by induction on $|x|$.
+
+\textbf{Base case.}  If $x=\pmb{a}\in\Sigma$, then by definition of $\delta'$,
+\[
+\overline{\delta'}(s,\pmb{a})=\delta'(s,\pmb{a})=\DBAR_{\lambda}(s,\pmb{a}).
+\]
+
+\textbf{Inductive step.}  Assume $\overline{\delta'}(s,x)=\DBAR_{\lambda}(s,x)$
+for some $x\in\Sigma^+$.  Let $\pmb{a}\in\Sigma$.  Then
+\begin{align*}
+\overline{\delta'}(s,x\pmb{a})
+&=\bigcup_{t\in\overline{\delta'}(s,x)}\delta'(t,\pmb{a}) \\
+&=\bigcup_{t\in\DBAR_{\lambda}(s,x)}\DBAR_{\lambda}(t,\pmb{a})
+\qquad\text{(induction hypothesis and definition of $\delta'$).}
+\end{align*}
+Now $\DBAR_{\lambda}(s,x)$ is $\lambda$-closed, because every value of
+$\DBAR_{\lambda}$ is obtained by applying $\Lambda$.  Hence if
+$t\in\DBAR_{\lambda}(s,x)$, then $\Lambda(t)\subseteq\DBAR_{\lambda}(s,x)$, and
+so
+\[
+\DBAR_{\lambda}(t,\pmb{a})
+=\Lambda\Bigl(\bigcup_{q\in\Lambda(t)}\delta_{\lambda}(q,\pmb{a})\Bigr)
+\subseteq
+\Lambda\Bigl(\bigcup_{q\in\DBAR_{\lambda}(s,x)}\delta_{\lambda}(q,\pmb{a})\Bigr)
+=\DBAR_{\lambda}(s,x\pmb{a}).
+\]
+This shows
+\[
+\bigcup_{t\in\DBAR_{\lambda}(s,x)}\DBAR_{\lambda}(t,\pmb{a})
+\subseteq \DBAR_{\lambda}(s,x\pmb{a}).
+\]
+For the reverse inclusion, if $r\in\DBAR_{\lambda}(s,x\pmb{a})$, then by
+definition there is some $q\in\DBAR_{\lambda}(s,x)$ and some
+$u\in\Lambda(q)\subseteq\DBAR_{\lambda}(s,x)$ such that $r$ is reached from $u$
+by reading $\pmb{a}$ followed by $\lambda$-moves.  Therefore
+$r\in\DBAR_{\lambda}(u,\pmb{a})$ for some $u\in\DBAR_{\lambda}(s,x)$, so
+\[
+\DBAR_{\lambda}(s,x\pmb{a})
+\subseteq
+\bigcup_{t\in\DBAR_{\lambda}(s,x)}\DBAR_{\lambda}(t,\pmb{a}).
+\]
+Thus
+\[
+\overline{\delta'}(s,x\pmb{a})=\DBAR_{\lambda}(s,x\pmb{a}),
+\]
+completing the induction.
 
 \textbf{Case 1: $x=\lambda$.}  Then
 \[
@@ -976,27 +1018,36 @@ $L=\{x\in\{\pmb{a},\pmb{b}\}^*\mid x\text{ begins with }\pmb{a}\vee x\text{ cont
 %% 4.20
 \item \textbf{Are the pumping lemma arguments still valid for NDFAs?}
 
-Yes.  The pumping lemma (Chapter~2) applies to any language accepted by a DFA
-(or equivalently, any FAD language).  Since every NDFA $A$ is equivalent to a
-DFA $A^d$ (Theorem~4.1), $L(A)=L(A^d)$ is FAD, and the pumping lemma applies
-to $L(A)$.
+Not as \emph{machine} arguments about an NDFA.  In Chapter~2, the pumping lemma
+was proved for DFAs by following the \emph{single} path determined by a long
+input and finding a repeated state on that path.  An NDFA does not behave that
+way, because one word may have many possible paths.
 
-More directly: the pumping lemma is a property of the \emph{language}, not the
-machine representation.  If $L$ is FAD (accepted by some NDFA), then all the
-arguments from Chapter~2 go through unchanged.  In particular, if $A$ has $n$
-states, then $A^d$ has at most $2^n$ states; words of length at least $2^n$
-must cause a repeated state in $A^d$, yielding the pumping decomposition.
+However, the pumping lemma conclusion \emph{does} still hold for every language
+accepted by an NDFA.  If $A$ is an NDFA, then by Theorem~4.1 there is an
+equivalent DFA $A^d$ with $L(A)=L(A^d)$.  Since $L(A^d)$ is FAD, the Chapter~2
+pumping lemma applies to that language.  Therefore any language accepted by an
+NDFA satisfies the pumping lemma, but the proof is obtained by passing to the
+equivalent DFA, not by reusing the Chapter~2 path argument directly on the NDFA.
 
 %% 4.21
 \item \textbf{Does the conclusion of Theorem~2.7 still hold for NDFAs?}
 
-Yes.  Theorem~2.7 characterizes FAD languages via the Myhill--Nerode theorem:
-$L$ is FAD iff $\equiv_L$ has finitely many equivalence classes.  This is a
-property of the language $L$, not of the particular automaton (DFA or NDFA)
-accepting it.  Since NDFAs and DFAs accept exactly the same class of languages
-(the FAD languages, by Theorem~4.1), the conclusion holds: a language is
-accepted by some NDFA iff it is accepted by some DFA iff $\equiv_L$ has
-finitely many classes iff the minimal DFA is finite.
+Yes, but again this is a statement about the \emph{language}, not about the
+internal states of an arbitrary NDFA.  Theorem~2.7 says that a language $L$ is
+FAD iff $\equiv_L$ has finitely many equivalence classes.  By Theorem~4.1, a
+language is accepted by some NDFA iff it is accepted by some DFA.  Therefore
+the conclusion of Theorem~2.7 still holds for languages accepted by NDFAs:
+\[
+L \text{ is accepted by an NDFA }
+\Leftrightarrow
+L \text{ is FAD }
+\Leftrightarrow
+\equiv_L \text{ has finitely many classes.}
+\]
+What does \emph{not} follow is that the states of a given NDFA correspond to the
+equivalence classes of $\equiv_L$; that correspondence belongs to the minimal
+DFA, not to an arbitrary nondeterministic machine.
 
 %% 4.22
 \item \textbf{Later no-$\lambda$ exercise: given an NDFA $A$ without $\lambda$-transitions
@@ -1114,9 +1165,21 @@ Let $y=x\pmb{a}$ with $|x|=k$ and $\pmb{a}\in\Sigma$.  Then:
   &= \bigcup_{t\in\DBAR_\lambda(s,x)}
       \delta^{\sigma}_\lambda(t,\pmb{a}) \quad\text{(induction hypothesis)} \\
   &= \bigcup_{t\in\DBAR_\lambda(s,x)}
-      \DBAR_\lambda(t,\pmb{a}) \quad\text{(base case)} \\
-  &= \DBAR_\lambda(s,x\pmb{a}).
-    \quad\text{(definition of $\DBAR_\lambda$)}
+      \DBAR_\lambda(t,\pmb{a}) \quad\text{(base case)}.
+\end{align*}
+Let $D=\DBAR_\lambda(s,x)$.  Since every value of $\DBAR_\lambda$ is obtained
+by applying $\Lambda$, the set $D$ is $\lambda$-closed.  Therefore
+\begin{align*}
+\bigcup_{t\in D}\DBAR_\lambda(t,\pmb{a})
+&=
+\bigcup_{t\in D}
+\Lambda\Bigl(\bigcup_{q\in\Lambda(t)}\delta_\lambda(q,\pmb{a})\Bigr) \\
+&=
+\Lambda\Bigl(\bigcup_{t\in D}\bigcup_{q\in\Lambda(t)}\delta_\lambda(q,\pmb{a})\Bigr) \\
+&=
+\Lambda\Bigl(\bigcup_{q\in D}\delta_\lambda(q,\pmb{a})\Bigr)
+\qquad\text{(because $\Lambda(t)\subseteq D$ for every $t\in D$)} \\
+&= \DBAR_\lambda(s,x\pmb{a}).
 \end{align*}
 By induction, the result holds for all $x\in\Sigma^+$. \qed
 \end{proof}
@@ -1191,7 +1254,12 @@ for any $Q\in\wp(S)$.  Therefore:
 
 \begin{enumerate}[(a)]
   \item \textbf{New acceptance definition.}  Define
-  $L_{\forall}(A)=\{w\in\Sigma^*\mid\DBAR(S_0,w)\neq\emptyset\wedge\DBAR(S_0,w)\subseteq F\}$.
+  \[
+  L_{\forall}(A)=\Bigl\{w\in\Sigma^* \,\Bigm|\,
+  \bigcup_{q\in S_0}\DBAR(q,w)\neq\emptyset
+  \ \wedge\
+  \bigcup_{q\in S_0}\DBAR(q,w)\subseteq F\Bigr\}.
+  \]
   That is, $w$ is accepted iff (i) at least one state is reachable and
   (ii) \emph{every} reachable state is final.
 
@@ -1370,7 +1438,14 @@ set-union version of $\overline{\delta^{\sigma}_\lambda}$ to a set argument.  Th
 are not the same: the left side applies $\delta^{\sigma}_\lambda$ to the entire
 set at once (which is not how the function is defined), while the right side
 correctly takes the union over individual states.  This makes the step invalid
-without justification.
+without justification.  The same typing problem reappears later if one writes an
+expression such as
+\[
+\DBAR_\lambda(\DBAR_\lambda(s,x),\pmb{a}),
+\]
+because the first argument of $\DBAR_\lambda$ must be a single state, not a set
+of states.  The correct way to proceed is to write a union over the states in
+that set.
 
 %% 4.33
 \item Consider the NDFA $T$ from Example~4.7 (detecting substring $\pmb{010010}$).
