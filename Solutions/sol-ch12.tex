@@ -7,30 +7,114 @@
 %%------------------------------------------------------------
 \item \textbf{Verify assertions in proof of Theorem 12.1 concerning Theorem 2.7.}
 
-Theorem 2.7 (Nerode's theorem) states that a language is FAD (finite automaton definable) iff its Nerode right congruence $R_L$ has finite index.
+The point used in Theorem 12.1 is this: if $A$ accepts any string at all, then
+$A$ accepts one of length $< n$, where $n=\|S\|$.
 
-Theorem 12.1 (decidability of $L(A)=\emptyset$) uses the following from Theorem 2.7:
-- The minimal DFA $A_{min}$ has states in bijection with equivalence classes of $R_L$.
-- $L(A)=\emptyset$ iff no final state is reachable from $s_0$ iff no equivalence class of $R_L$ containing an accepted string is reachable.
-- Reachability is decidable by BFS/DFS on the finite graph of $A$.
+Let
+\[
+A=\langle \Sigma,S,s_0,\delta,F\rangle
+\]
+and suppose $x\in L(A)$ with $|x|\geq n$. By Theorem 2.7, $L(A)$ is the union
+of classes of a finite-rank right congruence; in particular, we may use
+$R^A$, whose rank is at most $\|S\|=n$. Write
+\[
+x=a_1a_2\cdots a_m
+\]
+and consider the $n+1$ prefixes
+\[
+\lambda,\ a_1,\ a_1a_2,\ \ldots,\ a_1a_2\cdots a_n.
+\]
+Since $R^A$ has at most $n$ classes, two of these prefixes must be related by
+$R^A$. So we can write
+\[
+x=uvw
+\]
+with $v\neq\lambda$ and $u\ R^A\ uv$. Because $R^A$ is a right congruence,
+\[
+uw\ R^A\ uvw=x.
+\]
+Now $L(A)$ is a union of $R^A$-classes, and $x\in L(A)$, so $uw\in L(A)$ as
+well. Thus we have found a shorter accepted string. Repeating this shortening
+process eventually produces an accepted string of length $<n$.
 
-The assertion to verify: the equivalence classes of $R_L$ for a finite-index $R_L$ correspond exactly to the states of the minimal DFA. This follows directly from Theorem 2.7: each class $[x]_{R_L}$ maps to the state $\DBAR(s_0,x)$, and this mapping is a bijection between classes and states. \qed
+That is exactly the assertion needed in the proof of Theorem 12.1. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Prove Lemma 12.1.}
 
-Lemma 12.1 (typically states): For a DFA $A = \langle\Sigma,S,s_0,\delta,F\rangle$ with $|S|=n$, $L(A)\neq\emptyset$ iff $L(A)$ contains a string of length less than $n$.
+Let
+\[
+M=\{x\mid x\in L(A)\wedge |x|\geq n\}.
+\]
+If $M\neq\emptyset$, then the set
+\[
+\{|x|\mid x\in M\}\subseteq \NN
+\]
+is nonempty, so by the well-ordering principle it has a least element. Hence
+$M$ contains a string of minimal length; call it $x_m$.
 
-\textbf{Proof}: ($\Leftarrow$) Obvious.
+It remains to prove that $|x_m|<2n$. Suppose, for contradiction, that
+$|x_m|\geq 2n$. Since $x_m\in L(A)$ and $|x_m|\geq n$, the pumping lemma
+(Theorem 2.3) gives a factorization
+\[
+x_m=uvw
+\]
+with
+\[
+|uv|\leq n,\qquad |v|>0,
+\]
+and
+\[
+uv^iw\in L(A)\qquad\text{for all }i\in\NN.
+\]
+Take $i=0$. Then
+\[
+uw\in L(A).
+\]
+Also,
+\[
+|uw|=|x_m|-|v|\geq |x_m|-n\geq n,
+\]
+since $|v|\leq |uv|\leq n$. Thus $uw\in M$. But $|v|>0$, so
+\[
+|uw|<|x_m|,
+\]
+contradicting the minimality of $x_m$.
 
-($\Rightarrow$): If $L(A)\neq\emptyset$, let $x\in L(A)$. If $|x|<n$, done. If $|x|\geq n$, then the sequence of states $s_0, \DBAR(s_0,x_1),\DBAR(s_0,x_1x_2),\ldots,\DBAR(s_0,x)$ has $|x|+1>n$ states, so by the pigeonhole principle, some state repeats. Say $\DBAR(s_0,u)=\DBAR(s_0,uv)=q$ where $|v|\geq 1$. Then $\DBAR(s_0,u) = q = \DBAR(s_0,uv)$, and since $x=uvw\in L(A)$, $\DBAR(s_0,uw)=\DBAR(s_0,uvw)\in F$. So $uw\in L(A)$ and $|uw|<|uvw|=|x|$. Repeat until length $<n$. \qed
+Therefore $|x_m|<2n$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Number of nonfinal states in minimal DFA $\leq$ nonfinal states in any machine $B$ with $L(B)=L$.}
 
-\textbf{Proof}: Let $A_{min}$ be the minimal DFA for $L$ with $n_{min}$ nonfinal states and $B$ any machine with $L(B)=L$ having $n_B$ nonfinal states.
+\textbf{Proof}: Let $M$ be the minimal DFA for $L$. By Nerode's theorem, the
+states of $M$ correspond exactly to the classes of $R_L$. In particular, the
+nonfinal states of $M$ correspond exactly to the classes $C$ for which every
+string in $C$ is \emph{not} in $L$.
 
-Each nonfinal state $q$ of $A_{min}$ corresponds to a unique right-congruence class $[x]_{R_L}$ (by Nerode's theorem) with $\DBAR_{min}(s_0,x)=q$ and $x\not in L$ (since $q$ is nonfinal). In any machine $B$ with $L(B)=L$, two strings in different $R_L$-classes must lead to different states (otherwise $B$ would accept/reject some string incorrectly). Therefore $B$ must have at least as many nonfinal states as $A_{min}$. More precisely, the number of nonfinal classes of $R_L$ equals the number of nonfinal states in $A_{min}$, and $B$ must have at least this many nonfinal states. \qed
+For each such nonfinal class $C$, choose a representative string $x_C\notin L$.
+Now let
+\[
+B=\langle \Sigma,S_B,s_B,\delta_B,F_B\rangle
+\]
+be any DFA with $L(B)=L$. Since $x_C\notin L$, the state
+\[
+\DBAR_B(s_B,x_C)
+\]
+must be nonfinal.
+
+We claim that different nonfinal classes of $R_L$ must lead to different states
+of $B$. Suppose $C_1\neq C_2$ but
+\[
+\DBAR_B(s_B,x_{C_1})=\DBAR_B(s_B,x_{C_2}).
+\]
+Since $C_1$ and $C_2$ are distinct Nerode classes, there exists a string $z$
+such that exactly one of $x_{C_1}z$ and $x_{C_2}z$ belongs to $L$. But starting
+from the same state of $B$, reading the same suffix $z$ must give the same
+accept/reject answer for both strings, a contradiction.
+
+Thus distinct nonfinal Nerode classes determine distinct nonfinal states of
+$B$. Therefore the number of nonfinal states in $M$ is less than or equal to the
+number of nonfinal states in $B$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of $L(A_1)\subseteq L(A_2)$.}
@@ -57,10 +141,34 @@ $L(A)$ is cofinite iff $\overline{L(A)}$ is finite.
 %%------------------------------------------------------------
 \item \textbf{Decidability: does $L(A)$ contain any string of length $> 1228$?}
 
-\textbf{Algorithm} (using the pumping lemma and DFA structure):
-- By Theorem 12.2 (pumping lemma), $L(A)$ is infinite iff $L(A)$ contains a string of length $n \leq k < 2n$ (where $n=|S|$).
-- For strings of length $> 1228$: if $|S| \leq 1228$, enumerate all strings of length $n$ to $2n-1$ and check if any is in $L(A)$ (finitely many checks). If $L(A)$ contains such a string, it also contains strings of length $>1228$.
-- More directly: compute $\{\DBAR(s_0,y)\mid |y|=1229\}$ (reachable states at depth $1229$) by BFS. If any final state is reachable at depth $>1228$ (specifically, any path of length $>1228$ reaches a final state), the answer is yes. BFS on the DFA graph answers this. \qed
+\textbf{Algorithm}: Build the DFA
+\[
+B=\langle \Sigma,\{r_0,r_1,\ldots,r_{1229}\},r_0,\delta_B,\{r_{1229}\}\rangle,
+\]
+where for every $a\in\Sigma$,
+\[
+\delta_B(r_i,a)=r_{\min\{i+1,1229\}}.
+\]
+Then
+\[
+L(B)=\{x\in\Sigma^*\mid |x|\geq 1229\},
+\]
+that is, the strings of length greater than $1228$.
+
+Now form the product DFA $A^\cap$ for
+\[
+L(A)\cap L(B).
+\]
+Then
+\[
+L(A)\text{ contains a string of length }>1228
+\]
+iff
+\[
+L(A^\cap)\neq\emptyset.
+\]
+By Theorem 12.1, emptiness for DFAs is decidable. Hence this question is
+decidable. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability: does $A$ accept any even-length strings?}
@@ -122,12 +230,81 @@ Therefore, for \emph{any} regular language, there always exists a DFA with $>31$
 %%------------------------------------------------------------
 \item \textbf{Decidability: $\exists$ NDFA (without $\lambda$-moves) with $\leq 1$ final state accepting $L(A)$.}
 
-\textbf{Algorithm}:
+Let $L=L(A)$. We will show that such an NDFA exists iff either
+\[
+\lambda\notin L,
+\]
+or else
+\[
+\lambda\in L \quad\text{and}\quad L\cdot L\subseteq L.
+\]
+
+\textbf{Necessity}: Suppose
+\[
+N=\langle \Sigma,S,s_0,\delta,\{f\}\rangle
+\]
+is an NDFA without $\lambda$-moves that accepts $L$ and has at most one final
+state.
+
+If $\lambda\notin L$, there is nothing more to prove. So assume $\lambda\in L$.
+Then the start state itself must be final, and since there is at most one final
+state we have
+\[
+f=s_0.
+\]
+Therefore every accepted word labels a path from $s_0$ back to $s_0$. If
+$x,y\in L$, we may follow a path for $x$ from $s_0$ back to $s_0$ and then a
+path for $y$ from $s_0$ back to $s_0$. Hence
+\[
+xy\in L.
+\]
+So whenever $\lambda\in L$, the language must be closed under concatenation.
+
+\textbf{Sufficiency when $\lambda\notin L$}: Since regular languages are closed
+under reversal, construct a DFA for $L^r$ and reverse all its arrows. This gives
+an NDFA $M$ for $L$ that has one final state $q$ and possibly several start
+states collected in a set $I$. Because $\lambda\notin L$, the state $q$ is not a
+member of $I$.
+
+Now replace the set $I$ by a single new start state $s$, and for each
+$a\in\Sigma$ define
+\[
+\delta(s,a)=\bigcup_{i\in I}\delta_M(i,a).
+\]
+Leave all other transitions unchanged and keep $q$ as the unique final state.
+Every accepting path in the old machine is simulated by first choosing the same
+first step from $s$, so the new machine accepts exactly $L$. Thus the answer is
+Yes whenever $\lambda\notin L$.
+
+\textbf{Sufficiency when $\lambda\in L$ and $L$ is closed under concatenation}:
+Start again with the reversed machine $M$ above. Now $q\in I$. Make $q$ the
+only start state, and redefine its outgoing transitions by
+\[
+\delta'(q,a)=\bigcup_{i\in I}\delta_M(i,a).
+\]
+All other transitions remain as in $M$, and $q$ is still the unique final state.
+
+Every word of $L$ is accepted by this new machine, because its first move can
+imitate the first move from whichever old start state in $I$ was used before.
+Conversely, any accepting path in the new machine starts at $q$ and ends at $q$.
+Whenever the path returns to $q$, split it there. Each resulting segment is a
+word that was already accepted by the old multi-start machine, hence is in $L$.
+Since $L$ is closed under concatenation, the whole input word also belongs to
+$L$. So this new machine again accepts exactly $L$ and has one final state.
+
+\textbf{Decision procedure}:
 \begin{enumerate}
-\item Minimize the DFA $A$ to get $A_{min}$.
-\item A DFA (hence NDFA) with one final state accepting $L$ exists iff no two distinct final states of $A_{min}$ are distinguishable by the language continuation. More precisely: the language $L$ can be accepted by a one-final-state NDFA iff the set $F$ of final-state equivalence classes (in the Myhill-Nerode quotient) can be ``collapsed'' into one: this is possible iff all strings in $L$ lead to the same right-congruence class (i.e., $L$ has a single final Nerode class), or more generally, the structure allows merging.
-\item Check: if $A_{min}$ has exactly 1 final state, yes. Otherwise, check if the language structure allows a 1-final-state NDFA: convert to minimal DFA, check how many final Nerode classes exist. Decidable. \qed
+\item Check whether $\lambda\in L(A)$ by seeing whether the start state of $A$ is
+final.
+\item If $\lambda\notin L(A)$, answer Yes.
+\item If $\lambda\in L(A)$, construct an automaton for $L(A)\cdot L(A)$ and use
+Exercise 12.4 to decide whether
+\[
+L(A)\cdot L(A)\subseteq L(A).
+\]
 \end{enumerate}
+This inclusion is exactly the closure-under-concatenation condition above, so
+the question is decidable. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of $R_1 = R_2$ (same language).}
@@ -142,93 +319,238 @@ Therefore, for \emph{any} regular language, there always exists a DFA with $>31$
 %%------------------------------------------------------------
 \item \textbf{Decidability: $R_1$ and $R_2$ generate the same right congruence ($R_{L_1}=R_{L_2}$).}
 
-\textbf{Algorithm}:
-$R_{L_1} = R_{L_2}$ iff $L_1$ and $L_2$ have the same Nerode congruence iff the minimal DFAs for $L_1$ and $L_2$ are isomorphic (same state structure, same transitions, same final states). By Exercise 12.14, this reduces to checking $L(R_1)=L(R_2)$, which is decidable. \qed
+\textbf{Algorithm}: Convert $R_1$ and $R_2$ to minimal DFAs
+\[
+M_1=\langle\Sigma,S_1,s_1,\delta_1,F_1\rangle,\qquad
+M_2=\langle\Sigma,S_2,s_2,\delta_2,F_2\rangle.
+\]
+By Exercise 3.40, since these machines are minimal,
+\[
+R_{L_1}=R^{M_1},\qquad R_{L_2}=R^{M_2}.
+\]
+Therefore
+\[
+R_{L_1}=R_{L_2}
+\]
+iff
+\[
+R^{M_1}=R^{M_2}.
+\]
+Because $M_1$ and $M_2$ are connected, this happens exactly when there is a
+bijection
+\[
+\mu:S_1\to S_2
+\]
+such that
+\[
+\mu(s_1)=s_2
+\]
+and
+\[
+\mu(\delta_1(s,a))=\delta_2(\mu(s),a)
+\]
+for every state $s$ and letter $a$. Notice that the final states are
+\emph{irrelevant}; we are comparing the right congruences, not the languages.
+
+So the decision procedure is: minimize both machines, forget which states are
+final, and test whether the two rooted transition graphs are isomorphic. This
+is a finite check, and hence decidable. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Prove Theorem 12.5.}
 
-Theorem 12.5: The equivalence problem for DFAs is decidable.
+Theorem 12.5 states that it is decidable whether two right-linear grammars
+\[
+G_1=\langle\Omega_1,\Sigma,S_1,P_1\rangle,\qquad
+G_2=\langle\Omega_2,\Sigma,S_2,P_2\rangle
+\]
+are equivalent.
 
-\textbf{Proof}: Given DFAs $A_1$ and $A_2$, $L(A_1)=L(A_2)$ iff $L(A_1)\triangle L(A_2)=\emptyset$ (symmetric difference).
-$L(A_1)\triangle L(A_2) = (L(A_1)-L(A_2))\cup(L(A_2)-L(A_1)) = (L(A_1)\cap\overline{L(A_2)})\cup(L(A_2)\cap\overline{L(A_1)})$.
-
-Construct the corresponding DFA (product machine) for this symmetric difference. Check if it is empty (decidable by Theorem 12.1). \qed
+Use Lemma 8.2 to build NDFAs $A_{G_1}$ and $A_{G_2}$ for the two grammars.
+Convert these NDFAs to DFAs $A_1$ and $A_2$. Then
+\[
+L(G_1)=L(G_2)
+\]
+iff
+\[
+L(A_1)=L(A_2).
+\]
+By Theorem 12.3, equivalence of DFAs is decidable. Therefore equivalence of the
+two right-linear grammars is decidable as well. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Efficient algorithm for $\{\DBAR(s_0,y)\mid y\in\Sigma^*,\ n\leq|y|<2n\}$.}
 
-\textbf{Algorithm}: BFS on the DFA state graph, tracking string length.
+\textbf{Algorithm}: Compute the sets
+\[
+T_i=\{\DBAR(s_0,y)\mid y\in\Sigma^i\}
+\]
+recursively.
 \begin{enumerate}
-\item Initialize: at length 0, state is $\{s_0\}$.
-\item BFS layer by layer (one transition per layer, tracking the current layer as the string length).
-\item At layer $n$: record all states reached at length $n$ (i.e., states reachable by strings of length $n$).
-\item At layers $n, n+1, \ldots, 2n-1$: continue BFS, recording states reached at each length.
-\item Return the union of all states reached at lengths $n$ through $2n-1$.
+\item Set $T_0=\{s_0\}$.
+\item For $i=0,1,\ldots,2n-2$, compute
+\[
+T_{i+1}=\{\delta(s,a)\mid s\in T_i,\ a\in\Sigma\}.
+\]
+\item Return
+\[
+T_n\cup T_{n+1}\cup\cdots\cup T_{2n-1}.
+\]
 \end{enumerate}
-Since the DFA has $|S|$ states, the BFS terminates in at most $2n$ steps, each taking $O(|S|\cdot|\Sigma|)$ work. Total: $O(n\cdot|S|\cdot|\Sigma|)$.
-
-\textbf{Justification for halting}: The DFA has a finite number of states. BFS on the finite DFA graph terminates in at most $|S|$ layers. We run for $2n$ layers, which is finite. \qed
+Each $T_i$ is exactly the set of states reached by strings of length $i$, so the
+returned union is the desired set. The procedure halts because it performs only
+$2n-1$ finite computations. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Would intersecting $\{\DBAR(s_0,y)\mid 5n\leq|y|<6n\}$ with $F$ always work?}
 
 \textbf{Answer}: Yes, it would always produce the correct answer.
 
-\textbf{Justification}: By the pumping lemma (Theorem 12.2), $L(A)$ is infinite iff $L(A)$ contains a string of length $n \leq k < 2n$ (where $n=|S|$).
+\textbf{Justification}: If
+\[
+\{\DBAR(s_0,y)\mid 5n\leq|y|<6n\}\cap F\neq\emptyset,
+\]
+then some accepted string has length at least $5n$, hence at least $n$, and the
+argument used in Theorem 12.2 shows immediately that $L(A)$ is infinite.
 
-\textbf{Claim}: $L(A)$ is infinite iff $\{\DBAR(s_0,y)\mid 5n\leq|y|<6n\}\cap F\neq\emptyset$.
-
-($\Rightarrow$): If $L(A)$ is infinite, it contains strings of arbitrary length, so in particular strings of length between $5n$ and $6n-1$. Hence the intersection is nonempty.
-
-($\Leftarrow$): If the intersection is nonempty, there exists a string of length $5n\leq k<6n$ in $L(A)$. Since $k\geq 5n>n=|S|$, by the pigeonhole principle some state repeats in the path of length $k$; thus a shorter string is also accepted, and by applying the pumping argument, $L(A)$ is infinite.
-
-So yes, this alternative range would work correctly. \qed
+For the converse, assume $L(A)$ is infinite. Then Theorem 12.2 tells us that
+there is an accepted string $x$ with
+\[
+n\leq |x|<2n.
+\]
+Apply the pumping lemma to $x$, writing
+\[
+x=uvw
+\]
+with
+\[
+|uv|\leq n,\qquad |v|>0,
+\]
+and
+\[
+uv^iw\in L(A)\qquad\text{for all }i\in\NN.
+\]
+Choose the least $i$ such that
+\[
+|uv^iw|\geq 5n.
+\]
+Since $|v|\leq n$, minimality of $i$ gives
+\[
+|uv^iw|<5n+n=6n.
+\]
+Thus some accepted string has length in the range
+\[
+5n\leq |y|<6n.
+\]
+So this alternative interval also works. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of equivalence of two Mealy machines.}
 
 \textbf{Algorithm}:
 \begin{enumerate}
-\item Minimize both Mealy machines $M_1$ and $M_2$.
-\item Two Mealy machines are equivalent iff they produce identical outputs on all inputs.
-\item Construct a product machine $M^\times$ that tracks the states of $M_1$ and $M_2$ simultaneously and checks if outputs agree on every input.
-\item Use a reachability analysis: find all states $(q_1,q_2)$ of the product machine reachable from the initial state where the outputs differ. If no such state is reachable, the machines are equivalent.
-\item Reachability is decidable (BFS/DFS on the finite product machine graph). \qed
+\item Build the product graph on pairs of states $(q_1,q_2)$.
+\item Start from the pair of initial states.
+\item For each reachable pair $(q_1,q_2)$ and each input symbol $a$, compare the
+two output symbols produced on $a$.
+\item If a mismatch is ever found, the machines are not equivalent.
+\item Otherwise continue to the pair of next states reached on $a$.
 \end{enumerate}
+Because the product graph is finite, this search halts. It answers Yes exactly
+when every reachable pair produces the same output on every input symbol, which
+is precisely equivalence of the two Mealy machines. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of equivalence of two Moore machines.}
 
-\textbf{Algorithm}: Same as Exercise 12.19. Moore machines output based on state (not transition), so:
+\textbf{Algorithm}: Use the product graph on pairs of states.
 \begin{enumerate}
-\item Build the product machine tracking states of both Moore machines.
-\item Check if any reachable state pair $(q_1, q_2)$ has $\omega_1(q_1)\neq\omega_2(q_2)$ (different outputs).
-\item If not, the machines are equivalent. Decidable by BFS. \qed
+\item Start from the pair of initial states and first compare their output
+symbols.
+\item For every reachable pair $(q_1,q_2)$, compare $\omega_1(q_1)$ and
+$\omega_2(q_2)$.
+\item If a mismatch is found, the machines are not equivalent.
+\item Otherwise follow matching input symbols to successor pairs and continue.
 \end{enumerate}
+The product graph is finite, so this procedure halts. It is correct because
+Moore outputs are determined by the states themselves. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decide whether $R$ represents strings of length $> 28$, without finite automata.}
 
-\textbf{Algorithm} (direct on regular expressions):
+\textbf{Algorithm}: Compute a capped maximum-length function
+\[
+m(R)\in\{-\infty,0,1,\ldots,29\},
+\]
+where $m(R)=29$ means ``$R$ represents some string of length $>28$.'' Define it
+recursively:
 
-By structural induction on the regular expression $R$:
-- $R = \pmb{\emptyset}$: max length $= -\infty$; answer: no.
-- $R = \lambda$ or $R = a$ ($a\in\Sigma$): max length $\leq 1$; answer: no.
-- $R = R_1 \cup R_2$: yes if either $R_1$ or $R_2$ represents a string of length $>28$.
-- $R = R_1 \cdot R_2$: yes if the sum of max lengths exceeds 28, or if either has unbounded length (due to $^*$).
-- $R = R_1^*$: yes if $R_1$ represents any nonempty string (then $R_1^{29}$ has length $>28$); formally, $R_1^*$ represents strings of length $>28$ iff $R_1$ is not $\pmb{\emptyset}$ and $R_1$ is not $\{\lambda\}$ alone.
+\begin{enumerate}
+\item $m(\emptyset)=-\infty$.
+\item $m(\lambda)=0$.
+\item $m(a)=1$ for $a\in\Sigma$.
+\item $m(R_1\cup R_2)=\max\{m(R_1),m(R_2)\}$.
+\item For concatenation:
+\[
+m(R_1R_2)=
+\left\{
+\begin{array}{ll}
+-\infty & \text{if }m(R_1)=-\infty\text{ or }m(R_2)=-\infty,\\
+29 & \text{if }m(R_1)=29\text{ or }m(R_2)=29\text{ or }m(R_1)+m(R_2)>28,\\
+m(R_1)+m(R_2) & \text{otherwise.}
+\end{array}
+\right.
+\]
+\item For star:
+\[
+m(R_1^*)=
+\left\{
+\begin{array}{ll}
+0 & \text{if }L(R_1)\subseteq\{\lambda\},\\
+29 & \text{otherwise.}
+\end{array}
+\right.
+\]
+\end{enumerate}
 
-This induction on the structure of $R$ terminates in finitely many steps. \qed
+Then $R$ represents some string of length $>28$ iff $m(R)=29$. Since this
+recursion follows the finite parse tree of $R$, it always halts. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decide whether $L(G)$ contains a string of length $>28$ for right-linear grammar $G$.}
 
-\textbf{Algorithm} (without finite automata):
+\textbf{Algorithm} (without finite automata): Regard the grammar as a weighted
+directed graph. For each production of the form
+\[
+A\to xB
+\]
+place an edge $A\to B$ of weight $|x|$, and for each production
+\[
+A\to x
+\]
+place an edge from $A$ to a terminal sink $\bot$ of weight $|x|$.
 
-Solve the language equations for $G$: compute the set of nonterminals reachable from the start symbol, and check for cycles in the nonterminal dependency graph. If any cycle involves a nonterminal that generates nonempty strings, the language is infinite; in particular, it contains strings of length $>28$. Otherwise, solve the equations to find the maximum derivable string length.
+First discard useless nonterminals by the method of Theorem 12.6. Now there are
+two possibilities.
 
-Alternatively: perform BFS in the derivation tree up to depth $29$ (each step adds at most one terminal). If any terminal string of length $>28$ is derivable, answer yes. This terminates since the grammar is finite. \qed
+\begin{enumerate}
+\item There is a reachable productive cycle whose total weight is positive.
+Then the cycle can be traversed arbitrarily many times before exiting to
+$\bot$, so $L(G)$ contains arbitrarily long strings, and in particular a string
+of length $>28$.
+
+\item No such cycle exists. Then, after collapsing zero-weight cycles, the
+useful part of the graph is acyclic. The maximum length of a string derivable
+from each nonterminal can then be computed by dynamic programming in reverse
+topological order:
+\[
+\ell(A)=\max\{|x|,\ |x|+\ell(B)\},
+\]
+taking the maximum over productions $A\to x$ and $A\to xB$. The answer is Yes
+iff $\ell(S)>28$.
+\end{enumerate}
+
+Every step is finite, so the question is decidable. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Prove $Z_0\subseteq Z_1\subseteq\cdots\subseteq Z_n\subseteq\cdots\subseteq\Omega$.}
@@ -280,15 +602,39 @@ $W_{i+1} = W_i \cup \{A \mid \exists (A\to\alpha)\in P: \text{every symbol in }\
 \item \textbf{Decidability questions about NDFA $A$ with $\lambda$-moves.}
 
 \begin{enumerate}
-\item \textbf{Exists string with no complete path}: A ``complete path'' is one reading all input symbols. Check if there is any state (reachable from $s_0$ along some path) from which some transition is undefined. Convert $A$ to DFA $A^d$ (subset construction); check if the dead state (empty subset) is reachable in $A^d$. Decidable.
+\item \textbf{Exists string with no complete path}: Build the equivalent DFA
+$A^d$. For any string $x$, the state of $A^d$ reached by $x$ is exactly the set
+of states of $A$ at the ends of complete paths labeled $x$. Thus there is a
+string with no complete path iff the empty subset is reachable in $A^d$.
 
-\item \textbf{Exists string with a path to a nonfinal state}: BFS/DFS on $A$ to find if any complete computation path ends in a nonfinal state. Decidable (finite automaton has finitely many configurations per string-length).
+\item \textbf{Exists string with a path to a nonfinal state}: In $A^d$, search
+for a reachable subset that contains a nonfinal state of $A$. Such a subset
+exists iff some string has at least one complete path ending in a nonfinal
+state.
 
-\item \textbf{Exists accepted string with all paths leading to final states}: Find strings where every path from $s_0$ to an accepting state passes only through transitions that can also lead to final states. Check using the product of $A$ with a tracking automaton. Decidable.
+\item \textbf{Exists accepted string with all paths leading to final states}:
+This asks whether there is a reachable subset $Q$ of $A^d$ such that
+\[
+Q\neq\emptyset,\qquad Q\subseteq F.
+\]
+Then $x$ is accepted (because $Q$ is nonempty and every element is final), and
+every complete path on $x$ ends in a final state.
 
-\item \textbf{All accepted strings have all complete paths to final states}: More complex, but still decidable: check if the complement of this property is empty. Using DFA $A^d$ (subset construction), acceptance corresponds to subsets containing at least one final state. Check if any reachable subset in $A^d$ contains both a final and a nonfinal state of $A$. Decidable.
+\item \textbf{All accepted strings have all complete paths to final states}:
+This fails exactly when some reachable subset $Q$ of $A^d$ satisfies
+\[
+Q\cap F\neq\emptyset
+\qquad\text{and}\qquad
+Q-F\neq\emptyset.
+\]
+So the property is decidable by checking whether such a reachable subset exists.
 
-\item \textbf{All strings have unique paths}: A string has a unique path iff the NDFA is deterministic on that string (no two applicable transitions from any state on any symbol along the path). Check: for each state $q$ and symbol $a$, if $|\delta(q,a)| > 1$ or there are $\lambda$-move alternatives, the NDFA is nondeterministic on some strings. More carefully: check if any string leads to a state with multiple transition choices. Decidable (check transitions structure). \qed
+\item \textbf{All strings have unique paths}: Construct a finite product machine
+whose states record two simultaneous computations of $A$ on the same input,
+together with a bit indicating whether the two computations have diverged. Then
+there exists a string with two distinct complete paths iff a state with
+``diverged = yes'' is reachable in this product machine. Hence uniqueness of
+paths is decidable.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -341,15 +687,28 @@ Each check is computable by structural recursion on $R_1$. Terminates since $R_1
 \begin{enumerate}
 \item \textbf{Method}: BFS/DFS directly on the NDFA $A$ (viewed as a graph). Start from $s_0$, compute the $\lambda$-closure, then follow transitions. $L(A)=\emptyset$ iff no final state is reachable from $s_0$ (via any sequence of transitions and $\lambda$-moves). Reachability on the finite graph of $A$ (without constructing the exponential subset DFA).
 
-\item \textbf{Method for infinite $L(A)$}: BFS on $A$ to find all states reachable from $s_0$ and from which a final state is reachable. Among these ``useful'' states, check if there is a cycle (a state that appears twice on some accepting path). BFS/DFS to find a cycle among useful states. If yes, $L(A)$ is infinite; else finite. No DFA conversion needed. \qed
+\item \textbf{Method for infinite $L(A)$}: First find all states reachable from
+the initial $\lambda$-closure and all states from which some final state is
+reachable. Keep only these useful states. Then compute the strongly connected
+components of this useful subgraph. The language is infinite iff some useful
+component contains a cycle with at least one non-$\lambda$ transition. Such a
+cycle can be pumped to produce arbitrarily many different accepted strings; if
+no such cycle exists, every accepting path has bounded input length. Hence the
+question is decidable without converting to a DFA. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Decidability: $L(M)$ is a regular set for DPDA $M$.}
 
-\textbf{Reference result}: It is known (Stearns 1967) that it is decidable whether the language accepted by a DPDA is regular. The decision procedure involves analyzing the structure of the DPDA (looking for certain patterns of stack behavior called ``bounded stack''), but the proof is complex.
+\textbf{Answer}: This question is decidable, but the proof is substantially
+deeper than the earlier decidability arguments in the chapter. A standard
+result on deterministic pushdown automata gives an algorithm that determines
+whether the language of a given DPDA is regular. So the correct conclusion here
+is simply that the problem is decidable.
 
-\textbf{Outline}: A DPDA accepts a regular language iff its stack depth is bounded (the stack never grows beyond a fixed bound). This can be checked by analyzing the DPDA's transition structure for cycles that strictly increase stack depth. Such analysis is decidable since the DPDA has finite state and transition structure. \qed
+\textit{Caution}: it is \emph{not} enough to ask whether this particular DPDA
+happens to keep its stack bounded, since a DPDA can use unbounded stack space
+and still recognize a regular language. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Algorithm for path-finding in graphs (Theorem 12.9).}
@@ -405,18 +764,42 @@ $T'$ satisfies all three conditions: (1) halts on all input (since $T$ does and 
 \item \textbf{Machine $M_{\mathfrak{M}}$ and application to Theorem 12.15.}
 
 \begin{enumerate}
-\item \textbf{Proof}: Let $X$ be the set of encodings of halting TMs (all in $\mathfrak{M}$). Suppose every encoding in $X$ represents a halting TM. Assume $M_{\mathfrak{M}}$ decides membership in $X$.
+\item \textbf{Proof}: Assume there is a machine $M_{\mathfrak M}$ that decides
+membership in $X$, and that every encoding in $X$ represents a halting Turing
+machine. Define a halting Turing machine $D$ as follows on input $x$:
 
-By diagonalization: construct a TM $D$ that on input $\langle T\rangle$ (encoding of TM $T$):
-- Simulates $M_{\mathfrak{M}}$ on $\langle T\rangle$.
-- If $M_{\mathfrak{M}}$ accepts (i.e., $T\in X$): loop forever (don't halt).
-- If $M_{\mathfrak{M}}$ rejects: accept and halt.
+\begin{enumerate}
+\item Use $M_{\mathfrak M}$ to test whether $x\in X$.
+\item If $x\notin X$, reject.
+\item If $x\in X$, let $T_x$ be the Turing machine encoded by $x$, simulate
+$T_x$ on input $x$, and do the opposite: accept iff $T_x$ rejects $x$, and
+reject iff $T_x$ accepts $x$.
+\end{enumerate}
 
-$D$ is a halting TM on inputs not in $X$, but loops on inputs in $X$. What about $D$ itself? If $\langle D\rangle\in X$, then $D$ is a halting TM, but by construction $D$ loops on $\langle D\rangle$ (contradiction). If $\langle D\rangle\not in X$, then $D$ halts on $\langle D\rangle$ (accepting), so $\langle D\rangle$ represents a halting TM, contradicting $\langle D\rangle\not in X$.
+This simulation halts because every machine encoded by a member of $X$ is
+halting. So $D$ is itself a halting Turing machine.
 
-So $M_{\mathfrak{M}}$ cannot exist: there is a halting TM $D$ whose language is not in $\mathfrak{M}$. \qed
+Now suppose $L(D)\in\mathfrak M$. Then there is some encoding $d\in X$ whose
+machine $T_d$ recognizes $L(D)$. Consider what $D$ does on input $d$.
 
-\item \textbf{Application to Theorem 12.15}: Theorem 12.15 states that the halting problem is undecidable. Applying part (a) with $X = \{\langle T\rangle\mid T\text{ halts on all inputs}\}$ and $\mathfrak{M}$ = all Turing-acceptable languages: if there were an $M_{\mathfrak{M}}$ deciding whether $T$ halts on all inputs, then by part (a), some halting TM $D$ exists whose language is not Turing-acceptable --- contradiction. Hence no such $M_{\mathfrak{M}}$ exists. \qed
+\begin{itemize}
+\item If $d\in L(D)$, then by the definition of $D$, the machine $T_d$ rejects
+$d$, contradicting $L(T_d)=L(D)$.
+\item If $d\notin L(D)$, then by the definition of $D$, the machine $T_d$
+accepts $d$, again contradicting $L(T_d)=L(D)$.
+\end{itemize}
+
+Thus $L(D)\notin\mathfrak M$. So there exists a halting Turing machine that
+recognizes a language not in $\mathfrak M$. \qed
+
+\item \textbf{Application to Theorem 12.15}: Let $X$ be the set of strings that
+encode valid context-sensitive grammars by the scheme of the next exercise.
+Membership in $X$ is decidable. Also, each member of $X$ represents a halting
+Turing machine, because Theorem 12.9 gives an algorithm for deciding membership
+in the language of a context-sensitive grammar. Therefore part (a) applies to
+the class $\mathfrak M=\OSIG$ of context-sensitive languages, and yields a
+halting Turing machine whose language is not context sensitive. That is exactly
+Theorem 12.15.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -446,58 +829,146 @@ This encoding handles an unbounded number of nonterminals via unary encoding and
 \item \textbf{Undecidability of $L(X)=\emptyset$.}
 
 \begin{enumerate}
-\item \textbf{Arbitrary Turing machines}: Undecidable. If it were decidable, we could solve the halting problem: reduce the question ``does $T$ halt on $w$?'' to ``does $L(T_{w})=\emptyset$?'' where $T_w$ runs $T$ on $w$ and accepts iff $T$ halts.
+\item \textbf{Arbitrary Turing machines}: Undecidable. Given a Turing machine
+$T$ and a word $w$, build a machine $M_{T,w}$ that ignores its own input,
+simulates $T$ on $w$, and accepts iff that simulation halts. Then
+\[
+L(M_{T,w})=\emptyset
+\]
+iff $T$ does \emph{not} halt on $w$. So a decider for emptiness would solve the
+halting problem.
 
-\item \textbf{Halting Turing machines}: Still undecidable. By Rice's theorem applied to halting TMs: any nontrivial property of the language of a halting TM is undecidable.
+\item \textbf{Halting Turing machines}: Still undecidable. Given an arbitrary
+Turing machine $T$ and word $w$, build a halting Turing machine $H_{T,w}$ that
+on input $x$ simulates $T$ on $w$ for exactly $|x|$ steps and accepts iff $T$
+halts within that many steps. Then $H_{T,w}$ halts on every input. Also,
+\[
+L(H_{T,w})=\emptyset
+\]
+iff $T$ never halts on $w$. So deciding emptiness for halting Turing machines
+would decide the halting problem.
 
-\item \textbf{Context-sensitive grammars}: Undecidable (same reduction: membership in the halting set reduces to emptiness of the language of a CSG constructed from the TM encoding).
+\item \textbf{Context-sensitive grammars}: By Corollary 11.2, context-sensitive
+grammars and LBAs define the same class of languages. So it is enough to prove
+part (d): if emptiness were decidable for context-sensitive grammars, it would
+also be decidable for LBAs by first converting the LBA to an equivalent grammar.
 
-\item \textbf{Linear bounded automata}: Undecidable. The emptiness problem for LBAs is undecidable (since CSG = LBL and CSG emptiness is undecidable). \qed
+\item \textbf{Linear bounded automata}: Given $T$ and $w$, build an LBA
+$B_{T,w}$ that on input $x$ of length $n$ simulates $T$ on $w$ for exactly $n$
+steps and accepts iff $T$ halts within those $n$ steps. This can be done by a
+linear bounded automaton because in $n$ steps the simulated machine can visit at
+most $n+|w|$ tape cells, and $|w|$ is a fixed constant; the finitely many very
+short inputs can be handled separately in the finite control.
+
+Then
+\[
+L(B_{T,w})=\emptyset
+\]
+iff $T$ never halts on $w$. So emptiness for LBAs is undecidable, and therefore
+emptiness for context-sensitive grammars is undecidable as well. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Undecidability of $L(X)=\Sigma^*$.}
 
 \begin{enumerate}
-\item \textbf{Arbitrary TMs}: Undecidable (reduce from halting problem).
-\item \textbf{Halting TMs}: Undecidable (Rice's theorem for halting TMs).
-\item \textbf{Context-sensitive grammars}: Undecidable.
-\item \textbf{Linear bounded automata}: Undecidable.
-\item \textbf{Context-free grammars}: Undecidable. The universality problem for CFGs (``does $G$ generate $\Sigma^*$?'') is undecidable. This is a classical result: it can be shown by reducing from the Post Correspondence Problem.
-\item \textbf{Pushdown automata}: Undecidable (equivalent to CFG universality). \qed
+\item \textbf{Arbitrary TMs}: Undecidable. Given $T$ and $w$, build a machine
+$M'_{T,w}$ that ignores its input, simulates $T$ on $w$, and accepts iff $T$
+halts. Then
+\[
+L(M'_{T,w})=\Sigma^*
+\]
+iff $T$ halts on $w$. So universality for arbitrary Turing machines is
+undecidable.
+\item \textbf{Halting TMs}: Undecidable. Given $T$ and $w$, define a halting
+Turing machine $U_{T,w}$ that on input $x$ simulates $T$ on $w$ for exactly
+$|x|$ steps and accepts iff $T$ has \emph{not} halted within that many steps.
+Then $U_{T,w}$ halts on all inputs, and
+\[
+L(U_{T,w})=\Sigma^*
+\]
+iff $T$ never halts on $w$. So universality for halting Turing machines is
+undecidable.
+\item \textbf{Context-sensitive grammars}: By Corollary 11.2, it is enough to
+prove the corresponding statement for LBAs.
+\item \textbf{Linear bounded automata}: Given $T$ and $w$, build an LBA
+$C_{T,w}$ that on input $x$ of length $n$ simulates $T$ on $w$ for exactly $n$
+steps and accepts iff $T$ has \emph{not} halted within those $n$ steps. The
+same linear-space argument as in Exercise 12.41(d) shows that this is an LBA.
+Now
+\[
+L(C_{T,w})=\Sigma^*
+\]
+iff $T$ never halts on $w$. Hence universality is undecidable for LBAs, and
+therefore also for context-sensitive grammars.
+\item \textbf{Context-free grammars}: Undecidable. This is a standard
+undecidability result for context-free grammars.
+\item \textbf{Pushdown automata}: Undecidable, since Theorem 10.3 gives an
+effective conversion between PDAs and context-free grammars. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Set $E$ of encodings of TMs halting on $\lambda$.}
 
 \begin{enumerate}
-\item \textbf{$E\in\TSIG$}: Yes. The TM that recognizes $E$: on input $\langle T\rangle$, simulate $T$ on $\lambda$. If $T$ halts, accept (since that means $T$ halts on $\lambda$, so $\langle T\rangle\in E$). If $T$ doesn't halt, the TM doesn't halt either. So $E$ is Turing-acceptable (\TSIG). But $E\not in\OSIG$ (not decidable): if it were, we could decide the halting problem.
+\item \textbf{$E\in\TSIG$}: Yes. The TM that recognizes $E$ works as follows:
+on input $\langle T\rangle$, simulate $T$ on $\lambda$. If $T$ halts, accept. If
+$T$ does not halt, keep simulating forever. Therefore $E$ is Turing acceptable.
 
-\item \textbf{$E\in\HSIG$}: No. $E$ is not recursive (decidable). If $E\in\HSIG$ (halting TM language = recursive language), then $E$ would be decidable. But the halting problem for $T$ on $\lambda$ is undecidable. So $E\not in\HSIG$.
+\item \textbf{$E\in\HSIG$}: No. If $E\in\HSIG$, then $E$ would be decidable. But
+$E$ is exactly the halting problem on input $\lambda$, which is undecidable. So
+$E\notin\HSIG$.
 
-\item \textbf{$E\in\OSIG$}: No. $\OSIG = \HSIG$ (halting = recursive = decidable). As argued above, $E$ is not decidable. $E\not in\OSIG$.
+\item \textbf{$E\in\OSIG$}: No. By Corollary 12.3, every context-sensitive
+language belongs to $\HSIG$. Since $E\notin\HSIG$, it certainly cannot belong to
+$\OSIG$.
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Set $N$ of encodings of TMs that do NOT halt on $\lambda$.}
 
 \begin{enumerate}
-\item \textbf{$N\in\TSIG$}: No. $N = \overline{E}$ (complement of $E$ from Exercise 12.41). Since $E\in\TSIG$ but $E\not in\OSIG$, the complement $N = \overline{E}\not in\TSIG$ (if $E\in\TSIG$ and $\overline{E}\in\TSIG$, then $E$ would be recursive, contradicting $E\not in\OSIG$). So $N\not in\TSIG$.
+\item \textbf{$N\in\TSIG$}: No. Here
+\[
+N=\overline{E}.
+\]
+If both $E$ and $\overline{E}$ belonged to $\TSIG$, then we could dovetail the
+two semidecision procedures and decide $E$, which would put $E$ in $\HSIG$.
+But Exercise 12.41(b) showed that $E\notin\HSIG$. Therefore $N\notin\TSIG$.
 
 \item \textbf{$N\in\HSIG$}: No. Same argument: $N$ would be recursive (decidable) if $N\in\HSIG$, contradicting undecidability of the non-halting problem.
 
-\item \textbf{$N\in\OSIG$}: No. $\OSIG = \HSIG$. \qed
+\item \textbf{$N\in\OSIG$}: No. Again, $\OSIG\subseteq\HSIG$, and we have just
+seen that $N\notin\HSIG$. Hence $N\notin\OSIG$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
 \item \textbf{Decidability questions about equivalence classes of $R_{L(A)}$.}
 
 \begin{enumerate}
-\item \textbf{At least one equivalence class is finite}: For a DFA $A$, the equivalence classes of $R_{L(A)}$ correspond to states of the minimal DFA $A_{min}$. An equivalence class $[x]$ is finite iff the state $q = \DBAR_{min}(s_0,x)$ has no cycles reachable from itself that lead back to $q$. More precisely, $[x] = \{y\mid\DBAR_{min}(s_0,y)=q\}$ is the set of strings leading to state $q$.
+\item \textbf{At least one equivalence class is finite}: Minimize $A$ to obtain
+the connected DFA
+\[
+M=\langle \Sigma,S,s_0,\delta,F\rangle.
+\]
+Its states correspond to the classes of $R_{L(A)}$. For a state $q\in S$, the
+corresponding class is
+\[
+I(M,q)=\{x\in\Sigma^*\mid \DBAR(s_0,x)=q\}.
+\]
+This set is infinite iff some directed cycle reachable from $s_0$ can also
+reach $q$: traversing such a cycle any number of times gives infinitely many
+different strings in $I(M,q)$. Conversely, if no reachable cycle can reach
+$q$, then only finitely many paths lead from $s_0$ to $q$, so $I(M,q)$ is
+finite.
 
-This set is finite iff $q$ is not reachable from itself in $A_{min}$ (i.e., there is no cycle involving $q$). Check: in the DFA graph, does state $q$ have any path from itself back to itself? BFS/DFS in the state graph. Decidable.
+Therefore at least one class is finite iff there is some state $q$ not
+reachable from any reachable cycle. This is decidable by graph search.
 
-\item \textbf{All equivalence classes are finite}: All classes are finite iff the DFA graph is acyclic (no cycles, since any cycle would create an infinite class). Check if the DFA graph has any cycles: DFS looking for back edges. Decidable. \qed
+\item \textbf{All equivalence classes are finite}: By the same criterion, every
+class is finite iff no reachable cycle exists at all in the minimal DFA. So it
+suffices to minimize $A$ and test whether the reachable graph is acyclic. This
+is decidable. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
