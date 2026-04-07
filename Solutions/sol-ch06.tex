@@ -101,7 +101,19 @@ Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is foll
     ((\pmb{b}\cup\pmb{c})^*\pmb{a}(\pmb{b}\cup\pmb{c})^*\pmb{a})^*(\pmb{b}\cup\pmb{c})^*
   \]
 
-  \item $L_4=\{z\mid|z|_{\pmb{c}}\text{ prime}\}$: Not regular.  The set of primes is not eventually periodic, so the language $\{c^p\mid p\text{ prime}\}\subseteq L_4$ restricted to $\Sigma=\{\pmb{c}\}$ is not FAD (pumping lemma).  Hence $L_4$ has no regular expression.
+  \item $L_4=\{z\mid|z|_{\pmb{c}}\text{ prime}\}$: This language is not regular.
+  If it were FAD, let $p$ be a pumping length and choose a prime $q>p$.
+  Then $\pmb{c}^q\in L_4$.  Write
+  \[
+    \pmb{c}^q=uvw
+  \]
+  with $|uv|\le p$ and $|v|\ge 1$.  Since the word is unary, let $|v|=m\ge 1$.
+  Pump with $i=q+1$.  The pumped word has length
+  \[
+    q+qm=q(1+m),
+  \]
+  which is composite.  Hence $uv^{q+1}w\notin L_4$, contradicting the pumping
+  lemma.  Therefore $L_4$ has no regular expression.
 
   \item $L_5=\{x\mid\pmb{abc}\text{ is a substring}\}$:
   \[
@@ -172,19 +184,76 @@ A decimal number is divisible by 5 iff it ends in $\pmb{0}$ or $\pmb{5}$.
 %% 6.14
 \item \textbf{Build NDFA for $\pmb{b}\cup\pmb{a}^*\pmb{c}$ using exact constructs of Chapter~5.}
 
-Step 1: $\pmb{a}^*$ via Theorem~5.5 (Kleene closure of $\{\pmb{a}\}$).
-Step 2: $\pmb{a}^*\pmb{c}$ via Theorem~5.4 (concatenation of $\pmb{a}^*$ and $\{\pmb{c}\}$).
-Step 3: $\pmb{b}\cup\pmb{a}^*\pmb{c}$ via Theorem~5.2 (union of $\{\pmb{b}\}$ and $\pmb{a}^*\pmb{c}$).
+Use the same state names and unsimplified constructions as in
+Examples~6.4--6.6.
 
-The NDFA:
-\begin{itemize}
-  \item Machine for $\{\pmb{a}\}$: one start state $p_0$, one final state $p_1$, $\delta(p_0,\pmb{a})=\{p_1\}$.
-  \item Machine for $\pmb{a}^*$ (Theorem~5.5): add start state $q_0$ (final); $\lambda$-transition $q_0\to p_0$; $\lambda$-transition $p_1\to q_0$.
-  \item Machine for $\{\pmb{c}\}$: start $r_0$, final $r_1$, $\delta(r_0,\pmb{c})=\{r_1\}$.
-  \item Machine for $\pmb{a}^*\pmb{c}$ (Theorem~5.4): $\lambda$-transition $q_0\to r_0$; final states $\{r_1\}$.
-  \item Machine for $\{\pmb{b}\}$: start $s_0$, final $s_1$, $\delta(s_0,\pmb{b})=\{s_1\}$.
-  \item Union (Theorem~5.2): start state set $\{q_0,s_0\}$; final states $\{r_1,s_1\}$.
-\end{itemize}
+\medskip
+\noindent\textbf{Step 1: Build $\{\pmb{a}\}$ and apply Theorem~5.5.}
+Let
+\[
+A_{\pmb{a}}=\langle\Sigma,\{t_0,t_1\},\{t_0\},\delta_{\pmb{a}},\{t_1\}\rangle
+\]
+with $\delta_{\pmb{a}}(t_0,\pmb{a})=\{t_1\}$ and all other transitions empty.
+Then Theorem~5.5 gives an NDFA for $\pmb{a}^*$:
+\[
+A_{\pmb{a}^*}=\langle\Sigma,\{t_0,t_1,q_0\},\{t_0,q_0\},\delta_*,\{t_1,q_0\}\rangle,
+\]
+where
+\[
+\delta_*(t_0,\pmb{a})=\{t_1\},\qquad
+\delta_*(t_1,\pmb{a})=\{t_1\},
+\]
+and every other transition is empty.
+
+\medskip
+\noindent\textbf{Step 2: Concatenate with $\{\pmb{c}\}$ using the pattern of Example~6.6.}
+Let
+\[
+A_{\pmb{c}}=\langle\Sigma,\{r_0,r_1\},\{r_0\},\delta_{\pmb{c}},\{r_1\}\rangle
+\]
+with $\delta_{\pmb{c}}(r_0,\pmb{c})=\{r_1\}$ and all other transitions empty.
+Using the exact concatenation construction, form
+\[
+A_{\pmb{a}^*\pmb{c}}
+=\langle\Sigma,\{t_0,t_1,q_0,r_0,r_1\},\{t_0,q_0\},\delta_\bullet,\{r_1\}\rangle,
+\]
+where $\delta_\bullet$ agrees with the old transitions and, because $t_1$ and
+$q_0$ are final in $A_{\pmb{a}^*}$, they also mimic the transitions out of
+$r_0$.  Thus
+\[
+\delta_\bullet(t_0,\pmb{a})=\{t_1\},\qquad
+\delta_\bullet(t_1,\pmb{a})=\{t_1\},\qquad
+\delta_\bullet(t_1,\pmb{c})=\{r_1\},
+\]
+\[
+\delta_\bullet(q_0,\pmb{c})=\{r_1\},\qquad
+\delta_\bullet(r_0,\pmb{c})=\{r_1\},
+\]
+and every other transition is empty.  As in Example~6.6, the state $r_0$
+remains disconnected.
+
+\medskip
+\noindent\textbf{Step 3: Union with $\{\pmb{b}\}$ using Theorem~5.2.}
+Let
+\[
+A_{\pmb{b}}=\langle\Sigma,\{s_0,s_1\},\{s_0\},\delta_{\pmb{b}},\{s_1\}\rangle
+\]
+with $\delta_{\pmb{b}}(s_0,\pmb{b})=\{s_1\}$ and all other transitions empty.
+Then Theorem~5.2 yields
+\[
+A=
+\langle
+\Sigma,
+\{t_0,t_1,q_0,r_0,r_1,s_0,s_1\},
+\{t_0,q_0,s_0\},
+\delta,
+\{r_1,s_1\}
+\rangle,
+\]
+where $\delta$ agrees with $\delta_\bullet$ on
+$\{t_0,t_1,q_0,r_0,r_1\}$, agrees with $\delta_{\pmb{b}}$ on
+$\{s_0,s_1\}$, and has no other transitions.  This is the required unsimplified
+NDFA for $\pmb{b}\cup\pmb{a}^*\pmb{c}$.
 
 %% 6.15
 \item \textbf{Inequalities in Lemma~6.1:}
@@ -881,7 +950,9 @@ Let $w\in A\cdot E$.  Then $w=xy$ with $x\in A$ and $y\in E$.  Since $E\subseteq
   \item \textbf{Image of \RSIG\ under substitution $\bar{s}$ is in $\mathfrak{R}_\Gamma$.}
 
   \begin{proof}
-  Substitution $s:\Sigma\to\wp(\Gamma^*)$ maps each letter to a regular language.  For a regular expression $R$ over $\Sigma$, define $\bar{s}(R)$ by:
+  Interpreting $s$ as a regular set substitution in the sense of
+  Definition~6.5, this is exactly the induction omitted in Theorem~6.6.
+  For a regular expression $R$ over $\Sigma$, define $\bar{s}(R)$ by:
   $\bar{s}(\pmb{a})=s(\pmb{a})\in\mathfrak{R}_\Gamma$ (by assumption),
   $\bar{s}(\emptyset)=\emptyset$, $\bar{s}(\epsilon)=\{\lambda\}$,
   $\bar{s}(R_1\cup R_2)=\bar{s}(R_1)\cup\bar{s}(R_2)\in\mathfrak{R}_\Gamma$ (closed under union),
@@ -898,10 +969,18 @@ Let $w\in A\cdot E$.  Then $w=xy$ with $x\in A$ and $y\in E$.  Since $E\subseteq
   \]
   Define the substitution by
   $s(\pmb{a})=(\pmb{a}\cup\pmb{b})$ and
-  $s(\pmb{b})=(\pmb{a}\cup\pmb{b})$.  Then $\overline{s}(L)$ is the set of all
-  even-length words over $\{\pmb{a},\pmb{b}\}$, which is regular.  So the image
-  of a nonregular language under a substitution need not remain in
-  $\mathfrak{N}_\Gamma$.
+  $s(\pmb{b})=(\pmb{a}\cup\pmb{b})$.  Every word in $L$ has even length, so
+  every word in $\overline{s}(L)$ also has even length.  Thus
+  $\overline{s}(L)$ is contained in the set of even-length words.
+
+  Conversely, let $y$ be any even-length word, say $|y|=2n$.  Choose
+  $x=\pmb{a}^n\pmb{b}^n\in L$.  Since each letter of $x$ may be replaced by
+  either $\pmb{a}$ or $\pmb{b}$, the word $y$ belongs to $\overline{s}(x)$.
+  Hence every even-length word lies in $\overline{s}(L)$.
+
+  Therefore $\overline{s}(L)$ is exactly the set of all even-length words over
+  $\{\pmb{a},\pmb{b}\}$, which is regular.  So the image of a nonregular
+  language under a substitution need not remain in $\mathfrak{N}_\Gamma$.
 \end{enumerate}
 
 %% 6.45
@@ -979,7 +1058,6 @@ substring gives:
   \[
     \pmb{aa}(\pmb{a}\cup\pmb{b})^* \cup \pmb{bb}(\pmb{a}\cup\pmb{b})^*
   \]
-  (Also include words of length $<2$: $\lambda$ and $\pmb{a}$ and $\pmb{b}$ trivially satisfy the vacuous condition; but ``first two letters match'' requires length $\ge 2$.)
 
   \item Words for which the first and last letters match:
   \[

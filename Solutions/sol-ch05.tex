@@ -51,8 +51,39 @@
   \item \textbf{Complementation: Yes.}  The complement of a finite language is cofinite and vice versa.
   \item \textbf{Union: Yes.}  If both $L_1,L_2$ are finite, $L_1\cup L_2$ is finite.  If one is cofinite, $L_1\cup L_2$ is cofinite.  If both are cofinite, $L_1\cup L_2$ is cofinite (by 5.2b).  \textbf{Closed.}
   \item \textbf{Intersection: Yes.}  If both finite: finite.  If one cofinite and one finite: finite.  If both cofinite: cofinite (by 5.2c).
-  \item \textbf{Concatenation: No.}  Let $L_1=C_\Sigma$ element and $L_2=C_\Sigma$ element; concatenation is cofinite (by 5.2d).  Let $L_1,L_2\in F_\Sigma$; product is finite.  Let $L_1\in F_\Sigma$ and $L_2\in C_\Sigma$ or vice versa: if $L_1=\emptyset$, product is $\emptyset\in F_\Sigma$.  If $L_1$ is finite and nonempty: the product may be neither finite nor cofinite.  \textbf{Counterexample:} $L_1=\{\pmb{a}\}$ (finite), $L_2=\Sigma^*\setminus\{\pmb{aa}\}$ (cofinite).  Then $L_1\cdot L_2$ = all words of the form $\pmb{a}w$ where $w\neq\pmb{aa}$, i.e., all words starting with $\pmb{a}$ except $\pmb{aaa}$.  This is neither finite nor cofinite (it's infinite and its complement is infinite).  So \textbf{not closed}.
-  \item \textbf{Kleene closure: No.}  $\{\pmb{a}\}^*$ is infinite but $\{\pmb{a}\}\in F_\Sigma$; $\{\pmb{a}\}^*$ is not in $F_\Sigma$.  Is it cofinite?  $\{\pmb{a}\}^*=\{\lambda,\pmb{a},\pmb{aa},\ldots\}$, and its complement contains all words with any $\pmb{b}$ (if $|\Sigma|\ge 2$), which is infinite, so $\{\pmb{a}\}^*$ is not cofinite.  \textbf{Not closed.}
+  \item \textbf{Concatenation: It depends on $\Sigma$.}
+  If $|\Sigma|=1$, say $\Sigma=\{\pmb{a}\}$, then $B_\Sigma$ \emph{is} closed
+  under concatenation.  Finite unary languages correspond to finite sets of
+  lengths, and cofinite unary languages correspond to cofinite sets of lengths.
+  The sum of two finite sets of lengths is finite; the sum of a nonempty finite
+  set and a cofinite set is cofinite; and the sum of two cofinite sets is
+  cofinite.  So every concatenation stays in $B_\Sigma$.
+
+  If $|\Sigma|\ge 2$, then $B_\Sigma$ is \emph{not} closed under concatenation.
+  For example, let $L_1=\{\pmb{a}\}$ and
+  $L_2=\Sigma^*\setminus\{\pmb{aa}\}$.  Then $L_1\in F_\Sigma$ and
+  $L_2\in C_\Sigma$, but
+  \[
+  L_1\cdot L_2=\{\pmb{a}w\mid w\neq \pmb{aa}\},
+  \]
+  the set of all words beginning with $\pmb{a}$ except $\pmb{aaa}$.  This
+  language is infinite, and its complement is also infinite, so it is neither
+  finite nor cofinite.
+
+  Therefore the correct answer is:
+  \[
+  |\Sigma|=1 \Rightarrow \text{closed},\qquad |\Sigma|\ge 2 \Rightarrow \text{not closed}.
+  \]
+  \item \textbf{Kleene closure: No.}  Pick any symbol $\pmb{a}\in\Sigma$ and let
+  $L=\{\pmb{aa}\}$.  Then $L\in F_\Sigma\subseteq B_\Sigma$, but
+  \[
+  L^*=\{(\pmb{aa})^n\mid n\ge 0\}.
+  \]
+  This language is infinite.  If $|\Sigma|=1$, its complement is the set of
+  odd-length words, which is infinite.  If $|\Sigma|\ge 2$, its complement
+  contains every word with some symbol other than $\pmb{a}$, so it is again
+  infinite.  Thus $L^*$ is neither finite nor cofinite, so $B_\Sigma$ is not
+  closed under Kleene closure.
   \item \textbf{Relative complement: Yes.}  If $L_1\in C_\Sigma$ and
   $L_2\in C_\Sigma$, then $L_1\setminus L_2=L_1\cap\sim L_2$ where
   $\sim L_2$ is finite, so the result is finite and therefore belongs to
@@ -446,14 +477,57 @@ $x\in L^*$.
 %% 5.33
 \item \textbf{Amplify the proof of Theorem~5.2 (union).}
 
-Theorem~5.2: $\DSIG$ is closed under union.  The proof uses $A^\cup$ (NDFA combining $A_1$ and $A_2$ with joint start-state set $S^1_0\cup S^2_0$).  The key equivalences:
+Theorem~5.2 uses NDFAs
+\[
+A_1=\langle\Sigma,S_1,S_{0_1},\delta_1,F_1\rangle,\qquad
+A_2=\langle\Sigma,S_2,S_{0_2},\delta_2,F_2\rangle,
+\]
+and the union machine
+\[
+A^\cup=\langle\Sigma,S_1\cup S_2,S_{0_1}\cup S_{0_2},\delta^\cup,F_1\cup F_2\rangle.
+\]
+The book's chain of equivalences is:
+\begin{align*}
+x\in L(A^\cup)
+&\Leftrightarrow
+(\exists s\in S_{0_1}\cup S_{0_2})
+\bigl[\overline{\delta^\cup}(s,x)\cap(F_1\cup F_2)\neq\emptyset\bigr]
+\quad\text{(Definition~4.4)} \\
+&\Leftrightarrow
+(\exists s\in S_{0_1})
+\bigl[\overline{\delta^\cup}(s,x)\cap(F_1\cup F_2)\neq\emptyset\bigr] \\
+&\hspace{1.5cm}\vee
+(\exists s\in S_{0_2})
+\bigl[\overline{\delta^\cup}(s,x)\cap(F_1\cup F_2)\neq\emptyset\bigr]
+\quad\text{(definition of union)} \\
+&\Leftrightarrow
+(\exists s\in S_{0_1})
+\bigl[\DBAR_1(s,x)\cap(F_1\cup F_2)\neq\emptyset\bigr] \\
+&\hspace{1.5cm}\vee
+(\exists s\in S_{0_2})
+\bigl[\DBAR_2(s,x)\cap(F_1\cup F_2)\neq\emptyset\bigr]
+\quad\text{(by the inductive fact about $\overline{\delta^\cup}$)} \\
+&\Leftrightarrow
+(\exists s\in S_{0_1})
+\bigl[\DBAR_1(s,x)\cap F_1\neq\emptyset\bigr] \\
+&\hspace{1.5cm}\vee
+(\exists s\in S_{0_2})
+\bigl[\DBAR_2(s,x)\cap F_2\neq\emptyset\bigr]
+\quad\text{(since $S_1\cap S_2=\emptyset$ and $F^\cup=F_1\cup F_2$)} \\
+&\Leftrightarrow x\in L(A_1)\vee x\in L(A_2)
+\quad\text{(Definition~4.4)} \\
+&\Leftrightarrow x\in L_1\cup L_2.
+\end{align*}
 
-$x\in L(A^\cup)$ [Definition of $L(A^\cup)$]
-$\Leftrightarrow\DBAR^\cup(S^1_0\cup S^2_0,x)\cap(F_1\cup F_2)\neq\emptyset$ [Def.~4.4]
-$\Leftrightarrow(\DBAR^\cup(S^1_0,x)\cup\DBAR^\cup(S^2_0,x))\cap(F_1\cup F_2)\neq\emptyset$ [Exercise~4.27]
-$\Leftrightarrow(\DBAR_1(s^1_0,x)\cup\DBAR_2(s^2_0,x))\cap(F_1\cup F_2)\neq\emptyset$ [paths stay in $S_i$]
-$\Leftrightarrow\DBAR_1(s^1_0,x)\cap F_1\neq\emptyset$ or $\DBAR_2(s^2_0,x)\cap F_2\neq\emptyset$
-$\Leftrightarrow x\in L_1\cup L_2$.
+The missing ingredient in the textbook proof is exactly the inductive claim
+\[
+\overline{\delta^\cup}(s,x)=
+\begin{cases}
+\DBAR_1(s,x), & s\in S_1,\\
+\DBAR_2(s,x), & s\in S_2,
+\end{cases}
+\]
+which is proved later in Exercise~5.50.
 
 %% 5.34
 \item \textbf{Given DFA $A$, define NDFA accepting $L(A)^+$.}
@@ -516,25 +590,61 @@ The $\lambda$-transition from each $f\in F_1$ to $s^2_0$ cleanly separates the t
 %% 5.42
 \item \textbf{Redesign Theorem~5.5 (Kleene closure) using $\lambda$-transitions, without extra $q_0$.}
 
-In general this cannot be done correctly without changing the original start
-state's behavior, so the extra $q_0$ is still necessary.
-
-The tempting construction is to make $s_0$ final (so that $\lambda$ is
-accepted) and add $\lambda$-transitions from each $f\in F$ back to $s_0$.
-But this is wrong: making $s_0$ final can cause the new machine to accept words
-that merely return to $s_0$, even when they are not in $L^*$.
-
-For example, let $L=\{\pmb{aa}\}$ over $\Sigma=\{\pmb{a},\pmb{b}\}$, and let
-$A$ be a DFA for $L$ in which $s_0$ loops on $\pmb{b}$.  If we simply make
-$s_0$ final, then the redesigned machine accepts $\pmb{b}$, because
+Let
 \[
-\delta(s_0,\pmb{b})=s_0\in F'.
+A=\langle\Sigma,S,S_0,\delta,F\rangle
 \]
-But $\pmb{b}\not in L^*$, since every nonempty word of $L^*$ is a concatenation
-of copies of $\pmb{aa}$.
+be the NDFA for $L$.  For each start state $s\in S_0$, introduce a new copy
+$s'$ of that start state.  Let
+\[
+S'=\{s'\mid s\in S_0\},
+\]
+with $S'\cap S=\emptyset$.  Define the $\lambda$-NDFA
+\[
+A^\lambda_*=\langle\Sigma,S\cup S',S',\delta^\lambda_*,F\cup S'\rangle
+\]
+as follows:
+\begin{enumerate}[1.]
+  \item For each old state $t\in S$ and each $\pmb{a}\in\Sigma$, keep the old
+  transitions:
+  \[
+  \delta^\lambda_*(t,\pmb{a})=\delta(t,\pmb{a}).
+  \]
+  \item For each copied start state $s'\in S'$ corresponding to $s\in S_0$, let
+  it behave on letters exactly as $s$ did:
+  \[
+  \delta^\lambda_*(s',\pmb{a})=\delta(s,\pmb{a})
+  \qquad (\pmb{a}\in\Sigma).
+  \]
+  \item For each final state $f\in F$, add $\lambda$-transitions from $f$ to
+  every copied start state:
+  \[
+  \delta^\lambda_*(f,\lambda)\supseteq S'.
+  \]
+  \item No other $\lambda$-transitions are added.
+\end{enumerate}
 
-So even with $\lambda$-transitions, the fresh start state $q_0$ is needed to
-accept $\lambda$ without altering the behavior of the original start state.
+This makes the copied start states both start states and final states, so
+$\lambda$ is accepted immediately, and every time a copy of a word from $L$ is
+finished, the machine may jump by a $\lambda$-move to a copied start state and
+begin another copy.
+
+\textbf{Why it works.}  If $x=x_1x_2\cdots x_n$ with each $x_i\in L$, start in a
+copied start state corresponding to the start used for $x_1$, follow the old
+transitions while reading $x_1$, jump by $\lambda$ from the reached final state
+to a copied start state for $x_2$, and continue.  Thus every word of $L^*$ is
+accepted.
+
+Conversely, every accepting computation starts in a copied start state, and the
+only way to enter a copied start state later is by a $\lambda$-move from a final
+state.  Therefore the input splits into consecutive blocks, each of which takes
+the machine from some copied start state through the old machine to a final
+state.  Replacing each copied start state by its original partner in $S_0$
+shows that each block lies in $L$.  Hence the whole input lies in $L^*$.
+
+So this redesign does make the single extra start state $q_0$ unnecessary: the
+role of ``accept $\lambda$ and restart a new factor'' is carried by copied start
+states together with $\lambda$-transitions from final states.
 
 %% 5.43
 \item \textbf{Redesign Theorem~5.4 for NDFAs $A_1$ and $A_2$.}
