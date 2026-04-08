@@ -33,7 +33,7 @@
 
   \item \textbf{Intersection: Yes.}  $L_1\cap L_2=\Sigma^*\setminus(F_1\cup F_2)$.  Since $F_1$ and $F_2$ are finite, so is $F_1\cup F_2$, hence $L_1\cap L_2\in C_\Sigma$.
 
-  \item \textbf{Concatenation: Yes.}  If $L_1,L_2\in C_\Sigma$ (both infinite), then $L_1\cdot L_2$ contains arbitrarily long words, but let us verify cofiniteness.  Since $\Sigma^*\setminus(L_1\cdot L_2)\subseteq$ the set of words not writable as a product from $L_1$ and $L_2$; this set is finite because $L_1$ and $L_2$ each omit only finitely many words.  More precisely: there exists $N_1$ such that all words of length $\ge N_1$ are in $L_1$, and similarly $N_2$ for $L_2$.  Then any word of length $\ge N_1+N_2$ can be split so that both parts are in $L_1$ and $L_2$, so $L_1\cdot L_2$ is cofinite.
+  \item \textbf{Concatenation: Yes.}  If $L_1,L_2\in C_\Sigma$ (both infinite), then $L_1\cdot L_2$ contains arbitrarily long words, but let us verify cofiniteness.  Since $\Sigma^*\setminus(L_1\cdot L_2)\subseteq$ the set of words not writable as a product from $L_1$ and $L_2$; this set is finite because $L_1$ and $L_2$ each omit only finitely many words.  More precisely: there exists $N_1$ such that all words of length $\ge N_1$ are in $L_1$, and there exists $N_2$ such that all words of length $\ge N_2$ are in $L_2$.  Then any word of length $\ge N_1+N_2$ can be split so that both parts are in $L_1$ and $L_2$, so $L_1\cdot L_2$ is cofinite.
 
   \item \textbf{Kleene closure: Yes.}  Since $L$ is cofinite, there is an $N$
   such that every word of length at least $N$ lies in $L$.  Hence every word of
@@ -358,9 +358,16 @@ obtain a balanced word.  Thus $P(K)$ is FAD, so \NSIG\ is not closed under $P$.
 %% 5.24
 \item \textbf{\NSIG\ is not closed under $S$ (suffix operator).}
 
-Using the same language $K$, we have $S(K)=\{\pmb{a},\pmb{b}\}^*$: for any word
-$x$, prefix it by enough copies of the deficient symbol to balance the counts.
-Since $K\in\NSIG$ but $S(K)$ is FAD, \NSIG\ is not closed under $S$.
+Let
+\[
+K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}.
+\]
+Then $K\in\NSIG$. For any word $x$, prefix enough copies of the deficient symbol
+to balance the counts; this shows $x\in S(K)$. Hence
+\[
+S(K)=\{\pmb{a},\pmb{b}\}^*.
+\]
+Since $S(K)$ is FAD, \NSIG\ is not closed under $S$.
 
 %% 5.25
 \item \textbf{\NSIG\ is not closed under $C$ (center operator).}
@@ -374,7 +381,11 @@ is FAD while $K\in\NSIG$.
 %% 5.26
 \item \textbf{\NSIG\ is not closed under $F$.}
 
-For the same language $K$, every word in $K$ has a proper extension in $K$:
+Let
+\[
+K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}.
+\]
+Every word in $K$ has a proper extension in $K$:
 if $x\in K$, then $x\pmb{ab}\in K$.  Therefore $F(K)=\emptyset$, which is FAD.
 So \NSIG\ is not closed under $F$.
 
@@ -539,7 +550,7 @@ That is, whenever a transition would lead to a final state, simultaneously allow
 %% 5.35
 \item \textbf{Given NDFA $A$, define NDFA accepting $L(A)^+$.}
 
-Same construction as~5.34 adapted to NDFAs:
+Define
 $A^+=\langle\Sigma,S,S_0,\delta^+,F\rangle$ where for each $s\in S$ and $\pmb{a}\in\Sigma$:
 $\delta^+(s,\pmb{a})=\delta(s,\pmb{a})\cup(S_0\text{ if }\delta(s,\pmb{a})\cap F\neq\emptyset)$.
 This allows returning to any start state after reaching a final state.
@@ -565,7 +576,11 @@ Then $\{\lambda\}\subseteq K$, but $\{\lambda\}\in\DSIG$.
 %% 5.39
 \item \textbf{If $L\in\NSIG$, must all supersets be in \NSIG?}
 
-\textbf{No.}  With the same language $K\in\NSIG$, we have
+\textbf{No.}  Let
+\[
+K=\{x\in\{\pmb{a},\pmb{b}\}^*\mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}.
+\]
+Then $K\in\NSIG$ and
 $K\subseteq\{\pmb{a},\pmb{b}\}^*$, but $\{\pmb{a},\pmb{b}\}^*\in\DSIG$.
 
 %% 5.40
@@ -732,7 +747,24 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
 
   \item \textbf{Machine definition.}  Define $A^-$ as the product of $A_1$ and $A_2^\sim$ (complement of $A_2$), using the intersection machine from Lemma~5.1 with $F^-=F_1\times(S_2\setminus F_2)$.
 
-  \item \textbf{Proof.}  By induction (as in Exercise~5.56/5.57), $\overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x)=\langle\deltabar{1}(s^1_0,x),\deltabar{2}(s^2_0,x)\rangle$.  Then $x\in L(A^-)$ iff $\deltabar{1}(s^1_0,x)\in F_1$ and $\deltabar{2}(s^2_0,x)\not in F_2$ iff $x\in L_1\setminus L_2$. \qed
+  \item \textbf{Proof.}  We prove by induction on $|x|$ that
+  \[
+  \overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x)
+  =\langle\deltabar{1}(s^1_0,x),\deltabar{2}(s^2_0,x)\rangle.
+  \]
+  For $x=\lambda$ both sides are $\langle s^1_0,s^2_0\rangle$. If the claim holds
+  for $x$, then for any letter $\pmb{a}$,
+  \[
+  \overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x\pmb{a})
+  =\delta^-(\overline{\delta^-}(\langle s^1_0,s^2_0\rangle,x),\pmb{a})
+  \]
+  \[
+  =\delta^-(\langle\deltabar{1}(s^1_0,x),\deltabar{2}(s^2_0,x)\rangle,\pmb{a})
+  =\langle\deltabar{1}(s^1_0,x\pmb{a}),\deltabar{2}(s^2_0,x\pmb{a})\rangle.
+  \]
+  Therefore $x\in L(A^-)$ iff $\deltabar{1}(s^1_0,x)\in F_1$ and
+  $\deltabar{2}(s^2_0,x)\not in F_2$, which is exactly the condition
+  $x\in L_1\setminus L_2$. \qed
 \end{enumerate}
 
 %% 5.48
@@ -789,18 +821,24 @@ This makes sense: if $A$ is a minimal DFA for $L$, then $A^\sim$ (with complemen
   $x=\pmb{a}^n\pmb{b}^n=\pmb{a}\cdot \pmb{a}^{n-1}\pmb{b}^n$ with both factors in
   $L$.  Hence $L\cdot L=\{\pmb{a},\pmb{b}\}^*\in\DSIG$.
 
-  \item \textbf{\NSIG\ is not closed under Kleene closure.}  With the same
-  language $L$, we have $\lambda\in L$ and $L\cdot L=\Sigma^*$, so
+  \item \textbf{\NSIG\ is not closed under Kleene closure.}  For
+  \[
+    L=\{\pmb{a},\pmb{b}\}^*-\{\pmb{a}^n\pmb{b}^n\mid n\ge 1\},
+  \]
+  we have $\lambda\in L$ and $L\cdot L=\Sigma^*$, so
   $L^*=\Sigma^*\in\DSIG$.
 
-  \item \textbf{If $L\in\NSIG$, then $L^+\in\NSIG$: No.}  For the same language
-  $L$, because $\lambda\in L$ we have $L^+=L^*=\Sigma^*$, which is FAD.
+  \item \textbf{If $L\in\NSIG$, then $L^+\in\NSIG$: No.}  For
+  \[
+    L=\{\pmb{a},\pmb{b}\}^*-\{\pmb{a}^n\pmb{b}^n\mid n\ge 1\},
+  \]
+  because $\lambda\in L$ we have $L^+=L^*=\Sigma^*$, which is FAD.
 \end{enumerate}
 
 %% 5.52
 \item \textbf{Why require $S_1\cap S_2=\emptyset$ in Theorem~5.4?}
 
-If $S_1\cap S_2\neq\emptyset$, the transition function $\delta^\bullet$ would be ambiguous: for a state $s\in S_1\cap S_2$, which transitions should apply---those of $A_1$ or $A_2$?  The definition of $\delta^\bullet$ would not be well-defined.  Moreover, the proof that paths through the concatenation machine correctly simulate $A_1$ then $A_2$ relies on the fact that once the computation enters $S_2$, it stays in $S_2$ (and similarly for $S_1$).  If the state sets overlap, a path might inadvertently ``mix'' transitions from $A_1$ and $A_2$.
+If $S_1\cap S_2\neq\emptyset$, the transition function $\delta^\bullet$ would be ambiguous: for a state $s\in S_1\cap S_2$, which transitions should apply---those of $A_1$ or $A_2$?  The definition of $\delta^\bullet$ would not be well-defined.  Moreover, the proof that paths through the concatenation machine correctly simulate $A_1$ then $A_2$ relies on the fact that once the computation enters $S_2$, it stays in $S_2$, and once it begins in $S_1$ it follows only the $A_1$ transitions until such a handoff occurs.  If the state sets overlap, a path might inadvertently ``mix'' transitions from $A_1$ and $A_2$.
 
 %% 5.53
 \item \textbf{\DSIG\ is closed under $E(L)=\{z\mid\exists y\in\Sigma^+,\exists x\in L\ni z=yx\}$.}
@@ -967,10 +1005,13 @@ $Y(L)\in\DSIG$.
 
   \item \textbf{Proof:}  In the $0$-copy the machine either reads the current
   input symbol normally, or guesses that one letter $\pmb{b}$ of the original
-  word was deleted immediately before it and moves into the $1$-copy.  Once in
-  the $1$-copy, the rest of the input is processed exactly as in $A$.  The extra
-  final states in the $0$-copy handle the case where the deleted letter was the
-  last letter of the original word.  Hence this NDFA accepts exactly $Y(L)$.
+  word was deleted immediately before it and moves into the $1$-copy.  From that
+  moment on, if the original machine would have been in state $s$ after reading
+  the undeleted word, the new machine is in the state $\langle s,1\rangle$ after
+  reading the shortened word. Thus the $1$-copy simulates the remainder of the
+  computation of $A$ on the undeleted word. The extra final states in the
+  $0$-copy handle the case where the deleted letter was the last letter of the
+  original word. Hence this NDFA accepts exactly $Y(L)$.
 \end{enumerate}
 
 %% 5.61
@@ -1054,8 +1095,15 @@ letters are deleted:
 \delta'(\langle s,1\rangle,\lambda)
 =\{\langle\delta(s,c),0\rangle\mid c\in\Sigma\}.
 \]
-Exactly the same reasoning as in 5.62 shows that $A'$ accepts precisely those
-words obtained from words of $L$ by deleting the even-positioned letters.
+To see what $A'$ accepts, read an input word $x=x_1x_2\cdots x_k$. In state
+$\langle s,0\rangle$ the machine is about to read an odd-positioned letter of
+the original word, so it reads one actual input symbol and moves to
+$\langle\delta(s,x_i),1\rangle$. In state $\langle s,1\rangle$ it is about to
+skip an even-positioned letter of the original word, so it guesses that deleted
+letter by a $\lambda$-move to $\langle\delta(s,c),0\rangle$ for some $c\in\Sigma$.
+Thus every other letter is guessed and deleted, and the machine accepts
+precisely the words obtained from words of $L$ by deleting the even-positioned
+letters.
 Hence $U(L)\in\DSIG$. \qed
 
 %% 5.64

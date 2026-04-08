@@ -153,7 +153,15 @@ The nonempty letter-transitions are the suffix moves, for example
 \delta(\langle\pmb{ab}\rangle,\pmb{a})=\{\langle\pmb{b}\rangle\},\qquad
 \delta(\langle\pmb{b}\rangle,\pmb{b})=\{\langle\lambda\rangle\},
 \]
-and similarly for the other string-states.
+and the same suffix rule handles every other string-state: if the current state
+is $\langle \mathbf{a}u\rangle$ and the next input letter is $\mathbf{a}$, the
+machine moves to $\langle u\rangle$; if the input letter does not match the
+first symbol, there is no transition. For example,
+\[
+\delta(\langle\pmb{bb}B\rangle,\pmb{b})=\{\langle\pmb{b}B\rangle\},\qquad
+\delta(\langle\pmb{cc}V\rangle,\pmb{c})=\{\langle\pmb{c}V\rangle\},\qquad
+\delta(\langle\pmb{aa}\rangle,\pmb{a})=\{\langle\pmb{a}\rangle\}.
+\]
 
 \item For $G_5$, the corresponding automaton is simply the three-state DFA
 \[
@@ -844,7 +852,7 @@ L(G^r)=(L^r)^r=L.
 \textbf{Step}: If $S \DRightarrow \pmb{a}^n\pmb{baa}$, then $S \Rightarrow \pmb{a}S \DRightarrow \pmb{a}\cdot\pmb{a}^n\pmb{baa} = \pmb{a}^{n+1}\pmb{baa}$.
 Conversely, any derivation from $S$ either uses $S \to \pmb{baa}$ (giving $\lambda\cdot\pmb{baa}$) or $S \to \pmb{a}S$ (giving a longer string by IH). So $L(G_1) = \{\pmb{a}^n\pmb{baa}\}$. \qed
 
-\item $L(G_8) = \{\pmb{a}^n\pmb{baa} \mid n \in \NN\}$ (Example 8.9): The proof is analogous, using the inductive structure of the left-linear grammar $G_8$. \qed
+\item $L(G_8) = \{\pmb{a}^n\pmb{baa} \mid n \in \NN\}$ (Example 8.9):
 \textbf{Claim}: For every $n \geq 0$, $Z \DRightarrow \pmb{a}^n\pmb{baa}$ in
 $G_8$.
 
@@ -1072,7 +1080,15 @@ Since $\Sigma=\{\pmb{a},\pmb{b}\}$, ``last letter matches none of the others'' m
 G_4: S \to \pmb{a}S\pmb{a} \mid \pmb{a}S\pmb{b} \mid \pmb{b}S\pmb{a} \mid \pmb{b}S\pmb{b} \mid \pmb{aa} \mid \pmb{bb}
 \]
 
-\item $L_5$ = odd-length words where center letter matches none of the others: Similar to $L_3$; since $|\Sigma|=2$, if center is $\pmb{a}$ all others are $\pmb{b}$, and vice versa. So $L_5 = \{\pmb{b}^k\pmb{a}\pmb{b}^k\} \cup \{\pmb{a}^k\pmb{b}\pmb{a}^k\}$, which is context-free but not regular:
+\item $L_5$ = odd-length words where center letter matches none of the others:
+Since $\Sigma=\{\pmb{a},\pmb{b}\}$, if the center letter is $\pmb{a}$ then every
+other letter must be $\pmb{b}$, and if the center letter is $\pmb{b}$ then every
+other letter must be $\pmb{a}$. Therefore
+\[
+L_5=\{\pmb{b}^k\pmb{a}\pmb{b}^k\mid k\in\NN\}\cup
+\{\pmb{a}^k\pmb{b}\pmb{a}^k\mid k\in\NN\},
+\]
+which is context-free but not regular:
 \[
 G_5: S \to A \mid B,\qquad A \to \pmb{b}A\pmb{b} \mid \pmb{a},\qquad B \to \pmb{a}B\pmb{a} \mid \pmb{b}
 \]
@@ -1139,8 +1155,9 @@ B &\to E\pmb{b}E \mid E\pmb{b}B.
 \]
 Here $E$ generates the words with equally many $\pmb{a}$'s and $\pmb{b}$'s.
 Then $A$ inserts one or more extra $\pmb{a}$'s between balanced pieces, so it
-generates exactly the words with more $\pmb{a}$'s than $\pmb{b}$'s; similarly
-$B$ generates exactly the words with more $\pmb{b}$'s than $\pmb{a}$'s.
+generates exactly the words with more $\pmb{a}$'s than $\pmb{b}$'s. The
+productions for $B$ do the mirror-image job with extra $\pmb{b}$'s, so $B$
+generates exactly the words with more $\pmb{b}$'s than $\pmb{a}$'s.
 
 \item Postfix expressions over $\{\pmb{A},\pmb{B},\pmb{+},\pmb{-}\}$:
 $S \to \pmb{A} \mid \pmb{B} \mid SS\pmb{+} \mid SS\pmb{-}$.

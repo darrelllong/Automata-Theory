@@ -819,7 +819,11 @@ is the definition of $E_{iA}$.
 \[
 \DBAR(s,\mathbf{a}x)=\DBAR(\delta(s,\mathbf{a}),x)
 \]
-and similarly for $t$ is the definition of the extended transition function
+and
+\[
+\DBAR(t,\mathbf{a}x)=\DBAR(\delta(t,\mathbf{a}),x)
+\]
+are both instances of the definition of the extended transition function
 $\DBAR$.
 
 \item Finally,
@@ -962,9 +966,48 @@ $\mu: A\to B$ homomorphism. If $x R^A y$: $\DBAR_A(s_0,x)=\DBAR_A(s_0,y)$. Then 
 \item \textbf{Prove: if $A\cong B$ then $R^A=R^B$.}
 
 \begin{enumerate}
-\item Via Exercise 3.35: an isomorphism $\mu: A\to B$ is in particular a homomorphism, so $R^A$ refines $R^B$ (Exercise 3.35). By symmetry ($\mu^{-1}: B\to A$ is also a homomorphism), $R^B$ refines $R^A$. So $R^A=R^B$.
+\item Let $\mu:A\to B$ be an isomorphism. If $xR^A y$, then
+\[
+\DBAR_A(s_{0_A},x)=\DBAR_A(s_{0_A},y).
+\]
+Applying $\mu$ to both sides gives
+\[
+\mu(\DBAR_A(s_{0_A},x))=\mu(\DBAR_A(s_{0_A},y)).
+\]
+Because $\mu$ preserves start states and transitions, the left side is exactly
+$\DBAR_B(s_{0_B},x)$ and the right side is exactly $\DBAR_B(s_{0_B},y)$. Hence
+$xR^B y$. Therefore $R^A\subseteq R^B$.
 
-\item Directly: $x R^A y\Leftrightarrow\DBAR_A(s_0,x)=\DBAR_A(s_0,y)\Leftrightarrow\mu(\DBAR_A(s_0,x))=\mu(\DBAR_A(s_0,y))$ ($\mu$ injective) $\Leftrightarrow\DBAR_B(s_0,x)=\DBAR_B(s_0,y)$ (Exercise 3.10) $\Leftrightarrow x R^B y$.
+Now let $xR^B y$. Since $\mu^{-1}:B\to A$ is also an isomorphism, the inclusion
+proved above with $A$ and $B$ interchanged gives $xR^A y$. Hence
+$R^B\subseteq R^A$. Therefore
+$R^A=R^B$.
+
+\item Equivalently, for every word $x$,
+\[
+\mu(\DBAR_A(s_{0_A},x))=\DBAR_B(s_{0_B},x),
+\]
+and this can be proved by induction on $|x|$. The base case $x=\lambda$ is
+\[
+\mu(\DBAR_A(s_{0_A},\lambda))=\mu(s_{0_A})=s_{0_B}=\DBAR_B(s_{0_B},\lambda).
+\]
+For the step, write $x=\mathbf{a}w$. Then
+\[
+\mu(\DBAR_A(s_{0_A},\mathbf{a}w))
+=\mu(\DBAR_A(\delta_A(s_{0_A},\mathbf{a}),w))
+=\DBAR_B(\mu(\delta_A(s_{0_A},\mathbf{a})),w),
+\]
+by the induction hypothesis, and since $\mu$ preserves transitions this equals
+\[
+\DBAR_B(\delta_B(s_{0_B},\mathbf{a}),w)=\DBAR_B(s_{0_B},\mathbf{a}w).
+\]
+Because $\mu$ is injective,
+\[
+\DBAR_A(s_{0_A},x)=\DBAR_A(s_{0_A},y)
+\Leftrightarrow
+\DBAR_B(s_{0_B},x)=\DBAR_B(s_{0_B},y),
+\]
+so again $R^A=R^B$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1205,8 +1248,7 @@ so every state class is reachable.
 
 \textit{Analogue of Theorem 3.6}: true. Because $R$ refines $E_A$, every
 $R$-class is contained in a single $E_A$-class, so no $R$-class mixes final and
-nonfinal states; hence $F_R$ is well defined. Then the proof of Theorem 3.6
-goes through verbatim:
+nonfinal states; hence $F_R$ is well defined. Compute directly:
 \[
 x\in L(A/_R)
 \Leftrightarrow \DBAR_R([s_0]_R,x)\in F_R
@@ -1235,7 +1277,7 @@ L(M^{s_0})=a^+,\qquad L(M^{s_1})=a^*,\qquad L(M^{s_d})=a^{\ge 2},
 \]
 so $E_M$ is the identity relation and $M/_{E_M}=M$.
 
-Now $L(M)=a^+$, and $A_{R_{L(M)}}$ is the usual $2$-state DFA with initial
+Now $L(M)=a^+$, and $A_{R_{L(M)}}$ is the $2$-state DFA with initial
 nonfinal state $q_0$, final state $q_1$, and transitions
 $\delta(q_0,a)=q_1$, $\delta(q_1,a)=q_1$.
 
@@ -1599,7 +1641,39 @@ $A_{R_L}$ is a minimal DFA for $L$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Prove $S^c=\{\DBAR(s_0,x):|x|\leq\|S\|\}$.}
 
-By Exercise 3.52: $\exists i\leq|S|$ with $C_i=S^c$. So $S^c=C_i=\{\DBAR(s_0,x):|x|\leq i\}\subseteq\{\DBAR(s_0,x):|x|\leq|S|\}$. The other inclusion is trivial (all strings of length $\leq|S|$ reach states in $S^c$). $\square$
+Let
+\[
+C_0=\{s_0\},\qquad
+C_{i+1}=C_i\cup\{\delta(s,\mathbf{a})\mid s\in C_i,\ \mathbf{a}\in\Sigma\}.
+\]
+We prove by induction on $i$ that
+\[
+C_i=\{\DBAR(s_0,x)\mid |x|\leq i\}.
+\]
+For $i=0$, both sides are $\{s_0\}$. If the claim holds for $i$, then a state is
+reachable by some word of length at most $i+1$ exactly when either it is already
+reachable by a word of length at most $i$, or it has the form
+$\delta(\DBAR(s_0,x),\mathbf{a})$ for some $|x|\leq i$ and $\mathbf{a}\in\Sigma$.
+That is exactly the definition of $C_{i+1}$.
+
+The chain
+\[
+C_0\subseteq C_1\subseteq C_2\subseteq\cdots\subseteq S^c
+\]
+can gain a new state at most $\|S\|$ times, since there are only $\|S\|$ states
+altogether. Hence for some $i\leq \|S\|$ we have $C_i=C_{i+1}$, and then no new
+reachable states ever appear. Therefore $C_i=S^c$ for some $i\leq \|S\|$.
+
+Thus every connected state has the form $\DBAR(s_0,x)$ for some word with
+$|x|\leq \|S\|$, so
+\[
+S^c\subseteq\{\DBAR(s_0,x)\mid |x|\leq\|S\|\}.
+\]
+The reverse inclusion is immediate, because every state reached from $s_0$ by a
+word is connected. Therefore
+\[
+S^c=\{\DBAR(s_0,x)\mid |x|\leq\|S\|\}. \qed
+\]
 
 %%------------------------------------------------------------
 \item \textbf{Prove $s E_A t\Leftrightarrow L(A^s)=L(A^t)$.}

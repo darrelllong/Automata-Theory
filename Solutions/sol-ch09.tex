@@ -390,7 +390,7 @@ Introduce terminal nonterminals for each terminal symbol: $T_a,T_b,T_c,T_\epsilo
 $R \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}$: Each of these is a single-terminal production $R \to a$ (with $|a|=1$), which is already in CNF form.
 
 $R \to (R\pmb{\cdot}R)$: Break as $R \to T_{ (} D_1$, $D_1 \to RD_2$, $D_2 \to T_\cdot D_3$, $D_3 \to RT_{)}$.
-$R \to (R\pmb{\cup}R)$: Similarly $R \to T_{(}D_4$, $D_4 \to RD_5$, $D_5 \to T_\cup D_6$, $D_6 \to RT_{)}$.
+$R \to (R\pmb{\cup}R)$: Break as $R \to T_{(}D_4$, $D_4 \to RD_5$, $D_5 \to T_\cup D_6$, $D_6 \to RT_{)}$.
 $R \to R^{\pmb{*}}$: $R \to RD_7$, $D_7 \to T_*$---but $D_7 \to T_*$ is a unit production; substitute: $R \to RT_*$.
 
 Final CNF:
@@ -749,15 +749,23 @@ $L$ whose complement is not context free.  Let $X=\overline{L}$.  Then
 $X\in\XSIG$, but $\overline{X}=L\in\CSIG$.  So \XSIG\ is not closed under
 complement.
 
-\item \textbf{Intersection}: Not closed.  Using the same unary languages $A$ and
-$B=\pmb{a}^*-A$ from part (a), both $A$ and $B$ belong to \XSIG, but
+\item \textbf{Intersection}: Not closed.  Let
+\[
+A=\{\pmb{a}^{2^j}\mid j\in\NN\}
+\qquad\text{and}\qquad
+B=\pmb{a}^*-A.
+\]
+As in part (a), both $A$ and $B$ belong to \XSIG, but
 \[
 A\cap B=\emptyset,
 \]
 which is context free.  Hence \XSIG\ is not closed under intersection.
 
-\item \textbf{Kleene closure}: Not closed.  For the same language
-$A=\{\pmb{a}^{2^j}\mid j\in\NN\}$, we have $A\in\XSIG$.  Since
+\item \textbf{Kleene closure}: Not closed.  Let
+\[
+A=\{\pmb{a}^{2^j}\mid j\in\NN\}.
+\]
+Then $A\in\XSIG$.  Since
 $\pmb{a}=\pmb{a}^{2^0}\in A$, every unary word belongs to $A^*$, and therefore
 \[
 A^*=\pmb{a}^*.
@@ -770,8 +778,11 @@ A' = A\cup\{\lambda\},\qquad B' = B\cup\{\lambda\},
 \]
 where $A$ and $B$ are as in part (a).  If $A'$ were context free, then by
 Theorem~9.15 it would be regular; removing the single word $\lambda$ would show
-that $A$ is regular, contradiction.  So $A'\in\XSIG$, and similarly
-$B'\in\XSIG$.
+that $A$ is regular, contradiction.  So $A'\in\XSIG$.
+
+If $B'$ were context free, then Theorem~9.15 would make $B'$ regular. Removing
+the single word $\lambda$ would then show that
+$B=B'-\{\lambda\}$ is regular, contradiction. Hence $B'\in\XSIG$.
 
 Now every word $\pmb{a}^n$ belongs to $A'B'$: if $\pmb{a}^n\in A$, then
 $\pmb{a}^n=\pmb{a}^n\lambda$ with $\pmb{a}^n\in A'$ and $\lambda\in B'$; if
@@ -823,7 +834,8 @@ A \Rightarrow_{G^r} X_kX_{k-1}\cdots X_1 \DRightarrow_{G^r}^*
 x_k^r x_{k-1}^r \cdots x_1^r = (x_1x_2\cdots x_k)^r = x^r.
 \]
 
-The reverse implication follows by symmetry, since $(G^r)^r = G$.  Taking
+Conversely, suppose $x^r\in L(G^r)$. Applying the forward implication to the
+reversed grammar $G^r$, and using $(G^r)^r=G$, gives $x\in L(G)$. Taking
 $A=S$, we conclude that
 \[
 x\in L(G) \quad\Longleftrightarrow\quad x^r\in L(G^r),

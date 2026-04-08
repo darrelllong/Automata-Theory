@@ -312,8 +312,9 @@ Example~4.2 but uses multiple start states instead of multiple transitions.
     line is $s_1\vee s_4$.
 
   \item \emph{Circuit diagram (with \textless SOS\textgreater{} and
-    \textless EOS\textgreater).}  Use the same next-state equations as in
-    part~(a), but OR the start pulse into the two start-state inputs:
+    \textless EOS\textgreater).}  Keep the equations for $s'_2$, $s'_3$, and
+    $s'_5$ from part~(a), keep $s'_0=0$, and modify only the two start-state
+    inputs by OR-ing in the start pulse:
     \[
       s'_1=\text{\<SOS\>}\vee(s_1\wedge \pmb{0})\vee(s_5\wedge \pmb{0}),
       \qquad
@@ -391,9 +392,11 @@ $\{s_0,s_1,s_2,s_3\}$ and $\lambda$-transitions $s_0\to s_1$ and $s_1\to s_2$.
     s'_2=(s_1\wedge \pmb{c})\vee(s_2\wedge \pmb{d}),\qquad
     s'_3=s_1\wedge \pmb{b}.
   \]
-  The $\lambda$-moves $s_0\to s_1$ and $s_1\to s_2$ are implemented exactly as
-  in Example~4.17 by OR-ing the source activity line directly into the
-  destination input.  Thus the circuit can be specified by
+  Because a $\lambda$-move consumes no input symbol, whenever $s_0$ is active
+  the next-state logic must also make $s_1$ active, and whenever $s_1$ is
+  active it must also make $s_2$ active.  This is achieved by OR-ing the source
+  activity line directly into the destination input.  Thus the circuit can be
+  specified by
   \[
     D_0=0,\qquad
     D_1=s_0\vee(s_0\wedge \pmb{a})\vee(s_3\wedge \pmb{b}),
@@ -830,9 +833,9 @@ Example~4.14).
 
 \begin{enumerate}[(a)]
   \item \emph{Circuit diagram (no SOS or EOS).}
-  Example~4.15 gives the $\lambda$-free machine of Figure~4.20, so we can use
-  one activity bit for each of $q_0,s_0,s_1,s_2,s_3$.  The next-state equations
-  are
+  The equivalent $\lambda$-free machine has the five states
+  $q_0,s_0,s_1,s_2,s_3$, so we use one activity bit for each of them.  The
+  next-state equations are
   \[
     q'_0=0,\qquad s'_0=0,
   \]
@@ -1263,16 +1266,40 @@ for any $Q\in\wp(S)$.  Therefore:
   That is, $w$ is accepted iff (i) at least one state is reachable and
   (ii) \emph{every} reachable state is final.
 
-  \item \textbf{Modified $A^d$.}  Define $A^{\forall}=A^d$ with the same
-  state set $\wp(S)$ and transition function $\delta^d$ as before, but with
-  the new final-state condition:
+  \item \textbf{Modified $A^d$.}  Define
+  \[
+    A^{\forall}=\langle \Sigma,\wp(S),S_0,\delta^d,F^{\forall}\rangle,
+  \]
+  where
+  \[
+    \delta^d(Q,\pmb{a})=\bigcup_{q\in Q}\delta(q,\pmb{a})
+  \]
+  for each $Q\subseteq S$ and $\pmb{a}\in\Sigma$, and where the final-state set is
   \[
     F^{\forall}=\{Q\in\wp(S)\mid Q\neq\emptyset\wedge Q\subseteq F\}.
   \]
   That is, $Q$ is a final state of $A^{\forall}$ iff $Q$ is nonempty and
-  all states in $Q$ are final states of $A$.  By the same argument as
-  Theorem~4.1 (modified for this new acceptance criterion),
-  $L_{\forall}(A)=L(A^{\forall})$.
+  all states in $Q$ are final states of $A$.
+
+  For any word $w$, the subset construction yields
+  \[
+    \DBAR^d(S_0,w)=\bigcup_{q\in S_0}\DBAR(q,w).
+  \]
+  Therefore
+  \[
+    w\in L(A^{\forall})
+    \Leftrightarrow
+    \DBAR^d(S_0,w)\in F^{\forall}
+  \]
+  \[
+    \Leftrightarrow
+    \bigcup_{q\in S_0}\DBAR(q,w)\neq\emptyset
+    \ \wedge\
+    \bigcup_{q\in S_0}\DBAR(q,w)\subseteq F
+    \Leftrightarrow
+    w\in L_{\forall}(A).
+  \]
+  Hence $L_{\forall}(A)=L(A^{\forall})$.
 
   Note: this ``universal'' acceptance is still FAD (the modified $A^{\forall}$
   is a DFA), so $L_{\forall}(A)$ is always a FAD language.

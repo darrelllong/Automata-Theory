@@ -66,7 +66,9 @@ A practical approach:
 \begin{enumerate}[1.]
 \item Verify the input has the form $\pmb{a}^k\pmb{b}^n\pmb{c}^m$ (check symbol ordering); reject if not.
 \item Pair off $\pmb{a}$s and $\pmb{b}$s: erase one $\pmb{a}$ and one $\pmb{b}$ in each pass. If they run out simultaneously, $k=n$; reject.
-\item Pair off $\pmb{b}$s and $\pmb{c}$s similarly. If they run out simultaneously, $n=m$; reject.
+\item Restore the tape, then pair off $\pmb{b}$s and $\pmb{c}$s: erase one
+remaining $\pmb{b}$ and one remaining $\pmb{c}$ in each pass. If they run out
+simultaneously, $n=m$; reject.
 \item If both checks show inequality, accept.
 \end{enumerate}
 
@@ -90,7 +92,19 @@ $|x|_{\pmb{b}}\neq |x|_{\pmb{c}}$ is confirmed. If they run out together, reject
 \item \textbf{Machine $M$ with $L(M)=L_1(M)=L_2(M)=L_3(M)=\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\mid |x|_a=|x|_b=|x|_c\}$.}
 
 \begin{enumerate}
-\item \textbf{Construction}: First let $M$ deterministically test whether the input has equally many $\pmb{a}$'s, $\pmb{b}$'s, and $\pmb{c}$'s by the usual crossing-off routine. Then:
+\item \textbf{Construction}: First let $M$ deterministically test whether the
+input has equally many $\pmb{a}$'s, $\pmb{b}$'s, and $\pmb{c}$'s:
+\begin{enumerate}[1.]
+\item Scan from the left to find the first unmarked $\pmb{a}$. If there is none,
+check whether any unmarked $\pmb{b}$ or $\pmb{c}$ remains. If not, the test
+succeeds; otherwise it fails.
+\item Mark that $\pmb{a}$, continue right to find the first unmarked $\pmb{b}$,
+and mark it. If no such $\pmb{b}$ exists, the test fails.
+\item Continue right to find the first unmarked $\pmb{c}$ and mark it. If no
+such $\pmb{c}$ exists, the test fails.
+\item Return to the left end and repeat.
+\end{enumerate}
+Then:
 \begin{enumerate}[1.]
 \item If the test succeeds, erase the whole tape, write a single $\pmb{Y}$, position the head on that $\pmb{Y}$, and halt in a final state.
 \item If the test fails, do \emph{not} halt: enter a simple two-state loop that moves right and left forever on blanks.
@@ -238,7 +252,9 @@ Construct a TM $M$ that simulates $P$:
 - $M$ simulates each PDA move: reads next input symbol (or $\lambda$), looks up $\delta$, pops the stack top, pushes the new stack string (nondeterministically if $|\delta|>1$).
 - If the PDA reaches a final state with empty input, $M$ accepts.
 
-Since the PDA is nondeterministic, $M$ is a nondeterministic TM. Every NTM can be simulated by a deterministic TM (by enumerating computation paths as in Exercise 11.7(d)).
+Since the PDA is nondeterministic, $M$ is a nondeterministic TM. A deterministic
+TM can simulate such a machine by enumerating all finite computation paths in
+lexicographic order and checking them one by one.
 
 Thus $L = L(P) = L(M) \in \TSIG$. \qed
 
@@ -253,7 +269,9 @@ Theorem~11.2.
 On input $x$ of length $n$, tape 1 holds $x$ and is never altered. Tape 2 starts
 with just the start symbol $Z$. The finite control nondeterministically chooses
 a production from $P$ and a position in the current sentential form on tape 2,
-and applies that production exactly as in Theorem~11.2.
+checks whether the left side of that production occurs at that position, and if
+so replaces that occurrence by the right side by shifting the surrounding tape
+contents as needed.
 
 The only extra observation needed for a type~1 grammar is that, once the machine
 has begun deriving a nonempty word, the length of the sentential form can never
@@ -263,8 +281,9 @@ word $x$. Thus every surviving computation keeps tape 2 within $n$ cells.
 
 If $x=\lambda$, the only successful derivation is the special initial production
 $Z\to\lambda$. If $x\neq\lambda$, the machine accepts exactly when some sequence
-of guessed productions makes tape 2 agree with tape 1. So the same construction
-is now bounded by a linear amount of tape, and hence is a nondeterministic LBA.
+of guessed productions makes tape 2 agree with tape 1. Thus this two-tape
+construction is bounded by a linear amount of tape, and hence is a
+nondeterministic LBA.
 Therefore every type~1 language is a LBL. \qed
 
 %%------------------------------------------------------------
@@ -300,7 +319,8 @@ would have stepped onto a delimiter; instead, it simulates the unique
 delimiter-scan-and-return behavior without ever leaving the marked end cells.
 
 \item \textbf{Proof of equivalence} (for $|x|\geq 2$): By induction on the number of steps:
-- Every ordinary move of $M$ is copied verbatim by $M'$.
+- Every ordinary move of $M$ is matched by the corresponding move of $M'$ while
+preserving the marked end cells.
 - Every two-step excursion of $M$ from an end cell onto a delimiter and back is
 replaced by the corresponding unique boundary detour in $M'$.
 - Hence the two machines visit corresponding configurations inside the word and
@@ -316,14 +336,21 @@ accepts exactly when the original LBA does. \qed
 \begin{enumerate}
 \item \textbf{Strings of length 1}: For each tape symbol $d$, add a special symbol
 $\overline{\underline{d}}$ meaning ``this cell is both the leftmost and the
-rightmost cell.'' The modified strict LBA treats these symbols as the obvious
-single-cell analogues of $\overline{d}$ and $\underline{d}$.
+rightmost cell.'' The modified strict LBA duplicates every transition that
+previously referred to $\overline{d}$ or $\underline{d}$, replacing those marked
+symbols by $\overline{\underline{d}}$ whenever the word has length $1$. In this
+way the machine still knows that the scanned cell is simultaneously the left and
+right boundary cell.
 
 \item \textbf{Strict LBA accepting $\lambda$}: If the initial scan is of a blank
 cell, interpret that as the empty input and have the machine decide immediately
 whether $\lambda$ should be accepted. After that special start-up case, the
-strict machine proceeds exactly as in Exercise~11.13 and never actively moves to
-a cell outside the input. Thus every type~1 language can be recognized by a
+strict machine uses three tracks: one track stores the tape symbols, one marks
+the left end of the input, and one marks the right end. The transition function
+is changed so that whenever the old machine would step onto an endmarker and
+then return, the new machine performs the corresponding detour entirely inside
+the marked input cells. Thus every type~1
+language can be recognized by a
 strict LBA in this slightly relaxed sense. \qed
 \end{enumerate}
 

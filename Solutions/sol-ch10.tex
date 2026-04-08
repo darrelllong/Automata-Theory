@@ -152,7 +152,14 @@ Each production preserves the invariant $|x|_{\pmb{a}}+|x|_{\pmb{b}}=|x|_{\pmb{c
 
 \item \textbf{\ASIG\ (DCFL) is closed under inverse homomorphism}: Given a DCFL $L$ and a homomorphism $h$, $h^{-1}(L)$ is also a DCFL.
 
-\textbf{Proof}: The same buffering construction applied to a DPDA for $L$ yields a DPDA for $h^{-1}(L)$, since the DPDA is deterministic and the buffering of $h(a)$ (a fixed string per input symbol $a$) preserves determinism. \qed
+\textbf{Proof}: Let $P$ be a DPDA for $L$. Build a new DPDA $P'$ whose finite
+control stores, for each input symbol $a\in\Delta$, which letter of the fixed
+word $h(a)$ is currently being simulated. When $P'$ reads $a$, it feeds the
+symbols of $h(a)$ to the transition function of $P$ one by one before reading
+the next input symbol. Because each $h(a)$ is fixed and because $P$ is
+deterministic, there is never a choice of how to process this buffered block.
+Thus $P'$ is deterministic and accepts exactly those words $x$ for which
+$h(x)\in L$, namely the words of $h^{-1}(L)$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -499,7 +506,8 @@ P=\langle\{\pmb{a},\pmb{b},\pmb{c}\},\{Z,A\},
 \]
 The first symbol chooses the branch deterministically.
 
-For the $\pmb{c}^n\pmb{b}^n$ branch, use the standard one-counter routine:
+For the $\pmb{c}^n\pmb{b}^n$ branch, push one $A$ for each $\pmb{c}$ and then
+pop one $A$ for each $\pmb{b}$:
 \begin{align*}
 \delta(q_0,\pmb{c},Z)&=\langle q_c,AZ\rangle,\\
 \delta(q_c,\pmb{c},A)&=\langle q_c,AA\rangle,\\
@@ -601,7 +609,15 @@ If a DPDA recognized $L_4$, we could recognize $L_1\cup L_2$ by simulating that 
 %%------------------------------------------------------------
 \item \textbf{Example: \ASIG\ not closed under Kleene closure.}
 
-With $L_3$ as in Exercise 10.26, let
+Let
+\[
+L_1=\{\pmb{0}^i\pmb{1}^i\pmb{2}^k\mid i,k\geq 0\},
+\qquad
+L_2=\{\pmb{0}^i\pmb{1}^k\pmb{2}^k\mid i,k\geq 0\},
+\qquad
+L_3=\pmb{a}L_1\cup L_2,
+\]
+and let
 \[
 L_5=\{\pmb{a}\}\cup L_3.
 \]
@@ -701,12 +717,19 @@ This is a DCFL, because the first symbol determines which deterministic routine 
 L^r=\{\pmb{0}^i\pmb{1}^i\pmb{2}^j\pmb{a}\mid i,j\geq 0\}\cup
 \{\pmb{0}^i\pmb{1}^j\pmb{2}^j\pmb{b}\mid i,j\geq 0\}.
 \]
-If $L^r$ were a DCFL, then the same one-letter-lookahead argument as in Exercise 10.30 would turn it into a DPDA for
+If $L^r$ were a DCFL, then a DPDA for $L^r$ could inspect the final symbol
+$\pmb{a}$ or $\pmb{b}$ and thereby be turned into a DPDA for
 \[
 \{\pmb{0}^i\pmb{1}^i\pmb{2}^j\mid i,j\geq 0\}\cup
 \{\pmb{0}^i\pmb{1}^j\pmb{2}^j\mid i,j\geq 0\},
 \]
-which is the same standard non-DCFL union pattern discussed before Theorem 10.9, now with an extra trailing block. So reversal does not preserve \ASIG.
+because a DPDA for $L^r$ could wait until it read the last symbol: if that last
+symbol were $\pmb{a}$, it would erase it and continue exactly as a DPDA for
+$\{\pmb{0}^i\pmb{1}^i\pmb{2}^j\mid i,j\geq 0\}$; if the last symbol were
+$\pmb{b}$, it would erase it and continue as a DPDA for
+$\{\pmb{0}^i\pmb{1}^j\pmb{2}^j\mid i,j\geq 0\}$. That would yield a DPDA for the
+displayed union, contradicting the standard non-DCFL example discussed before
+Theorem 10.9. So reversal does not preserve \ASIG.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -766,7 +789,15 @@ A^b\cap \pmb{a}^*\pmb{b}^*\pmb{c}^*\pmb{\#}
 \]
 which is not context free. Therefore \PSIG\ is not closed under $b$.
 
-\item \ASIG\ is \textbf{not} closed under $b$. The same language $A$ is accepted by a DPDA: deterministically match the $\pmb{a}$'s against the $\pmb{b}$'s, then push three markers for each $\pmb{c}$, read the fixed delimiter $\pmb{\#\#}$, and pop one marker for each $\pmb{d}$. Thus $A\in\ASIG$, but $A^b$ is not even context free by part (a). So \ASIG\ is not closed under $b$.
+\item \ASIG\ is \textbf{not} closed under $b$. Let
+\[
+A=\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{\#\#}\pmb{d}^{3m}\mid n,m\ge 0\}.
+\]
+This language is accepted by a DPDA: deterministically match the $\pmb{a}$'s
+against the $\pmb{b}$'s, then push three markers for each $\pmb{c}$, read the
+fixed delimiter $\pmb{\#\#}$, and pop one marker for each $\pmb{d}$. Thus
+$A\in\ASIG$, but $A^b$ is not even context free by part (a). So \ASIG\ is not
+closed under $b$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -792,7 +823,20 @@ By Exercise 10.30(b), the language on the right is not a DCFL. Since \ASIG\ is c
 \begin{enumerate}
 \item \textbf{\PSIG\ is closed under $P$}: Let $M$ be a PDA for $L$. Build a new PDA $M'$ with two copies of each state of $M$. In the first copy, $M'$ simulates $M$ on the actual input. At any moment, $M'$ may take a $\lambda$-move to the second copy. In that second copy, every transition of $M$ that originally read a symbol of $\Sigma$ is replaced by a $\lambda$-transition with the same stack effect, and the original $\lambda$-moves are kept as $\lambda$-moves. Thus, once the real input has been exhausted, $M'$ may nondeterministically \emph{guess} a continuation and simulate $M$ on that guessed suffix. Therefore $M'$ accepts exactly those $x$ for which some $y$ satisfies $xy\in L$, that is, exactly $P(L)$.
 
-\item \textbf{\ASIG\ is closed under $P$}: Let $P$ be a DPDA normalized as in Exercise 10.24. For each stack symbol $X$, use two tagged copies $X^{\mathrm{live}}$ and $X^{\mathrm{dead}}$. While simulating $P$, the new machine maintains on the stack not just the current stack symbols but also, for each stack position, whether the subconfiguration beginning at that position can still be extended to an accepting computation. Because the original machine is deterministic, this tag is forced by the current state and the tagged symbols that replace $X$ in the next move. The machine therefore updates the tags deterministically whenever it pushes or pops. After the input ends, the simulated configuration is live exactly when the topmost tag is $\mathrm{live}$, and that is exactly the condition $x\in P(L)$. Hence a DPDA can accept the prefix language.
+\item \textbf{\ASIG\ is closed under $P$}: Let $P$ be a DPDA that has been
+prepared so that every computation reads the entire input, never empties the
+bottom stack marker, and halts only after the last input symbol has been
+processed. For each stack symbol $X$, use two tagged copies
+$X^{\mathrm{live}}$ and $X^{\mathrm{dead}}$. While simulating $P$, the new
+machine maintains on the stack not just the current stack symbols but also, for
+each stack position, whether the subconfiguration beginning at that position can
+still be extended to an accepting computation. Because the original machine is
+deterministic, this tag is forced by the current state and the tagged symbols
+that replace $X$ in the next move. The machine therefore updates the tags
+deterministically whenever it pushes or pops. After the input ends, the
+simulated configuration is live exactly when the topmost tag is
+$\mathrm{live}$, and that is exactly the condition $x\in P(L)$. Hence a DPDA
+can accept the prefix language.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -814,7 +858,18 @@ F(B)\cap\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}
 \]
 If $F(B)$ were context free, then intersecting with the regular language $\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}$ and deleting the final $\pmb{\$}$ would give $\sim K$ as a CFL, contradiction.
 
-\item \textbf{\ASIG\ is closed under $F$}: Start with a DPDA normalized as in Exercise 10.24. For each input word $x$, let $C_x$ be the unique configuration reached after all of $x$ has been scanned. Then $x\in F(L)$ exactly when two conditions hold: $C_x$ is accepting, and $C_x$ is not \emph{prolific}, meaning that no nonempty continuation from $C_x$ can still lead to acceptance. This is the same configuration-liveness idea used in part (b) for the prefix operator, with ``live'' replaced by ``accepting but not prolific.'' A DPDA can therefore simulate the original machine and accept exactly the words in $F(L)$, so \ASIG\ is closed under $F$.
+\item \textbf{\ASIG\ is closed under $F$}: Start with a DPDA prepared so that it
+reads the whole input, never empties the bottom stack marker, and halts only
+after the last input symbol has been processed. For each input word $x$, let
+$C_x$ be the unique configuration reached after all of $x$ has been scanned.
+Then $x\in F(L)$ exactly when two conditions hold: $C_x$ is accepting, and
+$C_x$ is not \emph{prolific}, meaning that no nonempty continuation from $C_x$
+can still lead to acceptance. A DPDA can track this property by tagging stack
+symbols as prolific or nonprolific and propagating those tags through each push
+and pop transition. The topmost tag then records whether the current accepting configuration has any
+strict extension that is also accepted. The machine accepts exactly when the
+current configuration is accepting and the topmost tag says ``nonprolific.'' So
+\ASIG\ is closed under $F$.
 \end{enumerate}
 
 \end{enumerate}

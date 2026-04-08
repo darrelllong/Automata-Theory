@@ -596,7 +596,14 @@ $W_{i+1} = W_i \cup \{A \mid \exists (A\to\alpha)\in P: \text{every symbol in }\
 %%------------------------------------------------------------
 \item \textbf{Prove $\exists m\in\NN: W_m = W_{m+1}$.}
 
-\textbf{Proof}: Same as Exercise 12.25: $W_0\subseteq W_1\subseteq\cdots\subseteq\Omega$ is a non-decreasing chain in the finite set $\Omega$, so it stabilizes. \qed
+\textbf{Proof}: By the definition of the sets $W_i$,
+\[
+W_0\subseteq W_1\subseteq W_2\subseteq\cdots\subseteq\Omega.
+\]
+Whenever $W_i\neq W_{i+1}$, at least one new nonterminal of the finite set
+$\Omega$ has been added. Since $\Omega$ has only finitely many elements, this can
+happen only finitely many times. Therefore for some $m$ no new symbol is added,
+so $W_m=W_{m+1}$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability questions about NDFA $A$ with $\lambda$-moves.}
@@ -645,7 +652,11 @@ paths is decidable.
 
 \item \textbf{Decidability of isomorphism existence}: An isomorphism requires $h$ to be bijective (so $|S_1|=|S_2|$). Check all bijections: $(|S_1|)!$ many. For each, verify the isomorphism conditions. Decidable (finite check for finite $S_1$).
 
-\item \textbf{Decidability of $>3$ isomorphisms}: Similarly, count the number of valid isomorphisms (at most $|S_1|!$ total). If the count exceeds 3, answer yes. Decidable. \qed
+\item \textbf{Decidability of $>3$ isomorphisms}: Enumerate all bijections
+$h:S_1\to S_2$. For each one, check whether it preserves the start state,
+transitions, and final states. Count how many bijections pass these tests.
+There are at most $(|S_1|)!$ candidates, so the procedure halts. Answer yes
+exactly when the final count exceeds $3$. Hence the question is decidable. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -894,7 +905,12 @@ prove the corresponding statement for LBAs.
 \item \textbf{Linear bounded automata}: Given $T$ and $w$, build an LBA
 $C_{T,w}$ that on input $x$ of length $n$ simulates $T$ on $w$ for exactly $n$
 steps and accepts iff $T$ has \emph{not} halted within those $n$ steps. The
-same linear-space argument as in Exercise 12.41(d) shows that this is an LBA.
+simulation uses only linear space: the machine keeps $x$ on one track, uses a
+counter of size $O(\log n)$ to count from $0$ up to $n$, and stores on the
+remaining track space a length-$O(n)$ window describing the first $n$ tape cells
+that $T$ could have visited in its first $n$ steps. Since a machine running for
+only $n$ steps cannot move farther than $n$ cells from its start position, this
+bounded work area is sufficient. Hence $C_{T,w}$ is indeed an LBA.
 Now
 \[
 L(C_{T,w})=\Sigma^*
@@ -936,7 +952,10 @@ If both $E$ and $\overline{E}$ belonged to $\TSIG$, then we could dovetail the
 two semidecision procedures and decide $E$, which would put $E$ in $\HSIG$.
 But Exercise 12.41(b) showed that $E\notin\HSIG$. Therefore $N\notin\TSIG$.
 
-\item \textbf{$N\in\HSIG$}: No. Same argument: $N$ would be recursive (decidable) if $N\in\HSIG$, contradicting undecidability of the non-halting problem.
+\item \textbf{$N\in\HSIG$}: No. If $N$ were in $\HSIG$, then both $E$ and
+$N=\overline{E}$ would be recursive languages. A recursive language and its
+complement are both decidable, so $E$ would be decidable. But the non-halting
+problem is undecidable. Therefore $N\notin\HSIG$.
 
 \item \textbf{$N\in\OSIG$}: No. Again, $\OSIG\subseteq\HSIG$, and we have just
 seen that $N\notin\HSIG$. Hence $N\notin\OSIG$. \qed

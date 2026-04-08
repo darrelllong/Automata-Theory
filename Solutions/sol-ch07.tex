@@ -468,7 +468,7 @@ $\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$.  Suppose $s E_M s'$.  By th
 \begin{proof}
 $\mu$ is defined by $\mu(s)=\DBAR_2(s_{0_2},x)$ where $x$ is any word with $\DBAR_1(s_{0_1},x)=s$ (such $x$ exists because $M_1$ is connected).  Well-definedness requires: if $\DBAR_1(s_{0_1},x)=\DBAR_1(s_{0_1},x')=s$, then $\DBAR_2(s_{0_2},x)=\DBAR_2(s_{0_2},x')$.
 
-Since $M_1$ and $M_2$ are equivalent, $\OBAR_1(s_{0_1},wx)=\OBAR_2(s_{0_2},wx)$ and $\OBAR_1(s_{0_1},wx')=\OBAR_2(s_{0_2},wx')$ for all $w$.  In particular, $\OBAR_1(s_{0_1},xy)=\OBAR_2(s_{0_2},xy)$ implies $\OBAR_1(s,y)=\OBAR_2(\DBAR_2(s_{0_2},x),y)$ for all $y$.  Similarly with $x'$.  Since $M_2$ is reduced, the state $\DBAR_2(s_{0_2},x)$ is uniquely determined by its output behavior, which equals that of $s$.  Hence $\DBAR_2(s_{0_2},x)=\DBAR_2(s_{0_2},x')$, and $\mu$ is well defined. \qed
+Since $M_1$ and $M_2$ are equivalent, $\OBAR_1(s_{0_1},wx)=\OBAR_2(s_{0_2},wx)$ and $\OBAR_1(s_{0_1},wx')=\OBAR_2(s_{0_2},wx')$ for all $w$.  In particular, $\OBAR_1(s_{0_1},xy)=\OBAR_2(s_{0_2},xy)$ implies $\OBAR_1(s,y)=\OBAR_2(\DBAR_2(s_{0_2},x),y)$ for all $y$.  Also, $\OBAR_1(s_{0_1},x'y)=\OBAR_2(s_{0_2},x'y)$ implies $\OBAR_1(s,y)=\OBAR_2(\DBAR_2(s_{0_2},x'),y)$ for all $y$.  Since $M_2$ is reduced, the state $\DBAR_2(s_{0_2},x)$ is uniquely determined by its output behavior, which equals that of $s$.  Hence $\DBAR_2(s_{0_2},x)=\DBAR_2(s_{0_2},x')$, and $\mu$ is well defined. \qed
 \end{proof}
 
 %% 7.19
@@ -1439,8 +1439,8 @@ and the Mealy output on any transition $(s,x)$ is
     $\gamma=1$ and to $s_2^D$ otherwise.
   \end{enumerate}
 
-  \item \textbf{Mealy machine:}  Use the same directed graph as in part~(b), but
-  place on each edge the output of the destination state.  If $o(t)$ denotes the
+  \item \textbf{Mealy machine:}  Take the state set and transition graph from
+  part~(b), and place on each edge the output of the destination state.  If $o(t)$ denotes the
   five-component output attached to the Moore state $t$, then
   \[
     \omega(s,x)=o(\delta(s,x)).
@@ -1926,7 +1926,9 @@ algorithm for computing $E_M$. \qed
 \item \textbf{Prove Corollary~7.11.}
 
 \begin{proof}
-Compute the connected part $M^c$ by the usual reachability algorithm.  Then use
+Compute the connected part $M^c$ by starting with the set containing only the
+start state and repeatedly adjoining every state reached by one transition from
+states already found.  Then use
 Corollary~7.10 to compute $E_{M^c}$.  Finally, form the quotient
 $M^c/_{E_{M^c}}$.  By Theorem~7.10(b), this quotient is the minimal Moore
 machine equivalent to $M$.  Hence there is an algorithm for computing the
@@ -2056,9 +2058,11 @@ minimal machine equivalent to $M$. \qed
   \]
   So every state of $A$ is reachable, and $A$ is connected.
 
-  \item \textbf{Moore machines:}  The same argument works verbatim for Moore
-  isomorphisms, since the inverse of a bijection that preserves start state and
-  transitions also preserves them in the Moore setting.  Thus $A$ is connected.
+  \item \textbf{Moore machines:}  Let $\psi:A\to B$ be a Moore isomorphism. Since
+  $\psi$ is bijective and preserves the start state and all transitions, its
+  inverse $\psi^{-1}:B\to A$ also preserves the start state and transitions.
+  Applying the reachability argument above to $\psi^{-1}$ shows that every state
+  of $A$ is reachable from $s_{0_A}$. Thus $A$ is connected.
 \end{enumerate}
 
 %% 7.54

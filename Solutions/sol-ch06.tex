@@ -184,8 +184,8 @@ A decimal number is divisible by 5 iff it ends in $\pmb{0}$ or $\pmb{5}$.
 %% 6.14
 \item \textbf{Build NDFA for $\pmb{b}\cup\pmb{a}^*\pmb{c}$ using exact constructs of Chapter~5.}
 
-Use the same state names and unsimplified constructions as in
-Examples~6.4--6.6.
+We follow the unsimplified Chapter~5 constructions literally, without merging
+states that happen to be equivalent.
 
 \medskip
 \noindent\textbf{Step 1: Build $\{\pmb{a}\}$ and apply Theorem~5.5.}
@@ -453,7 +453,7 @@ Verification: $(\epsilon\cup\pmb{b})(\pmb{ab})^k\pmb{a}$ gives words $\pmb{a}, \
 Given regular expressions $R_1$ and $R_2$ (each describing a FAD language):
 \begin{enumerate}[1.]
   \item Convert $R_1$ to an NDFA $A_1$ using the constructions of Chapter~5.
-  \item Convert $R_2$ to an NDFA $A_2$ similarly.
+  \item Convert $R_2$ to an NDFA $A_2$ so that $L(A_2)=L(R_2)$.
   \item Apply the subset construction to get DFAs $A_1^d$ and $A_2^d$.
   \item Build the product DFA $A^\cap$ (Lemma~5.1) with $F^\cap=F_1\times F_2$.
   \item Use the state-equation method of Theorems~6.3 and~6.2 to convert $A^\cap$ to a regular expression for $L(A_1)\cap L(A_2)$.
@@ -550,7 +550,7 @@ $M(L)=L\cdot\Sigma^+$.  If $L=L(R)$, then $M(L)=L(R\cdot(\pmb{a}\cup\pmb{b}\cup\
   $X_1=\pmb{b}\cup\epsilon\cdot X_1\cup\pmb{a}\cdot X_2=\pmb{b}\cup X_1\cup\pmb{a}X_2$.
   Since $X_1\subseteq X_1\cup\pmb{b}\cup\pmb{a}X_2$, the equation $X_1=\pmb{b}\cup X_1\cup\pmb{a}X_2$ says $X_1\supseteq\pmb{b}\cup\pmb{a}X_2$.  Any $X_1$ that contains $\pmb{b}$ and $\pmb{a}X_2$ is a solution; there are infinitely many such $X_1$.
 
-  $X_2=\pmb{c}\cup\emptyset\cdot X_1\cup\epsilon\cdot X_2=\pmb{c}\cup X_2$.  Similarly, any $X_2\supseteq\{\pmb{c}\}$ is a solution.
+  $X_2=\pmb{c}\cup\emptyset\cdot X_1\cup\epsilon\cdot X_2=\pmb{c}\cup X_2$.  Thus any $X_2\supseteq\{\pmb{c}\}$ is a solution.
 
   \item \textbf{No contradiction with Theorem~6.2:}  Theorem~6.2 assumes
   $\lambda\not in A_{ij}$ for \emph{every} coefficient in the system.  Here
@@ -660,7 +660,23 @@ Back-substitution then gives
 
   \emph{Base ($m=0$):}  $R\in\{\emptyset,\epsilon,\pmb{a}\}$.  $L(R)^r=L(R^r)$ by direct check.
 
-  \emph{Step:}  Assume the result for all expressions with $<m$ operators.  If $R=R_1\cup R_2$: $(L(R_1)\cup L(R_2))^r=L(R_1)^r\cup L(R_2)^r=L(R_1^r)\cup L(R_2^r)=L(R_1^r\cup R_2^r)=L(R^r)$.  Similarly for $\cdot$ and $*$.  \qed
+  \emph{Step:}  Assume the result for all expressions with $<m$ operators.
+  If $R=R_1\cup R_2$, then
+  \[
+  (L(R_1)\cup L(R_2))^r=L(R_1)^r\cup L(R_2)^r
+  =L(R_1^r)\cup L(R_2^r)=L(R_1^r\cup R_2^r)=L(R^r).
+  \]
+  If $R=R_1\cdot R_2$, then
+  \[
+  L(R)^r=(L(R_1)L(R_2))^r=L(R_2)^rL(R_1)^r
+  =L(R_2^r)L(R_1^r)=L(R_2^r\cdot R_1^r)=L(R^r).
+  \]
+  If $R=R_1^*$, then
+  \[
+  L(R)^r=(L(R_1)^*)^*{}^{\,r}=(L(R_1)^r)^*
+  =(L(R_1^r))^*=L((R_1^r)^*)=L(R^r).
+  \]
+  Thus the claim holds in all three operator cases.  \qed
 
   \item Since every FAD language has a regular expression (Corollary~6.2), and
   the reversal of any regular expression (via the rules above) is also a
@@ -951,7 +967,8 @@ Let $w\in A\cdot E$.  Then $w=xy$ with $x\in A$ and $y\in E$.  Since $E\subseteq
 
   \begin{proof}
   Interpreting $s$ as a regular set substitution in the sense of
-  Definition~6.5, this is exactly the induction omitted in Theorem~6.6.
+  Definition~6.5, we prove directly by structural induction on a regular
+  expression $R$ that $\bar{s}(L(R))$ is regular over $\Gamma$.
   For a regular expression $R$ over $\Sigma$, define $\bar{s}(R)$ by:
   $\bar{s}(\pmb{a})=s(\pmb{a})\in\mathfrak{R}_\Gamma$ (by assumption),
   $\bar{s}(\emptyset)=\emptyset$, $\bar{s}(\epsilon)=\{\lambda\}$,
@@ -1028,7 +1045,11 @@ substring gives:
   Any $\pmb{b}$ before the last $\pmb{c}$ is discharged by that final
   $\pmb{c}$, and after the last $\pmb{c}$ only $\pmb{a}$s may remain.
 
-  \item Every $\pmb{b}$ immediately followed by $\pmb{c}$: (same as Exercise~6.11)
+  \item Every $\pmb{b}$ immediately followed by $\pmb{c}$:
+  Any valid word is a concatenation of blocks from
+  $\{\pmb{a},\pmb{c},\pmb{bc}\}$, because every occurrence of $\pmb{b}$ must be
+  paired immediately with a following $\pmb{c}$. Conversely, any concatenation
+  of those blocks has the required property. Therefore
   \[
     (\pmb{a}\cup\pmb{c}\cup\pmb{bc})^*
   \]
@@ -1103,8 +1124,8 @@ languages would be FAD.  Hence $V$ is not FAD.
 %% 6.51
 \item \textbf{Complete details of Theorem~6.6.}
 
-Theorem~6.6 proves closure of \RSIG\ under substitution.  The text supplies the
-basis step; the missing details are the three operator cases.
+Theorem~6.6 proves closure of \RSIG\ under substitution.  Below are the three
+operator cases written out explicitly.
 
 \begin{proof}
 Assume inductively that whenever $R_1$ and $R_2$ have at most $m$ operators, the
