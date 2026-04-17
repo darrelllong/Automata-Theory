@@ -11,17 +11,18 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 
 \textit{Base} ($n=0$): $\mu(\DBAR(s,\lambda))=\mu(s)=\DBAR_{R_L}(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: $x=ya$, $|y|=n$. Using the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$:
+\textit{Step}: $x=ya$, $|y|=n$. Using Definition 1.11iii at the beginning and end, together with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
 \[
-\mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\delta_{R_L}(\mu(\DBAR(s,y)),a)=\delta_{R_L}(\DBAR_{R_L}(\mu(s),y),a)=\DBAR_{R_L}(\mu(s),ya). \quad\square
+\mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\delta_{R_L}(\mu(\DBAR(s,y)),a)=\delta_{R_L}(\DBAR_{R_L}(\mu(s),y),a)=\DBAR_{R_L}(\mu(s),ya).
 \]
+$\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\DBAR_{E_A}([s]_{E_A},x)=[\DBAR(s,x)]_{E_A}$ by induction.}
 
 \textit{Base} ($x=\lambda$): $\DBAR_{E_A}([s]_{E_A},\lambda)=[s]_{E_A}=[\DBAR(s,\lambda)]_{E_A}$. \checkmark
 
-\textit{Step}: $x=ya$.
+\textit{Step}: $x=ya$. By Definition 1.11iii,
 \[
 \DBAR_{E_A}([s]_{E_A},ya)=\delta_{E_A}(\DBAR_{E_A}([s]_{E_A},y),a)=\delta_{E_A}([\DBAR(s,y)]_{E_A},a)=[\delta(\DBAR(s,y),a)]_{E_A}=[\DBAR(s,ya)]_{E_A}. \quad\square
 \]
@@ -47,7 +48,7 @@ s\in F \Leftrightarrow t\in F.
 \]
 Hence $s E_{0A} t$.
 
-\textit{Step}: assume $E_A\subseteq E_{jA}$ and let $s E_A t$. Then
+\textit{Step}: Clearly, if $s E_A t$, then
 $L(A^s)=L(A^t)$. For every $a\in\Sigma$,
 \[
 L(A^{\delta(s,a)})=\{x\in\Sigma^*:ax\in L(A^s)\}
@@ -119,12 +120,12 @@ Hence $E_A=\bigcap_{j=0}^\infty E_{jA}$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Show $\delta_{E_A}$ in Definition 3.8 is well defined.}
 
-$\delta_{E_A}([s]_{E_A},a)=[\delta(s,a)]_{E_A}$. If $[s]_{E_A}=[t]_{E_A}$, i.e., $s E_A t$, then $\delta(s,a) E_A \delta(t,a)$ (proved in Exercise 3.3, $\supseteq$ direction): $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$. So $[\delta(s,a)]_{E_A}=[\delta(t,a)]_{E_A}$. $\square$
+For every class $[s]_{E_A}$ and letter $a\in\Sigma$, the state $\delta(s,a)$ exists, so the class $[\delta(s,a)]_{E_A}$ exists as well. Thus $\delta_{E_A}([s]_{E_A},a)=[\delta(s,a)]_{E_A}$ is defined everywhere. To show it is not multiply-defined, suppose $[s]_{E_A}=[t]_{E_A}$, i.e., $s E_A t$. Then $\delta(s,a) E_A \delta(t,a)$ (proved in Exercise 3.3, $\supseteq$ direction): $L(A^{\delta(s,a)})=\{x:ax\in L(A^s)\}=\{x:ax\in L(A^t)\}=L(A^{\delta(t,a)})$. So $[\delta(s,a)]_{E_A}=[\delta(t,a)]_{E_A}$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $F_{E_A}$ is well defined.}
 
-$F_{E_A}=\{[s]_{E_A}\mid s\in F\}$. If $[s]_{E_A}=[t]_{E_A}$ and $s\in F$: $s E_A t\Rightarrow L(A^s)=L(A^t)\Rightarrow\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t)\Rightarrow s\in F\Leftrightarrow t\in F$. So $t\in F$. $\square$
+Every $E_A$-class has at least one representative, so the description $F_{E_A}=\{[s]_{E_A}\mid s\in F\}$ addresses every class. To show membership is not multiply-defined, suppose $[s]_{E_A}=[t]_{E_A}$ and $s\in F$. Then $s E_A t\Rightarrow L(A^s)=L(A^t)\Rightarrow\lambda\in L(A^s)\Leftrightarrow\lambda\in L(A^t)\Rightarrow s\in F\Leftrightarrow t\in F$. So $t\in F$, and the definition is independent of the chosen representative. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Show $\delta^c$ maps into $S^c$.}
@@ -191,7 +192,15 @@ $(\forall k\in\NN)(E_{m+k,A}=E_{mA})$. $\square$
 
 \textit{Base}: $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: $x=ya$. $\mu(\DBAR_A(s,ya))=\mu(\delta_A(\DBAR_A(s,y),a))=\delta_B(\mu(\DBAR_A(s,y)),a)$ (homomorphism property) $=\delta_B(\DBAR_B(\mu(s),y),a)$ (IH) $=\DBAR_B(\mu(s),ya)$. $\square$
+\textit{Step}: $x=ya$. By Definition 1.11iii,
+\[
+\mu(\DBAR_A(s,ya))
+=\mu(\delta_A(\DBAR_A(s,y),a))
+=\delta_B(\mu(\DBAR_A(s,y)),a)
+=\delta_B(\DBAR_B(\mu(s),y),a)
+=\DBAR_B(\mu(s),ya),
+\]
+where the third equality is the homomorphism property, the fourth is the induction hypothesis, and the last is again Definition 1.11iii. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $L(A)=L(B)$ for a homomorphism $\mu: A\to B$.}
@@ -411,7 +420,7 @@ and define
 \psi(s)=[x_s]_{R^M}.
 \]
 
-\item \textit{Well-defined}: if $x$ and $y$ both satisfy
+\item \textit{Well-defined}: this is defined everywhere on $S^c$ because, by definition of the connected part, each $s\in S^c$ has at least one string reaching it. If $x$ and $y$ both satisfy
 \[
 \DBAR(s_0,x)=\DBAR(s_0,y)=s,
 \]
@@ -707,7 +716,7 @@ $[S_7]$, and its transition table is
 {}[S_9] & [S_2]=[S_5] & [S_2]=[S_5]
 \end{array}
 \]
-The connected part of this quotient is the three-state machine
+The connected part of this quotient is isomorphic to the three-state machine
 $A_{R_{L(D)}}$ above.
 \end{enumerate}
 
@@ -721,7 +730,7 @@ $\DBAR_A(s_{0A},x_s)=s$. Define
 \psi(s)=\DBAR_B(s_{0B},x_s).
 \]
 
-\item To show this is well defined, suppose $x$ and $y$ both satisfy
+\item To show this is well defined, first note that it is defined everywhere because $A$ is connected, so every state $s\in S_A$ has at least one string reaching it. Now suppose $x$ and $y$ both satisfy
 $\DBAR_A(s_{0A},x)=\DBAR_A(s_{0A},y)=s$. Then for every $z\in\Sigma^*$,
 \[
 xz\in L(A)\Leftrightarrow yz\in L(A),
@@ -931,13 +940,13 @@ $R$ refines $R_L$: each $R$-class is contained in some $R_L$-class. Define
 \qquad\text{by}\qquad
 \mu([x]_R)=[x]_{R_L}.
 \]
-This is well defined: if $[x]_R=[y]_R$, then $xRy$, and since $R$ refines
-$R_L$, also $xR_Ly$, so $[x]_{R_L}=[y]_{R_L}$.
+This is well defined: every $R$-class has at least one representative $x\in\Sigma^*$, so the definition applies everywhere on $S_{A_R}$. If $[x]_R=[y]_R$, then $xRy$, and since $R$ refines $R_L$, also $xR_Ly$, so $[x]_{R_L}=[y]_{R_L}$.
 
 Now
 \[
-\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_{R_L}=s_{0,R_L}.
+\mu([\lambda]_R)=[\lambda]_{R_L},
 \]
+so $\mu$ sends the start state of $A_R$ to the start state of $A_{R_L}$.
 Also, for any $a\in\Sigma$,
 \[
 \mu(\delta_R([x]_R,a))
@@ -1162,7 +1171,7 @@ again contradicting minimality.
 Because $A$ is connected, every state is reached by some string, so the
 $R^A$-classes are in one-to-one correspondence with the states of $A$. Hence
 \[
-rk(R^A)=|S|.
+rk(R^A)=\|S\|.
 \]
 Also, Exercise 2.57(c) says that $R^A$ refines $R_{L(A)}$, so
 \[
@@ -1172,11 +1181,11 @@ On the other hand, Corollary 3.2 says that $A_{R_{L(A)}}$ is minimal for
 $L(A)$. Since $A$ is also minimal for $L(A)$, the two minimal DFAs have the same
 number of states:
 \[
-|S|=rk(R_{L(A)}).
+\|S\|=rk(R_{L(A)}).
 \]
 Therefore
 \[
-rk(R^A)=|S|=rk(R_{L(A)}).
+rk(R^A)=\|S\|=rk(R_{L(A)}).
 \]
 A refinement of finite rank cannot be proper if the two ranks are equal. Hence
 $R^A=R_{L(A)}$. $\square$
@@ -1327,7 +1336,7 @@ So $\psi$ is a homomorphism from $A_{R_{L(M)}}$ to $M/_{E_M}$. $\square$
 %%------------------------------------------------------------
 \item \textbf{Prove: $\exists m<\|S\|$ with $E_{mA}=E_{m+1,A}$.}
 
-The sequence $E_{0A}\supseteq E_{1A}\supseteq\cdots$ is decreasing (each refinement removes some equivalences). Since $S$ is finite, the number of equivalence classes is bounded by $|S|$. Each strict refinement step increases the number of classes by at least 1. Starting from $E_{0A}$ (which has at most 2 classes: final/nonfinal), we can have at most $|S|-1$ strict refinement steps before reaching $E_A$. So $E_{|S|-1,A}=E_{|S|,A}=E_A$, meaning $m\leq|S|-1<|S|$. $\square$
+The sequence $E_{0A}\supseteq E_{1A}\supseteq\cdots$ is decreasing (each refinement removes some equivalences). Since $S$ is finite, the number of equivalence classes is bounded by $\|S\|$. Each strict refinement step increases the number of classes by at least $1$. Starting from $E_{0A}$ (which has at most $2$ classes: final/nonfinal), we can have at most $\|S\|-1$ strict refinement steps before reaching $E_A$. So $E_{\|S\|-1,A}=E_{\|S\|,A}=E_A$, meaning $m\leq\|S\|-1<\|S\|$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Equivalence vs.\ isomorphism.}
@@ -1390,12 +1399,12 @@ Since $S$ is finite, the sequence $C_0\subseteq C_1\subseteq\cdots$ is non-decre
 %%------------------------------------------------------------
 \item \textbf{Prove: $\exists i\leq\|S\|$ with $C_i=S^c$.}
 
-Each strict inclusion $C_i\subsetneq C_{i+1}$ adds at least one new state. Starting from $|C_0|=1$, after at most $|S|-1$ strict inclusions we reach $C_{|S|-1}\supseteq\cdots$, which must equal $C_{|S|}$ (no room to grow beyond $|S|$ states). So $i\leq|S|-1\leq|S|$ and $C_i=S^c$. $\square$
+Each strict inclusion $C_i\subsetneq C_{i+1}$ adds at least one new state. Starting from $\|C_0\|=1$, after at most $\|S\|-1$ strict inclusions we reach $C_{\|S\|-1}\supseteq\cdots$, which must equal $C_{\|S\|}$ (no room to grow beyond $\|S\|$ states). So $i\leq\|S\|-1\leq\|S\|$ and $C_i=S^c$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Argue the $C_i$ algorithm is correct and terminates.}
 
-Correctness: by Exercise 3.48, $C_i$ is exactly the reachable states within depth $i$. By Exercise 3.51, $C_i=S^c$ when stable. Termination: by Exercise 3.51 and 3.52, stability occurs by step $|S|$. $\square$
+Correctness: by Exercise 3.48, $C_i$ is exactly the reachable states within depth $i$. By Exercise 3.51, $C_i=S^c$ when stable. Termination: by Exercise 3.51 and 3.52, stability occurs by step $\|S\|$. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Give two DFAs with homomorphisms in both directions but no isomorphism.}
@@ -1484,7 +1493,7 @@ $A_R$.
 %%------------------------------------------------------------
 \item \textbf{Prove $A_Q$ is connected.}
 
-Every state $[x]_Q$ of $A_Q$ is reachable: $\DBAR_Q([\lambda]_Q,x)=[x]_Q$. $\square$
+Let $[x]_Q$ be any state of $A_Q$; such an $x$ exists because equivalence classes are nonempty. Then $\DBAR_Q([\lambda]_Q,x)=[x]_Q$, so every state of $A_Q$ is reachable. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove: if $A\cong B$ and $A$ connected then $B$ connected.}
@@ -1549,13 +1558,13 @@ $A$ is not connected.
 \item \textbf{$A_{R^A}\cong A^c$: define $\psi$ and prove it is an isomorphism.}
 
 \begin{enumerate}
-\item $\psi([x]_{R^A})=\DBAR(s_0,x)$: sends each $R^A$-class (= set of strings reaching the same state) to that state.
+\item For each $R^A$-class $[x]_{R^A}$, choose a representative $x$ from the class; this is possible because equivalence classes are nonempty. Define $\psi([x]_{R^A})=\DBAR(s_0,x)$, which sends each class to the state it reaches.
 
 \item Well-defined: $[x]_{R^A}=[y]_{R^A}\Rightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$. \checkmark
 
 \item Homomorphism: $\psi([\lambda]_{R^A})=s_0$. $\psi([xa]_{R^A})=\DBAR(s_0,xa)=\delta(\DBAR(s_0,x),a)=\delta(\psi([x]_{R^A}),a)$. $[x]\in F_{R^A}\Leftrightarrow x\in L(A)\Leftrightarrow\DBAR(s_0,x)\in F=F^c$. \checkmark
 
-\item Isomorphism: Injective: $\psi([x])=\psi([y])\Rightarrow\DBAR(s_0,x)=\DBAR(s_0,y)\Rightarrow[x]=[y]$. Surjective (onto $S^c$): any $s\in S^c$ has $s=\DBAR(s_0,x_s)=\psi([x_s])$.
+\item Isomorphism: Injective: $\psi([x])=\psi([y])\Rightarrow\DBAR(s_0,x)=\DBAR(s_0,y)\Rightarrow[x]=[y]$. Surjective (onto $S^c$): if $s\in S^c$, then connectedness gives a string $x_s$ with $s=\DBAR(s_0,x_s)$, and therefore $s=\psi([x_s])$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -1612,12 +1621,12 @@ $\psi(s) E_B \psi(t)$, and Exercise 3.20 gives
 Since $A$ is reduced, $s E_A t$ implies $s=t$. Thus $\psi$ is one-to-one.
 
 To prove surjectivity, let $u\in S_B$. Because $B$ is connected, there exists
-$x\in\Sigma^*$ such that $\DBAR_B(s_{0B},x)=u$. Let
-$s=\DBAR_A(s_{0A},x)\in S_A$. By Exercise 3.10,
+$x_u\in\Sigma^*$ such that $\DBAR_B(s_{0B},x_u)=u$. Let
+$s=\DBAR_A(s_{0A},x_u)\in S_A$. By Exercise 3.10,
 \[
-\psi(s)=\psi(\DBAR_A(s_{0A},x))
-=\DBAR_B(\psi(s_{0A}),x)
-=\DBAR_B(s_{0B},x)
+\psi(s)=\psi(\DBAR_A(s_{0A},x_u))
+=\DBAR_B(\psi(s_{0A}),x_u)
+=\DBAR_B(s_{0B},x_u)
 =u.
 \]
 So every state of $B$ lies in the image of $\psi$.
