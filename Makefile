@@ -25,7 +25,7 @@ Solutions/solutions.pdf: Solutions/solutions.tex $(SOLUTION_CHAPTERS)
 	cd Solutions && pdflatex solutions && pdflatex solutions
 
 clean:
-	rm -f book.pdf book.aux book.idx book.ilg book.ind book.log book.out book.toc
+	rm -f book.pdf book.aux book.idx book.ilg book.ind book.log book.out book.toc book.dvi
 	rm -f ch-*.aux ch-*.log ch-*.out ch-*.toc
 	rm -f Solutions/solutions.pdf Solutions/*.aux Solutions/*.log Solutions/*.out \
 		Solutions/*.toc Solutions/*.fls Solutions/*.fdb_latexmk
