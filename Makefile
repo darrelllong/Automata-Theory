@@ -1,7 +1,7 @@
 BOOK_CHAPTERS = ch-00.tex ch-01.tex ch-02.tex ch-03.tex ch-04.tex ch-05.tex \
 	ch-06.tex ch-07.tex ch-08.tex ch-09.tex ch-10.tex ch-11.tex ch-12.tex
 
-SOLUTION_CHAPTERS = Solutions/sol-ch00.tex Solutions/sol-ch02.tex \
+SOLUTION_CHAPTERS = Solutions/sol-introduction.tex Solutions/sol-ch00.tex Solutions/sol-ch02.tex \
 	Solutions/sol-ch03.tex Solutions/sol-ch04.tex Solutions/sol-ch05.tex \
 	Solutions/sol-ch06.tex Solutions/sol-ch07.tex Solutions/sol-ch08.tex \
 	Solutions/sol-ch09.tex Solutions/sol-ch10.tex Solutions/sol-ch11.tex \
