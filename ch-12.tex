@@ -11,7 +11,7 @@ it is possible to write a program to check whether an arbitrary DFA
 is minimal. We know this property can be reliably checked because
 we proved that the algorithms in Chapter 3 could be applied to
 ascertain the correct answer for virtually every conceivable DFA.
-There are an infinite number of DFAs about which the question can
+There \textcolor{red}{are} an infinite number of DFAs about which the question can
 be posed, and yet our algorithm decides the question correctly in
 all cases. In the following section we consider questions that can
 be asked about more complex languages and machines.
@@ -119,7 +119,7 @@ clear that the answer to the question should be ``YES$-L(A)\not=\emptyset$,''
 while if we never find a string that is accepted, the answer should be ``NO$-
 L(A)=\emptyset$.'' This procedure is guaranteed to halt and give the correct
 answer if the language is indeed nonempty. However, the procedure will never
-halt and answer NO (in a finite amount of time) because there are an infinite
+halt and answer NO (in a finite amount of time) because there \textcolor{red}{are} an infinite
 number of strings in $\Sigma^*$ that must be checked. A modification of this
 basic idea is necessary to produce a procedure that will halt under all
 circumstances (that is, to produce an \emph{algorithm}).
@@ -633,7 +633,7 @@ answers to a particular question can be thought of as an unending sequence of
 such pattern can be thought of as a binary fraction, representing a real number
 between $.00000\ldots=0$ and $.111111\ldots=1$. Conversely, each such real
 number in this range represents a sequence of yes-no answers to some question.
-Since there are an uncountable number of real numbers between 0 and 1, there are
+Since there \textcolor{red}{are} an uncountable number of real numbers between 0 and 1, there \textcolor{red}{are}
 an uncountable number of answers that might be of interest to us. Some of these
 answers cannot be obtained by algorithms, since there are not enough algorithms
 to go around. Thus, there must be many questions that are not decidable.
@@ -758,7 +758,7 @@ proposed the function HALT fiddle with the code; the above contradiction will be
 reached regardless of what code appears between the {\tt begin} and {\tt end}
 statements in the function HALT. We have shown that any such proposed function
 is \emph{guaranteed} to behave inappropriately when fed a program such as TEST. In
-actuality, there are an infinite number of programs that cause HALT to misbehave,
+actuality, there \textcolor{red}{are} an infinite number of programs that cause HALT to misbehave,
 but it was sufficient to demonstrate just one failure to justify that no such
 function can solve the general problem.
 

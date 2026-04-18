@@ -1202,7 +1202,7 @@ will conform to the increasing condition. After the final step, all nonterminals
 eliminated, and we can proceed to phase 2.
 
 The procedure for the $i$th iteration is: If an $S_i$-rule of the form $S_i
-\rightarrow S_j\alpha$ is found where $i<j$. eliminate it as specified in Lemma
+\rightarrow S_j\alpha$ is found where $i<j$\textcolor{red}{. eliminate} it as specified in Lemma
 \ref{lmm-9.1}. This may introduce other rules of the form $S_i\rightarrow S_{j'}\alpha'$, in
 which $i$ is still less than $j'$. Such new rules will likewise have to be
 eliminated via Lemma \ref{lmm-9.1}, but since the offending subscript will decrease each
@@ -1718,7 +1718,7 @@ equivalence classes mod $n$ in which the $j_k$ values may fall, totaling $n^2$
 different combinations. Thus, all the long words in $L$ will be accounted for by
 the time $m$ reaches $n^2$ . The words in $L$ of length less than $n$ constitute
 a finite set $F$, which is regular. Each $L_k$ is represented by the regular
-expression indicated by $(\pmb{a}^{i_k})^*\cdot\pmb{a}^{j_k}$ , and there are less
+expression indicated by $(\pmb{a}^{i_k})^*\cdot\pmb{a}^{j_k}$ , and there are \textcolor{red}{less}
 than $n^2$ of these expressions, so $L$ is the finite union of regular sets, and
 is therefore regular.
 \end{thm}
