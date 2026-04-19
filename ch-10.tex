@@ -800,7 +800,7 @@ turn out to be useless.
 $P_{P_1}$ contains the $Z$-rules $Z\rightarrow B^{qq}$ and $Z\rightarrow B^{qr}$
 from the first criteria for productions. The transition $\delta(q,\pmb{a},B) =
 \{\langle q,A\rangle\}$ accounts for the productions $B^{qr}\rightarrow\pmb{a}
-A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$ . $\delta(q,\pmb{a},A)=\{\langle q,
+A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$\textcolor{red}{ .} $\delta(q,\pmb{a},A)=\{\langle q,
 AA\rangle\}$ gives rise to the $A^{qq}$ -rules $A^{qq}\rightarrow\pmb{a}A^{qq}A^{qq}$ and $A^{qq}\rightarrow\pmb{a}A^{qr}A^{rq}$, as well as $A^{qr}$ -rules
 $A^{qr}\rightarrow\pmb{a}A^{qq}A^{qr}$ and $A^{qr}\rightarrow\pmb{a}A^{qr}A^{rr}$.
 $\delta(q,\pmb{b},A)=\{\langle r,\lambda\rangle\}$ accounts for another
@@ -808,8 +808,8 @@ $A^{qr}$-rule, $A^{qr}\rightarrow\pmb{b}$. Finally, the transition $\delta(r,
 \pmb{b},A)=\{\langle r,\lambda\rangle\}$ generates the only $A^{rr}$ -rule,
 $A^{rr}\rightarrow\pmb{b}$.
 
-Note that some of the potential nonterminals ($B^{qr} ,B^{rq} ,B^{rr}$) are never
-generated, and others ($A^{qq} ,B^{qq}$) cannot produce terminal strings. The
+Note that some of the potential nonterminals ($B^{qr}\textcolor{red}{ ,}B^{rq}\textcolor{red}{ ,}B^{rr}$) are never
+generated, and others ($A^{qq}\textcolor{red}{ ,}B^{qq}$) cannot produce terminal strings. The
 resulting grammar, with useless items deleted, is given by
 \[ G_{P_1}=\langle\{Z,B^{qr},A^{qr},A^{rr}\},\{\pmb{a},\pmb{b}\},Z,\{Z
 	\rightarrow B^{qr},B^{qr}\rightarrow\pmb{a}A^{qr},A^{qr}\rightarrow
@@ -846,7 +846,7 @@ corresponds to the stack symbol $A$) that will eventually produce a terminal
 string as the stack shrinks below the current size during a sequence of
 transitions that lead from state $q$ to state $r$. This finally happens in the
 last of the following steps, where $\pmb{aaa}A^{qr}  A^{rr}  A^{rr}\ \DRightarrow
-\pmb{aaabbb}$. $A^{rr}$ , by contrast, denotes a nonterminal (again corresponding
+\pmb{aaabbb}$. $A^{rr}$\textcolor{red}{ ,} by contrast, denotes a nonterminal (again corresponding
 to the stack symbol $A$) that will produce a terminal string as the stack
 shrinks in size during transitions from state $r$ back to state $r$. In this
 example, this occurs in the next to the last two steps. The initial stack symbol

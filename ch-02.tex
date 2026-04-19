@@ -323,7 +323,7 @@ strings that wind up at state $s$ (from $s_0$). Note that it is easy to define
 automata for which it is impossible to reach certain states from the start
 state; for such states, $I(M,s)$ would be empty. Then $\forall s \in S,\ I(M,s)$
 is either an equivalence class of $R^M$ or $I(M,s)=\emptyset$. Since there is at
-most one equivalence class per state, and there are a finite number of states,
+most one equivalence class per state, and there \textcolor{red}{are} a finite number of states,
 it follows that $rk(R^M)$ is also finite: $rk(R^M) \leq \|S\| < \infty$.
 
 However, we have
@@ -726,7 +726,7 @@ for a DFA, as shown by the proof in the following example.
 Consider $L=\{\pmb{a}^i\pmb{b}^j\ |\ i,j \in \NN$ and $i$ and $j$ are relatively
 prime$\}$. We will use Theorem \ref{thm-2.4} to show $L$ is not FAD: Let $n$ be given, and
 choose a prime $p$ larger than $n + 1$ (we can be assured such a $p$ exists
-since there are an infinite number of primes). Let $x=\pmb{a}^p\pmb{b}^{(p-1)!}$.
+since there \textcolor{red}{are} an infinite number of primes). Let $x=\pmb{a}^p\pmb{b}^{(p-1)!}$.
 Since $p$ has no factors other than $1$ and $p$, it has no nontrivial factor in
 common with $(p-1) \cdot (p-2) \cdot \ldots \cdot 3 \cdot 2 \cdot 1$, and so $p$
 and $(p-1)!$ are relatively prime, which guarantees that $x \in L$. The length
