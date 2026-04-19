@@ -574,7 +574,7 @@ The automaton $P_G$ is then
 	\pmb{\emptyset},\pmb{\cup},\pmb{\cdot},^{\pmb{*}}\},\{R,\pmb{a},\pmb{b},
 	\pmb{c},\pmb{(},\pmb{)},\pmb{\epsilon},\pmb{\emptyset},\pmb{\cup},
 	\pmb{\cdot},^{\pmb{*}}\},\{s\},s,\delta_G,R,\emptyset\rangle, \]
-where $\delta_G$ is comprised of the following nonempty transitions:
+where $\delta_G$ is \textcolor{red}{comprised of} the following nonempty transitions:
 \begin{center}\begin{tabular}{r@{ = }l}
 $\delta_G(s,\pmb{(},R)$ & $\{\langle s,R\pmb{\cdot}R\pmb{)}\rangle,\langle s,R
 	\pmb{\cup}R\pmb{)}\rangle,\langle s,R\pmb{)}^{\pmb{*}}\rangle\}$ \\
@@ -767,10 +767,10 @@ $\delta(t,\pmb{b},C)$ & $\{\langle t,\lambda\rangle\}$
 Since there is but one state and two stack symbols, the nonterminals for the
 corresponding grammar $G_{P_2}$ are $\Omega=\{Z,S^{tt},C^{tt}\}$. $P_{P_2}$ can
 be calculated as follows: $Z\rightarrow S^{tt}$ is the only rule arising from
-the first criteria for productions. Since $\delta(t,\pmb{a},S)$ contains
+the first \textcolor{red}{criteria} for productions. Since $\delta(t,\pmb{a},S)$ contains
 $\langle t,SC\rangle$, a move that produces two stack symbols, $m=2$ and the
 resulting production is $S^{tt}\rightarrow\pmb{a}S^{tt}C^{tt}$. The only other
-rule due to the second criteria arises because $\delta(t,\pmb{a},S)$ contains
+rule due to the second \textcolor{red}{criteria} arises because $\delta(t,\pmb{a},S)$ contains
 $\langle t,C\rangle$, which with $m=1$ yields $S^{tt}\rightarrow\pmb{a}C^{tt}$.
 Finally, $\langle t,\lambda\rangle\in\delta(t,\pmb{b},C)$ causes $C^{tt}
 \rightarrow\pmb{b}$ to be added to the production set. The resulting grammar is
@@ -798,7 +798,7 @@ B^{qr},B^{rq},B^{rr},A^{qq},A^{qr},A^{rq},A^{rr}\}$, although some of these will
 turn out to be useless.
 
 $P_{P_1}$ contains the $Z$-rules $Z\rightarrow B^{qq}$ and $Z\rightarrow B^{qr}$
-from the first criteria for productions. The transition $\delta(q,\pmb{a},B) =
+from the first \textcolor{red}{criteria} for productions. The transition $\delta(q,\pmb{a},B) =
 \{\langle q,A\rangle\}$ accounts for the productions $B^{qr}\rightarrow\pmb{a}
 A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$\textcolor{red}{ .} $\delta(q,\pmb{a},A)=\{\langle q,
 AA\rangle\}$ gives rise to the $A^{qq}$ -rules $A^{qq}\rightarrow\pmb{a}A^{qq}A^{qq}$ and $A^{qq}\rightarrow\pmb{a}A^{qr}A^{rq}$, as well as $A^{qr}$ -rules
@@ -920,8 +920,8 @@ shown in the following section.
 \section{Equivalence \textcolor{red}{Of} Acceptance By Final State and Empty Stack}\label{sec-10.3}
 
 In this section, we explore the ramifications of accepting words according to
-the criteria that a final state can be reached after processing all the letters
-on the input tape, rather than the criteria that the stack is emptied. Theorem
+the \textcolor{red}{criteria} that a final state can be reached after processing all the letters
+on the input tape, rather than the \textcolor{red}{criteria} that the stack is emptied. Theorem
 \ref{thm-10.4} will show that any language that can be accepted via empty stack can also
 be accepted via final state. In terms of Definition \ref{dfn-10.5}, this means that
 $\PSIG\subseteq\FSIG$. Since $\PSIG=\CSIG$, this means that every context-free
@@ -1250,7 +1250,7 @@ The automaton $P_G$ is then
 	\{R,\pmb{a},\pmb{b},\pmb{c},\pmb{(},\pmb{)},\pmb{\{},\pmb{\}},\pmb{[},
 	\pmb{]},\pmb{\epsilon},\pmb{\emptyset},\pmb{\cup},\pmb{\cdot},\pmb{^*}\},\{s\},s,
 	\delta_G,R,\emptyset\rangle \]
-where $\delta_G$ is comprised of the following nonempty transitions:
+where $\delta_G$ is \textcolor{red}{comprised of} the following nonempty transitions:
 \begin{center}\begin{tabular}{r@{ = }l}
 $\delta_G(s,\pmb{(},R)$ & $\{\langle s,R\pmb{\cdot}R\pmb{)}\rangle\}$ \\
 $\delta_G(s,\pmb{[},R)$ & $\{\langle s,R\pmb{\cup}R\pmb{]}\rangle\}$ \\
@@ -1427,7 +1427,7 @@ languages
 	L_2 = \{\pmb{a}^n\pmb{b}^m|\ (n \geq 1)\wedge(n = 2m)\} \]
 are both DCFLs, and yet $L_1\cup L_2 = \{\pmb{a}^n\pmb{b}^m|\ (n \geq 1)\wedge(n=
 m \vee n = 2m)\}$ is not a DCFL (see the exercises). Thus, unlike \PSIG, \ASIG\ 
-is not closed under union if $\Sigma$ is comprised of at least two symbols
+is not closed under union if $\Sigma$ is \textcolor{red}{comprised of} at least two symbols
 (recall that since $\mathfrak{D}_{\{\pmb{a}\}} = \cal{A}_{\{\pmb{a}\}} =
 \mathfrak{P}_{\{\pmb{a}\}}$, $\cal{A}_{\{\pmb{a}\}}$ would be closed under
 union). If \ASIG\ was closed under intersection, then \ASIG\ would (by
@@ -1467,7 +1467,7 @@ exercises.
 
 % Lemma 10.1
 \begin{lmm}\label{lmm-10.1}
-Let $\Sigma$ be an alphabet comprised of at least two symbols. Then \ASIG\ is
+Let $\Sigma$ be an alphabet \textcolor{red}{comprised of} at least two symbols. Then \ASIG\ is
 not closed under union, intersection, concatenation, \Index{Kleene closure},
 homomorphism, substitution, or reversal. That is, there are examples of
 deterministic context-free languages $L_1$ and $L_2$, a homomorphism $h$, and a
