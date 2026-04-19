@@ -204,7 +204,7 @@ The notation presented here allows a concise method of denoting both relations
 defined by languages and relations defined by automata. It is helpful to observe
 that even in the absence of context, $R_X$ indicates that a relation based on
 the \emph{language} $X$ is being described (since $X$ occurs as a subscript),
-while the relation $R^Y$ identifies $Y$ as a \emph{machine} (since Y occurs as a
+while the relation $R^Y$ identifies $Y$ as a \emph{machine} (since \textcolor{red}{Y} occurs as a
 superscript).
 
 Just as each DFA $M$ gives rise to a right congruence $R^M$, many right
@@ -393,7 +393,7 @@ the language accepted by $A_{R_L}$ really is $L$. In other words, $L(A_{R_L})=L$
 First, note that $S_{R_L}$ is a finite set, since [by the only assumption we
 have in (3)] $R_L$ consists of only a finite number of equivalence classes. It
 can be shown that $F_{R_L}$ is well defined; if $[z]_{R_L}=[y]_{R_L}$, then
-either (both $z \in L$ and $y \in L$) or (neither $z$ nor $y$ belong to $L$)
+either (both $z \in L$ and $y \in L$) or (neither $z$ nor $y$ \textcolor{red}{belong} to $L$)
 (why?). The reader should show that $\delta_{R_L}$ is similarly well defined;
 that is, if $[z]_{R_L}=[y]_{R_L}$, it follows that $\delta_{R_L}$ is forced to
 also take both transitions to the same state $([z\pmb{a}]_{R_L}=[y\pmb{a}]_{R_L})$.
