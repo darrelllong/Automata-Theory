@@ -4,6 +4,6 @@ When you finish an item, prefix it with [DONE] so we both know it is finished.
 
 [DONE] 2. Go through each chapter of the book and careful check for typographical, spelling, or grammatical errors. When you find one, enclose it with \textcolor{red}{This text is red.} You will want to \usepackage{xcolor}
 
-3. Make a proper clickable (hyperlink, but without the ugly boxes) Table of Contents (at the beginning) and Index (at the end) for the book.
+[DONE] 3. Make a proper clickable (hyperlink, but without the ugly boxes) Table of Contents (at the beginning) and Index (at the end) for the book.
 
-4. Add RESPONSE-JLC.md and in it put a list of all of the \textcolor{red} you added to the book, with a polite note: "Please, prof. Carroll, review where I may have found typos in your book. I took the liberty of marking them in red. I hope Tina is enjoying her CyberTruck and is street racing the Posches."
+[DONE] 4. Add RESPONSE-JLC.md and in it put a list of all of the \textcolor{red} you added to the book, with a polite note: "Please, prof. Carroll, review where I may have found typos in your book. I took the liberty of marking them in red. I hope Tina is enjoying her CyberTruck and is street racing the Posches."

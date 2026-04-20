@@ -1,0 +1,107 @@
+Please, prof. Carroll, review where I may have found typos in your book. I took the liberty of marking them in red. I hope Tina is enjoying her CyberTruck and is street racing the Posches.
+
+Below is the list of red typo/grammar/punctuation markings currently present in the book source.
+
+- `ch-00.tex:26` truth table for \emph{not} shows, a statement \textcolor{red}{r} is false exactly when \textcolor{red}{$\neg$r} is
+- `ch-00.tex:370` exactly one equivalence class of $R$. $X$ is therefore \textcolor{red}{comprised of} the union of
+- `ch-00.tex:472` When a pair of elements \textcolor{red}{are} related by a function, we will write $f(a) = b$
+- `ch-00.tex:578` one first coordinate associated with any given second coordinate\textcolor{red}{ .}
+- `ch-00.tex:599` associated with any given second coordinate\textcolor{red}{ .}
+- `ch-00.tex:733` \emph{Proof}\textcolor{red}{.} See the exercises.
+- `ch-00.tex:810` Let \textcolor{red}{A} be \emph{any} set. Then $\|A\| < \|\wp(A)\|$
+- `ch-00.tex:812` \emph{Proof}\textcolor{red}{.} There is a bijection between $A$ and the set of all singleton
+- `ch-00.tex:957` where \textcolor{red}{D} is also a formula containing only the terms $p_1, p_2, \ldots, p_m$.
+- `ch-01.tex:18` which there \textcolor{red}{are} a finite set of inputs and a finite set of things that must be
+- `ch-01.tex:103` \textcolor{red}{is what you are reading right now, which are} words (or strings) over the
+- `ch-01.tex:361` Finite automata are appropriate whenever there \textcolor{red}{are} a finite number of inputs and
+- `ch-01.tex:1404` \textcolor{red}{principle} disjunctive normal form of $t_1'$ contains just two terms:
+- `ch-01.tex:1671` that can be thought of as words \textcolor{red}{comprised of} $\pmb{0}$s and $\pmb{1}$s.
+- `ch-02.tex:167` The \textcolor{red}{ranks} of the relation in Example 2.3 was 2, since there were two equivalence
+- `ch-02.tex:207` while the relation $R^Y$ identifies $Y$ as a \emph{machine} (since \textcolor{red}{Y} occurs as a
+- `ch-02.tex:326` most one equivalence class per state, and there \textcolor{red}{are} a finite number of states,
+- `ch-02.tex:396` either (both $z \in L$ and $y \in L$) or (neither $z$ nor $y$ \textcolor{red}{belong} to $L$)
+- `ch-02.tex:729` since there \textcolor{red}{are} an infinite number of primes). Let $x=\pmb{a}^p\pmb{b}^{(p-1)!}$.
+- `ch-02.tex:897` \item Show that $Q$ is a right congruence\textcolor{red}{. and} list the equivalence classes.
+- `ch-02.tex:1081` that are composed of \textcolor{red}{less} than 1 million characters. Is Short Pascal FAD? Any
+- `ch-03.tex:190` $I(A,t) = \{x\ | \DBAR(s_0,x) = t\}$. Notice that initial sets are \textcolor{red}{comprised of}
+- `ch-03.tex:435` \DBAR(s_0,x_s) = s$. (Since \textcolor{red}{A} is connected, we are guaranteed to find such an
+- `ch-03.tex:495` $x_s \in L(A)$ & $\Leftrightarrow$ & (by definition of \textcolor{red}{L}) \\
+- `ch-03.tex:548` \emph{Proof}\textcolor{red}{.} If $A \cong B$, it is easy to show that $A$ is equivalent to $B$
+- `ch-03.tex:551` reduced and connected does hold, and that $A$ is equivalent to $B$. Since \textcolor{red}{A} is
+- `ch-03.tex:677` process because there \textcolor{red}{are} an infinite number of strings in $\Sigma^*$ to check.
+- `ch-03.tex:834` Furthermore, there exists an algorithm for computing $E_{A^c}$ \textcolor{red}{the} state equivalence
+- `ch-03.tex:901` \emph{algorithm} for finding $E_{iA}$ since there \textcolor{red}{are} only a finite number of
+- `ch-03.tex:1560` \item Assume \textcolor{red}{A and B} are both reduced and connected. If $\psi$ is a homomorphism
+- `ch-04.tex:842` \section{NDFAs \textcolor{red}{With} Lambda-Transitions}\label{sec-4.3}
+- `ch-04.tex:1031` two machines are equivalent. \textcolor{red}{Because the way} $A^{\sigma}_{\lambda}$ was constructed
+- `ch-04.tex:1346` \item Draw the connected part of $T^d$,\textcolor{red}{the} deterministic equivalent of the NDFA
+- `ch-05.tex:596` \emph{Proof.} Let \textcolor{red}{L} belong to $\DSIG$. Then there is a \underline{non}deterministic
+- `ch-05.tex:676` For any alphabet $\Sigma$, $\DSIG$ is closed under the operator \textcolor{red}{Z},
+- `ch-05.tex:677` where \textcolor{red}{Z} is defined by
+- `ch-05.tex:679` 	word in \textcolor{red}{L}}\}. \]
+- `ch-05.tex:868` different alphabets, if $L$ is FAD, the homomorphic image of \textcolor{red}{L} is also FAD (see
+- `ch-05.tex:944` $z \in\Gamma^*$\textcolor{red}{, The} \emph{\Index{inverse homomorphic image} of \textcolor{red}{z} under $\PBAR$}
+- `ch-05.tex:948` image} of \textcolor{red}{L} under} $\PBAR$ is defined by
+- `ch-05.tex:1174` exactly, since there \textcolor{red}{are} only a finite number of ways to choose a set of final
+- `ch-05.tex:1535` \item Given an automaton accepting $L$\textcolor{red}{. describe} how to modify it to produce an
+- `ch-06.tex:45` Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages \textcolor{red}{are}
+- `ch-06.tex:551` in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \textcolor{red}{\not in} A_{ij})$.
+- `ch-06.tex:670` (\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$\textcolor{red}{ .}
+- `ch-06.tex:1048` $X_1$ (instead of $X_2$)\textcolor{red}{ .} The solution for $X_2$ is quite concise, which leads
+- `ch-06.tex:1056` interrelated. Recall that, for a state $s_i$, $I(A,s_i)$ is \textcolor{red}{comprised of} strings
+- `ch-07.tex:585` Since $z$ was an arbitrary element of $\Sigma^{m+1}$\textcolor{red}{ ,} and $t$ was an arbitrary
+- `ch-07.tex:1668` Consider the FST displayed in Figure \ref{fig-7.17}. If \<EOS\> and \<SOS\> \textcolor{red}{is}
+- `ch-07.tex:1782` \item $E_{0M}$ has just one equivalence \textcolor{red}{classes}, which consists of all of $S$.
+- `ch-08.tex:14` \section{Overview \textcolor{red}{Of} \textcolor{red}{The} Grammar Hierarchy}\label{sec-8.1}
+- `ch-08.tex:70` \item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \textcolor{red}{\pmb\cdot} R_2\pmb{)}$.
+- `ch-08.tex:71` \item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \textcolor{red}{\pmb\cup} R_2\pmb{)}$.
+- `ch-08.tex:137` \textcolor{red}{comprised of} $\{S,S_1,S_2,S_3,S_4,S_5\}$. The start symbol designates which of
+- `ch-08.tex:512` \rightarrow\pmb{b}T,T\rightarrow\pmb{aa}\}\rangle$\textcolor{red}{.Then} $S\ \DRightarrow\pmb{aabaa}$,
+- `ch-08.tex:708` and $\delta_G$ is \textcolor{red}{comprised of} (normal) transitions of the form
+- `ch-08.tex:1332` symbol. This is only necessary if $\lambda\in L$; if $\lambda\textcolor{red}{\not in} L$, there
+- `ch-09.tex:160` each of the following \textcolor{red}{are} valid derivations of the string $x=\pmb{((a\cup b)^*  \cdot c)}$.
+- `ch-09.tex:438` lemma for regular sets (Theorem \ref{thm-2.3}) can be used to show \textcolor{red}{that} is impossible for
+- `ch-09.tex:951` will follow immediately from Definition \ref{dfn-8.6}. If \textcolor{red}{L} is a pure context-free
+- `ch-09.tex:1088` term. Since the set of all $B$-rules \textcolor{red}{were} $B\rightarrow\beta_1,B\rightarrow
+- `ch-09.tex:1114` and the set of all \textcolor{red}{non[left]recursive X-rules} by $X^n=\{X\rightarrow\gamma_1,X
+- `ch-09.tex:1205` \rightarrow S_j\alpha$ is found where $i<j$\textcolor{red}{. eliminate} it as specified in Lemma
+- `ch-09.tex:1367` The two occurrences of \textcolor{red}{R} were in distinct places in the parse tree, and hence at
+- `ch-09.tex:1371` $|v|+|x|>0$. Furthermore, the subtree rooted at the higher occurrence of \textcolor{red}{R} was
+- `ch-09.tex:1719` the time $m$ reaches $n^2$\textcolor{red}{ .} The words in $L$ of length less than $n$ constitute
+- `ch-09.tex:1721` expression indicated by $(\pmb{a}^{i_k})^*\cdot\pmb{a}^{j_k}$\textcolor{red}{ ,} and there are \textcolor{red}{less}
+- `ch-10.tex:424` Since $A$ was the only stack symbol in $P_3$, the language could \textcolor{red}{have as easily}
+- `ch-10.tex:577` where $\delta_G$ is \textcolor{red}{comprised of} the following nonempty transitions:
+- `ch-10.tex:624` Figures \ref{fig-10.5a}-f \textcolor{red}{illustrates} the state of the machine at several points during the
+- `ch-10.tex:770` the first \textcolor{red}{criteria} for productions. Since $\delta(t,\pmb{a},S)$ contains
+- `ch-10.tex:773` rule due to the second \textcolor{red}{criteria} arises because $\delta(t,\pmb{a},S)$ contains
+- `ch-10.tex:801` from the first \textcolor{red}{criteria} for productions. The transition $\delta(q,\pmb{a},B) =
+- `ch-10.tex:803` A^{qr}$ and $B^{qq}\rightarrow\pmb{a}A^{qq}$\textcolor{red}{ .} $\delta(q,\pmb{a},A)=\{\langle q,
+- `ch-10.tex:811` Note that some of the potential nonterminals ($B^{qr}\textcolor{red}{ ,}B^{rq}\textcolor{red}{ ,}B^{rr}$) are never
+- `ch-10.tex:812` generated, and others ($A^{qq}\textcolor{red}{ ,}B^{qq}$) cannot produce terminal strings. The
+- `ch-10.tex:849` \pmb{aaabbb}$. $A^{rr}$\textcolor{red}{ ,} by contrast, denotes a nonterminal (again corresponding
+- `ch-10.tex:920` \section{Equivalence \textcolor{red}{Of} Acceptance By Final State and Empty Stack}\label{sec-10.3}
+- `ch-10.tex:923` the \textcolor{red}{criteria} that a final state can be reached after processing all the letters
+- `ch-10.tex:924` on the input tape, rather than the \textcolor{red}{criteria} that the stack is emptied. Theorem
+- `ch-10.tex:1253` where $\delta_G$ is \textcolor{red}{comprised of} the following nonempty transitions:
+- `ch-10.tex:1430` is not closed under union if $\Sigma$ is \textcolor{red}{comprised of} at least two symbols
+- `ch-10.tex:1470` Let $\Sigma$ be an alphabet \textcolor{red}{comprised of} at least two symbols. Then \ASIG\ is
+- `ch-11.tex:27` \textcolor{red}{comprised of} the familiar components that have already been used
+- `ch-11.tex:190` Turing machine may be \textcolor{red}{comprised of} several submodules. Control may be passed to
+- `ch-11.tex:749` resulting in a $\pmb{Y}$ exists, and there \textcolor{red}{are} an infinite number of negative
+- `ch-11.tex:1659` symbols can be placed. Furthermore, there \textcolor{red}{are} only a finite number of characters
+- `ch-11.tex:1678` \section{Closure Properties and \textcolor{red}{The} Hierarchy Theorem}\label{sec-11.4}
+- `ch-12.tex:14` There \textcolor{red}{are} an infinite number of DFAs about which the question can
+- `ch-12.tex:122` halt and answer NO (in a finite amount of time) because there \textcolor{red}{are} an infinite
+- `ch-12.tex:569` and contain all words in $L(G)$ of length $\leq n$\textcolor{red}{, If} we are only interested in
+- `ch-12.tex:613` over some finite character set. As such, there \textcolor{red}{are} only a countable number of
+- `ch-12.tex:622` involving a countable number of instances. We will argue that there \textcolor{red}{are} an
+- `ch-12.tex:625` are also finite, and thus there \textcolor{red}{are} a countable number of DFAs, a countable
+- `ch-12.tex:636` Since there \textcolor{red}{are} an uncountable number of real numbers between 0 and 1, there \textcolor{red}{are}
+- `ch-12.tex:643` After all, there \textcolor{red}{are} an uncountable number of real numbers, yet all computers
+- `ch-12.tex:761` actuality, there \textcolor{red}{are} an infinite number of programs that cause HALT to misbehave,
+- `ch-12.tex:950` We now consider languages whose \textcolor{red}{criteria} for membership is related to the
+- `ch-12.tex:976` have shown that, since there \textcolor{red}{are} only a countable number of type 0 grammars and
+- `ch-12.tex:992` Our original \textcolor{red}{criteria} for belonging to the language $L$ accepted by a Turing
+- `ch-12.tex:1183` \textcolor{red}{$A$} set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
+- `ch-12.tex:1202` show that it is decidable whether there is a DFA with \textcolor{red}{less} than 31 states that
+- `ch-12.tex:1205` \item Given any alphabet $\Sigma$ and \textcolor{red}{a} regular expressions $R_1$ over $\Sigma$,
