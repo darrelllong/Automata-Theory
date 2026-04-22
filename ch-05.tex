@@ -593,7 +593,7 @@ Kleene closure is outlined in Theorem \ref{thm-5.5}. The construction for $L^+$ 
 For any alphabet $\Sigma$, $\DSIG$ is closed under $^*$ (Kleene
 closure).
 
-\emph{Proof.} Let L belong to $\DSIG$. Then there is a \underline{non}deterministic
+\emph{Proof.} Let \textcolor{red}{L} belong to $\DSIG$. Then there is a \underline{non}deterministic
 finite automaton $A =\langle\Sigma,S,S_0,\delta,F\rangle$ such that $L(A)=L$.
 Define a \underline{non}deterministic machine
 $A_*=\langle\Sigma,S_{*},S_{0*},\delta_{*},F_{*}\rangle$,
@@ -673,10 +673,10 @@ constructive proofs.
 
 % Theorem 5.6
 \begin{thm}\label{thm-5.6}
-For any alphabet $\Sigma$, $\DSIG$ is closed under the operator Z,
-where Z is defined by
+For any alphabet $\Sigma$, $\DSIG$ is closed under the operator \textcolor{red}{Z},
+where \textcolor{red}{Z} is defined by
 \[ Z(L) = \{x \ |\  x \text{ is formed by deleting zero or more letters from a
-	word in L}\}. \]
+	word in \textcolor{red}{L}}\}. \]
 
 \emph{Proof.} See the exercises and the following example.
 \end{thm}
@@ -865,7 +865,7 @@ A general homomorphism $\psi$ maps a language over $\Sigma$ to a language over
 $\Gamma$. However, to consider the closure of \DSIG, we will restrict our
 attention for the moment to homomorphisms for which $\Gamma=\Sigma$. It is more
 generally true, though, that even for language homomorphisms between two
-different alphabets, if $L$ is FAD, the homomorphic image of L is also FAD (see
+different alphabets, if $L$ is FAD, the homomorphic image of \textcolor{red}{L} is also FAD (see
 the exercises).
 
 % Theorem 5.9
@@ -941,11 +941,11 @@ not $L \in \NSIG,\ \PBAR(L)=\{\lambda\}$, which is definitely not in \NSIG.
 % Definition 5.9
 \begin{dfn}\label{dfn-5.9}
 Let $\psi$$: \Sigma\rightarrow\Gamma^*$ be a language homomorphism and consider
-$z \in\Gamma^*$, The \emph{\Index{inverse homomorphic image} of z under $\PBAR$}
+$z \in\Gamma^*$\textcolor{red}{, The} \emph{\Index{inverse homomorphic image} of \textcolor{red}{z} under $\PBAR$}
 is then
 \[ \overline{\psi^{-1}}(z)=\{x \in \Sigma^*\ |\ \PBAR(x) = z\} \]
 For a language $L \subseteq \Gamma^*$, the \emph{\Index{inverse homomorphic
-image} of L under} $\PBAR$ is defined by
+image} of \textcolor{red}{L} under} $\PBAR$ is defined by
 \[ \overline{\psi^{-1}}(L)=\{x \in \Sigma^*\ |\ \PBAR(x) \in L\} \]
 \end{dfn}
 
@@ -1171,7 +1171,7 @@ need to define $F^/$; we may not really know which subset of states $F^/$ should
 actually be [after all, we could hardly check the property $\DBAR_1(q,y)\in F$,
 one string at a time, for each of an infinite number of strings $y$ in $L_2$ in
 a finite amount of time]. Fortunately, it is not necessary to know $F^/$
-exactly, since there are only a finite number of ways to choose a set of final
+exactly, since there \textcolor{red}{are} only a finite number of ways to choose a set of final
 states in the automaton $A^/$, and the proof of Theorem \ref{thm-5.12} assures us that one
 of those ways must be the correct one that admits the conclusion
 $L(A^/)=L_1/L_2$.
@@ -1532,7 +1532,7 @@ automaton accepting $B(L)$.
 \item Let $\Sigma$ be an alphabet. Define
 $M(L)=\{z\  \mid (\exists x \in L)(\exists y \in \Sigma^+)(z = xy)\}$.
 \begin{enumerate}
-\item Given an automaton accepting $L$. describe how to modify it to produce an
+\item Given an automaton accepting $L$\textcolor{red}{. describe} how to modify it to produce an
 automaton accepting $M(L)$.
 \item Prove that your construction behaves as advertised.
 \item Argue that \DSIG\ is closed under the operator $M$.

@@ -19,6 +19,8 @@
 \usepackage{fullpage}
 \usepackage{quoting}
 \usepackage[light,outline]{draftcopy}
+\usepackage{xcolor}
+\usepackage[hidelinks,hyperindex]{hyperref}
 
 \newcommand{\Index}[1]{#1\index{#1}}
 
@@ -103,6 +105,9 @@ with an Introduction to Formal Languages}
 \include{ch-11}
 \include{ch-12}
 
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Index}
 \printindex
 \newpage\centerline{\includegraphics[height=4in]{Figures/mfake.eps}}
 \end{document}

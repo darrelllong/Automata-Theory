@@ -839,13 +839,13 @@ equivalent DFA derived in Example 4.12 has only four states and therefore can be
 encoded with just 2 bits of state data. Hence only two flip-flops are necessary
 to implement a recognizer for $L(C)$.
 
-\section{NDFAs With Lambda-Transitions}\label{sec-4.3}
+\section{NDFAs \textcolor{red}{With} Lambda-Transitions}\label{sec-4.3}
 
 We now extend our computational model to include the nondeterministic finite
 automata that allow transitions between states to occur ``spontaneously,''
 without any input being processed. A transition that occurs without an input
 symbol being processed is called a \emph{$\lambda$-transition} or
-\emph{lambda-move}\index{lambda-move|see|{$\lambda$-transition}}. In texts that denote the empty string by the symbol
+\emph{lambda-move}\index{lambda-move|see{$\lambda$-transition}}. In texts that denote the empty string by the symbol
 $\epsilon$, such a transition is usually referred to as an
 \emph{$\epsilon$-move}\index{$\epsilon$-move|see{$\lambda$-transition}}.
 
@@ -1028,7 +1028,7 @@ is an NDFA with $\lambda$-transitions. Construct the corresponding NDFA
 $A^{\sigma}_{\lambda} = \langle\Sigma,S\cup\{q_0\},S_0\cup\{q_0\},
 \delta^{\sigma}_{\lambda},F^{\sigma}\rangle$, which has no $\lambda$-transitions.
 We will show $L(A_{\lambda})=L(A^{\sigma}_{\lambda})$, and thereby prove that the
-two machines are equivalent. Because the way $A^{\sigma}_{\lambda}$ was constructed
+two machines are equivalent. \textcolor{red}{Because the way} $A^{\sigma}_{\lambda}$ was constructed
 limits the scope of Lemma \ref{lmm-4.2}, the proof is divided into two cases.
 
 \textbf{Case 1}: If $x = \lambda$, then by Definition \ref{dfn-4.9}
@@ -1343,7 +1343,7 @@ are final and some nonfinal, Definition \ref{dfn-4.4} requires us to accept that
 accepts only those words specified in part (a).
 \end{enumerate}
 
-\item Draw the connected part of $T^d$,the deterministic equivalent of the NDFA
+\item Draw the connected part of $T^d$,\textcolor{red}{the} deterministic equivalent of the NDFA
 $T$ in Example 4.7.
 
 \item Refer to Example 4.7 and modify the NDFA $T$ so that the machine reverts

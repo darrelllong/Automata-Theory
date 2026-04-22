@@ -83,7 +83,7 @@ that is,
 \DBAR(s,\lambda)\in F \Leftrightarrow \DBAR(t,\lambda)\in F.
 \]
 
-\textit{Step}: assume the claim holds for $n$. Let $|x|\leq n+1$.
+\textit{Step}: Clearly, assume the claim holds for $n$. Let $|x|\leq n+1$.
 If $x=\lambda$, then $s E_{n+1,A} t$ implies $s E_{nA} t$, so the induction
 hypothesis already gives the result. If $x=ay$ with $a\in\Sigma$ and $|y|\leq n$,
 then $s E_{n+1,A} t$ implies
@@ -276,7 +276,7 @@ So $\mu$ is a homomorphism. $\square$
 
 More precisely: since $A$ is connected, for each $s\in S$ there exists $x_s\in\Sigma^*$ with $\DBAR(s_{0A},x_s)=s$. Define $\psi(s)=[x_s]_{R_{L(A)}}$.
 
-\item Well-definedness: if $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then $x R^A y$ (same state), and $R^A$ refines $R_{L(A)}$, so $x R_{L(A)} y$, giving $[x]_{R_{L(A)}}=[y]_{R_{L(A)}}$. $\square$
+\item Well-definedness: it is defined everywhere because connectedness gives, for every $s\in S$, at least one string $x_s$ with $\DBAR(s_{0A},x_s)=s$. It is not multiply-defined because if $\DBAR(s_0,x)=\DBAR(s_0,y)=s$, then $x R^A y$ (same state), and $R^A$ refines $R_{L(A)}$, so $x R_{L(A)} y$, giving $[x]_{R_{L(A)}}=[y]_{R_{L(A)}}$. $\square$
 
 \item Homomorphism:
 \begin{itemize}
@@ -730,7 +730,7 @@ $\DBAR_A(s_{0A},x_s)=s$. Define
 \psi(s)=\DBAR_B(s_{0B},x_s).
 \]
 
-\item To show this is well defined, first note that it is defined everywhere because $A$ is connected, so every state $s\in S_A$ has at least one string reaching it. Now suppose $x$ and $y$ both satisfy
+\item To show this is well defined, first note that it is defined everywhere because $A$ is connected, so every state $s\in S_A$ has at least one string reaching it. It is not multiply-defined: suppose $x$ and $y$ both satisfy
 $\DBAR_A(s_{0A},x)=\DBAR_A(s_{0A},y)=s$. Then for every $z\in\Sigma^*$,
 \[
 xz\in L(A)\Leftrightarrow yz\in L(A),

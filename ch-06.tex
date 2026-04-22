@@ -42,7 +42,7 @@ sequence of applications of the following rules:
 \end{dfn}
 \subsection*{Example 6.1}
 
-Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages are
+Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages \textcolor{red}{are}
 regular sets:
 \begin{center}\begin{tabular}{llll}
 $\{\lambda\}$ & $\{\pmb{b}\}\cup\{\pmb{c}\}$ & $\{\pmb{a}\}\cdot(\{\pmb{b}\}\cup
@@ -548,7 +548,7 @@ $X_{n-1}$ & $=$ & $E_{n-1} \cup A_{(n-1)1}X_1 \cup A_{(n-1)2}X_2 \cup \cdots
 $X_n$ & $=$ & $E_n \cup A_{n1}X_1 \cup A_{n2}X_2 \cup \cdots \cup
 	A_{n(n-1)}X_{n-1} \cup A_{nn}X_n$
 \end{tabular}\end{center}
-in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \not in A_{ij})$.
+in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \textcolor{red}{\not in} A_{ij})$.
 \begin{enumerate}[a.]
 \item This system has a unique solution.
 \item Define $\hat{E}_i = E_i \cup (A_{in} \cdot A^*_{nn} \cdot E_n)$ for all
@@ -667,7 +667,7 @@ Theorem \ref{thm-6.1} has the (unique) solution $X_1 = \hat{A}^*_{11}\hat{E}_1 =
 \cup \pmb{bb})^*   \cdot \epsilon$. Substituting this into the second equation
 yields $X_2 = \emptyset \cup \pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*\cup\emptyset
 \cdot X_2$, which by Theorem \ref{thm-6.1} has the (unique) solution $X_2=\emptyset^*  \cdot
-(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$ .
+(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$\textcolor{red}{ .}
 Note that this expression for $X_2$ could also be found by applying the
 back-substitution formula given in the proof of Theorem \ref{thm-6.2}.
 
@@ -1045,7 +1045,7 @@ eliminating $X_3$ and then eliminating $X_2$. Theorem \ref{thm-6.1} can then be 
 solve for $X_1$, and then the back-substitution rules can be employed to find
 $X_2$ and $X_3$. The regular expressions found in this manner are quite complex.
 A striking simplification can be made by eliminating $X_3$ and then eliminating
-$X_1$ (instead of $X_2$) . The solution for $X_2$ is quite concise, which leads
+$X_1$ (instead of $X_2$)\textcolor{red}{ .} The solution for $X_2$ is quite concise, which leads
 to simple expressions for $X_1$ and $X_3$ during the back-substitution phase (see
 Exercise 6.19).
 
@@ -1053,7 +1053,7 @@ Let $A=\langle\Sigma,\{s_1,s_2,\ldots,s_n\},s_1,\delta,F\rangle$ be a
 deterministic finite automaton. We have seen that the relationships between the
 terminal sets $T(A,s_i)$ described in Chapter \ref{ch-3} give rise to a system of
 equations. Similarly, the initial sets $I(A,s_i)$ defined in Chapter \ref{ch-2} are also
-interrelated. Recall that, for a state $s_i$, $I(A,s_i)$ is comprised of strings
+interrelated. Recall that, for a state $s_i$, $I(A,s_i)$ is \textcolor{red}{comprised of} strings
 that, when starting in the start state, lead to the state $s_i$. That is,
 $I(A,s_i)=\{x\ \ |\ \DBAR(s_1,x) = s_i\}$. The equations we have discussed to this
 point have been \emph{\Index{right linear}}; that is, the unknowns $X_i$ appear

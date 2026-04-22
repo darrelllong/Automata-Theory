@@ -11,7 +11,7 @@ grammars will be explored in full detail in this chapter. The more robust
 classes of grammars introduced here will be discussed at length in later
 chapters.
 
-\section{Overview Of The Grammar Hierarchy}\label{sec-8.1}
+\section{Overview \textcolor{red}{Of} \textcolor{red}{The} Grammar Hierarchy}\label{sec-8.1}
 
 Much like the rules given in Backus-Naur Form (BNF) in Chapters \ref{ch-0} and \ref{ch-1}, the
 language-defining power of a grammar stems from the generation of strings
@@ -67,8 +67,8 @@ formed by repeated application of the following rules:
 \item $\pmb{a}$, $\pmb{b}$, $\pmb{c}$ are each regular expressions.
 \item $\emptyset$ is a regular expression.
 \item $\epsilon$ is a regular expression.
-\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \pmb\cdot R_2\pmb{)}$.
-\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \pmb\cup R_2\pmb{)}$.
+\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \textcolor{red}{\pmb\cdot} R_2\pmb{)}$.
+\item If $R_1$ and $R_2$ are regular expressions, then so is $\pmb{(}R_1 \textcolor{red}{\pmb\cup} R_2\pmb{)}$.
 \item If $R_1$ is a regular expression, then so is $R^{\pmb *}_1$.
 \end{enumerate}
 The conditions set forth above could have instead been succinctly specified by
@@ -134,7 +134,7 @@ of $\overline{\Rightarrow}$.
 
 As illustrated by Example 8.1, several nonterminals may be used in the grammar.
 The set of nonterminals in the grammar given for FORTRAN identifiers was
-comprised of $\{S,S_1,S_2,S_3,S_4,S_5\}$. The start symbol designates which of
+\textcolor{red}{comprised of} $\{S,S_1,S_2,S_3,S_4,S_5\}$. The start symbol designates which of
 these nonterminals should always be used to begin derivations.
 
 The previous examples discussed in this section have illustrated all the
@@ -509,7 +509,7 @@ literature.
 \subsection*{Example 8.6}
 
 Let $G_1 = \langle\{T,S\},\{\pmb{a},\pmb{b}\},S,\{S\rightarrow\pmb{a}S,S
-\rightarrow\pmb{b}T,T\rightarrow\pmb{aa}\}\rangle$.Then $S\ \DRightarrow\pmb{aabaa}$,
+\rightarrow\pmb{b}T,T\rightarrow\pmb{aa}\}\rangle$\textcolor{red}{.Then} $S\ \DRightarrow\pmb{aabaa}$,
 since by Definition \ref{dfn-8.8}, with $x_1=\lambda,\ x_2=\pmb{a},\ x_3=\pmb{aa},\ x_4 =
 \pmb{aab},\ x_5=\pmb{aabaa},\ A_1=A_2=A_3=S,\ A_4=T$, and $A_5=\lambda$.
 \begin{center}\begin{tabular}{r@{ $\Rightarrow$ }ll}
@@ -705,7 +705,7 @@ $Q_G =$ & $\{\langle z\rangle\ |\ z=\lambda\vee z\in\Omega\vee\exists y\in
 $q_{0_G} =$ & $\{\langle S\rangle\}$ \\
 $F_G =$ & $\{\langle\lambda\rangle\}$,
 \end{tabular}\end{center}
-and $\delta_G$ is comprised of (normal) transitions of the form
+and $\delta_G$ is \textcolor{red}{comprised of} (normal) transitions of the form
 \begin{center}\begin{tabular}{r@{ }l}
 $\delta_G(\langle w\rangle,\pmb{a}) =$ & $\{\langle x\rangle\ |\ \exists y\in(\Omega
 	\cup\Sigma)^*,\exists B\in\Omega\ni w=\pmb{a}x \wedge B\rightarrow yw$ \\
@@ -1329,7 +1329,7 @@ Theorem \ref{thm-8.8} below.
 
 As with context-free and context-sensitive languages, the contracting
 productions can be limited to $Z\rightarrow\lambda$, where $Z$ is the start
-symbol. This is only necessary if $\lambda\in L$; if $\lambda\not in L$, there
+symbol. This is only necessary if $\lambda\in L$; if $\lambda\textcolor{red}{\not in} L$, there
 need be no contracting productions at all. We wish to show how to produce a
 right-linear grammar with no more than one contracting production. By relying on the
 existence of the normal form described in Theorem \ref{thm-8.7}, this can be done without

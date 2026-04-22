@@ -24,7 +24,7 @@ for the type 2 languages, but further enhancements in the capabilities
 of the automaton model are necessary to achieve the generality
 inherent in type 0 and type 1 languages. A (seemingly) minor
 modification will be all that is required. \emph{Turing machines} are
-comprised of the familiar components that have already been used
+\textcolor{red}{comprised of} the familiar components that have already been used
 in previous classes of automata. As with the earlier constructions,
 the heart of the device is a finite-state control, which reacts to
 information scanned by the tape head(s).  Like finite-state transducers
@@ -187,7 +187,7 @@ this machine, in which the halt state is not explicitly shown. Much like the
 straight start state arrow that denotes where the automaton is entered, the new
 straight arrows show how the machine is left. This notation is especially
 appropriate for \emph{\Index{submachines}}. As with complex programs, a complex
-Turing machine may be comprised of several submodules. Control may be passed to
+Turing machine may be \textcolor{red}{comprised of} several submodules. Control may be passed to
 a submachine, which manipulates the input tape until it halts. Control may then
 be passed to a second submachine, which then further modifies the tape contents.
 When this submachine would halt, control may be passed on to a third submachine,
@@ -746,7 +746,7 @@ would then move on to the next candidate. Since there may be a countable number
 of sequences to try, this process may never end. This is not really a problem,
 since if a sequence resulting in a $\pmb{Y}$ exists, it will eventually be found
 and tried, and the machine will halt and accept the word. If no such sequence
-resulting in a $\pmb{Y}$ exists, and there are an infinite number of negative
+resulting in a $\pmb{Y}$ exists, and there \textcolor{red}{are} an infinite number of negative
 attempts to be checked, the machine will never halt. By our original definition
 of acceptance, this will result in the word being rejected, which is the desired
 result.
@@ -1656,7 +1656,7 @@ to exactly which of these special productions it should contain.
 As will be seen in Chapter \ref{ch-12}, it \emph{is} possible to determine which words
 are accepted (and which are rejected) by linear bounded automata. Unlike
 unrestricted Turing machines, there is only a finite span of tape upon which
-symbols can be placed. Furthermore, there are only a finite number of characters
+symbols can be placed. Furthermore, there \textcolor{red}{are} only a finite number of characters
 that can appear in those cells, a finite number of positions the tape head can
 be in, and a finite number of states to consider. The limited number of
 configurations makes it possible to determine exactly which words of a given
@@ -1675,7 +1675,7 @@ linear bounded languages. That is, $\LSIG=\OSIG$.
 \emph{Proof.} The proof follows immediately from Theorems \ref{thm-11.3} and \ref{thm-11.5}.
 \end{cor}
 
-\section{Closure Properties and The Hierarchy Theorem}\label{sec-11.4}
+\section{Closure Properties and \textcolor{red}{The} Hierarchy Theorem}\label{sec-11.4}
 
 Finally, we consider some of the closure properties of the classes of languages
 explored in this chapter. Since $\TSIG=\ZSIG$ we may use either cognitive or
