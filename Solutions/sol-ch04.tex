@@ -29,7 +29,7 @@ subsets from $\wp(S)$ are disconnected.
 \end{array}
 \]
 
-\item Figure~4.25(c): start state $\{r_0\}$, final states $\{r_0\}$ and
+\item Figure~4.25(c): start state $\{r_0,r_1\}$, final states $\{r_0\}$ and
 $\{r_0,r_1\}$.
 \[
 \begin{array}{c|ccc}
@@ -53,12 +53,12 @@ $\{r_0,r_1\}$.
 \end{array}
 \]
 
-\item Figure~4.25(e): start state $\{s_1\}$, final state $\{s_1,s_2\}$.
+\item Figure~4.25(e): start state $\{s_1,s_2\}$, final state $\{s_1,s_2\}$.
 \[
 \begin{array}{c|ccc}
  & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
-\{s_1\} & \{s_1,s_2\} & \emptyset & \emptyset\\
 \{s_1,s_2\} & \{s_1,s_2\} & \{s_1\} & \emptyset\\
+\{s_1\} & \{s_1,s_2\} & \emptyset & \emptyset\\
 \emptyset & \emptyset & \emptyset & \emptyset
 \end{array}
 \]
@@ -69,9 +69,9 @@ start state $\{s_0\}$ and final state $\{s_0,s_1,s_3\}$.
 \begin{array}{c|ccc}
  & \pmb{a} & \pmb{b} & \pmb{c}\\\hline
 \{s_0\} & \{s_0,s_1\} & \emptyset & \emptyset\\
-\{s_0,s_1\} & \{s_0,s_1\} & \{s_2\} & \emptyset\\
+\{s_0,s_1\} & \{s_0,s_1\} & \emptyset & \{s_2\}\\
 \{s_2\} & \emptyset & \emptyset & \{s_0,s_1,s_3\}\\
-\{s_0,s_1,s_3\} & \{s_0,s_1\} & \{s_2\} & \emptyset\\
+\{s_0,s_1,s_3\} & \{s_0,s_1\} & \emptyset & \{s_2\}\\
 \emptyset & \emptyset & \emptyset & \emptyset
 \end{array}
 \]
@@ -93,20 +93,16 @@ start state $\{s_0\}$ and final state $\{s_0,s_1,s_3\}$.
 \item Consider Example~4.17, that is, the automaton $E$ of Figure~4.23.
 Reading the figure gives
 \[
-E=\langle\{\pmb{a},\pmb{b}\},\{s_1,s_2,s_3\},\{s_1\},\delta_{\lambda},\{s_2\}\rangle
+E=\langle\{\pmb{a},\pmb{b}\},\{s_1,s_2\},\{s_1\},\delta_{\lambda},\{s_2\}\rangle
 \]
 with ordinary transitions
 \[
 \delta_{\lambda}(s_1,\pmb{a})=\{s_1,s_2\},\qquad
-\delta_{\lambda}(s_1,\pmb{b})=\{s_3\},
+\delta_{\lambda}(s_1,\pmb{b})=\emptyset,
 \]
 \[
 \delta_{\lambda}(s_2,\pmb{a})=\{s_1\},\qquad
 \delta_{\lambda}(s_2,\pmb{b})=\{s_1\},
-\]
-\[
-\delta_{\lambda}(s_3,\pmb{a})=\emptyset,\qquad
-\delta_{\lambda}(s_3,\pmb{b})=\{s_1\},
 \]
 and one $\lambda$-transition $\delta_{\lambda}(s_1,\lambda)=\{s_2\}$.
 
@@ -115,50 +111,39 @@ and one $\lambda$-transition $\delta_{\lambda}(s_1,\lambda)=\{s_2\}$.
   $\lambda$-closures are:
   \[
     \Lambda(s_1)=\{s_1,s_2\},\qquad
-    \Lambda(s_2)=\{s_2\},\qquad
-    \Lambda(s_3)=\{s_3\}.
+    \Lambda(s_2)=\{s_2\}.
   \]
-  Since $\lambda\in L(E)$, Definition~4.9 adds the isolated start state $q_0$
-  and also makes $q_0$ final.  Thus
+  Using the $\lambda$-closure of the original start state, the corresponding
+  $\lambda$-free NDFA has start set $\{s_1,s_2\}$. Thus
   \[
-  E^{\sigma}_{\lambda}=\langle\{\pmb{a},\pmb{b}\},\{q_0,s_1,s_2,s_3\},\{q_0,s_1\},
-  \delta^{\sigma}_{\lambda},\{q_0,s_2\}\rangle
+  E^{\sigma}_{\lambda}=\langle\{\pmb{a},\pmb{b}\},\{s_1,s_2\},\{s_1,s_2\},
+  \delta^{\sigma}_{\lambda},\{s_2\}\rangle
   \]
   with
   \[
-  \delta^{\sigma}_{\lambda}(q_0,\pmb{a})=
-  \delta^{\sigma}_{\lambda}(q_0,\pmb{b})=\emptyset,
-  \]
-  \[
   \delta^{\sigma}_{\lambda}(s_1,\pmb{a})=\{s_1,s_2\},\qquad
-  \delta^{\sigma}_{\lambda}(s_1,\pmb{b})=\{s_1,s_2,s_3\},
+  \delta^{\sigma}_{\lambda}(s_1,\pmb{b})=\{s_1,s_2\},
   \]
   \[
   \delta^{\sigma}_{\lambda}(s_2,\pmb{a})=\{s_1,s_2\},\qquad
-  \delta^{\sigma}_{\lambda}(s_2,\pmb{b})=\{s_1,s_2\},
-  \]
-  \[
-  \delta^{\sigma}_{\lambda}(s_3,\pmb{a})=\emptyset,\qquad
-  \delta^{\sigma}_{\lambda}(s_3,\pmb{b})=\{s_1,s_2\}.
+  \delta^{\sigma}_{\lambda}(s_2,\pmb{b})=\{s_1,s_2\}.
   \]
 
   \item \emph{Convert this NDFA into a DFA (Definition~4.5).}  The full
-  deterministic machine has $2^4=16$ subset states, but only three are reachable
-  from the start set $\{q_0,s_1\}$:
+  deterministic machine has $2^2=4$ subset states, but only one is reachable
+  from the start set $\{s_1,s_2\}$:
   \[
-  Q_0=\{q_0,s_1\},\qquad Q_1=\{s_1,s_2\},\qquad Q_2=\{s_1,s_2,s_3\}.
+  Q_0=\{s_1,s_2\}.
   \]
-  All three are final, because $q_0\in Q_0$ and $s_2\in Q_1\cap Q_2$. Their
+  This state is final because it contains $s_2$. Its
   transitions are
   \[
   \begin{array}{c|cc}
    & \pmb{a} & \pmb{b}\\\hline
-  Q_0 & Q_1 & Q_2\\
-  Q_1 & Q_1 & Q_2\\
-  Q_2 & Q_1 & Q_2
+  Q_0 & Q_0 & Q_0
   \end{array}
   \]
-  so the connected part of the DFA is a 3-state machine.
+  so the connected part of the DFA is a one-state accepting machine.
 \end{enumerate}
 
 %% 4.3
@@ -464,7 +449,7 @@ immediately followed by $\pmb{c}$.
     \Lambda(s_1)=\{s_1\},\qquad
     \Lambda(s_2)=\{s_0,s_2\}.
   \]
-  Since $\lambda\not in L(A_\lambda)$, Definition~4.9 adds $q_0$ as an extra
+  Since $\lambda\notin L(A_\lambda)$, Definition~4.9 adds $q_0$ as an extra
   disconnected start state but does not make it final.  Thus
   \[
     A^{\sigma}_\lambda=
@@ -547,7 +532,7 @@ For an NDFA, a word $w$ may follow \emph{multiple} paths, some ending in final
 states and some not.  Under Definition~4.4, $w\in L(A)$ iff \emph{at least one}
 path ends in a final state.  If we complement the final states, a word is
 accepted by the modified machine iff at least one path ends in a \emph{formerly
-nonfinal} state.  This is \emph{not} the same as $w\not in L(A)$, because a word
+nonfinal} state.  This is \emph{not} the same as $w\notin L(A)$, because a word
 can simultaneously have a path to a (formerly) final state and a path to a
 (formerly) nonfinal state; the complemented machine would accept it, but it was
 already in $L(A)$.
@@ -556,7 +541,7 @@ already in $L(A)$.
 $F=\{s_1\}$, $\delta(s_0,\pmb{a})=\{s_0,s_1\}$, $\delta(s_1,\pmb{a})=\emptyset$.
 Then $\pmb{a}\in L(A)$ because $s_1\in\delta(s_0,\pmb{a})$.  After complementing,
 $F'=\{s_0\}$, and $\pmb{a}$ is still accepted (via the path $s_0\to s_0\in F'$),
-yet $\pmb{a}\not in\Sigma^*\setminus L(A)$ since $\pmb{a}\in L(A)$.  Hence the
+yet $\pmb{a}\notin\Sigma^*\setminus L(A)$ since $\pmb{a}\in L(A)$.  Hence the
 complement-of-final-states trick fails for NDFAs.
 
 %% 4.9
@@ -574,7 +559,7 @@ $A'=\langle\Sigma,S',q_0,\delta',\{q_f\}\rangle$ where:
   \item For all $s\in S$ and $\pmb{a}\in\Sigma$: $\delta'(s,\pmb{a})=\delta(s,\pmb{a})$.
   \item $\delta'(f,\lambda)\ni q_f$ for every $f\in F$ ($\lambda$-transitions
         from each old final state to the new unique final state $q_f$).
-  \item $\delta'(q_f,\pmb{a})=\emptyset$ for all $\pmb{a}$ (and no transitions
+  \item $\delta'(q_f,\pmb{a})=\emptyset$ for all $\pmb{a}$ (and no $\lambda$-transitions
         out of $q_f$).
 \end{itemize}
 
@@ -729,8 +714,8 @@ or by $A_2$, because the $\lambda$-transitions route the computation into one
 of the two machines and collect the result at $q_f$.
 
 %% 4.13
-\item \textbf{Example of NDFA $A$ such that $A^d$ is not connected, not reduced,
-but is minimal.}
+\item \textbf{Examples of three NDFAs such that the corresponding $A^d$ is
+respectively not connected, not reduced, and minimal.}
 
 \textbf{(a) $A^d$ is not connected.}  Any NDFA in which some subsets of states
 are never reachable from the start set under the transition function will
@@ -823,7 +808,7 @@ final so that the empty word is still accepted.
   no-$\lambda$ NDFA with exactly one start state and exactly one final state.
   But Exercise~4.23 shows that this can fail when $\lambda$ is in the language.
   So the correct conclusion is: one start state and one final state can be
-  forced under the hypothesis $\lambda\not in L$, but not uniformly in general.
+  forced under the hypothesis $\lambda\notin L$, but not uniformly in general.
 \end{enumerate}
 
 %% 4.16
@@ -1054,11 +1039,11 @@ DFA, not to an arbitrary nondeterministic machine.
 
 %% 4.22
 \item \textbf{Later no-$\lambda$ exercise: given an NDFA $A$ without $\lambda$-transitions
-with $\lambda\not in L(A)$, construct $A''$ with exactly one start state, one
+with $\lambda\notin L(A)$, construct $A''$ with exactly one start state, one
 final state, and $L(A'')=L(A)$.}
 
 \textbf{Construction.}  Let $A=\langle\Sigma,S,S_0,\delta,F\rangle$ with
-$\lambda\not in L(A)$, so $S_0\cap F=\emptyset$.  Define
+$\lambda\notin L(A)$, so $S_0\cap F=\emptyset$.  Define
 \[
 A''=\langle \Sigma,  S\cup\{q_0,q_f\},  \{q_0\},  \delta'',  \{q_f\}\rangle
 \]
@@ -1088,7 +1073,7 @@ where $q_0$ and $q_f$ are new states and:
 This machine has exactly one start state ($q_0$) and exactly one final state
 ($q_f$).
 
-\textbf{Why this preserves the language.}  Since $\lambda\not in L(A)$, every
+\textbf{Why this preserves the language.}  Since $\lambda\notin L(A)$, every
 accepted word has positive length.  Suppose
 $w=\pmb{a}_1\cdots \pmb{a}_n\in L(A)$.  Then there is a path in $A$ from some
 start state to some final state that reads all of $w$.  In $A''$, use the same

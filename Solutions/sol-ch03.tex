@@ -11,7 +11,9 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 
 \textit{Base} ($n=0$): $\mu(\DBAR(s,\lambda))=\mu(s)=\DBAR_{R_L}(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: $x=ya$, $|y|=n$. Using Definition 1.11iii at the beginning and end, together with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
+\textit{Step}: Let $x=ya$ with $|y|=n$. This is the tail-recursive form of
+Definition~1.11iii. Using that definition at the beginning and end, together
+with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
 \[
 \mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\delta_{R_L}(\mu(\DBAR(s,y)),a)=\delta_{R_L}(\DBAR_{R_L}(\mu(s),y),a)=\DBAR_{R_L}(\mu(s),ya).
 \]
@@ -22,7 +24,7 @@ $\square$
 
 \textit{Base} ($x=\lambda$): $\DBAR_{E_A}([s]_{E_A},\lambda)=[s]_{E_A}=[\DBAR(s,\lambda)]_{E_A}$. \checkmark
 
-\textit{Step}: $x=ya$. By Definition 1.11iii,
+\textit{Step}: Let $x=ya$. By the tail-recursive clause in Definition~1.11iii,
 \[
 \DBAR_{E_A}([s]_{E_A},ya)=\delta_{E_A}(\DBAR_{E_A}([s]_{E_A},y),a)=\delta_{E_A}([\DBAR(s,y)]_{E_A},a)=[\delta(\DBAR(s,y),a)]_{E_A}=[\DBAR(s,ya)]_{E_A}. \quad\square
 \]
@@ -192,7 +194,7 @@ $(\forall k\in\NN)(E_{m+k,A}=E_{mA})$. $\square$
 
 \textit{Base}: $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: $x=ya$. By Definition 1.11iii,
+\textit{Step}: Let $x=ya$. By the tail-recursive clause in Definition~1.11iii,
 \[
 \mu(\DBAR_A(s,ya))
 =\mu(\delta_A(\DBAR_A(s,y),a))
@@ -744,9 +746,11 @@ for every $z$. Therefore the states $\DBAR_B(s_{0B},x)$ and
 $\DBAR_B(s_{0B},y)$ have the same future language in $B$. Because $B$ is
 reduced, these states must be equal. Hence $\psi$ is well defined.
 
-\item First,
+\item First, take the candidate string for the start state to be
+$x_{s_{0A}}=\lambda$. Then
 \[
-\psi(s_{0A})=\DBAR_B(s_{0B},\lambda)=s_{0B}.
+\psi(s_{0A})=\DBAR_B(s_{0B},x_{s_{0A}})
+=\DBAR_B(s_{0B},\lambda)=s_{0B}.
 \]
 Now let $s\in S_A$ and $a\in\Sigma$. Since
 \[
