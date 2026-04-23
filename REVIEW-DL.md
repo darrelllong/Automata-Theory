@@ -9,3 +9,5 @@ When you finish an item, prefix it with [DONE] so we both know it is finished.
 [DONE] 4. Add RESPONSE-JLC.md and in it put a list of all of the \textcolor{red} you added to the book, with a polite note: "Please, prof. Carroll, review where I may have found typos in your book. I took the liberty of marking them in red. I hope Tina is enjoying her CyberTruck and is street racing the Posches."
 
 5. Make \Appendix{Programs} at the end of the book, and in it put (i) each original Pascal program, and an equivalent (not some hack): (ii) Python 3 program, (iii) Rust program
+
+6. Replace README with a proper README.md that describes the project (revision of the original book, and addition of the solutions manual); how to build it.
