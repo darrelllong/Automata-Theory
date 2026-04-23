@@ -962,7 +962,7 @@ $z=\pmb{aa}$. Since $\overline{\xi}(\pmb{bb})=\overline{\xi}(\pmb{ba}) =
 \[ \overline{\xi^{-1}} (\pmb{aa})=\{\pmb{bb},\pmb{ba},\pmb{ab},\pmb{aa}\}
 \text{. Note that } \overline{\xi^{-1}} (\pmb{ba})=\emptyset. \]
 
-For $L=\{x \in\{\pmb{a}\}^*|\ |x|\equiv 0\bmod{3}\},\ 
+For $L=\{x \in\{\pmb{a}\}^*|\ |x|\equiv 0\bmod{3}\},\
 \overline{\xi^{-1}} (L)=\{x\in\{\pmb{a},\pmb{b}\}^*|\ |x|\equiv 0\bmod{3}\}$.
 Note that this second set is definitely larger, since it also contains words
 with $\pmb{b}$s in them.
@@ -990,7 +990,7 @@ $F^\psi = F$
 \end{tabular}
 \end{center}
 and $\delta^\psi$ is defined by
-\[ \delta^\psi(s,\pmb{a})=\DBAR(s,\psi(\pmb{a}))\ 
+\[ \delta^\psi(s,\pmb{a})=\DBAR(s,\psi(\pmb{a}))\
 		\forall s \in S, \forall \pmb{a} \in \Sigma \]
 Induction can be used to show $\overline{\delta^\psi}(s,x)=\DBAR(s,\PBAR(x))\forall s \in S,
 \forall x \in \Sigma^*$, and in particular $\overline{\delta^{\psi}}(s_0,x)=\DBAR(s_0,\PBAR(x))$
@@ -1532,7 +1532,7 @@ automaton accepting $B(L)$.
 \item Let $\Sigma$ be an alphabet. Define
 $M(L)=\{z\  \mid (\exists x \in L)(\exists y \in \Sigma^+)(z = xy)\}$.
 \begin{enumerate}
-\item Given an automaton accepting $L$\textcolor{red}{. describe} how to modify it to produce an
+\item Given an automaton accepting $L$, describe how to modify it to produce an
 automaton accepting $M(L)$.
 \item Prove that your construction behaves as advertised.
 \item Argue that \DSIG\ is closed under the operator $M$.
