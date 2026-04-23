@@ -10,6 +10,6 @@ When you finish an item, prefix it with [DONE] so we both know it is finished.
 
 [DONE] 5. Make \Appendix{Programs} at the end of the book, and in it put (i) each original Pascal program, and an equivalent (not some hack): (ii) Python 3 program, (iii) Rust program
 
-6. Replace README with a proper README.md that describes the project (revision of the original book, and addition of the solutions manual); how to build it.
+[DONE] 6. Replace README with a proper README.md that describes the project (revision of the original book, and addition of the solutions manual); how to build it.
 
-7. The programs should be individually listed in the table of contents.
+[DONE] 7. The programs should be individually listed in the table of contents.

@@ -24,5 +24,11 @@ Here is a summary of the changes made in response to the items in
    the same automata, transition tables, start states, final states, and input
    conventions rather than replacing them with unrelated examples.
 
-The remaining open item is to replace the README with a project README that
-describes the book revision, the solutions manual, and the build process.
+6. I replaced the original stub `README` with `README.md`.  The new README
+   describes the project, the book revision, the solutions manual, the source
+   layout, the LaTeX build requirements, and the `make` targets for building
+   and cleaning the generated files.
+
+7. I changed the Programs appendix entries from unnumbered sections to regular
+   sections so that each program is listed individually in the table of
+   contents.
