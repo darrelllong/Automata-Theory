@@ -1,0 +1,419 @@
+This appendix collects the Pascal programs and program fragments that appear in
+the text, together with direct Python 3 and Rust translations.  The translations
+preserve the same automata, transition tables, start states, final states, and
+input conventions as the Pascal originals.
+
+\section*{State Transition Function}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+type
+   Sigma = 'a'..'c';
+   State = (s0,s1,s2);
+var
+   TransitionTable=array[State,Sigma] of State;
+
+function Delta(S:State;A:Sigma):State;
+begin
+   Delta := TransitionTable [S, A]
+end; {Delta}
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+from enum import Enum
+from collections.abc import Mapping
+
+class State(Enum):
+    S0 = 0
+    S1 = 1
+    S2 = 2
+
+TransitionTable = Mapping[tuple[State, str], State]
+
+def delta(transition_table: TransitionTable,
+          state: State,
+          letter: str) -> State:
+    return transition_table[(state, letter)]
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+enum State {
+    S0,
+    S1,
+    S2,
+}
+
+fn state_index(state: State) -> usize {
+    match state {
+        State::S0 => 0,
+        State::S1 => 1,
+        State::S2 => 2,
+    }
+}
+
+fn sigma_index(letter: char) -> usize {
+    match letter {
+        'a' => 0,
+        'b' => 1,
+        'c' => 2,
+        _ => panic!("letter outside Sigma"),
+    }
+}
+
+fn delta(transition_table: &[[State; 3]; 3],
+         state: State,
+         letter: char) -> State {
+    transition_table[state_index(state)][sigma_index(letter)]
+}
+\end{verbatim}
+
+\section*{Extended State Transition Function}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+const
+MaxWordLength = 255; {an arbitrary constraint}
+type
+   Word = record
+      Length :0..MaxWordLength;
+      Letters:packed array [0..MaxWordLength] of Sigma
+   end; {Word}
+function DeltaBar(S:State; W:Word) : State;
+{uses the function Delta defined previously}
+var
+   T:State;
+   I:0..MaxWordLength;
+begin
+   T := S;
+   if W.Length>0
+      then
+         for I := 1 to W.Length do
+            T := Delta(T, W.Letters[I]);
+   DeltaBar := T
+end; {DeltaBar}
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+MAX_WORD_LENGTH = 255
+
+def delta_bar(transition_table: TransitionTable,
+              state: State,
+              word: str) -> State:
+    if len(word) > MAX_WORD_LENGTH:
+        raise ValueError("word exceeds MaxWordLength")
+    current = state
+    for letter in word:
+        current = delta(transition_table, current, letter)
+    return current
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+const MAX_WORD_LENGTH: usize = 255;
+
+fn delta_bar(transition_table: &[[State; 3]; 3],
+             state: State,
+             word: &str) -> State {
+    if word.chars().count() > MAX_WORD_LENGTH {
+        panic!("word exceeds MaxWordLength");
+    }
+    let mut current = state;
+    for letter in word.chars() {
+        current = delta(transition_table, current, letter);
+    }
+    current
+}
+\end{verbatim}
+
+\section*{Acceptance Test}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+function Accept(W:Word):Boolean;
+{returns TRUE iff W is accepted by the DFA}
+begin
+   Accept := DeltaBar(s0, W) in FinalState
+end; {Accept}
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+from collections.abc import Set
+
+def accept(transition_table: TransitionTable,
+           final_state: Set[State],
+           word: str) -> bool:
+    return delta_bar(transition_table, State.S0, word) in final_state
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+fn accept(transition_table: &[[State; 3]; 3],
+          final_state: &[State],
+          word: &str) -> bool {
+    final_state.contains(&delta_bar(transition_table, State::S0, word))
+}
+\end{verbatim}
+
+\section*{DFA Emulator}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+program DFA(input, output);
+{This program tests whether input strings are accepted by the     }
+{automaton displayed in Figure 1.9. The program expects input from}
+{the keyboard, delimited by a carriage return. No error checking  }
+{is done; letters outside ['a' .. 'c'] cause a range error.       }
+type
+    Sigma = 'a'..'c';
+    State = (s0, s1, s2);
+var
+    TransitionTable : array [State, Sigma] of State;
+    FinalState      : set of State;
+function Delta(s : State; c : Sigma) : State;
+begin
+    Delta := TransitionTable[s,c]
+end; { Delta }
+function DeltaBar(s : State) : State;
+var
+    t : State;
+begin
+    t := s;
+    { Step through the keyboard input one letter at a time. }
+    while not eoln(input) do
+        begin
+            t := Delta(t, input^);
+            get(input)
+        end;
+    DeltaBar := t
+end; { DeltaBar }
+function Accept : boolean;
+begin
+    Accept := DeltaBar(s0) in FinalState
+end; { Accept }
+procedure Initialize;
+begin
+    FinalState := [s2];
+    { Set up the state transition table. }
+    TransitionTable [s0,'a'] := s1; TransitionTable [s0,'b'] := s0;
+    TransitionTable [s0,'c'] := s2; TransitionTable [s1,'a'] := s2;
+    TransitionTable [s1,'b'] := s0; TransitionTable [s1,'c'] := s0;
+    TransitionTable [s2,'a'] := s0; TransitionTable [s2,'b'] := s0;
+    TransitionTable [s2,'c'] := s1;
+end; { Initialize }
+begin { DFA }
+    Initialize;
+    if Accept then
+        writeln(output, 'Accepted')
+    else
+        writeln(output, 'Rejected')
+end. { DFA }
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+from enum import Enum
+import sys
+
+class State(Enum):
+    S0 = 0
+    S1 = 1
+    S2 = 2
+
+TRANSITION_TABLE = {
+    (State.S0, "a"): State.S1,
+    (State.S0, "b"): State.S0,
+    (State.S0, "c"): State.S2,
+    (State.S1, "a"): State.S2,
+    (State.S1, "b"): State.S0,
+    (State.S1, "c"): State.S0,
+    (State.S2, "a"): State.S0,
+    (State.S2, "b"): State.S0,
+    (State.S2, "c"): State.S1,
+}
+FINAL_STATE = {State.S2}
+
+def delta(state: State, letter: str) -> State:
+    return TRANSITION_TABLE[(state, letter)]
+
+def delta_bar(state: State, word: str) -> State:
+    current = state
+    for letter in word:
+        current = delta(current, letter)
+    return current
+
+def accept(word: str) -> bool:
+    return delta_bar(State.S0, word) in FINAL_STATE
+
+def main() -> None:
+    word = sys.stdin.readline().rstrip("\n")
+    print("Accepted" if accept(word) else "Rejected")
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+use std::io::{self, Read};
+
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+enum State {
+    S0,
+    S1,
+    S2,
+}
+
+fn delta(state: State, letter: char) -> State {
+    match (state, letter) {
+        (State::S0, 'a') => State::S1,
+        (State::S0, 'b') => State::S0,
+        (State::S0, 'c') => State::S2,
+        (State::S1, 'a') => State::S2,
+        (State::S1, 'b') => State::S0,
+        (State::S1, 'c') => State::S0,
+        (State::S2, 'a') => State::S0,
+        (State::S2, 'b') => State::S0,
+        (State::S2, 'c') => State::S1,
+        _ => panic!("letter outside ['a'..'c']"),
+    }
+}
+
+fn delta_bar(state: State, word: &str) -> State {
+    let mut current = state;
+    for letter in word.chars() {
+        current = delta(current, letter);
+    }
+    current
+}
+
+fn accept(word: &str) -> bool {
+    delta_bar(State::S0, word) == State::S2
+}
+
+fn main() {
+    let mut input = String::new();
+    io::stdin().read_to_string(&mut input).unwrap();
+    let word = input.lines().next().unwrap_or("");
+    if accept(word) {
+        println!("Accepted");
+    } else {
+        println!("Rejected");
+    }
+}
+\end{verbatim}
+
+\section*{Hypothetical Use of HALT}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+program CHECK;
+{ envisioned usage of HALT }
+   function HALT: boolean;
+   begin
+      { marvelous code goes here }
+   end { HALT }
+
+begin { CHECK }
+if HALT then
+   writeln('The program in file data.p will halt')
+else
+   writeln('The program in file data.p will not halt')
+end { CHECK }.
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+def halt() -> bool:
+    # Hypothetical oracle from the proof; no such total function exists.
+    raise NotImplementedError("marvelous code goes here")
+
+def main() -> None:
+    if halt():
+        print("The program in file data.p will halt")
+    else:
+        print("The program in file data.p will not halt")
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+fn halt() -> bool {
+    // Hypothetical oracle from the proof; no such total function exists.
+    unimplemented!("marvelous code goes here")
+}
+
+fn main() {
+    if halt() {
+        println!("The program in file data.p will halt");
+    } else {
+        println!("The program in file data.p will not halt");
+    }
+}
+\end{verbatim}
+
+\section*{Contradictory Test Program}
+
+\subsection*{Original Pascal}
+\begin{verbatim}
+program TEST;
+{ to be placed in the file data.p }
+var FOREVER: boolean;
+   function HALT: boolean;
+   begin
+      { marvelous code goes here }
+   end; { HALT }
+
+begin { TEST }
+FOREVER := false;
+if HALT then
+   repeat
+      FOREVER := false;
+   until FOREVER
+else
+   writeln('This program halts')
+end { TEST }.
+\end{verbatim}
+
+\subsection*{Python 3}
+\begin{verbatim}
+def halt() -> bool:
+    # Hypothetical oracle from the proof; no such total function exists.
+    raise NotImplementedError("marvelous code goes here")
+
+def main() -> None:
+    forever = False
+    if halt():
+        while not forever:
+            forever = False
+    else:
+        print("This program halts")
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+
+\subsection*{Rust}
+\begin{verbatim}
+fn halt() -> bool {
+    // Hypothetical oracle from the proof; no such total function exists.
+    unimplemented!("marvelous code goes here")
+}
+
+fn main() {
+    let mut forever = false;
+    if halt() {
+        while !forever {
+            forever = false;
+        }
+    } else {
+        println!("This program halts");
+    }
+}
+\end{verbatim}

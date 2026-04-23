@@ -23,6 +23,7 @@
 \usepackage[hidelinks,hyperindex]{hyperref}
 
 \newcommand{\Index}[1]{#1\index{#1}}
+\newcommand{\Appendix}[1]{\appendix\chapter{#1}}
 
 \DeclareMathOperator{\THETA}{\Theta}
 \DeclareMathOperator{\ETA}{\eta}
@@ -104,6 +105,9 @@ with an Introduction to Formal Languages}
 \include{ch-10}
 \include{ch-11}
 \include{ch-12}
+
+\Appendix{Programs}
+\input{appendix-programs}
 
 \cleardoublepage
 \phantomsection
