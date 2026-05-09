@@ -11,11 +11,12 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 
 \textit{Base} ($n=0$): $\mu(\DBAR(s,\lambda))=\mu(s)=\DBAR_{R_L}(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: Let $x=ya$ with $|y|=n$. This is the tail-recursive form of
+\textit{Step}: Let $x=ay$ with $|y|=n$. This is the tail-recursive form of
 Definition~1.11iii. Using that definition at the beginning and end, together
-with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
+with the induction hypothesis for the state $\delta(s,a)$ and the string $y$,
+and with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
 \[
-\mu(\DBAR(s,ya))=\mu(\delta(\DBAR(s,y),a))=\delta_{R_L}(\mu(\DBAR(s,y)),a)=\delta_{R_L}(\DBAR_{R_L}(\mu(s),y),a)=\DBAR_{R_L}(\mu(s),ya).
+\mu(\DBAR(s,ay))=\mu(\DBAR(\delta(s,a),y))=\DBAR_{R_L}(\mu(\delta(s,a)),y)=\DBAR_{R_L}(\delta_{R_L}(\mu(s),a),y)=\DBAR_{R_L}(\mu(s),ay).
 \]
 $\square$
 
@@ -24,9 +25,9 @@ $\square$
 
 \textit{Base} ($x=\lambda$): $\DBAR_{E_A}([s]_{E_A},\lambda)=[s]_{E_A}=[\DBAR(s,\lambda)]_{E_A}$. \checkmark
 
-\textit{Step}: Let $x=ya$. By the tail-recursive clause in Definition~1.11iii,
+\textit{Step}: Let $x=ay$. By the tail-recursive clause in Definition~1.11iii,
 \[
-\DBAR_{E_A}([s]_{E_A},ya)=\delta_{E_A}(\DBAR_{E_A}([s]_{E_A},y),a)=\delta_{E_A}([\DBAR(s,y)]_{E_A},a)=[\delta(\DBAR(s,y),a)]_{E_A}=[\DBAR(s,ya)]_{E_A}. \quad\square
+\DBAR_{E_A}([s]_{E_A},ay)=\DBAR_{E_A}(\delta_{E_A}([s]_{E_A},a),y)=\DBAR_{E_A}([\delta(s,a)]_{E_A},y)=[\DBAR(\delta(s,a),y)]_{E_A}=[\DBAR(s,ay)]_{E_A}. \quad\square
 \]
 
 %%------------------------------------------------------------
@@ -194,15 +195,15 @@ $(\forall k\in\NN)(E_{m+k,A}=E_{mA})$. $\square$
 
 \textit{Base}: $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: Let $x=ya$. By the tail-recursive clause in Definition~1.11iii,
+\textit{Step}: Let $x=ay$. By the tail-recursive clause in Definition~1.11iii,
 \[
-\mu(\DBAR_A(s,ya))
-=\mu(\delta_A(\DBAR_A(s,y),a))
-=\delta_B(\mu(\DBAR_A(s,y)),a)
-=\delta_B(\DBAR_B(\mu(s),y),a)
-=\DBAR_B(\mu(s),ya),
+\mu(\DBAR_A(s,ay))
+=\mu(\DBAR_A(\delta_A(s,a),y))
+=\DBAR_B(\mu(\delta_A(s,a)),y)
+=\DBAR_B(\delta_B(\mu(s),a),y)
+=\DBAR_B(\mu(s),ay),
 \]
-where the third equality is the homomorphism property, the fourth is the induction hypothesis, and the last is again Definition 1.11iii. $\square$
+where the third equality is the induction hypothesis, the fourth is the homomorphism property, and the last is again Definition 1.11iii. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $L(A)=L(B)$ for a homomorphism $\mu: A\to B$.}
@@ -948,7 +949,7 @@ This is well defined: every $R$-class has at least one representative $x\in\Sigm
 
 Now
 \[
-\mu([\lambda]_R)=[\lambda]_{R_L},
+\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_{R_L}=s_{0,R_L},
 \]
 so $\mu$ sends the start state of $A_R$ to the start state of $A_{R_L}$.
 Also, for any $a\in\Sigma$,
