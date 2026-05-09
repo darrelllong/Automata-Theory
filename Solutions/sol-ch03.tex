@@ -11,9 +11,11 @@ $\mu(s)=[s]_{R^M}$ (the $R^M$-class of state $s$, identified with an $R_L$-class
 
 \textit{Base} ($n=0$): $\mu(\DBAR(s,\lambda))=\mu(s)=\DBAR_{R_L}(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: Let $x=ay$ with $|y|=n$. This is the tail-recursive form of
-Definition~1.11iii. Using that definition at the beginning and end, together
-with the induction hypothesis for the state $\delta(s,a)$ and the string $y$,
+\textit{Step}: Let $x=ay$ where $a\in\Sigma$ is a single letter on the left and
+$y\in\Sigma^*$ is a string of length $n$ on the right. This is the
+tail-recursive form of Definition~1.11iii. Using that definition at the
+beginning and end, together with the induction hypothesis for the state
+$\delta(s,a)$ and the string $y$,
 and with the homomorphism property $\mu(\delta(t,a))=\delta_{R_L}(\mu(t),a)$,
 \[
 \mu(\DBAR(s,ay))=\mu(\DBAR(\delta(s,a),y))=\DBAR_{R_L}(\mu(\delta(s,a)),y)=\DBAR_{R_L}(\delta_{R_L}(\mu(s),a),y)=\DBAR_{R_L}(\mu(s),ay).
@@ -25,7 +27,9 @@ $\square$
 
 \textit{Base} ($x=\lambda$): $\DBAR_{E_A}([s]_{E_A},\lambda)=[s]_{E_A}=[\DBAR(s,\lambda)]_{E_A}$. \checkmark
 
-\textit{Step}: Let $x=ay$. By the tail-recursive clause in Definition~1.11iii,
+\textit{Step}: Let $x=ay$ where $a\in\Sigma$ is a single letter and
+$y\in\Sigma^*$ is the remaining string. By the tail-recursive clause in
+Definition~1.11iii,
 \[
 \DBAR_{E_A}([s]_{E_A},ay)=\DBAR_{E_A}(\delta_{E_A}([s]_{E_A},a),y)=\DBAR_{E_A}([\delta(s,a)]_{E_A},y)=[\DBAR(\delta(s,a),y)]_{E_A}=[\DBAR(s,ay)]_{E_A}. \quad\square
 \]
@@ -195,7 +199,9 @@ $(\forall k\in\NN)(E_{m+k,A}=E_{mA})$. $\square$
 
 \textit{Base}: $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$. \checkmark
 
-\textit{Step}: Let $x=ay$. By the tail-recursive clause in Definition~1.11iii,
+\textit{Step}: Let $x=ay$ where $a\in\Sigma$ is a single letter and
+$y\in\Sigma^*$ is the remaining string. By the tail-recursive clause in
+Definition~1.11iii,
 \[
 \mu(\DBAR_A(s,ay))
 =\mu(\DBAR_A(\delta_A(s,a),y))
@@ -949,7 +955,7 @@ This is well defined: every $R$-class has at least one representative $x\in\Sigm
 
 Now
 \[
-\mu(s_{0,R})=\mu([\lambda]_R)=[\lambda]_{R_L}=s_{0,R_L},
+s_{0,A_R}=\mu(s_{0,A_R})=\mu([\lambda]_R)=[\lambda]_{R_L}=s_{0,A_{R_L}},
 \]
 so $\mu$ sends the start state of $A_R$ to the start state of $A_{R_L}$.
 Also, for any $a\in\Sigma$,
