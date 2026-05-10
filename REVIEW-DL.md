@@ -13,3 +13,11 @@ When you finish an item, prefix it with [DONE] so we both know it is finished.
 [DONE] 6. Replace README with a proper README.md that describes the project (revision of the original book, and addition of the solutions manual); how to build it.
 
 [DONE] 7. The programs should be individually listed in the table of contents.
+
+[DONE] 8. Go through /Users/darrell/Documents/Books/Office\ Books/TheoryOfComputation\:FormalLanguages\,Automata\,andComplexity.pdf and look for things covered in that book that are not covered in our book.tex and then write a file SUGGESTED-TOPICS.md
+
+[DONE] 9.  Go through /Users/darrell/Documents/Books/Office\ Books/AbstractMachinesAndGrammars.pdf  and look for things covered in that book that are not covered in our book.tex and then append them to the file SUGGESTED-TOPICS.md
+
+[DONE] 10.  Go through /Users/darrell/Documents/Books/Office\ Books/ElementsOfTheTheoryOfComputation.pdf and look for things covered in that book that are not covered in our book.tex and then append them to the file SUGGESTED-TOPICS.md
+
+[DONE] 11. Make sure the topics in SUGGESTED-TOPICS.md are not duplicates of each other.
