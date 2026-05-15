@@ -1,12 +1,9 @@
-[DONE] Exercises 3.1, 3.2, and 3.10:  CHANGE the presentation of the inductive step in
-each of these three exercises.  Do not use head recursion; use tail recursion,
-as defined in Definition 1.11iii.  Use the string ay, not ya.  That is,
-in this concatenation, the term on the LEFT is a single letter, and the term
-on the RIGHT is a string of length n.
+Exercise 3.34: In the equation directly after "Now", keep all four terms
+and all three equal signs.  Pay particular attention to the correct way to
+denote subscripts on these states, and remove the commas in the subscripts
+on the far left and far right.   For example, the term on the ultimate
+right will be s-sub-zero-sub-R-sub-L.  Refer to the last part of the proof
+of Theorem 2.2 for the correct notation to use.  The far last has a similar
+cascade of three subscripts (and no comma), as per Definition 2.5, with the
+generic 'Q' in Definition 2.5 replaced by the specific $A_R$ .
 
-[DONE] Exercise 3.34: In the equation directly after "Now", give explicit details
-justifying that one start state maps to the other start state.
-Add an equal sign to the left and one to the right, explicitly adding
-the correct variation of s-sub-zero on each side.  Pay particular attention to
-the correct way to denote subscripts on these states.  For example, the term
-on the ultimate right will be s-sub-zero-sub-R-sub-L.
