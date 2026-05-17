@@ -1,8 +1,13 @@
-[DONE] Exercise 3.34: In the equation directly after "Now", keep all four terms
-and all three equal signs.  Pay particular attention to the correct way to
-denote subscripts on these states, and remove the commas in the subscripts
-on the far left and far right.   For example, the term on the ultimate
-right will be s-sub-zero-sub-R-sub-L.  Refer to the last part of the proof
-of Theorem 2.2 for the correct notation to use.  The far last has a similar
-cascade of three subscripts (and no comma), as per Definition 2.5, with the
-generic 'Q' in Definition 2.5 replaced by the specific $A_R$ .
+Exercise 5.5e: fix the latex error in the last phrase, which currently has an 
+'i' with a slash through it.  It was intended to be the 'element of' symbol
+with a slash through it.  This same latex error is repeated in the exercises
+cited below.
+
+Search through all the exercises in all the solution chapters for the following
+latex error: ('i' with a slash through it followed by 'n') and replace it with
+the 'not an element of' math symbol.  Exercises 5.5e, 5.6f, 5.11, 5.19, 5.22,
+5.27, 5.43, 5.45, and 5.47 contain examples of this formatting error.
+
+5.47: Rework the inductive step using the exact definition in 1.11iii; that is,
+the string should be ax, where the first part (a) is a single letter and the
+remainder (x) is a string 
