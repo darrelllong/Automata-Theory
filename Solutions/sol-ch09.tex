@@ -531,7 +531,7 @@ $B\to\beta_i$.  Hence the two grammars generate the same language. \qed
 
 Let $|vx| = m$ where $1 \leq m \leq n$. Then $uv^i wx^i y = \pmb{d}^{p + (i-1)m}$. For $i=0$: $\pmb{d}^{p-m}$. For $i=2$: $\pmb{d}^{p+m}$.
 
-Choose $i = p+1$: the resulting string has length $p + pm = p(1+m)$. Since $p \geq 2$ and $m \geq 1$, $p(1+m)$ is composite (product of two integers each $\geq 2$). So $\pmb{d}^{p(1+m)} \not in P$, contradiction. \qed
+Choose $i = p+1$: the resulting string has length $p + pm = p(1+m)$. Since $p \geq 2$ and $m \geq 1$, $p(1+m)$ is composite (product of two integers each $\geq 2$). So $\pmb{d}^{p(1+m)} \notin P$, contradiction. \qed
 
 \item \textbf{Using nonregularity}: The language $P$ is a language over the
 single-letter alphabet $\{\pmb{d}\}$.  If $P$ were context free, then
@@ -604,7 +604,7 @@ For $i=2$: length $= 2^j + m$. We need $2^j + m$ to be a power of 2. But $2^j < 
 
 By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| = m \geq 1$. Then pumped strings have length $j^2 + (i-1)m$. For $i=2$: length $j^2 + m$. We need $j^2 + m$ to be a perfect square. Choose $j > n/2$ so that $n < 2j$; then $j^2 < j^2 + m \leq j^2 + n < j^2 + 2j + 1 = (j+1)^2$. So $j^2 + m$ is strictly between two consecutive perfect squares, hence not a perfect square. Contradiction. \qed
 
-\item \textbf{$\Phi'$ not context free via homomorphism}: Define $h: \{\pmb{b},\pmb{c},\pmb{d}\}^* \to \{\pmb{a}\}^*$ by $h(\pmb{c}) = \pmb{a}$ and $h(\pmb{b}) = h(\pmb{d}) = \lambda$. If $\Phi'$ were a CFL, then $h(\Phi') = \Phi$ would also be a CFL (CFLs are closed under homomorphism), contradicting part~(a). Hence $\Phi' \not in \CSIG$.
+\item \textbf{$\Phi'$ not context free via homomorphism}: Define $h: \{\pmb{b},\pmb{c},\pmb{d}\}^* \to \{\pmb{a}\}^*$ by $h(\pmb{c}) = \pmb{a}$ and $h(\pmb{b}) = h(\pmb{d}) = \lambda$. If $\Phi'$ were a CFL, then $h(\Phi') = \Phi$ would also be a CFL (CFLs are closed under homomorphism), contradicting part~(a). Hence $\Phi' \notin \CSIG$.
 
 \item \textbf{Direct Ogden's lemma proof}: Assume $\Phi'$ is context free, and
 let $p$ be the constant from Ogden's lemma.  Choose the word
@@ -633,7 +633,7 @@ so
 p^2+\alpha < (p+\beta)^2.
 \]
 Again the relation $|x|_{\pmb{c}}=(|x|_{\pmb{d}})^2$ fails.  In either case,
-$uv^2wx^2y\not in\Phi'$, contradicting Ogden's lemma.  Therefore
+$uv^2wx^2y\notin\Phi'$, contradicting Ogden's lemma.  Therefore
 $\Phi'$ is not context free.
 
 \item \textbf{Pumping theorem}: \emph{Yes}.  The ordinary pumping theorem also
@@ -645,7 +645,7 @@ s=\pmb{b}\pmb{c}^{n^2}\pmb{d}^n \in \Phi'.
 Write $s=uvwxy$ with $|vwx|\leq n$ and $|vx|\geq 1$.
 
 If $vx$ contains the initial $\pmb{b}$, then pumping down ($i=0$) removes that
-only $\pmb{b}$, so $uv^0wx^0y\not in\Phi'$.
+only $\pmb{b}$, so $uv^0wx^0y\notin\Phi'$.
 
 Otherwise, $vx$ lies entirely in the $\pmb{c}^*\pmb{d}^*$ portion of the word.
 Let $\alpha=|vx|_{\pmb{c}}$ and $\beta=|vx|_{\pmb{d}}$.  Then
@@ -786,7 +786,7 @@ $B=B'-\{\lambda\}$ is regular, contradiction. Hence $B'\in\XSIG$.
 
 Now every word $\pmb{a}^n$ belongs to $A'B'$: if $\pmb{a}^n\in A$, then
 $\pmb{a}^n=\pmb{a}^n\lambda$ with $\pmb{a}^n\in A'$ and $\lambda\in B'$; if
-$\pmb{a}^n\not in A$, then $\pmb{a}^n\in B$ and
+$\pmb{a}^n\notin A$, then $\pmb{a}^n\in B$ and
 $\pmb{a}^n=\lambda\pmb{a}^n$ with $\lambda\in A'$ and $\pmb{a}^n\in B'$.
 Hence $A'B'=\pmb{a}^*$, which is context free.  Therefore \XSIG\ is not closed
 under concatenation.
@@ -845,7 +845,7 @@ so $L(G^r)=L^r$. \qed
 %%------------------------------------------------------------
 \item \textbf{$\CSIG$ is closed under operator $T$ ($T(L) = \{w^r w \mid w \in L\}$).}
 
-\textbf{Claim}: $T$ does not preserve $\CSIG$ in general; i.e., there exists $L\in\CSIG$ such that $T(L)\not in\CSIG$.
+\textbf{Claim}: $T$ does not preserve $\CSIG$ in general; i.e., there exists $L\in\CSIG$ such that $T(L)\notin\CSIG$.
 
 \textbf{Counterexample}: Let
 \[
@@ -857,7 +857,7 @@ have
 \[
 T(L)=\{\pmb{a}^n\pmb{b}\pmb{a}^{2n}\pmb{b}\pmb{a}^n\mid n\geq 0\}.
 \]
-We claim $T(L)\not in\CSIG$.  Suppose instead that $T(L)$ is context free, and
+We claim $T(L)\notin\CSIG$.  Suppose instead that $T(L)$ is context free, and
 let $N$ be its pumping constant.  Choose
 \[
 s=\pmb{a}^N\pmb{b}\pmb{a}^{2N}\pmb{b}\pmb{a}^N \in T(L).
@@ -896,7 +896,7 @@ $T(L)$ is not context free, and \CSIG\ is not closed under $T$. \qed
 
 \textbf{Disproof}: Let $L_1 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} = |x|_{\pmb{b}}\}$ (CFL) and $L_2 = \{\pmb{a}\}^*\{\pmb{b}\}^*$ (regular, hence CFL). Then:
 \[
-L_1 - L_2 = \{x \mid |x|_{\pmb{a}} = |x|_{\pmb{b}}\} - \{\pmb{a}^n\pmb{b}^n\} = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}, x \not in \pmb{a}^*\pmb{b}^*\}.
+L_1 - L_2 = \{x \mid |x|_{\pmb{a}} = |x|_{\pmb{b}}\} - \{\pmb{a}^n\pmb{b}^n\} = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}, x \notin \pmb{a}^*\pmb{b}^*\}.
 \]
 This language (balanced strings that are not in $\pmb{a}^*\pmb{b}^*$) is
 context free (construct a grammar). So this does not give a counterexample.

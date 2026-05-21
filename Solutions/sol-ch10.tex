@@ -74,7 +74,7 @@ So $\alpha\in\{SC^{i+1},C^{i+1}\}$. \qed
 \[
 L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}.
 \]
-For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack with no moves available, so the stack is never emptied and $\lambda\not in L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
+For $n=0$: the initial configuration $\langle t,\lambda,S\rangle$ has $S$ still on the stack with no moves available, so the stack is never emptied and $\lambda\notin L(P'_2)$. Hence $L(P'_2) = \{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -167,7 +167,7 @@ $h(x)\in L$, namely the words of $h^{-1}(L)$. \qed
 
 \textbf{Example}: $L = \{\pmb{ab}\}$.
 
-\textbf{Proof}: Every one-state PDA $P$ with state set $\{t\}$, start state $t$, and final states $\{t\}$ trivially accepts $\lambda$: the initial configuration has $P$ already in the (unique) final state with empty input, so $\lambda$ is accepted regardless of the stack content. Since $\lambda \not in L = \{\pmb{ab}\}$, no one-state PDA via final state can recognize $L$.
+\textbf{Proof}: Every one-state PDA $P$ with state set $\{t\}$, start state $t$, and final states $\{t\}$ trivially accepts $\lambda$: the initial configuration has $P$ already in the (unique) final state with empty input, so $\lambda$ is accepted regardless of the stack content. Since $\lambda \notin L = \{\pmb{ab}\}$, no one-state PDA via final state can recognize $L$.
 
 More generally, any finite language that does not contain $\lambda$ is not recognizable by any one-state PDA via final state, since such a machine always accepts $\lambda$. \qed
 
@@ -851,10 +851,10 @@ $K$ is context free, but by Exercise 10.23 its complement over $\{\pmb{a},\pmb{b
 \[
 B=\{x\pmb{\$}\mid x\in\{\pmb{a},\pmb{b},\pmb{c}\}^*\}\cup\{x\pmb{\$\$}\mid x\in K\}.
 \]
-$B$ is context free. A word $x\pmb{\$}$ is in $F(B)$ exactly when $x\not in K$, because it fails to be maximal precisely when it can be extended to $x\pmb{\$\$}$. Therefore
+$B$ is context free. A word $x\pmb{\$}$ is in $F(B)$ exactly when $x\notin K$, because it fails to be maximal precisely when it can be extended to $x\pmb{\$\$}$. Therefore
 \[
 F(B)\cap\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}
-=\{x\pmb{\$}\mid x\not in K\}.
+=\{x\pmb{\$}\mid x\notin K\}.
 \]
 If $F(B)$ were context free, then intersecting with the regular language $\{\pmb{a},\pmb{b},\pmb{c}\}^*\pmb{\$}$ and deleting the final $\pmb{\$}$ would give $\sim K$ as a CFL, contradiction.
 
