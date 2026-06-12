@@ -32,8 +32,11 @@ A word of odd length not ending in $\pmb{b}$ has an even-length prefix (possibly
 \item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ not containing $\pmb{cc}$:
 Words with no two consecutive $\pmb{c}$s are those where every $\pmb{c}$ is followed by a non-$\pmb{c}$ (or is at the end).  Let $N=\pmb{a}\cup\pmb{b}$ (non-$\pmb{c}$ letters).
 \[
-  (N \cup \pmb{c}N)^*(N \cup \pmb{c} \cup \epsilon)
+  (N \cup \pmb{c}N)^*(\epsilon \cup \pmb{c})
 \]
+The final factor need only be $\epsilon\cup\pmb{c}$, because any terminal
+non-$\pmb{c}$ letter is already covered by the last block chosen from
+$N\cup\pmb{c}N$.
 
 %% 6.6
 \item Words over $\{\pmb{a},\pmb{b},\pmb{c}\}$ containing $\pmb{cc}$:
@@ -740,6 +743,14 @@ This is part (c).  Hence Theorem~6.4 follows. \qed
   word.  Hence one regular expression is
   \[
     (\pmb{b}\cup\pmb{c}\cup\pmb{a}\pmb{a}^*\pmb{c})^*(\epsilon\cup\pmb{a}\pmb{a}^*).
+  \]
+  The right-hand term simplifies, since
+  \[
+    \epsilon\cup\pmb{a}\pmb{a}^*=\pmb{a}^*.
+  \]
+  So a shorter equivalent expression is
+  \[
+    (\pmb{b}\cup\pmb{c}\cup\pmb{a}\pmb{a}^*\pmb{c})^*\pmb{a}^*.
   \]
 
   \item Words with exactly two $\pmb{c}$s and no $\pmb{ab}$:

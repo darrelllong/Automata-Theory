@@ -920,20 +920,21 @@ $M(L)=\{z\mid z=xy,x\in L,y\in\Sigma^+\}=L\cdot\Sigma^+$.  By closure under conc
 %% 5.56
 \item \textbf{Prove $\overline{\delta^\cap}(\langle s,t\rangle,x)=\langle\DBAR_1(s,x),\DBAR_2(t,x)\rangle$.}
 
-\begin{proof}
-By induction on $|x|$.
+  \begin{proof}
+  By induction on $|x|$.
 
-\emph{Base:}  $\overline{\delta^\cap}(\langle s,t\rangle,\lambda)=\langle s,t\rangle=\langle\DBAR_1(s,\lambda),\DBAR_2(t,\lambda)\rangle$.
+  \emph{Base:}  $\overline{\delta^\cap}(\langle s,t\rangle,\lambda)=\langle s,t\rangle=\langle\DBAR_1(s,\lambda),\DBAR_2(t,\lambda)\rangle$.
 
-\emph{Step:}  Assume the result for $x$.  Then:
-\begin{align*}
-  \overline{\delta^\cap}(\langle s,t\rangle,x\pmb{a})
-  &=\delta^\cap(\overline{\delta^\cap}(\langle s,t\rangle,x),\pmb{a}) \\
-  &=\delta^\cap(\langle\DBAR_1(s,x),\DBAR_2(t,x)\rangle,\pmb{a}) \\
-  &=\langle\delta_1(\DBAR_1(s,x),\pmb{a}),\delta_2(\DBAR_2(t,x),\pmb{a})\rangle \\
-  &=\langle\DBAR_1(s,x\pmb{a}),\DBAR_2(t,x\pmb{a})\rangle. \qed
-\end{align*}
-\end{proof}
+  \emph{Step:}  Let the string be $\pmb{a}x$, where $\pmb{a}$ is a single letter
+  and $x$ is the remaining string. Assume the result for $x$. Then
+  \begin{align*}
+  \overline{\delta^\cap}(\langle s,t\rangle,\pmb{a}x)
+  &=\overline{\delta^\cap}(\delta^\cap(\langle s,t\rangle,\pmb{a}),x) \\
+  &=\overline{\delta^\cap}(\langle\delta_1(s,\pmb{a}),\delta_2(t,\pmb{a})\rangle,x) \\
+  &=\langle\DBAR_1(\delta_1(s,\pmb{a}),x),\DBAR_2(\delta_2(t,\pmb{a}),x)\rangle \\
+  &=\langle\DBAR_1(s,\pmb{a}x),\DBAR_2(t,\pmb{a}x)\rangle. \qed
+  \end{align*}
+  \end{proof}
 
 %% 5.57
 \item \textbf{Prove $L(A^\cap)=L_1\cap L_2$.}
@@ -1280,7 +1281,17 @@ unary homomorphisms under which \NSIG\ is not closed.
 
   \emph{Base:} $\overline{\delta^\psi}(s,\lambda)=s=\DBAR(s,\lambda)=\DBAR(s,\PBAR(\lambda))$ (since $\psi(\lambda)=\lambda$).
 
-  \emph{Step:} $\overline{\delta^\psi}(s,x\pmb{b})=\delta^\psi(\overline{\delta^\psi}(s,x),\pmb{b})=\deltabar{}(\DBAR(s,\PBAR(x)),\psi(\pmb{b}))=\DBAR(s,\PBAR(x)\psi(\pmb{b}))=\DBAR(s,\PBAR(x\pmb{b}))$. \qed
+  \emph{Step:} Let the string be $\pmb{b}x$, where $\pmb{b}$ is a single letter
+  and $x$ is the remaining string. Then
+  \[
+  \overline{\delta^\psi}(s,\pmb{b}x)
+  =\overline{\delta^\psi}(\delta^\psi(s,\pmb{b}),x)
+  =\overline{\delta^\psi}(\DBAR(s,\psi(\pmb{b})),x)
+  =\DBAR(\DBAR(s,\psi(\pmb{b})),\PBAR(x))
+  =\DBAR(s,\psi(\pmb{b})\PBAR(x))
+  =\DBAR(s,\PBAR(\pmb{b}x)).
+  \]
+  This is exactly the desired statement for $\pmb{b}x$. \qed
   \end{proof}
 
   \item \textbf{Proof of Theorem~5.10:} $y\in L(A^\psi)$ iff $\overline{\delta^\psi}(s_0,y)\in F$ iff $\DBAR(s_0,\psi(y))\in F$ iff $\psi(y)\in L$ iff $y\in\psi^{-1}(L)$. \qed
