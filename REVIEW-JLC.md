@@ -3,7 +3,7 @@
 with a slash through it.  This same latex error is repeated in the exercises
 cited below.
 
-Search through all the exercises in all the solution chapters for the following
+[DONE] Search through all the exercises in all the solution chapters for the following
 latex error: ('i' with a slash through it followed by 'n') and replace it with
 the 'not an element of' math symbol.  Exercises 5.5e, 5.6f, 5.11, 5.19, 5.22,
 5.27, 5.43, 5.45, and 5.47 contain examples of this formatting error.
