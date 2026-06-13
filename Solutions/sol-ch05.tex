@@ -921,12 +921,14 @@ $M(L)=\{z\mid z=xy,x\in L,y\in\Sigma^+\}=L\cdot\Sigma^+$.  By closure under conc
 \item \textbf{Prove $\overline{\delta^\cap}(\langle s,t\rangle,x)=\langle\DBAR_1(s,x),\DBAR_2(t,x)\rangle$.}
 
   \begin{proof}
-  By induction on $|x|$.
+  We prove the stronger statement, for all state pairs $\langle s,t\rangle$, by
+  induction on $|x|$.
 
   \emph{Base:}  $\overline{\delta^\cap}(\langle s,t\rangle,\lambda)=\langle s,t\rangle=\langle\DBAR_1(s,\lambda),\DBAR_2(t,\lambda)\rangle$.
 
   \emph{Step:}  Let the string be $\pmb{a}x$, where $\pmb{a}$ is a single letter
-  and $x$ is the remaining string. Assume the result for $x$. Then
+  and $x$ is the remaining string. Assume the result for $x$ and arbitrary
+  states. Then, using Definition~1.11iii for the first and last equalities,
   \begin{align*}
   \overline{\delta^\cap}(\langle s,t\rangle,\pmb{a}x)
   &=\overline{\delta^\cap}(\delta^\cap(\langle s,t\rangle,\pmb{a}),x) \\
@@ -1277,12 +1279,13 @@ unary homomorphisms under which \NSIG\ is not closed.
   \item \textbf{Prove $\overline{\delta^\psi}(s,x)=\DBAR(s,\PBAR(x))$.}
 
   \begin{proof}
-  By induction on $|x|$.
+  We prove the stronger statement, for all states $s$, by induction on $|x|$.
 
   \emph{Base:} $\overline{\delta^\psi}(s,\lambda)=s=\DBAR(s,\lambda)=\DBAR(s,\PBAR(\lambda))$ (since $\psi(\lambda)=\lambda$).
 
   \emph{Step:} Let the string be $\pmb{b}x$, where $\pmb{b}$ is a single letter
-  and $x$ is the remaining string. Then
+  and $x$ is the remaining string. Assume the result for $x$ and arbitrary
+  states. Then, using Definition~1.11iii for the first and last equalities,
   \[
   \overline{\delta^\psi}(s,\pmb{b}x)
   =\overline{\delta^\psi}(\delta^\psi(s,\pmb{b}),x)
