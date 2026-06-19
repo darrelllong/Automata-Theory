@@ -769,11 +769,16 @@ This is part (c).  Hence Theorem~6.4 follows. \qed
 
   This means exactly that every maximal block of $\pmb{c}$s is followed by
   $\pmb{a}$ or occurs at the end of the word.  Hence one regular expression is
-  \[
-    (\pmb{a}\cup\pmb{b}\cup\pmb{c}\pmb{c}^*\pmb{a})^*(\epsilon\cup\pmb{c}\pmb{c}^*)
-  \]
+	  \[
+	    (\pmb{a}\cup\pmb{b}\cup\pmb{c}\pmb{c}^*\pmb{a})^*(\epsilon\cup\pmb{c}\pmb{c}^*)
+	  \]
+	  Since $\epsilon\cup\pmb{c}\pmb{c}^*=\pmb{c}^*$, this may also be written more
+	  compactly as
+	  \[
+	    (\pmb{a}\cup\pmb{b}\cup\pmb{c}\pmb{c}^*\pmb{a})^*\pmb{c}^*.
+	  \]
 
-  \item Words with exactly one $\pmb{c}$ and no $\pmb{cb}$:
+	  \item Words with exactly one $\pmb{c}$ and no $\pmb{cb}$:
 
   Exactly one $\pmb{c}$, and that $\pmb{c}$ is not immediately followed by $\pmb{b}$:
   \[
@@ -789,16 +794,50 @@ This is part (c).  Hence Theorem~6.4 follows. \qed
 %% 6.40
 \item \begin{enumerate}[(a)]
   \item For Figure~6.11 the right-linear equations are
-  \begin{align*}
-    X_1 &= \emptyset \cup \pmb{a}X_1 \cup \pmb{a}X_2,\\
-    X_2 &= \epsilon \cup (\pmb{a}\cup\pmb{b})X_1.
-  \end{align*}
+	  \begin{align*}
+	    X_1 &= \emptyset \cup \pmb{a}X_1 \cup \pmb{a}X_2,\\
+	    X_2 &= \epsilon \cup (\pmb{a}\cup\pmb{b})X_1.
+	  \end{align*}
 
-  \item Substitute the second equation into the first:
-  \[
-  X_1=\pmb{a}X_1\cup\pmb{a}(\epsilon\cup(\pmb{a}\cup\pmb{b})X_1)
-     =\pmb{a}\cup(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})X_1.
-  \]
+	  \item In the notation of Theorem~6.2,
+	  \[
+	  E_1=\emptyset,\quad E_2=\epsilon,\quad
+	  A_{11}=\pmb{a},\quad A_{12}=\pmb{a},\quad
+	  A_{21}=\pmb{a}\cup\pmb{b},\quad A_{22}=\emptyset.
+	  \]
+	  Eliminating $X_2$ gives the one-variable equation
+	  \[
+	  X_1=\hat{E}_1\cup\hat{A}_{11}X_1,
+	  \]
+	  where
+	  \[
+	  \hat{E}_1
+	  =E_1\cup A_{12}A_{22}^*E_2
+	  =\emptyset\cup\pmb{a}\emptyset^*\epsilon
+	  =\pmb{a},
+	  \]
+	  and
+	  \[
+	  \hat{A}_{11}
+	  =A_{11}\cup A_{12}A_{22}^*A_{21}
+	  =\pmb{a}\cup\pmb{a}\emptyset^*(\pmb{a}\cup\pmb{b})
+	  =\pmb{a}\cup\pmb{aa}\cup\pmb{ab}.
+	  \]
+	  By Theorem~6.1,
+	  \[
+	  X_1=(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a}.
+	  \]
+	  Back-substitution, equivalently Theorem~6.2(c), gives
+	  \[
+	  X_2=\emptyset^*(\epsilon\cup(\pmb{a}\cup\pmb{b})X_1)
+	     =\epsilon\cup(\pmb{a}\cup\pmb{b})(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a}.
+	  \]
+
+	  The same result follows by direct substitution. Substitute the second equation into the first:
+	  \[
+	  X_1=\pmb{a}X_1\cup\pmb{a}(\epsilon\cup(\pmb{a}\cup\pmb{b})X_1)
+	     =\pmb{a}\cup(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})X_1.
+	  \]
   Hence
   \[
   X_1=(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a},
@@ -835,20 +874,74 @@ This is part (c).  Hence Theorem~6.4 follows. \qed
     X_0 &= \pmb{a}X_1,\\
     X_1 &= \pmb{a}X_1 \cup \pmb{a}X_2,\\
     X_2 &= \epsilon \cup \pmb{b}X_2 \cup \pmb{a}X_3,\\
-    X_3 &= \pmb{b}X_0 \cup (\pmb{a}\cup\pmb{b})X_3 .
-  \end{align*}
+	    X_3 &= \pmb{b}X_0 \cup (\pmb{a}\cup\pmb{b})X_3 .
+	  \end{align*}
 
-  \item Solving from the end:
-  \[
-  X_3=(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0,
-  \]
-  \[
-  X_2=\pmb{b}^*(\epsilon\cup\pmb{a}X_3)
-      =\pmb{b}^*\cup\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0,
-  \]
-  \[
-  X_1=\pmb{a}^*\pmb{a}X_2,
-  \qquad
+	  \item First apply Theorem~6.2 to eliminate $X_3$.  The last equation has
+	  $E_3=\emptyset$, $A_{30}=\pmb{b}$, and
+	  $A_{33}=\pmb{a}\cup\pmb{b}$, so
+	  \[
+	  X_3=(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0,
+	  \]
+	  and the $X_2$ equation becomes
+	  \[
+	  X_2=\pmb{b}^*(\epsilon\cup\pmb{a}X_3)
+	      =\pmb{b}^*\cup\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0,
+	  \]
+	  after applying Theorem~6.1 to the coefficient $\pmb{b}$ of $X_2$.
+
+	  Substituting this expression for $X_2$ leaves the pair
+	  \begin{align*}
+	    X_0 &= \pmb{a}X_1,\\
+	    X_1 &= \pmb{a}\pmb{b}^*
+	      \cup \pmb{a}\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0
+	      \cup \pmb{a}X_1 .
+	  \end{align*}
+	  For this pair,
+	  \[
+	  E_0=\emptyset,\quad
+	  E_1=\pmb{a}\pmb{b}^*,\quad
+	  A_{00}=\emptyset,\quad A_{01}=\pmb{a},\quad
+	  A_{10}=\pmb{a}\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b},\quad
+	  A_{11}=\pmb{a}.
+	  \]
+	  Theorem~6.2 therefore reduces the pair to
+	  \[
+	  X_0=\hat{E}_0\cup\hat{A}_{00}X_0,
+	  \]
+	  where
+	  \[
+	  \hat{E}_0
+	  =E_0\cup A_{01}A_{11}^*E_1
+	  =\pmb{a}\pmb{a}^*\pmb{a}\pmb{b}^*
+	  \]
+	  and
+	  \[
+	  \hat{A}_{00}
+	  =A_{00}\cup A_{01}A_{11}^*A_{10}
+	  =\pmb{a}\pmb{a}^*\pmb{a}\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}.
+	  \]
+	  By Theorem~6.1,
+	  \[
+	  X_0=
+	  \bigl(\pmb{a}\pmb{a}^*\pmb{a}\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}\bigr)^*
+	  \pmb{a}\pmb{a}^*\pmb{a}\pmb{b}^*.
+	  \]
+	  The remaining unknowns are obtained by back-substitution:
+	  \[
+	  X_1=\pmb{a}^*(\pmb{a}\pmb{b}^*
+	      \cup \pmb{a}\pmb{b}^*\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0),
+	  \]
+	  \[
+	  X_2=\pmb{b}^*(\epsilon\cup\pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0),
+	  \qquad
+	  X_3=(\pmb{a}\cup\pmb{b})^*\pmb{b}X_0.
+	  \]
+
+	  The direct substitution method gives the same equation for $X_0$:
+	  \[
+	  X_1=\pmb{a}^*\pmb{a}X_2,
+	  \qquad
   X_0=\pmb{a}\pmb{a}^*\pmb{a}X_2.
   \]
   Therefore
@@ -1091,11 +1184,11 @@ substring gives:
     \pmb{aa}(\pmb{a}\cup\pmb{b})^* \cup \pmb{bb}(\pmb{a}\cup\pmb{b})^*
   \]
 
-  \item Words for which the first and last letters match:
-  \[
-    \epsilon \cup \pmb{a} \cup \pmb{b} \cup \pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{a} \cup \pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{b}
-  \]
-\end{enumerate}
+	  \item Words for which the first and last letters match:
+	  \[
+	    \pmb{a} \cup \pmb{b} \cup \pmb{a}(\pmb{a}\cup\pmb{b})^*\pmb{a} \cup \pmb{b}(\pmb{a}\cup\pmb{b})^*\pmb{b}
+	  \]
+	\end{enumerate}
 
 %% 6.49
 \item \textbf{The language of all valid regular expressions over $\{\pmb{a},\pmb{b}\}$ is not FAD.}
@@ -1120,17 +1213,118 @@ languages would be FAD.  Hence $V$ is not FAD.
 \end{proof}
 
 %% 6.50
-\item Apply Theorem~6.3 (state equations) and Theorem~6.2 (Arden's lemma) to each NDFA in Figure~6.14 to produce a regular expression.
+	\item Apply Theorem~6.3 (state equations) and Theorem~6.2 (Arden's lemma) to each NDFA in Figure~6.14 to produce a regular expression.
 
-\begin{enumerate}[(a)]
-  \item $(\pmb{a}\cup\pmb{c})^*$
-  \item $(\pmb{b}\cup\pmb{a}\pmb{c}^*\pmb{b})^*$
-  \item $(\pmb{a}\cup(\pmb{a}\cup\pmb{c})\pmb{b})^*$
-  \item $\pmb{a}(\pmb{bb})^*\pmb{a}$
-  \item $(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a}$
-  \item $\pmb{a}\pmb{a}^*\pmb{b}\pmb{c}(\pmb{a}^*\pmb{b}\pmb{c})^*$
-  \item $\bigl(\pmb{a}(\pmb{bb}\cup\pmb{cc})^*\pmb{a}\bigr)^*$
-\end{enumerate}
+	\begin{enumerate}[(a)]
+	  \item Let $X_0$ denote the terminal set from $t_0$.  The equation is
+	  \[
+	  X_0=\epsilon\cup(\pmb{a}\cup\pmb{c})X_0.
+	  \]
+	  Theorem~6.1 gives
+	  \[
+	  X_0=(\pmb{a}\cup\pmb{c})^*.
+	  \]
+
+	  \item Let $X_1$ and $X_0$ denote the terminal sets from $q_1$ and $q_0$,
+	  respectively.  The equations are
+	  \[
+	  X_1=\epsilon\cup\pmb{b}X_1\cup\pmb{a}X_0,
+	  \qquad
+	  X_0=\pmb{c}X_0\cup\pmb{b}X_1.
+	  \]
+	  The second equation gives $X_0=\pmb{c}^*\pmb{b}X_1$.  Hence
+	  \[
+	  X_1=\epsilon\cup(\pmb{b}\cup\pmb{a}\pmb{c}^*\pmb{b})X_1,
+	  \]
+	  and
+	  \[
+	  X_1=(\pmb{b}\cup\pmb{a}\pmb{c}^*\pmb{b})^*.
+	  \]
+
+	  \item With terminal sets $X_0$ and $X_1$ from $r_0$ and $r_1$,
+	  \[
+	  X_0=\epsilon\cup\pmb{a}X_0\cup(\pmb{a}\cup\pmb{c})X_1,
+	  \qquad
+	  X_1=\pmb{b}X_0.
+	  \]
+	  Substitution gives
+	  \[
+	  X_0=\epsilon\cup(\pmb{a}\cup(\pmb{a}\cup\pmb{c})\pmb{b})X_0,
+	  \]
+	  so
+	  \[
+	  X_0=(\pmb{a}\cup(\pmb{a}\cup\pmb{c})\pmb{b})^*.
+	  \]
+
+	  \item With $X_i$ the terminal set from $s_i$,
+	  \[
+	  X_0=\pmb{a}X_1,\qquad
+	  X_1=\pmb{a}X_2\cup\pmb{b}X_3,\qquad
+	  X_2=\epsilon,\qquad
+	  X_3=\pmb{b}X_1.
+	  \]
+	  Thus $X_1=\pmb{a}\cup\pmb{bb}X_1$, so
+	  $X_1=(\pmb{bb})^*\pmb{a}$ and
+	  \[
+	  X_0=\pmb{a}(\pmb{bb})^*\pmb{a}.
+	  \]
+
+	  \item This is the same two-state system solved in Exercise~6.40:
+	  \[
+	  X_1=\pmb{a}X_1\cup\pmb{a}X_2,\qquad
+	  X_2=\epsilon\cup(\pmb{a}\cup\pmb{b})X_1.
+	  \]
+	  Therefore
+	  \[
+	  X_1=(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a}.
+	  \]
+
+	  \item With $X_i$ the terminal set from $S_i$,
+	  \[
+	  X_0=\pmb{a}X_1,\qquad
+	  X_1=X_0\cup\pmb{b}X_2,\qquad
+	  X_2=\pmb{c}X_3,\qquad
+	  X_3=\epsilon\cup X_1.
+	  \]
+	  Hence
+	  \[
+	  X_1=X_0\cup\pmb{bc}\cup\pmb{bc}X_1
+	      =\pmb{a}X_1\cup\pmb{bc}\cup\pmb{bc}X_1,
+	  \]
+	  so
+	  \[
+	  X_1=(\pmb{a}\cup\pmb{bc})^*\pmb{bc}.
+	  \]
+	  Since $X_0=\pmb{a}X_1$,
+	  \[
+	  X_0=\pmb{a}(\pmb{a}\cup\pmb{bc})^*\pmb{bc}
+	      =\pmb{a}\pmb{a}^*\pmb{b}\pmb{c}(\pmb{a}^*\pmb{b}\pmb{c})^*.
+	  \]
+
+	  \item With $X_i$ the terminal set from $S_i$,
+	  \[
+	  X_0=\epsilon\cup\pmb{a}X_1,\qquad
+	  X_1=\pmb{a}X_0\cup\pmb{c}X_2\cup\pmb{b}X_3,\qquad
+	  X_2=\pmb{c}X_1,\qquad
+	  X_3=\pmb{b}X_1.
+	  \]
+	  Substituting for $X_2$ and $X_3$ gives
+	  \[
+	  X_1=\pmb{a}X_0\cup(\pmb{bb}\cup\pmb{cc})X_1,
+	  \]
+	  so
+	  \[
+	  X_1=(\pmb{bb}\cup\pmb{cc})^*\pmb{a}X_0.
+	  \]
+	  Then
+	  \[
+	  X_0=\epsilon\cup\pmb{a}(\pmb{bb}\cup\pmb{cc})^*\pmb{a}X_0,
+	  \]
+	  and therefore
+	  \[
+	  X_0=\bigl(\pmb{a}(\pmb{bb}\cup\pmb{cc})^*\pmb{a}\bigr)^*.
+	  \]
+	\end{enumerate}
 
 %% 6.51
 \item \textbf{Complete details of Theorem~6.6.}
