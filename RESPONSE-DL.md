@@ -32,3 +32,7 @@ Here is a summary of the changes made in response to the items in
 7. I changed the Programs appendix entries from unnumbered sections to regular
    sections so that each program is listed individually in the table of
    contents.
+
+8. I added `SUGGESTED-TOPICS.md`, comparing the current book coverage against
+   the three requested reference books and deduplicating the suggested additions
+   across those sources.
