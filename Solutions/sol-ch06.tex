@@ -780,12 +780,9 @@ This is part (c).  Hence Theorem~6.4 follows. \qed
 
 	  \item Words with exactly one $\pmb{c}$ and no $\pmb{cb}$:
 
-  Exactly one $\pmb{c}$, and that $\pmb{c}$ is not immediately followed by $\pmb{b}$:
-  \[
-    (\pmb{a}\cup\pmb{b})^*\pmb{c}(\pmb{a}\cup\epsilon)(\pmb{a}\cup\pmb{b})^*
-    \quad\text{where the $\pmb{c}$ is followed by $\pmb{a}$ or end}
-  \]
-  More precisely:
+  Exactly one $\pmb{c}$, and that $\pmb{c}$ is not immediately followed by
+  $\pmb{b}$, means that the lone $\pmb{c}$ is followed by either $\pmb{a}$
+  and then any string over $\{\pmb{a},\pmb{b}\}$, or by the end of the word:
   \[
     (\pmb{a}\cup\pmb{b})^*\cdot\pmb{c}\cdot((\pmb{a}(\pmb{a}\cup\pmb{b})^*)\cup\epsilon)
   \]
@@ -1269,12 +1266,17 @@ languages would be FAD.  Hence $V$ is not FAD.
 	  X_0=\pmb{a}(\pmb{bb})^*\pmb{a}.
 	  \]
 
-	  \item This is the same two-state system solved in Exercise~6.40:
+	  \item With terminal sets $X_1$ and $X_2$ from the two states,
 	  \[
 	  X_1=\pmb{a}X_1\cup\pmb{a}X_2,\qquad
 	  X_2=\epsilon\cup(\pmb{a}\cup\pmb{b})X_1.
 	  \]
-	  Therefore
+	  Substitute the second equation into the first:
+	  \[
+	  X_1=\pmb{a}X_1\cup\pmb{a}(\epsilon\cup(\pmb{a}\cup\pmb{b})X_1)
+	     =\pmb{a}\cup(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})X_1.
+	  \]
+	  Therefore, by Theorem~6.1,
 	  \[
 	  X_1=(\pmb{a}\cup\pmb{aa}\cup\pmb{ab})^*\pmb{a}.
 	  \]
