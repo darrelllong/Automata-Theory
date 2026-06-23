@@ -43,7 +43,6 @@ Below is the list of red typo/grammar/punctuation markings currently present in 
 - `ch-05.tex:944` $z \in\Gamma^*$\textcolor{red}{, The} \emph{\Index{inverse homomorphic image} of \textcolor{red}{z} under $\PBAR$}
 - `ch-05.tex:948` image} of \textcolor{red}{L} under} $\PBAR$ is defined by
 - `ch-05.tex:1174` exactly, since there \textcolor{red}{are} only a finite number of ways to choose a set of final
-- `ch-05.tex:1535` \item Given an automaton accepting $L$\textcolor{red}{. describe} how to modify it to produce an
 - `ch-06.tex:45` Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages \textcolor{red}{are}
 - `ch-06.tex:551` in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \textcolor{red}{\not in} A_{ij})$.
 - `ch-06.tex:670` (\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$\textcolor{red}{ .}
