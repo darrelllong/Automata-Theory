@@ -1,17 +1,30 @@
+6.51: At the beginning of the proof, address the basis step for the induction.
 
-[DONE] 6.39a: Keep the current illustrative solution, but also observe that there is
-a shorter expression with a simpified right-hand term.
+7.1a,7.1b,7.2a,7.2b: In each of these four inductive steps, use the recursive
+definition given in the text.  In particular, isolate the letter at the
+beginning of the string, NOT the letter at the end of the string.  The string
+under consideration should be a single letter followed by the rest of the
+string, not a string followed by a single letter.
 
-[DONE] 6.40, 6.41: Keep the existing 'solution by substitution' as an alternate method,
-but first:
-1) Identify the E_i and A_ij constants the pair of equations produce when
-Theorem 6.2 is applied, apply Theorem 6.2 to reduce the two original equations
-into a single equation in one unknown, then apply Theorem 6.1 to find the
-solution for X_1.  (Example 6.8 shows the method described here.)
+7.6d: The argument given depends on each relation being distinct from the
+previous relation.  Be more explicit about why each relation in the chain
+is unique.
 
-[DONE] 6.48e: Correct the expression by eliminating the empty string from the
-displayed solution.
+7.7b:  The first line is missing symbols.
+E1M iff ...
+should be
+s E1M t iff ...
 
-[DONE] 6.50: Show how the answers given in all seven parts of this exercise came about.
-In at least some cases, be as explicit as what the latter half of Example 6.11
-illustrates.
+7.13: rephrase "and concatenation with lambda is identity" to read:
+"and lambda is the identity element for concatenation"
+
+7.15: The result given shows that the function is not multiply-defined;
+add a brief justification that it is defined everywhere.
+
+7.16: The result given shows that the function is not multiply-defined;
+add a brief justification that it is defined everywhere.
+
+7.46a: The result given shows that the defined mu function is not
+multiply-defined; add a brief justification that mu is defined everywhere.
+
+
