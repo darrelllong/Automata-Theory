@@ -1335,6 +1335,14 @@ Theorem~6.6 proves closure of \RSIG\ under substitution.  Below are the three
 operator cases written out explicitly.
 
 \begin{proof}
+The basis step is the case in which $R$ has no operators.  Then $R$ is either a
+single letter $\pmb{a}\in\Sigma$, $\emptyset$, or $\epsilon$.  By Definition~6.5,
+$s(\pmb{a})$ is a regular expression over $\Gamma$ representing
+$\overline{s}(\{\pmb{a}\})$, while $\emptyset$ represents
+$\overline{s}(\emptyset)$ and $\epsilon$ represents
+$\overline{s}(\{\lambda\})$.  Thus the substituted expression has the required
+language in each basis case.
+
 Assume inductively that whenever $R_1$ and $R_2$ have at most $m$ operators, the
 expressions obtained by replacing each letter $\pmb{a}$ with $s(\pmb{a})$
 represent $\overline{s}(R_1)$ and $\overline{s}(R_2)$.

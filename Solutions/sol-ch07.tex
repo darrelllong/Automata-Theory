@@ -9,17 +9,17 @@
   \item \textbf{Prove $\OBAR(t,yx)=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x)$} for any Mealy machine.
 
   \begin{proof}
-  By induction on $|x|=k$.
+  By induction on $|y|=k$.
 
-  \emph{Base ($k=0$):} $\OBAR(t,y\lambda)=\OBAR(t,y)=\OBAR(t,y)\cdot\lambda=\OBAR(t,y)\cdot\OBAR(\DBAR(t,y),\lambda)$ since $\OBAR(\cdot,\lambda)=\lambda$.
+  \emph{Base ($k=0$):} $\OBAR(t,\lambda x)=\OBAR(t,x)=\lambda\cdot\OBAR(t,x)=\OBAR(t,\lambda)\cdot\OBAR(\DBAR(t,\lambda),x)$.
 
-  \emph{Step:}  Let $x=x'\pmb{a}$ with $|x'|=k$.  Then:
+  \emph{Step:}  Let $y=\pmb{a}y'$ with $|y'|=k$.  Then:
   \begin{align*}
-    \OBAR(t,yx'\pmb{a})
-    &= \OBAR(t,yx')\cdot\omega(\DBAR(t,yx'),\pmb{a}) \\
-    &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x')\cdot\omega(\DBAR(\DBAR(t,y),x'),\pmb{a}) \\
-    &\quad\text{(inductive hypothesis applied to $yx'$)} \\
-    &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x'\pmb{a}) \\
+    \OBAR(t,\pmb{a}y'x)
+    &= \omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),y'x) \\
+    &= \omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),y')\cdot
+       \OBAR(\DBAR(\delta(t,\pmb{a}),y'),x) \\
+    &= \OBAR(t,\pmb{a}y')\cdot\OBAR(\DBAR(t,\pmb{a}y'),x) \\
     &= \OBAR(t,y)\cdot\OBAR(\DBAR(t,y),x). \qed
   \end{align*}
   \end{proof}
@@ -27,11 +27,18 @@
   \item \textbf{Prove $\DBAR(s,yx)=\DBAR(\DBAR(s,y),x)$.}
 
   \begin{proof}
-  By induction on $|x|$.
+  By induction on $|y|$.
 
-  \emph{Base:} $\DBAR(s,y\lambda)=\DBAR(s,y)=\DBAR(\DBAR(s,y),\lambda)$.
+  \emph{Base:} $\DBAR(s,\lambda x)=\DBAR(s,x)=\DBAR(\DBAR(s,\lambda),x)$.
 
-  \emph{Step:}  $\DBAR(s,yx'\pmb{a})=\delta(\DBAR(s,yx'),\pmb{a})=\delta(\DBAR(\DBAR(s,y),x'),\pmb{a})=\DBAR(\DBAR(s,y),x'\pmb{a})$. \qed
+  \emph{Step:}  Let $y=\pmb{a}y'$ with $|y'|=k$.  Then
+  \[
+    \DBAR(s,\pmb{a}y'x)=
+    \DBAR(\delta(s,\pmb{a}),y'x)=
+    \DBAR(\DBAR(\delta(s,\pmb{a}),y'),x)=
+    \DBAR(\DBAR(s,\pmb{a}y'),x).
+  \]
+  Hence $\DBAR(s,yx)=\DBAR(\DBAR(s,y),x)$. \qed
   \end{proof}
 \end{enumerate}
 
@@ -46,8 +53,17 @@
 
   \emph{Base:} $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$.
 
-  \emph{Step:}  $\mu(\DBAR_A(s,x\pmb{a}))=\mu(\delta_A(\DBAR_A(s,x),\pmb{a}))=\delta_B(\mu(\DBAR_A(s,x)),\pmb{a})=\delta_B(\DBAR_B(\mu(s),x),\pmb{a})=\DBAR_B(\mu(s),x\pmb{a})$.
-  (Used: $\mu(\delta_A(t,\pmb{a}))=\delta_B(\mu(t),\pmb{a})$ for all $t\in S_A$---homomorphism property.) \qed
+  \emph{Step:}  Let $x=\pmb{a}y$ with $|y|=k$.  Then
+  \[
+  \begin{aligned}
+  \mu(\DBAR_A(s,\pmb{a}y))
+  &=\mu(\DBAR_A(\delta_A(s,\pmb{a}),y))\\
+  &=\DBAR_B(\mu(\delta_A(s,\pmb{a})),y)\\
+  &=\DBAR_B(\delta_B(\mu(s),\pmb{a}),y)\\
+  &=\DBAR_B(\mu(s),\pmb{a}y).
+  \end{aligned}
+  \]
+  Thus $\mu(\DBAR_A(s,x))=\DBAR_B(\mu(s),x)$. \qed
   \end{proof}
 
   \item \textbf{Prove $\OBAR_A(s,x)=\OBAR_B(\mu(s),x)$.}
@@ -57,10 +73,19 @@
 
   \emph{Base:} $\OBAR_A(s,\lambda)=\lambda=\OBAR_B(\mu(s),\lambda)$.
 
-  \emph{Step:}  $\OBAR_A(s,x\pmb{a})=\OBAR_A(s,x)\cdot\omega_A(\DBAR_A(s,x),\pmb{a})$.
-  By induction: $=\OBAR_B(\mu(s),x)\cdot\omega_A(\DBAR_A(s,x),\pmb{a})$.
-  By homomorphism: $\omega_A(t,\pmb{a})=\omega_B(\mu(t),\pmb{a})$ for all $t$; so:
-  $=\OBAR_B(\mu(s),x)\cdot\omega_B(\mu(\DBAR_A(s,x)),\pmb{a})=\OBAR_B(\mu(s),x)\cdot\omega_B(\DBAR_B(\mu(s),x),\pmb{a})=\OBAR_B(\mu(s),x\pmb{a})$. \qed
+  \emph{Step:}  Let $x=\pmb{a}y$ with $|y|=k$.  Then
+  \[
+  \begin{aligned}
+  \OBAR_A(s,\pmb{a}y)
+  &=\omega_A(s,\pmb{a})\cdot\OBAR_A(\delta_A(s,\pmb{a}),y)\\
+  &=\omega_B(\mu(s),\pmb{a})\cdot
+    \OBAR_B(\mu(\delta_A(s,\pmb{a})),y)\\
+  &=\omega_B(\mu(s),\pmb{a})\cdot
+    \OBAR_B(\delta_B(\mu(s),\pmb{a}),y)\\
+  &=\OBAR_B(\mu(s),\pmb{a}y).
+  \end{aligned}
+  \]
+  Thus $\OBAR_A(s,x)=\OBAR_B(\mu(s),x)$. \qed
   \end{proof}
 \end{enumerate}
 
@@ -156,10 +181,12 @@ equivalent machine has fewer states than $M$.  Thus $M$ is minimal. \qed
   \[
     E_{0M},E_{1M},E_{2M},\ldots
   \]
-  form a descending chain of refinements.  Every proper refinement increases the
-  number of equivalence classes by at least one.  Since there are only $\|S\|$
-  states, there can be at most $\|S\|$ equivalence classes.  Therefore the chain
-  cannot refine properly more than $\|S\|-1$ times, and for some
+  form a descending chain of refinements.  If $E_{i+1,M}\neq E_{iM}$, then the
+  containment is proper, so some $E_{iM}$-class is split into at least two
+  $E_{i+1,M}$-classes; hence the two adjacent relations are distinct, and the
+  number of equivalence classes increases by at least one.  Since there are only
+  $\|S\|$ states, there can be at most $\|S\|$ equivalence classes.  Therefore
+  the chain cannot refine properly more than $\|S\|-1$ times, and for some
   $m\le \|S\|$ we must have $E_{mM}=E_{m+1,M}$. \qed
   \end{proof}
 
@@ -186,7 +213,7 @@ equivalent machine has fewer states than $M$.  Thus $M$ is minimal. \qed
 
   $E_{0M}$ is defined by $s E_{0M} t$ always (no conditions).  Hence all states are in one class: $[s]_{E_{0M}}=S$ for all $s$.
 
-  \item \textbf{$E_{1M}$ iff $\forall\pmb{a}\in\Sigma,\omega(s,\pmb{a})=\omega(t,\pmb{a})$:}
+  \item \textbf{$s E_{1M} t$ iff $\forall\pmb{a}\in\Sigma,\omega(s,\pmb{a})=\omega(t,\pmb{a})$:}
 
   $E_{1M}$ refines $E_{0M}$ by requiring that $s$ and $t$ agree on single-letter outputs.  $s E_{1M} t$ iff $s E_{0M} t$ (trivially) and $\forall\pmb{a}\in\Sigma,\omega(s,\pmb{a})=\omega(t,\pmb{a})$.
 
@@ -427,7 +454,7 @@ Thus $\mu$ is a homomorphism from $M$ onto $B$.
 \begin{proof}
 By definition of $\OBAR$ for a single letter:
 $\OBAR(t,\pmb{a})=\OBAR(t,\lambda)\cdot\omega(t,\pmb{a})=\lambda\cdot\omega(t,\pmb{a})=\omega(t,\pmb{a})$.
-(Since $\OBAR(t,\lambda)=\lambda$ and concatenation with $\lambda$ is identity.) \qed
+(Since $\OBAR(t,\lambda)=\lambda$ and $\lambda$ is the identity element for concatenation.) \qed
 \end{proof}
 
 %% 7.14
@@ -447,14 +474,21 @@ Formally: add $\delta(s_k,\pmb{r})=s_0$ and $\omega(s_k,\pmb{r})=\pmb{a}$ for ea
 \item \textbf{$\delta_{E_M}$ is well defined.}
 
 \begin{proof}
-$\delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}$.  Suppose $[s]_{E_M}=[s']_{E_M}$, i.e., $s E_M s'$.  By Lemma~7.3c, $\delta(s,\pmb{a}) E_M \delta(s',\pmb{a})$.  Hence $[\delta(s,\pmb{a})]_{E_M}=[\delta(s',\pmb{a})]_{E_M}$, so $\delta_{E_M}$ gives the same result regardless of the representative chosen. \qed
+$\delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}$.  Suppose $[s]_{E_M}=[s']_{E_M}$, i.e., $s E_M s'$.  By Lemma~7.3c, $\delta(s,\pmb{a}) E_M \delta(s',\pmb{a})$.  Hence $[\delta(s,\pmb{a})]_{E_M}=[\delta(s',\pmb{a})]_{E_M}$, so $\delta_{E_M}$ gives the same result regardless of the representative chosen.
+Also, for every $[s]_{E_M}\in S_{E_M}$ and every $\pmb{a}\in\Sigma$, $\delta$ is
+defined on $(s,\pmb{a})$, so $[\delta(s,\pmb{a})]_{E_M}$ is an element of
+$S_{E_M}$.  Thus $\delta_{E_M}$ is defined on all of
+$S_{E_M}\times\Sigma$. \qed
 \end{proof}
 
 %% 7.16
 \item \textbf{$\omega_{E_M}$ is well defined.}
 
 \begin{proof}
-$\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$.  Suppose $s E_M s'$.  By the definition of $E_M$ (states are equivalent iff they produce the same output on all inputs), in particular on the single letter $\pmb{a}$: $\omega(s,\pmb{a})=\omega(s',\pmb{a})$.  Hence $\omega_{E_M}$ is independent of the choice of representative. \qed
+$\omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a})$.  Suppose $s E_M s'$.  By the definition of $E_M$ (states are equivalent iff they produce the same output on all inputs), in particular on the single letter $\pmb{a}$: $\omega(s,\pmb{a})=\omega(s',\pmb{a})$.  Hence $\omega_{E_M}$ is independent of the choice of representative.
+Also, for every $[s]_{E_M}\in S_{E_M}$ and every $\pmb{a}\in\Sigma$, $\omega$ is
+defined on $(s,\pmb{a})$, so $\omega_{E_M}$ is defined on all of
+$S_{E_M}\times\Sigma$. \qed
 \end{proof}
 
 %% 7.17
@@ -1806,7 +1840,9 @@ Suppose the minimal Moore machine $M$ for $f$ is not reduced.  Then two states $
   \[
     \mu(s)=\DBAR_B(s_{0_B},x_s).
   \]
-  We show that $\mu$ is well defined and one-to-one.
+  Since $M$ is connected, such a string $x_s$ exists for every $s\in S_M$; hence
+  this rule assigns a value to every state of $M$.  We show that $\mu$ is well
+  defined and one-to-one.
 
   First, suppose $x_s$ and $y_s$ both reach the same state $s$ in $M$.  For any
   $z\in\Sigma^*$, Theorem~7.6 gives
