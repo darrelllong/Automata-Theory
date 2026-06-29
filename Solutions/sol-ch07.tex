@@ -453,8 +453,9 @@ Thus $\mu$ is a homomorphism from $M$ onto $B$.
 
 \begin{proof}
 By definition of $\OBAR$ for a single letter:
-$\OBAR(t,\pmb{a})=\OBAR(t,\lambda)\cdot\omega(t,\pmb{a})=\lambda\cdot\omega(t,\pmb{a})=\omega(t,\pmb{a})$.
-(Since $\OBAR(t,\lambda)=\lambda$ and $\lambda$ is the identity element for concatenation.) \qed
+$\OBAR(t,\pmb{a})=\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),\lambda)
+=\omega(t,\pmb{a})\cdot\lambda=\omega(t,\pmb{a})$.
+(Since $\OBAR(\delta(t,\pmb{a}),\lambda)=\lambda$ and $\lambda$ is the identity element for concatenation.) \qed
 \end{proof}
 
 %% 7.14
