@@ -220,11 +220,40 @@ equivalent machine has fewer states than $M$.  Thus $M$ is minimal. \qed
   \item \textbf{$s E_{i+1,M} t$ iff $s E_{iM} t$ and $\forall\pmb{a}\in\Sigma,\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$:}
 
   \begin{proof}
-  By definition, $E_{i+1,M}$ refines $E_{iM}$ by additionally requiring that the successors are $E_{iM}$-equivalent.  This is the standard iterative refinement.
+  Assume $i\ge 1$.
 
-  $(\Rightarrow)$ If $s E_{i+1,M} t$, then $s$ and $t$ agree on all strings of length $\le i+1$.  In particular, they agree on strings of length $\le i$ (so $s E_{iM} t$), and for each $\pmb{a}$, $\delta(s,\pmb{a})$ and $\delta(t,\pmb{a})$ agree on all strings of length $\le i$ (so $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$).
+  $(\Rightarrow)$ If $s E_{i+1,M} t$, then $s$ and $t$ agree on every input
+  string of length at most $i+1$.  In particular, they agree on all strings of
+  length at most $i$, so $s E_{iM} t$.  Now fix $\pmb{a}\in\Sigma$ and
+  $y\in\Sigma^*$ with $|y|\le i$.  Since $|\pmb{a}y|\le i+1$, Definition~7.2
+  gives
+  \[
+  \omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),y)
+  =\OBAR(s,\pmb{a}y)
+  =\OBAR(t,\pmb{a}y)
+  =\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),y).
+  \]
+  Taking $y=\lambda$ shows $\omega(s,\pmb{a})=\omega(t,\pmb{a})$.  Canceling
+  this common first letter from the displayed equality leaves
+  $\OBAR(\delta(s,\pmb{a}),y)=\OBAR(\delta(t,\pmb{a}),y)$ for every $|y|\le i$.
+  Hence $\delta(s,\pmb{a}) E_{iM}\delta(t,\pmb{a})$.
 
-  $(\Leftarrow)$ If $s E_{iM} t$ and $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$ for all $\pmb{a}$, then for any $w=\pmb{a}w'$ with $|w|\le i+1$: $\OBAR(s,\pmb{a}w')=\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),w')$.  Since $s E_{1M} t$ (implied by $s E_{iM} t$, $i\ge 1$): $\omega(s,\pmb{a})=\omega(t,\pmb{a})$.  And $\delta(s,\pmb{a}) E_{iM} \delta(t,\pmb{a})$ gives $\OBAR(\delta(s,\pmb{a}),w')=\OBAR(\delta(t,\pmb{a}),w')$ for $|w'|\le i$.  So $\OBAR(s,w)=\OBAR(t,w)$. \qed
+  $(\Leftarrow)$ Suppose $s E_{iM} t$ and
+  $\delta(s,\pmb{a}) E_{iM}\delta(t,\pmb{a})$ for every $\pmb{a}\in\Sigma$.
+  Let $w\in\Sigma^*$ with $|w|\le i+1$.  If $|w|\le i$, then
+  $\OBAR(s,w)=\OBAR(t,w)$ because $s E_{iM}t$.  Otherwise write
+  $w=\pmb{a}y$, where $|y|\le i$.  Since $i\ge1$, $s E_{iM}t$ implies
+  $s E_{1M}t$, so $\omega(s,\pmb{a})=\omega(t,\pmb{a})$.  Also,
+  $\delta(s,\pmb{a}) E_{iM}\delta(t,\pmb{a})$ gives
+  $\OBAR(\delta(s,\pmb{a}),y)=\OBAR(\delta(t,\pmb{a}),y)$.  Therefore, by
+  Definition~7.2,
+  \[
+  \OBAR(s,\pmb{a}y)
+  =\omega(s,\pmb{a})\cdot\OBAR(\delta(s,\pmb{a}),y)
+  =\omega(t,\pmb{a})\cdot\OBAR(\delta(t,\pmb{a}),y)
+  =\OBAR(t,\pmb{a}y).
+  \]
+  Thus $s E_{i+1,M} t$. \qed
   \end{proof}
 \end{enumerate}
 
