@@ -1874,19 +1874,33 @@ Suppose the minimal Moore machine $M$ for $f$ is not reduced.  Then two states $
   this rule assigns a value to every state of $M$.  We show that $\mu$ is well
   defined and one-to-one.
 
-  First, suppose $x_s$ and $y_s$ both reach the same state $s$ in $M$.  For any
-  $z\in\Sigma^*$, Theorem~7.6 gives
+  First, suppose $x_s$ and $y_s$ both reach the same state $s$ in $M$.  Put
   \[
-    \OBAR_M(s,z)=\OBAR_B(\DBAR_B(s_{0_B},x_s),z)
+    p=\DBAR_B(s_{0_B},x_s),\qquad q=\DBAR_B(s_{0_B},y_s).
   \]
-  and also
+  We show that $p$ and $q$ have the same output behavior.  Let
+  $z\in\Sigma^*$ be arbitrary.  By Theorem~7.6,
   \[
-    \OBAR_M(s,z)=\OBAR_B(\DBAR_B(s_{0_B},y_s),z),
+    \OBAR_M(s_{0_M},x_sz)=\OBAR_M(s_{0_M},x_s)\cdot \OBAR_M(s,z)
   \]
-  because $M$ and $B$ are equivalent and both starts have processed the same
-  prefixes $x_s$ and $y_s$.  Thus the two states of $B$ reached by $x_s$ and
-  $y_s$ are equivalent.  Since $B$ is reduced, they are equal.  Hence $\mu$ is
-  well defined.
+  and
+  \[
+    \OBAR_B(s_{0_B},x_sz)=\OBAR_B(s_{0_B},x_s)\cdot \OBAR_B(p,z).
+  \]
+  Since $M$ and $B$ are equivalent, the left sides are equal; applying
+  equivalence also to the prefix $x_s$ gives
+  $\OBAR_M(s_{0_M},x_s)=\OBAR_B(s_{0_B},x_s)$.  Canceling this common prefix
+  leaves
+  \[
+    \OBAR_M(s,z)=\OBAR_B(p,z).
+  \]
+  The same argument with $y_s$ gives
+  \[
+    \OBAR_M(s,z)=\OBAR_B(q,z).
+  \]
+  Hence $\OBAR_B(p,z)=\OBAR_B(q,z)$ for every $z\in\Sigma^*$, so $p E_B q$.
+  Since $B$ is reduced, $p=q$.  Therefore the value of $\mu(s)$ does not depend
+  on which reaching string is chosen, and $\mu$ is well defined.
 
   Next, suppose $\mu(s)=\mu(t)$.  Then for every $z\in\Sigma^*$,
   \[
