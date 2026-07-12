@@ -1938,16 +1938,18 @@ Suppose the minimal Moore machine $M$ for $f$ is not reduced.  Then two states $
   \emph{Base:} If $x=\lambda$, then
   $\mu(\DBAR_A(s,\lambda))=\mu(s)=\DBAR_B(\mu(s),\lambda)$.
 
-  \emph{Step:} Let $x=y\pmb{a}$.  Then
+  \emph{Step:} Let $x=\pmb{a}y$.  Then
   \[
-    \mu(\DBAR_A(s,y\pmb{a}))
-    =\mu(\delta_A(\DBAR_A(s,y),\pmb{a}))
-    =\delta_B(\mu(\DBAR_A(s,y)),\pmb{a}),
+    \mu(\DBAR_A(s,\pmb{a}y))
+    =\mu(\DBAR_A(\delta_A(s,\pmb{a}),y))
+    =\DBAR_B(\mu(\delta_A(s,\pmb{a})),y),
   \]
-  by the homomorphism property.  Apply the inductive hypothesis to obtain
+  where the last equality is the inductive hypothesis.  By the homomorphism
+  property,
   \[
-    \mu(\DBAR_A(s,y\pmb{a}))=\delta_B(\DBAR_B(\mu(s),y),\pmb{a})
-    =\DBAR_B(\mu(s),y\pmb{a}).
+    \DBAR_B(\mu(\delta_A(s,\pmb{a})),y)
+    =\DBAR_B(\delta_B(\mu(s),\pmb{a}),y)
+    =\DBAR_B(\mu(s),\pmb{a}y).
   \]
   \end{proof}
 
