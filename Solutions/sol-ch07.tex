@@ -2028,6 +2028,9 @@ minimal machine equivalent to $M$. \qed
   \[
     \delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}.
   \]
+  This rule is defined for every argument: each element of $S_{E_M}$ has the
+  form $[s]_{E_M}$ for some $s\in S$, and the original transition function
+  $\delta$ is defined for every pair $(s,\pmb{a})\in S\times\Sigma$.
   If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$.  By Lemma~7.3(c),
   \[
     \delta(s,\pmb{a}) E_M \delta(t,\pmb{a}),
@@ -2046,6 +2049,9 @@ minimal machine equivalent to $M$. \qed
   \[
     \omega_{E_M}([s]_{E_M},\pmb{a})=\omega(s,\pmb{a}).
   \]
+  This rule is defined for every argument because every quotient state has a
+  representative $s\in S$, and the original output function $\omega$ is defined
+  for every pair $(s,\pmb{a})\in S\times\Sigma$.
   If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$, so the states $s$ and $t$ agree on
   every one-letter input.  In particular,
   \[
@@ -2066,6 +2072,9 @@ minimal machine equivalent to $M$. \qed
   \[
     \delta_{E_M}([s]_{E_M},\pmb{a})=[\delta(s,\pmb{a})]_{E_M}.
   \]
+  This rule is defined for every argument: each quotient state is $[s]_{E_M}$
+  for some $s\in S$, and the Moore-machine transition function $\delta$ is
+  defined on all of $S\times\Sigma$.
   Suppose $[s]_{E_M}=[t]_{E_M}$, so $s E_M t$.  Then $s$ and $t$ produce the
   same output on every continuation.  In particular, for every
   $x\in\Sigma^*$,
@@ -2092,6 +2101,9 @@ minimal machine equivalent to $M$. \qed
   \[
     \omega_{E_M}([s]_{E_M})=\omega(s).
   \]
+  This rule is defined for every argument because every quotient state has a
+  representative $s\in S$, and the original Moore output function $\omega$ is
+  defined for every state in $S$.
   If $[s]_{E_M}=[t]_{E_M}$, then $s E_M t$.  By Lemma~7.3(b), the full state
   equivalence relation $E_M$ is a refinement of $E_{0M}$, so $s E_{0M} t$.
   Lemma~7.6(a) says that $s E_{0M} t$ is exactly the statement that the two
