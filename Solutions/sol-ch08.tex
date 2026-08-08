@@ -35,7 +35,7 @@ From
 \[
 V=\pmb{a}V\cup\pmb{c}X,
 \]
-Arden's lemma gives
+Arden's lemma (Theorem 6.1) gives
 \[
 V=\pmb{a}^*\pmb{c}X.
 \]
@@ -64,16 +64,46 @@ so
 \[
 S=\pmb{abb}\cup\pmb{abbc}S\cup\pmb{bbab}.
 \]
-By Arden's lemma,
+By Arden's lemma (Theorem 6.1),
 \[
 L(G_4)=(\pmb{abbc})^*(\pmb{abb}\cup\pmb{bbab}).
 \]
 
-\item $G_5$ generates strings with an even number of \pmb{1}s (binary parity even):
+\item $G_5$: The language equations for the three nonterminals are
 \[
-L(G_5) = (\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*\pmb{0}^* = (\pmb{0}^*(\pmb{10}^*\pmb{1})^*\pmb{0}^*).
+\begin{aligned}
+S_0 &= \lambda \cup \pmb{0}S_2 \cup \pmb{1}S_1,\\
+S_1 &= \pmb{0}S_1 \cup \pmb{1}S_2,\\
+S_2 &= \pmb{0}S_2 \cup \pmb{1}S_0.
+\end{aligned}
 \]
-The regular expression is $(\pmb{0}\cup\pmb{10}^*\pmb{1})^*$.
+The equation for $S_2$ has the form required by Theorem 6.1, so
+\[
+S_2=\pmb{0}^*\pmb{1}S_0.
+\]
+Substituting this into the equation for $S_1$ gives
+\[
+S_1=\pmb{0}S_1\cup\pmb{1}\pmb{0}^*\pmb{1}S_0,
+\]
+and another application of Theorem 6.1 gives
+\[
+S_1=\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0.
+\]
+Now substitute both expressions into the equation for $S_0$:
+\[
+\begin{aligned}
+S_0
+&=\lambda\cup\pmb{0}\pmb{0}^*\pmb{1}S_0
+  \cup \pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0\\
+&=\lambda\cup(\pmb{0}^+\pmb{1}\cup
+  \pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})S_0.
+\end{aligned}
+\]
+Thus
+\[
+L(G_5)=(\pmb{0}^+\pmb{1}\cup
+\pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*.
+\]
 
 \item $G_6$: From the productions $Z \to \pmb{a}Z | \pmb{b}T$, $T \to \pmb{a}Z$. Language equations: $Z = \pmb{a}Z \cup \pmb{b}T$ and $T = \pmb{a}Z$. Substituting: $Z = \pmb{a}Z \cup \pmb{ba}Z = (\pmb{a}\cup\pmb{ba})Z$. Since there is no terminal production (no production $Z \to w$ or $T \to w$ for $w \in \Sigma^*$), $L(G_6) = \emptyset$.
 
@@ -103,7 +133,17 @@ Lemma 8.1 states that for the grammar $G_A$ constructed from DFA $A$, $L(G_A) = 
 
 By the inductive result of Exercise 8.2, for all $x \in \Sigma^*$ and all states $t_i, t_j$: $t_i \DRightarrow x t_j$ in $G_A$ iff $\DBAR_A(t_i, x) = t_j$. Taking $t_i = t_0$ (start state):
 
-$x \in L(G_A)$ iff $t_0 \DRightarrow x$ in $G_A$ iff ($\exists t_j \in F$) $t_0 \DRightarrow x t_j \Rightarrow x$ iff ($\exists t_j \in F$) $\DBAR_A(t_0, x) = t_j$ iff $\DBAR_A(t_0, x) \in F$ iff $x \in L(A)$. \qed
+\[
+\begin{aligned}
+x \in L(G_A)
+&\Longleftrightarrow t_0 \DRightarrow x \text{ in } G_A\\
+&\Longleftrightarrow (\exists t_j\in F)\ t_0 \DRightarrow x t_j \Rightarrow x\\
+&\Longleftrightarrow (\exists t_j\in F)\ \DBAR_A(t_0,x)=t_j\\
+&\Longleftrightarrow \DBAR_A(t_0,x)\in F\\
+&\Longleftrightarrow x\in L(A).
+\end{aligned}
+\]
+\qed
 
 %%------------------------------------------------------------
 \item \textbf{Draw the automata for the grammars in Exercise 8.3.}
@@ -243,8 +283,13 @@ State $S$ = ``last symbol was not $\pmb{b}$'' (or start); state $A$ = ``last sym
 \item All words \emph{containing} two consecutive $\pmb{b}$s:
 \[
 G = \langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{c}S|\pmb{b}A,
-A\to\pmb{b}B|{\pmb{a}S|\pmb{c}S},B\to\pmb{a}B|\pmb{b}B|\pmb{c}B|\lambda\}\rangle
+A\to\pmb{b}B|\pmb{a}S|\pmb{c}S,B\to\pmb{a}B|\pmb{b}B|\pmb{c}B|\lambda\}\rangle
 \]
+State $S$ means ``no consecutive $\pmb{b}$s have been seen and the last symbol
+was not $\pmb{b}$''; state $A$ means ``no consecutive $\pmb{b}$s have been seen,
+but the last symbol was $\pmb{b}$''; state $B$ means ``two consecutive
+$\pmb{b}$s have occurred.''  Once $B$ is reached, any remaining string may be
+generated.
 
 \item All words with $|w|_{\pmb{a}} = |w|_{\pmb{b}}$: This language is not regular (it includes $\{\pmb{a}^n\pmb{b}^n\}$), so no right-linear grammar exists.
 
@@ -253,6 +298,10 @@ A\to\pmb{b}B|{\pmb{a}S|\pmb{c}S},B\to\pmb{a}B|\pmb{b}B|\pmb{c}B|\lambda\}\rangle
 G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{b}S|\pmb{c}S|\pmb{a}A|\lambda,
 A\to\pmb{b}A|\pmb{c}A|\pmb{a}S\}\rangle
 \]
+State $S$ records that an even number of $\pmb{a}$s has been generated so far,
+and state $A$ records that an odd number has been generated.  The
+$\pmb{b}$- and $\pmb{c}$-productions preserve parity, while each $\pmb{a}$
+switches parity.
 
 \item All words \emph{not} ending in $\pmb{b}$:
 \[
@@ -260,6 +309,10 @@ G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,\{S\to\pmb{a}S|\pmb{b}A|\pmb{c}
 A\to\pmb{a}S|\pmb{b}A|\pmb{c}S|\pmb{a}|\pmb{c}\}\rangle
 \]
 (Equivalently, $G = \langle\{S,A\},\ldots,\{S\to(\pmb{a}|\pmb{b}|\pmb{c})^*(\pmb{a}|\pmb{c})|\lambda\}\rangle$.)
+State $S$ records that the string generated so far is empty or currently ends
+in a symbol other than $\pmb{b}$; state $A$ records that it currently ends in
+$\pmb{b}$.  Only $S$ may stop by $\lambda$, and both states may stop after
+adding one final $\pmb{a}$ or $\pmb{c}$.
 
 \item All words containing no $\pmb{c}$s:
 \[
@@ -414,23 +467,27 @@ exactly the words in $L(G)^{n+1}$. \qed
 %%------------------------------------------------------------
 \item \textbf{Use the efficient algorithm of Theorem 8.3 to find regular expressions for $L(G_5)$, $L(G_6)$, $L(G_7)$ in Exercise 8.3.}
 
-The efficient algorithm eliminates one variable at a time using Arden's lemma.
+The efficient algorithm eliminates one variable at a time using
+Theorem 6.1.
 
 \begin{enumerate}
 \item[$G_5$:] Equations: $S_0 = \pmb{0}S_2 \cup \pmb{1}S_1 \cup \lambda$, $S_1 = \pmb{0}S_1 \cup \pmb{1}S_2$, $S_2 = \pmb{0}S_2 \cup \pmb{1}S_0$.
 Solve for $S_2$ from third equation: $S_2 = \pmb{0}^*\pmb{1}S_0$.
 Substitute into $S_1$: $S_1 = \pmb{0}S_1 \cup \pmb{1}\pmb{0}^*\pmb{1}S_0$, so $S_1 = \pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0$.
 Substitute $S_1$ and $S_2$ into $S_0$: $S_0 = \pmb{0}\cdot\pmb{0}^*\pmb{1}S_0 \cup \pmb{1}\cdot\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1}S_0 \cup \lambda = (\pmb{0}^+\pmb{1} \cup \pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})S_0 \cup \lambda$.
-By Arden's lemma: $L(G_5) = (\pmb{0}^+\pmb{1}\cup\pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*$.
-Simplified: $(\pmb{0}\cup\pmb{10}^*\pmb{1})^*$.
+By Theorem 6.1,
+\[
+L(G_5) = (\pmb{0}^+\pmb{1}\cup
+\pmb{1}\pmb{0}^*\pmb{1}\pmb{0}^*\pmb{1})^*.
+\]
 
-\item[$G_6$:] Equations: $Z = \pmb{a}Z \cup \pmb{b}T$, $T = \pmb{a}Z$. Substitute: $Z = \pmb{a}Z \cup \pmb{ba}Z = (\pmb{a}\cup\pmb{ba})Z \cup \emptyset$. By Arden's lemma: $Z = (\pmb{a}\cup\pmb{ba})^*\cdot\emptyset = \emptyset$. So $L(G_6) = \emptyset$.
+\item[$G_6$:] Equations: $Z = \pmb{a}Z \cup \pmb{b}T$, $T = \pmb{a}Z$. Substitute: $Z = \pmb{a}Z \cup \pmb{ba}Z = (\pmb{a}\cup\pmb{ba})Z \cup \emptyset$. By Theorem 6.1, $Z = (\pmb{a}\cup\pmb{ba})^*\cdot\emptyset = \emptyset$. So $L(G_6) = \emptyset$.
 
 \item[$G_7$:] Equations: $S = \pmb{a}S \cup \pmb{ab}B \cup \pmb{c}C$, $B = \pmb{ab}B \cup \lambda$, $C = \pmb{c}C \cup \pmb{ca}$.
 Solve $B = (\pmb{ab})^*$.
 Solve $C = \pmb{c}^*\pmb{ca}$.
 Substitute: $S = \pmb{a}S \cup \pmb{ab}(\pmb{ab})^* \cup \pmb{c}\cdot\pmb{c}^*\pmb{ca} = \pmb{a}S \cup (\pmb{ab})^+\cup\pmb{c}^+\pmb{a}$.
-By Arden's:
+By Theorem 6.1:
 \[
 L(G_7) = \pmb{a}^*((\pmb{ab})^+\cup\pmb{c}^+\pmb{a})
        = \pmb{a}^*(\pmb{ab})^+\cup\pmb{a}^*\pmb{c}^+\pmb{a}.
@@ -483,7 +540,7 @@ for $i,j=1,2,\ldots,n-1$.
 \[
 X_S=X_A\pmb{baa},\qquad X_A=\lambda\cup X_A\pmb{a}.
 \]
-By the left-linear version of Arden's lemma,
+By the left-linear version of Theorem 6.1,
 \[
 X_A=\lambda\pmb{a}^*=\pmb{a}^*.
 \]
@@ -519,9 +576,9 @@ I &= \pmb{0}I \cup \pmb{1}I \cup \pmb{0}\pmb{.}F \cup \pmb{1}\pmb{.}F \\
 F &= \lambda \cup \pmb{0}F \cup \pmb{1}F
 \end{align*}
 
-\item Solving: $F = (\pmb{0}\cup\pmb{1})^*$ (by Arden's on $F = \pmb{0}F\cup\pmb{1}F\cup\lambda$).
+\item Solving: $F = (\pmb{0}\cup\pmb{1})^*$ by Theorem 6.1 applied to $F = (\pmb{0}\cup\pmb{1})F\cup\lambda$.
 Substituting into $I$: $I = (\pmb{0}\cup\pmb{1})I \cup (\pmb{0}\cup\pmb{1})\pmb{.}(\pmb{0}\cup\pmb{1})^*$.
-By Arden's: $I = (\pmb{0}\cup\pmb{1})^+\pmb{.}(\pmb{0}\cup\pmb{1})^*$.
+By Theorem 6.1, $I = (\pmb{0}\cup\pmb{1})^+\pmb{.}(\pmb{0}\cup\pmb{1})^*$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -539,6 +596,10 @@ State $A$ handles $\pmb{c}^*$ and the choice of $\pmb{d}$ or $(\pmb{ab})^*$; sta
 \begin{align*}
 G &= \langle\{S,A\},\{\pmb{a},\pmb{b}\},S,\{S\to\pmb{a}S|\pmb{b}S|\pmb{a}A,\ A\to\pmb{a}A|\pmb{b}A|\lambda\}\rangle
 \end{align*}
+State $S$ generates the arbitrary prefix before the required occurrence of
+$\pmb{a}$; the production $S\to\pmb{a}A$ supplies that required occurrence.
+State $A$ then generates the arbitrary suffix and may terminate by
+$A\to\lambda$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -559,6 +620,9 @@ $B\to C\pmb{b}\to B\pmb{ab}$ adds one more copy of $(\pmb{ab})$ on the right.
 \[
 G = \langle\{S,A\},\{\pmb{a},\pmb{b}\},S,\{S\to S\pmb{a}|S\pmb{b}|A\pmb{a},\ A\to A\pmb{a}|A\pmb{b}|\lambda\}\rangle
 \]
+Here $A$ generates the arbitrary prefix, and the production $S\to A\pmb{a}$
+places the required $\pmb{a}$ after that prefix.  The productions
+$S\to S\pmb{a}$ and $S\to S\pmb{b}$ append the arbitrary suffix on the right.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -566,22 +630,26 @@ G = \langle\{S,A\},\{\pmb{a},\pmb{b}\},S,\{S\to S\pmb{a}|S\pmb{b}|A\pmb{a},\ A\t
 
 \begin{enumerate}
 \item \textbf{Algorithm}:
-1. From the right-linear grammar $G$, construct the NDFA $A_G$ of
+\begin{enumerate}
+\item From the right-linear grammar $G$, construct the NDFA $A_G$ of
 Lemma~8.2.
 
-2. Reverse all arrows in $A_G$ and interchange initial and final states.  The
-resulting machine accepts $L(G)^r$.
+\item Reverse all arrows in $A_G$ and interchange initial and final states.  As
+in the reverse construction used in Exercise~5.20 and cited in the proof of
+Theorem 8.2, the resulting machine accepts $L(G)^r$.
 
-3. Apply the subset construction from Chapter~4 to obtain a DFA for $L(G)^r$.
+\item Apply the subset construction from Definition 4.5 to obtain a
+DFA for $L(G)^r$.
 
-4. Apply Lemma~8.1 to that DFA to get a right-linear grammar $H$ for
+\item Apply Lemma~8.1 to that DFA to get a right-linear grammar $H$ for
 $L(G)^r$.
 
-5. Reverse every production in $H$.  By Lemma~8.3, the resulting grammar is
+\item Reverse every production in $H$.  By Lemma~8.3, the resulting grammar is
 left-linear and generates
 \[
 L(H)^r=(L(G)^r)^r=L(G).
 \]
+\end{enumerate}
 
 \item Applying this to $G_4$: first construct $A_{G_4}$ from Lemma~8.2, then
 reverse it, determinize, and apply Lemma~8.1.  The resulting right-linear
@@ -589,7 +657,7 @@ grammar for $L(G_4)^r$ is
 \[
 H=\langle\{R,U,V,W,X,L,M,N,P\},\Sigma,R,P_H\rangle,
 \]
-where
+where $P_H$ contains
 \[
 \begin{aligned}
 R&\to \pmb{b}U\\
@@ -623,8 +691,14 @@ P&\to L\pmb{a}.
 \item \textbf{Algorithm to convert a regular grammar to one generating the complement.}
 
 \begin{enumerate}
-\item Construct the DFA $A$ from grammar $G$ (via Lemma 8.1 or 8.2).
-\item Compute the complement DFA $A^c$ by swapping final and nonfinal states (after making $A$ complete/total).
+\item Construct an automaton for $L(G)$ from grammar $G$ using Lemma~8.2, and
+then, if necessary, convert it to an equivalent DFA $A$ by Definition 4.5.
+\item Compute the complement DFA $A^c$ by keeping the same states, start state,
+and transition function as $A$, and replacing the final-state set $F$ by
+$S-F$.  Since $A$ is a DFA, its transition function is already total; the
+earlier parenthetical ``after making $A$ complete/total'' was only meant as a
+guard against stopping with a partial transition table before the DFA step has
+actually been completed.
 \item Construct a right-linear grammar $G^c$ from $A^c$.
 Then $L(G^c) = \overline{L(G)}$.
 \end{enumerate}
@@ -634,7 +708,11 @@ Then $L(G^c) = \overline{L(G)}$.
 
 \begin{enumerate}
 \item Build the automaton $A_G$ from $G$.
-\item Compute the set of states reachable from the start state (BFS/DFS from start state).
+\item Compute the connected state set $S^c$ from the start state by the
+successive $C_i$ construction of Definition 3.10.  The assertion
+proved in Exercise~3.53 justifies that these $C_i$ sets produce exactly the
+states reachable by strings of bounded length, so the iteration is the
+textbook reachability algorithm.
 \item If no final state is reachable, $L(G) = \emptyset$; otherwise $L(G) \neq \emptyset$.
 \end{enumerate}
 This terminates since the automaton has finitely many states.
@@ -654,10 +732,22 @@ This terminates since the automaton has finitely many states.
 \item \textbf{Algorithm to determine whether two right-linear grammars $G_1$ and $G_2$ generate the same language.}
 
 \begin{enumerate}
-\item Construct DFAs $A_1$ and $A_2$ from $G_1$ and $G_2$ respectively.
-\item Compute the minimized DFA for each.
-\item Check isomorphism of the two minimized DFAs (compare state by state).
-\item $L(G_1) = L(G_2)$ iff the minimal DFAs are isomorphic.
+\item Construct DFAs
+$A_1=\langle\Sigma,S_1,s_{0_1},\delta_1,F_1\rangle$ and
+$A_2=\langle\Sigma,S_2,s_{0_2},\delta_2,F_2\rangle$ from $G_1$ and $G_2$,
+using Lemma~8.2 followed by Definition 4.5 when determinization is
+needed.  Rename states if necessary so that $S_1\cap S_2=\emptyset$.
+\item Form the composite DFA
+\[
+A=\langle\Sigma,S_1\cup S_2,s_{0_1},\delta,F_1\cup F_2\rangle,
+\]
+where $\delta(s,\pmb{a})=\delta_1(s,\pmb{a})$ for $s\in S_1$ and
+$\delta(s,\pmb{a})=\delta_2(s,\pmb{a})$ for $s\in S_2$.
+\item Use the Chapter~3 algorithm for computing $E_A$ (Corollary 3.5).
+\item Answer yes exactly when $s_{0_1}E_As_{0_2}$.  If the two start states are
+state-equivalent in the composite machine, every input word either reaches final
+states in both component machines or reaches nonfinal states in both; if they
+are not equivalent, some word is accepted by exactly one component machine.
 \end{enumerate}
 
 %%------------------------------------------------------------
