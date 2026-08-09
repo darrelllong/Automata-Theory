@@ -312,8 +312,12 @@ the question is decidable. \qed
 \textbf{Algorithm}:
 \begin{enumerate}
 \item Convert $R_1, R_2$ to DFAs $A_1, A_2$.
-\item Minimize both: $A_1^{min}, A_2^{min}$.
-\item $L(R_1)=L(R_2)$ iff $A_1^{min} \cong A_2^{min}$ (isomorphic as DFAs). Check isomorphism: decidable in polynomial time. \qed
+\item Apply the DFA equivalence algorithm of Theorem~12.3 to $A_1$ and $A_2$.
+That algorithm constructs the composite DFA and computes its state-equivalence
+relation, then compares the two start states.
+\item Answer yes exactly when the two start states are state-equivalent in that
+composite DFA.  This is equivalent to $L(A_1)=L(A_2)$, and hence to
+$L(R_1)=L(R_2)$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
