@@ -345,6 +345,14 @@ G = \langle\{S,A,B\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
   A\to S\pmb{a}\mid S\pmb{c}\mid B\pmb{b},\;
   B\to B\pmb{a}\mid B\pmb{b}\mid B\pmb{c}\mid \lambda\}\rangle
 \]
+Here $S$ generates all strings that already contain two consecutive $\pmb{b}$s.
+State $A$ generates strings whose leftmost symbol is one $\pmb{b}$ away from
+creating the required pair, and $B$ generates the arbitrary prefix to the left of
+that pair.
+
+\item Same number of $\pmb{a}$s as $\pmb{b}$s: no left-linear grammar exists.
+By Theorem~8.2, every left-linear grammar generates a FAD language, and the
+corresponding part of Exercise~8.6 is not FAD.
 
 \item Even number of $\pmb{a}$s:
 \[
@@ -352,6 +360,9 @@ G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
 \{S\to S\pmb{b}\mid S\pmb{c}\mid A\pmb{a}\mid \lambda,\;
   A\to S\pmb{a}\mid A\pmb{b}\mid A\pmb{c}\}\rangle
 \]
+Here $S$ generates strings with an even number of $\pmb{a}$s, while $A$
+generates strings with an odd number of $\pmb{a}$s.  Appending $\pmb{b}$ or
+$\pmb{c}$ preserves the parity, and appending $\pmb{a}$ changes it.
 
 \item Not ending in $\pmb{b}$:
 \[
@@ -359,12 +370,17 @@ G = \langle\{S,A\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
 \{S\to A\pmb{a}\mid A\pmb{c}\mid \lambda,\;
   A\to A\pmb{a}\mid A\pmb{b}\mid A\pmb{c}\mid \lambda\}\rangle
 \]
+Here $S$ generates exactly the target strings: either $\lambda$, or a string
+whose final symbol is $\pmb{a}$ or $\pmb{c}$.  State $A$ generates the arbitrary
+prefix that may precede that final non-$\pmb{b}$ symbol.
 
 \item No $\pmb{c}$s:
 \[
 G = \langle\{S\},\{\pmb{a},\pmb{b},\pmb{c}\},S,
 \{S\to S\pmb{a}\mid S\pmb{b}\mid \lambda\}\rangle
 \]
+Here $S$ generates exactly the words over $\{\pmb{a},\pmb{b}\}$ and may stop at
+any point; there is no production that appends $\pmb{c}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
