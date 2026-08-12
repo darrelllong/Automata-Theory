@@ -32,17 +32,25 @@ parse trees are maximally right-branching.
 \[
 S \to AB, \quad A \to \pmb{a}A\pmb{b} \mid \lambda, \quad B \to \pmb{c}B\pmb{d} \mid \lambda.
 \]
+Here $A$ generates the balanced $\pmb{a}^n\pmb{b}^n$ block and $B$
+generates the independent balanced $\pmb{c}^m\pmb{d}^m$ block. The start
+symbol concatenates these two independently generated pieces.
 
 \item $\{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i \mid i,j \in \NN\}$:
 \[
 S \to \pmb{a}S\pmb{d} \mid T \mid \lambda, \quad T \to \pmb{b}T\pmb{c} \mid \lambda.
 \]
+Here $S$ accounts for the outer matching $\pmb{a}/\pmb{d}$ symbols, and
+then hands control to $T$ for the middle matching $\pmb{b}/\pmb{c}$ symbols.
+The rule $S\to\lambda$ is the case $i=j=0$.
 
 \item $\{\pmb{a}^n\pmb{b}^n\pmb{c}^m\pmb{d}^m\} \cup \{\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i\}$:
 \[
 S \to S_1 \mid S_2
 \]
-where $S_1$ generates the first language (as in part (a)) and $S_2$ generates the second (as in part (b)).
+where $S_1$ generates the first language (as in part (a)) and $S_2$
+generates the second (as in part (b)). The two productions from $S$ are the
+grammar-level union construction.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -879,7 +887,10 @@ pumping changes only the middle block.  The outer blocks still both have length
 $N$, so the middle block should still have length $2N$, but it does not.
 
 \item If $vwx$ lies entirely within the rightmost $\pmb{a}^N$ block, the
-argument is symmetric to the first case.
+pumped word changes only that rightmost block.  The leftmost $\pmb{a}$-block
+remains of length $N$, so the pumped word cannot have the required form
+$\pmb{a}^n\pmb{b}\pmb{a}^{2n}\pmb{b}\pmb{a}^n$, in which the two outer
+$\pmb{a}$-blocks have the same length.
 
 \item If $vwx$ contains one of the $\pmb{b}$'s, then pumping with $i=0$ or
 $i=2$ either changes the number of $\pmb{b}$'s or changes one adjacent

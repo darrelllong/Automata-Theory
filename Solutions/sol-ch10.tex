@@ -7,15 +7,53 @@
 %%------------------------------------------------------------
 \item \textbf{Show by induction: $\DBAR(s_0,x)=t \Leftrightarrow \langle s_0,x,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.}
 
-\textbf{Claim} ($P(n)$): For all $x \in \Sigma^n$, $\DBAR(s_0,x)=t$ iff $\langle s_0,x,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.
+\textbf{Claim} ($P(n)$): For every state $s,t$ and every $x \in \Sigma^n$,
+$\DBAR(s,x)=t$ iff
+$\langle s,x,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.
 
-\textbf{Base} ($n=0$): $\DBAR(s_0,\lambda)=s_0$ and $\langle s_0,\lambda,\cent\rangle\Dvdash\langle s_0,\lambda,\cent\rangle$ (zero moves). Both sides give $t=s_0$. \checkmark
+\textbf{Base} ($n=0$): $\DBAR(s,\lambda)=s$ and
+$\langle s,\lambda,\cent\rangle\Dvdash\langle s,\lambda,\cent\rangle$ by zero
+moves. Both sides therefore give $t=s$. \checkmark
 
-\textbf{Step}: Assume $P(n)$. For $x=ya$ ($|y|=n$, $a\in\Sigma$):
+\textbf{Step}: Assume $P(n)$. Let $x=\pmb{a}y$, where $\pmb{a}\in\Sigma$ is
+the first letter and $|y|=n$, matching the recursive form of
+Definition~1.11iii.
 
-($\Rightarrow$): $\DBAR(s_0,ya)=\delta(\DBAR(s_0,y),a)=t$. Let $q=\DBAR(s_0,y)$. By IH, $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By Theorem 10.1, $\langle q,a,\cent\rangle\vdash\langle t,\lambda,\cent\rangle$ (single step reading $a$). So $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$.
+($\Rightarrow$): If $\DBAR(s,\pmb{a}y)=t$, then by Definition~1.11iii,
+\[
+\DBAR(\delta(s,\pmb{a}),y)=t.
+\]
+Let $q=\delta(s,\pmb{a})$. The PDA corresponding to the DFA has the one-step
+move
+\[
+\langle s,\pmb{a}y,\cent\rangle\vdash\langle q,y,\cent\rangle.
+\]
+By the induction hypothesis applied from state $q$,
+\[
+\langle q,y,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle.
+\]
+Chaining the moves gives
+\[
+\langle s,\pmb{a}y,\cent\rangle\Dvdash
+\langle t,\lambda,\cent\rangle.
+\]
 
-($\Leftarrow$): If $\langle s_0,ya,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle$, then the computation passes through some state $q$ after reading $y$: $\langle s_0,y,\cent\rangle\Dvdash\langle q,\lambda,\cent\rangle$. By IH, $\DBAR(s_0,y)=q$. The last step reads $a$ from state $q$ to reach $t$, so $\delta(q,a)=t$, hence $\DBAR(s_0,ya)=t$. \qed
+($\Leftarrow$): If
+\[
+\langle s,\pmb{a}y,\cent\rangle\Dvdash\langle t,\lambda,\cent\rangle,
+\]
+then the first move must read the initial input letter $\pmb{a}$ and move to
+$q=\delta(s,\pmb{a})$:
+\[
+\langle s,\pmb{a}y,\cent\rangle\vdash\langle q,y,\cent\rangle
+\Dvdash\langle t,\lambda,\cent\rangle.
+\]
+By the induction hypothesis, $\DBAR(q,y)=t$. Since $q=\delta(s,\pmb{a})$,
+Definition~1.11iii gives
+\[
+\DBAR(s,\pmb{a}y)=\DBAR(\delta(s,\pmb{a}),y)=\DBAR(q,y)=t.
+\]
+\qed
 
 %%------------------------------------------------------------
 \item \textbf{Define a one-state DPDA $P'_1$ with $\Lambda(P'_1)=\{\pmb{a}^n\pmb{b}^n \mid n\geq 1\}$.}
@@ -110,7 +148,12 @@ State $q_0$ handles the $\pmb{a}$-block, $q_1$ the $\pmb{b}$-block, and $q_2$ th
 S \rightarrow \pmb{a}S\pmb{c}\mid T,\qquad
 T \rightarrow \pmb{b}T\pmb{c}\mid \lambda.
 \]
-This generates exactly the strings $\pmb{a}^i\pmb{b}^j\pmb{c}^{i+j}$.
+Here $S$ accounts for one outer $\pmb{a}$ together with one final
+$\pmb{c}$, and $T$ accounts for the remaining middle
+$\pmb{b}$/$\pmb{c}$ matching. Thus a derivation first chooses $i$ uses of
+$S\to\pmb{a}S\pmb{c}$ and then $j$ uses of
+$T\to\pmb{b}T\pmb{c}$, producing exactly
+$\pmb{a}^i\pmb{b}^j\pmb{c}^{i+j}$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -184,7 +227,21 @@ $\delta(q_1,\pmb{c},Z)=\langle q_2,BZ\rangle$, $\delta(q_2,\pmb{c},B)=\langle q_
 $\delta(q_2,\pmb{d},B)=\langle q_2,\lambda\rangle$, $\delta(q_2,\lambda,Z)=\langle q_f,Z\rangle$.
 Also $\delta(q_0,\lambda,Z)=\langle q_1,Z\rangle$ to handle $n=0$, and $\delta(q_1,\lambda,Z)=\langle q_2,Z\rangle$ for $m=0$ (with appropriate final states).
 
-\item \textbf{PDA via empty stack}: Similar; pop $Z$ at the end.
+\item \textbf{PDA via empty stack}: Use the same reading transitions as in
+part (a), but accept by emptying the bottom marker instead of entering
+$q_f$. Thus the final-state set is empty, and the bottom-marker moves are
+\[
+\delta(q_0,\lambda,Z)=\{\langle q_1,Z\rangle,\langle q_0,\lambda\rangle\},
+\]
+\[
+\delta(q_1,\lambda,Z)=\{\langle q_2,Z\rangle,\langle q_1,\lambda\rangle\},
+\qquad
+\delta(q_2,\lambda,Z)=\{\langle q_2,\lambda\rangle\}.
+\]
+The first move from $q_0$ handles $n=0$, the first move from $q_1$ handles
+the transition to the $\pmb{c}/\pmb{d}$ phase when the
+$\pmb{a}/\pmb{b}$ count is balanced, and the pop moves accept exactly when the
+input has been consumed and the relevant count is balanced.
 
 \item \textbf{DPDA}: Yes. The DPDA deterministically pushes $A$s, then pops $A$s, then pushes $B$s, then pops $B$s. Each step is deterministic.
 
@@ -196,6 +253,9 @@ S\rightarrow AB,\qquad
 A\rightarrow \pmb{a}A\pmb{b}\mid \lambda,\qquad
 B\rightarrow \pmb{c}B\pmb{d}\mid \lambda.
 \]
+Here $A$ generates the first balanced block
+$\pmb{a}^n\pmb{b}^n$, $B$ generates the second balanced block
+$\pmb{c}^m\pmb{d}^m$, and $S$ concatenates those two independent pieces.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -315,6 +375,11 @@ one kind of stack symbol, that boundary cannot be marked.
 S\rightarrow \pmb{a}S\pmb{d}\mid T,\qquad
 T\rightarrow \pmb{b}T\pmb{c}\mid \lambda.
 \]
+Here $S$ preserves the outer $\pmb{a}/\pmb{d}$ count while $T$ handles the
+middle $\pmb{b}/\pmb{c}$ count. After $i$ uses of
+$S\to\pmb{a}S\pmb{d}$ and $j$ uses of
+$T\to\pmb{b}T\pmb{c}$, the derived word is
+$\pmb{a}^i\pmb{b}^j\pmb{c}^j\pmb{d}^i$.
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -418,7 +483,53 @@ The first move in $P$ corresponds to $\delta_P(s,a,A)\ni\langle s',\gamma\rangle
 %%------------------------------------------------------------
 \item \textbf{Prove (Theorem 10.5): same correspondence for $P_\lambda$.}
 
-\textbf{Proof by induction}: Symmetric to Exercise 10.16; the marker $Y$ at the bottom of the stack (representing ``no more stack to pop'') is unaffected by all moves above it, so the computation in $P$ with stack $\alpha$ corresponds exactly to the computation in $P_\lambda$ with stack $\alpha Y$. \qed
+\textbf{Proof by induction on the number of moves}: The construction of
+$P_\lambda$ keeps all old moves of $P$ on the old stack symbols and adds the
+new bottom marker $Y$ only below the old stack.
+
+\textbf{Base} (0 moves): The two configurations are identical except for the
+extra marker $Y$ below the stack:
+\[
+\langle s,xy,\alpha\rangle=\langle s,y,\beta\rangle
+\quad\Longleftrightarrow\quad
+\langle s,xy,\alpha Y\rangle=\langle s,y,\beta Y\rangle.
+\]
+
+\textbf{Step}: Suppose the correspondence holds for computations of $k$ moves.
+If
+\[
+\langle s,xy,\alpha\rangle\vdash
+\langle s',x'y,\alpha'\rangle\Dvdash
+\langle t,y,\beta\rangle
+\]
+is a computation in $P$, then the first move reads either a letter or
+$\lambda$, replaces the top old stack symbol by some old stack string, and
+does not inspect anything below that top symbol. The same first move is present
+in $P_\lambda$, so
+\[
+\langle s,xy,\alpha Y\rangle\vdash
+\langle s',x'y,\alpha'Y\rangle.
+\]
+By the induction hypothesis applied to the remaining $k$ moves,
+\[
+\langle s',x'y,\alpha'Y\rangle\Dvdash
+\langle t,y,\beta Y\rangle.
+\]
+Thus the computation in $P$ gives the corresponding computation in
+$P_\lambda$.
+
+Conversely, any move of $P_\lambda$ while an old stack symbol is on top is one
+of the old moves of $P$. During a computation from $\alpha Y$ to $\beta Y$, the
+marker $Y$ is never the top symbol until all of the old stack above it has been
+processed, so deleting the untouched $Y$ from every configuration gives exactly
+the corresponding computation of $P$ from $\alpha$ to $\beta$. Hence
+\[
+\langle s,xy,\alpha\rangle\Dvdash\langle t,y,\beta\rangle
+\quad\Longleftrightarrow\quad
+\langle s,xy,\alpha Y\rangle\Dvdash
+\langle t,y,\beta Y\rangle.
+\]
+\qed
 
 %%------------------------------------------------------------
 \item \textbf{$\{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\wedge|x|_{\pmb{b}}>|x|_{\pmb{c}}\}$ is not context free.}

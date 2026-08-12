@@ -31,7 +31,19 @@ Strategy: Repeatedly match the leftmost and rightmost unprocessed symbols.
 \end{enumerate}
 States: $\{q_\text{start}, q_a, q_b, q_c, q_\text{right}, q_{\text{check},a}, q_{\text{check},b}, q_{\text{check},c}, q_\text{return}, q_\text{accept}, q_\text{reject}\}$.
 
-Transitions: $\delta(q_\text{start}, \pmb{a}) = (q_a, \overline{\pmb{a}}, R)$ [mark $\pmb{a}$, go right]; etc.
+Transitions are given schematically. For each
+$d\in\{\pmb{a},\pmb{b},\pmb{c}\}$,
+\[
+\delta(q_\text{start},d)=(q_d,\overline d,R),
+\]
+which marks the leftmost unprocessed symbol and records it in the state.  In
+state $q_d$, move right over unmarked and marked input symbols until the first
+blank is reached; then move one square left into $q_{\text{check},d}$.  In
+$q_{\text{check},d}$, accept the pair if the scanned unmarked symbol is $d$ by
+writing $\overline d$ and moving left to $q_\text{return}$; reject if it is a
+different unmarked input symbol.  State $q_\text{return}$ moves left to the
+left end of the tape and then returns to $q_\text{start}$. If
+$q_\text{start}$ finds no unmarked input symbol, it enters $q_\text{accept}$.
 
 \item \textbf{Linear Bounded Automaton (LBA)}: Since the tape head never needs to go beyond the input boundaries (matching leftmost/rightmost within the input), the TM above is already an LBA. The computation uses only the $n$ tape cells containing the input.
 
