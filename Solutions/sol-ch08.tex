@@ -712,12 +712,9 @@ P&\to L\pmb{a}.
 \begin{enumerate}
 \item Construct an automaton for $L(G)$ from grammar $G$ using Lemma~8.2, and
 then, if necessary, convert it to an equivalent DFA $A$ by Definition 4.5.
-\item Compute the complement DFA $A^c$ by keeping the same states, start state,
+\item Compute the complement DFA $A^c$ (as outlined in the proof of Theorem 5.1) by keeping the same states, start state,
 and transition function as $A$, and replacing the final-state set $F$ by
-$S-F$.  Since $A$ is a DFA, its transition function is already total; the
-earlier parenthetical ``after making $A$ complete/total'' was only meant as a
-guard against stopping with a partial transition table before the DFA step has
-actually been completed.
+$S-F$.
 \item Construct a right-linear grammar $G^c$ from $A^c$.
 Then $L(G^c) = \overline{L(G)}$.
 \end{enumerate}
@@ -827,19 +824,19 @@ Conversely, any derivation in $G^\bullet$ must use rules from $P_1$ until reachi
 %%------------------------------------------------------------
 \item \textbf{Construct a $\lambda$-NDFA $A'$ with one start and one final state from an NDFA $A$ without $\lambda$-transitions.}
 
-Let $A = \langle\Sigma,S,s_0,\delta,F\rangle$ be an NDFA without $\lambda$-transitions.
+Let $A = \langle\Sigma,S,S_0,\delta,F\rangle$ be an NDFA without $\lambda$-transitions.
 
 Add two new states $i$ and $f$, where $i$ will be the unique start state and
 $f$ the unique final state.  Define
 \[
-A'=\langle\Sigma,S\cup\{i,f\},i,\delta',\{f\}\rangle,
+A'=\langle\Sigma,S\cup\{i,f\},\{i\},\delta',\{f\}\rangle,
 \]
 where
 \[
 \delta'(s,\pmb{a})=\delta(s,\pmb{a})\qquad(s\in S,\ \pmb{a}\in\Sigma),
 \]
 \[
-\delta'(i,\lambda)=\{s_0\},
+\delta'(i,\lambda)=S_0,
 \]
 and for every old final state $p\in F$ we add the $\lambda$-transition
 \[
@@ -848,10 +845,12 @@ f\in\delta'(p,\lambda).
 There are no other new transitions.
 
 Every accepting path of $A$ becomes an accepting path of $A'$ by first taking
-$i\to s_0$, following the old transitions of $A$, and then taking a final
-$\lambda$-move into $f$.  Conversely, any accepting path in $A'$ must begin with
-$i\to s_0$, use only old transitions while reading the input, and end with a
-$\lambda$-move from an old final state into $f$.  Hence
+a $\lambda$-move from $i$ to one of the states in the start set $S_0$, following
+the old transitions of $A$, and then taking a final $\lambda$-move into $f$.
+Conversely, any accepting path in $A'$ must begin with one of the
+$\lambda$-moves from $i$ to a state in $S_0$, use only old transitions while
+reading the input, and end with a $\lambda$-move from an old final state into
+$f$.  Hence
 \[
 L(A')=L(A),
 \]
@@ -987,7 +986,8 @@ $C = \langle\{S,A,B\},\{\pmb{0},\pmb{1}\},S,\{S\to\pmb{0}A|\pmb{1}B|\pmb{0}|\pmb
 
 Derivation: $S \Rightarrow \pmb{0}A \Rightarrow \pmb{0}S\pmb{0}$. Each step wraps the current sentential form between matching symbols. The grammar generates all even-length and odd-length palindromes.
 
-\item Yes, $L(C) = \{w \mid w = w^r\}$ is not regular (it requires unbounded memory to match the first and last symbols). So $L(C)$ is FAD only for the trivial case; in general, $L(C)$ is not FAD.
+\item No. $L(C) = \{w \mid w = w^r\}$ is not regular; it requires unbounded
+memory to match the first and last symbols. Thus $L(C)$ is not FAD.
 
 \item The definition of regular grammars should \emph{not} be expanded to include such mixed grammars, because the resulting class of languages would no longer coincide with the regular languages. Mixed grammars generate languages (like palindromes) that are context-free but not regular.
 \end{enumerate}
@@ -1005,7 +1005,7 @@ Derivation: $S \Rightarrow \pmb{0}A \Rightarrow \pmb{0}S\pmb{0}$. Each step wrap
 %%------------------------------------------------------------
 \item \textbf{If $A_G$ is disconnected, what does this say about $G$?}
 
-If $A_G$ (the NDFA constructed from $G$) is disconnected, it means some states (nonterminals) are not reachable from the start state. This means the corresponding nonterminals in $G$ are \emph{useless}: they cannot appear in any derivation from the start symbol. The portions of $G$ defining those nonterminals contribute nothing to $L(G)$ and can be removed without affecting the language generated.
+If $A_G$ (the NDFA constructed from $G$) is disconnected, it means some states (nonterminals) are not reachable from the start state. This means the corresponding nonterminals in $G$ are \emph{useless}: they cannot appear in any derivation from the start symbol. The portions of $G$ defining those nonterminals contribute nothing to $L(G)$ and can be removed (along with all productions involving the useless nonterminals) without affecting the language generated.
 
 %%------------------------------------------------------------
 \item \textbf{Apply Lemma 8.1 to the automata in Figure 8.4.}
@@ -1070,21 +1070,24 @@ t&\to \pmb{a}r\mid \pmb{c}q.
 \begin{enumerate}
 \item \textbf{Restated Lemma}: Given an NDFA
 \[
-A=\langle\Sigma,S,s_0,\delta,F\rangle,
+A=\langle\Sigma,S,S_0,\delta,F\rangle,
 \]
 define
 \[
-G_A=\langle S,\Sigma,s_0,P\rangle
+G_A=\langle S\cup\{Z\},\Sigma,Z,P\rangle
 \]
-by adding
+where $Z\notin S$, by adding
 \begin{itemize}
+\item a production $Z\to s$ for every start state $s\in S_0$,
 \item a production $s\to \pmb{a}t$ for every $t\in\delta(s,\pmb{a})$,
 \item a production $s\to t$ for every $t\in\delta(s,\lambda)$,
 \item a production $s\to\lambda$ for every final state $s\in F$.
 \end{itemize}
 Then $L(G_A)=L(A)$.
 
-\item \textbf{Proof}: Every production records one NDFA move: letter transitions
+\item \textbf{Proof}: The productions from $Z$ choose exactly one initial state
+from the NDFA start set $S_0$.  Every later production records one NDFA move:
+letter transitions
 become productions of the form $s\to \pmb{a}t$, $\lambda$-transitions become unit
 productions $s\to t$, and final states get the production $s\to\lambda$.  Thus a
 derivation in $G_A$ corresponds exactly to a path in $A$, and the derivation
@@ -1095,12 +1098,14 @@ state.  Therefore $L(G_A)=L(A)$.
 \begin{enumerate}
 \item Figure~8.5(a):
 \[
+Z\to t_0,\qquad
 t_0\to \pmb{a}t_0\mid \pmb{c}t_0\mid \lambda.
 \]
 
 \item Figure~8.5(b):
 \[
 \begin{aligned}
+Z&\to q_1\mid q_0\\
 q_1&\to \pmb{a}q_0\mid \pmb{b}q_1\mid \lambda\\
 q_0&\to \pmb{b}q_1\mid \pmb{c}q_0.
 \end{aligned}
@@ -1109,6 +1114,7 @@ q_0&\to \pmb{b}q_1\mid \pmb{c}q_0.
 \item Figure~8.5(c):
 \[
 \begin{aligned}
+Z&\to r_0\mid r_1\\
 r_0&\to \pmb{a}r_0\mid \pmb{a}r_1\mid \pmb{c}r_1\mid \lambda\\
 r_1&\to \pmb{b}r_0.
 \end{aligned}
@@ -1117,6 +1123,7 @@ r_1&\to \pmb{b}r_0.
 \item Figure~8.5(d):
 \[
 \begin{aligned}
+Z&\to S_0\\
 S_0&\to \pmb{a}S_1\\
 S_1&\to \pmb{a}S_2\mid \pmb{b}S_3\\
 S_2&\to \lambda\\
@@ -1127,6 +1134,7 @@ S_3&\to \pmb{b}S_1.
 \item Figure~8.5(e):
 \[
 \begin{aligned}
+Z&\to S_1\mid S_2\\
 S_1&\to \pmb{a}S_1\mid \pmb{a}S_2\\
 S_2&\to \pmb{a}S_1\mid \pmb{b}S_1\mid \lambda.
 \end{aligned}
@@ -1135,6 +1143,7 @@ S_2&\to \pmb{a}S_1\mid \pmb{b}S_1\mid \lambda.
 \item Figure~8.5(f):
 \[
 \begin{aligned}
+Z&\to S_0\\
 S_0&\to \pmb{a}S_1\\
 S_1&\to S_0\mid \pmb{b}S_2\\
 S_2&\to \pmb{c}S_3\\
@@ -1145,6 +1154,7 @@ S_3&\to S_1\mid \lambda.
 \item Figure~8.5(g):
 \[
 \begin{aligned}
+Z&\to S_0\\
 S_0&\to \pmb{a}S_1\mid \lambda\\
 S_1&\to \pmb{a}S_0\mid \pmb{b}S_3\mid \pmb{c}S_2\\
 S_2&\to \pmb{c}S_1\\
@@ -1252,6 +1262,10 @@ S \to \lambda
 Each nonempty production inserts exactly two $\pmb{a}$s and one $\pmb{b}$, with
 recursive pieces before, between, and after them, so all generated strings
 satisfy $|x|_{\pmb{a}} = 2|x|_{\pmb{b}}$.
+Conversely, any nonempty word satisfying this count condition can be split
+around two occurrences of $\pmb{a}$ and one occurrence of $\pmb{b}$ so that the
+four intervening pieces satisfy the same count condition; induction on the
+length of the word then gives a derivation from $S$.
 
 \item $L_2 = \{x \in \{\pmb{a},\pmb{b}\}^* \mid |x|_{\pmb{a}} \neq |x|_{\pmb{b}}\}$:
 \[
@@ -1384,8 +1398,13 @@ G_2: S \to \pmb{a}S\pmb{c} \mid \pmb{b}T\pmb{c} \mid \lambda, \quad T \to \pmb{b
 
 \item $L_3 = \{x \in \{\pmb{a},\pmb{b},\pmb{c}\}^* \mid |x|_{\pmb{a}} + |x|_{\pmb{b}} = |x|_{\pmb{c}}\}$:
 \[
-G_3: S \to \pmb{a}S\pmb{c} \mid \pmb{b}S\pmb{c} \mid SS \mid \lambda
+G_3: S \to \pmb{a}S\pmb{c} \mid \pmb{c}S\pmb{a}
+      \mid \pmb{b}S\pmb{c} \mid \pmb{c}S\pmb{b}
+      \mid SS \mid \lambda
 \]
+The added left-$\pmb{c}$ alternatives allow strings such as $\pmb{ccab}$:
+$S\Rightarrow \pmb{c}S\pmb{b}\Rightarrow \pmb{cc}S\pmb{ab}
+\Rightarrow \pmb{ccab}$.
 \end{enumerate}
 
 %%------------------------------------------------------------

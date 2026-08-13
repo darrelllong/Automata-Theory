@@ -700,7 +700,12 @@ Each check is computable by structural recursion on $R_1$. Terminates since $R_1
 \item \textbf{Efficient method for $L(A)=\emptyset$ for NDFA $A$, without DFA conversion.}
 
 \begin{enumerate}
-\item \textbf{Method}: BFS/DFS directly on the NDFA $A$ (viewed as a graph). Start from $s_0$, compute the $\lambda$-closure, then follow transitions. $L(A)=\emptyset$ iff no final state is reachable from $s_0$ (via any sequence of transitions and $\lambda$-moves). Reachability on the finite graph of $A$ (without constructing the exponential subset DFA).
+\item \textbf{Method}: BFS/DFS directly on the NDFA $A$ (viewed as a graph).
+Start from the start set $S_0$, compute its $\lambda$-closure, then follow
+transitions. $L(A)=\emptyset$ iff no final state is reachable from any state in
+$S_0$ (via any sequence of transitions and $\lambda$-moves). Reachability on the
+finite graph of $A$ is enough; there is no need to construct the exponential
+subset DFA.
 
 \item \textbf{Method for infinite $L(A)$}: First find all states reachable from
 the initial $\lambda$-closure and all states from which some final state is
