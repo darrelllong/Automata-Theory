@@ -1767,10 +1767,10 @@ using the following construction? Let $G_1 = \langle\Omega_1,\Sigma,S_1,P_1
 \rangle$ and $G_2 = \langle\Omega_2,\Sigma,S_2,P_2\rangle$ be two context-free
 grammars, and without loss of generality assume that $\Omega_1\cap\Omega_2 =
 \emptyset$. Choose a new nonterminal $Z$ such that $Z\not in\Omega_1\cup\Omega_2$,
-and define a new grammar $G^* = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,
+and define a new grammar $G^{\cdot} = \langle\Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,
 P_1\cup P_2\cup\{Z\rightarrow S_1\cdot S_2\}\rangle$. \emph{Note:} It \emph{is}
-straightforward to show that $L(G^*) = L(G_1)\cdot L(G_2)$.
-\item Modify $G^*$ so that it reflects an appropriate valid context-free
+straightforward to show that $L(G^{\cdot}) = L(G_1)\cdot L(G_2)$.
+\item Modify $G^{\cdot}$ so that it reflects an appropriate valid context-free
 grammar. (\emph{Hint:} Pay careful attention to the treatment of lambda
 productions.)
 \item Prove that \CSIG\ is closed under concatenation by using the construction
@@ -1856,8 +1856,8 @@ $\alpha$ and $\gamma$ and nonterminals $X$ and $B$ for which $X\rightarrow\gamma
 B\alpha\in P$. Further assume that the set of all $B$ rules is given by
 $\{B\rightarrow\beta_1,B\rightarrow\beta_2,\ldots,B\rightarrow\beta_m\}$, and
 let $G' = \langle\Omega,\Sigma,S,P'\rangle$, where
-\[ P' = P\cup\{X_B\rightarrow\gamma\beta_1\alpha,X_B\rightarrow\gamma\beta_2
-	\alpha,\ldots,X_B\rightarrow\gamma\beta_m\alpha\}-\{X\rightarrow\gamma
+\[ P' = P\cup\{X\rightarrow\gamma\beta_1\alpha,X\rightarrow\gamma\beta_2
+	\alpha,\ldots,X\rightarrow\gamma\beta_m\alpha\}-\{X\rightarrow\gamma
 	B\alpha\}. \]
 Then $L(G) = L(G')$.
 

@@ -1345,7 +1345,18 @@ and
 S\Rightarrow LR\Rightarrow LDR\Rightarrow DDR\Rightarrow D\pmb{b}R
 \Rightarrow \pmb{bb}DR \Rightarrow \pmb{bbbb}.
 \]
-Therefore $L(G_\Phi)=\Phi$.
+The only way to begin a derivation for a string longer than $\pmb{b}$ is to
+choose $S\to LR$.  After $L\to LD$ has been used $j-1$ times and $L\to D$ has
+removed the $L$, the sentential form is $D^jR$.  In any terminal derivation,
+each of the first $j-1$ occurrences of $D$ must eventually meet $R$ and use
+$DR\to\pmb{b}R$, while the last occurrence must use $DR\to\pmb{bb}$; using
+$DR\to\pmb{bb}$ earlier leaves a $D$ with no possible terminal completion.
+Each earlier $D$ crosses the current block of $\pmb{b}$'s by
+$D\pmb{b}\to\pmb{bb}D$, thereby doubling that block before passing control to
+the next $D$.  Thus $D^jR$ yields exactly $\pmb{b}^{2^j}$, and every
+$j\geq 1$ is obtained by the corresponding number of $L\to LD$ steps.  The
+separate rule $S\to\pmb{b}$ gives the $j=0$ case, so the grammar generates all
+and only the strings in $\Phi$.
 \end{enumerate}
 
 %%------------------------------------------------------------

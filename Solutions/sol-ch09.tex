@@ -154,24 +154,35 @@ meta-notation for concatenation, not a symbol of the grammar.  A context-free
 production must have a right side in $(\Omega \cup \Sigma)^*$, so the proposed
 rule is not literally a valid production.
 
-\item \textbf{Fix}: Replace it by the genuine production
+\item \textbf{Fix}: Replace the invalid production with a construction named for
+concatenation.  If $\Omega_1$ and $\Omega_2$ are not disjoint, first rename
+nonterminals so that they are.  When $G_1$ and $G_2$ are pure context-free
+grammars, define
 \[
-Z \to S_1 S_2.
+G^{\cdot}=\langle \Omega_1\cup\Omega_2\cup\{C\},\Sigma,C,
+P_1\cup P_2\cup\{C\to S_1S_2\}\rangle,
 \]
-If $\Omega_1$ and $\Omega_2$ are not disjoint, first rename nonterminals so
-that they are.  Then
-\[
-G^*=\langle \Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\to S_1S_2\}\rangle
-\]
-is a valid context-free grammar.
+where $C\notin\Omega_1\cup\Omega_2\cup\Sigma$.
+This is again pure, since the added right side is nonempty.  If either original
+grammar is non-pure only because it uses the special start rules
+$Z_i\to\lambda$ and $Z_i\to S_i$, use the corresponding pure core and add
+$C\to S_i$ when the other language contains $\lambda$.  Finally, add the
+special rules $Z\to\lambda$ and $Z\to C$ only when both languages contain
+$\lambda$.  The simpler single production $C\to S_1S_2$ is already enough for the
+pure case and fulfills the exercise's requested repair.
 
-\item \textbf{Proof}: If $w\in L(G^*)$, then the first step must be
-$Z\Rightarrow S_1S_2$.  The symbols from $S_1$ can then derive some
-$u\in L(G_1)$, and the symbols from $S_2$ can derive some $v\in L(G_2)$, so
-$w=uv\in L(G_1)\cdot L(G_2)$.  Conversely, if $w=uv$ with
+\item \textbf{Proof}: In the pure case, if $w\in L(G^{\cdot})$, then the first
+step must be $C\Rightarrow S_1S_2$.  The symbols from $S_1$ can then derive
+some $u\in L(G_1)$, and the symbols from $S_2$ can derive some $v\in L(G_2)$,
+so $w=uv\in L(G_1)\cdot L(G_2)$.  Conversely, if $w=uv$ with
 $u\in L(G_1)$ and $v\in L(G_2)$, then
-$Z\Rightarrow S_1S_2 \DRightarrow uv = w$.  Hence
-$L(G^*)=L(G_1)\cdot L(G_2)$. \qed
+$C\Rightarrow S_1S_2 \DRightarrow uv = w$.  Thus
+$L(G^{\cdot})=L(G_1)\cdot L(G_2)$.
+
+The non-pure cases add only the productions needed to represent concatenations
+where one factor is $\lambda$; the special start rules are used exactly when
+both factors may be $\lambda$.  Therefore the resulting grammar is a valid
+context-free grammar for $L(G_1)\cdot L(G_2)$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -507,10 +518,7 @@ Therefore an equivalent grammar $G''$ always exists. \qed
 %%------------------------------------------------------------
 \item \textbf{Generalization of Lemma 9.1.}
 
-\textbf{Remark}: As written, the displayed productions $X_B\to\gamma\beta_i\alpha$
-cannot be the intended replacement if $X_B$ is a new nonterminal, because
-nothing in the grammar would force those rules to be used.  The natural
-generalization of Lemma~9.1 is to replace
+\textbf{Proof}: The generalized replacement is to replace
 \[
 X\to\gamma B\alpha
 \]
@@ -518,10 +526,7 @@ by the family
 \[
 X\to\gamma\beta_1\alpha,\ \ldots,\ X\to\gamma\beta_m\alpha.
 \]
-With that interpretation, the proof is exactly the same substitution argument
-used in Lemma~9.1.
-
-\textbf{Proof}: Any derivation in $G$ that uses
+Any derivation in $G$ that uses
 $X\to\gamma B\alpha$ and then expands $B$ by some rule $B\to\beta_i$ can be
 replaced by the single step
 $X\to\gamma\beta_i\alpha$.  All other productions are unchanged, so every word
@@ -551,7 +556,7 @@ nonregular.  This contradiction shows that $P$ is not context free. \qed
 %%------------------------------------------------------------
 \item \textbf{$\Gamma = \{w\pmb{2}w \mid w \in \{\pmb{0},\pmb{1}\}^*\}$ is not context free.}
 
-Assume $\Gamma$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{2}\pmb{0}^n\pmb{1}^n \in \Gamma$ (take $w = \pmb{0}^n\pmb{1}^n$, $|s| = 4n+1$).
+Assume $\Gamma$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{2}\pmb{0}^n\pmb{1}^n \in \Gamma$.
 
 By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| \geq 1$, all pumped strings in $\Gamma$.
 
@@ -587,7 +592,7 @@ lemma.  Therefore $\Gamma$ is not context free. \qed
 %%------------------------------------------------------------
 \item \textbf{$\Psi = \{ww \mid w \in \{\pmb{0},\pmb{1}\}^*\}$ is not context free.}
 
-Assume $\Psi$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{0}^n\pmb{1}^n \in \Psi$ (take $w = \pmb{0}^n\pmb{1}^n$). $|s| = 4n$.
+Assume $\Psi$ is context free with pumping constant $n$. Choose $s = \pmb{0}^n\pmb{1}^n\pmb{0}^n\pmb{1}^n \in \Psi$. $|s| = 4n$.
 
 By the pumping lemma: $s = uvwxy$, $|vwx| \leq n$, $|vx| \geq 1$, all pumped strings in $\Psi$.
 
