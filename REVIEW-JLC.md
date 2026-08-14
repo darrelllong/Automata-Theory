@@ -1,24 +1,26 @@
-[DONE] 8.38c: Replace the last sentence with a fuller justification of why the
+1.8: The given solution is actually for Exercise 1.9, so label it correctly.
+A solution for Exercise 1.8 (L(M) - {\lambda} is currently nonexistent.
+(1.9 uses 'union', 1.8 uses '-')  Solve Exercise 1.8 and insert that
+solution in the proper place; this should fix all subsequent numbering
+discrepancies.
+
+8.38c: My original request resulted in no change.  Think harder about this:
+Replace the last sentence with a fuller justification of why the
 solution generates all the required strings (and only the required strings).
 
-[DONE] 9.6b: The new symbol G^* would be a more appropriate name for a construct that
-defined a Kleene closure: since this exercise is centered around concatenation,
-a superscript using a 'dot' would be more appropriate.  [Cf the names used
-for the constructs in the proof of Theorems 5.4 versus Theorem 5.5]
+9.19: Restore the observation that |s| = 4n+1 .
 
-[DONE] 9.6b: Adjust the definition so that if the initial G_1 and G_2 are pure
-context-free grammars, then the new construct is also pure.  Though this
-constraint was not required in the exercise statement, point out this
-'pure-preserving feature, and mention that a simpler set of productions
-[as described in your current iteration] also fulfills what was asked for.
-Adjust 9.6c accordingly.
+9.28: Precede the first sentence with "Determine if "
 
-[DONE] 9.17: Adjust the proposed generalization in Ch-09.tex for 9.17 to reflect
-the natural generalization you have proposed.  [That should render the
-remark in sol-ch09.tex superfluous.]
+9.29: The 'Disproof' contains an unspecified n, allowing a^nb^n to be
+interpreted as a single word.  Replace this paragraph with an actual
+counterexample.  (And retain the second paragraph as well.)
 
-[DONE] 9.19,9.20: The first sentence of each of these solutions mentions "take w =",
-and here 'w' refers to the dummy variable in the set definition, whereas 'w'
-in the rest of the solution references the dummy variable in the pumping lemma.
-Avoid the ambiguity by removing the characters between '(' and ',' in the
-first sentence.
+9.30a: The exercise explicitly asks for a proof involving a two-letter
+alphabet.  Using three letters (a,b,c) does not fit that constraint.  Revise.
+
+9.33: Leave the given solution unchanged, but revise the ch-09.tex problem
+to use the directive 'Prove or disprove'.
+
+9.35: {a^nb^n} needs 'n' to be qualified, so that it doesn't appear to be
+a singleton set.  Fix {a^nb^nc^m} similarly.
