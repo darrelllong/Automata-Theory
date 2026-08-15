@@ -586,14 +586,14 @@ been consumed, so it accepts precisely $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; part~(b) as printed is false.}
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; part~(b) counterexample.}
 
 \begin{enumerate}
 \item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not CFL}: Assume it is, with pumping constant $N$. Take $s=\pmb{a}^N\pmb{b}^N\pmb{c}^N$. By the pumping lemma, $s=uvwxy$ with $|vwx|\leq N$ and $|vx|\geq 1$.
 
 Since $|vwx|\leq N$, the substring $vwx$ cannot span all three blocks. So $v$ and $x$ together involve at most two of $\{\pmb{a},\pmb{b},\pmb{c}\}$. Pumping changes the count of at most two symbols while leaving the third unchanged. But all three must be equal, so the pumped string fails $|u|_{\pmb{a}}=|u|_{\pmb{b}}=|u|_{\pmb{c}}$ for some $i\neq 1$. Contradiction. \qed
 
-\item \textbf{Disproof}: the printed statement is false, because
+\item \textbf{Disproof}: the statement in part~(b) is false, because
 \[
 L = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}
 \]

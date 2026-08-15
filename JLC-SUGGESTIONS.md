@@ -203,9 +203,9 @@ manual pass.
 - Review `Solutions/sol-ch10.tex:535`--`547`, where a non-CFL proof uses a
   closure reduction to `{a^n b^n c^k | n > k}`. The proof is brief and should be
   checked for a fully valid pumping argument.
-- Review `Solutions/sol-ch10.tex:589`--`604`, where the solution says part (b)
-  of a printed exercise is false as written. This is a high-priority author
-  review item.
+- The previous contradiction between Exercise 10.21(b)'s directive and the
+  solution has been reconciled: the exercise now asks to "Prove or disprove,"
+  and the solution gives the counterexample.
 - Review deterministic-PDA claims in `Solutions/sol-ch10.tex`, especially
   closure under prefix/operator constructions and non-closure examples around
   `Solutions/sol-ch10.tex:774`--`872`; these rely on subtle DCFL closure facts.
@@ -262,8 +262,8 @@ manual pass.
   Chapter 7 (`72` versus `78`), Chapter 9 (`36` versus `51`),
   and Chapter 11 (`20` versus `23`).
 - Check whether any solution item explicitly contradicts the printed exercise
-  text. The clearest current examples are in Chapter 9 (`L^*` regularity) and
-  Chapter 10 (part (b) marked false as printed).
+  text. Recent Chapter 9 and Chapter 10 directive mismatches have been
+  reconciled, but this remains worth auditing chapter by chapter.
 - Review build-log layout warnings after content review. The worst current
   solution warning is the Roman numeral DFA display in Chapter 1; the book also
   has float-size/placement warnings around figure-heavy chapters.
