@@ -1413,7 +1413,21 @@ G_3: S \to \pmb{a}S\pmb{c} \mid \pmb{c}S\pmb{a}
       \mid \pmb{b}S\pmb{c} \mid \pmb{c}S\pmb{b}
       \mid SS \mid \lambda
 \]
-The added left-$\pmb{c}$ alternatives allow strings such as $\pmb{ccab}$:
+Every production preserves the difference
+$|x|_{\pmb{c}}-(|x|_{\pmb{a}}+|x|_{\pmb{b}})$: the four wrapping productions add
+one $\pmb{c}$ and one non-$\pmb{c}$ symbol, $SS$ concatenates two already
+balanced strings, and $S\to\lambda$ supplies the empty balanced string.  Hence
+the grammar generates only strings in $L_3$.
+
+Conversely, let $x\in L_3$.  If a proper nonempty prefix of $x$ is already
+balanced, split $x=uv$ at the first such prefix and derive $u$ and $v$ by
+induction, then use $S\to SS$.  If no proper prefix is balanced, the first and
+last symbols must be one $\pmb{c}$ and one symbol from
+$\{\pmb{a},\pmb{b}\}$; removing those two symbols leaves a shorter balanced
+string, which is handled by one of
+$S\to \pmb{a}S\pmb{c}$, $S\to \pmb{b}S\pmb{c}$,
+$S\to \pmb{c}S\pmb{a}$, or $S\to \pmb{c}S\pmb{b}$.  Thus all required strings
+are generated.  For example,
 $S\Rightarrow \pmb{c}S\pmb{b}\Rightarrow \pmb{cc}S\pmb{ab}
 \Rightarrow \pmb{ccab}$.
 \end{enumerate}

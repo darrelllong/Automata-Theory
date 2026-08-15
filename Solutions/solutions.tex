@@ -1176,7 +1176,39 @@ The common 4-state machine (shown here for $A_1$ with $F=\{oe\}$; change $F$ for
 \end{center}
 
 %%------------------------------------------------------------
-\item \textbf{Modify $M$ to accept $L(M)-\{\lambda\}$.}
+\item \textbf{Modify the machine from Example 1.10 to accept
+$L(M)-\{\lambda\}$.}
+
+In Example~1.10,
+\[
+S=\{\langle0,0\rangle,\langle0,1\rangle,\langle1,0\rangle,\langle1,1\rangle\},
+\quad s_0=\langle0,0\rangle,\quad F=\{\langle0,0\rangle\},
+\]
+and the transition function toggles the first coordinate on input $\pmb{a}$ and
+the second coordinate on input $\pmb{b}$.
+
+Add a fresh start state $s_0'$ that is not final.  Let
+\[
+S'=S\cup\{s_0'\},\qquad F'=\{\langle0,0\rangle\},
+\]
+and keep the old transitions on the old states.  Define the two new transitions
+by
+\[
+\delta'(s_0',\pmb{a})=\langle1,0\rangle,\qquad
+\delta'(s_0',\pmb{b})=\langle0,1\rangle.
+\]
+Thus
+\[
+M'=\langle\{\pmb{a},\pmb{b}\},S',s_0',\delta',F'\rangle.
+\]
+The word $\lambda$ is rejected because $s_0'\notin F'$.  For any nonempty word,
+the first input letter moves $M'$ to exactly the state that $M$ would reach after
+reading that same first letter from $\langle0,0\rangle$, and all later
+transitions are unchanged.  Hence every nonempty word is accepted by $M'$ iff it
+was accepted by $M$, so $L(M')=L(M)-\{\lambda\}$.
+
+%%------------------------------------------------------------
+\item \textbf{General procedure to modify $M$ to accept $L(M)-\{\lambda\}$.}
 
 If $s_0 \notin F$ then $\lambda\notin L(M)$ and $M$ already accepts $L(M)\setminus\{\lambda\}=L(M)$; nothing to do.
 
