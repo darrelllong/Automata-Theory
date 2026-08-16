@@ -200,9 +200,10 @@ manual pass.
   `ch-10.tex:805`, `ch-10.tex:807`, `ch-10.tex:815`, `ch-10.tex:816`,
   `ch-10.tex:853`, `ch-10.tex:924`, `ch-10.tex:927`, `ch-10.tex:928`,
   `ch-10.tex:1257`, `ch-10.tex:1434`, and `ch-10.tex:1474`.
-- Review `Solutions/sol-ch10.tex:535`--`547`, where a non-CFL proof uses a
-  closure reduction to `{a^n b^n c^k | n > k}`. The proof is brief and should be
-  checked for a fully valid pumping argument.
+- The closure-reduction solution for
+  `{x | |x|_a = |x|_b and |x|_b > |x|_c}` now includes an explicit pumping
+  argument for `{a^n b^n c^k | n > k}` rather than relying on a parenthetical
+  proof sketch.
 - The previous contradiction between Exercise 10.21(b)'s directive and the
   solution has been reconciled: the exercise now asks to "Prove or disprove,"
   and the solution gives the counterexample.
