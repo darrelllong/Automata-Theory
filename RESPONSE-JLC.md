@@ -104,3 +104,114 @@ Below is the list of red typo/grammar/punctuation markings currently present in 
 - `ch-12.tex:1183` \textcolor{red}{$A$} set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
 - `ch-12.tex:1202` show that it is decidable whether there is a DFA with \textcolor{red}{less} than 31 states that
 - `ch-12.tex:1205` \item Given any alphabet $\Sigma$ and \textcolor{red}{a} regular expressions $R_1$ over $\Sigma$,
+
+# Exercise Answer Review Notes, Chapters 0-6
+
+Prof. Carroll, I went through the solution-answer source for chapters 0 through
+6 and made a list of items I think are worth another look. Some are likely just
+wording or notation cleanups; a few may affect the mathematical argument.
+
+## Chapter 0
+
+- **Exercise 0.15**: The solution heading describes the rule as
+  `$x \mapsto \arccos(x)$`, but the exercise statement describes pairing `x`
+  with "the real number whose cosine is `x`." If `arccos` is read as the
+  principal inverse-cosine function, then the "not well defined" explanation is
+  confusing. The answer itself seems to address the intended converse-of-cosine
+  relation, so this may only need a heading/prose adjustment.
+
+- **Exercise 0.18**: The solution treats the statement as `f: X -> Y`, but the
+  book source currently says `Let f: X\times Y be an arbitrary function`. The
+  answer appears to use the intended formulation, so the exercise statement and
+  solution should be aligned.
+
+## Chapter 1
+
+- **General**: I did not find a `Solutions/sol-ch01.tex` file, and
+  `Solutions/solutions.tex` jumps from `sol-ch00.tex` to `sol-ch02`. If chapter
+  1 exercise answers are expected in the solutions manual, they appear to be
+  missing or located somewhere other than the chapter solution files.
+
+## Chapter 2
+
+- **Exercise 2.7(e)**: The answer says that relabeling final states in `A_Q`
+  gives `C_e \cup [\lambda]_Q` versus `C_o`, and then says "this collapses to
+  `A_{R_L}`." That sounds like the original language `L`, not the requested new
+  language `K` whose Nerode machine should look like the relabeled `A_Q`.
+  Exercise 2.7(f) later identifies two choices that keep the three `Q`-classes
+  distinct, so part (e) may need to exhibit one of those directly.
+
+- **Exercises 2.13 and 2.47**: Both induction steps use a right-end
+  decomposition `y = wa`. Definition 1.11(iii) defines `\DBAR` recursively from
+  the left, with strings of the form `a x`. If these proofs are intended to rely
+  directly on Definition 1.11, it may be cleaner to rewrite the induction steps
+  with a left-end decomposition or explicitly cite a previously proved
+  right-recursive equivalent.
+
+- **Exercise 2.81**: The proof that decimal powers of 2 are not FAD may be
+  correct, but it relies on the number-theoretic fact that the order of `2`
+  modulo `5^r` is `4*5^{r-1}`. That is a fairly heavy lemma for this setting.
+  It may be worth checking whether this is the intended level of proof, or
+  whether a simpler Nerode/pumping argument is expected.
+
+## Chapter 3
+
+- **Exercise 3.61**: In the isomorphism proof for `A_{R^A} \cong A^c`, the
+  final-state line ends with `\DBAR(s_0,x)\in F=F^c`. That reads as if
+  `F = F^c`, which is generally false. I think the intended statement is that
+  the reached connected state lies in the final set of the connected part, e.g.
+  `\DBAR(s_0,x)\in F^c` or `\DBAR(s_0,x)\in F\cap S^c`.
+
+## Chapter 4
+
+- **Exercise 4.38**: The connected-portion algorithm for NDFAs is clear, but
+  the runtime claim `O(|S|\cdot|\Sigma|)` may undercount the cost of scanning
+  nondeterministic transition sets. Depending on the representation of
+  `\delta(s,a)`, this should probably be stated in terms of the total transition
+  relation, or as something like `O(|S|^2\cdot|\Sigma|)` in a dense
+  subset-valued representation.
+
+## Chapter 5
+
+- **Exercise 5.2(d)**: The concatenation proof for cofinite languages has a
+  first sentence that seems circular or at least too fast: it says the set of
+  words not writable as a product from `L_1` and `L_2` is finite because the
+  languages omit only finitely many words. The later threshold argument is the
+  real proof and looks like the part to keep; the earlier sentence may be worth
+  deleting or softening.
+
+- **Exercise 5.5(a)**: The complement-closure discussion for `J_\Sigma` says
+  `\sim(\sim L)=L` is infinite, but the same paragraph correctly uses the
+  counterexample `L=\emptyset`. Since a language in `J_\Sigma` need not itself
+  be infinite, that sentence should be revised even though the conclusion is
+  right.
+
+- **Exercise 5.65(c)**: The `C_\Sigma` part says, "If `P` is cofinite: `P` is
+  not cofinite," which looks like a typo/logic hiccup. The intended
+  counterexample seems to be `L=\Sigma^*`, so `I(L)=P`, and `P` is neither
+  finite nor cofinite.
+
+## Chapter 6
+
+- **Exercise 6.13**: The proposed expression for decimal strings divisible by
+  5 is `(\pmb{0}\cup\cdots\cup\pmb{9})^*(\pmb{0}\cup\pmb{5})`. This is right
+  for nonempty decimal strings, but Exercise 6.12 explicitly treats `\lambda`
+  as representing zero in the divisible-by-3 language. If the same convention is
+  intended here, this expression should include `\epsilon`.
+
+- **Exercise 6.33**: The solution notes that the coefficient
+  `(\pmb{10})^*` contains `\lambda`, so Theorem 6.1 does not guarantee a unique
+  solution, and then gives the least solution. Since the exercise simply says
+  "solve" the system, it may be worth either describing all solutions or
+  explicitly saying that only the least solution is being reported.
+
+- **Exercise 6.36(c)**: In the reversal induction, the Kleene-star case writes
+  `L(R)^r=(L(R_1)^*)^*{}^{\,r}`. That extra star is confusing; the line should
+  likely start from `(L(R_1)^*)^r` before concluding `(L(R_1)^r)^*`.
+
+- **Exercise 6.44**: The exercise statement says `s: \Sigma -> \Gamma^*`, but
+  the solution treats `s` as a regular-set substitution with values such as
+  `s(\pmb{a})=(\pmb{a}\cup\pmb{b})`. That matches Definition 6.5, not a
+  string-valued homomorphism. The exercise statement and solution should be
+  aligned, especially because part (b)'s example is not type-correct if
+  `s(\pmb{a})` must be a single word in `\Gamma^*`.
