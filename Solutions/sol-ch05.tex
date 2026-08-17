@@ -33,7 +33,7 @@
 
   \item \textbf{Intersection: Yes.}  $L_1\cap L_2=\Sigma^*\setminus(F_1\cup F_2)$.  Since $F_1$ and $F_2$ are finite, so is $F_1\cup F_2$, hence $L_1\cap L_2\in C_\Sigma$.
 
-  \item \textbf{Concatenation: Yes.}  If $L_1,L_2\in C_\Sigma$ (both infinite), then $L_1\cdot L_2$ contains arbitrarily long words, but let us verify cofiniteness.  Since $\Sigma^*\setminus(L_1\cdot L_2)\subseteq$ the set of words not writable as a product from $L_1$ and $L_2$; this set is finite because $L_1$ and $L_2$ each omit only finitely many words.  More precisely: there exists $N_1$ such that all words of length $\ge N_1$ are in $L_1$, and there exists $N_2$ such that all words of length $\ge N_2$ are in $L_2$.  Then any word of length $\ge N_1+N_2$ can be split so that both parts are in $L_1$ and $L_2$, so $L_1\cdot L_2$ is cofinite.
+  \item \textbf{Concatenation: Yes.}  If $L_1,L_2\in C_\Sigma$, then there exists $N_1$ such that all words of length $\ge N_1$ are in $L_1$, and there exists $N_2$ such that all words of length $\ge N_2$ are in $L_2$.  Then any word of length $\ge N_1+N_2$ can be split so that both parts are in $L_1$ and $L_2$, so $L_1\cdot L_2$ is cofinite.
 
   \item \textbf{Kleene closure: Yes.}  Since $L$ is cofinite, there is an $N$
   such that every word of length at least $N$ lies in $L$.  Hence every word of
@@ -114,7 +114,7 @@
 \item $J_\Sigma=\wp(\Sigma^*)\setminus C_\Sigma$, languages with infinite complements.
 
 \begin{enumerate}[(a)]
-  \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite, i.e., $\sim L\in I_\Sigma$.  Then $\sim(\sim L)=L$; is $\sim L\in J_\Sigma$?  $\sim(\sim L)=L$ is infinite (since $L\in J_\Sigma$ is not cofinite, its complement is infinite, so $L$ itself need not be infinite).  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\notin J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
+  \item \textbf{Complementation: No.}  $L\in J_\Sigma$ means $\sim L$ is infinite.  For $\sim L$ itself to belong to $J_\Sigma$, its complement $\sim(\sim L)=L$ would also have to be infinite; this need not hold.  Counterexample: $L=\emptyset\in J_\Sigma$ (complement is $\Sigma^*$, infinite), but $\sim L=\Sigma^*\notin J_\Sigma$ (complement is $\emptyset$, finite).  \textbf{Not closed.}
   \item \textbf{Union: No.}  Over $\Sigma=\{\pmb{a}\}$, let
   $L_1=\{\pmb{a}^{2n}\mid n\ge 0\}$ and $L_2=\{\pmb{a}^{2n+1}\mid n\ge 0\}$.
   Both have infinite complements, so both belong to $J_\Sigma$.  But
@@ -1172,7 +1172,7 @@ Hence $U(L)\in\DSIG$. \qed
 
   \item \textbf{$F_\Sigma$ closed under $I$.}  $I(L)=L\cap P\subseteq L$; if $L$ is finite, so is $I(L)$.
 
-  \item \textbf{$C_\Sigma$ closed under $I$? No.}  $L=\Sigma^*\setminus F$ for finite $F$.  $I(L)=P\setminus F'$ for some finite $F'$.  If $P$ is cofinite: $P$ is not cofinite (infinitely many non-primes), so $P\setminus F'$ is not cofinite.  \textbf{Not closed.}
+  \item \textbf{$C_\Sigma$ closed under $I$? No.}  Take $L=\Sigma^*$.  Then $L\in C_\Sigma$, but $I(L)=P$, the set of prime-length words.  $P$ is neither finite nor cofinite, since there are infinitely many primes and infinitely many non-primes.  \textbf{Not closed.}
 
   \item \textbf{$B_\Sigma$ closed under $I$? No.}  $I(\Sigma^*)=P\notin B_\Sigma$ (not finite, not cofinite).
 

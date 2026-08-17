@@ -179,9 +179,11 @@ X_0={}&((D_0)^*\cup(D_0)^*D_1((D_0\cup D_2(D_0)^*D_1))^*D_2(D_0)^*) \\
 %% 6.13
 \item $K=\{x\mid x\text{ is divisible by }5\}$ over decimal digits:
 
-A decimal number is divisible by 5 iff it ends in $\pmb{0}$ or $\pmb{5}$.
+A nonempty decimal string represents a number divisible by 5 iff it ends in
+$\pmb{0}$ or $\pmb{5}$.  Using the same convention as Exercise~6.12, where
+$\lambda$ represents zero,
 \[
-  K = (\pmb{0}\cup\pmb{1}\cup\cdots\cup\pmb{9})^*(\pmb{0}\cup\pmb{5})
+  K = \epsilon\cup(\pmb{0}\cup\pmb{1}\cup\cdots\cup\pmb{9})^*(\pmb{0}\cup\pmb{5})
 \]
 
 %% 6.14
@@ -676,7 +678,7 @@ Back-substitution then gives
   \]
   If $R=R_1^*$, then
   \[
-  L(R)^r=(L(R_1)^*)^*{}^{\,r}=(L(R_1)^r)^*
+  L(R)^r=(L(R_1)^*)^r=(L(R_1)^r)^*
   =(L(R_1^r))^*=L((R_1^r)^*)=L(R^r).
   \]
   Thus the claim holds in all three operator cases.  \qed
