@@ -1778,7 +1778,11 @@ exists to find the connected portion.}
   \end{enumerate}
   Each iteration of the while loop adds at least one state to $R$ (otherwise
   $\text{New}=\emptyset$ and we stop).  Thus the loop executes at most $|S|$
-  times, and the algorithm runs in $O(|S|\cdot|\Sigma|)$ time. \qed
+  times.  The running time depends on how the transition sets are represented:
+  with adjacency lists it is linear in the number of reachable transition
+  triples $(s,\pmb{a},t)$ with $t\in\delta(s,\pmb{a})$, while a dense
+  subset-valued representation gives a bound of $O(|S|^2\cdot|\Sigma|)$.
+  In either representation the procedure is finite and effective. \qed
   \end{proof}
 \end{enumerate}
 
