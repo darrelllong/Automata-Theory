@@ -183,9 +183,9 @@ manual pass.
   whether these labels should be normalized.
 - Check `ch-09.tex:1114`; the red-marked "non[left]recursive X-rules" looks like
   an editing artifact or notation that needs author approval.
-- Review `Solutions/sol-ch09.tex:1011`--`1041`, where the solution says the
-  printed statement "Prove `L^*` must be regular for any collection `L`" is false
-  as written. This should be reconciled with the book exercise text.
+- The earlier Chapter 9 directive mismatch for `L^*` has been reconciled: the
+  exercise now asks the reader to prove or disprove regularity, matching the
+  counterexample in the solution.
 - Review the non-CFL pumping/Ogden arguments in `Solutions/sol-ch09.tex`,
   especially prime lengths, copy languages, powers of two, squares, and the final
   Ogden lemma exercise. These are high-risk for small proof gaps.
@@ -241,8 +241,9 @@ manual pass.
   `ch-12.tex:1202`, and `ch-12.tex:1205`.
 - Check repeated "there are an infinite/uncountable/countable number" phrasing
   across the chapter for a consistent editorial rule.
-- Review `ch-12.tex:1183`, where the red-marked `$A$` likely needs a textual
-  correction at the start of a sentence.
+- The earlier Chapter 12 math-mode `$A$` typo has been corrected to textual
+  red-marked `A`; Prof. Carroll still needs to review whether to accept or
+  revise the red-marked copy edit itself.
 - Recheck the recent solution notation cleanup in `Solutions/sol-ch12.tex`
   around the NDFA emptiness method; it now starts from the start set `S_0`.
 - Review the decidability reductions and enumeration arguments for
