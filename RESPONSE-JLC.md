@@ -101,7 +101,7 @@ Below is the list of red typo/grammar/punctuation markings currently present in 
 - `ch-12.tex:950` We now consider languages whose \textcolor{red}{criteria} for membership is related to the
 - `ch-12.tex:976` have shown that, since there \textcolor{red}{are} only a countable number of type 0 grammars and
 - `ch-12.tex:992` Our original \textcolor{red}{criteria} for belonging to the language $L$ accepted by a Turing
-- `ch-12.tex:1183` \textcolor{red}{$A$} set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
+- `ch-12.tex:1183` \textcolor{red}{A} set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
 - `ch-12.tex:1202` show that it is decidable whether there is a DFA with \textcolor{red}{less} than 31 states that
 - `ch-12.tex:1205` \item Given any alphabet $\Sigma$ and \textcolor{red}{a} regular expressions $R_1$ over $\Sigma$,
 
