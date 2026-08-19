@@ -1573,7 +1573,18 @@ $A$ is not connected.
 
 \item Well-defined: $[x]_{R^A}=[y]_{R^A}\Rightarrow\DBAR(s_0,x)=\DBAR(s_0,y)$. \checkmark
 
-\item Homomorphism: $\psi([\lambda]_{R^A})=s_0$. $\psi([xa]_{R^A})=\DBAR(s_0,xa)=\delta(\DBAR(s_0,x),a)=\delta(\psi([x]_{R^A}),a)$. $[x]\in F_{R^A}\Leftrightarrow x\in L(A)\Leftrightarrow\DBAR(s_0,x)\in F\cap S^c=F^c$. \checkmark
+\item Homomorphism: $\psi([\lambda]_{R^A})=s_0$. Also
+\[
+\psi([xa]_{R^A})=\DBAR(s_0,xa)=\delta(\DBAR(s_0,x),a)
+=\delta(\psi([x]_{R^A}),a).
+\]
+Finally, since $F^c=F\cap S^c$ for the connected part of $A$,
+\[
+[x]\in F_{R^A}\Leftrightarrow x\in L(A)
+\Leftrightarrow\DBAR(s_0,x)\in F
+\Leftrightarrow\psi([x])\in F^c.
+\]
+\checkmark
 
 \item Isomorphism: Injective: $\psi([x])=\psi([y])\Rightarrow\DBAR(s_0,x)=\DBAR(s_0,y)\Rightarrow[x]=[y]$. Surjective (onto $S^c$): if $s\in S^c$, then connectedness gives a string $x_s$ with $s=\DBAR(s_0,x_s)$, and therefore $s=\psi([x_s])$.
 \end{enumerate}
