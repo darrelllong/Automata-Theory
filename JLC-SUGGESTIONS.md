@@ -136,9 +136,8 @@ manual pass.
 - Review red-marked book passages in `ch-07.tex`, especially punctuation at
   `ch-07.tex:585`, agreement at `ch-07.tex:1668`, and singular/plural wording at
   `ch-07.tex:1782`.
-- Source-label issue: `ch-07.tex` uses `\label{7.3}` and `\label{7.4}` for two
-  sections instead of the `sec-7.x` pattern used elsewhere. JLC should decide
-  whether those labels should be normalized.
+- The earlier source-label issue in `ch-07.tex` has been resolved: section
+  labels now follow the `sec-7.x` pattern used elsewhere.
 - Review the large applied exercises and solutions: elevator, traffic signal,
   walk signals, left-turn signals, and base adders. These are long enough that
   "works by construction" prose may hide missing state/output cases.
@@ -178,9 +177,8 @@ manual pass.
   `ch-09.tex:438`, `ch-09.tex:951`, `ch-09.tex:1088`, `ch-09.tex:1114`,
   `ch-09.tex:1205`, `ch-09.tex:1367`, `ch-09.tex:1371`, `ch-09.tex:1719`, and
   `ch-09.tex:1721`.
-- Source-label issue: section labels `\label{9.4}` and `\label{9.5}` do not
-  follow the `sec-9.x` pattern used in earlier sections. JLC should decide
-  whether these labels should be normalized.
+- The earlier source-label issue in `ch-09.tex` has been resolved: section
+  labels now follow the `sec-9.x` pattern used elsewhere.
 - Check `ch-09.tex:1114`; the red-marked "non[left]recursive X-rules" looks like
   an editing artifact or notation that needs author approval.
 - The earlier Chapter 9 directive mismatch for `L^*` has been reconciled: the
