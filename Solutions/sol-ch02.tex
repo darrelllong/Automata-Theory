@@ -77,7 +77,18 @@ $Q$ has three equivalence classes: $[x]_Q$ depends on $|x|_\mathbf{a}\bmod 3$. S
 
 \item $A_{R_L}$: 2 states (even, odd), final: even.
 
-\item $A_Q$ with relabeled final states: Yes. $C_e\cup[\lambda]_Q$ vs.\ $C_o$ -- this collapses to $A_{R_L}$.
+\item The original choice of final states, $[\lambda]_Q\cup C_e$, does not
+give a three-state minimal machine: it collapses $[\lambda]_Q$ and $C_e$ and
+therefore gives the two-state machine $A_{R_L}$.  To make $A_{R_K}$ look like
+the three-state machine $A_Q$, relabel the final states so that
+\[
+K=C_e.
+\]
+Then $z=\lambda$ distinguishes $[\lambda]_Q$ from $C_e$, since
+$\lambda\notin K$ but $\pmb{aa}\in K$, and it also distinguishes $C_e$ from
+$C_o$, since $\pmb{aa}\in K$ but $\pmb{a}\notin K$.  Thus the three
+$Q$-classes remain distinct, so $R_K=Q$ and $A_{R_K}$ has the same state
+structure as this relabeled $A_Q$.
 
 \item The eight languages are the $2^3=8$ unions of subsets of $\{[\lambda]_Q, C_e, C_o\}$. A language $K$ satisfies the criterion of part (e) iff $R_K = Q$, i.e., $A_Q$ (relabeled with new final states for $K$) is already minimal.
 
@@ -121,6 +132,9 @@ $\delta_{R_L}([x]_{R_L}, a) = [xa]_{R_L}$. We must show: if $[x]_{R_L}=[y]_{R_L}
 
 %%------------------------------------------------------------
 \item \textbf{Prove $\DBAR_{R_L}([x]_{R_L},y)=[xy]_{R_L}$ by induction on $|y|$.}
+
+The step below uses the right-end form of the recursion, justified by the
+Chapter 1 concatenation theorem for $\DBAR$.
 
 \textit{Base} $|y|=0$: $\DBAR_{R_L}([x],\lambda)=[x]=[x\lambda]$. \checkmark
 
@@ -890,6 +904,9 @@ So $\delta_Q$ is well defined. $\square$
 
 %%------------------------------------------------------------
 \item \textbf{Prove $\DBAR_Q([x]_Q,y)=[xy]_Q$ by induction.}
+
+As above, the right-end decomposition is legitimate by the Chapter 1
+concatenation theorem for $\DBAR$.
 
 \textit{Base}: $\DBAR_Q([x]_Q,\lambda)=[x]_Q=[x\lambda]_Q$. \checkmark
 

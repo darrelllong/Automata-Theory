@@ -542,7 +542,40 @@ Suppose $K \in \PSIG$. Consider the regular language $R = \pmb{a}^*\pmb{b}^*\pmb
 
 $K \cap R = \{\pmb{a}^n\pmb{b}^n\pmb{c}^k \mid n>k\}$.
 
-If $K$ were a CFL, then $K \cap R$ would be a CFL (by Theorem 10.6: CFL $\cap$ regular $=$ CFL). But $\{\pmb{a}^n\pmb{b}^n\pmb{c}^k \mid n>k\}$ is not context free (one can apply the pumping lemma to strings $\pmb{a}^p\pmb{b}^p\pmb{c}^{p-1}$; any pumping either changes the $\pmb{a}$-count differently from the $\pmb{b}$-count, or changes the $\pmb{c}$-count, in each case violating the constraints).
+If $K$ were a CFL, then $K \cap R$ would be a CFL (by Theorem 10.6: CFL $\cap$ regular $=$ CFL). We show this is impossible.
+
+Assume
+\[
+H=\{\pmb{a}^n\pmb{b}^n\pmb{c}^k \mid n>k\}
+\]
+is context free, with pumping constant $p$.  Choose
+\[
+z=\pmb{a}^p\pmb{b}^p\pmb{c}^{p-1}\in H.
+\]
+By the pumping lemma, write $z=uvwxy$ with $|vwx|\leq p$, $|vx|\geq 1$, and
+$uv^i wx^i y\in H$ for every $i\geq 0$.
+
+The substring $vwx$ has length at most $p$, so it cannot meet both the
+$\pmb{a}/\pmb{b}$ boundary and the $\pmb{b}/\pmb{c}$ boundary.  If $vx$ contains
+symbols from only one of the three blocks, pumping with $i=0$ changes exactly
+one of the three counts.  Changing only the $\pmb{a}$-count or only the
+$\pmb{b}$-count destroys the equality of the first two counts; changing only
+the $\pmb{c}$-count and pumping upward with $i=2$ gives at least $p$ copies of
+$\pmb{c}$ while the common $\pmb{a}$- and $\pmb{b}$-count remains $p$, so
+$n>k$ fails.
+
+It remains to consider the cases where $vx$ crosses one boundary.  If $vx$
+touches the $\pmb{a}/\pmb{b}$ boundary, then pumping with $i=0$ either removes
+unequal numbers of $\pmb{a}$'s and $\pmb{b}$'s, destroying equality, or removes
+the same positive number of each.  In the latter case the common count becomes
+at most $p-1$, while the $\pmb{c}$-count remains $p-1$, so $n>k$ again fails.
+If $vx$ touches the $\pmb{b}/\pmb{c}$ boundary and contains a $\pmb{b}$, pumping
+changes the $\pmb{b}$-count while the $\pmb{a}$-count stays $p$, destroying
+equality.  If it contains only $\pmb{c}$'s, pumping upward gives the same
+$n>k$ failure as above.
+
+In every possible decomposition, some pumped word lies outside $H$,
+contradicting the pumping lemma.  Therefore $H$ is not context free.
 
 So $K$ is not a CFL. \qed
 
