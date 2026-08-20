@@ -280,7 +280,7 @@ Grammar: $R \to \pmb{a}|\pmb{b}|\pmb{c}|\pmb{\epsilon}|\pmb{\emptyset}|(R\pmb{\c
 \[
 Y\rightarrow \pmb{^*}\mid \pmb{^*}Y.
 \]
-Then an equivalent PGNF grammar is
+Then an equivalent PGNF grammar is formed by combining the above rule with
 \begin{align*}
 R \rightarrow& \pmb{a}\mid \pmb{b}\mid \pmb{c}\mid \pmb{\epsilon}\mid \pmb{\emptyset}\mid
 \pmb{(}R\pmb{\cdot}R\pmb{)}\mid \pmb{(}R\pmb{\cup}R\pmb{)} \\
@@ -619,22 +619,28 @@ been consumed, so it accepts precisely $\{\pmb{a}^n\pmb{b}^n\pmb{c}^n \mid n\geq
 \end{enumerate}
 
 %%------------------------------------------------------------
-\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; part~(b) counterexample.}
+\item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not context free; part~(b) proof.}
 
 \begin{enumerate}
 \item \textbf{$\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\}$ is not CFL}: Assume it is, with pumping constant $N$. Take $s=\pmb{a}^N\pmb{b}^N\pmb{c}^N$. By the pumping lemma, $s=uvwxy$ with $|vwx|\leq N$ and $|vx|\geq 1$.
 
 Since $|vwx|\leq N$, the substring $vwx$ cannot span all three blocks. So $v$ and $x$ together involve at most two of $\{\pmb{a},\pmb{b},\pmb{c}\}$. Pumping changes the count of at most two symbols while leaving the third unchanged. But all three must be equal, so the pumped string fails $|u|_{\pmb{a}}=|u|_{\pmb{b}}=|u|_{\pmb{c}}$ for some $i\neq 1$. Contradiction. \qed
 
-\item \textbf{Disproof}: the statement in part~(b) is false, because
+\item \textbf{Proof}: The statement in part~(b) is true. Let
 \[
-L = \{x \mid |x|_{\pmb{a}}=|x|_{\pmb{b}}\}
+K = \{x\in\{\pmb{a},\pmb{b},\pmb{c}\}^* \mid
+|x|_{\pmb{a}}=|x|_{\pmb{b}}=|x|_{\pmb{c}}\}.
 \]
-is context free. For example, the grammar
+Suppose, for contradiction, that $K$ is context free. The language
 \[
-S \to \pmb{c}S \mid SS \mid \pmb{a}S\pmb{b} \mid \pmb{b}S\pmb{a} \mid \lambda
+R=\pmb{a}^+\pmb{b}^+\pmb{c}^+
 \]
-generates exactly the strings over $\{\pmb{a},\pmb{b},\pmb{c}\}$ having equally many $\pmb{a}$'s and $\pmb{b}$'s. Therefore the claim to be proved is false.
+is regular, so $K\cap R$ would be context free. But
+\[
+K\cap R=\{\pmb{a}^n\pmb{b}^n\pmb{c}^n\mid n\geq 1\},
+\]
+which part~(a) proves is not context free. This contradiction proves that $K$
+is not context free. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
