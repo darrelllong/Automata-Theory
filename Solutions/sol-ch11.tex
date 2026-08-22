@@ -158,7 +158,16 @@ the remembered symbol. If they differ, reject.
 \item If all $m$ comparisons succeed, accept.
 \end{enumerate}
 
-\item \textbf{LBA}: Since the computation uses only the $2n$ cells of the input, the machine is already an LBA.
+\item \textbf{LBA}: Let the input length be $n$. An LBA can use exactly the $n$
+input cells and marked versions of the input symbols. First, repeatedly mark the
+leftmost unmarked symbol as belonging to the left half and the rightmost
+unmarked symbol as belonging to the right half. If the final left mark has no
+right-hand mate, then $n$ is odd and the machine rejects. Otherwise the two
+halves each have $n/2$ cells. Repeatedly compare the leftmost unprocessed symbol
+of the left half with the leftmost unprocessed symbol of the right half, marking
+both as processed and rejecting on a mismatch. The machine accepts when every
+pair agrees. All marks overwrite original input cells, so no cell outside the
+length-$n$ input region is scanned.
 
 \item \textbf{Multiple tapes}: A two-tape TM copies the first half of the input to tape 2, then compares tape 2 with the second half of tape 1 symbol by symbol. A nondeterministic TM can guess the midpoint and verify.
 \end{enumerate}
@@ -249,7 +258,11 @@ Strategy:
 - Head 2 scans for $\pmb{b}$-symbols.
 - Head 3 scans for $\pmb{c}$-symbols.
 
-In each synchronization step: advance all three heads to their next unmatched symbol of the respective types. If at any point one head reaches the end while others haven't (or vice versa), reject. If all three heads reach the end simultaneously, accept.
+One synchronization step advances each head, in turn, to its next unmatched
+symbol of the appropriate type or to the right end of the input. After all three
+advances are complete, accept if all three heads reached the end; reject if
+exactly one or two heads reached the end; otherwise begin the next
+synchronization step.
 
 \textbf{No head ever needs to move left}: Each head only moves right (it scans past symbols of other types, looking for its own). Since the heads never backtrack, none needs to move left. \qed
 
@@ -482,42 +495,56 @@ ABAB\Rightarrow AaB\Rightarrow ab.
 \]
 Since $ab\notin\{b\}^*$, the naive construction is wrong.
 
-\item \textbf{Correct $G_*$}: Insert a separator that does not occur in any
-left-hand side of a rule from $P$. Choose a new nonterminal $\#$ with
-$\#\notin\Gamma\cup\Sigma$, and define
+\item \textbf{Correct $G_*$}: A separator alone is insufficient if it may be
+erased before its neighboring derivations are complete. Instead, simulate each
+copy of $G$ using a tagged copy of every symbol. For each
+$X\in\Sigma\cup\Gamma$, choose a fresh nonterminal $\widehat X$, and for a word
+$\alpha=X_1\cdots X_r$ write
+$\widehat\alpha=\widehat X_1\cdots\widehat X_r$. Let
 \[
-G_*=\langle\Sigma,\Gamma\cup\{W,\#\},W,P_*\rangle,
+\widehat P=\{\widehat\alpha\to\widehat\beta\mid
+\alpha\to\beta\in P\}.
 \]
-where
+Choose fresh nonterminals $W$ and $\#$, and define
 \[
-P_* = P\cup\{W\to\lambda,\ W\to Z,\ W\to Z\#W,\ \#\to\lambda\}.
+G_*=\langle\Sigma,\{\widehat X\mid X\in\Sigma\cup\Gamma\}\cup\{W,\#\},W,P_*\rangle,
 \]
-The symbol $\#$ separates one copy of $G$ from the next, so productions from $P$
-cannot straddle two copies.
+where $P_*$ contains $\widehat P$ together with
+\[
+W\to\lambda\mid\widehat Z\#W,\qquad
+\widehat a\to a\quad(a\in\Sigma),
+\]
+and the separator-removal rules
+\[
+a\#\to a\quad(a\in\Sigma),\qquad
+a\#b\to ab\quad(a,b\in\Sigma).
+\]
+Thus $\#$ is never erased by itself: it can disappear only after a completed
+terminal word, and an internal separator also requires a completed terminal word
+on its right. The tagged productions cannot cross either a separator or an
+untagged terminal symbol.
 
-\item \textbf{Proof}: If
+\item \textbf{Proof}: Let
 \[
-w=w_1w_2\cdots w_k\qquad\text{with each }w_i\in L(G),
+w=w_1w_2\cdots w_k\qquad\text{with each }w_i\in L(G)-\{\lambda\}.
 \]
-then
-\[
-W\Rightarrow Z\#W\Rightarrow Z\#Z\#W\Rightarrow\cdots\Rightarrow
-Z\#Z\#\cdots\#Z
-\]
-with $k$ copies of $Z$, each copy derives its own $w_i$ by the productions in
-$P$, and finally all separators disappear by repeated use of $\#\to\lambda$.
-Hence $w\in L(G_*)$.
+Starting with $W$, use $W\to\widehat Z\#W$ exactly $k$ times and then
+$W\to\lambda$. In each tagged block, use $\widehat P$ to simulate a derivation
+$Z\DRightarrow_G w_i$, then apply $\widehat a\to a$ to expose the terminal
+letters of $w_i$. The separator rules remove the resulting separators, giving
+$w$. The zero-factor derivation gives $\lambda$. Since
+$(L(G)-\{\lambda\})^*=L(G)^*$, this proves $L(G)^*\subseteq L(G_*)$.
 
-Conversely, any derivation in $G_*$ first creates a string
-$Z\#Z\#\cdots\#Z$, and the only productions that can affect symbols between two
-occurrences of $\#$ are the productions from $P$ applied within that block, or
-the final erasures of $\#$. Since no left-hand side from $P$ contains $\#$, the
-copies do not interact. Therefore every terminal word derived from $W$ is a
-concatenation of finitely many words from $L(G)$. So
-\[
-L(G_*)=L(G)^*.
-\]
-\qed
+Conversely, consider a terminal derivation from $W$. Every tagged block is
+created by $W\to\widehat Z\#W$. Before such a block can contribute only terminal
+letters, its tagged nonterminals must have been eliminated by rules from
+$\widehat P$, and each remaining tagged terminal must have been converted by a
+rule $\widehat a\to a$. Those steps correspond to a derivation in $G$ of the
+same nonempty terminal word. A separator can be removed only between terminal
+letters (or at the end of the last terminal word), so no tagged production can
+ever cross from one block into another. Therefore every terminal word derived
+from $W$ is a finite concatenation of words in $L(G)$, and
+$L(G_*)\subseteq L(G)^*$. Hence $L(G_*)=L(G)^*$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -536,9 +563,12 @@ $M$ on $h(x)$. Then the new machine accepts exactly the words in
 $h^{-1}(L)$.
 
 \item \textbf{Concatenation}: Let $M_1$ and $M_2$ accept $L_1$ and $L_2$. On
-input $y$, list all splits $y=uv$. There are only finitely many. Dovetail the
-simulations of $M_1$ on each $u$ and $M_2$ on the corresponding $v$, and accept
-as soon as one pair both accepts. This semidecides $L_1L_2$.
+input $y$, list the finitely many splits $y=uv$. Simulate every associated pair
+$(M_1,u)$ and $(M_2,v)$ in round-robin fashion: at stage $t$, perform one more
+step of each simulation that has not halted. Accept as soon as both simulations
+for one split have accepted. If $y\in L_1L_2$, the accepting split eventually
+gets enough simulated steps for both machines to accept; if no split works, the
+machine need not halt. Thus this semidecides $L_1L_2$.
 
 \item \textbf{Substitution}: Let $s$ be a substitution with $s(\pmb{a})\in\TSIG$
 for each $\pmb{a}\in\Sigma$, and let $M$ accept $L$. On input $y$, enumerate all
@@ -571,7 +601,15 @@ $\pmb{Y}$ occurs. If one is found, it erases the tape, writes a single
 $\pmb{Y}$, and halts. If no $\pmb{Y}$ is found, it halts with some other final
 tape contents, for example a single $\pmb{N}$. Therefore $A_3$ halts with
 $\pmb{Y}$ at the right end of the tape exactly when $A_2$ would have halted with
-$\pmb{Y}$ somewhere on the tape. So $L_3(A_3)=L_2(A_2)=L$. \qed
+$\pmb{Y}$ somewhere on the tape. So $L_3(A_3)=L_2(A_2)=L$.
+
+\item \textbf{$L_3(A_3)$ to $L_1(A_1)$}: Let $A_3$ be a machine with
+$L=L_3(A_3)$. Redirect every transition entering the halt state of $A_3$ to a
+new verification routine. The routine scans right to the first blank cell,
+steps left, and checks the last nonblank tape symbol. If that symbol is
+$\pmb{Y}$, it enters a new halt state; otherwise it enters a simple infinite
+loop. Hence $A_1$ halts exactly when $A_3$ halts with $\pmb{Y}$ at the right end
+of its tape. Therefore $L_1(A_1)=L_3(A_3)=L$. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -591,8 +629,11 @@ nonerasing, every such $x$ has length at most $|y|$, so only finitely many words
 need be checked. Run $B$ on each of them and accept iff one is accepted. This
 halts on every input, so $h(L)\in\OSIG$.
 
-\item \textbf{Inverse homomorphism}: On input $x$, compute $h(x)$ and run the
-halting machine for $L$ on that word. Therefore $h^{-1}(L)\in\OSIG$.
+\item \textbf{Inverse homomorphism}: On input $x$, first compute $h(x)$ and then
+run the halting machine for $L$ on that word. This composed machine halts because
+the preliminary computation of $h(x)$ is finite and the machine for $L$ halts on
+every input. It accepts exactly when $h(x)\in L$, which is exactly when
+$x\in h^{-1}(L)$. Therefore $h^{-1}(L)\in\OSIG$.
 
 \item \textbf{Concatenation}: Given halting machines for $L_1$ and $L_2$, list all
 splits $y=uv$ of the input and test each one. Since the list of splits is finite
@@ -603,7 +644,7 @@ $s(\pmb{a})\in\OSIG$ for each $\pmb{a}\in\Sigma$. On input $y$, enumerate all
 factorizations $y=y_1\cdots y_k$ into nonempty pieces and all words
 $x=\pmb{a}_1\cdots\pmb{a}_k\in\Sigma^k$ of the same length $k$. Because the pieces are
 nonempty, only finitely many such choices exist. Test whether $x\in L$ and
-$y_i\in s(\pmb{a}_i)$ for every $i$; accept iff one choice works. Hence
+$y_i\in s(\pmb{a}_i)$ for every $i$; accept iff (at least) one choice works. Hence
 \OSIG\ is closed under nonerasing substitution. \qed
 \end{enumerate}
 
