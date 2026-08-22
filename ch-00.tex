@@ -23,8 +23,8 @@ connectives.
 As an example of a complex statement, consider the assertion that two statements
 $p$ and $q$ take on the same value. This can be rephrased as:
 Either ($p$ is true and $q$ is true) or ($p$ is false and $q$ is false).  As the
-truth table for \emph{not} shows, a statement \textcolor{red}{r} is false exactly when \textcolor{red}{$\neg$r} is
-true; the above assertion could be further refined to:
+truth table for \emph{not} shows, a statement $r$ is false exactly when $\neg$$r$ is
+true; the earlier assertion could be further refined to:
 Either ($p$ is true and $q$ is true) or ($\neg p$ is true and $\neg q$ is true).
 
 % Figure 0.1
@@ -277,7 +277,7 @@ Let $X = \{1,2,3\}$. The familiar relation $<$ (less than) would then consist of
 the following ordered pairs:
 $<: \{\langle 1, 2\rangle , \langle 1, 3\rangle , \langle 2, 3\rangle \}$,
 by which we mean to indicate that $1 < 2, 1 < 3$, and $2 < 3$.
-$\langle 3,3\rangle \not in <$ since $3 \not< 3$.
+$\langle 3,3\rangle \not \in <$ since $3 \not< 3$.
 
 Some relations have special properties. For example, the relation ``less than''
 is \emph{transitive}, by which we mean that for any numbers $x, y,$ and $z,$
@@ -367,7 +367,7 @@ $R_n$ is often called \emph{\Index{congruence modulo $n$}}, and $x R_n y$ is
 commonly denoted by $x \equiv y \pmod{ n}$ or $x \equiv _n$$y$.
 
 If $R$ is an equivalence relation in $X$, then every element of $X$ belongs to
-exactly one equivalence class of $R$. $X$ is therefore \textcolor{red}{comprised of} the union of
+exactly one equivalence class of $R$. $X$ is therefore composed of the union of
 the equivalence classes of $R$, and in this sense $R$ \emph{partitions} the set
 $X$ into disjoint subsets. Conversely, a partition of $X$ defines an equivalence
 relation in $X$; the sets of the partition can be thought of as the equivalence
@@ -523,7 +523,7 @@ belong to a given set, are special types of functions.
 Given a set $A$, the \emph{characteristic function} $\chi_A$ associated with $A$
 is defined by
 \[\chi_{A}(x)=1\text{ if }x\in A\quad\text{and}\quad\chi_{A}(x)=0\text{ if }x
-	\not in A\]
+	\not \in A\]
 \end{dfn}
 
 \subsection*{Example 0.12}
@@ -730,7 +730,7 @@ to those imposed on the domain of $f$. In particular:
 Let $f$: $X\rightarrow Y$ be a function. The converse of $f$ is a function iff
 $f$ is a bijection.
 
-\emph{Proof}\textcolor{red}{.} See the exercises.
+\emph{Proof.} See the exercises.
 \end{thm}
 
 If $f$ is a bijection, $f^{-1}$ must exist and will also be a bijection. In
@@ -807,9 +807,9 @@ infinite cardinal numbers.
 
 % Theorem 0.4
 \begin{thm}\label{thm-0.4}
-Let \textcolor{red}{A} be \emph{any} set. Then $\|A\| < \|\wp(A)\|$
+Let $A$ be \emph{any} set. Then $\|A\| < \|\wp(A)\|$
 
-\emph{Proof}\textcolor{red}{.} There is a bijection between $A$ and the set of all singleton
+\emph{Proof.} There is a bijection between $A$ and the set of all singleton
 subsets of $A$, as shown by the function $s$: $A \rightarrow \{\{x\}\ |\ x \in A\}$
 defined by $s(z) = \{z\}$ for each $z \in A$. Since
 $\{\{x\}\ |\ x\in A\}\subseteq \wp(A)$, we have $\|A\| \leq \|\wp(A)\|$. It
@@ -821,18 +821,18 @@ Assume $f$: $A\rightarrow \wp(A)$ is a function; we will demonstrate that there
 must exist a set in $\wp(A)$ that is not in the range of $f$, and hence $f$
 cannot be onto. Consider an element $z$ of $A$ and the set $f(z)$ to which it
 maps. $f(z)$ is a subset of $A$, and hence $z$ may or may not belong to $f(z)$.
-Define $B$ to be the set $\{y \in A \ |\  y \not in f(y)\}$. $B$ is then the set of
+Define $B$ to be the set $\{y \in A \ |\  y \not \in f(y)\}$. $B$ is then the set of
 all elements of $A$ that do not appear in the set corresponding to their image
 under $f$. It is impossible for $B$ to be in the range of $f$, for if it were
 then there would be an element of $A$ that maps to this subset: assume $w \in A$
 and $f(w) = B$. Since $w$ is an element of $A$, it might belong to $B$, which is
 a subset of $A$. If $w \in B$, then $w \in f(w)$, since $f(w) = B$; but the
 elements for which $y \in f(y)$ were exactly the ones omitted from $B$, and thus
-we would have $w \not in B$, which is a contradiction. Our speculation that $w$
+we would have $w \not \in B$, which is a contradiction. Our speculation that $w$
 might belong to $B$ is therefore incorrect. The only other option is that $w$
-does not belong to $B$. But if $w \not in B = f(w)$, then $w$ is one of the
+does not belong to $B$. But if $w \not \in B = f(w)$, then $w$ is one of the
 elements that are supposed to be in $B$ and we are again faced with the
-impossibility that $w \not in B$ and $w \in B$. In all cases, we reach a
+impossibility that $w \not \in B$ and $w \in B$. In all cases, we reach a
 contradiction if we assume that there exists an element $w$ for which $f(w) = B$.
 Thus, $B$ was a member of the codomain that is not in the range of $f$, and $f$ 
 is therefore not a bijection.
@@ -954,11 +954,11 @@ to factor $p_{m+1}$ out of all the terms in (1), leaving an expression of the
 form $C \wedge p_{m+1}$ where $C$ is a formula containing only the terms
 $p_1, p_2, \ldots, p_m$. Similarly, $\neg p_{m+1}$ can be factored out of all
 the terms in (2), leaving an expression of the form $D \wedge \neg p_{m+1}$,
-where \textcolor{red}{D} is also a formula containing only the terms $p_1, p_2, \ldots, p_m$.
+where $D$ is also a formula containing only the terms $p_1, p_2, \ldots, p_m$.
 
 $S$ can therefore be written as $(C \wedge p_{m+1})\vee(D \wedge \neg p_{m+1})$,
 which contains the four operators $\wedge, \vee, \wedge$, and $\neg$ and the
-operators that comprise the formulas for C and D. However, since both C and D
+operators that comprise the formulas for $C$ and $D$. However, since both $C$ and $D$
 only contain the $m$ variables $p_1, p_2, \ldots, p_m$, the induction assumption
 ensures that they each have equivalent representations using no more than
 $m \cdot 2^m$ operators. $S$ can therefore be written in a form containing at

@@ -56,11 +56,11 @@ $\|Y \cup Z\| < n + m$?)
 
 To show a set $K$ is not closed under a binary operator $\THETA$, we must show
 $\neg[(\forall x,y \in K)(x\THETA y \in K)]$, which means
-$\exists x,y \in K \ni x\THETA y \not in K$.
+$\exists x,y \in K \ni x\THETA y \not \in K$.
 
 \subsection*{Example 5.4}
 
-$\NN$ is not closed under $-$ (subtraction) since $3 - 5 = -2 \not in \NN$, even
+$\NN$ is not closed under $-$ (subtraction) since $3 - 5 = -2 \not \in \NN$, even
 though both $3 \in \NN$ and $5 \in \NN$.
 
 Notice that the set as well as the operator is important when discussing closure
@@ -120,11 +120,11 @@ $\DBAR(s_0,x) \in F^\sim$ & $\Leftrightarrow$ &
 	(by definition of $F^\sim$) \\
 $\DBAR(s_0,x)\in S$-$F$ & $\Leftrightarrow$ &
 	(by definition of complement) \\
-$\DBAR(s_0,x) \not in F$ & $\Leftrightarrow$ &
+$\DBAR(s_0,x) \not \in F$ & $\Leftrightarrow$ &
 	(by definition of $L$) \\
-$x \not in L(A)$ & $\Leftrightarrow$ &
+$x \not \in L(A)$ & $\Leftrightarrow$ &
 	(by definition of $K$) \\
-$x \not in K$ & $\Leftrightarrow$ &
+$x \not \in K$ & $\Leftrightarrow$ &
 	(by definition of complement) \\
 $x \in\ \sim   K$ &&
 \end{tabular}
@@ -458,7 +458,7 @@ $F^\bullet = \left\{\begin{array}{l}
 			F_1 \cup F_2
 		  \end{array}\right.$
 	& $\begin{array}{l}
-		\text{if }\lambda \not in L_2 \\
+		\text{if }\lambda \not \in L_2 \\
 		\text{if }\lambda \in L_2
 	  \end{array}$
 \end{tabular}
@@ -515,10 +515,10 @@ are still final states since $\lambda \in L(B_2)$.
 Consider the nondeterministic finite automata $B_1$ and $B_3$ shown in Figure
 \ref{fig-5.11}, where $B_1$ is the same as that given in Example 5.9, while $B_3$ differs
 just slightly from $B_2$ ($t_0$ is no longer a final state). Note that
-$L(B_3)=\{\pmb{aa},\pmb{baa}\}$, and $\lambda \not in L(B_3)$. Applying Theorem
+$L(B_3)=\{\pmb{aa},\pmb{baa}\}$, and $\lambda \not \in L(B_3)$. Applying Theorem
 \ref{thm-5.4} in this case yields the automaton shown in Figure \ref{fig-5.12}. In this
 construction, $s_0$ and $s_1$ are no longer final states since the definition of
-$F$ must follow a different rule when $\lambda \not in L(B_3)$. By examining the
+$F$ must follow a different rule when $\lambda \not \in L(B_3)$. By examining the
 resulting machine, the reader can verify that having $t_3$ as the only final
 state is indeed the correct strategy for this case.
 
@@ -593,7 +593,7 @@ Kleene closure is outlined in Theorem \ref{thm-5.5}. The construction for $L^+$ 
 For any alphabet $\Sigma$, $\DSIG$ is closed under $^*$ (Kleene
 closure).
 
-\emph{Proof.} Let \textcolor{red}{L} belong to $\DSIG$. Then there is a \underline{non}deterministic
+\emph{Proof.} Let $L$ belong to $\DSIG$. Then there is a \underline{non}deterministic
 finite automaton $A =\langle\Sigma,S,S_0,\delta,F\rangle$ such that $L(A)=L$.
 Define a \underline{non}deterministic machine
 $A_*=\langle\Sigma,S_{*},S_{0*},\delta_{*},F_{*}\rangle$,
@@ -609,7 +609,7 @@ $F_{*}=$ &    $F \cup \{q_0\}$
 and $\delta_{*}$$: (S \cup \{q_0\}) \times \Sigma \rightarrow
 	\wp(S \cup \{q_0\})$ is defined by
 \[ \delta_{*}(s,\pmb{a}) = \left\{\begin{array}{ll}
-		\delta(s,\pmb{a}) & \text{if }s \not in F \cup \{q_0\} \\
+		\delta(s,\pmb{a}) & \text{if }s \not \in F \cup \{q_0\} \\
 		\delta(s,\pmb{a})\cup\left(\bigcup\limits_{t\in S_0}\delta(t,\pmb{a})\right)
 			& \text{if }s \in F \\
 		\emptyset & \text{if }s = q_0
@@ -673,10 +673,10 @@ constructive proofs.
 
 % Theorem 5.6
 \begin{thm}\label{thm-5.6}
-For any alphabet $\Sigma$, $\DSIG$ is closed under the operator \textcolor{red}{Z},
-where \textcolor{red}{Z} is defined by
+For any alphabet $\Sigma$, $\DSIG$ is closed under the operator $Z$,
+where $Z$ is defined by
 \[ Z(L) = \{x \ |\  x \text{ is formed by deleting zero or more letters from a
-	word in \textcolor{red}{L}}\}. \]
+	word in } L\}. \]
 
 \emph{Proof.} See the exercises and the following example.
 \end{thm}
@@ -813,7 +813,7 @@ $\mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ is \emph{not} closed under $\cap$.
 
 \emph{Proof.} Let $L_1=\{\pmb{a}^p\ |\ p$ is prime$\}$ and let $L_2=\{\pmb{b}^p\ |\ p$ is prime$\}$.
 Then $L_1 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$, $L_2 \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ but
-$L_1 \cap L_2 = \emptyset \not in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ (why?).
+$L_1 \cap L_2 = \emptyset \not \in \mathfrak{N}_{\{\pmb{a},\pmb{b}\}}$ (why?).
 \end{lmm}
 
 As another useful example of closure, we consider the transformation of one
@@ -865,7 +865,7 @@ A general homomorphism $\psi$ maps a language over $\Sigma$ to a language over
 $\Gamma$. However, to consider the closure of \DSIG, we will restrict our
 attention for the moment to homomorphisms for which $\Gamma=\Sigma$. It is more
 generally true, though, that even for language homomorphisms between two
-different alphabets, if $L$ is FAD, the homomorphic image of \textcolor{red}{L} is also FAD (see
+different alphabets, if $L$ is FAD, the homomorphic image of $L$ is also FAD (see
 the exercises).
 
 % Theorem 5.9
@@ -941,11 +941,11 @@ not $L \in \NSIG,\ \PBAR(L)=\{\lambda\}$, which is definitely not in \NSIG.
 % Definition 5.9
 \begin{dfn}\label{dfn-5.9}
 Let $\psi$$: \Sigma\rightarrow\Gamma^*$ be a language homomorphism and consider
-$z \in\Gamma^*$\textcolor{red}{, The} \emph{\Index{inverse homomorphic image} of \textcolor{red}{z} under $\PBAR$}
+$z \in\Gamma^*$. The \emph{\Index{inverse homomorphic image} of $z$ under $\PBAR$}
 is then
 \[ \overline{\psi^{-1}}(z)=\{x \in \Sigma^*\ |\ \PBAR(x) = z\} \]
 For a language $L \subseteq \Gamma^*$, the \emph{\Index{inverse homomorphic
-image} of \textcolor{red}{L} under} $\PBAR$ is defined by
+image} of $L$ under} $\PBAR$ is defined by
 \[ \overline{\psi^{-1}}(L)=\{x \in \Sigma^*\ |\ \PBAR(x) \in L\} \]
 \end{dfn}
 
@@ -1171,7 +1171,7 @@ need to define $F^/$; we may not really know which subset of states $F^/$ should
 actually be [after all, we could hardly check the property $\DBAR_1(q,y)\in F$,
 one string at a time, for each of an infinite number of strings $y$ in $L_2$ in
 a finite amount of time]. Fortunately, it is not necessary to know $F^/$
-exactly, since there \textcolor{red}{are} only a finite number of ways to choose a set of final
+exactly, since there are only a finitely many ways to choose a set of final
 states in the automaton $A^/$, and the proof of Theorem \ref{thm-5.12} assures us that one
 of those ways must be the correct one that admits the conclusion
 $L(A^/)=L_1/L_2$.

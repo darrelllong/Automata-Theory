@@ -24,7 +24,7 @@ for the type 2 languages, but further enhancements in the capabilities
 of the automaton model are necessary to achieve the generality
 inherent in type 0 and type 1 languages. A (seemingly) minor
 modification will be all that is required. \emph{Turing machines} are
-\textcolor{red}{comprised of} the familiar components that have already been used
+composed of the familiar components that have already been used
 in previous classes of automata. As with the earlier constructions,
 the heart of the device is a finite-state control, which reacts to
 information scanned by the tape head(s).  Like finite-state transducers
@@ -123,7 +123,7 @@ The auxiliary alphabet always includes the \emph{\Index{blank symbol}} (denoted 
 and neither $\Sigma$ nor $\Gamma$ include the special symbols $\pmb{L}$ and
 $\pmb{R}$, which denote moving the tape head left and right, respectively. The
 state $h$ is a special \emph{\Index{halt state}}\index{Turing machine!halt state}, from which no further transitions are
-possible; $h\not in S$.
+possible; $h\not \in S$.
 \end{dfn}
 
 The alphabet $\Sigma$ is intended to denote the nonblank symbols that can be
@@ -187,7 +187,7 @@ this machine, in which the halt state is not explicitly shown. Much like the
 straight start state arrow that denotes where the automaton is entered, the new
 straight arrows show how the machine is left. This notation is especially
 appropriate for \emph{\Index{submachines}}. As with complex programs, a complex
-Turing machine may be \textcolor{red}{comprised of} several submodules. Control may be passed to
+Turing machine may be composed of several submodules. Control may be passed to
 a submachine, which manipulates the input tape until it halts. Control may then
 be passed to a second submachine, which then further modifies the tape contents.
 When this submachine would halt, control may be passed on to a third submachine,
@@ -748,7 +748,7 @@ would then move on to the next candidate. Since there may be a countable number
 of sequences to try, this process may never end. This is not really a problem,
 since if a sequence resulting in a $\pmb{Y}$ exists, it will eventually be found
 and tried, and the machine will halt and accept the word. If no such sequence
-resulting in a $\pmb{Y}$ exists, and there \textcolor{red}{are} an infinite number of negative
+resulting in a $\pmb{Y}$ exists, and there are infinitely many negative
 attempts to be checked, the machine will never halt. By our original definition
 of acceptance, this will result in the word being rejected, which is the desired
 result.
@@ -939,7 +939,7 @@ quintuple $M=\langle\Sigma,\Gamma,S,s_0,\delta\rangle$, where
 $\Sigma$ is the \emph{input alphabet} \\
 $\Gamma$ is the \emph{auxiliary alphabet} containing the special markers $\<$ and\index{end markers for LBA}
 	$\>$ and $\Sigma$, $\Gamma$, and $\{\pmb{L},\pmb{R}\}$ are pairwise
-	disjoint sets (and thus $\<,\> \not in\Sigma$). \\
+	disjoint sets (and thus $\<,\> \not \in\Sigma$). \\
 $S$ is a finite nonempty set of \emph{states} (and $S\cap(\Sigma\cup\Gamma) =
 	\emptyset$). \\
 $s_0$ is the \emph{\Index{start state}} ($s_0\in S$). \\
@@ -1199,7 +1199,7 @@ derivations arising from the application of these rules directly reflect the
 changes in the configuration of the Turing machine (see Theorem \ref{thm-11.4}).
 
 None of the class 3 productions can be used until the point at which the halt
-state would be reached in the corresponding computation. Since $h\not in S$, none
+state would be reached in the corresponding computation. Since $h\not \in S$, none
 of the class 2 productions can then be used. Only if $\pmb{Y}$ was written to tape as
 the Turing machine halted will the production $h\pmb{Y}\rightarrow U$ be
 applicable. $U$ will then delete the trailing blanks and $]$ from the sentential
@@ -1660,7 +1660,7 @@ to exactly which of these special productions it should contain.
 As will be seen in Chapter \ref{ch-12}, it \emph{is} possible to determine which words
 are accepted (and which are rejected) by linear bounded automata. Unlike
 unrestricted Turing machines, there is only a finite span of tape upon which
-symbols can be placed. Furthermore, there \textcolor{red}{are} only a finite number of characters
+symbols can be placed. Furthermore, only a finite number of characters
 that can appear in those cells, a finite number of positions the tape head can
 be in, and a finite number of states to consider. The limited number of
 configurations makes it possible to determine exactly which words of a given
@@ -1679,7 +1679,7 @@ linear bounded languages. That is, $\LSIG=\OSIG$.
 \emph{Proof.} The proof follows immediately from Theorems \ref{thm-11.3} and \ref{thm-11.5}.
 \end{cor}
 
-\section{Closure Properties and \textcolor{red}{The} Hierarchy Theorem}\label{sec-11.4}
+\section{Closure Properties and The Hierarchy Theorem}\label{sec-11.4}
 
 Finally, we consider some of the closure properties of the classes of languages
 explored in this chapter. Since $\TSIG=\ZSIG$ we may use either cognitive or
@@ -1696,7 +1696,7 @@ Let $\Sigma$ be an alphabet. Then $\TSIG$ is closed under union.
 Theorem \ref{thm-11.4} there are type 0 grammars $G_1=\langle\Omega_1,\Sigma,S_1,P_1
 \rangle$ and $G_2=\langle\Omega_2,\Sigma,S_2,P_2\rangle$ that recognize $L_1$
 and $L_2$. Without loss of generality, assume that $\Omega_1\cap\Omega_2=
-\emptyset$. Choose a new nonterminal $Z$ such that $Z\not in\Omega_1\cup\Omega_2$,
+\emptyset$. Choose a new nonterminal $Z$ such that $Z\not \in\Omega_1\cup\Omega_2$,
 and consider the new type 0 grammar $G^{\cup}$ defined by $G^{\cup}=\langle
 \Omega_1\cup\Omega_2\cup\{Z\},\Sigma,Z,P_1\cup P_2\cup\{Z\rightarrow S_1,Z
 \rightarrow S_2\}\rangle$. Clearly, $L(G^{\cup})=L(G_1)\cup L(G_2)$. By Theorem

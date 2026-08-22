@@ -242,7 +242,7 @@ accepted by an NDFA.
 Consider the machine given in Example 4.4 and let $x = \pmb{b}$; the possible
 paths through the machine include (1) starting at $s$ and proceeding to $r$, and
 (2) starting at $s$ and proceeding to $t$. Note that it is not possible to start
-from $t$ (since $t \not in S_0$), and there is no way to proceed with $x =
+from $t$ (since $t \not \in S_0$), and there is no way to proceed with $x =
 \pmb{b}$ by starting at $r$, the other start state.
 
 Now let $x = \pmb{ba}$ and consider the possibilities. The only path through the
@@ -839,7 +839,7 @@ equivalent DFA derived in Example 4.12 has only four states and therefore can be
 encoded with just 2 bits of state data. Hence only two flip-flops are necessary
 to implement a recognizer for $L(C)$.
 
-\section{NDFAs \textcolor{red}{With} Lambda-Transitions}\label{sec-4.3}
+\section{NDFAs With Lambda-Transitions}\label{sec-4.3}
 
 We now extend our computational model to include the nondeterministic finite
 automata that allow transitions between states to occur ``spontaneously,''
@@ -961,7 +961,7 @@ $\lambda$-transitions}, $A^{\sigma}_{\lambda}=\langle\Sigma,S\cup\{q_0\},S_0\cup
 
 \begin{center}\begin{tabular}{l}
 $F^{\sigma} = \left\{ \begin{tabular}{ll}
-		$F$ & $\quad\text{iff}\quad\lambda\not in L(A_{\lambda})$ \\
+		$F$ & $\quad\text{iff}\quad\lambda\not \in L(A_{\lambda})$ \\
  		$F \cup \{q_0\}$ & $\quad\text{iff}\quad \lambda\in
 			L(A_{\lambda})$
 		\end{tabular}\right. $ \\
@@ -1028,7 +1028,7 @@ is an NDFA with $\lambda$-transitions. Construct the corresponding NDFA
 $A^{\sigma}_{\lambda} = \langle\Sigma,S\cup\{q_0\},S_0\cup\{q_0\},
 \delta^{\sigma}_{\lambda},F^{\sigma}\rangle$, which has no $\lambda$-transitions.
 We will show $L(A_{\lambda})=L(A^{\sigma}_{\lambda})$, and thereby prove that the
-two machines are equivalent. \textcolor{red}{Because the way} $A^{\sigma}_{\lambda}$ was constructed
+two machines are equivalent. Because $A^{\sigma}_{\lambda}$ was constructed in a way that
 limits the scope of Lemma \ref{lmm-4.2}, the proof is divided into two cases.
 
 \textbf{Case 1}: If $x = \lambda$, then by Definition \ref{dfn-4.9}
@@ -1306,7 +1306,7 @@ they still valid when applied to NDFAs?
 NDFA?
 
 \item Given a nondeterministic finite automaton $A$ (without
-$\lambda$-transitions) for which $\lambda \not in L(A)$, show that it is possible
+$\lambda$-transitions) for which $\lambda \not \in L(A)$, show that it is possible
 to construct a nondeterministic finite automaton (also without
 $\lambda$-transitions) $A''$ with the properties:
 \begin{enumerate}[1.]
@@ -1343,7 +1343,7 @@ are final and some nonfinal, Definition \ref{dfn-4.4} requires us to accept that
 accepts only those words specified in part (a).
 \end{enumerate}
 
-\item Draw the connected part of $T^d$,\textcolor{red}{the} deterministic equivalent of the NDFA
+\item Draw the connected part of $T^d$, the deterministic equivalent of the NDFA
 $T$ in Example 4.7.
 
 \item Refer to Example 4.7 and modify the NDFA $T$ so that the machine reverts

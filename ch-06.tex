@@ -42,7 +42,7 @@ sequence of applications of the following rules:
 \end{dfn}
 \subsection*{Example 6.1}
 
-Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. Each of the following languages \textcolor{red}{are}
+Let $\Sigma = \{\pmb{a},\pmb{b},\pmb{c}\}$. The following languages are all
 regular sets:
 \begin{center}\begin{tabular}{llll}
 $\{\lambda\}$ & $\{\pmb{b}\}\cup\{\pmb{c}\}$ & $\{\pmb{a}\}\cdot(\{\pmb{b}\}\cup
@@ -387,27 +387,27 @@ Thus, every solution must contain all of $A^*E$, and $A^*E$ is in this sense the
 smallest solution. This is true regardless of whether or not $\lambda$ belongs
 to $A$.
 
-Now let us assume that $\lambda \not in A$ and that we have a solution $W$ that
+Now let us assume that $\lambda \not \in A$ and that we have a solution $W$ that
 is actually ``bigger'' than $A^*E$; we will show that this is a contradiction,
 and thus all solutions must look \emph{exactly} like $A^*E$. If $W$ is a
 solution, $W \not= A^*E$, then there must be some elements in the set $W-A^*E$;
 choose a string of \emph{minimal length} from among these elements and call it
-$z$. Thus $z \in W$ and $z \not in A^*E$, and since $E \subseteq A^*E$ (why?),
-$z \not in E$. Since $W$ is a solution, we have
+$z$. Thus $z \in W$ and $z \not \in A^*E$, and since $E \subseteq A^*E$ (why?),
+$z \not \in E$. Since $W$ is a solution, we have
 \begin{center}\begin{tabular}{rcl}
 $W=E \cup A \cdot W$ & $\Rightarrow$ & (since $z \in W$ and it cannot be in the
 	$E$ part) \\
 $z \in A \cdot W$ & $\Rightarrow$ & (by definition of $\cdot$) \\
 $(\exists x \in A,\exists y \in W) \ni z = x \cdot y$ & $\Rightarrow$ & (by
 	definition of $|\ |$) \\
-$|z| = |x| + |y|$ & $\Rightarrow$ & (since $\lambda \not in A$ and $x \in A$, so
+$|z| = |x| + |y|$ & $\Rightarrow$ & (since $\lambda \not \in A$ and $x \in A$, so
 	$x \neq \lambda$ and $|x| > 0$) \\
 |y| < |z|
 \end{tabular}\end{center}
 
 Note that $y$ cannot belong to $A^*E$ (if $y \in A^*E$, then, since $x \in A$,
 $z(=x\cdot y)\in A \cdot (A^*E) \subseteq A^*E$, which means that $z \in A^*E$,
-and we started by assuming that $z \not in A^*E$); since $y \in W$, we have 
+and we started by assuming that $z \not \in A^*E$); since $y \in W$, we have 
 $y \in W - A^*E$, and we have produced a string shorter than $z$, which belongs
 to $W - A^*E$. This is the contradiction we were looking for, and we can
 conclude that it is impossible for a solution $W$ to be larger than $A^*E$.
@@ -527,7 +527,7 @@ $\hat{A}_{11}$ and $\hat{E}_1$ can be calculated as
 $\hat{E}_1 = E_1A_{22} - E_2A_{12}$ \\
 $\hat{A}_{11} = A_{11}A_{22} - A_{12}A_{21}$
 \end{tabular}\end{center}
-A similar technique can be used to eliminate variables when there is a larger
+An analogous technique can be used to eliminate variables when there is a larger
 number of equations in the system. The following theorem makes similar
 predictions of the new coefficients for language equations.
 
@@ -548,7 +548,7 @@ $X_{n-1}$ & $=$ & $E_{n-1} \cup A_{(n-1)1}X_1 \cup A_{(n-1)2}X_2 \cup \cdots
 $X_n$ & $=$ & $E_n \cup A_{n1}X_1 \cup A_{n2}X_2 \cup \cdots \cup
 	A_{n(n-1)}X_{n-1} \cup A_{nn}X_n$
 \end{tabular}\end{center}
-in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \textcolor{red}{\not in} A_{ij})$.
+in which $(\forall i,j \in \{1,2, \cdots ,n\})(\lambda \not \in A_{ij})$.
 \begin{enumerate}[a.]
 \item This system has a unique solution.
 \item Define $\hat{E}_i = E_i \cup (A_{in} \cdot A^*_{nn} \cdot E_n)$ for all
@@ -667,7 +667,7 @@ Theorem \ref{thm-6.1} has the (unique) solution $X_1 = \hat{A}^*_{11}\hat{E}_1 =
 \cup \pmb{bb})^*   \cdot \epsilon$. Substituting this into the second equation
 yields $X_2 = \emptyset \cup \pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*\cup\emptyset
 \cdot X_2$, which by Theorem \ref{thm-6.1} has the (unique) solution $X_2=\emptyset^*  \cdot
-(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$\textcolor{red}{ .}
+(\pmb{b}\cdot(\pmb{a}\cup\pmb{bb})^*) = \pmb{b} \cdot (\pmb{a}\cup\pmb{bb})^*$.
 Note that this expression for $X_2$ could also be found by applying the
 back-substitution formula given in the proof of Theorem \ref{thm-6.2}.
 
@@ -689,7 +689,7 @@ the terminal set $T(A,s_i)$ described in Chapter \ref{ch-3}. Since $s_1$ is the 
 of this machine, it should be clear that $X_1 = L(A) = L$. Define
 \begin{align*}
 E_i = & \left\{ \begin{tabular}{ll}
-			$\emptyset$ & if $s_i \not in F$ \\
+			$\emptyset$ & if $s_i \not \in F$ \\
 			& \\
 			$\epsilon$ & if $s_i \in F$
 		 \end{tabular}\right. &
@@ -699,7 +699,7 @@ A_{ij} = & \bigcup\limits_{\pmb{a}\in \Sigma \wedge \delta(s_i,\pmb{a}) =
 	s_j} \pmb{a} & \text{for }i,j=1,2, \ldots ,n
 \end{align*}
 That is, $A_{ij}$ represents the set of all letters that cause a transition from
-state $s_i$ to state $s_j$. Notice that since $\lambda\not in\Sigma$ none of the
+state $s_i$ to state $s_j$. Notice that since $\lambda\not \in\Sigma$ none of the
 sets $A_{ij}$ contain the empty string, and therefore by Theorem \ref{thm-6.2}, there is a
 unique solution to the system:
 \begin{center}\begin{tabular}{rcl}
@@ -994,7 +994,7 @@ Let $n$ and $m$ be positive integers and let $m \leq n$. Consider the system of
 $n \geq 2$ equations in the unknowns $X_1,X_2,\ldots,X_n$, given by
 \[ X_k = E_k \cup A_{k1}X_1 \cup A_{k2}X_2 \cup\cdots\cup A_{kn}X_n,\qquad
 	\text{for }k = 1,2, \ldots , n \]
-in which $(\forall i,j)(\lambda \not in A_{ij})$
+in which $(\forall i,j)(\lambda \not \in A_{ij})$
 
 The unknown $X_m$ can be eliminated from this system to form the following $n-1$
 equations in the unknowns $X_1,X_2,\ldots,X_{m-1},X_{m+1},\ldots,X_n$.
@@ -1045,7 +1045,7 @@ eliminating $X_3$ and then eliminating $X_2$. Theorem \ref{thm-6.1} can then be 
 solve for $X_1$, and then the back-substitution rules can be employed to find
 $X_2$ and $X_3$. The regular expressions found in this manner are quite complex.
 A striking simplification can be made by eliminating $X_3$ and then eliminating
-$X_1$ (instead of $X_2$)\textcolor{red}{ .} The solution for $X_2$ is quite concise, which leads
+$X_1$ (instead of $X_2$). The solution for $X_2$ is quite concise, which leads
 to simple expressions for $X_1$ and $X_3$ during the back-substitution phase (see
 Exercise 6.19).
 
@@ -1053,7 +1053,7 @@ Let $A=\langle\Sigma,\{s_1,s_2,\ldots,s_n\},s_1,\delta,F\rangle$ be a
 deterministic finite automaton. We have seen that the relationships between the
 terminal sets $T(A,s_i)$ described in Chapter \ref{ch-3} give rise to a system of
 equations. Similarly, the initial sets $I(A,s_i)$ defined in Chapter \ref{ch-2} are also
-interrelated. Recall that, for a state $s_i$, $I(A,s_i)$ is \textcolor{red}{comprised of} strings
+interrelated. Recall that, for a state $s_i$, $I(A,s_i)$ is composed of strings
 that, when starting in the start state, lead to the state $s_i$. That is,
 $I(A,s_i)=\{x\ \ |\ \DBAR(s_1,x) = s_i\}$. The equations we have discussed to this
 point have been \emph{\Index{right linear}}; that is, the unknowns $X_i$ appear
@@ -1069,7 +1069,7 @@ Let $n$ and $m$ be positive integers and let $m \leq n$. Consider the system of
 $n \geq 2$ equations in the unknowns $Y_1,Y_2,\ldots,Y_n$ given by
 \[ Y_k = I_k\cup Y_1B_{k1} \cup Y_2B_{k2} \cup\cdots\cup Y_nB_{kn},\qquad
 	\text{for }k = 1,2,\ldots,n \]
-in which $(\forall i,j)(\lambda \not in B_{ij})$.
+in which $(\forall i,j)(\lambda \not \in B_{ij})$.
 \begin{enumerate}[a.]
 \item The unknown $Y_m$ can be eliminated from this system to form the following
 $n-1$ equations in the unknowns $Y_1,Y_2, \ldots , Y_{m-1},Y_{m+1},\ldots,Y_n$.
@@ -1110,7 +1110,7 @@ left-linear equations of the form
 where the coefficients are given by
 \begin{align*}
 I_i = & \left\{ \begin{tabular}{ll}
-			$\emptyset$ & if $s_i \not in S_0$ \\
+			$\emptyset$ & if $s_i \not \in S_0$ \\
 			& \\
 			$\epsilon$ & if $s_i \in S_0$
 		 \end{tabular}\right. &
@@ -1285,6 +1285,7 @@ $s(\pmb{b})=(\pmb{a}\cup\pmb{b})$. The image of the nonregular set
 \[ L = \{x\ | \  |x|_{\pmb{a}} = |x|_{\pmb{b}}\} \]
 is the set of even-length words, which \emph{is} regular. Thus $L \in \NSIG$ but
 $\overline{s}(L) \not in \NSIG$.
+\
 
 (b) \NSIG\ \emph{is} closed under some substitutions. Some substitutions do
 preserve nonregularity (such as the identity substitution $i$, since for any

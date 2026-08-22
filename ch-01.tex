@@ -15,7 +15,7 @@ by assemblers and compilers. In fact, the best known string matching algorithms
 are based on finite automata. Although finite automata are generally thought of
 as abstract computing devices, other non-computer applications are possible.
 These applications include traffic signals and vending machines or any device in
-which there \textcolor{red}{are} a finite set of inputs and a finite set of things that must be
+which there is a finite set of inputs and a finite set of things that must be
 ``remembered'' by the device.
 
 Briefly, a \emph{deterministic finite automaton}\index{deterministic finite automaton|see{DFA}}\index{DFA|see{finite automaton}}\index{automaton|see{DFA, NDFA, FST, MSM, PDA, DPDA,\linebreak LBA, Turing machine}}, also called a
@@ -100,7 +100,7 @@ $\Sigma \times \Sigma \times \Sigma$. Indeed, one may view the three-letter word
 $\pmb{bca}$ as a convenient shorthand for the ordered triple $\langle \pmb{b, c, a}\rangle$.
 A word over an alphabet is thus an ordered string of symbols, where each symbol
 in the string is an element of the given alphabet. An obvious example of words
-\textcolor{red}{is what you are reading right now, which are} words (or strings) over the
+is what you are reading right now, namely words (or strings) over the
 standard English alphabet. In some contexts, these strings of symbols are
 occasionally called \emph{sentences}.
 
@@ -208,7 +208,7 @@ strings $x$,
 \[ x \cdot \lambda = \lambda \cdot x = x \]
 Even though the empty word is represented by a single character,
 $\lambda$ is a string but is \emph{not} a member of any alphabet:
-$\lambda \not in \Sigma$.
+$\lambda \not \in \Sigma$.
 (Symbols in an alphabet all have length one; $\lambda$ has length zero.)
 
 A particular string $x$ can be divided into \emph{substrings} in several ways.
@@ -275,7 +275,7 @@ be finite, just as every number in $\NN$ is finite.
 Since $\Sigma^*$ is the union of all $\Sigma^k$ for $k \in \NN,\ \Sigma^*$ must
 also contain $\Sigma^0$. In other words, besides containing all words that can
 be constructed from one or more letters of $\Sigma$, $\Sigma^*$ also contains
-the empty word $\lambda$. While $\lambda \not in \Sigma,\ \lambda \in \Sigma^*$.
+the empty word $\lambda$. While $\lambda \not \in \Sigma,\ \lambda \in \Sigma^*$.
 $\lambda$ represents a \emph{string} and \emph{not} a symbol, and thus the empty
 string cannot be in the alphabet $\Sigma$. However, $\lambda$ is included in
 $\Sigma^*$, since $\Sigma^*$ is not just an alphabet, but a collection of words
@@ -358,7 +358,7 @@ indicating that a candy bar may be selected.\index{vending machine!DFA}
 \caption{An implementation of a vending machine}\label{fig-1.2}
 \end{figure}
 
-Finite automata are appropriate whenever there \textcolor{red}{are} a finite number of inputs and
+Finite automata are appropriate whenever there is a finite number of inputs and
 only a finite number of situations must be distinguished by the machine. Other
 applications include traffic signals and elevators (as discussed in Chapter
 \ref{ch-7}). We now present a formal mathematical definition of a finite-state
@@ -662,7 +662,7 @@ the word $w$ is presented to the machine. We will occasionally say that $A$
 % Definition 1.13
 \begin{dfn}\label{dfn-1.13}
 Given a DFA $A = \langle\Sigma,S,s_0,\delta,F\rangle$, $A$ \emph{rejects} a word $w \in
-\Sigma^*$ iff \ \  $\DBAR(s_0,w) \not in F$.
+\Sigma^*$ iff \ \  $\DBAR(s_0,w) \not \in F$.
 \end{dfn}
 
 In other words, a word $w$ is rejected by a machine
@@ -718,7 +718,7 @@ Now let $y = \pmb{1100}$:
 &= \delta(q_0, \pmb{0}) \\
 &= q_0
 \end{align*}
-Therefore, $\DBAR(q_0,y) = q_0 \not in F$, which means that $y$ is
+Therefore, $\DBAR(q_0,y) = q_0 \not \in F$, which means that $y$ is
 \emph{not accepted} by $A$.
 
 Following the Pascal conventions defined in the previous programming fragments,
@@ -1401,7 +1401,7 @@ $\pmb{1}$ & $\pmb{1}$ & $\pmb{1}$ & *
 \end{table}
 
 If we arbitrarily assume that the two don't-care combinations (*) are zero, the
-\textcolor{red}{principle} disjunctive normal form of $t_1'$ contains just two terms:
+principle disjunctive normal form of $t_1'$ contains just two terms:
 $(\neg t_1\wedge\pmb{a}_1\wedge\neg\pmb{a}_2)\vee(t_1\wedge\neg\pmb{a}_1\wedge
 \neg\pmb{a}_2)$. It is profitable to reassign the don't-care value in the fourth
 row to $\pmb{1}$, since the expression can then be shortened to $(\neg t_1\wedge
@@ -1668,7 +1668,7 @@ how these concepts can be applied to help evaluate the performance of computers.
 
 A computer program is essentially a linear list of machine instructions, stored
 in consecutive memory locations. Each memory location holds a sequence of bits
-that can be thought of as words \textcolor{red}{comprised of} $\pmb{0}$s and $\pmb{1}$s.
+that can be thought of as words composed of $\pmb{0}$s and $\pmb{1}$s.
 Different types of instructions are represented by different patterns of bits.
 The CPU sequentially \emph{fetches} these instructions and chooses its next
 action by examining the incoming bit pattern to determine the type of

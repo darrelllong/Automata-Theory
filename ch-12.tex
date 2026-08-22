@@ -11,7 +11,7 @@ it is possible to write a program to check whether an arbitrary DFA
 is minimal. We know this property can be reliably checked because
 we proved that the algorithms in Chapter 3 could be applied to
 ascertain the correct answer for virtually every conceivable DFA.
-There \textcolor{red}{are} an infinite number of DFAs about which the question can
+There are infinitely many DFAs about which the question can
 be posed, and yet our algorithm decides the question correctly in
 all cases. In the following section we consider questions that can
 be asked about more complex languages and machines.
@@ -119,8 +119,8 @@ clear that the answer to the question should be ``YES$-L(A)\not=\emptyset$,''
 while if we never find a string that is accepted, the answer should be ``NO$-
 L(A)=\emptyset$.'' This procedure is guaranteed to halt and give the correct
 answer if the language is indeed nonempty. However, the procedure will never
-halt and answer NO (in a finite amount of time) because there \textcolor{red}{are} an infinite
-number of strings in $\Sigma^*$ that must be checked. A modification of this
+halt and answer NO (in a finite amount of time) because there are infinitely
+many strings in $\Sigma^*$ that must be checked. A modification of this
 basic idea is necessary to produce a procedure that will halt under all
 circumstances (that is, to produce an \emph{algorithm}).
 
@@ -566,7 +566,7 @@ be added to the set of accessible sentential forms, and the added nodes can be
 checked until no new labels are found. The set of sentential forms will then 
 consist of
 \[ \{w\in(\Sigma\cup\Gamma)^*|\ S\ \DRightarrow w \wedge |w|\leq n\} \]
-and contain all words in $L(G)$ of length $\leq n$\textcolor{red}{, If} we are only interested in
+and contain all words in $L(G)$ of length $\leq n$. If we are only interested in
 the specific word $x$, then the algorithm can return Yes as soon as $x$ appears
 in the set of accessible sentential forms and would return No if $x$ did not
 appear by the time the set stopped growing.
@@ -610,7 +610,7 @@ occur. A similar mismatch occurs when comparing the (countable) number of
 algorithms to the (uncountable) number of possible yes-no functions.
 
 By definition, an algorithm is a \emph{finite} list of instructions, written
-over some finite character set. As such, there \textcolor{red}{are} only a countable number of
+over some finite character set. As such, there is only a countable number of
 different algorithms that can be written. It may be helpful to consider the set
 of all Pascal programs and view each file that contains the ASCII code for a
 program, which is essentially a sequence of zeros and ones, as one very long
@@ -619,10 +619,10 @@ but no more programs than there are binary integers, so the number of such files
 is indeed countable.
 
 Now consider the possible lists of answers that could be given to questions
-involving a countable number of instances. We will argue that there \textcolor{red}{are} an
+involving a countable number of instances. We will argue that there is an
 uncountable number of yes-no patterns that might describe the answers to such
 questions. Notice that the descriptions for automata, grammars, and the like
-are also finite, and thus there \textcolor{red}{are} a countable number of DFAs, a countable
+are also finite, and thus there is a countable number of DFAs, a countable
 number of grammars, and so on, that can be described. The questions we asked in
 the previous sections were therefore applied to a countable number of instances,
 and these instances could be ordered in some well-defined way, much as the
@@ -633,14 +633,14 @@ answers to a particular question can be thought of as an unending sequence of
 such pattern can be thought of as a binary fraction, representing a real number
 between $.00000\ldots=0$ and $.111111\ldots=1$. Conversely, each such real
 number in this range represents a sequence of yes-no answers to some question.
-Since there \textcolor{red}{are} an uncountable number of real numbers between 0 and 1, there \textcolor{red}{are}
+Since there is an uncountable number of real numbers between 0 and 1, there is
 an uncountable number of answers that might be of interest to us. Some of these
 answers cannot be obtained by algorithms, since there are not enough algorithms
 to go around. Thus, there must be many questions that are not decidable.
 
 It is not immediately apparent that the existence of undecidable questions is
 much of a drawback; perhaps all the ``interesting'' questions are decidable.
-After all, there \textcolor{red}{are} an uncountable number of real numbers, yet all computers
+After all, there is an uncountable number of real numbers, yet all computers
 and many humans seem to make do with just the countable number of rational
 numbers. Unfortunately, there are many simple and meaningful questions that are
 undecidable. We discuss one such question now; others are considered in the next
@@ -758,7 +758,7 @@ proposed the function HALT fiddle with the code; the above contradiction will be
 reached regardless of what code appears between the {\tt begin} and {\tt end}
 statements in the function HALT. We have shown that any such proposed function
 is \emph{guaranteed} to behave inappropriately when fed a program such as TEST. In
-actuality, there \textcolor{red}{are} an infinite number of programs that cause HALT to misbehave,
+actuality, there is an infinite number of programs that cause HALT to misbehave,
 but it was sufficient to demonstrate just one failure to justify that no such
 function can solve the general problem.
 
@@ -947,7 +947,7 @@ incorrectly.\index{undecidable problems!Turing machine halting problems|)}
 
 \section{Turing-Decidable Languages}\label{sec-12.5}
 
-We now consider languages whose \textcolor{red}{criteria} for membership is related to the
+We now consider languages whose criteria for membership are related to the
 halting problem. Define the language $D$ to be those words that either are not
 encodings of Turing machines or are encodings of machines that would halt with
 $\pmb{Y}$ when presented with their own encoding on their input tape. The
@@ -973,7 +973,7 @@ Therefore, no such Turing machine $T$ can exist, and $U$ is an example of a
 language that is not Turing-acceptable.
 
 We have finally found a language that is not type 0. A counting argument would
-have shown that, since there \textcolor{red}{are} only a countable number of type 0 grammars and
+have shown that, since there is only a countable number of type 0 grammars and
 an uncountable number of subsets of $\Sigma^*$, there had to be many languages
 over $\Sigma$ that are not in \ZSIG\ ( $=\TSIG$). We have now seen that some of these
 unrepresentable languages are meaningful sets for which it would be quite
@@ -989,7 +989,7 @@ Turing-acceptable language $D$ described above has a complement $U$ that is not
 Turing-acceptable.
 \end{thm}
 
-Our original \textcolor{red}{criteria} for belonging to the language $L$ accepted by a Turing
+Our original criterion for belonging to the language $L$ accepted by a Turing
 machine $M$ implied that $M$ would eventually halt when presented with any word
 in $L$, but we had no guarantees about how $M$ will behave when presented with a
 word that is not in $L$. $M$ may halt with $\pmb{N}$ on the tape, or $M$ may run
@@ -1118,7 +1118,7 @@ did not reject its own encoding ($x_L$). Thus, $T_L$ recognizes $x_L$, and
 therefore the corresponding grammar $G_L$ must generate $x_L$. But then $x_L\in
 L(G_L)=L$, contradicting the assumption that $x_L$ did not belong to $L$. If on
 the other hand $x_L$ belongs to $L$, then, by definition of $L$, $T_L$ must
-reject its own encoding ($x_L$), and thus $x_L\not in L(T_L)=L(G_L)=L$, which is
+reject its own encoding ($x_L$), and thus $x_L\not \in L(T_L)=L(G_L)=L$, which is
 another contradiction. Thus, no such context-sensitive grammar $G_L$ can exist,
 and $L$ is not a context-sensitive language.
 \end{thm}
@@ -1180,7 +1180,7 @@ whether $L(A_1)\subseteq L(A_2)$.
 
 \item Given any alphabet $\Sigma$ and a DFA $A=\langle\Sigma,S,s_0,\delta,F
 \rangle$, show that it is decidable whether $L(A)$ is cofinite\index{cofinite!decidability}. (\emph{Note:}
-\textcolor{red}{A} set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
+A set $L$ is cofinite \emph{iff} its complement is finite, that is, \emph{iff}
 $\Sigma^*-L$ is finite.)
 
 \item Given any alphabet $\Sigma$ and a DFA $A=\langle\Sigma,S,s_0,\delta,F
@@ -1199,10 +1199,10 @@ $\Sigma$, show that it is decidable whether $R_1$ and $R_2$ describe any common
 strings.
 
 \item Given any alphabet $\Sigma$ and a regular expression $R_1$ over $\Sigma$,
-show that it is decidable whether there is a DFA with \textcolor{red}{less} than 31 states that
+show that it is decidable whether there is a DFA with less than 31 states that
 accepts the language described by $R_1$.
 
-\item Given any alphabet $\Sigma$ and \textcolor{red}{a} regular expressions $R_1$ over $\Sigma$,
+\item Given any alphabet $\Sigma$ and a regular expression $R_1$ over $\Sigma$,
 show that it is decidable whether there is a DFA with \emph{more} than 31 states
 that accepts the language described by $R_1$. (You should be able to argue that
 there is a \emph{one}-step algorithm that always supplies the correct yes-no

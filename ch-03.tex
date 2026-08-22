@@ -187,9 +187,9 @@ automaton.
 The modified automaton $A^t$, which gives rise to the terminal set $T(A,t)$, can
 be contrasted with the modified automaton $A_t=\langle\Sigma,S,s_0,\delta,\{t\}\rangle$
 from Chapter \ref{ch-2}, which recognized the initial set
-$I(A,t) = \{x\ | \DBAR(s_0,x) = t\}$. Notice that initial sets are \textcolor{red}{comprised of}
+$I(A,t) = \{x\ | \DBAR(s_0,x) = t\}$. Notice that initial sets are composed of
 strings that move from the start state to the distinguished state $t$, while
-terminal sets are made up of strings that go from $t$ to a final state.
+terminal sets are made up of strings that go from $t$ to a (any!) final state.
 
 \subsection*{Example 3.3}
 
@@ -432,7 +432,7 @@ that accepts $L$. Then $A \cong A_{R_L}$.
 of $A$ to the states of $A_{R_L}$ (which you should recall corresponded to
 equivalence classes of $R_L$). A natural way to define $\mu$ (which happens to
 work!) is: For each $s \in S$, find a string $x_s \in \Sigma^* \ni
-\DBAR(s_0,x_s) = s$. (Since \textcolor{red}{A} is connected, we are guaranteed to find such an
+\DBAR(s_0,x_s) = s$. (Since $A$ is connected, we are guaranteed to find such an
 $x_s$. In fact, there may be many strings that take us from $s_0$ to $s$; choose
 any one of them, and call it $x_s$.) We need to map $s$ to some equivalence
 class of $R_L$; the logical choice is the class containing $x_s$. Thus we define
@@ -492,7 +492,7 @@ $\DBAR(s_0,x_s) = s$. Then
 \begin{center}
 \begin{tabular}{rcl}
 $s \in F$ & $\Leftrightarrow$ & (by definition of $x_s$, and Definition \ref{dfn-1.14}) \\
-$x_s \in L(A)$ & $\Leftrightarrow$ & (by definition of \textcolor{red}{L}) \\
+$x_s \in L(A)$ & $\Leftrightarrow$ & (by definition of $L$) \\
 $x_s \in L$ & $\Leftrightarrow$ & (by definition of $F_{R_L}$) \\
 $[x_s]_{R_L} \in F_{R_L}$ & $\Leftrightarrow$ & (by definition of $\mu$) \\
 $\mu(s) \in F_{R_L}$ &&
@@ -545,10 +545,10 @@ also a bijection; so $\mu$ is an isomorphism and therefore $A \cong A_{R_L}$.
 Let $A$ and $B$ be reduced and connected finite automata. Under these conditions,
 $A$ is equivalent to $B$ iff $A \cong B$.
 
-\emph{Proof}\textcolor{red}{.} If $A \cong B$, it is easy to show that $A$ is equivalent to $B$
+\emph{Proof.} If $A \cong B$, it is easy to show that $A$ is equivalent to $B$
 (as indicated in the exercises, this implication is true even if $A$ and $B$ are
 not reduced and connected). Now assume the hypothesis that $A$ and $B$ are
-reduced and connected does hold, and that $A$ is equivalent to $B$. Since \textcolor{red}{A} is
+reduced and connected does hold, and that $A$ is equivalent to $B$. Since $A$ is
 minimal, $A \cong A_{R_{L(A)}}$. Similarly, $B \cong A_{R_{L(B)}}$. Since
 $L(A) = L(B)$, $A_{R_{L(A)}} = A_{R_{L(B)}}$. Therefore,
 $A \cong A_{R_{L(A)}} = A_{R_{L(B)}} \cong B$.
@@ -674,7 +674,7 @@ calculating what it is). The definition of $S^c$ implies that there is a
 \emph{procedure} for finding $S^c$: one can begin enumerating the strings $x$ in
 $\Sigma^*$, and by applying the transition function to each $x$, the new states
 that are reached can be included in $S^c$. This is not a very satisfactory
-process because there \textcolor{red}{are} an infinite number of strings in $\Sigma^*$ to check.
+process because there are infinitely many strings in $\Sigma^*$ to check.
 However, the indicated proof for Theorem \ref{thm-2.7} shows that, if a state can be
 reached by a ``long'' string, then it can be reached by a ``short'' string.
 Thus, we will only need to check the ``short'' strings. In particular,
@@ -831,7 +831,7 @@ algorithm for finding the set of connected states in $A$, and therefore there
 exists an algorithm for constructing $A^c$, which is a \emph{connected} automaton with
 the property that $L(A^c) = L(A) = L$.
 
-Furthermore, there exists an algorithm for computing $E_{A^c}$ \textcolor{red}{the} state equivalence
+Furthermore, we will soon prove there exists an algorithm for computing $E_{A^c}$, the state equivalence
 relation on $A^c$; consequently, there is an algorithm for constructing
 $A^c / _{E_{A^c}}$, which is a reduced, connected automaton with the property that
 $L(A^c / _{E_{A^c}}) = L(A^c) = L(A) = L$
@@ -877,11 +877,11 @@ two equivalence classes, $\{q_0\}$ and $\{q_1, q_2, q_3, q_4\}$.
 
 In $E_{1B}$, $\lambda$ still differentiates $q_0$ from the other states, but the
 string \pmb{1} can distinguish $q_3$ from $q_1,\ q_2$, and $q_4$ since
-$\DBAR(q_3,\pmb{1}) \not in F$, but $\DBAR(q_i,\pmb{1}) \in F$ for $i$ = 1, 2, and 4. We
+$\DBAR(q_3,\pmb{1}) \not \in F$, but $\DBAR(q_i,\pmb{1}) \in F$ for $i$ = 1, 2, and 4. We
 still cannot distinguish between $q_1,\ q_2$, and $q_4$ with strings of length
 0 or 1, so these remain together and
 $E_{1B}=\{\{q_0\},\{q_3\},\{q_1,q_2,q_4\}\}$. Similarly, since
-$\DBAR(q_1,\pmb{11})\in F$ but $\DBAR(q_2,\pmb{11})\not in F$ and $\DBAR(q_4,\pmb{11})\not in F$,
+$\DBAR(q_1,\pmb{11})\in F$ but $\DBAR(q_2,\pmb{11})\not \in F$ and $\DBAR(q_4,\pmb{11})\not \in F$,
 $E_{2B}=\{\{q_0\},\{q_3\},\{q_1\},\{q_2,q_4\}\}$. Further investigation shows
 $E_{2B} = E_{3B} = E_{4B} = E_{5B} = \cdots$, and indeed $E_B = E_{2B}$.
 
@@ -898,7 +898,7 @@ observations will culminate in a proof that the calculation of successive
 partial state equivalence relations is guaranteed to lead to the relation $E_A$.
 
 Given an integer $i$ and a finite alphabet $\Sigma$, there is clearly an
-\emph{algorithm} for finding $E_{iA}$ since there \textcolor{red}{are} only a finite number of
+\emph{algorithm} for finding $E_{iA}$ since there are only finitely many
 strings in $\Sigma^0 \cup \Sigma^1 \cup \Sigma^2 \cup \cdots \cup \Sigma^i$.
 Furthermore, given every $E_{iA}$, there is an expression for $E_A$:
 \[ E_A = E_{0A} \cap E_{1A} \cap E_{2A} \cap E_{3A} \cap \cdots \cap E_{nA} \cap
@@ -1557,7 +1557,7 @@ for which $\psi \not= \mu^{-1}$.
 equivalence class. Is it possible for $E_{0A}$ to be different from $E_{1A}$ in
 such a machine? Explain.
 
-\item Assume \textcolor{red}{A and B} are both reduced and connected. If $\psi$ is a homomorphism
+\item Assume $A$ and $B$ are both reduced and connected. If $\psi$ is a homomorphism
 from $A$ to $B$, does $\psi$ have to be an isomorphism? Justify your
 conclusions.
 

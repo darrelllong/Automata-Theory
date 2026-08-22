@@ -117,10 +117,10 @@ Let $K$ be the set of all words over $\{\pmb{a},\pmb{b}\}$ that are of odd
 length. Those strings that are in $K$ are used to define exactly which pairs of
 strings are in $R_K$. For example, we can determine that $\pmb{ab}\ R_K\ 
 \pmb{bbaa}$, since it is true that, for any $u \in \Sigma^*$, either
-$\pmb{ab}u \not in K$ and $\pmb{bbaa}u \not in K$ (when $|u|$ is even) or
+$\pmb{ab}u \not \in K$ and $\pmb{bbaa}u \not \in K$ (when $|u|$ is even) or
 $\pmb{ab}u \in K$ and $\pmb{bbaa}u \in K$ (when $|u|$ is odd). Note that
 $\pmb{ab}$ and $\pmb{a}$ are not related by $R_K$, since there are choices for $u$
-that would violate the definition of $R_K:\ \pmb{ab}\lambda \not in K$ and yet
+that would violate the definition of $R_K:\ \pmb{ab}\lambda \not \in K$ and yet
 $\pmb{a}\lambda \in K$. In this case, $R_K$ turns out to be the same as the
 relation $R$ defined in Example 2.1.
 
@@ -164,7 +164,7 @@ $rk(P)$, is defined to be the number of \emph{distinct} (and nonempty)
 equivalence classes of $P$.
 \end{dfn}
 
-The \textcolor{red}{ranks} of the relation in Example 2.3 was 2, since there were two equivalence
+The rank of the relation in Example 2.3 was 2, since there were two equivalence
 classes, the set of even-length words and the set of odd-length words. In
 Example 2.2, $rk(R_2)=4$. The rank of $R_L$ can be thought of as a measure of
 the complexity of the underlying language $L$. Thus, for $K$ in Example 2.3,
@@ -204,7 +204,7 @@ The notation presented here allows a concise method of denoting both relations
 defined by languages and relations defined by automata. It is helpful to observe
 that even in the absence of context, $R_X$ indicates that a relation based on
 the \emph{language} $X$ is being described (since $X$ occurs as a subscript),
-while the relation $R^Y$ identifies $Y$ as a \emph{machine} (since \textcolor{red}{Y} occurs as a
+while the relation $R^Y$ identifies $Y$ as a \emph{machine} (since $Y$ occurs as a
 superscript).
 
 Just as each DFA $M$ gives rise to a right congruence $R^M$, many right
@@ -323,7 +323,7 @@ strings that wind up at state $s$ (from $s_0$). Note that it is easy to define
 automata for which it is impossible to reach certain states from the start
 state; for such states, $I(M,s)$ would be empty. Then $\forall s \in S,\ I(M,s)$
 is either an equivalence class of $R^M$ or $I(M,s)=\emptyset$. Since there is at
-most one equivalence class per state, and there \textcolor{red}{are} a finite number of states,
+most one equivalence class per state, and there are finitely many states,
 it follows that $rk(R^M)$ is also finite: $rk(R^M) \leq \|S\| < \infty$.
 
 However, we have
@@ -393,7 +393,7 @@ the language accepted by $A_{R_L}$ really is $L$. In other words, $L(A_{R_L})=L$
 First, note that $S_{R_L}$ is a finite set, since [by the only assumption we
 have in (3)] $R_L$ consists of only a finite number of equivalence classes. It
 can be shown that $F_{R_L}$ is well defined; if $[z]_{R_L}=[y]_{R_L}$, then
-either (both $z \in L$ and $y \in L$) or (neither $z$ nor $y$ \textcolor{red}{belong} to $L$)
+either (both $z \in L$ and $y \in L$) or (neither $z$ nor $y$ belongs to $L$)
 (why?). The reader should show that $\delta_{R_L}$ is similarly well defined;
 that is, if $[z]_{R_L}=[y]_{R_L}$, it follows that $\delta_{R_L}$ is forced to
 also take both transitions to the same state $([z\pmb{a}]_{R_L}=[y\pmb{a}]_{R_L})$.
@@ -684,13 +684,13 @@ combinations of $u$, $v$, and $w$ must be given).
 Note that this choice of $x$ is ``long enough'' in that $|x| = 2n \geq n$, as
 required by Theorem \ref{thm-2.4}. For \emph{any} combination of $u,\ v,\ w \in \Sigma^*$ such
 that $x = uvw,\ |uv| \leq n,\ |v| \geq 1$, we hope to find a value for $i$ such
-that $uv^iw \not in L_4$. Since $|uv| \leq n$ and the first $n$ letters of $x$ are
+that $uv^iw \not \in L_4$. Since $|uv| \leq n$ and the first $n$ letters of $x$ are
 all zeros, this narrows down the choices for $u,\ v$, and $w$. They must be of
 the form $u = \pmb{0}^j$ and $v = \pmb{0}^k$ (since $|uv| \leq n$ and $x$ starts
 with $n$ zeros), and $w$ must be the ``rest of the string'' and look something
 like $w=\pmb{0}^m \pmb{1}^n$. The constraints on $u,\ v$, and $w$ imply that
 $j + k \leq n,\ k \geq 1$, and $j + k + m = n$. If $i = 2$, we have that
-$uv^2w = \pmb{0}^{n+k} \pmb{1}^n \not in L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
+$uv^2w = \pmb{0}^{n+k} \pmb{1}^n \not \in L_4$ (why?). Thus, by Theorem \ref{thm-2.4}, $L_4$ is not FAD
 [or, alternately, because the conclusion of the pumping lemma (Theorem \ref{thm-2.3}) does
 \emph{not} hold, $L_4$ cannot be FAD].
 
@@ -726,7 +726,7 @@ for a DFA, as shown by the proof in the following example.
 Consider $L=\{\pmb{a}^i\pmb{b}^j\ |\ i,j \in \NN$ and $i$ and $j$ are relatively
 prime$\}$. We will use Theorem \ref{thm-2.4} to show $L$ is not FAD: Let $n$ be given, and
 choose a prime $p$ larger than $n + 1$ (we can be assured such a $p$ exists
-since there \textcolor{red}{are} an infinite number of primes). Let $x=\pmb{a}^p\pmb{b}^{(p-1)!}$.
+since there are infinitely many primes). Let $x=\pmb{a}^p\pmb{b}^{(p-1)!}$.
 Since $p$ has no factors other than $1$ and $p$, it has no nontrivial factor in
 common with $(p-1) \cdot (p-2) \cdot \ldots \cdot 3 \cdot 2 \cdot 1$, and so $p$
 and $(p-1)!$ are relatively prime, which guarantees that $x \in L$. The length
@@ -740,7 +740,7 @@ and $w$ must be the ``rest of the string''; that is, $w=\pmb{a}^m
 $k \geq 1$, and $j + k + m = p$. If $i = 0$, we have that $uv^{0} w =
 \pmb{a}^{p-k}\pmb{b}^{(p-1)!}$. But $p-k$ is a number between $p-1$ and $p-n$
 and hence must match one of the nontrivial factors in $(p-1)!$, which means that
-$uv^{0} w \not in L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
+$uv^{0} w \not \in L$ (why?). Therefore, Theorem \ref{thm-2.3} has been violated, so $L$
 could not have been FAD.
 
 The details of the basic argument used to prove the pumping lemma can be varied
@@ -773,7 +773,7 @@ we obtain yet another variation.
 % Theorem 2.6
 \begin{thm}\label{thm-2.6}
 Let $L$ be a FAD language over $\Sigma^*$. Then
-\[ (\exists n \in \NN)(\forall x \not in L \ni |x| \geq n)(\exists u,v,w \in
+\[ (\exists n \in \NN)(\forall x \not \in L \ni |x| \geq n)(\exists u,v,w \in
 	\Sigma^*) \ni \]
 \begin{center}\begin{tabular}{rcl}
 $x$ & $=$ & $uvw$ \\
@@ -781,7 +781,7 @@ $|uv|$ & $\leq$ & $n$ \\
 $|v|$ & $\geq$ & $1$ \\
 \end{tabular}\end{center}
 and
-\[ (\forall i \in \NN)(uv^iw \not in L) \]
+\[ (\forall i \in \NN)(uv^iw \not \in L) \]
 
 \emph{Proof.} See the exercises.
 \end{thm}
@@ -894,7 +894,7 @@ which implies that
 	\Leftrightarrow (|x|\text{ is even }\wedge |y|\text{ is odd})\vee(|x|
 	\text{ is odd} \wedge |y|\text{ is even})]. \]
 \begin{enumerate}
-\item Show that $Q$ is a right congruence\textcolor{red}{. and} list the equivalence classes.
+\item Show that $Q$ is a right congruence, and list the equivalence classes.
 \item Define $L=[\lambda]_Q \cup [\pmb{aa}]_Q$. Find a simple description for
 $L$, and list the equivalence classes of $R_L$. (Note that $Q$ does refine
 $R_L$.)
@@ -1078,7 +1078,7 @@ programs (that is, the valid words are those text files that would compile with
 no compiler errors). Is this language FAD?
 
 \item Define \emph{``Short Pascal''} as the collection of valid Pascal programs
-that are composed of \textcolor{red}{less} than 1 million characters. Is Short Pascal FAD? Any
+that are composed of less than 1 million characters. Is Short Pascal FAD? Any
 volunteers for building the appropriate DFA?
 
 \item Let $\Sigma=\{\pmb{a},\pmb{b},\pmb{c}\}$, and define $L=\{\pmb{a}^n
