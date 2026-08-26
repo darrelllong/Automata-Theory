@@ -179,8 +179,8 @@ manual pass.
   `ch-09.tex:1721`.
 - The earlier source-label issue in `ch-09.tex` has been resolved: section
   labels now follow the `sec-9.x` pattern used elsewhere.
-- Check `ch-09.tex:1114`; the red-marked "non[left]recursive X-rules" looks like
-  an editing artifact or notation that needs author approval.
+- The earlier `ch-09.tex:1114` "non[left]recursive X-rules" editing artifact has
+  been corrected to "non-left-recursive $X$-rules."
 - The earlier Chapter 9 directive mismatch for `L^*` has been reconciled: the
   exercise now asks the reader to prove or disprove regularity, matching the
   counterexample in the solution.

@@ -1111,7 +1111,7 @@ by introducing a new right-recursive nonterminal.
 Let $G=\langle\Omega,\Sigma,S,P\rangle$ be a context-free grammar, and choose a
 nonterminal $X\in\Omega$. Denote the set of all left-recursive $X$-rules by $X^r =
 \{X\rightarrow X\alpha_1,X\rightarrow X\alpha_2,\ldots,X\rightarrow X\alpha_m\}$
-and the set of all non[left]recursive X-rules by $X^n=\{X\rightarrow\gamma_1,X
+and the set of all non-left-recursive $X$-rules by $X^n=\{X\rightarrow\gamma_1,X
 \rightarrow\gamma_2,\ldots,X\rightarrow\gamma_n\}$. Choose a new nonterminal $Y
 \not \in\Omega$ and let $G'' = \langle\Omega\cup\{Y\},\Sigma,S,P''\rangle$, where
 $P'' = P\cup\{X\rightarrow\gamma_1Y,X\rightarrow\gamma_2Y,\ldots,X\rightarrow
@@ -1166,8 +1166,9 @@ $\{X\rightarrow \gamma_1Y,X\rightarrow\gamma_2Y,\ldots,X\rightarrow\gamma_nY\}
 	\alpha_m\}\cup$ \\
 $\{Y\rightarrow\alpha_1Y,Y\rightarrow\alpha_2Y,\ldots,Y\rightarrow\alpha_mY\}$
 \end{tabular}\end{center}
-can replace the left-recursive $X$-rules $X\rightarrow\gamma_1,\ X\rightarrow\gamma_2,
-\ldots,X\rightarrow\gamma_n$.
+together with the original non-left-recursive $X$-rules, can replace the
+left-recursive $X$-rules $X\rightarrow X\alpha_1,\ X\rightarrow X\alpha_2,
+\ldots,X\rightarrow X\alpha_m$.
 \end{lmm}
 
 Note that the new production set eliminates all left-recursive $X$-rules and does not

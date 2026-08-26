@@ -1,6 +1,6 @@
 Please, prof. Carroll, review where I may have found typos in your book. I took the liberty of marking them in red. I hope Tina is enjoying her CyberTruck and is street racing the Posches.
 
-Below is the list of red typo/grammar/punctuation markings currently present in the book source.
+Below is the list of red typo/grammar/punctuation markings identified in the book source during this review pass.
 
 - `ch-00.tex:26` truth table for \emph{not} shows, a statement \textcolor{red}{r} is false exactly when \textcolor{red}{$\neg$r} is
 - `ch-00.tex:370` exactly one equivalence class of $R$. $X$ is therefore \textcolor{red}{comprised of} the union of
