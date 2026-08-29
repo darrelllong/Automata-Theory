@@ -511,39 +511,46 @@ G_*=\langle\Sigma,\{\widehat X\mid X\in\Sigma\cup\Gamma\}\cup\{W,\#\},W,P_*\rang
 \]
 where $P_*$ contains $\widehat P$ together with
 \[
-W\to\lambda\mid\widehat Z\#W,\qquad
+W\to\lambda\mid\widehat Z\mid\widehat Z\#W,\qquad
 \widehat a\to a\quad(a\in\Sigma),
 \]
-and the separator-removal rules
+and the sole separator-removal rules
 \[
-a\#\to a\quad(a\in\Sigma),\qquad
 a\#b\to ab\quad(a,b\in\Sigma).
 \]
-Thus $\#$ is never erased by itself: it can disappear only after a completed
-terminal word, and an internal separator also requires a completed terminal word
-on its right. The tagged productions cannot cross either a separator or an
-untagged terminal symbol.
+The rule $a\#\to a$ is deliberately absent: the final copied word is created by
+$W\to\widehat Z$, so no trailing separator has to be erased. An internal
+separator can disappear only when a terminal symbol occurs on both sides. Even
+if the rest of the right-hand copy has not yet finished, its first untagged
+terminal symbol blocks every production in $\widehat P$, whose symbols are all
+tagged. Thus tagged productions cannot cross either a separator or an untagged
+terminal symbol.
 
 \item \textbf{Proof}: Let
 \[
 w=w_1w_2\cdots w_k\qquad\text{with each }w_i\in L(G)-\{\lambda\}.
 \]
-Starting with $W$, use $W\to\widehat Z\#W$ exactly $k$ times and then
-$W\to\lambda$. In each tagged block, use $\widehat P$ to simulate a derivation
+For $k>0$, start with $W\to\widehat Z\#W$ exactly $k-1$ times and then use
+$W\to\widehat Z$. In each tagged block, use $\widehat P$ to simulate a derivation
 $Z\DRightarrow_G w_i$, then apply $\widehat a\to a$ to expose the terminal
-letters of $w_i$. The separator rules remove the resulting separators, giving
-$w$. The zero-factor derivation gives $\lambda$. Since
+letters of $w_i$. Once terminal symbols appear on both sides of each boundary,
+the rules $a\#b\to ab$ remove the resulting separators, giving $w$. The
+zero-factor derivation gives $\lambda$. Since
 $(L(G)-\{\lambda\})^*=L(G)^*$, this proves $L(G)^*\subseteq L(G_*)$.
 
 Conversely, consider a terminal derivation from $W$. Every tagged block is
-created by $W\to\widehat Z\#W$. Before such a block can contribute only terminal
-letters, its tagged nonterminals must have been eliminated by rules from
-$\widehat P$, and each remaining tagged terminal must have been converted by a
-rule $\widehat a\to a$. Those steps correspond to a derivation in $G$ of the
-same nonempty terminal word. A separator can be removed only between terminal
-letters (or at the end of the last terminal word), so no tagged production can
-ever cross from one block into another. Therefore every terminal word derived
-from $W$ is a finite concatenation of words in $L(G)$, and
+created by one of the two nonempty alternatives for $W$. In a terminal result,
+the tagged nonterminals in each block have been eliminated by rules from
+$\widehat P$, and every remaining tagged terminal has been converted by a rule
+$\widehat a\to a$. If the tags are erased from this sequence of steps, each
+$\widehat P$ step is a production of $G$ and each conversion step changes
+nothing, so the resulting nonempty terminal word belongs to $L(G)$.
+
+A separator can be removed only by $a\#b\to ab$. At that moment the untagged
+letters $a$ and $b$ remain between the two copies, so no tagged production can
+ever cross their former boundary, even if an unfinished tagged substring occurs
+farther to the right. Therefore every terminal word derived from $W$ is a finite
+concatenation of words in $L(G)$, and
 $L(G_*)\subseteq L(G)^*$. Hence $L(G_*)=L(G)^*$. \qed
 \end{enumerate}
 
