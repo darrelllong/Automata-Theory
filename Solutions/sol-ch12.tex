@@ -224,7 +224,15 @@ Therefore, for \emph{any} regular language, there always exists a DFA with $>31$
 
 \textbf{Algorithm}:
 \begin{enumerate}
-\item Convert $R$ to a $\lambda$-NDFA $N$ using the Kleene/Thompson construction. This construction produces NDFAs with exactly one final state. So the answer is always yes for any regular expression $R$. \qed
+\item Use the usual $\lambda$-NDFA form of the structural construction in
+Lemma~6.2.  The resulting regular-expression-to-automaton correspondence is
+recorded in Corollary~6.1 and summarized by Kleene's Theorem~6.5. Give every
+subexpression a fresh entry state
+and a fresh exit state; the union, concatenation, and star cases join these
+pairs with $\lambda$-moves.  The exit state for the complete expression is the
+only final state.
+\item Thus every regular expression has a $\lambda$-NDFA with exactly one
+final state that accepts its language.  The answer is always Yes. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -258,7 +266,7 @@ path for $y$ from $s_0$ back to $s_0$. Hence
 \[
 xy\in L.
 \]
-So whenever $\lambda\in L$, the language must be closed under concatenation.
+So whenever $\lambda\in L$, we must have $L\cdot L\subseteq L$.
 
 \textbf{Sufficiency when $\lambda\notin L$}: Since regular languages are closed
 under reversal, construct a DFA for $L^r$ and reverse all its arrows. This gives
@@ -276,7 +284,7 @@ Every accepting path in the old machine is simulated by first choosing the same
 first step from $s$, so the new machine accepts exactly $L$. Thus the answer is
 Yes whenever $\lambda\notin L$.
 
-\textbf{Sufficiency when $\lambda\in L$ and $L$ is closed under concatenation}:
+\textbf{Sufficiency when $\lambda\in L$ and $L\cdot L\subseteq L$}:
 Start again with the reversed machine $M$ above. Now $q\in I$. Make $q$ the
 only start state, and redefine its outgoing transitions by
 \[
@@ -289,8 +297,9 @@ imitate the first move from whichever old start state in $I$ was used before.
 Conversely, any accepting path in the new machine starts at $q$ and ends at $q$.
 Whenever the path returns to $q$, split it there. Each resulting segment is a
 word that was already accepted by the old multi-start machine, hence is in $L$.
-Since $L$ is closed under concatenation, the whole input word also belongs to
-$L$. So this new machine again accepts exactly $L$ and has one final state.
+Repeated application of $L\cdot L\subseteq L$ shows that the whole input word
+also belongs to $L$. So this new machine again accepts exactly $L$ and has one
+final state.
 
 \textbf{Decision procedure}:
 \begin{enumerate}
@@ -303,8 +312,8 @@ Exercise 12.4 to decide whether
 L(A)\cdot L(A)\subseteq L(A).
 \]
 \end{enumerate}
-This inclusion is exactly the closure-under-concatenation condition above, so
-the question is decidable. \qed
+This inclusion is exactly the required condition, so the question is decidable.
+\qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability of $R_1 = R_2$ (same language).}
@@ -332,33 +341,24 @@ By Exercise 3.40, since these machines are minimal,
 \[
 R_{L_1}=R^{M_1},\qquad R_{L_2}=R^{M_2}.
 \]
-Therefore
+For each $s\in S_1$ and $t\in S_2$, form the two DFAs
 \[
-R_{L_1}=R_{L_2}
+B_{1,s}=\langle\Sigma,S_1,s_1,\delta_1,\{s\}\rangle,
+\qquad
+B_{2,t}=\langle\Sigma,S_2,s_2,\delta_2,\{t\}\rangle.
 \]
-iff
+Each has exactly one final state, and
 \[
-R^{M_1}=R^{M_2}.
+L(B_{1,s})=\{x\mid\DBAR_1(s_1,x)=s\},
+\qquad
+L(B_{2,t})=\{x\mid\DBAR_2(s_2,x)=t\}.
 \]
-Because $M_1$ and $M_2$ are connected, this happens exactly when there is a
-bijection
-\[
-\mu:S_1\to S_2
-\]
-such that
-\[
-\mu(s_1)=s_2
-\]
-and
-\[
-\mu(\delta_1(s,a))=\delta_2(\mu(s),a)
-\]
-for every state $s$ and letter $a$. Notice that the final states are
-\emph{irrelevant}; we are comparing the right congruences, not the languages.
-
-So the decision procedure is: minimize both machines, forget which states are
-final, and test whether the two rooted transition graphs are isomorphic. This
-is a finite check, and hence decidable. \qed
+Because the minimal machines are connected, these languages are precisely the
+equivalence classes of $R^{M_1}$ and $R^{M_2}$, respectively. Apply
+Theorem~12.3 to every pair $B_{1,s},B_{2,t}$. Answer Yes exactly when
+every class found from $M_1$ is equal to exactly one class found from $M_2$, and
+conversely. This is a finite collection of applications of Theorem~12.3, so it
+decides whether $R_{L_1}=R_{L_2}$. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Prove Theorem 12.5.}
@@ -402,8 +402,10 @@ T_n\cup T_{n+1}\cup\cdots\cup T_{2n-1}.
 \]
 \end{enumerate}
 Each $T_i$ is exactly the set of states reached by strings of length $i$, so the
-returned union is the desired set. The procedure halts because it performs only
-$2n-1$ finite computations. \qed
+returned union is the desired set. At stage $i$, each state in $T_i$ requires
+$\|\Sigma\|$ transition-table lookups, one for each input letter; since
+$T_i\subseteq S$, there are at most $n\|\Sigma\|$ lookups at that stage. The
+procedure halts because it performs only $2n-1$ finite computations. \qed
 
 %%------------------------------------------------------------
 \item \textbf{Would intersecting $\{\DBAR(s_0,y)\mid 5n\leq|y|<6n\}$ with $F$ always work?}
@@ -451,17 +453,31 @@ So this alternative interval also works. \qed
 %%------------------------------------------------------------
 \item \textbf{Decidability of equivalence of two Mealy machines.}
 
+Let
+\[
+M_i=\langle\Sigma,\Gamma,S_i,s_{0_i},\delta_i,\omega_i\rangle
+\qquad(i=1,2).
+\]
+Define the directed product graph to have vertex set $S_1\times S_2$, start
+vertex $(s_{0_1},s_{0_2})$, and, for each $a\in\Sigma$, an $a$-labeled edge
+\[
+(q_1,q_2)\longrightarrow
+(\delta_1(q_1,a),\delta_2(q_2,a)).
+\]
+
 \textbf{Algorithm}:
 \begin{enumerate}
-\item Build the product graph on pairs of states $(q_1,q_2)$.
-\item Start from the pair of initial states.
-\item For each reachable pair $(q_1,q_2)$ and each input symbol $a$, compare the
-two output symbols produced on $a$.
-\item If a mismatch is ever found, the machines are not equivalent.
-\item Otherwise continue to the pair of next states reached on $a$.
+\item Perform breadth-first search from $(s_{0_1},s_{0_2})$, examining each
+reachable pair $(q_1,q_2)$ once.
+\item For each such pair and each $a\in\Sigma$, compare $\omega_1(q_1,a)$ and
+$\omega_2(q_2,a)$. If they differ, answer No.
+\item Otherwise, place the endpoint
+$(\delta_1(q_1,a),\delta_2(q_2,a))$ of the defined $a$-edge on the search queue
+unless it was already examined.
 \end{enumerate}
-Because the product graph is finite, this search halts. It answers Yes exactly
-when every reachable pair produces the same output on every input symbol, which
+Because the defined product graph has $\|S_1\|\cdot\|S_2\|$ vertices, this
+search halts. It answers Yes exactly when every pair reached by the same input
+word produces the same next output symbol on every possible next input, which
 is precisely equivalence of the two Mealy machines. \qed
 
 %%------------------------------------------------------------
@@ -564,7 +580,7 @@ In the proof of Theorem 12.6 (decidability of $L(G)=\emptyset$ for CFG $G$), $Z_
 $Z_0 = \{S\}$ (only the start symbol).
 $Z_{i+1} = Z_i \cup \{B \mid \exists A\in Z_i, \exists \alpha: A\to\alpha\in P, B\in\alpha\}$ (all nonterminals appearing in right-hand sides of productions of nonterminals in $Z_i$).
 
-\textbf{Proof}: $Z_0\subseteq Z_1$ since $Z_1 = Z_0\cup(\cdots) \supseteq Z_0$. By induction: if $Z_k\subseteq Z_{k+1}$, then $Z_{k+1}\subseteq Z_{k+2}$ since any nonterminal in $Z_{k+1}$ is reachable in $k+1$ steps, hence reachable in $k+2$ steps as well. The chain is bounded above by $\Omega$ (which is finite). \qed
+\textbf{Proof}: $Z_0\subseteq Z_1$ since $Z_1 = Z_0\cup(\cdots) \supseteq Z_0$. By induction: if $Z_k\subseteq Z_{k+1}$, then $Z_{k+1}\subseteq Z_{k+2}$ since any nonterminal in $Z_{k+1}$ is reachable in at most $k+1$ steps, hence is reachable in at most $k+2$ steps. The chain is bounded above by $\Omega$ (which is finite). \qed
 
 %%------------------------------------------------------------
 \item \textbf{If $Z_m = Z_{m+1}$, then $Z_m$ is the set of all nonterminals reachable from $S$.}
@@ -678,12 +694,27 @@ Each check is computable by structural recursion on $R_1$. Terminates since $R_1
 %%------------------------------------------------------------
 \item \textbf{Decidability of Mealy machine equivalent to Moore machine.}
 
+Let $M$ be the given Mealy machine and $A$ the given Moore machine. By
+Definition~7.19, construct the corresponding Mealy machine $M_A$ from $A$.
+Theorem~7.7 gives
+\[
+f_{M_A}=f_A,
+\]
+where the translation functions are those of Definition~7.18.
+Therefore
+\[
+M\text{ is equivalent to }A
+\quad\Longleftrightarrow\quad
+M\text{ is equivalent to }M_A.
+\]
+
 \textbf{Algorithm}:
 \begin{enumerate}
-\item Minimize the Mealy machine $M$ and the Moore machine $A$.
-\item Convert one to the other's representation (Mealy to Moore or vice versa) using the standard transformation.
-\item Check equivalence (Exercise 12.19 or 12.20). Decidable. \qed
+\item Construct $M_A$ using Definition~7.19.
+\item Apply the product-graph procedure from Exercise~12.19 to $M$ and $M_A$.
 \end{enumerate}
+The construction and the search are finite, so this decides the question.
+\qed
 
 %%------------------------------------------------------------
 \item \textbf{Decidability: $L(R_2)$ properly contains $L(R_1)$ ($L(R_1)\subset L(R_2)$).}
@@ -721,10 +752,24 @@ question is decidable without converting to a DFA. \qed
 \item \textbf{Decidability: $L(M)$ is a regular set for DPDA $M$.}
 
 \textbf{Answer}: This question is decidable, but the proof is substantially
-deeper than the earlier decidability arguments in the chapter. A standard
-result on deterministic pushdown automata gives an algorithm that determines
-whether the language of a given DPDA is regular. So the correct conclusion here
-is simply that the problem is decidable.
+deeper than the earlier decidability arguments in the chapter. The standard
+regularity algorithm for DPDAs can be outlined as follows.
+\begin{enumerate}
+\item Put $M$ into an equivalent normal form in which the effects of entering
+and later leaving a stack symbol can be summarized by a finite collection of
+control-state pairs.
+\item Compute these finite summaries for all reachable stack symbols and use
+the DPDA equivalence procedure to identify summaries with the same residual
+input language.
+\item Test the recurrent stack-growth patterns. If they yield infinitely many
+pairwise distinct residual languages, then $L(M)$ is not regular. Otherwise the
+finitely many residual languages are the states of an equivalent DFA, which the
+procedure constructs.
+\end{enumerate}
+This procedure always terminates because the normal-form summaries are finite
+descriptions and the equivalence tests used in the recurring cases are
+decidable. It answers Yes exactly when the constructed finite collection of
+residual languages recognizes $L(M)$.
 
 \textit{Caution}: it is \emph{not} enough to ask whether this particular DPDA
 happens to keep its stack bounded, since a DPDA can use unbounded stack space
@@ -926,10 +971,23 @@ L(C_{T,w})=\Sigma^*
 \]
 iff $T$ never halts on $w$. Hence universality is undecidable for LBAs, and
 therefore also for context-sensitive grammars.
-\item \textbf{Context-free grammars}: Undecidable. This is a standard
-undecidability result for context-free grammars.
-\item \textbf{Pushdown automata}: Undecidable, since Theorem 10.3 gives an
-effective conversion between PDAs and context-free grammars. \qed
+\item \textbf{Context-free grammars}: Undecidable. Use the standard reduction
+from the Post correspondence problem. From an instance $P$, construct a
+context-free grammar $G_P$ that generates every well-formed candidate encoding
+except an encoding of a solution of $P$; malformed encodings and candidates
+with a first mismatch are generated directly. Thus
+\[
+L(G_P)=\Sigma_P^*
+\quad\Longleftrightarrow\quad
+P\text{ has no solution}.
+\]
+The construction of $G_P$ is effective, so a universality procedure for
+context-free grammars would decide the Post correspondence problem. Hence no
+such procedure exists.
+\item \textbf{Pushdown automata}: Undecidable. Given a context-free grammar
+$G$, Theorem~10.2 effectively constructs a pushdown automaton $P_G$
+with $\Lambda(P_G)=L(G)$. Therefore a universality procedure for pushdown
+automata would decide the context-free-grammar case just proved. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
@@ -993,10 +1051,13 @@ finite.
 Therefore at least one class is finite iff there is some state $q$ not
 reachable from any reachable cycle. This is decidable by graph search.
 
-\item \textbf{All equivalence classes are finite}: By the same criterion, every
-class is finite iff no reachable cycle exists at all in the minimal DFA. So it
-suffices to minimize $A$ and test whether the reachable graph is acyclic. This
-is decidable. \qed
+\item \textbf{All equivalence classes are finite}: No. By Definition~1.1,
+$\Sigma$ is nonempty, so $\Sigma^*$ is infinite. The relation $R_{L(A)}$ has
+only finitely many equivalence classes because $L(A)$ is FAD (equivalently,
+the reduced connected DFA is isomorphic to $A_{R_{L(A)}}$ by
+Theorem~3.1). If all of those finitely many classes were finite, then
+their union $\Sigma^*$ would be finite, a contradiction. Thus the one-step
+decision procedure always answers No. \qed
 \end{enumerate}
 
 %%------------------------------------------------------------
