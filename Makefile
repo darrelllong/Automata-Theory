@@ -7,7 +7,7 @@ SOLUTION_CHAPTERS = Solutions/sol-introduction.tex Solutions/sol-ch00.tex Soluti
 	Solutions/sol-ch09.tex Solutions/sol-ch10.tex Solutions/sol-ch11.tex \
 	Solutions/sol-ch12.tex
 
-.PHONY: all book solutions clean
+.PHONY: all book solutions clean FORCE
 
 all: book solutions
 
@@ -21,8 +21,10 @@ book.pdf: book.tex $(BOOK_CHAPTERS)
 
 solutions: Solutions/solutions.pdf
 
-Solutions/solutions.pdf: Solutions/solutions.tex $(SOLUTION_CHAPTERS)
+Solutions/solutions.pdf: FORCE Solutions/solutions.tex $(SOLUTION_CHAPTERS)
 	cd Solutions && pdflatex solutions && pdflatex solutions
+
+FORCE:
 
 clean:
 	rm -f book.pdf book.aux book.idx book.ilg book.ind book.log book.out book.toc book.dvi
