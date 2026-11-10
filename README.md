@@ -1,6 +1,6 @@
 # Automata Theory
 
-This repository contains a revised LaTeX edition of James Carroll's automata
+This repository contains a revised LaTeX edition of John Carroll's automata
 theory text, together with an added solutions manual.  The main book sources
 live at the repository root, while the solutions manual lives in
 `Solutions/`.
